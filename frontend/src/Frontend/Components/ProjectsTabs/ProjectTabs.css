@@ -1,0 +1,43 @@
+.projectTabs .nav-link {
+  border: 0px !important;
+  border-radius: 0px !important;
+}
+
+.projectTabs .nav-link:hover {
+  color: #698845 !important;
+}
+
+.projectTabs .nav-link.active {
+  background-color: #698845 !important;
+  color: #fff !important;
+}
+
+.nav-tabs {
+  border-top: 1px solid #ddd;
+  border-bottom: 0px !important;
+}
+
+.zoomImg {
+  /* display: inline-block; */
+  /* overflow: scroll; */
+  border: 1px solid rgb(237, 237, 237);
+  padding: 15px 0;
+}
+.zoomImg img {
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+
+  /* vertical-align: middle; */
+}
+
+.zoomImg img:hover {
+  -webkit-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  transform: scale(1.5);
+  /* transform: scale3d(1.1, 1.1, 1); */
+}

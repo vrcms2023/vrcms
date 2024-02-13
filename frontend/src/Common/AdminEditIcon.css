@@ -1,0 +1,23 @@
+.editIcon {
+  right: 0px;
+  z-index: 999;
+  cursor: pointer;
+  margin-top: 5px;
+  width: auto !important;
+}
+
+.editIcon i {
+  background-color: #fff;
+  border: 2px dashed rgb(255, 193, 7);
+  padding: 5px 10px;
+}
+.editIcon i:hover {
+  border: 2px dashed rgba(255, 255, 255);
+  background-color: rgb(255, 193, 7);
+  padding: 5px 10px;
+  color: #fff !important;
+}
+
+.carousel .editIcon {
+  top: 150px !important;
+}

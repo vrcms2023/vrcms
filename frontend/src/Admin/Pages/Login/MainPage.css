@@ -1,0 +1,13 @@
+.adminMain {
+  height: 100vh;
+}
+
+.mainLinks {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .mainLinks {
+    width: 90%;
+  }
+}

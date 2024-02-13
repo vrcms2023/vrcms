@@ -1,0 +1,51 @@
+.adminEditTestmonial {
+  background-color: #fff;
+  border: 2px dashed rgb(255, 193, 7);
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  bottom: 25px;
+  left: 25px;
+  z-index: 9990;
+  width: calc(100% - 50px) !important;
+  /* height: 100%; */
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+}
+
+@media screen and (max-width: 576px) {
+  .adminEditTestmonial {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100% !important;
+  }
+}
+
+.adminEditTestmonial a.close {
+  text-transform: uppercase;
+}
+
+.adminEditTestmonial a.close:hover {
+  color: #c30000 !important;
+}
+
+.adminEditTestmonialHeader {
+  border-bottom: 1px solid #444;
+}
+
+/* @media (max-width: 768px) {
+  .adminEditTestmonial {
+    overflow: auto;
+    max-height: 650px;
+  }
+} */
+
+.slideItem .description {
+  overflow: hidden;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}

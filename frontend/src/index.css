@@ -1,0 +1,256 @@
+/* body {
+  margin: 0;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px !important;
+  background-color: #fff !important;
+  color: #666666 !important;
+} */
+/* white-space: pre-line; */
+/* background-image: url('https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); */
+
+/* background: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7)), 
+                url('https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80') */
+
+/* .btn-primary {
+  background-color: #a8c849 !important;
+  color: #fff !important;
+  border: 0px !important;
+  box-shadow: 0 4px 4px 0 #555;
+}
+
+.btn-secondary {
+  background-color: #fff !important;
+  color: #165d3d !important;
+  box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.3) !important;
+  font-weight: bold !important;
+  border: 0px solid #fff !important;
+}
+
+.btn-secondary:hover {
+  background-color: #165d3d !important;
+  color: #fff !important;
+}
+
+.loadMore {
+  padding: 6px 15px;
+  border: 1px solid #cccccc;
+  color: #165d3d;
+  text-decoration: none;
+  transition: transform 0.3s;
+  border-radius: 5px;
+}
+
+.loadMore svg {
+  fill: #165d3d;
+}
+.loadMore:hover,
+.loadMore.active {
+  background-color: #698845;
+  color: #fff;
+  box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+.loadMore:hover svg {
+  transform: translateX(10px);
+  fill: #fff;
+}
+
+.modal {
+  z-index: 9999 !important;
+}
+
+.modal-body,
+.tab-content,
+.amenities {
+  white-space: pre-line;
+}
+
+.amenities {
+  line-height: 2rem;
+}
+
+.modelBg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3331;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.green-900 {
+  color: #165d3d;
+}
+
+.green-700 {
+  color: #698845;
+}
+
+.green-500 {
+  color: #a8c849;
+}
+
+.blue-900 {
+  color: #295a93;
+}
+
+.blue-700 {
+  color: #017db9;
+}
+
+.blue-500 {
+  color: #0098da;
+}
+
+.blue-300 {
+  color: #92d0ec;
+}
+
+.gray-222 {
+  color: #222222;
+}
+
+.gray-444 {
+  color: #444444;
+}
+
+.homeProjectsBg {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(33, 72, 118, 1) 50%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+
+.introGrayBg {
+  background-color: #f3f3f3;
+}
+
+.bg-green-900 {
+  background-color: #165d3d;
+}
+.bg-green-700 {
+  background-color: #698845;
+}
+.bg-green-500 {
+  background-color: #a8c849;
+}
+
+.bg-blue-900 {
+  background-color: #295a93;
+}
+
+.bg-blue-700 {
+  background-color: #017db9;
+}
+
+.bg-blue-500,
+.blueBg-500 {
+  background-color: #0098da;
+}
+
+.bg-blue-300 {
+  background-color: #92d0ec;
+}
+
+.bg-blue-222 {
+  background-color: #222222;
+}
+
+.bg-gray-444 {
+  background-color: #444444;
+}
+
+.bg-gray-light {
+  background-color: #e9e9e9;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.collapsing {
+  transition: none !important;
+}
+
+/* .headerBottomMargin {
+  margin-top: 80px !important;
+} */
+
+.headerBottomMargin .editIcon {
+  margin-top: 50px;
+}
+
+/* .banner {
+  background-size: cover;
+  background-position: top center;
+  height: 400px;
+} */
+.newBanner {
+  /* background-image: url("Images/project-banner.jpg"); */
+}
+
+.projectBanner {
+  /* background-image: url("Images/Banner_13.jpg"); */
+}
+
+.aboutBanner {
+  /* background-image: url("Images/Banner_12.jpg"); */
+}
+
+.contactBanner {
+  /* background-image: url("Images/Banner_11.jpg"); */
+}
+
+.noImg {
+  object-fit: cover;
+}
+.homeCarousel::after {
+  content: "";
+  display: block;
+  /* background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(22, 93, 61, 0.95) 95%
+  ); */
+  position: absolute;
+  height: 65vh;
+  width: 100%;
+  top: 0;
+}
+
+.carousel-caption {
+  position: absolute;
+  z-index: 999;
+}
+
+.carousel-caption h1 {
+  letter-spacing: 0.3rem;
+}
+
+@media (max-width: 768px) {
+  .banner {
+    height: 200px !important;
+  }
+
+  .carousel-item img,
+  .homeCarousel::after {
+    height: 50vh;
+  }
+}
+
+/* Buttons Styling */
+
+.btn {
+  border: 0px !important;
+  border-radius: 0 !important;
+  padding: 8px 35px !important;
+  font-size: 1.2rem;
+}
+
+.react-confirm-alert-overlay {
+  z-index: 99999 !important;
+}

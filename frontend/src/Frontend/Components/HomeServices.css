@@ -1,0 +1,53 @@
+.homeServices .row.service:nth-child(odd) {
+  flex-direction: row-reverse;
+}
+
+.homeServices img {
+  object-fit: cover;
+}
+
+.homeServices h2 {
+  font-weight: bold;
+  font-size: 2.5rem;
+  padding-left: 15px;
+  border: 0px;
+  border-left-width: 15px;
+  border-style: solid;
+}
+
+.homeServices h3 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.homeServices .serviceTitle {
+  color: #141414;
+  font-size: 40px;
+  font-family: roboto;
+}
+
+@media (max-width: 576px) {
+  .homeServices .serviceTitle {
+    font-size: 2rem;
+  }
+}
+
+.homeServices .homeServiceImg {
+  height: 270px;
+  -o-object-fit: contain;
+  -o-object-position: center;
+}
+
+.homeServices .homeServiceDetails .description div,
+.homeServices .homeServiceDetails .description p,
+.homeServices .homeServiceDetails .description ul {
+  display: none;
+}
+
+.homeServices .homeServiceDetails .description p:first-child {
+  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

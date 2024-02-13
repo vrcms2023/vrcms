@@ -1,0 +1,14 @@
+{
+  "name": "VRCMS Theme",
+  "fontFamily": "'Fira Sans', sans-serif, Arial, verdana",
+  "background": "#ffffff",
+  "bodyBgImage": "",
+  "textColor": "#333333",
+  "white": "#ffffff",
+  "black": "#000000",
+
+  "topStripBgColor": "#000000",
+  "topStripColor": "#ffffff",
+
+  "navbarBg": "#ff0000"
+}

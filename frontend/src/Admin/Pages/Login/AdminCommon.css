@@ -1,0 +1,10 @@
+.description p,
+.description span {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.editModeBorder {
+  border: 2px solid #0098da;
+}

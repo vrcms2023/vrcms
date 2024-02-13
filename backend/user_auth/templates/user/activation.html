@@ -1,0 +1,31 @@
+{% load i18n %}
+
+{% block subject %}
+{% blocktrans %} Account activation on {{ site_name }}{% endblocktrans %}
+{% endblock subject %}
+
+{% block text_body %}
+{% blocktrans %}Hi {{ user }}{% endblocktrans %}
+{% blocktrans %}Thank you for registration!{% endblocktrans %}
+{% blocktrans %} You're just one step away from completing your registration, activate your account by clicking the button below to start use {{ site_name }}.{% endblocktrans %}
+
+{% trans "Please go to the following page to activate account:" %}
+{{ protocol }}://{{ domain }}/{{ url|safe }}
+
+<i>{% blocktrans %}If you face difficulties on account activation kindly contact us on: contact@hprinfra.com{% endblocktrans %}</i>
+
+{% endblock text_body %}
+
+{% block html_body %}
+<h4>{% blocktrans %}Hi {{ user }}{% endblocktrans %}</h4>
+<p style="margin-top: 30px;">Thank you for registration! </p>
+<p>{% blocktrans %} You're just one step away from completing your registration, activate your account by clicking the button below to start use {{ site_name }}.{% endblocktrans %}</p>
+<!-- <p>{% blocktrans %} You're receiving this email because you need to finish activation process on {{ site_name }}.{% endblocktrans %}</p> -->
+
+
+<p style="text-align: center; margin-top: 30px;"><a style="padding: 10px 20px; background-color: #a8c849; color: #165d3d; border: 0; border-radius: 5px; font-size: 18px; cursor: pointer; border: 0px solid #165d3d; font-weight: bold" href="{{ protocol }}://{{ domain }}/{{ url|safe }}">Activate Account</a></p>
+
+
+<i style="margin-top: 50px; display: block;">{% blocktrans %}If you face difficulties on account activation kindly contact us on: contact@hprinfra.com{% endblocktrans %}</i>
+
+{% endblock html_body %}

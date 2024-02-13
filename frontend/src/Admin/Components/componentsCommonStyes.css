@@ -1,0 +1,10 @@
+.requiredField:after {
+  content: "*";
+  color: #e32;
+  display: inline;
+}
+
+label {
+  color: #333;
+  font-size: 1rem !important;
+}

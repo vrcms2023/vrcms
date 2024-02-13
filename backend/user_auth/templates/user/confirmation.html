@@ -1,0 +1,24 @@
+{% load i18n %}
+
+{% block subject %}
+{% blocktrans %}{{ site_name }} - Your account has been successfully created and activated!{% endblocktrans %}
+{% endblock %}
+
+{% block text_body %}
+{% trans "Your account has been created and is ready to use!" %}
+
+{% endblock text_body %}
+
+{% block html_body %}
+<h4>{% blocktrans %}Hi {{ user }}{% endblocktrans %}</h4>
+<p style="margin-top: 30px;">{% trans "Your account has been created and is ready to use!" %}</p>
+
+<p style="text-align: center; margin-top: 30px;">
+  <a style="padding: 10px 20px; background-color: #a8c849; color: #165d3d; border: 0; border-radius: 5px; font-size: 18px; cursor: pointer; border: 0px solid #165d3d; font-weight: bold" 
+    href="{{ protocol }}://{{ domain }}/login">Login to Account</a></p>
+
+
+
+<i style="margin-top: 50px; display: block;">{% blocktrans %}If you face difficulties in Login to your account kindly contact us on: contact@hprinfra.com {% endblocktrans %}</i>
+
+{% endblock html_body %}

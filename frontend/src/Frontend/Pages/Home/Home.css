@@ -1,0 +1,91 @@
+/* .card {
+  border-radius: 0px !important;
+  overflow: hidden;
+  border: 0px !important;
+  background-color: #fff !important;
+} */
+
+/* .cardGreenBg {
+  background-color: #a8c849 !important;
+} */
+
+/* .card-body {
+  padding: 30px !important;
+} */
+
+/* .card-body h3 {
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.card-body p {
+  font-size: 1rem;
+  color: #222;
+}
+
+.card-body a {
+  color: #165d3d;
+  text-decoration: none;
+  font-weight: bold;
+} 
+
+.card-body a svg {
+  width: 20px;
+  transition: transform 0.3s;
+}
+
+.card-body a:hover svg {
+  transform: translateX(10px);
+}*/
+
+/*  Eight Blocks */
+/* .homeSections {
+  border-top: 5px solid #017db9;
+  border-bottom: 5px solid #698845;
+} */
+
+.ourCulture {
+  background: #017db9;
+  /* background-image: url("../../../Images/ourculture.png"); */
+  background-size: cover;
+  min-height: 530px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 70px 75px !important;
+}
+
+.ourCulture .title {
+  font-size: 2.6rem;
+  font-weight: 500 !important;
+}
+
+.ourCulture .subTitle {
+  font-size: 1.5rem;
+  font-weight: 600 !important;
+}
+
+.professional {
+  /* background-image: url("../../../Images/professional.png"); */
+  background-size: cover;
+  min-height: 265px;
+}
+
+.quality {
+  /* background-image: url("../../../Images/quality.png"); */
+  background-size: cover;
+  min-height: 265px;
+}
+
+.transparency {
+  /* background-image: url("../../../Images/transparency.png"); */
+  background-size: cover;
+  min-height: 265px;
+}
+
+.borderBottom {
+  border-bottom: 1px solid #ddd;
+}
+
+/*  End of Eight Blocks */
