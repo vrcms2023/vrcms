@@ -1,0 +1,22 @@
+.newsAndUpdates .card-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.newsImg {
+  width: 250px;
+}
+
+@media (max-width: 768px) {
+  .newsImg {
+    width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .newsImg {
+    width: 100%;
+  }
+}

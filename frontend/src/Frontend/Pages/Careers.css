@@ -1,0 +1,34 @@
+.careersPage {
+}
+
+.adminEditTestmonial select.form-control {
+  width: 150px !important;
+}
+
+.jobBriefDetails {
+  background-color: #e5e5e5;
+}
+
+.jobDescription {
+  background-color: #fff;
+}
+
+.jobDescription ul {
+  margin-left: 25px;
+}
+
+.jobDescription ul li {
+  padding: 5px 0;
+  /* list-style-type: disclosure-closed !important; */
+  list-style: none !important;
+}
+
+.jobDescription ul li::before {
+  /* content: "\2B9E"; */
+  content: "*";
+  color: #27aae1;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}

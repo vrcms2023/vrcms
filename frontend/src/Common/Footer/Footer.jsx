@@ -11,6 +11,7 @@ import { getCookie } from "../../util/cookieUtil";
 import { urlStringFormat } from "../../util/commonUtil";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 import { useAdminLoginStatus } from "../customhook/useAdminLoginStatus";
+import { getAddressList } from "../../features/address/addressActions";
 
 // Modal
 import Model from "../../Common/Model";
@@ -32,6 +33,7 @@ const Footer = () => {
   };
 
   const [footerValues, setFooterValues] = useState(false);
+  const [address, setAddress] = useState({});
   const [show, setShow] = useState(false);
   const [modelShow, setModelShow] = useState(false);
   const { isAdmin, hasPermission } = useAdminLoginStatus();
@@ -39,7 +41,11 @@ const Footer = () => {
   const [termsAndPolicyData, setTermsAndPolicyData] = useState({});
   const [termsAndConditionData, setTermsAndConditionData] = useState({});
   const { footerData, error } = useSelector((state) => state.footerData);
+  const { addressList } = useSelector((state) => state.addressList);
   const dispatch = useDispatch();
+
+  const date = new Date();
+  const fullYear = date.getFullYear();
 
   useEffect(() => {
     if (footerData?.length === 0) {
@@ -59,6 +65,17 @@ const Footer = () => {
     }
   }, [footerData]);
 
+  useEffect(() => {
+    if (addressList?.length === 0) {
+      dispatch(getAddressList());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (addressList?.addressList?.length > 0) {
+      setAddress(addressList.addressList[0]);
+    }
+  }, [addressList]);
   const showModel = (type) => {
     if (type === "PP") {
       setTermsAndConditionData({
@@ -87,7 +104,7 @@ const Footer = () => {
     const getFooterValues = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `/footer/getTermsAndCondition/`,
+          `/footer/getTermsAndCondition/`
         );
         if (response?.data?.terms?.length > 0) {
           setTermsAndPolicyData(response?.data?.terms[0]);
@@ -120,7 +137,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to={`/services/${urlStringFormat(
-                      getCookie("pageLoadServiceName"),
+                      getCookie("pageLoadServiceName")
                     )}/`}
                   >
                     Services
@@ -260,7 +277,7 @@ const Footer = () => {
           )}
 
           <div className="d-flex justify-content-center align-items-center flex-column flex-md-row gap-1 gap-md-2">
-            <small>&copy; 2023 - All rights reserved</small>
+            <small>&copy; {fullYear} - All rights reserved</small>
             <span className="d-inline-block  d-none d-md-block">|</span>
             <Link
               to=""

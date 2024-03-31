@@ -1,6 +1,9 @@
 const Error = ({ children, ...props }) => {
   return (
-    <div className="error" {...props}>
+    <div
+      style={{ color: "#f23838", textAlign: "center", margin: "0.5rem 0" }}
+      {...props}
+    >
       {children}
     </div>
   );

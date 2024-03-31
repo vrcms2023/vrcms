@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'djoser',
 	'corsheaders',
     'user_auth',
+    'addressList',
     'realestate',
     'gallery',
     'testimonials',
