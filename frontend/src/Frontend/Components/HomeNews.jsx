@@ -66,7 +66,7 @@ const HomeNews = ({
         const response = await axiosClientServiceApi.get(
           `/appNews/clientAppNews/`,
         );
-        console.log(response.data.results, "News Component");
+        // console.log(response.data.results, "News Component");
         if (response?.status === 200) {
           //const data = sortCreatedDateByDesc(response.data.appNews);
 

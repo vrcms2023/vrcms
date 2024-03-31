@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "styled-components";
@@ -17,11 +17,13 @@ import AdminProtectedRoute from "./Frontend/Routes/AdminProtectedRoute";
 // Themes
 import ThemeOne from "./Common/StyledThemes/ThemeOne.json";
 import { GlobalStyles } from "./Common/StyledComponents/GlobalStyles";
+import {AdvertiseComponentStyled} from "./Common/StyledComponents/Adv-Styles"
 
 // CSS
 import "./App.css";
 import "react-toastify/dist/ReactToastify.min.css";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import Advertisement from "./Common/Advertisement/Advertisement";
 
 // Lazy Loading
 const PageNotFound = lazy(() => import("./Frontend/Pages/PageNotFound"));
@@ -77,13 +79,22 @@ const AdminTestimonial = lazy(() =>
   import("./Admin/Pages/Login/AdminTestimonial")
 );
 
+
+
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
   const { isLoading } = useSelector((state) => state.loader);
+  
   const isHideMenu = HideFooterForAdmin();
+  const [flashAdd, setFlashAdd] = useState(true);
+
+  useEffect(() => {
+    setFlashAdd(true)
+  }, [])
 
   return (
     <>
+      {flashAdd && <Advertisement setFlashAdd={setFlashAdd} />}
       <ThemeProvider theme={ThemeOne}>
         <GlobalStyles />
         <BrowserRouter>
