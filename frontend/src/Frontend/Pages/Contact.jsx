@@ -53,7 +53,7 @@ const Contact = () => {
   const defautURL =
     "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15226.413145928846!2d78.441906!3d17.430816!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x80e4d67809745a48!2sHPR+INFRA+PROJECTS!5e0!3m2!1sen!2sin!4v1442574301202";
   const pageType = "contactus";
-  const isAdmin = useAdminLoginStatus();
+  const { isAdmin, hasPermission } = useAdminLoginStatus();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [formData, setFormData] = useState(formObject);
   const [show, setShow] = useState(false);
@@ -143,10 +143,8 @@ const Contact = () => {
     <>
       {/* Page Banner Component */}
       <div className="position-relative">
-        {isAdmin ? (
+        {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("banner", true)} />
-        ) : (
-          ""
         )}
         <Banner
           getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
@@ -171,10 +169,8 @@ const Contact = () => {
       )}
 
       {/* Introduction */}
-      {isAdmin ? (
+      {isAdmin && hasPermission && (
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-      ) : (
-        ""
       )}
 
       <BriefIntroFrontend
@@ -197,10 +193,8 @@ const Contact = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="contactAddress position-relative col-md-12 text-white blueBg-500 p-5 py-3 p-md-5">
-            {isAdmin ? (
+            {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("address", true)} />
-            ) : (
-              ""
             )}
 
             {componentEdit.address ? (
@@ -277,10 +271,8 @@ const Contact = () => {
 
         <div className="row">
           <div className="col-md-7 position-relative">
-            {isAdmin ? (
+            {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("map", true)} />
-            ) : (
-              ""
             )}
             {mapValues.google_map_url && (
               <iframe
