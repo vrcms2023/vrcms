@@ -84,6 +84,11 @@ export const paginationDataFormat = (data) => {
     previous_url: data.previous,
   };
 };
+export const sortByFieldName = (array, fieldName) => {
+  return _.sortBy(array, function (o) {
+    return o[fieldName];
+  });
+};
 
 export const getMenuObject = (data) => {
   const parentMenu = _.filter(data, (item) => {

@@ -11,6 +11,7 @@ import { getCookie } from "../../util/cookieUtil";
 import { urlStringFormat } from "../../util/commonUtil";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 import { useAdminLoginStatus } from "../customhook/useAdminLoginStatus";
+import { getAddressList } from "../../features/address/addressActions";
 
 // Modal
 import Model from "../../Common/Model";
@@ -32,6 +33,7 @@ const Footer = () => {
   };
 
   const [footerValues, setFooterValues] = useState(false);
+  const [address, setAddress] = useState({});
   const [show, setShow] = useState(false);
   const [modelShow, setModelShow] = useState(false);
   const { isAdmin, hasPermission } = useAdminLoginStatus();
@@ -39,7 +41,11 @@ const Footer = () => {
   const [termsAndPolicyData, setTermsAndPolicyData] = useState({});
   const [termsAndConditionData, setTermsAndConditionData] = useState({});
   const { footerData, error } = useSelector((state) => state.footerData);
+  const { addressList } = useSelector((state) => state.addressList);
   const dispatch = useDispatch();
+
+  const date = new Date();
+  const fullYear = date.getFullYear();
 
   useEffect(() => {
     if (footerData?.length === 0) {
@@ -59,6 +65,17 @@ const Footer = () => {
     }
   }, [footerData]);
 
+  useEffect(() => {
+    if (addressList?.length === 0) {
+      dispatch(getAddressList());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (addressList?.addressList?.length > 0) {
+      setAddress(addressList.addressList[0]);
+    }
+  }, [addressList]);
   const showModel = (type) => {
     if (type === "PP") {
       setTermsAndConditionData({
@@ -87,7 +104,7 @@ const Footer = () => {
     const getFooterValues = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `/footer/getTermsAndCondition/`,
+          `/footer/getTermsAndCondition/`
         );
         if (response?.data?.terms?.length > 0) {
           setTermsAndPolicyData(response?.data?.terms[0]);
@@ -120,7 +137,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to={`/services/${urlStringFormat(
-                      getCookie("pageLoadServiceName"),
+                      getCookie("pageLoadServiceName")
                     )}/`}
                   >
                     Services
@@ -143,113 +160,74 @@ const Footer = () => {
               </ul>
             </div>
             <hr className="d-block d-md-none" />
-            <div className="col-md-3 pb-3 pb-md-0">
-              {isAdmin && (
-                <EditIcon editHandler={() => editHandler("address", true)} />
-              )}
-
-              <div className="text-center text-md-start">
-                <h5>Address</h5>
-                {footerValues.address_dr_no}, {footerValues.location} <br />
-                {footerValues.street} <br />
-                {footerValues.city} - {footerValues.postcode} <br />
-                {footerValues.state}
-              </div>
-            </div>
+            
 
             <hr className="d-block d-md-none" />
-            <div className="col-md-3 text-center text-md-start pb-3 pb-md-0">
-              <h5>Reach Us</h5>
-              <div>
-                <p className="text-secondary">Phone</p>
-
-                <p className="">{footerValues.phonen_number}</p>
-                <p>
-                  {footerValues.phonen_number_2 ? (
-                    <>
-                      {footerValues.phonen_number_2}{" "}
-                      <i
-                        className="fa fa-whatsapp text-warning fs-1 ms-2"
-                        aria-hidden="true"
-                      ></i>
-                    </>
+              { <div className="col-md-3 pb-3 pb-md-0">
+                <div className="socialLinks">
+                  <h5>Social Media</h5>
+                  {footerValues.facebook_url ? (
+                    <Link to={footerValues.facebook_url} target="_blank">
+                      <i className="fa fa-facebook-square" aria-hidden="true"></i>
+                    </Link>
                   ) : (
                     ""
                   )}
-                </p>
-              </div>
-              {footerValues.emailid ? (
-                <div className="mb-md-0 mt-4">
-                  <p className="text-secondary">Email</p>
-                  <a href={`mailto:${footerValues.emailid}`}>
-                    {footerValues.emailid}{" "}
-                  </a>
+
+                  {footerValues.twitter_url ? (
+                    <Link to={footerValues.twitter_url} target="_blank">
+                      <i className="fa fa-twitter-square" aria-hidden="true"></i>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+
+                  {footerValues.youtube_url ? (
+                    <Link to={footerValues.youtube_url} target="_blank">
+                      <i className="fa fa-youtube-play" aria-hidden="true"></i>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+
+                  {footerValues.linkedIn_url ? (
+                    <Link to={footerValues.linkedIn_url} target="_blank">
+                      <i className="fa fa-linkedin-square" aria-hidden="true"></i>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+
+                  {footerValues.instagram_url ? (
+                    <Link to={footerValues.instagram_url} target="_blank">
+                      <i className="fa fa-instagram" aria-hidden="true"></i>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+
+                  {footerValues.vimeo_url ? (
+                    <Link to={footerValues.vimeo_url} target="_blank">
+                      <i className="fa fa-vimeo" aria-hidden="true"></i>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+
+                  {footerValues.pinterest_url ? (
+                    <Link to={footerValues.pinterest_url} target="_blank">
+                      <i className="fa fa-pinterest" aria-hidden="true"></i>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
                 </div>
-              ) : (
-                ""
-              )}
-            </div>
+               
+              </div> } 
 
             <hr className="d-block d-md-none" />
-            <div className="col-md-3 text-center socialLinks ">
-              <img src={Logo} alt="" />
-              <div>
-                {footerValues.facebook_url ? (
-                  <Link to={footerValues.facebook_url} target="_blank">
-                    <i className="fa fa-facebook-square" aria-hidden="true"></i>
-                  </Link>
-                ) : (
-                  ""
-                )}
-
-                {footerValues.twitter_url ? (
-                  <Link to={footerValues.twitter_url} target="_blank">
-                    <i className="fa fa-twitter-square" aria-hidden="true"></i>
-                  </Link>
-                ) : (
-                  ""
-                )}
-
-                {footerValues.youtube_url ? (
-                  <Link to={footerValues.youtube_url} target="_blank">
-                    <i className="fa fa-youtube-play" aria-hidden="true"></i>
-                  </Link>
-                ) : (
-                  ""
-                )}
-
-                {footerValues.linkedIn_url ? (
-                  <Link to={footerValues.linkedIn_url} target="_blank">
-                    <i className="fa fa-linkedin-square" aria-hidden="true"></i>
-                  </Link>
-                ) : (
-                  ""
-                )}
-
-                {footerValues.instagram_url ? (
-                  <Link to={footerValues.instagram_url} target="_blank">
-                    <i className="fa fa-instagram" aria-hidden="true"></i>
-                  </Link>
-                ) : (
-                  ""
-                )}
-
-                {footerValues.vimeo_url ? (
-                  <Link to={footerValues.vimeo_url} target="_blank">
-                    <i className="fa fa-vimeo" aria-hidden="true"></i>
-                  </Link>
-                ) : (
-                  ""
-                )}
-
-                {footerValues.pinterest_url ? (
-                  <Link to={footerValues.pinterest_url} target="_blank">
-                    <i className="fa fa-pinterest" aria-hidden="true"></i>
-                  </Link>
-                ) : (
-                  ""
-                )}
-              </div>
+            <div className="col-md-6 text-center socialLinks d-flex justify-content-end align-items-center">
+              <img src={Logo} alt="VRCMS" style={{ opacity: 0.2 }} />
             </div>
           </div>
         </div>
@@ -260,7 +238,7 @@ const Footer = () => {
           )}
 
           <div className="d-flex justify-content-center align-items-center flex-column flex-md-row gap-1 gap-md-2">
-            <small>&copy; 2023 - All rights reserved</small>
+            <small>&copy; {fullYear} - All rights reserved</small>
             <span className="d-inline-block  d-none d-md-block">|</span>
             <Link
               to=""

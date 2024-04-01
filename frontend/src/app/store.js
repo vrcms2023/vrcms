@@ -5,6 +5,7 @@ import clientProjectReducer from "../features/project/clientProjectSlice";
 import loadingReducer from "../features/project/loadingSlice";
 import footerReducer from "../features/footer/footerSlice";
 import serviceReducer from "../features/services/serviceSlice";
+import addressSlice from "../features/address/addressSlice";
 import { authApi } from "./services/auth/authService";
 
 const store = configureStore({
@@ -15,6 +16,7 @@ const store = configureStore({
     auth: authReducer,
     footerData: footerReducer,
     serviceMenu: serviceReducer,
+    addressList: addressSlice,
     [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

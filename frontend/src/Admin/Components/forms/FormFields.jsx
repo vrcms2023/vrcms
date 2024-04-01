@@ -136,6 +136,8 @@ export const InputField = ({
   fieldName,
   register,
   cssClass,
+  validationObject,
+  error,
 }) => {
   return (
     <div className="mb-3 row">
@@ -149,10 +151,11 @@ export const InputField = ({
       </label>
       <div className="col-sm-9">
         <input
-          {...register(fieldName)}
+          {...register(fieldName, validationObject)}
           type={type}
           className="form-control p-2"
         />
+        <span className="error">{error}</span>
       </div>
     </div>
   );
@@ -191,7 +194,13 @@ export const SelectField = ({
   );
 };
 
-export const TextAreaField = ({ label, fieldName, register }) => {
+export const TextAreaField = ({
+  label,
+  fieldName,
+  register,
+  validationObject,
+  error,
+}) => {
   return (
     <div className="mb-3 row">
       <label
@@ -203,9 +212,10 @@ export const TextAreaField = ({ label, fieldName, register }) => {
       <div className="col-sm-9">
         <textarea
           className="form-control"
-          {...register(fieldName)}
-          rows="7"
+          {...register(fieldName, validationObject)}
+          rows="3"
         ></textarea>
+        <span className="error">{error}</span>
       </div>
     </div>
   );
