@@ -348,6 +348,43 @@ export const ClientMenu = ({ serviceMenuList }) => {
           </NavLink>
         </li>
 
+        <li className="nav-item dropdown">
+          <NavLink
+            id="KnowledgeHubnavbarDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            role="button"
+            to="khub"
+            className={useCallback(({ isActive }) =>
+              isActive
+                ? "nav-Link dropdown-toggle isChildAvailable active"
+                : "nav-Link dropdown-toggle isChildAvailable"
+            )}
+          >
+            Gallery
+          </NavLink>
+          <ul
+            className="dropdown-menu"
+            aria-labelledby="KnowledgeHubnavbarDropdown"
+          >
+            <li>
+              <Link to="/imagegallery" className="dropdown-item">
+                Image Gallery
+              </Link>
+            </li>
+            <li>
+              <Link to="/imagegallery" className="dropdown-item">
+                Video Gallery
+              </Link>
+            </li>
+            <li>
+              <Link to="/imagegallery" className="dropdown-item">
+                Projects Gallery
+              </Link>
+            </li>
+          </ul>
+        </li>
+
         <li className="nav-item">
           <NavLink
             to="/contact"
