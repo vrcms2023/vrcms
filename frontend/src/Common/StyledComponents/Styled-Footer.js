@@ -30,10 +30,11 @@ export const FooterStyled = styled.div`
     color: ${({ theme }) => theme.footerTitleColor};
     margin: 0 0 20px;
     font-size: 1.6rem;
+    text-align: left
   }
 
   .socialLinks {
-    padding: 15px 0;
+    // padding: 15px 0;
 
     img {
       width: 80%;
