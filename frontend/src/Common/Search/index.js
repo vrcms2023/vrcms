@@ -14,6 +14,8 @@ const Search = ({
   setPageloadResults,
   setSearchquery,
   searchQuery,
+  imageGallery,
+  setImageGallery
 }) => {
   const userCookie = getCookie("access");
 
@@ -27,24 +29,30 @@ const Search = ({
     }
   };
 
-  const searchResults = async () => {
-    let response;
-    try {
-      if (searchQuery) {
-        response = await axiosClientServiceApi.get(
-          `${clientSearchURL}${searchQuery}/`,
-        );
-      } else if (userCookie) {
-        response = await axiosServiceApi.get(adminSearchURL);
-      } else {
-        response = await axiosClientServiceApi.get(clientDefaultURL);
-      }
-      setObject(response.data);
-      setPageloadResults(false);
-    } catch (error) {
-      console.log("Unable to get the  data");
-    }
+  const searchResults = () => {
+    const searchResults = imageGallery?.filter(image => image.title.toLowerCase() === searchQuery.toLowerCase())
+    setImageGallery(searchResults);
   };
+
+  // const searchResults = async () => {
+  //   let response;
+  //   try {
+  //     if (searchQuery) {
+  //       response = await axiosClientServiceApi.get(
+  //         `${clientSearchURL}${searchQuery}/`,
+  //       );
+
+  //     } else if (userCookie) {
+  //       response = await axiosServiceApi.get(adminSearchURL);
+  //     } else {
+  //       response = await axiosClientServiceApi.get(clientDefaultURL);
+  //     }
+  //     setObject(response.data);
+  //     setPageloadResults(false);
+  //   } catch (error) {
+  //     console.log("Unable to get the  data");
+  //   }
+  // };
 
   return (
     <div className="d-flex justify-conent-start align-items-start flex-column">
