@@ -90,6 +90,8 @@ function App() {
     setFlashAdd(true);
   }, []);
 
+  // Google Language Translator
+
   const googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement(
       {
@@ -109,9 +111,14 @@ function App() {
     window.googleTranslateElementInit = googleTranslateElementInit;
   }, []);
 
+  // End of Google Language Translator
+
   return (
     <>
+      {/* Google Language Translator */}
       <div id="google_translate_element"></div>
+      {/* End of Google Language Translator */}
+
       {flashAdd && <Advertisement setFlashAdd={setFlashAdd} />}
       <ThemeProvider theme={ThemeOne}>
         <GlobalStyles />
