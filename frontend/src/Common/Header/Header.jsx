@@ -285,6 +285,17 @@ export const ClientMenu = ({ serviceMenuList }) => {
             )}
           </ul>
         </li>
+        
+        <li className="nav-item">
+          <NavLink
+            to="/projects"
+            className={({ isActive }) =>
+              isActive ? "nav-Link active" : "nav-Link"
+            }
+          >
+            Projects
+          </NavLink>
+        </li>
 
         <li className="nav-item dropdown">
           <NavLink
@@ -384,7 +395,7 @@ export const ClientMenu = ({ serviceMenuList }) => {
             </li>
           </ul>
         </li>
-
+        <li>Lang</li>
         <li className="nav-item">
           <NavLink
             to="/contact"
@@ -415,6 +426,9 @@ export const ClientMenu = ({ serviceMenuList }) => {
               className="dropdown-menu"
               aria-labelledby="AdminSettingnavbarDropdown"
             >
+              <Link to="/dashboard" className="dropdown-item">
+                  Dashboard
+                </Link>
               <li>
                 {showContentPerRole(userInfo, false) ? (
                   <>
@@ -437,6 +451,7 @@ export const ClientMenu = ({ serviceMenuList }) => {
               </li>
             </ul>
           </li>
+         
         ) : (
           ""
         )}
