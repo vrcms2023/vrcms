@@ -350,11 +350,11 @@ const FileUpload = ({
   return (
     <>
       <form className="" onSubmit={handleSubmit(uploadFile)}>
-        <div className="mb-3 row">
-          <label className="col-sm-3 col-form-label text-start text-md-end">
+        <div className="mb-2 row">
+          <label className="col-sm-12 col-form-label">
             <Title title={title} cssClass="requiredField" />
           </label>
-          <div className="col-sm-9">
+          <div className="col-sm-12">
             {error ? <Error>{error}</Error> : ""}
             <div className="border border-3 mb-0 shadow-lg">
               <FilePond
@@ -447,7 +447,7 @@ const FileUpload = ({
           })}
 
           <div className="row">
-            <div className="d-flex justify-content-center align-items-center gap-1 gap-md-3 ">
+            <div className="d-flex justify-content-center align-items-center gap-1 ">
               {!editImage?.id ? (
                 <button
                   type="button"

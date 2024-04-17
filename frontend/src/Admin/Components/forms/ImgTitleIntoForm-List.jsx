@@ -104,12 +104,13 @@ const AdminBanner = ({
   };
 
   return (
-    <>
+    <div>
       <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
+      <hr className="m-0" />
       <div className="container">
         <div className="row d-flex flex-row-reverse">
           {carousel.length > 0 ? (
-            <div className="col-md-6 my-3">
+            <div className="col-md-12 my-3">
               <div className="container">
                 {carousel?.map((item, index) => (
                   <div className="row mb-4 slideItem" key={index}>
@@ -165,10 +166,10 @@ const AdminBanner = ({
           ) : (
             ""
           )}
-          <hr className="d-md-none" />
+          <hr className="" />
           <div
             className={`mb-5 mb-md-0 ${
-              carousel.length > 0 ? "col-md-6" : "col-md-12"
+              carousel.length > 0 ? "col-md-12" : "col-md-12"
             }`}
           >
             <FileUpload
@@ -198,7 +199,7 @@ const AdminBanner = ({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

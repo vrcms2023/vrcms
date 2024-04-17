@@ -12,14 +12,14 @@ export const InputFields = ({
   switch (type) {
     case "text":
       return (
-        <div className="mb-3 row">
+        <div className="mb-2 row">
           <label
             htmlFor=""
-            className="col-sm-3 col-form-label text-start text-md-end text-capitalize"
+            className="col-sm-12 col-form-label text-capitalize"
           >
             {label}
           </label>
-          <div className="col-sm-9">
+          <div className="col-sm-12">
             <input
               {...register(fieldName)}
               value={value}
@@ -32,14 +32,14 @@ export const InputFields = ({
       );
     case "dropdown":
       return (
-        <div className="mb-3 row">
+        <div className="mb-2 row">
           <label
             htmlFor=""
-            className="col-sm-3 col-form-label text-start text-md-end text-capitalize"
+            className="col-sm-12 col-form-label text-capitalize"
           >
             {label}
           </label>
-          <div className="col-sm-9">
+          <div className="col-sm-12">
             <select
               className="custom-select custom-select-lg form-control p-2"
               {...register(fieldName)}
@@ -56,33 +56,33 @@ export const InputFields = ({
       );
     case "textarea":
       return (
-        <div className="mb-3 row">
+        <div className="mb-2 row">
           <label
             htmlFor=""
-            className="col-sm-3 col-form-label text-start text-md-end"
+            className="col-sm-12 col-form-label"
           >
             {label}
           </label>
-          <div className="col-sm-9">
+          <div className="col-sm-12">
             <textarea
               className="form-control"
               {...register(fieldName)}
               value={value}
-              rows="7"
+              rows="3"
             ></textarea>
           </div>
         </div>
       );
     case "checkbox":
       return (
-        <div className="mb-3 row">
+        <div className="mb-2 row">
           <label
             htmlFor=""
-            className="col-sm-3 col-form-label text-start text-md-end text-capitalize"
+            className="col-sm-12 col-form-label text-start text-md-end text-capitalize"
           >
             {label}
           </label>
-          <div className="col-sm-9">
+          <div className="col-sm-12">
             <input
               {...{
                 checked: rest.checked,
@@ -96,7 +96,7 @@ export const InputFields = ({
       );
     case "hidden":
       return (
-        <div className="mb-3 row">
+        <div className="mb-2 row">
           <input
             {...register(fieldName)}
             type={type}
@@ -112,7 +112,7 @@ export const InputFields = ({
 
 export const RichTextInputEditor = ({ label, editorSetState, initialText }) => {
   return (
-    <div className="mb-3 row">
+    <div className="mb-2 row">
       {/* <label
         htmlFor=""
         className="col-sm-3 col-form-label text-start text-md-end text-capitalize"
@@ -140,16 +140,16 @@ export const InputField = ({
   error,
 }) => {
   return (
-    <div className="mb-3 row">
+    <div className="mb-2 row">
       <label
         htmlFor=""
-        className={`col-sm-3 col-form-label text-start text-md-end text-capitalize ${
+        className={`col-sm-12 col-form-label text-capitalize ${
           cssClass ? cssClass : ""
         }`}
       >
         {label}
       </label>
-      <div className="col-sm-9">
+      <div className="col-sm-12">
         <input
           {...register(fieldName, validationObject)}
           type={type}
@@ -169,14 +169,14 @@ export const SelectField = ({
   ...rest
 }) => {
   return (
-    <div className="mb-3 row">
+    <div className="mb-2 row">
       <label
         htmlFor=""
-        className="col-sm-3 col-form-label text-start text-md-end text-capitalize"
+        className="col-sm-12 col-form-label text-start text-md-end text-capitalize"
       >
         {label}
       </label>
-      <div className="col-sm-9">
+      <div className="col-sm-12">
         <select
           defaultValue={"Choose..."}
           className="custom-select custom-select-lg form-control p-2"
@@ -202,14 +202,14 @@ export const TextAreaField = ({
   error,
 }) => {
   return (
-    <div className="mb-3 row">
+    <div className="mb-2 row">
       <label
         htmlFor=""
-        className="col-sm-3 col-form-label text-start text-md-end"
+        className="col-sm-12 col-form-label text-start text-md-end"
       >
         {label}
       </label>
-      <div className="col-sm-9">
+      <div className="col-sm-12">
         <textarea
           className="form-control"
           {...register(fieldName, validationObject)}
