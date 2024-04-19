@@ -27,7 +27,7 @@ export const FooterStyled = styled.div`
   }
 
   h5 {
-    color: ${({ theme }) => theme.footerTitleColor};
+    // color: ${({ theme }) => theme.footerTitleColor};
     margin: 0 0 20px;
     font-size: 1.6rem;
     text-align: left

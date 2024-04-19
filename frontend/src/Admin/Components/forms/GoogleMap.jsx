@@ -60,19 +60,18 @@ const GoogleMap = ({ editHandler, componentType, mapValues }) => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="">
       <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
-
-      <div className="container">
-        <div className="row py-0 pb-md-5">
-          <div className="mb-3 row">
+      <hr className="m-0" />
+      <div className="container my-3">
+        <div className="row">
             <label
               for=""
-              className="col-sm-2 col-form-label text-start text-md-end text-capitalize"
+              className="col-sm-12 col-form-label text-capitalize"
             >
-              {componentType}
+              Google {componentType}
             </label>
-            <div className="col-sm-10">
+            <div className="col-sm-12">
               <textarea
                 className="form-control"
                 id="exampleFormControlTextarea1"
@@ -90,9 +89,8 @@ const GoogleMap = ({ editHandler, componentType, mapValues }) => {
                 height="450" width="100%" &gt; &;t;/iframe&gt;
               </code>
             </div>
-          </div>
 
-          <div className="row">
+          <div className="row mt-3">
             <div className="d-flex justify-content-center align-items-center gap-2">
               <button onClick={saveGoogleMapUrl} className="btn btn-primary">
                 Save

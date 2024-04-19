@@ -120,7 +120,7 @@ export const RichTextInputEditor = ({ label, editorSetState, initialText }) => {
         {label}
       </label> */}
       <div className="col-sm-12">
-        <p className="text-center fw-bold fs-5 pt-3 py-md-0">{label}</p>
+        <p className="fs-5 pt-3 py-md-0">{label}</p>
         <RichTextEditor
           initialText={initialText ? initialText : ""}
           RichEditorState={editorSetState}

@@ -16,13 +16,13 @@
 
 .adminEditTestmonial {
   background-color: #ddd;
-  border: 2px dashed rgb(255, 193, 7);
+  /* border: 2px dashed rgb(255, 193, 7); */
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   z-index: 9990;
-  width: 400px !important;
+  width: 640px !important;
   overflow-x: hidden;
   /* overflow-y: auto; */
   outline: 0;

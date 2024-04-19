@@ -84,10 +84,10 @@ function App() {
   const { isLoading } = useSelector((state) => state.loader);
 
   const isHideMenu = HideFooterForAdmin();
-  const [flashAdd, setFlashAdd] = useState(true);
+  const [flashAdd, setFlashAdd] = useState(false);
 
   useEffect(() => {
-    setFlashAdd(true);
+    setFlashAdd(false);
   }, []);
 
   // Google Language Translator
