@@ -41,11 +41,12 @@ const Home = () => {
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [pageLoadResult, setPageloadResults] = useState(false);
   const [show, setShow] = useState(false);
+  const [showEditPop, setShowEditPop] = useState(false);
   const [news, setNews] = useState([]);
 
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
-    setShow(!show);
+    setShow(value);
     document.body.style.overflow = "hidden";
   };
 
@@ -82,7 +83,7 @@ const Home = () => {
         <div className="row">
           <div className="col-md-12 p-0 carousel">
             {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("carousel", true)} />
+              <EditIcon editHandler={editHandler} />
             )}
             <Carousel carouselState={componentEdit.carousel} />
           </div>
@@ -254,6 +255,8 @@ const Home = () => {
       )}
 
       {show && <ModelBg />}
+      {/* {showEditPop && <ModelBg />} */}
+      
     </>
   );
 };
