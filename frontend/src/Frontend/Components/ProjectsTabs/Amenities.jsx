@@ -18,7 +18,7 @@ const Amenities = ({ amenities }) => {
           ""
         ) : (
           <div className="col-6">
-            <h4>Futures</h4>
+            <h4>Features</h4>
             <div>{feature}</div>
           </div>
         )}
