@@ -21,7 +21,7 @@ const ProjectTabs = () => {
   // const [selectedProject, setSelectedProject] = useState(null)
   const [amenities, setAmenities] = useState({});
   const [projectImages, setProjectImages] = useState([]);
-  const [projectHome, setProjectHome] = useState({});
+  const [projectHome, setProjectHome] = useState([]);
   const [specifications, setSpecifications] = useState([]);
   const [pdfs, setPdfs] = useState([]);
   const [planPdfs, setPlanPdfs] = useState([]);
@@ -29,6 +29,7 @@ const ProjectTabs = () => {
   const [projectTitle, setProjectTitle] = useState("");
   const [isProjectImg, setIsProjectImg] = useState(false);
 
+  const [thumbImgs, setThumbImgs] = useState([]);
   const [pricePdfs, setPricePdfs] = useState([]);
   const [priceImgs, setPriceImgs] = useState([]);
 
@@ -50,19 +51,21 @@ const ProjectTabs = () => {
     // const {value} = e.target
     try {
       const response = await axiosClientServiceApi.get(
-        `/project/getSelectedClientProject/${projectid}/`,
+        `/project/getSelectedClientProject/${projectid}/`
       );
       if (response?.status == 200) {
         const projectData = response.data;
-        setProjectTitle(projectData.project.projectTitle);
-        setprojectid(projectData.project.id);
-        setProjectHome(projectData.project);
+        const project = projectData.project[0];
+        setProjectTitle(project?.projectTitle);
+        setprojectid(project?.id);
+        setProjectHome(project);
         setAmenities(projectData.amenitie[0]);
         filtersImgPdfs(projectData, "images");
         filtersImgPdfs(projectData, "pdfs");
         filtersImgPdfs(projectData, "price");
         filtersImgPdfs(projectData, "plan");
         filtersImgPdfs(projectData, "avl");
+        filtersImgPdfs(projectData, "thumbnail");
         setSpecifications(projectData?.specificationData);
       }
     } catch (error) {
@@ -113,6 +116,12 @@ const ProjectTabs = () => {
       const pdfs = filterPdfs(avlImgs);
       setAvlPdfs(pdfs);
     }
+
+    if (type === "thumbnail") {
+      const thumbImgs = filterCategory(data, "thumbnail");
+      const images = filterImages(thumbImgs);
+      setThumbImgs(images);
+    }
   };
 
   const filterCategory = (data, type) => {
@@ -123,7 +132,7 @@ const ProjectTabs = () => {
       (item) =>
         item.contentType === ".jpg" ||
         item.contentType === ".jpeg" ||
-        item.contentType === ".png",
+        item.contentType === ".png"
     );
   };
 
@@ -313,9 +322,8 @@ const ProjectTabs = () => {
               >
                 <HomeTab
                   project={projectHome}
-                  projectImages={projectImages}
+                  thumbImgs={thumbImgs}
                   pdfs={pdfs}
-                  isProjectImg={isProjectImg}
                 />
               </div>
               {isProjectImg ? (

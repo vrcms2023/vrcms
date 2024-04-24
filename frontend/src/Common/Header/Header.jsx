@@ -285,7 +285,7 @@ export const ClientMenu = ({ serviceMenuList }) => {
             )}
           </ul>
         </li>
-        
+
         <li className="nav-item">
           <NavLink
             to="/projects"
@@ -379,23 +379,22 @@ export const ClientMenu = ({ serviceMenuList }) => {
             aria-labelledby="KnowledgeHubnavbarDropdown"
           >
             <li>
-              <Link to="/imagegallery" className="dropdown-item">
+              <Link to="/gallery" className="dropdown-item">
                 Image Gallery
               </Link>
             </li>
             <li>
-              <Link to="/imagegallery" className="dropdown-item">
+              <Link to="/gallery" className="dropdown-item">
                 Video Gallery
               </Link>
             </li>
             <li>
-              <Link to="/imagegallery" className="dropdown-item">
+              <Link to="/gallery" className="dropdown-item">
                 Projects Gallery
               </Link>
             </li>
           </ul>
         </li>
-        <li>Lang</li>
         <li className="nav-item">
           <NavLink
             to="/contact"
@@ -427,8 +426,8 @@ export const ClientMenu = ({ serviceMenuList }) => {
               aria-labelledby="AdminSettingnavbarDropdown"
             >
               <Link to="/dashboard" className="dropdown-item">
-                  Dashboard
-                </Link>
+                Dashboard
+              </Link>
               <li>
                 {showContentPerRole(userInfo, false) ? (
                   <>
@@ -451,7 +450,6 @@ export const ClientMenu = ({ serviceMenuList }) => {
               </li>
             </ul>
           </li>
-         
         ) : (
           ""
         )}

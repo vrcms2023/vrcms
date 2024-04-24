@@ -30,7 +30,7 @@ const Projects = () => {
   const [future, setFuture] = useState([]);
   const [ongoing, setOngoing] = useState([]);
   const { clientProjects, error } = useSelector(
-    (state) => state.clientProjects,
+    (state) => state.clientProjects
   );
   const dispatch = useDispatch();
 
@@ -115,14 +115,6 @@ const Projects = () => {
 
       {componentEdit.banner ? (
         <div className="adminEditTestmonial">
-          <ImageInputsForm editHandler={editHandler} componentType="banner" />
-        </div>
-      ) : (
-        ""
-      )}
-
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
@@ -142,6 +134,7 @@ const Projects = () => {
           <AdminBriefIntro
             editHandler={editHandler}
             componentType="briefIntro"
+            pageType={pageType}
           />
         </div>
       ) : (
