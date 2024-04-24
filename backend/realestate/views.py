@@ -12,7 +12,7 @@ from rest_framework import status, viewsets
 from rest_framework import status
 from rest_framework import permissions
 from collections import OrderedDict
-
+from django.db.models import Q
 
 """
 Project Category View
@@ -254,7 +254,7 @@ class ClientProjectAPIView(APIView):
       
         snippets = self.get_object()
         projectList = ProjectsSerializer(snippets, many=True)
-        query_set = Gallery.objects.filter(category='images')
+        query_set = Gallery.objects.filter(Q(category='thumbnail') | Q(category='images'))
         data = self.gallery_serializer_class(query_set, many=True).data
             
         return Response({"projectList" : projectList.data, "imageList": data}, status=status.HTTP_200_OK)

@@ -44,6 +44,7 @@ const AddProject = () => {
   const [specifications, setSpecifications] = useState([specificationKeys]);
   const [amenities, setAmenities] = useState(amenitieKeys);
   const [pdfObject, setPdfObject] = useState([]);
+  const [thumbnailObject, setThumbnailObject] = useState([]);
   const [planObject, setPlanObject] = useState([]);
   const [availabileObject, setAvailabileObject] = useState([]);
   const [priceObject, setPriceObject] = useState([]);
@@ -209,10 +210,10 @@ const AddProject = () => {
         };
         setAboutUs(aboutus);
         setPercentValue(
-          project.percentValue ? JSON.parse(project.percentValue) : null,
+          project.percentValue ? JSON.parse(project.percentValue) : null
         );
         setProjectPublish(
-          project.publish ? JSON.parse(project.publish) : false,
+          project.publish ? JSON.parse(project.publish) : false
         );
         setShow(true);
       } else {
@@ -705,6 +706,32 @@ const AddProject = () => {
                         rows="3"
                       ></textarea>
                     </div>
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Project Home Thumbnail
+                      </label>
+                      <FileUpload
+                        project={newProject}
+                        updated_By={userName}
+                        category="thumbnail"
+                        gallerysetState={setThumbnailObject}
+                        galleryState={thumbnailObject}
+                        validTypes="image/png,image/jpeg"
+                        descriptionTitle="Plan Description"
+                        showDescription={false}
+                        saveState={setSaveState}
+                        buttonLable="Upload Plan"
+                        maxFiles={1}
+                      />
+                      <CatageoryImgC
+                        title={`${readOnlyTitle} Thumbnail`}
+                        catategoryImgs={thumbnailObject}
+                        catategoryImgState={setThumbnailObject}
+                        project={newProject}
+                        category="thumbnail"
+                        cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -893,7 +920,7 @@ const AddProject = () => {
                     validTypes="image/png,image/jpeg"
                     descriptionTitle="Image Description"
                     saveState={setSaveState}
-                    showDescription={true}
+                    showDescription={false}
                   />
                   <CatageoryImgC
                     title={`${readOnlyTitle} Image Gallery`}
