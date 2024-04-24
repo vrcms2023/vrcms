@@ -26,8 +26,8 @@ const DraggableAddress = forwardRef(
         <div>
           <div className="row position-reltive">
            
-          <span {...dragHandleProps} className="position-absolute" style={{top: "-1px", left: "-30px", padding: "5px", background: "#ddd", width: "30px", borderRadius: "5px"}}>
-                <i className="fa fa-arrows-alt fs-5" aria-hidden="true"></i>
+          <span {...dragHandleProps} className="position-absolute" style={{top: "-1px", left: "-20px", padding: "5px", background: "#ddd", width: "25px", borderRadius: "5px"}}>
+                <i className="fa fa-arrows-alt fs-6" aria-hidden="true"></i>
               </span>
            
             <div className="col-8">

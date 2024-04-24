@@ -74,10 +74,10 @@ const AdminTermsAndPrivacy = ({
         title={componentType}
         type={type}
       />
-
-      <div className="container">
+      <hr className="m-0 text-dark" />
+      <div className="container mt-3" style={{color: "#000"}}>
         <div className="row">
-          <div className="col-md-6 bg-light">
+          <div className="col-md-12">
             <RichTextInputEditor
               label={"Terms And Conditions"}
               editorSetState={setTermEditorState}
@@ -88,8 +88,10 @@ const AdminTermsAndPrivacy = ({
               }
             />
           </div>
+          </div>
 
-          <div className="col-md-6 bg-light  border-start border-3">
+          <div className="row mt-3">
+          <div className="col-md-12 border-start border-3">
             <RichTextInputEditor
               label={"Privacy Policy"}
               editorSetState={setPolicyEditorState}
@@ -100,7 +102,9 @@ const AdminTermsAndPrivacy = ({
               }
             />
           </div>
+          </div>
 
+          <div className="row">
           <div className="d-flex justify-content-center align-items-center gap-2 my-5">
             {/* <button onClick={resetForm} type="reset" className="btn btn-secondary mx-3">
                   Clear
@@ -119,7 +123,7 @@ const AdminTermsAndPrivacy = ({
               handlerChange={closeHandler}
             />
           </div>
-        </div>
+          </div>
       </div>
     </>
   );

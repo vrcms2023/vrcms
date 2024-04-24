@@ -237,7 +237,7 @@ const Footer = () => {
             <EditIcon editHandler={() => editHandler("termsPolacy", true)} />
           )}
 
-          <div className="d-flex justify-content-center align-items-center flex-column flex-md-row gap-1 gap-md-2">
+          <div className="d-flex justify-content-center align-items-center flex-column flex-md-row gap-2">
             <small>&copy; {fullYear} - All rights reserved</small>
             <span className="d-inline-block  d-none d-md-block">|</span>
             <Link

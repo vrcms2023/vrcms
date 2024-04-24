@@ -66,9 +66,10 @@ const JobPost = ({ editHandler, componentType, type, editPost }) => {
         title={componentType}
         type={type}
       />
+      <hr className="m-0" />
       <div className="container">
         <div className="row p-4">
-          <div className="col-md-8 offset-md-2 mb-5 mb-md-0">
+          <div className="col-md-12 mb-5 mb-md-0">
             <form className="g-3 mb-md-0" onSubmit={handleSubmit(onSubmit)}>
               <InputField
                 label="Title"

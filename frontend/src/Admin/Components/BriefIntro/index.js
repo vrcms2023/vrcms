@@ -107,7 +107,8 @@ export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
   return (
     <>
       <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
-      <div className="container">
+      <hr className="m-0" />
+      <div className="container my-3">
         {success ? (
           <>
             <Title
@@ -118,16 +119,16 @@ export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
         ) : (
           ""
         )}
-        <div className="row p-4">
-          <div className="col-md-8 offset-md-2">
+        <div className="row">
+          <div className="col-md-12">
             <div className="mb-3 row">
               <label
                 htmlFor=""
-                className="col-sm-3 col-form-label text-start text-md-end"
+                className="col-sm-12 col-form-label"
               >
                 Title
               </label>
-              <div className="col-sm-9">
+              <div className="col-sm-12">
                 <input
                   name="intro_title"
                   value={
@@ -143,11 +144,11 @@ export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
             <div className="mb-3 row">
               <label
                 htmlFor=""
-                className="col-sm-3 col-form-label text-start text-md-end"
+                className="col-sm-12 col-form-label"
               >
                 SubTitle
               </label>
-              <div className="col-sm-9">
+              <div className="col-sm-12">
                 <input
                   name="subTitle"
                   value={introFormValue.subTitle ? introFormValue.subTitle : ""}
@@ -161,11 +162,11 @@ export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
             <div className="mb-3 row">
               <label
                 htmlFor=""
-                className="col-sm-3 col-form-label text-start text-md-end"
+                className="col-sm-12 col-form-label"
               >
                 Description
               </label>
-              <div className="col-sm-9">
+              <div className="col-sm-12">
                 <textarea
                   name="intro_desc"
                   className="form-control"

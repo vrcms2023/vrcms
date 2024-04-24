@@ -166,10 +166,51 @@ const AddressForm = ({ editHandler, componentType, address }) => {
   return (
     <div className="">
       <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
-      <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
-        <div className="container">
+      <hr className="m-0 text-dark" />
+      <form className="" onSubmit={handleSubmit(onSubmit)}>
+        <div className="container my-3">
           <div className="row">
-            <div className="col-md-6 mb-md-0">
+          <div className="col-md-12 mb-md-0  ">
+            <p className="text-dark fw-bold fs-6">Use drag option to shuffle the addresses</p>
+              <DragDropContext onDragEnd={dragEnded}>
+                <Droppable droppableId="address-wrapper">
+                  {(provided, snapshot) => (
+                    <DraggableAddressList
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                    >
+                      {listofAddress.map((_address, index) => {
+                        return (
+                          <Draggable
+                            draggableId={`${_address.id}`}
+                            index={index}
+                            key={_address.id}
+                          >
+                            {(_provided, _snapshot) => (
+                              <DraggableAddress
+                                ref={_provided.innerRef}
+                                dragHandleProps={_provided.dragHandleProps}
+                                {..._provided.draggableProps}
+                                snapshot={_snapshot}
+                                item={_address}
+                                thumbDelete={thumbDelete}
+                                handleCarouselEdit={handleCarouselEdit}
+                              />
+                            )}
+                          </Draggable>
+                        );
+                      })}
+                      {provided.placeholder}
+                    </DraggableAddressList>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
+            
+            <div className="col-md-12">
+              <p className="text-dark fw-bold mt-3">Address Form</p>
+            <hr className="mb-3 text-dark" /></div>
+            <div className="col-md-12 mb-md-0">
               <InputField
                 label="Country"
                 fieldName="location_title"
@@ -231,42 +272,7 @@ const AddressForm = ({ editHandler, componentType, address }) => {
               />
             </div>
 
-            <div className="col-md-6 mb-md-0 px-5 text-black">
-            <p className="text-warning fs-5">Use drag option to shuffle the addresses</p>
-              <DragDropContext onDragEnd={dragEnded}>
-                <Droppable droppableId="address-wrapper">
-                  {(provided, snapshot) => (
-                    <DraggableAddressList
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                    >
-                      {listofAddress.map((_address, index) => {
-                        return (
-                          <Draggable
-                            draggableId={`${_address.id}`}
-                            index={index}
-                            key={_address.id}
-                          >
-                            {(_provided, _snapshot) => (
-                              <DraggableAddress
-                                ref={_provided.innerRef}
-                                dragHandleProps={_provided.dragHandleProps}
-                                {..._provided.draggableProps}
-                                snapshot={_snapshot}
-                                item={_address}
-                                thumbDelete={thumbDelete}
-                                handleCarouselEdit={handleCarouselEdit}
-                              />
-                            )}
-                          </Draggable>
-                        );
-                      })}
-                      {provided.placeholder}
-                    </DraggableAddressList>
-                  )}
-                </Droppable>
-              </DragDropContext>
-            </div>
+            
           </div>
           <div className="row">
             <div className="d-flex justify-content-center align-items-center gap-1 gap-md-3 mb-4">
