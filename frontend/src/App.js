@@ -116,7 +116,7 @@ function App() {
   return (
     <>
       {/* Google Language Translator */}
-      <div id="google_translate_element"></div>
+      {/* <div id="google_translate_element"></div> */}
       {/* End of Google Language Translator */}
 
       {flashAdd && <Advertisement setFlashAdd={setFlashAdd} />}

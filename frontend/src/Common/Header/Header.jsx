@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import { useNavigate, Link, NavLink } from "react-router-dom";
+import { HashLink  } from 'react-router-hash-link';
 import Button from "../Button";
 import { getCookie, removeAllCookies } from "../../util/cookieUtil";
 import { useDispatch, useSelector } from "react-redux";
@@ -150,7 +151,8 @@ const Header = () => {
       >
         <div className="container">
           <Link to={isHideMenu ? "#" : "/"} className="navbar-brand logo">
-            <img src={Logo} alt="" />
+            {/* <img src={Logo} alt="" /> */}
+            SAP Design Studio
           </Link>
 
           {!isHideBurgetIcon ? (
@@ -272,12 +274,13 @@ export const ClientMenu = ({ serviceMenuList }) => {
                   <hr className="dropdown-divider" />
                 </li>
                 <li className="pt-3">
-                  <Link
-                    to="/services/"
+                  <Link 
+                    to="/services#servicesPage"
                     className="dropdown-item btn btn-primary"
                   >
                     Add New Service
                   </Link>
+                  
                 </li>
               </>
             ) : (

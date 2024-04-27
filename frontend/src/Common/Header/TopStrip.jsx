@@ -36,7 +36,7 @@ const TopStrip = () => {
     <TopStripStyled>
       <div className="d-flex justify-content-center justify-content-md-between align-items-center topStrip">
         <div className="d-none d-md-flex">
-          <Title title="Welcome to RishSystems" cssClass={"fs-6 fw-normal"} />
+          <Title title="Welcome to SAP Design Studio" cssClass={"fs-6 fw-normal"} />
         </div>
         <div className="d-flex justify-content-between gap-4 quickContact">
           <span className="d-none d-md-flex">

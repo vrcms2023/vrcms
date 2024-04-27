@@ -219,24 +219,27 @@ const Services = () => {
         {/* End Of Introduction */}
 
         {/* Add Service Page */}
-        {isAdmin && hasPermission && (
+        {/* {isAdmin && hasPermission && (
           <AddService
             setSelectedServiceProject={setSelectedServiceProject}
             selectedServiceProject={selectedServiceProject}
             pageType="service"
           />
-        )}
+        )} */}
         {/* End of Add Service Page */}
 
         <div
-          className="container my-md-5 py-md-4 servicesPage"
+          className={isAdmin && hasPermission ? "container-fluid my-md-5 py-md-4 servicesPage" : "container my-md-5 py-md-4 servicesPage"}
           id="servicesPage"
         >
+        <div className="row">
+           
+          <div className={isAdmin && hasPermission ? "col-md-8" : "col-md-12"}>
           {isAdmin && hasPermission && selectedServiceProject?.id && (
             <div className="d-flex justify-content-end align-items-center mb-3">
               <span className="mx-2 text-dark">
                 {" "}
-                Add data in
+                Add new section in
                 <span className="badge bg-warning text-dark fs-6 mx-1">
                   {selectedServiceProject.services_page_title}
                 </span>
@@ -284,12 +287,11 @@ const Services = () => {
           )}
 
           <div className="row ">
-            {/* {selectedServiceProject.services_page_title} */}
             <div className="col-12 col-md-8">
-            <Title
-                title={"Services"}
-                cssClass="fs-3 mb-2 pageTitle"
-              />
+              <Title
+                  title={"Services"}
+                  cssClass="fs-3 mb-2 pageTitle"
+                />
               {/* <Title
                 title={TitleStringFormat(
                   selectedServiceProject.services_page_title,
@@ -347,7 +349,19 @@ const Services = () => {
               </div>
             </div>
           ))}
+          </div>
+        
+        {isAdmin && hasPermission && <div className="col-md-4">
+          <AddService
+            setSelectedServiceProject={setSelectedServiceProject}
+            selectedServiceProject={selectedServiceProject}
+            pageType="service"
+          />
+        </div>}
+        
         </div>
+        </div>
+        
       </ServicesStyled>
 
       {show && <ModelBg />}
