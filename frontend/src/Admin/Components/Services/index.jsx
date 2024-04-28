@@ -184,16 +184,16 @@ const AddService = ({
   };
 
   return (
-    <div className="py-5 addNewServicePage bg-dark">
-      <Title title="Create New Service Page" cssClass="h2 mb-4 text-white text-center" />
-
+    <div className="pb-5 border border-1 border-secondary">
+      <Title title="Create New Service Page" cssClass="p-3 fs-6 text-dark" />
+    <hr className="m-0 mb-3"/>
       {/* <h3 className={`text-center ${selectedServiceProject && selectedServiceProject.publish ? 'border border-success' : ''} `}>Add New Service </h3> */}
 
-      <div className="container bg-light border shadow-lg">
+      <div className="container">
         {/* <div className={`container bg-light p-5 border shadow-lg ${selectedServiceProject && selectedServiceProject.publish ? 'border border-success' : ''}`}> */}
         <div className="row">
           {error ? <Error>{error}</Error> : ""}
-          <div className="col-md-5 px-4 py-5  d-flex flex-column justify-content-center align-items-center text-center addPageForm">
+          <div className="col-md-12 pb-4 d-flex flex-column justify-content-center align-items-center text-center addPageForm">
             <input
               type="text"
               className="form-control py-2"
@@ -223,7 +223,7 @@ const AddService = ({
             </div>
           </div>
 
-          <div className="col-md-7 px-4 py-3 mt-md-0 servicePageLinks">
+          <div className="col-md-12 servicePageLinks">
             {/* <Title title="Pages" cssClass="fs-6 fw-bold text-center border-bottom pb-2 mb-2 " /> */}
             <ul>
               {serviceList &&
