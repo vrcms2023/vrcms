@@ -27,7 +27,7 @@ import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
 
 const Login = () => {
   const { access, userInfo, error, permissions } = useSelector(
-    (state) => state.auth,
+    (state) => state.auth
   );
 
   const dispatch = useDispatch();
@@ -45,6 +45,10 @@ const Login = () => {
 
   useEffect(() => {
     if (userInfo) {
+      if (!userInfo.is_appAccess) {
+        removeAllCookies();
+        return navigate("/unauthorized");
+      }
       if (!userInfo.is_admin) {
         dispatch(getSelectedUserPermissions(userInfo.id));
       } else {

@@ -28,6 +28,7 @@ import {
   getUser,
 } from "../../features/auth/authActions";
 import {
+  HideFooterForAdmin,
   storeServiceMenuValueinCookie,
   urlStringFormat,
 } from "../../util/commonUtil";
@@ -54,14 +55,15 @@ const Header = () => {
   const pathList = [
     "/login",
     "/register",
+    "/resend_activation",
+    "/reset_password",
     "/authForm",
-    "/main",
-    "/dashboard",
-    "/addproject",
-    "/editproject/",
-    "/adminnews",
-    "/testimonial",
-    "/userAdmin",
+    // "/dashboard",
+    // "/addproject",
+    // "/editproject/",
+    // "/adminnews",
+    // "/testimonial",
+    // "/userAdmin",
   ];
   const isHideMenu = hideHandBurgerIcon(pathList);
 
@@ -98,7 +100,7 @@ const Header = () => {
   }, [serviceMenu, dispatch]);
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo?.is_appAccess) {
       const uName = userInfo ? userInfo.userName : getCookie("userName");
       setUserName(uName);
       dispatch(getSelectedUserPermissions(userInfo?.id));
@@ -108,7 +110,7 @@ const Header = () => {
     if (!userInfo && getCookie("access")) {
       dispatch(getUser());
     }
-    if (menuList.length === 0) {
+    if (userInfo?.is_appAccess && menuList.length === 0) {
       dispatch(getMenu());
     }
   }, [userInfo]);
@@ -169,7 +171,7 @@ const Header = () => {
             ""
           )}
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ClientMenu serviceMenuList={serviceMenuList} />
+            {!isHideMenu && <ClientMenu serviceMenuList={serviceMenuList} />}
           </div>
         </div>
       </nav>
@@ -188,19 +190,25 @@ export const ClientMenu = ({ serviceMenuList }) => {
         <li className={`nav-item ${menu.childMenu ? "dropdown" : ""}`}>
           <NavLink
             to={menu.page_url}
-            className={`${menu.is_Parent ? "nav-Link" : "dropdown-item"}`}
+            className={`${menu.is_Parent ? "nav-Link" : "dropdown-item"} ${
+              menu.childMenu?.length > 0 && "dropdown-toggle isChildAvailable"
+            }`}
+            id={menu.id}
+            data-bs-toggle={`${menu.childMenu?.length > 0 && "dropdown"}`}
+            aria-expanded={`${menu.childMenu?.length > 0 && "false"}`}
+            role={`${menu.childMenu?.length > 0 && "button"}`}
           >
             {menu.page_label}
-            {menu.childMenu?.length > 0 ? (
-              <ul className="dropdown-menu">
-                {menu.childMenu.map((childMenu) =>
-                  ChildMenuContent(childMenu, true)
-                )}
-              </ul>
-            ) : (
-              ""
-            )}
           </NavLink>
+          {menu.childMenu?.length > 0 ? (
+            <ul className="dropdown-menu">
+              {menu.childMenu.map((childMenu) =>
+                ChildMenuContent(childMenu, true)
+              )}
+            </ul>
+          ) : (
+            ""
+          )}
         </li>
       </React.Fragment>
     );
@@ -208,7 +216,7 @@ export const ClientMenu = ({ serviceMenuList }) => {
 
   return (
     <StyledMenu>
-      <ul className="navbar-nav ms-auto mb-2 mb-lg-0 menu">
+      {/* <ul className="navbar-nav ms-auto mb-2 mb-lg-0 menu">
         <li className="nav-item">
           <NavLink
             to="/"
@@ -437,6 +445,12 @@ export const ClientMenu = ({ serviceMenuList }) => {
                     <Link to="/userPermission" className="dropdown-item">
                       User Pages Permissions
                     </Link>
+                    <Link
+                      to="/adminPagesConfigurtion"
+                      className="dropdown-item"
+                    >
+                      Admin Pages Configurtion
+                    </Link>
                   </>
                 ) : (
                   ""
@@ -453,10 +467,10 @@ export const ClientMenu = ({ serviceMenuList }) => {
         ) : (
           ""
         )}
-      </ul>
-      {/* <ul className="navbar-nav ms-auto mb-2 mb-lg-0 menu">
-      {menuList?.map((menu) => ChildMenuContent(menu, false))}
       </ul> */}
+      <ul className="navbar-nav ms-auto mb-2 mb-lg-0 menu">
+        {menuList?.map((menu) => ChildMenuContent(menu, false))}
+      </ul>
     </StyledMenu>
   );
 };
