@@ -1,13 +1,9 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
-import { useNavigate, Link, NavLink } from "react-router-dom";
-import { HashLink  } from 'react-router-hash-link';
-import Button from "../Button";
-import { getCookie, removeAllCookies } from "../../util/cookieUtil";
+import React, { useEffect, useState, useRef } from "react";
+import { Link, NavLink } from "react-router-dom";
+import _ from "lodash";
+import { getCookie } from "../../util/cookieUtil";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../features/auth/authSlice";
-import { toast } from "react-toastify";
 import AdminHeader from "../../Admin/Components/Header";
-// import _ from "lodash";
 
 import ModalBg from "../../Common/ModelBg";
 // import EditIcon from "../AdminEditIcon";
@@ -20,8 +16,6 @@ import { StyledMenu } from "../StyledComponents/Styled-NavMenu";
 // Styles
 import "./Styles.css";
 
-// Images
-import Logo from "../../Images/logo.svg";
 // import { axiosClientServiceApi } from "../../util/axiosUtil";
 import {
   getMenu,
@@ -29,27 +23,23 @@ import {
   getUser,
 } from "../../features/auth/authActions";
 import {
-  HideFooterForAdmin,
   storeServiceMenuValueinCookie,
   urlStringFormat,
 } from "../../util/commonUtil";
 
 import { getServiceValues } from "../../features/services/serviceActions";
-import { showContentPerRole } from "../../util/permissions";
+import { isAppAccess } from "../../util/permissions";
 
 const Header = () => {
   const editComponentObj = {
     logo: false,
     menu: false,
   };
-  const { isAdmin, hasPermission } = useAdminLoginStatus();
+  const { isAdmin } = useAdminLoginStatus();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [show, setShow] = useState(false);
-  const navigate = useNavigate();
   const { userInfo, menuList } = useSelector((state) => state.auth);
-  const { serviceMenu, serviceerror } = useSelector(
-    (state) => state.serviceMenu
-  );
+  const { serviceMenu } = useSelector((state) => state.serviceMenu);
   const dispatch = useDispatch();
   const onPageLoadAction = useRef(true);
 
@@ -80,7 +70,6 @@ const Header = () => {
   ];
   const isHideBurgetIcon = hideHandBurgerIcon(burgetHide);
   const [serviceMenuList, setServiceMenuList] = useState([]);
-  const [userName, setUserName] = useState("");
 
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -101,40 +90,40 @@ const Header = () => {
   }, [serviceMenu, dispatch]);
 
   useEffect(() => {
-    if (userInfo?.is_appAccess) {
-      const uName = userInfo ? userInfo.userName : getCookie("userName");
-      setUserName(uName);
+    if (isAppAccess(userInfo)) {
       dispatch(getSelectedUserPermissions(userInfo?.id));
-    } else {
-      setUserName("");
     }
     if (!userInfo && getCookie("access")) {
       dispatch(getUser());
     }
-    if (userInfo?.is_appAccess && menuList.length === 0) {
+    if (menuList.length === 0) {
       dispatch(getMenu());
     }
-  }, [userInfo]);
+  }, [userInfo, dispatch, menuList]);
 
-  const links = document.querySelectorAll("#navbarSupportedContent li");
+  useEffect(() => {
+    setTimeout(() => {
+      const links = document.querySelectorAll("#navbarSupportedContent li");
 
-  const menu = document.getElementById("navbarSupportedContent");
+      const menu = document.getElementById("navbarSupportedContent");
 
-  // on clicking of menu Item Menu will be hided
-  links.forEach((item) => {
-    item.addEventListener("click", function (event) {
-      if (!event.target.classList.contains("isChildAvailable")) {
-        menu.classList.remove("show");
-      }
-    });
-  });
+      // on clicking of menu Item Menu will be hided
+      links.forEach((item) => {
+        item.addEventListener("click", function (event) {
+          if (!event.target.classList.contains("isChildAvailable")) {
+            menu.classList.remove("show");
+          }
+        });
+      });
+    }, 2000);
+  }, []);
 
-  function logOutHandler() {
-    removeAllCookies();
-    dispatch(logout());
-    toast.success("Logout successfully");
-    navigate("/");
-  }
+  // function logOutHandler() {
+  //   removeAllCookies();
+  //   dispatch(logout());
+  //   toast.success("Logout successfully");
+  //   navigate("/");
+  // }
   return (
     <>
       {componentEdit.menu ? (
@@ -183,33 +172,52 @@ const Header = () => {
 };
 
 export const ClientMenu = ({ serviceMenuList }) => {
-  const { isAdmin, hasPermission } = useAdminLoginStatus();
-  const { userInfo, menuList } = useSelector((state) => state.auth);
+  const { menuList } = useSelector((state) => state.auth);
+
+  const getSelectedServiceMenu = (menu) => {
+    const tempService = _.filter(serviceMenuList, (item) => {
+      return item.services_page_title === menu.page_label;
+    })[0];
+    if (tempService) {
+      storeServiceMenuValueinCookie(tempService);
+    }
+  };
 
   const ChildMenuContent = (menu) => {
     return (
       <React.Fragment key={menu.id}>
         <li className={`nav-item ${menu.childMenu ? "dropdown" : ""}`}>
           <NavLink
-            to={menu.page_url}
-            className={`${menu.is_Parent ? "nav-Link" : "dropdown-item"} ${
-              menu.childMenu?.length > 0 && "dropdown-toggle isChildAvailable"
-            }`}
+            to={urlStringFormat(menu.page_url)}
+            className={
+              (({ isActive }) => (isActive ? "active" : ""),
+              `${menu.is_Parent ? "nav-Link" : "dropdown-item"} ${
+                menu.childMenu?.length > 0 && "dropdown-toggle isChildAvailable"
+              }`)
+            }
+            onClick={
+              menu.page_url.startsWith("/services/")
+                ? () => {
+                    getSelectedServiceMenu(menu);
+                  }
+                : ""
+            }
             id={menu.id}
-            data-bs-toggle={`${menu.childMenu?.length > 0 && "dropdown"}`}
-            aria-expanded={`${menu.childMenu?.length > 0 && "false"}`}
-            role={`${menu.childMenu?.length > 0 && "button"}`}
+            data-bs-toggle={`${menu.childMenu?.length > 0 ? "dropdown" : ""}`}
+            aria-expanded={`${menu.childMenu?.length > 0 ? false : true}`}
+            role={`${menu.childMenu?.length > 0 ? "button" : ""}`}
           >
             {menu.page_label}
           </NavLink>
-          {menu.childMenu?.length > 0 ? (
-            <ul className="dropdown-menu">
+          {menu.childMenu?.length > 0 && (
+            <ul
+              className="dropdown-menu"
+              aria-labelledby={`${menu.page_label}navbarDropdown`}
+            >
               {menu.childMenu.map((childMenu) =>
                 ChildMenuContent(childMenu, true)
               )}
             </ul>
-          ) : (
-            ""
           )}
         </li>
       </React.Fragment>

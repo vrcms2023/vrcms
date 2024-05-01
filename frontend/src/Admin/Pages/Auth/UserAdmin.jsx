@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 import Title from "../../../Common/Title";
 
@@ -9,21 +8,17 @@ import { toast } from "react-toastify";
 import { getCookie } from "../../../util/cookieUtil";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
+import { isAppAccess } from "../../../util/permissions";
 
 const UserAdmin = () => {
   const [userDetails, setUserDetails] = useState([]);
   const [isSuperAdmin, setisSuperAdmin] = useState("");
-  const [userName, setUserName] = useState("");
   const [userId, setUserId] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    setUserName(getCookie("userName"));
     setisSuperAdmin(JSON.parse(getCookie("is_admin")));
     setUserId(JSON.parse(getCookie("userId")));
   }, []);
-
-  const navigate = useNavigate();
 
   /**
    * get User details
@@ -31,7 +26,7 @@ const UserAdmin = () => {
   const getAllUserDetails = async () => {
     try {
       const response = await axiosServiceApi.get(`/user/auth/users/`);
-      if (response?.status == 200 && response.data?.length > 0) {
+      if (response?.status === 200 && response.data?.length > 0) {
         setUserDetails(response.data);
       } else {
         setUserDetails([]);
@@ -76,14 +71,14 @@ const UserAdmin = () => {
         `/user/auth/appAccess/${user.id}/`,
         {
           is_appAccess: !user.is_appAccess,
-        },
+        }
       );
 
       if (response.status !== 200) {
         toast.error("Unable to active user");
       }
 
-      if (response.status == 200) {
+      if (response.status === 200) {
         toast.success(`${user.userName} is status updated`);
         getAllUserDetails();
       }
@@ -134,19 +129,19 @@ const UserAdmin = () => {
                   <td className={`${user.is_admin ? "text-danger" : ""}`}>
                     <span
                       className={`badge ${
-                        user.is_appAccess
+                        isAppAccess(user)
                           ? "bg-success"
                           : "bg-secondary text-mute"
                       } fw-normal`}
                     >
-                      {user.is_appAccess ? "Active" : "In Active"}{" "}
+                      {isAppAccess(user) ? "Active" : "In Active"}{" "}
                     </span>
                   </td>
                   <td className={`${user.is_admin ? "text-danger" : ""}`}>
                     {user.id !== userId && !user.is_admin ? (
                       <input
                         type="checkbox"
-                        checked={user.is_appAccess}
+                        checked={isAppAccess(user)}
                         readOnly
                         onClick={() => {
                           activeDeactiveUser(user);
@@ -177,10 +172,14 @@ const UserAdmin = () => {
           <h3>Not authorized to view this page </h3>
         )}
         <div className="text-center">
-          <p className="text-white h4 bg-info m-5 p-4">After activating the user account, granting page permissions is also required to access the application.</p>
+          <p className="text-white h4 bg-info m-5 p-4">
+            After activating the user account, granting page permissions is also
+            required to access the application.
+          </p>
 
-
-          <Link to="/userPermission" className="btn btn-outline">Page Permissions</Link>
+          <Link to="/userPermission" className="btn btn-outline">
+            Page Permissions
+          </Link>
         </div>
       </div>
     </div>

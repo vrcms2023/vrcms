@@ -9,7 +9,6 @@ import Button from "../../../Common/Button";
 import Error from "../../Components/Error";
 import {
   removeAllCookies,
-  removeCookie,
   setCookie,
   getCookie,
 } from "../../../util/cookieUtil";
@@ -17,13 +16,13 @@ import {
   userLogin,
   getUser,
   getSelectedUserPermissions,
-  getMenus,
 } from "../../../features/auth/authActions";
 import { updatedPermisisons } from "../../../features/auth/authSlice";
 import CSRFToken from "../../../Frontend/Components/CRSFToken";
 
 // CSS Styles
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
+import { isAppAccess } from "../../../util/permissions";
 
 const Login = () => {
   const { access, userInfo, error, permissions } = useSelector(
@@ -41,11 +40,11 @@ const Login = () => {
     if (access) {
       dispatch(getUser());
     }
-  }, [access]);
+  }, [access, dispatch]);
 
   useEffect(() => {
     if (userInfo) {
-      if (!userInfo.is_appAccess) {
+      if (!isAppAccess(userInfo)) {
         removeAllCookies();
         return navigate("/unauthorized");
       }
@@ -66,14 +65,14 @@ const Login = () => {
         removeAllCookies();
       }
     }
-  }, [userInfo]);
+  }, [userInfo, dispatch, navigate]);
 
   useEffect(() => {
     if (permissions.length > 0) {
       navigate("/");
       window.location.reload();
     }
-  }, [permissions]);
+  }, [permissions, navigate]);
 
   const submitForm = (data) => {
     dispatch(userLogin(data));

@@ -5,7 +5,7 @@ import GalleryImgThumb from "./GalleryImgThumb";
 import ModelBg from "../../Common/ModelBg";
 import DynamicCarousel from "../Components/DynamicCarousel";
 
-const Gallery = ({ projectImages, type }) => {
+const ProjectGalleryView = ({ projectImages, type }) => {
   const [showModal, setShowModal] = useState(false);
   const [img, setImg] = useState(null);
   const [selectedProject, setSelectedProject] = useState({});
@@ -70,4 +70,4 @@ const Gallery = ({ projectImages, type }) => {
     </>
   );
 };
-export default Gallery;
+export default ProjectGalleryView;

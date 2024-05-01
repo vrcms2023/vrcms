@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Title from "../../../Common/Title";
 import { useDispatch } from "react-redux";

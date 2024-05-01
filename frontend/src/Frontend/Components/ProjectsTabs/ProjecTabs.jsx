@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./ProjectTabs.css";
 
 import Title from "../../../Common/Title";
-import Gallery from "../../Pages/Gallery";
+import ProjectGalleryView from "../../Pages/ProjectGalleryView";
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import HomeTab from "./HomeTab";
 import Amenities from "./Amenities";
@@ -38,7 +38,7 @@ const ProjectTabs = () => {
 
   useEffect(() => {
     getProjects(projectid);
-  }, []);
+  }, [projectid]);
 
   useEffect(() => {
     const id = document.getElementById("projectLink");
@@ -53,7 +53,7 @@ const ProjectTabs = () => {
       const response = await axiosClientServiceApi.get(
         `/project/getSelectedClientProject/${projectid}/`
       );
-      if (response?.status == 200) {
+      if (response?.status === 200) {
         const projectData = response.data;
         const project = projectData.project[0];
         setProjectTitle(project?.projectTitle);
@@ -333,7 +333,7 @@ const ProjectTabs = () => {
                   role="tabpanel"
                   aria-labelledby="nav-gallery-tab"
                 >
-                  <Gallery
+                  <ProjectGalleryView
                     projectImages={projectImages}
                     type="projectgallery"
                   />

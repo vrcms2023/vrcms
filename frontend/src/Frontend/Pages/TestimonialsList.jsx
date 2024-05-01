@@ -19,7 +19,6 @@ import AddEditAdminNews from "../../Admin/Components/News";
 import { toast } from "react-toastify";
 
 import { getTestimonialsFields } from "../../util/dynamicFormFields";
-import { removeActiveClass } from "../../util/ulrUtil";
 import Search from "../../Common/Search";
 import { sortCreatedDateByDesc } from "../../util/dataFormatUtil";
 import CustomPagination from "../../Common/CustomPagination";
@@ -51,7 +50,7 @@ const TestimonialsList = () => {
 
   const setResponseData = (data) => {
     setClientsList(
-      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : [],
+      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []
     );
     setPaginationData(paginationDataFormat(data));
     setCurrentPage(1);
@@ -61,7 +60,7 @@ const TestimonialsList = () => {
     const getCAseStutiesvalues = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `/testimonials/clientTestimonials/`,
+          `/testimonials/clientTestimonials/`
         );
         if (response?.status === 200) {
           setResponseData(response.data);
@@ -99,7 +98,7 @@ const TestimonialsList = () => {
 
     const deleteSection = async () => {
       const response = await axiosServiceApi.delete(
-        `/testimonials/updateTestimonials/${id}/`,
+        `/testimonials/updateTestimonials/${id}/`
       );
       if (response.status === 204) {
         const list = clientsList.filter((list) => list.id !== id);
@@ -249,7 +248,7 @@ const TestimonialsList = () => {
 
             {clientsList.length > 0 ? (
               clientsList.map((item, index) => (
-                <>
+                <div key={item.id}>
                   <div
                     key={item.id}
                     className={`row mb-2 ${
@@ -304,7 +303,7 @@ const TestimonialsList = () => {
                     </div>
                   </div>
                   <hr className="border-secondary" />
-                </>
+                </div>
               ))
             ) : (
               <p className="text-center text-muted py-5">

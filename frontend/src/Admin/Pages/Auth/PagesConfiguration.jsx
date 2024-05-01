@@ -4,10 +4,8 @@ import Title from "../../../Common/Title";
 import { useSelector } from "react-redux";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { toast } from "react-toastify";
-import { getCookie } from "../../../util/cookieUtil";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
-import EditIcon from "../../../Common/AdminEditIcon";
 import ModelBg from "../../../Common/ModelBg";
 import MenuForm from "../../Components/forms/MenuForm";
 import { getMenuObject } from "../../../util/commonUtil";
@@ -57,7 +55,7 @@ const PagesConfiguration = () => {
     const title = menu.page_label;
     const deleteMenuItemByID = async () => {
       const response = await axiosServiceApi.delete(
-        `/pageMenu/updatePageMenu/${id}/`,
+        `/pageMenu/updatePageMenu/${id}/`
       );
       if (response.status === 204) {
         toast.success(`${title} Memu is delete successfully `);
@@ -87,7 +85,7 @@ const PagesConfiguration = () => {
     try {
       const response = await axiosServiceApi.patch(
         `/pageMenu/updatePageMenu/${id}/`,
-        data,
+        data
       );
 
       if (response.status === 200) {
@@ -96,6 +94,22 @@ const PagesConfiguration = () => {
     } catch (error) {
       toast.error("Unable to load user details");
     }
+  };
+
+  const tableHeader = () => {
+    return (
+      <tr>
+        <th>Menu Lable</th>
+        <th>URL</th>
+        <th>Menu type</th>
+        <th className="text-center">Position</th>
+        <th className="text-center">Active status</th>
+        <th className="text-center">Client </th>
+        <th className="text-center">Admin </th>
+        <th className="text-center">Maintainer</th>
+        <th className="text-center">Action</th>
+      </tr>
+    );
   };
 
   const childContent = (page, isChild) => {
@@ -141,6 +155,17 @@ const PagesConfiguration = () => {
               />
             </td>
             <td className="text-center">
+              <input
+                type="checkbox"
+                checked={page.is_Maintainer_menu}
+                readOnly
+                onClick={() => {
+                  activeUserMenu(page.id, page, "is_Maintainer_menu");
+                }}
+                className="form-check-input border border-secondary"
+              />
+            </td>
+            <td className="text-center">
               <Link
                 to=""
                 onClick={() => editHandler("menu", true, page)}
@@ -170,16 +195,7 @@ const PagesConfiguration = () => {
           <tr>
             <td colSpan="8" className="p-0">
               <table className="table mt-4 mb-4  w-100 border">
-                <tr>
-                  <th>Menu Lable</th>
-                  <th>URL</th>
-                  <th>Menu type</th>
-                  <th className="text-center">Position</th>
-                  <th className="text-center">Active status</th>
-                  <th className="text-center">Client Menu</th>
-                  <th className="text-center">Admin Menu</th>
-                  <th className="text-center">Action</th>
-                </tr>
+                {tableHeader()}
                 {page.childMenu.map((child) => childContent(child, true))}
               </table>
             </td>
@@ -226,18 +242,7 @@ const PagesConfiguration = () => {
       <div className="row px-3 px-lg-5 py-4 table-responsive">
         {showContentPerRole(userInfo, false) ? (
           <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Menu Lable</th>
-                <th>URL</th>
-                <th>Menu type</th>
-                <th className="text-center">Position</th>
-                <th className="text-center">Active status</th>
-                <th className="text-center">Client Menu</th>
-                <th className="text-center">Admin Menu</th>
-                <th className="text-center">Action</th>
-              </tr>
-            </thead>
+            <thead>{tableHeader()}</thead>
             <tbody>
               {pagesDetails?.map((page) => childContent(page, false))}
             </tbody>

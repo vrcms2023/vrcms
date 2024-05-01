@@ -44,7 +44,10 @@ export const getDummyImage = () => {
 export const getObjectTitle = (type, item) => {
   const carouse_Field = "carouse_title";
   const testimonial_Field = "testimonial_title";
-  return type === "testmonial" ? item[testimonial_Field] : item[carouse_Field];
+  const imageGallery_Field = "image_title";
+  if (type === "carousel") return item[carouse_Field];
+  if (type === "testmonial") return item[testimonial_Field];
+  if (type === "gallery") return item[imageGallery_Field];
 };
 
 export const getObjectSubtitle = (type, item) => {
@@ -57,14 +60,17 @@ export const getObjectSubtitle = (type, item) => {
 export const getObjectDescription = (type, item) => {
   const carouse_Field = "carouse_sub_title";
   const testimonial_Field = "testimonial_description";
-  return type === "testmonial" ? item[testimonial_Field] : item[carouse_Field];
+  const imageGallery_Field = "image_description";
+  if (type === "carousel") return item[carouse_Field];
+  if (type === "testmonial") return item[testimonial_Field];
+  if (type === "gallery") return item[imageGallery_Field];
 };
 
 export const storeServiceMenuValueinCookie = (item) => {
   removeCookie("pageLoadServiceID");
   removeCookie("pageLoadServiceName");
   setCookie("pageLoadServiceID", item.id);
-  setCookie("pageLoadServiceName", urlStringFormat(item.services_page_title));
+  setCookie("pageLoadServiceName", urlStringFormat(item?.services_page_title));
 };
 
 export const urlStringFormat = (str) => {

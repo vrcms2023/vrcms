@@ -17,7 +17,6 @@ import AdminProtectedRoute from "./Frontend/Routes/AdminProtectedRoute";
 // Themes
 import ThemeOne from "./Common/StyledThemes/ThemeOne.json";
 import { GlobalStyles } from "./Common/StyledComponents/GlobalStyles";
-import { AdvertiseComponentStyled } from "./Common/StyledComponents/Adv-Styles";
 
 // CSS
 import "./App.css";
@@ -39,7 +38,9 @@ const Projects = lazy(() => import("./Frontend/Pages/Projects"));
 const ProjectTabs = lazy(() =>
   import("./Frontend/Components/ProjectsTabs/ProjecTabs")
 );
-const ProjectGallery = lazy(() => import("./Frontend/Pages/ProjectGallery"));
+const ProjectsGallery = lazy(() => import("./Frontend/Pages/ProjectsGallery"));
+const ImagesGallery = lazy(() => import("./Frontend/Pages/ImagesGallery"));
+const VideosGallery = lazy(() => import("./Frontend/Pages/VideosGallery"));
 const CaseStudies = lazy(() => import("./Frontend/Pages/CaseStudies"));
 const CaseStudiesDetails = lazy(() =>
   import("./Frontend/Pages/caseStudies-details")
@@ -146,7 +147,9 @@ function App() {
               <Route exact path="/team" element={<Team />} />
               <Route exact path="/projects" element={<Projects />} />
               <Route exact path="/project-details" element={<ProjectTabs />} />
-              <Route exact path="/gallery" element={<ProjectGallery />} />
+              <Route exact path="/gallery" element={<ProjectsGallery />} />
+              <Route exact path="/imagegallery" element={<ImagesGallery />} />
+              <Route exact path="/videogallery" element={<VideosGallery />} />
               <Route exact path="/casestudies" element={<CaseStudies />} />
               <Route
                 exact

@@ -244,6 +244,28 @@ export const getTeamMemberFields = () => {
   };
 };
 
+export const getImageGalleryFields = (category) => {
+  return {
+    image_title: {
+      label: "Image Title",
+      type: "text",
+      fieldName: "image_title",
+    },
+    image_description: {
+      label: "Description",
+      type: "textarea",
+      fieldName: "image_description",
+    },
+    category: {
+      label: "News Title",
+      readonly: true,
+      type: "hidden",
+      value: category ? category : "",
+      fieldName: "category",
+    },
+  };
+};
+
 export const imageDimensionsJson = (component) => {
   const imgDimension = {
     carousel: {
@@ -277,6 +299,14 @@ export const imageDimensionsJson = (component) => {
     teams: {
       w: "300px",
       h: "200px",
+    },
+    imageGallery: {
+      w: "800px",
+      h: "800px",
+    },
+    VideosGallery: {
+      w: "800px",
+      h: "800px",
     },
   };
   return imgDimension[component];

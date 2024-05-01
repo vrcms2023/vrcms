@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
-import { setCookie } from "../../util/cookieUtil";
+import { getCookie, setCookie } from "../../util/cookieUtil";
 
 export const userLogin = createAsyncThunk(
   "auth/login",
@@ -13,7 +13,7 @@ export const userLogin = createAsyncThunk(
         {
           email,
           password,
-        },
+        }
       );
 
       // store user's token in local storage
@@ -28,7 +28,7 @@ export const userLogin = createAsyncThunk(
       // return custom error message from API if any
       return rejectWithValue(error);
     }
-  },
+  }
 );
 
 export const registerUser = createAsyncThunk(
@@ -44,7 +44,7 @@ export const registerUser = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error);
     }
-  },
+  }
 );
 
 export const getUser = createAsyncThunk(
@@ -64,7 +64,7 @@ export const getUser = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  },
+  }
 );
 
 export const getRefreshToken = createAsyncThunk(
@@ -82,7 +82,7 @@ export const getRefreshToken = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  },
+  }
 );
 
 export const getSelectedUserPermissions = createAsyncThunk(
@@ -90,7 +90,7 @@ export const getSelectedUserPermissions = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const { data } = await axiosServiceApi.get(
-        `/pagePermission/updatePermissions/${id}/`,
+        `/pagePermission/updatePermissions/${id}/`
       );
 
       return data;
@@ -103,18 +103,21 @@ export const getSelectedUserPermissions = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  },
+  }
 );
 
 export const getMenu = createAsyncThunk(
   "auth/getMenus",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axiosClientServiceApi.get(
-        `/pageMenu/getPageMenu/`,
-      );
+      let data = {};
+      if (getCookie("access")) {
+        data = await axiosServiceApi.get("/pageMenu/createPageMenu/");
+      } else {
+        data = await axiosClientServiceApi.get(`/pageMenu/getPageMenu/`);
+      }
 
-      return data;
+      return data.data;
     } catch (error) {
       // return custom error message from API if any
       if (error?.response?.data) {
@@ -124,5 +127,5 @@ export const getMenu = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  },
+  }
 );

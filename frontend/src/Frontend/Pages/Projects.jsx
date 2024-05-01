@@ -15,6 +15,7 @@ import {
 import "./Projects.css";
 import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
 import { removeActiveClass } from "../../util/ulrUtil";
+import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
 
 const Projects = () => {
   const editComponentObj = {
@@ -22,23 +23,21 @@ const Projects = () => {
     briefIntro: false,
   };
   const pageType = "projects";
-  const [admin, setAdmin] = useState(true);
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [show, setShow] = useState(false);
+  const { isAdmin, hasPermission } = useAdminLoginStatus();
 
   const [completed, setCompleted] = useState([]);
   const [future, setFuture] = useState([]);
   const [ongoing, setOngoing] = useState([]);
-  const { clientProjects, error } = useSelector(
-    (state) => state.clientProjects
-  );
+  const { clientProjects } = useSelector((state) => state.clientProjects);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (clientProjects.length === 0) {
       dispatch(getClientProjects());
     }
-  }, []);
+  }, [dispatch, clientProjects]);
 
   useEffect(() => {
     if (clientProjects?.projectList?.length > 0) {
@@ -65,10 +64,8 @@ const Projects = () => {
   return (
     <>
       <div className="headerBottomMargin">
-        {admin ? (
+        {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("banner", true)} />
-        ) : (
-          ""
         )}
         <Banner
           getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
@@ -77,10 +74,8 @@ const Projects = () => {
       </div>
 
       {/* Introduction */}
-      {admin ? (
+      {isAdmin && hasPermission && (
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-      ) : (
-        ""
       )}
       {/* <BriefIntro title="Welcome To HPR Infra Projects">
         We believe that construction is a man made wonder. The thought of

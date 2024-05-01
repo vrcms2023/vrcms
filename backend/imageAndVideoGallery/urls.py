@@ -3,6 +3,8 @@ from .views import *
 
 
 urlpatterns = [
-    # path('', ContactUSAPIView.as_view(), name="create_get_Conatactus"),
-    # path('searchContacts/<query>/', ContacListSearchAPIView.as_view(), name="get_contact_search_result")
+    path('createImageVidoeGallery/', ImageAndVideoGalleryAPIView.as_view(), name="create_get_ImageAndVideoGallery"),
+    path('createImageVidoeGallery/<category>/', ImageAndVideoGalleryAPIView.as_view(), name='get_ImageAndVideoGallery_by_category'),
+    path('updateImageVidoeGallery/<pk>/',ImageAndVideoGalleryUpdateAndDeleteView.as_view(), name='retrieve_update_delete_ImageAndVideoGallery'),
+    path('clientImageVidoeGallery/<category>/', ClientImageAndVideoGalleryView.as_view(), name="get_client_ImageAndVideoGallery"),
 ]
