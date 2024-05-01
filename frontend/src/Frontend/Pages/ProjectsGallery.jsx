@@ -4,18 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Gallery.css";
 import { getClientProjects } from "../../features/project/clientProjectActions";
 
-import Gallery from "./Gallery";
+import ProjectGalleryView from "./ProjectGalleryView";
 import { removeActiveClass } from "../../util/ulrUtil";
 
-const ProjectGallery = () => {
+const ProjectsGallery = () => {
   const [all, setAll] = useState([]);
   const [ongoing, setOngoing] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [future, setFuture] = useState([]);
   const [btnActiveWord, setBtnActiveWord] = useState("ongoing");
-  const { clientProjects, error } = useSelector(
-    (state) => state.clientProjects,
-  );
+  const { clientProjects } = useSelector((state) => state.clientProjects);
 
   const dispatch = useDispatch();
 
@@ -39,7 +37,7 @@ const ProjectGallery = () => {
     if (clientProjects.length === 0) {
       dispatch(getClientProjects());
     }
-  }, []);
+  }, [dispatch, clientProjects]);
 
   useEffect(() => {
     removeActiveClass();
@@ -63,7 +61,7 @@ const ProjectGallery = () => {
       if (!projList[proj.projectCategoryValue]) {
         projList[proj.projectCategoryValue] = [];
       }
-      projList[proj.projectCategoryValue].push(proj);
+      return projList[proj.projectCategoryValue].push(proj);
     });
     return projList;
   };
@@ -120,10 +118,10 @@ const ProjectGallery = () => {
         </div>
         <hr />
         <div>
-          <Gallery projectImages={all} type="applicationgallery" />
+          <ProjectGalleryView projectImages={all} type="applicationgallery" />
         </div>
       </div>
     </>
   );
 };
-export default ProjectGallery;
+export default ProjectsGallery;

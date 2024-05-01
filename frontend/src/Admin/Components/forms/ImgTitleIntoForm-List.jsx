@@ -5,7 +5,6 @@ import FileUpload from "../../Components/FileUpload";
 import DeleteDialog from "../../../Common/DeleteDialog";
 
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
-import { getBaseURL } from "../../../util/ulrUtil";
 import { getCookie } from "../../../util/cookieUtil";
 import {
   getObjectTitle,
@@ -26,9 +25,10 @@ const AdminBanner = ({
   extraFormParamas,
   titleTitle = "Title",
   descriptionTitle = "Description",
-  showDescription = { showDescription },
-  showExtraFormFields = { showExtraFormFields },
+  showDescription,
+  showExtraFormFields,
   dimensions,
+  validTypes = "image/png,image/jpeg",
 }) => {
   const projectID = "a62d7759-a e6b-4e49-a129-1ee208c6789d";
   const [userName, setUserName] = useState("");
@@ -36,7 +36,7 @@ const AdminBanner = ({
   const [saveState, setSaveState] = useState(false);
   const [carousel, setcarouseData] = useState([]);
   const [project, setProject] = useState({ id: projectID });
-  const baseURL = getBaseURL();
+
   const [editCarousel, setEditCarousel] = useState({});
 
   const closeHandler = () => {
@@ -66,7 +66,7 @@ const AdminBanner = ({
     };
 
     getCarouselData();
-  }, [imgGallery]);
+  }, [imgGallery, getImageListURL]);
 
   const handleCarouselEdit = (event, carousel) => {
     event.preventDefault();
@@ -81,9 +81,9 @@ const AdminBanner = ({
   const thumbDelete = (id, name) => {
     const deleteImageByID = async () => {
       const response = await axiosFileUploadServiceApi.delete(
-        `${deleteImageURL}${id}/`,
+        `${deleteImageURL}${id}/`
       );
-      if (response.status == 204) {
+      if (response.status === 204) {
         const list = imgGallery.filter((item) => item.id !== id);
         setImgGallery(list);
         setEditCarousel({});
@@ -109,7 +109,7 @@ const AdminBanner = ({
       <hr className="m-0" />
       <div className="container">
         <div className="row d-flex flex-row-reverse">
-          {carousel.length > 0 ? (
+          {carousel?.length > 0 ? (
             <div className="col-md-12 my-3">
               <div className="container">
                 {carousel?.map((item, index) => (
@@ -133,7 +133,8 @@ const AdminBanner = ({
                       </h6>
                       <small className="description text-muted d-none d-md-block">
                         {getObjectDescription(componentType, item)}
-                        {item.carouseDescription ? item.carouseDescription : ""}
+                        {item.carouseDescription && item.carouseDescription}
+                        {item.image_description && item.image_description}
                       </small>
                     </div>
                     <div className="col-4 col-md-2 d-flex justify-content-around align-items-center flex-md-row gap-3">
@@ -149,7 +150,7 @@ const AdminBanner = ({
                         onClick={(event) =>
                           thumbDelete(
                             item.id,
-                            getObjectTitle(componentType, item),
+                            getObjectTitle(componentType, item)
                           )
                         }
                       >
@@ -169,7 +170,7 @@ const AdminBanner = ({
           <hr className="" />
           <div
             className={`mb-5 mb-md-0 ${
-              carousel.length > 0 ? "col-md-12" : "col-md-12"
+              carousel?.length > 0 ? "col-md-12" : "col-md-12"
             }`}
           >
             <FileUpload
@@ -180,7 +181,7 @@ const AdminBanner = ({
               gallerysetState={setImgGallery}
               maxFiles={1}
               galleryState={imgGallery}
-              validTypes="image/png,image/jpeg"
+              validTypes={validTypes}
               descriptionTitle={descriptionTitle}
               titleTitle={titleTitle}
               alternitivetextTitle="Image Alt Text"

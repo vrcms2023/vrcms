@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import _ from "lodash";
 import { useLocation } from "react-router-dom";
 import { getCookie } from "../../util/cookieUtil";
+import { isAppAccess } from "../../util/permissions";
 
 export const useAdminLoginStatus = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -13,11 +14,16 @@ export const useAdminLoginStatus = () => {
     return location.pathname.match(item.name);
   });
   let getHome = _.filter(permissions, (item) => {
-    return item.name == "/home";
+    return item.name === "/home";
   });
 
   useEffect(() => {
-    if (getCookie("access")) {
+    setIsAdmin(false);
+    setHasPermission(false);
+    if (!isAppAccess(userInfo)) {
+      setIsAdmin(false);
+    }
+    if (getCookie("access") && isAppAccess(userInfo)) {
       setIsAdmin(true);
     }
     if (userInfo?.is_admin) permissionsPath = ["ALL"];
@@ -26,7 +32,7 @@ export const useAdminLoginStatus = () => {
     if (getCookie("access") && permissionsPath.length > 0) {
       setHasPermission(true);
     }
-  }, [userInfo, permissions]);
+  }, [userInfo, permissions, location.pathname]);
 
   return { isAdmin, hasPermission };
 };

@@ -1,12 +1,21 @@
-import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import React from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import Title from "../../../Common/Title";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../features/auth/authSlice";
+import { removeAllCookies } from "../../../util/cookieUtil";
 
 const UnauthorizedPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userName = localStorage.getItem("userName");
+
+  const logOutHandler = () => {
+    removeAllCookies();
+    dispatch(logout());
+    navigate("/login");
+    window.location.reload();
+  };
 
   // useEffect(() => {
   //   setTimeout(() => {
@@ -27,7 +36,10 @@ const UnauthorizedPage = () => {
       </div>
       <div className="unauthorized mt3">
         <span>
-          <NavLink to="/login">Login</NavLink> to gain access
+          <NavLink to="/#" onClick={logOutHandler}>
+            Login
+          </NavLink>{" "}
+          to gain access
         </span>
       </div>
     </div>

@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/v1/pageMenu/', include('pagesAdministration.urls')),
     path('api/v1/pagePermission/', include('pagePermissions.urls')),
 	path('api/v1/address/', include('addressList.urls')),
+    path('api/v1/imgGallery/', include('imageAndVideoGallery.urls')),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name="index.html"))]

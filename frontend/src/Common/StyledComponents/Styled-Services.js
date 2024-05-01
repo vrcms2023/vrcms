@@ -23,7 +23,7 @@ export const ServicesStyled = styled.div`
       
       .servicesPage {
         ul {
-            margin: 40px 25px;
+            margin: 15px 10px;
 
             li {
                 border-bottom: 1px solid color: ${({ theme }) =>
@@ -57,7 +57,7 @@ export const ServicesStyled = styled.div`
       }
       
       .addPageForm {
-        background-color: ${({ theme }) => theme.teritoryColor};
+        // background-color: ${({ theme }) => theme.teritoryColor};
       }
 
       .servicePageLinks {

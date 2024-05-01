@@ -81,3 +81,9 @@ def get_custom_paginated_data(self, snippets):
         if page is not None :
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
+        
+def get_imageAndVidoe_data_From_request_Object(request):
+        requestObj = get_image_data_from_request(request)
+        requestObj['image_title'] = request.data["image_title"]
+        requestObj['image_description'] = request.data["image_description"]
+        return requestObj

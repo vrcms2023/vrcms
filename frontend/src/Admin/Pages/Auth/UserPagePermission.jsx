@@ -1,22 +1,17 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Title from "../../../Common/Title";
 
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { toast } from "react-toastify";
 import { getCookie } from "../../../util/cookieUtil";
-import { confirmAlert } from "react-confirm-alert";
-import DeleteDialog from "../../../Common/DeleteDialog";
 import { getMenuObject } from "../../../util/commonUtil";
 import Button from "../../../Common/Button";
 import Error from "../../Components/Error";
+import { isAppAccess } from "../../../util/permissions";
 
 const UserPagePermission = () => {
   const [userDetails, setUserDetails] = useState([]);
-  const [isSuperAdmin, setisSuperAdmin] = useState("");
-  const [userName, setUserName] = useState("");
   const [userId, setUserId] = useState("");
   const [menuDetails, setMenuDetails] = useState([]);
   const [menuList, setMenuList] = useState([]);
@@ -25,12 +20,13 @@ const UserPagePermission = () => {
   const [isUserCheck, setIsUserCheck] = useState([]);
   const [isMenuCheck, setIsMenuCheck] = useState([]);
   const [userPermission, setUserPermission] = useState({});
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    setUserName(getCookie("userName"));
-    setisSuperAdmin(JSON.parse(getCookie("is_admin")));
-    setUserId(JSON.parse(getCookie("userId")));
-  }, []);
+    if (isAppAccess(userInfo)) {
+      setUserId(userInfo.id);
+    }
+  }, [userInfo]);
 
   /**
    * get User details
@@ -38,7 +34,7 @@ const UserPagePermission = () => {
   const getAllUserDetails = async () => {
     try {
       const response = await axiosServiceApi.get(`/user/auth/users/`);
-      if (response?.status == 200 && response.data?.length > 0) {
+      if (response?.status === 200 && response.data?.length > 0) {
         setUserDetails(response.data);
       } else {
         setUserDetails([]);
@@ -116,7 +112,10 @@ const UserPagePermission = () => {
     }
   };
 
-  const isObjectDisabled = (ObbArray, id) => {
+  const isObjectDisabled = (user, ObbArray, id) => {
+    if (!isAppAccess(user)) {
+      return true;
+    }
     if (ObbArray.length === 0) return;
     const item = ObbArray.filter((item) => item.id === id);
     if (item.length > 0) {
@@ -289,6 +288,7 @@ const UserPagePermission = () => {
                           user.id.toString()
                         )}
                         disabled={isObjectDisabled(
+                          user,
                           isUserCheck,
                           user.id.toString()
                         )}

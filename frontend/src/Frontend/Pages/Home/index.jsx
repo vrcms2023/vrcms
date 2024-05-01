@@ -39,9 +39,7 @@ const Home = () => {
   const [testimonis, setTestmonis] = useState([]);
   const { isAdmin, hasPermission } = useAdminLoginStatus();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
-  const [pageLoadResult, setPageloadResults] = useState(false);
   const [show, setShow] = useState(false);
-  const [showEditPop, setShowEditPop] = useState(false);
   const [news, setNews] = useState([]);
 
   const editHandler = (name, value) => {
@@ -51,10 +49,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     removeActiveClass();
   }, []);
 
@@ -62,7 +56,7 @@ const Home = () => {
     const getTestimonial = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `/testimonials/clientTestimonials/`,
+          `/testimonials/clientTestimonials/`
         );
         if (response?.status === 200) {
           setTestmonis(response.data.results);
@@ -82,14 +76,12 @@ const Home = () => {
         {/* Carousel */}
         <div className="row">
           <div className="col-md-12 p-0 carousel">
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={editHandler} />
-            )}
+            {isAdmin && hasPermission && <EditIcon editHandler={editHandler} />}
             <Carousel carouselState={componentEdit.carousel} />
           </div>
         </div>
 
-        {componentEdit.carousel ? (
+        {componentEdit.carousel && (
           <div className="adminEditTestmonial">
             <AdminBanner
               editHandler={editHandler}
@@ -104,8 +96,6 @@ const Home = () => {
               dimensions={imageDimensionsJson("carousel")}
             />
           </div>
-        ) : (
-          ""
         )}
 
         {/* Introduction */}
@@ -194,12 +184,7 @@ const Home = () => {
             <div className="container">
               <h2 className="mb-5 fw-bold">News</h2>
               <div className="row">
-                <HomeNews
-                  news={news}
-                  setNews={setNews}
-                  setPageloadResults={setPageloadResults}
-                  pagetype={pageType}
-                />
+                <HomeNews news={news} setNews={setNews} pagetype={pageType} />
               </div>
             </div>
           </div>
@@ -256,7 +241,6 @@ const Home = () => {
 
       {show && <ModelBg />}
       {/* {showEditPop && <ModelBg />} */}
-      
     </>
   );
 };

@@ -11,3 +11,4 @@ class PageDetails(BaseModel):
     page_position =     models.IntegerField(default=0)
     is_Admin_menu =     models.BooleanField(default=False)
     is_Client_menu =    models.BooleanField(default=True)
+    is_Maintainer_menu =    models.BooleanField(default=False)

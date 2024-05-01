@@ -10,38 +10,23 @@ import ModelBg from "../../Common/ModelBg";
 import AddEditAdminNews from "../../Admin/Components/News/index";
 import { useAdminLoginStatus } from "../../Common/customhook/useAdminLoginStatus";
 
-import { getBaseURL } from "../../util/ulrUtil";
-import { getImagePath } from "../../util/commonUtil";
-import { sortCreatedDateByDesc } from "../../util/dataFormatUtil";
 import {
   axiosClientServiceApi,
   axiosFileUploadServiceApi,
 } from "../../util/axiosUtil";
 import { getNewslFields } from "../../util/dynamicFormFields";
-import moment from "moment";
-
-// Images
-import EditIcon from "../../Common/AdminEditIcon";
 
 // Styles
 import { NewsStyled } from "../../Common/StyledComponents/Styled-News";
 import Ancher from "../../Common/Ancher";
 import SkeletonNews from "../../Common/Skeltons/SkeltonNews";
 
-const HomeNews = ({
-  addNewsState,
-  news,
-  setNews,
-  setPageloadResults,
-  pagetype,
-}) => {
+const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
   const location = useLocation();
-  const baseURL = getBaseURL();
   const editComponentObj = {
     news: false,
   };
 
-  const pageType = "homeNew";
   const { isLoading } = useSelector((state) => state.loader);
   const { isAdmin, hasPermission } = useAdminLoginStatus();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
@@ -64,13 +49,13 @@ const HomeNews = ({
     const getNews = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `/appNews/clientAppNews/`,
+          `/appNews/clientAppNews/`
         );
         // console.log(response.data.results, "News Component");
         if (response?.status === 200) {
           //const data = sortCreatedDateByDesc(response.data.appNews);
 
-          setPageloadResults(true);
+          //setPageloadResults(true);
           const data =
             pagetype === "home"
               ? response.data.results.slice(0, 4)
@@ -84,7 +69,7 @@ const HomeNews = ({
     if (!componentEdit.news || !addNewsState) {
       getNews();
     }
-  }, [componentEdit.news, addNewsState]);
+  }, [componentEdit.news, addNewsState, pagetype, setNews]);
 
   /**
    *
@@ -93,9 +78,9 @@ const HomeNews = ({
   const DeleteNews = (id, name) => {
     const deleteImageByID = async () => {
       const response = await axiosFileUploadServiceApi.delete(
-        `appNews/updateAppNews/${id}/`,
+        `appNews/updateAppNews/${id}/`
       );
-      if (response.status == 204) {
+      if (response.status === 204) {
         const list = news.filter((item) => item.id !== id);
         setNews(list);
       }

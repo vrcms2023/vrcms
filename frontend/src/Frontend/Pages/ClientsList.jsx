@@ -19,7 +19,6 @@ import AddEditAdminNews from "../../Admin/Components/News";
 import { toast } from "react-toastify";
 
 import { getClinetLogsFields } from "../../util/dynamicFormFields";
-import { removeActiveClass } from "../../util/ulrUtil";
 import Search from "../../Common/Search";
 import { sortCreatedDateByDesc } from "../../util/dataFormatUtil";
 import CustomPagination from "../../Common/CustomPagination";
@@ -50,7 +49,7 @@ const ClientsList = () => {
 
   const setResponseData = (data) => {
     setClientsList(
-      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : [],
+      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []
     );
     setPaginationData(paginationDataFormat(data));
     setCurrentPage(1);
@@ -60,7 +59,7 @@ const ClientsList = () => {
     const getCAseStutiesvalues = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `/client/getAllClientLogos/`,
+          `/client/getAllClientLogos/`
         );
         if (response?.status === 200) {
           setResponseData(response.data);
@@ -98,7 +97,7 @@ const ClientsList = () => {
 
     const deleteSection = async () => {
       const response = await axiosServiceApi.delete(
-        `/client/updateClientLogo/${id}/`,
+        `/client/updateClientLogo/${id}/`
       );
       if (response.status === 204) {
         const list = clientsList.filter((list) => list.id !== id);

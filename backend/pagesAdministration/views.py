@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from django.http import Http404
 
+
 # Create your views here.
 
 class CreatePages(generics.CreateAPIView):
@@ -18,7 +19,12 @@ class CreatePages(generics.CreateAPIView):
     """
 
     def get(self, request, format=None):
-        snippets = PageDetails.objects.all()
+        user = request.user
+        if user.is_admin:
+            snippets = PageDetails.objects.filter(is_Admin_menu= True)
+        else:
+            snippets = PageDetails.objects.filter(is_Maintainer_menu= True)
+        
         serializer = PagesAdministrationSerializer(snippets, many=True)
         return Response({"PageDetails": serializer.data}, status=status.HTTP_200_OK)
     
@@ -70,7 +76,7 @@ class ClientMenuListAPIView(generics.ListAPIView):
     pagination_class = PageDetails
   
     def get(self, request, format=None):
-        snippets = PageDetails.objects.all()
+        snippets = PageDetails.objects.filter(is_Client_menu= True)
         serializer = PagesAdministrationSerializer(snippets, many=True)
         return Response({"PageDetails": serializer.data}, status=status.HTTP_200_OK)
     
