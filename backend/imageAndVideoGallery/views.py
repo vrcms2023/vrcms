@@ -7,18 +7,24 @@ from .models import imageAndVideoGallery
 from rest_framework import status
 from django.http import Http404
 from common.utility import get_imageAndVidoe_data_From_request_Object
-
+from common.utility import get_custom_paginated_data
+from common.CustomPagination import CustomPagination
 
 class ImageAndVideoGalleryAPIView(generics.CreateAPIView):
      permission_classes = [permissions.IsAuthenticated]
      serializer_class = imageAndVideoGallerySerializer
      queryset = imageAndVideoGallery.objects.all()
+     pagination_class = CustomPagination
 
      """
      List all imageAndVideoGallery, or create a new imageAndVideoGallery.
      """
      def get(self, request, category, format=None):
         snippets = imageAndVideoGallery.objects.filter(category = category)
+        results = get_custom_paginated_data(self, snippets)
+        if results is not None:
+            return results
+        
         serializer = imageAndVideoGallerySerializer(snippets, many=True)
         return Response({"imageAndVideoGallery": serializer.data}, status=status.HTTP_200_OK)
         
@@ -71,6 +77,7 @@ class ClientImageAndVideoGalleryView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = imageAndVideoGallery.objects.all()
     serializer_class = imageAndVideoGallerySerializer
+    pagination_class = CustomPagination
 
     """
     List all imageAndVideoGallery, or create a new imageAndVideoGallery.
@@ -78,5 +85,8 @@ class ClientImageAndVideoGalleryView(generics.CreateAPIView):
 
     def get(self, request, category, format=None):
         snippets = imageAndVideoGallery.objects.filter(category = category)
+        results = get_custom_paginated_data(self, snippets)
+        if results is not None:
+            return results
         serializer = imageAndVideoGallerySerializer(snippets, many=True)
         return Response({"imageAndVideoGallery": serializer.data}, status=status.HTTP_200_OK)

@@ -23,13 +23,8 @@ const DraggableAddress = forwardRef(
         {...props}
         className={"card p-2 my-2 " + (snapshot.isDragging ? "hovering" : "")}
       >
-        <div>
+        <div {...dragHandleProps}>
           <div className="row position-reltive">
-           
-          <span {...dragHandleProps} className="position-absolute" style={{top: "-1px", left: "-20px", padding: "5px", background: "#ddd", width: "25px", borderRadius: "5px"}}>
-                <i className="fa fa-arrows-alt fs-6" aria-hidden="true"></i>
-              </span>
-           
             <div className="col-8">
               <p className="m-0 fw-bold">{item?.location_title}</p>
               <small>

@@ -10,9 +10,8 @@ import {
 } from "../../util/dynamicFormFields";
 import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
 import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
-import { getImagePath, paginationDataFormat } from "../../util/commonUtil";
+import { paginationDataFormat, sortByFieldName } from "../../util/commonUtil";
 import Title from "../../Common/Title";
-import { Link } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../Common/DeleteDialog";
 import AddEditAdminNews from "../../Admin/Components/News";
@@ -20,11 +19,10 @@ import { toast } from "react-toastify";
 
 import { getClinetLogsFields } from "../../util/dynamicFormFields";
 import Search from "../../Common/Search";
-import { sortCreatedDateByDesc } from "../../util/dataFormatUtil";
 import CustomPagination from "../../Common/CustomPagination";
-import SkeletonImage from "../../Common/Skeltons/SkeletonImage";
 import { ClientStyled } from "../../Common/StyledComponents/Styled-Clients";
-import { useSelector } from "react-redux";
+import { ClientListComponent } from "../Components/ClientListComponent";
+import NoteComponent from "../../Common/NoteComponent";
 
 const ClientsList = () => {
   const editComponentObj = {
@@ -35,7 +33,6 @@ const ClientsList = () => {
   };
 
   const pageType = "clients";
-  const { isLoading } = useSelector((state) => state.loader);
   const { isAdmin, hasPermission } = useAdminLoginStatus();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [clientsList, setClientsList] = useState([]);
@@ -49,29 +46,32 @@ const ClientsList = () => {
 
   const setResponseData = (data) => {
     setClientsList(
-      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []
+      data.results.length > 0
+        ? sortByFieldName(data.results, "client_position")
+        : []
     );
     setPaginationData(paginationDataFormat(data));
     setCurrentPage(1);
   };
 
   useEffect(() => {
-    const getCAseStutiesvalues = async () => {
-      try {
-        const response = await axiosClientServiceApi.get(
-          `/client/getAllClientLogos/`
-        );
-        if (response?.status === 200) {
-          setResponseData(response.data);
-        }
-      } catch (error) {
-        console.log("unable to access ulr because of server is down");
-      }
-    };
     if (!componentEdit.addSection || !componentEdit.editSection) {
-      getCAseStutiesvalues();
+      getClinetDetails();
     }
   }, [componentEdit.addSection, componentEdit.editSection]);
+
+  const getClinetDetails = async () => {
+    try {
+      const response = await axiosClientServiceApi.get(
+        `/client/getAllClientLogos/`
+      );
+      if (response?.status === 200) {
+        setResponseData(response.data);
+      }
+    } catch (error) {
+      console.log("unable to access ulr because of server is down");
+    }
+  };
 
   useEffect(() => {
     const id = document.getElementById("KnowledgeHubnavbarDropdown");
@@ -226,89 +226,24 @@ const ClientsList = () => {
               showDescription={false}
               showExtraFormFields={getClinetLogsFields()}
               dimensions={imageDimensionsJson("aboutus")}
+              scrollEnable={false}
             />
           </div>
         ) : (
           ""
         )}
-
+        <br />
+        {isAdmin && (
+          <NoteComponent note="Use drag option to shuffle the Items" />
+        )}
         <ClientStyled>
-          <div className="clients my-5">
-            {isLoading ? (
-              <div className="row">
-                {[1, 2, 3, 4].map((item, index) => (
-                  <div className="col-12" key={index}>
-                    <SkeletonImage />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              ""
-            )}
-
-            {clientsList.length > 0 ? (
-              clientsList.map((item, index) => (
-                <>
-                  <div
-                    key={item.id}
-                    className={`row mb-2 ${
-                      isAdmin
-                        ? "border border-warning mb-3 position-relative"
-                        : ""
-                    } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
-                  >
-                    {isAdmin && hasPermission && (
-                      <>
-                        <EditIcon
-                          editHandler={() =>
-                            editHandler("editSection", true, item)
-                          }
-                        />
-                        <Link
-                          className="deleteSection"
-                          onClick={() => deleteAboutSection(item)}
-                        >
-                          <i
-                            className="fa fa-trash-o text-danger fs-4"
-                            aria-hidden="true"
-                          ></i>
-                        </Link>
-                      </>
-                    )}
-                    <div className="col-12 col-lg-10 p-3 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column clientDetails">
-                      {item.client_title ? (
-                        <Title
-                          title={item.client_title}
-                          cssClass="fs-4 fw-bold mb-2"
-                        />
-                      ) : (
-                        ""
-                      )}
-
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: item.client_description,
-                        }}
-                      />
-                    </div>
-
-                    <div className="col-lg-2 d-none d-lg-block h-100 clientAvatar">
-                      <img
-                        src={getImagePath(item.path)}
-                        alt=""
-                        className="img-fluid rounded-circle border border-3 border-light shadow-lg img-thumbnail"
-                      />
-                    </div>
-                  </div>
-                  <hr className="border-secondary" />
-                </>
-              ))
-            ) : (
-              <p className="text-center text-muted py-5">
-                {!isLoading && <p>Please add page contents...</p>}
-              </p>
-            )}
-          </div>
+          <ClientListComponent
+            clientsList={clientsList}
+            setClientsList={setClientsList}
+            deleteAboutSection={deleteAboutSection}
+            editHandler={editHandler}
+            getClinetDetails={getClinetDetails}
+          />
         </ClientStyled>
         {paginationData?.total_count ? (
           <CustomPagination
@@ -322,8 +257,8 @@ const ClientsList = () => {
               searchQuery
                 ? `/client/searchClientLogos/${searchQuery}/`
                 : isAdmin
-                ? "/client/createClientLogo/"
-                : "/client/getAllClientLogos/"
+                  ? "/client/createClientLogo/"
+                  : "/client/getAllClientLogos/"
             }
             searchQuery={searchQuery}
             setCurrentPage={setCurrentPage}

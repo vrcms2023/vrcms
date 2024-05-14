@@ -198,43 +198,47 @@ const UserPagePermission = () => {
     }
   };
 
-  const childContent = (menu, isChild) => {
+  const ChildContent = ({ menu }) => {
     return (
       <React.Fragment key={menu.id}>
-        <li
-          className={`list-group-item ${
-            !menu.childMenu
-              ? "d-flex justify-content-between align-items-start"
-              : ""
-          }`}
-        >
-          <span className={`${menu.is_Parent ? "fw-bold" : "child"}`}>
-            {menu.page_label}
-          </span>
-          {!menu.childMenu ? (
-            <span className="badge">
-              <Checkbox
-                key={menu.id}
-                type="checkbox"
-                name={menu.page_url}
-                id={menu.id}
-                handleClick={handleClick}
-                isChecked={isObjectChecked(isMenuCheck, menu.id)}
-                disabled={false}
-              />
+        {menu.is_Maintainer_menu && (
+          <li
+            className={`list-group-item ${
+              !menu.childMenu
+                ? "d-flex justify-content-between align-items-start"
+                : ""
+            }`}
+          >
+            <span className={`${menu.is_Parent ? "fw-bold" : "child"}`}>
+              {menu.page_label}
             </span>
-          ) : (
-            ""
-          )}
+            {!menu.childMenu ? (
+              <span className="badge">
+                <Checkbox
+                  key={menu.id}
+                  type="checkbox"
+                  name={menu.page_url}
+                  id={menu.id}
+                  handleClick={handleClick}
+                  isChecked={isObjectChecked(isMenuCheck, menu.id)}
+                  disabled={false}
+                />
+              </span>
+            ) : (
+              ""
+            )}
 
-          {menu.childMenu?.length > 0 ? (
-            <ul className="list-group">
-              {menu.childMenu.map((childMenu) => childContent(childMenu, true))}
-            </ul>
-          ) : (
-            ""
-          )}
-        </li>
+            {menu.childMenu?.length > 0 ? (
+              <ul className="list-group">
+                {menu.childMenu.map((childMenu) => {
+                  return <ChildContent menu={childMenu} />;
+                })}
+              </ul>
+            ) : (
+              ""
+            )}
+          </li>
+        )}
       </React.Fragment>
     );
   };
@@ -318,7 +322,9 @@ const UserPagePermission = () => {
             </li>
           </ul>
           <ul className="list-group list-group-flush">
-            {menuDetails?.map((menu) => childContent(menu, false))}
+            {menuDetails?.map((menu) => {
+              return <ChildContent menu={menu} />;
+            })}
           </ul>
         </div>
       </div>

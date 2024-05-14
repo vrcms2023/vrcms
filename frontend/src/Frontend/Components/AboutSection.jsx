@@ -14,7 +14,7 @@ const AboutSection = ({ getBannerAPIURL, bannerState }) => {
     const getBannerData = async () => {
       try {
         const response = await axiosClientServiceApi.get(getBannerAPIURL);
-        if (response?.status == 200) {
+        if (response?.status === 200) {
           setBannerData(response.data.imageModel);
         }
       } catch (error) {

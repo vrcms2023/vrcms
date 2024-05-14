@@ -6,6 +6,7 @@ from common.BaseModel import BaseModel
 # Create your models here.
 
 class Address(BaseModel):
+        company_name =      models.CharField(max_length=100,  null=True, blank=True )
         address_dr_no =     models.CharField(max_length=50,  null=True, blank=True )
         location =          models.CharField(max_length=100, null=True, blank=True )
         street =            models.CharField(max_length=100, null=True, blank=True )

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import Button from "../../../Common/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import Title from "../../../Common/Title";
@@ -27,9 +26,9 @@ const ResetPasswordConfirmation = () => {
     try {
       const data = await axiosClientServiceApi.post(
         `/user/auth/users/reset_password_confirm/`,
-        body,
+        body
       );
-      if (data.status == 204) {
+      if (data.status === 204) {
         setSuccess(true);
       }
     } catch (error) {

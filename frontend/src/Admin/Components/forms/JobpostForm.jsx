@@ -37,13 +37,13 @@ const JobPost = ({ editHandler, componentType, type, editPost }) => {
         data["updated_by"] = userName;
         response = await axiosServiceApi.put(
           `/careers/updateCareer/${data.id}/`,
-          data,
+          data
         );
       } else {
         data["created_by"] = userName;
         response = await axiosServiceApi.post(`/careers/createCareer/`, data);
       }
-      if (response.status == 200 || response.status == 201) {
+      if (response.status === 200 || response.status === 201) {
         setEditorState("");
         reset();
         toast.success(`Career Values are updated successfully `);
@@ -159,7 +159,7 @@ const JobPost = ({ editHandler, componentType, type, editPost }) => {
               </div>
 
               <div className="row">
-                <div className="d-flex justify-content-center align-items-center gap-2">
+                <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-2">
                   {!editPost?.id ? (
                     <button
                       className="btn btn-secondary m-3"

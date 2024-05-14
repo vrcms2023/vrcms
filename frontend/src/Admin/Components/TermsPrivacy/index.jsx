@@ -45,18 +45,18 @@ const AdminTermsAndPrivacy = ({
         data["id"] = termsAndConditionData.id;
         response = await axiosServiceApi.put(
           `/footer/updateTermsAndCondition/${data.id}/`,
-          data,
+          data
         );
       } else {
         data["created_by"] = userName;
         data["updated_by"] = userName;
         response = await axiosServiceApi.post(
           `/footer/createTermsAndCondition/`,
-          data,
+          data
         );
       }
 
-      if (response.status == 201 || response.status == 200) {
+      if (response.status === 201 || response.status === 200) {
         toast.success(`Footer Values are updated successfully `);
         closeHandler();
       }
@@ -75,7 +75,7 @@ const AdminTermsAndPrivacy = ({
         type={type}
       />
       <hr className="m-0 text-dark" />
-      <div className="container mt-3" style={{color: "#000"}}>
+      <div className="container mt-3" style={{ color: "#000" }}>
         <div className="row">
           <div className="col-md-12">
             <RichTextInputEditor
@@ -88,9 +88,9 @@ const AdminTermsAndPrivacy = ({
               }
             />
           </div>
-          </div>
+        </div>
 
-          <div className="row mt-3">
+        <div className="row mt-3">
           <div className="col-md-12 border-start border-3">
             <RichTextInputEditor
               label={"Privacy Policy"}
@@ -102,10 +102,10 @@ const AdminTermsAndPrivacy = ({
               }
             />
           </div>
-          </div>
+        </div>
 
-          <div className="row">
-          <div className="d-flex justify-content-center align-items-center gap-2 my-5">
+        <div className="row">
+          <div className="d-flex justify-content-center flex-wrap flex-column flex-md-row align-items-center gap-2 my-5">
             {/* <button onClick={resetForm} type="reset" className="btn btn-secondary mx-3">
                   Clear
                 </button> */}
@@ -123,7 +123,7 @@ const AdminTermsAndPrivacy = ({
               handlerChange={closeHandler}
             />
           </div>
-          </div>
+        </div>
       </div>
     </>
   );

@@ -7,4 +7,5 @@ class OurTeam(ImageModel, SocialMeidaModel):
     team_member_designation =   models.CharField(max_length=200, null=True, blank=True)
     team_member_phone_number =  models.CharField(max_length=200, null=True, blank=True)
     team_member_about_us  =     models.CharField(max_length=5000, null=True, blank=True)
+    team_member_position =      models.IntegerField(null=True, blank=True, default=0)
     

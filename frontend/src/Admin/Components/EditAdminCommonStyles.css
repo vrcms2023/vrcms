@@ -24,9 +24,10 @@
   z-index: 9990;
   width: 640px !important;
   overflow-x: hidden;
-  /* overflow-y: auto; */
+  /* overflow-y: hidden; */
   outline: 0;
   padding: 0 15px;
+  
 }
 
 @media screen and (max-width: 576px) {
@@ -63,4 +64,18 @@
   display: -webkit-box !important;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+.heightCtrl {
+  height: 280px; 
+  overflow: auto;
+  overflow-x: hidden; 
+  resize: vertical
+}
+
+.fullHeightCtrl {
+  height: 75vh !important; 
+  overflow: auto;
+  overflow-x: hidden; 
+  resize: vertical
 }

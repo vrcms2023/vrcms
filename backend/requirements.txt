@@ -14,7 +14,6 @@ djangorestframework-simplejwt==5.3.1
 djoser==2.2.0
 filelock==3.12.3
 idna==3.4
-mysqlclient==2.2.0
 oauthlib==3.2.2
 Pillow==10.0.1
 platformdirs==3.10.0

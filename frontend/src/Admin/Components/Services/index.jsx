@@ -29,7 +29,7 @@ const AddService = ({
   const [userName, setUserName] = useState("");
   const onPageLoadAction = useRef(true);
   const { serviceMenu, serviceerror } = useSelector(
-    (state) => state.serviceMenu,
+    (state) => state.serviceMenu
   );
   const dispatch = useDispatch();
 
@@ -70,14 +70,14 @@ const AddService = ({
         data["updated_by"] = userName;
         response = await axiosServiceApi.put(
           `/services/updateService/${editServiceObject.id}/`,
-          data,
+          data
         );
         setServiceName("");
         setEditServiceObject({});
       } else {
         response = await axiosServiceApi.post(`/services/createService/`, data);
       }
-      if (response?.status == 201 || response?.status == 200) {
+      if (response?.status === 201 || response?.status === 200) {
         toast.success(`${serviceName} service is created `);
         setServiceName("");
         dispatch(getServiceValues());
@@ -128,7 +128,7 @@ const AddService = ({
     try {
       let response = await axiosServiceApi.patch(
         `/services/publishService/${item.id}/`,
-        { publish: !item.publish },
+        { publish: !item.publish }
       );
 
       if (response.status === 200) {
@@ -136,7 +136,7 @@ const AddService = ({
         toast.success(
           `Service ${
             services.publish ? "published" : "un published"
-          } successfully`,
+          } successfully`
         );
         setSelectedServiceProject(response.data.services);
         dispatch(getServiceValues());
@@ -151,9 +151,9 @@ const AddService = ({
     const name = item.services_page_title;
     const deleteImageByID = async () => {
       const response = await axiosServiceApi.delete(
-        `services/updateService/${item.id}/`,
+        `services/updateService/${item.id}/`
       );
-      if (response.status == 204) {
+      if (response.status === 204) {
         const list = serviceList.filter((list) => list.id !== id);
         setServiceList(list);
         toast.success(`${name} is deleted`);
@@ -186,7 +186,7 @@ const AddService = ({
   return (
     <div className="pb-5 border border-1 border-secondary">
       <Title title="Create New Service Page" cssClass="p-3 fs-6 text-dark" />
-    <hr className="m-0 mb-3"/>
+      <hr className="m-0 mb-3" />
       {/* <h3 className={`text-center ${selectedServiceProject && selectedServiceProject.publish ? 'border border-success' : ''} `}>Add New Service </h3> */}
 
       <div className="container">

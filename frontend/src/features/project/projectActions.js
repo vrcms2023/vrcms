@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosServiceApi, axiosClientServiceApi } from "../../util/axiosUtil";
+import { axiosServiceApi } from "../../util/axiosUtil";
 
 export const getDashBoardProjects = createAsyncThunk(
   "project/dashboardProjects",
   async (rejectWithValue) => {
     try {
       const { data } = await axiosServiceApi.get(
-        `/project/getDashboardProject/`,
+        `/project/getDashboardProject/`
       );
 
       return data;
@@ -18,5 +18,5 @@ export const getDashBoardProjects = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  },
+  }
 );

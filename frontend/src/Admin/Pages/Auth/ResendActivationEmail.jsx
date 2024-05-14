@@ -19,9 +19,9 @@ const ResendActivationEmail = () => {
     try {
       const data = await axiosClientServiceApi.post(
         `/user/auth/users/resend_activation/`,
-        body,
+        body
       );
-      if (data.status == 204) {
+      if (data.status === 204) {
         setSuccess(true);
       }
     } catch (error) {

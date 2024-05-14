@@ -20,6 +20,7 @@ export const News = ({
   setEditCarousel,
   showDescription = true,
   dimensions,
+  scrollEnable,
 }) => {
   const projectID = "a62d7759-a e6b-4e49-a129-1ee208c6789d";
   const [userName, setUserName] = useState("");
@@ -52,30 +53,33 @@ export const News = ({
         <div className="row py-0 pb-md-5">
           <div className="col-md-12 mb-5 mb-md-0">
             <div className="container">
-              <FileUpload
-                title={imageLabel}
-                project={project}
-                updated_by={userName}
-                category={category}
-                gallerysetState={setImgGallery}
-                maxFiles={1}
-                galleryState={imgGallery}
-                validTypes="image/png,image/jpeg"
-                descriptionTitle="Caption"
-                titleTitle="Title"
-                alternitivetextTitle="Image Alt Text"
-                saveState={setSaveState}
-                showDescription={showDescription}
-                buttonLable="Save"
-                editImage={editCarousel}
-                setEditCarousel={setEditCarousel}
-                imagePostURL={imagePostURL}
-                imageUpdateURL={imageUpdateURL}
-                extraFormParamas={extraFormParamas}
-                showExtraFormFields={showExtraFormFields}
-                dimensions={dimensions}
-                closeHandler={closeHandler}
-              />
+              <div className="">
+                <FileUpload
+                  title={imageLabel}
+                  project={project}
+                  updated_by={userName}
+                  category={category}
+                  gallerysetState={setImgGallery}
+                  maxFiles={1}
+                  galleryState={imgGallery}
+                  validTypes="image/png,image/jpeg"
+                  descriptionTitle="Caption"
+                  titleTitle="Title"
+                  alternitivetextTitle="Image Alt Text"
+                  saveState={setSaveState}
+                  showDescription={showDescription}
+                  buttonLable="Save"
+                  editImage={editCarousel}
+                  setEditCarousel={setEditCarousel}
+                  imagePostURL={imagePostURL}
+                  imageUpdateURL={imageUpdateURL}
+                  extraFormParamas={extraFormParamas}
+                  showExtraFormFields={showExtraFormFields}
+                  dimensions={dimensions}
+                  closeHandler={closeHandler}
+                  scrollEnable={scrollEnable}
+                />
+              </div>
             </div>
           </div>
         </div>

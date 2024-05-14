@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Title from "./Title";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import DeleteDialog from "./DeleteDialog";
@@ -7,8 +6,6 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { axiosServiceApi } from "../util/axiosUtil";
 import { getBaseURL } from "../util/ulrUtil";
-import { useDispatch, useSelector } from "react-redux";
-import { getCookie } from "../util/cookieUtil";
 import useAdminLoginStatus from "./customhook/useAdminLoginStatus";
 
 const CatageoryImgC = ({
@@ -25,7 +22,6 @@ const CatageoryImgC = ({
   ]);
   const navigate = useNavigate();
   const baseURL = getBaseURL();
-  const { userInfo } = useSelector((state) => state.auth);
   const { isAdmin } = useAdminLoginStatus();
   /**
    * get selected Images for edit
@@ -39,23 +35,23 @@ const CatageoryImgC = ({
             projectID: project.id,
             category: category,
           },
-        },
+        }
       );
-      if (response?.status == 200 && response?.data?.fileData?.length > 0) {
+      if (response?.status === 200 && response?.data?.fileData?.length > 0) {
         catategoryImgState(response.data.fileData);
       }
     };
     if (project?.id) {
       getSelectedImages();
     }
-  }, [project]);
+  }, [project, category]);
 
   const thumbDelete = (id, name) => {
     const deleteImageByID = async () => {
       const response = await axiosServiceApi.delete(
-        `/gallery/deleteGalleryImage/${id}/`,
+        `/gallery/deleteGalleryImage/${id}/`
       );
-      if (response.status == 204) {
+      if (response.status === 204) {
         const list = catategoryImgs.filter((item) => item.id !== id);
         catategoryImgState(list);
       }
@@ -88,7 +84,7 @@ const CatageoryImgC = ({
       window.open(
         url,
         "_blank",
-        "location=yes,height=800,width=600 ,scrollbars=yes,status=yes",
+        "location=yes,height=800,width=600 ,scrollbars=yes,status=yes"
       );
     } else {
       confirmAlert({

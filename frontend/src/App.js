@@ -35,57 +35,67 @@ const Careers = lazy(() => import("./Frontend/Pages/Careers"));
 const CareerDetails = lazy(() => import("./Frontend/Pages/career-details"));
 const Team = lazy(() => import("./Frontend/Pages/Team"));
 const Projects = lazy(() => import("./Frontend/Pages/Projects"));
-const ProjectTabs = lazy(() =>
-  import("./Frontend/Components/ProjectsTabs/ProjecTabs")
+const ProjectTabs = lazy(
+  () => import("./Frontend/Components/ProjectsTabs/ProjecTabs")
 );
 const ProjectsGallery = lazy(() => import("./Frontend/Pages/ProjectsGallery"));
 const ImagesGallery = lazy(() => import("./Frontend/Pages/ImagesGallery"));
 const VideosGallery = lazy(() => import("./Frontend/Pages/VideosGallery"));
 const CaseStudies = lazy(() => import("./Frontend/Pages/CaseStudies"));
-const CaseStudiesDetails = lazy(() =>
-  import("./Frontend/Pages/caseStudies-details")
+const CaseStudiesDetails = lazy(
+  () => import("./Frontend/Pages/caseStudies-details")
 );
 const NewsAndUpdates = lazy(() => import("./Frontend/Pages/NewsAndUpdates"));
-const TestimonialsList = lazy(() =>
-  import("./Frontend/Pages/TestimonialsList")
+const TestimonialsList = lazy(
+  () => import("./Frontend/Pages/TestimonialsList")
 );
 
 const Login = lazy(() => import("./Admin/Pages/Auth/Login"));
 const Registration = lazy(() => import("./Admin/Pages/Auth/Registration"));
 const ChangePassword = lazy(() => import("./Admin/Pages/Auth/ChangePassword"));
 const ResetPassword = lazy(() => import("./Admin/Pages/Auth/ResetPassword"));
-const ResetPasswordConfirmation = lazy(() =>
-  import("./Admin/Pages/Auth/ResetPasswordConfirmation")
+const ResetPasswordConfirmation = lazy(
+  () => import("./Admin/Pages/Auth/ResetPasswordConfirmation")
 );
 const Activation = lazy(() => import("./Admin/Pages/Auth/Activation"));
-const ResendActivationEmail = lazy(() =>
-  import("./Admin/Pages/Auth/ResendActivationEmail")
+const ResendActivationEmail = lazy(
+  () => import("./Admin/Pages/Auth/ResendActivationEmail")
 );
 const Dashboard = lazy(() => import("./Admin/Pages/Login/Dashboard"));
 const UserAdmin = lazy(() => import("./Admin/Pages/Auth/UserAdmin"));
-const UnauthorizedPage = lazy(() =>
-  import("./Admin/Pages/Login/UnauthorizedPage")
+const UnauthorizedPage = lazy(
+  () => import("./Admin/Pages/Login/UnauthorizedPage")
 );
 const AuthForm = lazy(() => import("./Admin/Pages/Auth/AuthForm"));
 const AddProject = lazy(() => import("./Admin/Pages/Login/AddProject"));
 const AdminNews = lazy(() => import("./Admin/Pages/Login/AdminNews"));
 const ContactUSAdmin = lazy(() => import("./Admin/Pages/Auth/ContactUSAdmin"));
-const PagesConfiguration = lazy(() =>
-  import("./Admin/Pages/Auth/PagesConfiguration")
+const PagesConfiguration = lazy(
+  () => import("./Admin/Pages/Auth/PagesConfiguration")
 );
-const UserPagePermission = lazy(() =>
-  import("./Admin/Pages/Auth/UserPagePermission")
+const UserPagePermission = lazy(
+  () => import("./Admin/Pages/Auth/UserPagePermission")
 );
-const AdminTestimonial = lazy(() =>
-  import("./Admin/Pages/Login/AdminTestimonial")
+const AdminTestimonial = lazy(
+  () => import("./Admin/Pages/Login/AdminTestimonial")
 );
 
 function App() {
-  const { userInfo } = useSelector((state) => state.auth);
   const { isLoading } = useSelector((state) => state.loader);
 
   const isHideMenu = HideFooterForAdmin();
   const [flashAdd, setFlashAdd] = useState(false);
+
+  // useEffect(() => {
+  //   document.addEventListener("contextmenu", handleContextMenu);
+  //   return () => {
+  //     document.removeEventListener("contextmenu", handleContextMenu);
+  //   };
+  // }, []);
+  // const handleContextMenu = (e) => {
+  //   e.preventDefault();
+  //   toast.error("Right Click is diabled");
+  // };
 
   useEffect(() => {
     setFlashAdd(false);
@@ -93,24 +103,24 @@ function App() {
 
   // Google Language Translator
 
-  const googleTranslateElementInit = () => {
-    new window.google.translate.TranslateElement(
-      {
-        pageLanguage: "en",
-        autoDisplay: false,
-      },
-      "google_translate_element"
-    );
-  };
-  useEffect(() => {
-    var addScript = document.createElement("script");
-    addScript.setAttribute(
-      "src",
-      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-    );
-    document.body.appendChild(addScript);
-    window.googleTranslateElementInit = googleTranslateElementInit;
-  }, []);
+  // const googleTranslateElementInit = () => {
+  //   new window.google.translate.TranslateElement(
+  //     {
+  //       pageLanguage: "en",
+  //       autoDisplay: false,
+  //     },
+  //     "google_translate_element"
+  //   );
+  // };
+  // useEffect(() => {
+  //   var addScript = document.createElement("script");
+  //   addScript.setAttribute(
+  //     "src",
+  //     "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+  //   );
+  //   document.body.appendChild(addScript);
+  //   window.googleTranslateElementInit = googleTranslateElementInit;
+  // }, []);
 
   // End of Google Language Translator
 
@@ -129,7 +139,24 @@ function App() {
           <Header />
           <Suspense fallback={<SkeletonPage />}>
             <Routes>
-              {/* <Route exact path="*" element={<Suspense fallback={<Loading text={lazyText} cssClasses="" />}><PageNotFound /></Suspense>} /> */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="/change_password" element={<ChangePassword />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/contactUSList" element={<ContactUSAdmin />} />
+              </Route>
+
+              <Route element={<AdminProtectedRoute />}>
+                <Route path="/userAdmin" element={<UserAdmin />} />
+                <Route
+                  path="/userPermission"
+                  element={<UserPagePermission />}
+                />
+                <Route
+                  path="/adminPagesConfigurtion"
+                  element={<PagesConfiguration />}
+                />
+              </Route>
+
               <Route exact path="*" element={<PageNotFound />} />
               <Route exact path="/" element={<Home />} />
               <Route exact path="/home" element={<Home />} />
@@ -164,16 +191,7 @@ function App() {
               />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/register" element={<Registration />} />
-              <Route
-                exact
-                path="/change_password"
-                element={
-                  <ProtectedRoute>
-                    {" "}
-                    <ChangePassword />{" "}
-                  </ProtectedRoute>
-                }
-              />
+
               <Route exact path="/reset_password" element={<ResetPassword />} />
               <Route
                 exact
@@ -190,39 +208,7 @@ function App() {
                 path="/resend_activation"
                 element={<ResendActivationEmail />}
               />
-              <Route
-                exact
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    {" "}
-                    <Dashboard />{" "}
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                exact
-                path="/userAdmin"
-                element={
-                  <ProtectedRoute>
-                    {" "}
-                    {userInfo?.is_admin ? (
-                      <UserAdmin />
-                    ) : (
-                      <UnauthorizedPage />
-                    )}{" "}
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                exact
-                path="/userPermission"
-                element={
-                  <AdminProtectedRoute>
-                    <UserPagePermission />
-                  </AdminProtectedRoute>
-                }
-              />
+
               <Route
                 exact
                 path="/unauthorized"
@@ -232,16 +218,7 @@ function App() {
               <Route exact path="/addproject" element={<AddProject />} />
               <Route exact path="/editproject/:id" element={<AddProject />} />
               <Route exact path="/adminNews" element={<AdminNews />} />
-              <Route exact path="/contactUSList" element={<ContactUSAdmin />} />
-              <Route
-                exact
-                path="/adminPagesConfigurtion"
-                element={
-                  <AdminProtectedRoute>
-                    <PagesConfiguration />
-                  </AdminProtectedRoute>
-                }
-              />
+
               <Route exact path="/testimonial" element={<AdminTestimonial />} />
             </Routes>
           </Suspense>

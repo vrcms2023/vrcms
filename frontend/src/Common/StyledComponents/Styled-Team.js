@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const TeamStyled = styled.div`
   background-color: ${({ theme }) => theme.teamBg};
 
+  .editIcon {
+    top: 10px;
+  }
+
   .title {
     color: ${({ theme }) => theme.teamTitleColor};
   }
@@ -13,18 +17,36 @@ export const TeamStyled = styled.div`
 
   .social i {
     color: ${({ theme }) => theme.teamIconColor};
-    font-size: 2.3rem;
+    font-size: 2rem;
     margin: 10px;
   }
 
   img {
-    width: 100%;
-    height: 250px;
     object-fit: cover;
     object-position: top;
     border-radius: 5px !important;
   }
 
   .aboutMe {
+  }
+
+  .memberCard {
+    background-color: ${({ theme }) => theme.verylightgray};
+    border-radius: 15px;
+
+    .memberDetails {
+      color: ${({ theme }) => theme.teamTextColor};
+
+      .strengths {
+        p:before {
+          content: "»  ";
+          font-size: 25px;
+        }
+        p{
+          margin-left: 10px;
+          margin-bottom: 0px;
+      }
+      }
+    }
   }
 `;

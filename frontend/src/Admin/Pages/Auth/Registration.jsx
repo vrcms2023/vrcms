@@ -24,7 +24,6 @@ const Registration = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
@@ -38,7 +37,7 @@ const Registration = () => {
       setCustomError(error);
     }
     dispatch(updatedState());
-  }, [navigate, success, error]);
+  }, [navigate, success, error, dispatch]);
 
   useEffect(() => {
     removeAllCookies();

@@ -112,3 +112,29 @@ class TestimonialsSearchAPIView(generics.ListAPIView):
 
         serializer = TestimonialsSerializer(snippet, many=True)
         return Response({"testimonial": serializer.data}, status=status.HTTP_200_OK)
+    
+
+class UpdateTestimonialIndex(APIView):
+    """
+    Retrieve, update or delete a Carousel instance.
+    """
+
+    def get_object(self, obj_id):
+        try:
+            return Testimonials.objects.get(id=obj_id)
+        except (Testimonials.DoesNotExist):
+            raise status.HTTP_400_BAD_REQUEST
+        
+    def put(self, request, *args, **kwargs):
+        obj_list = request.data
+        instances = []
+        user = request.user
+        for item in obj_list:
+            obj = self.get_object(obj_id=item["id"])
+            obj.updated_by = user.userName
+            obj.testimonial_position = item["testimonial_position"]
+            obj.save()
+            instances.append(obj)
+
+        serializer = TestimonialsSerializer(instances,  many=True)
+        return Response({"testimonial": serializer.data}, status=status.HTTP_200_OK)

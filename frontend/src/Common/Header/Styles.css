@@ -1,6 +1,6 @@
-.navbar-brand img {
+/* .navbar-brand img {
   width: 85%;
-}
+} */
 
 @media screen and (max-width: 480px) {
   .navbar-brand {
@@ -22,7 +22,7 @@
 }
 
 .nav-Link.active {
-  color: #3cd9d2 !important;
+  color: #748E31 !important;
   font-weight: 600;
 }
 
@@ -31,7 +31,7 @@
   content: "";
   width: 35%;
   /* height: 1px; */
-  border-bottom: 2px solid #3cd9d2;
+  border-bottom: 2px solid #748E31;
   bottom: -4px;
 }
 
@@ -40,7 +40,7 @@
   content: "";
   width: 0%;
   /* height: 1px; */
-  border-bottom: 2px solid rgba(23, 66, 127, 0.9);
+  border-bottom: 2px solid #748E31;
   bottom: -4px;
   transition: width 0.3s;
 }

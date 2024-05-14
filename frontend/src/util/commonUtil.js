@@ -45,7 +45,8 @@ export const getObjectTitle = (type, item) => {
   const carouse_Field = "carouse_title";
   const testimonial_Field = "testimonial_title";
   const imageGallery_Field = "image_title";
-  if (type === "carousel") return item[carouse_Field];
+  if (type === "carousel" || type === "serviceOffered")
+    return item[carouse_Field];
   if (type === "testmonial") return item[testimonial_Field];
   if (type === "gallery") return item[imageGallery_Field];
 };
@@ -151,4 +152,41 @@ export const HideFooterForAdmin = () => {
     pathList.indexOf(window.location.pathname) >= 0 ? true : false;
 
   return isHideMenu;
+};
+
+export const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
+export const updateArrIndex = (list, property, parentIndex) => {
+  return list.map((item, index) => {
+    let _ind = index + 1;
+    if (parentIndex) {
+      _ind = parentIndex * 10 + _ind;
+    }
+    item[property] = _ind;
+
+    return item;
+  });
+};
+
+export const getItemStyle = (isDragging, draggableStyle) => ({
+  userSelect: "none",
+  background: isDragging ? "lightgreen" : "white",
+  ...draggableStyle,
+});
+
+export const getListStyle = (isDraggingOver) => ({
+  background: isDraggingOver ? "lightblue" : "white",
+});
+
+export const getObjectPositionKey = (item) => {
+  const _keys = Object.keys(item);
+  return _keys.filter((key) => {
+    return key.indexOf("position") !== -1 ? key : "";
+  })[0];
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import Title from "../../Common/Title";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getBaseURL } from "../../util/ulrUtil";
 
 const ProjectItem = ({ projectList, projectType }) => {

@@ -18,12 +18,21 @@ class CarouselAPIView(generics.CreateAPIView):
      serializer_class = CarouselSerializer
      queryset = Carousel.objects.all()
 
+     def get_object(self, category):
+        try:
+              return Carousel.objects.filter(
+                Q(category__icontains=category)
+            )
+        except (Carousel.DoesNotExist):
+            raise status.HTTP_400_BAD_REQUEST
+        
+
      """
      List all Carousel, or create a new Carousel.
      """
-
-     def get(self, request, format=None):
-        snippets = Carousel.objects.all()
+        
+     def get(self, request, category, format=None):
+        snippets = self.get_object(category)
         serializer = CarouselSerializer(snippets, many=True)
         return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
         
@@ -69,6 +78,30 @@ class CarouselUpdateAndDeleteView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class UpdateCarouselIndex(APIView):
+    """
+    Retrieve, update or delete a Carousel instance.
+    """
+
+    def get_object(self, obj_id):
+        try:
+            return Carousel.objects.get(id=obj_id)
+        except (Carousel.DoesNotExist):
+            raise status.HTTP_400_BAD_REQUEST
+        
+    def put(self, request, *args, **kwargs):
+        obj_list = request.data
+        instances = []
+        user = request.user
+        for item in obj_list:
+            obj = self.get_object(obj_id=item["id"])
+            obj.updated_by = user.userName
+            obj.carouse_position = item["carouse_position"]
+            obj.save()
+            instances.append(obj)
+
+        serializer = CarouselSerializer(instances,  many=True)
+        return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
    
 class ClientCarouselView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
@@ -78,9 +111,32 @@ class ClientCarouselView(generics.CreateAPIView):
     """
     List all carousel, or create a new carousel.
     """
-
+ 
     def get(self, request, format=None):
         snippets = Carousel.objects.all()
+        serializer = CarouselSerializer(snippets, many=True)
+        return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
+    
+class ClientCarouselViewByCategory(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = Carousel.objects.all()
+    serializer_class = CarouselSerializer
+
+    """
+    List all carousel, or create a new carousel.
+    """
+    def get_object(self, category):
+        try:
+              return Carousel.objects.filter(
+                Q(category__icontains=category)
+            )
+        except (Carousel.DoesNotExist):
+            raise status.HTTP_400_BAD_REQUEST
+        
+
+
+    def get(self, request, category, format=None):
+        snippets = self.get_object(category)
         serializer = CarouselSerializer(snippets, many=True)
         return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
 
@@ -264,3 +320,32 @@ class ClientLogoSearchAPIView(generics.ListAPIView):
 
         serializer = ClientLogoSerializer(snippet, many=True)
         return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
+    
+
+
+class UpdateClientIndex(APIView):
+    """
+    Retrieve, update or delete a address instance.
+    """
+
+    def get_object(self, obj_id):
+        try:
+            return ClientLogo.objects.get(id=obj_id)
+        except (ClientLogo.DoesNotExist):
+            raise status.HTTP_400_BAD_REQUEST
+        
+    def put(self, request, *args, **kwargs):
+        obj_list = request.data
+        instances = []
+        user = request.user
+        for item in obj_list:
+            obj = self.get_object(obj_id=item["id"])
+            obj.updated_by = user.userName
+            obj.client_position = item["client_position"]
+            obj.save()
+            instances.append(obj)
+
+        serializer = ClientLogoSerializer(instances,  many=True)
+        
+        return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
+       

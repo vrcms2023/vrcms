@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { getCookie } from "../../../util/cookieUtil";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
 import { InputField } from "./FormFields";
 import Button from "../../../Common/Button";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import DeleteDialog from "../../../Common/DeleteDialog";
 import { confirmAlert } from "react-confirm-alert";
-import _ from "lodash";
 import { fieldValidation } from "../../../util/validationUtil";
 import DraggableAddress from "../AddressList/DraggableAddress";
 import DraggableAddressList from "../AddressList/DraggableAddressList";
-import { sortByFieldName } from "../../../util/commonUtil";
-import { getAddressList } from "../../../features/address/addressActions";
+import {
+  getObjectPositionKey,
+  reorder,
+  sortByFieldName,
+  updateArrIndex,
+} from "../../../util/commonUtil";
+import NoteComponent from "../../../Common/NoteComponent";
 
 const AddressForm = ({ editHandler, componentType, address }) => {
   const { addressList } = useSelector((state) => state.addressList);
@@ -29,8 +33,6 @@ const AddressForm = ({ editHandler, componentType, address }) => {
     formState: { errors },
   } = useForm({});
   const [listofAddress, setListofAddress] = useState(address);
-  const [editAddress, setEditAddress] = useState(address[0]);
-  const dispatch = useDispatch();
 
   const closeHandler = () => {
     editHandler(componentType, false);
@@ -43,7 +45,7 @@ const AddressForm = ({ editHandler, componentType, address }) => {
 
   const handleCarouselEdit = (event, address) => {
     event.preventDefault();
-    setEditAddress(address);
+
     const fieldKeys = Object.keys(address);
     fieldKeys.forEach((item) => {
       setValue(item, address[item]);
@@ -97,7 +99,7 @@ const AddressForm = ({ editHandler, componentType, address }) => {
         console.log("New Address", response);
       }
 
-      if (response.status == 200 || response.status == 201) {
+      if (response.status === 200 || response.status === 201) {
         reset();
         toast.success(`Address Values are updated successfully `);
         updateAddressList(response.data.addressList);
@@ -108,15 +110,14 @@ const AddressForm = ({ editHandler, componentType, address }) => {
   };
 
   const updateAddressList = (data) => {
-    const item = listofAddress.filter((item) => item.id === data.id);
-    let list = [...listofAddress];
-    if (item.length > 0) {
-      list.splice(item[0].address_position, 1);
-      list.splice(list.length, 0, data);
+    let _arr = JSON.parse(JSON.stringify(listofAddress));
+    let foundIndex = _arr.findIndex((x) => x.id === data.id);
+    if (foundIndex > -1) {
+      _arr[foundIndex] = data;
     } else {
-      list.push(data);
+      _arr.push(data);
     }
-    const _list = sortByFieldName(list, "address_position");
+    const _list = sortByFieldName(_arr, "address_position");
     setListofAddress(_list);
   };
 
@@ -126,18 +127,14 @@ const AddressForm = ({ editHandler, componentType, address }) => {
   const dragEnded = async (param) => {
     const { source, destination } = param;
     if (!destination) return true;
-    let _arr = [...listofAddress];
-
-    const sourceobj = await updateObjectIndex(
-      _arr[source.index],
-      destination.index
-    );
-
-    const destinationObj = await updateObjectIndex(
-      _arr[destination.index],
-      source.index
-    );
-    dispatch(getAddressList());
+    let _arr = JSON.parse(JSON.stringify(listofAddress));
+    const _positionKey = getObjectPositionKey(_arr[0]);
+    const _items = reorder(_arr, source.index, destination.index);
+    const _parentObjects = updateArrIndex(_items, _positionKey);
+    const response = await updateObjectsIndex(_parentObjects);
+    if (response?.length > 0) {
+      setListofAddress(response);
+    }
   };
 
   useEffect(() => {
@@ -146,15 +143,9 @@ const AddressForm = ({ editHandler, componentType, address }) => {
     }
   }, [addressList]);
 
-  const updateObjectIndex = async (item, index) => {
-    let data = {};
-    data["updated_by"] = userName;
-    data["index"] = index;
+  const updateObjectsIndex = async (data) => {
     try {
-      let response = await axiosServiceApi.put(
-        `/address/updateindex/${item.id}/`,
-        data
-      );
+      let response = await axiosServiceApi.put(`/address/updateindex/`, data);
       if (response?.data?.addressList) {
         return response.data.addressList;
       }
@@ -170,112 +161,153 @@ const AddressForm = ({ editHandler, componentType, address }) => {
       <form className="" onSubmit={handleSubmit(onSubmit)}>
         <div className="container my-3">
           <div className="row">
-          <div className="col-md-12 mb-md-0  ">
-            <p className="text-dark fw-bold fs-6">Use drag option to shuffle the addresses</p>
-              <DragDropContext onDragEnd={dragEnded}>
-                <Droppable droppableId="address-wrapper">
-                  {(provided, snapshot) => (
-                    <DraggableAddressList
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                    >
-                      {listofAddress.map((_address, index) => {
-                        return (
-                          <Draggable
-                            draggableId={`${_address.id}`}
-                            index={index}
-                            key={_address.id}
-                          >
-                            {(_provided, _snapshot) => (
-                              <DraggableAddress
-                                ref={_provided.innerRef}
-                                dragHandleProps={_provided.dragHandleProps}
-                                {..._provided.draggableProps}
-                                snapshot={_snapshot}
-                                item={_address}
-                                thumbDelete={thumbDelete}
-                                handleCarouselEdit={handleCarouselEdit}
-                              />
-                            )}
-                          </Draggable>
-                        );
-                      })}
-                      {provided.placeholder}
-                    </DraggableAddressList>
-                  )}
-                </Droppable>
-              </DragDropContext>
+            <div className="col-md-12 mb-md-0  ">
+              <NoteComponent note="Use drag option to shuffle the addresses" />
+              <div className="heightCtrl">
+                <DragDropContext onDragEnd={dragEnded}>
+                  <Droppable droppableId="address-wrapper">
+                    {(provided, snapshot) => (
+                      <DraggableAddressList
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                      >
+                        {listofAddress.map((_address, index) => {
+                          return (
+                            <Draggable
+                              draggableId={`${_address.id}`}
+                              index={index}
+                              key={_address.id}
+                            >
+                              {(_provided, _snapshot) => (
+                                <DraggableAddress
+                                  ref={_provided.innerRef}
+                                  dragHandleProps={_provided.dragHandleProps}
+                                  {..._provided.draggableProps}
+                                  snapshot={_snapshot}
+                                  item={_address}
+                                  thumbDelete={thumbDelete}
+                                  handleCarouselEdit={handleCarouselEdit}
+                                />
+                              )}
+                            </Draggable>
+                          );
+                        })}
+                        {provided.placeholder}
+                      </DraggableAddressList>
+                    )}
+                  </Droppable>
+                </DragDropContext>
+              </div>
             </div>
-            
+
             <div className="col-md-12">
               <p className="text-dark fw-bold mt-3">Address Form</p>
-            <hr className="mb-3 text-dark" /></div>
+              <hr className="mb-3 text-dark" />
+            </div>
             <div className="col-md-12 mb-md-0">
-              <InputField
-                label="Country"
-                fieldName="location_title"
-                register={register}
-                validationObject={fieldValidation.location_title}
-                error={errors?.location_title?.message}
-              />
-              <InputField label="State" fieldName="state" register={register} />
-              <InputField
-                label="City"
-                fieldName="city"
-                register={register}
-                validationObject={fieldValidation.city}
-                error={errors?.city?.message}
-              />
-              <InputField
-                label="Location"
-                fieldName="location"
-                register={register}
-              />
-              <InputField
-                label="Street"
-                fieldName="street"
-                register={register}
-              />
-              <InputField
-                label="Door Number"
-                fieldName="address_dr_no"
-                register={register}
-              />
+              <div className="heightCtrl">
+                <InputField
+                  label="Company Name"
+                  fieldName="company_name"
+                  register={register}
+                  validationObject={fieldValidation.company_name}
+                  error={errors?.company_name?.message}
+                  isRequired={true}
+                />
+                <InputField
+                  label="Country"
+                  fieldName="location_title"
+                  register={register}
+                  validationObject={fieldValidation.location_title}
+                  error={errors?.location_title?.message}
+                  isRequired={true}
+                />
+                <InputField
+                  label="State"
+                  fieldName="state"
+                  register={register}
+                />
+                <InputField
+                  label="City"
+                  fieldName="city"
+                  register={register}
+                  validationObject={fieldValidation.city}
+                  error={errors?.city?.message}
+                  isRequired={true}
+                />
+                <InputField
+                  label="Location"
+                  fieldName="location"
+                  register={register}
+                />
+                <InputField
+                  label="Street"
+                  fieldName="street"
+                  register={register}
+                />
+                <InputField
+                  label="Door Number"
+                  fieldName="address_dr_no"
+                  register={register}
+                />
 
-              {/* <InputField
+                {/* <InputField
                 label="Postcode"
                 fieldName="postcode"
                 register={register}
                 validationObject={fieldValidation.postcode}
                 error={errors?.postcode?.message}
               /> */}
-              <InputField
-                label="Email"
-                fieldName="emailid"
-                register={register}
-                validationObject={fieldValidation.emailid}
-                error={errors?.emailid?.message}
-              />
-              <InputField
-                label="Phone"
-                fieldName="phonen_number"
-                register={register}
-                validationObject={fieldValidation.phonen_number}
-                error={errors?.phonen_number?.message}
-              />
-              <InputField
-                label="WhatsApp No."
-                fieldName="phonen_number_2"
-                register={register}
-                validationObject={fieldValidation.phonen_number_2}
-                error={errors?.phonen_number_2?.message}
-              />
+                <InputField
+                  label="Email"
+                  fieldName="emailid"
+                  register={register}
+                  validationObject={fieldValidation.emailid}
+                  error={errors?.emailid?.message}
+                  isRequired={true}
+                />
+                <InputField
+                  label="Email 2"
+                  fieldName="emailid_2"
+                  register={register}
+                  validationObject={fieldValidation.emailid_2}
+                  error={errors?.emailid_2?.message}
+                  isRequired={false}
+                />
+                <InputField
+                  label="Email 3"
+                  fieldName="emailid_3"
+                  register={register}
+                  validationObject={fieldValidation.emailid_2}
+                  error={errors?.emailid_2?.message}
+                />
+                <InputField
+                  label="Phone"
+                  fieldName="phonen_number"
+                  register={register}
+                  validationObject={fieldValidation.phonen_number}
+                  error={errors?.phonen_number?.message}
+                  isRequired={true}
+                />
+                <InputField
+                  label="Phone Number 2"
+                  fieldName="phonen_number_2"
+                  register={register}
+                  validationObject={fieldValidation.phonen_number_2}
+                  error={errors?.phonen_number_2?.message}
+                />
+                <InputField
+                  label="WhatsApp No."
+                  fieldName="phonen_number_3"
+                  register={register}
+                  validationObject={fieldValidation.phonen_number_2}
+                  error={errors?.phonen_number_2?.message}
+                />
+              </div>
             </div>
-
-            
           </div>
           <div className="row">
-            <div className="d-flex justify-content-center align-items-center gap-1 gap-md-3 mb-4">
+            <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-1 gap-md-3 my-3">
               <button type="reset" className="btn btn-secondary">
                 Clear
               </button>
@@ -284,7 +316,7 @@ const AddressForm = ({ editHandler, componentType, address }) => {
               </button>
               <Button
                 type="submit"
-                cssClass="btn btn-outline"
+                cssClass="btn btn-more"
                 label={"Close"}
                 handlerChange={closeHandler}
               />

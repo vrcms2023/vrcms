@@ -55,7 +55,7 @@ export const AdminNews = () => {
 
   const getNewList = async () => {
     const response = await axiosServiceApi.get(`/appNews/createAppNews/`);
-    if (response?.status == 200 && response.data?.appNews?.length > 0) {
+    if (response?.status === 200 && response.data?.appNews?.length > 0) {
       const listReverseOrder = response.data.appNews;
       const sortData = sortByDate(listReverseOrder);
       setNewsList(sortData);
@@ -110,9 +110,9 @@ export const AdminNews = () => {
         });
       }
 
-      if (response?.status == 200 || response?.status == 201) {
+      if (response?.status === 200 || response?.status === 201) {
         toast.success(
-          `${newsState.newstitle} news ${editState ? "Update" : "created"}`,
+          `${newsState.newstitle} news ${editState ? "Update" : "created"}`
         );
         setEditState(false);
         setnewsState(newsKeys);
@@ -132,15 +132,7 @@ export const AdminNews = () => {
 
   const handleNewsEdit = (event, news) => {
     event.preventDefault();
-    const {
-      imageId,
-      projectID,
-      originalname,
-      imageUrl,
-      description,
-      newstitle,
-      id,
-    } = news;
+    const { projectID, description, newstitle, id } = news;
     setNewsObject([]);
     const newsObj = {
       newstitle: newstitle,
@@ -162,14 +154,14 @@ export const AdminNews = () => {
     const deleteSelectedNews = async () => {
       try {
         const response = await axiosServiceApi.delete(
-          `/appNews/updateAppNews/${news.id}/`,
+          `/appNews/updateAppNews/${news.id}/`
         );
 
         if (response.status !== 204) {
           setErrorMessage(response.data.message);
           toast.error("Unable to Delete news");
         }
-        if (response.status == 204) {
+        if (response.status === 204) {
           toast.success(`${news.newstitle} news deleted`);
           setEditState(false);
           setnewsState(newsKeys);

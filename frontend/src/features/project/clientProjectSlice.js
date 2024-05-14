@@ -16,20 +16,20 @@ const clientProjectSlice = createSlice({
       state.clientProjects = payload;
     },
   },
-  extraReducers: {
+  extraReducers: (builder) => {
     // Client projects
-    [getClientProjects.pending]: (state) => {
+    builder.addCase(getClientProjects.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [getClientProjects.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(getClientProjects.fulfilled, (state, action) => {
       state.loading = false;
-      state.clientProjects = payload;
-    },
-    [getClientProjects.rejected]: (state, { payload }) => {
+      state.clientProjects = action.payload;
+    });
+    builder.addCase(getClientProjects.rejected, (state, action) => {
       state.loading = false;
-      state.error = payload;
-    },
+      state.error = action.payload;
+    });
   },
 });
 

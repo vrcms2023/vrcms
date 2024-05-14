@@ -16,20 +16,20 @@ const footerSlice = createSlice({
       state.footerData = payload;
     },
   },
-  extraReducers: {
+  extraReducers: (builder) => {
     // Footer
-    [getFooterValues.pending]: (state) => {
+    builder.addCase(getFooterValues.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [getFooterValues.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(getFooterValues.fulfilled, (state, action) => {
       state.loading = false;
-      state.footerData = payload;
-    },
-    [getFooterValues.rejected]: (state, { payload }) => {
+      state.footerData = action.payload;
+    });
+    builder.addCase(getFooterValues.rejected, (state, action) => {
       state.loading = false;
-      state.error = payload;
-    },
+      state.error = action.payload;
+    });
   },
 });
 

@@ -16,7 +16,7 @@ export const dataFormatedByCatergoryName = (data) => {
     return acc.concat({ ...val, imgs });
   }, []);
 
-  list.map((proj) => {
+  list.forEach((proj) => {
     if (!projList[proj.projectCategoryValue]) {
       projList[proj.projectCategoryValue] = [];
     }
@@ -29,9 +29,9 @@ export const getImagesByDate = (img) => {
   const imgByDate = [];
   const sortedImageArray = img.sort(
     (a, b) =>
-      new moment(b.updated_at).valueOf() - new moment(a.updated_at).valueOf(),
+      new moment(b.updated_at).valueOf() - new moment(a.updated_at).valueOf()
   );
-  sortedImageArray.map((img) => {
+  sortedImageArray.forEach((img) => {
     const dt = new moment(img.updated_at).format("YYYY/DD/MM");
     if (!imgByDate[dt]) {
       imgByDate[dt] = [];
@@ -59,7 +59,7 @@ export const sortCreatedDateByDesc = (array) => {
     function (o) {
       return new moment(o.created_at);
     },
-    ["desc"],
+    ["desc"]
   );
 };
 
@@ -75,7 +75,7 @@ export const sortUpdatedDateByDesc = (array) => {
     function (o) {
       return new moment(o.updated_at);
     },
-    ["desc"],
+    ["desc"]
   );
 };
 

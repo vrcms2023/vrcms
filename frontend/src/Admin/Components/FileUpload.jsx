@@ -19,7 +19,6 @@ import {
   RichTextInputEditor,
 } from "./forms/FormFields";
 import { getImagePath } from "../../util/commonUtil";
-import RichTextEditor from "../../Frontend/Components/RichTextEditor";
 
 // CSS
 import "filepond/dist/filepond.min.css";
@@ -35,7 +34,6 @@ registerPlugin(
 const FileUpload = ({
   title,
   project,
-  updated_by,
   category,
   gallerysetState,
   galleryState,
@@ -51,7 +49,6 @@ const FileUpload = ({
   showDescription = false,
   showExtraFormFields = [],
   maxFiles,
-  buttonLable,
   editImage,
   setEditCarousel,
   imagePostURL = "/gallery/createGallery/",
@@ -59,6 +56,7 @@ const FileUpload = ({
   extraFormParamas = [],
   dimensions,
   closeHandler,
+  scrollEnable = false,
 }) => {
   const [files, setFiles] = useState([]);
   const [extTypes, setExtTypes] = useState([]);
@@ -66,7 +64,7 @@ const FileUpload = ({
   const listofAboutSection = ["aboutDetails", "aboutVision", "aboutMission"];
   const [editorState, setEditorState] = useState("");
   const baseURL = getBaseURL();
-  const [editImg, setEditimg] = useState({});
+
   const [error, setError] = useState("");
 
   const { register, reset, handleSubmit } = useForm({
@@ -75,21 +73,6 @@ const FileUpload = ({
     }, [editImage]),
     mode: "onChange",
   });
-
-  const content = {
-    entityMap: {},
-    blocks: [
-      {
-        key: "637gr",
-        text: "Initialized from content state.",
-        type: "unstyled",
-        depth: 0,
-        inlineStyleRanges: [],
-        entityRanges: [],
-        data: {},
-      },
-    ],
-  };
 
   useEffect(() => {
     if (!editImage?.id) {
@@ -153,6 +136,8 @@ const FileUpload = ({
             formData.append("news_description", editorState);
           } else if (key === "aboutus_description") {
             formData.append("aboutus_description", editorState);
+          } else if (key === "team_member_about_us") {
+            formData.append("team_member_about_us", editorState);
           } else if (key === "case_studies_description") {
             formData.append("case_studies_description", editorState);
           } else if (key === "client_description") {
@@ -350,161 +335,171 @@ const FileUpload = ({
   return (
     <>
       <form className="" onSubmit={handleSubmit(uploadFile)}>
-        <div className="mb-2 row">
-          <label className="col-sm-12 col-form-label">
-            <Title title={title} cssClass="requiredField" />
-          </label>
-          <div className="col-sm-12">
-            {error ? <Error>{error}</Error> : ""}
-            <div className="border border-3 mb-0 shadow-lg">
-              <FilePond
-                labelIdle='Drag & Drop your files or <span className="filepond--label-action">Browse</span>'
-                labelInvalidField="invalid files"
-                name="path"
-                files={files}
-                onerror={onerror}
-                onupdatefiles={onUpdateFiles}
-                allowMultiple={true}
-                maxFiles={maxFiles ? maxFiles : 4}
-                maxParallelUploads={4}
-                disabled={disabledFile}
-                credits={false}
-                acceptedFileTypes={extTypes}
-                instantUpload={false}
-              />
-            </div>
-            {dimensions ? (
-              <div>
-                <small className="text-muted">
-                  Min. Width - {dimensions.w} & Height - {dimensions.h} will be
-                  the good for resolution.{" "}
-                </small>
-              </div>
-            ) : (
-              ""
-            )}
-
-            {editImage?.id && editImage.path ? (
-              <div>
-                <img
-                  src={getImagePath(editImage.path, editImage.contentType)}
-                  alt={editImage?.alternitivetext}
-                  className=""
-                  style={{ width: "100%", height: "100px", objectFit: "cover" }}
+        <div className={`${scrollEnable ? "heightCtrl" : "fullHeightCtrl"}`}>
+          <div className="mb-2 row">
+            <label className="col-sm-12 col-form-label">
+              <Title title={title} cssClass="requiredField" />
+            </label>
+            <div className="col-sm-12">
+              {error ? <Error>{error}</Error> : ""}
+              <div className="border border-3 mb-0 shadow-lg">
+                <FilePond
+                  labelIdle='Drag & Drop your files or <span className="filepond--label-action">Browse</span>'
+                  labelInvalidField="invalid files"
+                  name="path"
+                  files={files}
+                  onerror={onerror}
+                  onupdatefiles={onUpdateFiles}
+                  allowMultiple={true}
+                  maxFiles={maxFiles ? maxFiles : 4}
+                  maxParallelUploads={4}
+                  disabled={disabledFile}
+                  credits={false}
+                  acceptedFileTypes={extTypes}
+                  instantUpload={false}
                 />
               </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
-        <InputFields
-          label={alternitivetextTitle}
-          type="text"
-          fieldName={altTitleFieldName}
-          register={register}
-        />
-
-        <>
-          {Object.keys(showExtraFormFields).map((e, index) => {
-            const { label, type, fieldName, value } = showExtraFormFields[e];
-
-            if (type == "richText") {
-              return (
-                <RichTextInputEditor
-                  key={index}
-                  label={label}
-                  editorSetState={setEditorState}
-                  initialText={
-                    editImage?.feature_description
-                      ? editImage?.feature_description
-                      : editImage?.news_description
-                      ? editImage?.news_description
-                      : editImage?.banner_descripiton
-                      ? editImage?.banner_descripiton
-                      : editImage?.aboutus_description
-                      ? editImage?.aboutus_description
-                      : editImage?.client_description
-                      ? editImage?.client_description
-                      : editImage?.case_studies_description
-                      ? editImage?.case_studies_description
-                      : ""
-                  }
-                />
-              );
-            } else {
-              return (
-                <InputFields
-                  key={index}
-                  label={label}
-                  type={type}
-                  value={value}
-                  fieldName={fieldName}
-                  register={register}
-                />
-              );
-            }
-          })}
-
-          <div className="row">
-            <div className="d-flex justify-content-center align-items-center gap-1 ">
-              {!editImage?.id ? (
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={clearField}
-                >
-                  Clear
-                </button>
+              {dimensions ? (
+                <div>
+                  <small className="text-muted">
+                    Min. Width - {dimensions.w} & Height - {dimensions.h} will
+                    be the good for resolution.{" "}
+                  </small>
+                </div>
               ) : (
                 ""
               )}
-              <button type="submit" className="btn btn-primary">
-                {editImage?.id ? "Update" : "Save"}
-              </button>
 
-              <Button
-                type="submit"
-                cssClass="btn btn-more"
-                label={"Close"}
-                handlerChange={closeHandler}
-              />
+              {editImage?.id && editImage.path ? (
+                <div>
+                  <img
+                    src={getImagePath(editImage.path, editImage.contentType)}
+                    alt={editImage?.alternitivetext}
+                    className=""
+                    style={{
+                      width: "100%",
+                      height: "100px",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
-        </>
-
-        {showDescription ? (
-          <>
-            <InputField
-              label={titleTitle}
-              fieldName={imageTitleFieldName}
+          <div>
+            <InputFields
+              label={alternitivetextTitle}
+              type="text"
+              fieldName={altTitleFieldName}
               register={register}
             />
 
-            <TextAreaField
-              label={descriptionTitle}
-              fieldName={imageDescriptionFieldName}
-              register={register}
-            />
-            <>
-              {extraFormParamas.map((item, index) => {
-                let key = Object.keys(item);
-                let field = item[key];
-                if (field.readonly) return "";
+            {Object.keys(showExtraFormFields).map((e, index) => {
+              const { label, type, fieldName, value } = showExtraFormFields[e];
+
+              if (type == "richText") {
                 return (
-                  <InputField
+                  <RichTextInputEditor
                     key={index}
-                    label={field.label}
-                    type={field.type}
-                    fieldName={field.fieldName}
+                    label={label}
+                    editorSetState={setEditorState}
+                    initialText={
+                      editImage?.feature_description
+                        ? editImage?.feature_description
+                        : editImage?.news_description
+                          ? editImage?.news_description
+                          : editImage?.banner_descripiton
+                            ? editImage?.banner_descripiton
+                            : editImage?.aboutus_description
+                              ? editImage?.aboutus_description
+                              : editImage?.client_description
+                                ? editImage?.client_description
+                                : editImage?.case_studies_description
+                                  ? editImage?.case_studies_description
+                                  : editImage?.team_member_about_us
+                                    ? editImage?.team_member_about_us
+                                    : ""
+                    }
+                  />
+                );
+              } else {
+                return (
+                  <InputFields
+                    key={index}
+                    label={label}
+                    type={type}
+                    value={value}
+                    fieldName={fieldName}
                     register={register}
                   />
                 );
-              })}
-            </>
+              }
+            })}
+          </div>
+        </div>
+        <div className="row">
+          <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-2 my-3">
+            {!editImage?.id ? (
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={clearField}
+              >
+                Clear
+              </button>
+            ) : (
+              ""
+            )}
+            <button type="submit" className="btn btn-primary">
+              {editImage?.id ? "Update" : "Save"}
+            </button>
 
+            <Button
+              type="submit"
+              cssClass="btn btn-more"
+              label={"Close"}
+              handlerChange={closeHandler}
+            />
+          </div>
+        </div>
+
+        {showDescription ? (
+          <>
+            <div
+              className={`${scrollEnable ? "heightCtrl" : "fullHeightCtrl"}`}
+            >
+              <InputField
+                label={titleTitle}
+                fieldName={imageTitleFieldName}
+                register={register}
+              />
+
+              <TextAreaField
+                label={descriptionTitle}
+                fieldName={imageDescriptionFieldName}
+                register={register}
+              />
+              <>
+                {extraFormParamas.map((item, index) => {
+                  let key = Object.keys(item);
+                  let field = item[key];
+                  if (field.readonly) return "";
+                  return (
+                    <InputField
+                      key={index}
+                      label={field.label}
+                      type={field.type}
+                      fieldName={field.fieldName}
+                      register={register}
+                    />
+                  );
+                })}
+              </>
+            </div>
             <div className="row">
-              <div className="d-flex gap-2 justify-content-center align-items-center">
+              <div className="d-flex gap-2 justify-content-center flex-wrap flex-column flex-sm-row align-items-center my-3">
                 <button
                   type="button"
                   className="btn btn-secondary mx-3"

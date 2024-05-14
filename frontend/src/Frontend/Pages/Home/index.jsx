@@ -17,6 +17,7 @@ import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import { removeActiveClass } from "../../../util/ulrUtil";
 import {
   getCarouselFields,
+  getFormDynamicFields,
   getTestimonialsFields,
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
@@ -26,6 +27,11 @@ import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginSta
 
 import "./Home.css";
 import Features from "../../Components/Features";
+
+import Banner from "../../../Common/Banner";
+import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
+
+import { sortByFieldName } from "../../../util/commonUtil";
 
 const Home = () => {
   const editComponentObj = {
@@ -41,6 +47,7 @@ const Home = () => {
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [show, setShow] = useState(false);
   const [news, setNews] = useState([]);
+  const [clientsList, setClientsList] = useState([]);
 
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -59,7 +66,11 @@ const Home = () => {
           `/testimonials/clientTestimonials/`
         );
         if (response?.status === 200) {
-          setTestmonis(response.data.results);
+          const _testimonialsList = sortByFieldName(
+            response.data.results,
+            "testimonial_position"
+          );
+          setTestmonis(_testimonialsList);
         }
       } catch (e) {
         console.log("unable to access ulr because of server is down");
@@ -70,9 +81,58 @@ const Home = () => {
     }
   }, [componentEdit.testmonial]);
 
+  useEffect(() => {
+    const getClientList = async () => {
+      try {
+        const response = await axiosClientServiceApi.get(
+          `/client/getAllClientLogos/`
+        );
+        if (response?.status === 200) {
+          const _clientList = sortByFieldName(
+            response.data.results,
+            "client_position"
+          );
+
+          setClientsList(_clientList);
+        }
+      } catch (error) {
+        console.log("unable to access ulr because of server is down");
+      }
+    };
+
+    getClientList();
+  }, []);
+
   return (
     <>
       <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-12 p-0 position-relative homePage">
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("banner", true)} />
+            )}
+            <Banner
+              getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+              bannerState={componentEdit.banner}
+            />
+          </div>
+        </div>
+        {componentEdit.banner ? (
+          <div className="adminEditTestmonial">
+            <ImageInputsForm
+              editHandler={editHandler}
+              componentType="banner"
+              pageType={`${pageType}-banner`}
+              imageLabel="Banner Image"
+              showDescription={false}
+              showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+              dimensions={imageDimensionsJson("banner")}
+            />
+          </div>
+        ) : (
+          ""
+        )}
+
         {/* Carousel */}
         <div className="row">
           <div className="col-md-12 p-0 carousel">
@@ -90,6 +150,7 @@ const Home = () => {
               deleteImageURL="carousel/updateCarousel/"
               imagePostURL="carousel/createCarousel/"
               imageUpdateURL="carousel/updateCarousel/"
+              imageIndexURL="carousel/updateCarouselindex/"
               imageLabel="Add Carousel Image"
               showDescription={false}
               showExtraFormFields={getCarouselFields("carousel")}
@@ -149,14 +210,14 @@ const Home = () => {
 
         {/*  HOME Services */}
         <div className="row">
-          <div className="col-md-8 ABrief">
+          <div className="col-md-12 ABrief">
             <ABrief
               cssClass="fw-bold title"
               dimensions={imageDimensionsJson("homeCareers")}
             />
           </div>
 
-          <div className="col-md-4 p-5 testimonials text-center">
+          <div className="col-md-12 p-5 testimonials text-center">
             {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("testmonial", true)} />
             )}
@@ -219,6 +280,7 @@ const Home = () => {
             deleteImageURL="testimonials/updateTestimonials/"
             imagePostURL="testimonials/createTestimonials/"
             imageUpdateURL="testimonials/updateTestimonials/"
+            imageIndexURL="testimonials/updateTestimonialsindex/"
             imageLabel="Add your Image"
             titleTitle="Testmonial Name"
             descriptionTitle="Testimonial Writeup "

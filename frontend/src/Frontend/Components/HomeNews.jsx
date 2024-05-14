@@ -9,10 +9,12 @@ import DeleteDialog from "../../Common/DeleteDialog";
 import ModelBg from "../../Common/ModelBg";
 import AddEditAdminNews from "../../Admin/Components/News/index";
 import { useAdminLoginStatus } from "../../Common/customhook/useAdminLoginStatus";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
 import {
   axiosClientServiceApi,
   axiosFileUploadServiceApi,
+  axiosServiceApi,
 } from "../../util/axiosUtil";
 import { getNewslFields } from "../../util/dynamicFormFields";
 
@@ -20,6 +22,13 @@ import { getNewslFields } from "../../util/dynamicFormFields";
 import { NewsStyled } from "../../Common/StyledComponents/Styled-News";
 import Ancher from "../../Common/Ancher";
 import SkeletonNews from "../../Common/Skeltons/SkeltonNews";
+import {
+  getImagePath,
+  getListStyle,
+  reorder,
+  sortByFieldName,
+  updateArrIndex,
+} from "../../util/commonUtil";
 
 const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
   const location = useLocation();
@@ -56,20 +65,18 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
           //const data = sortCreatedDateByDesc(response.data.appNews);
 
           //setPageloadResults(true);
-          const data =
-            pagetype === "home"
-              ? response.data.results.slice(0, 4)
-              : response.data.results;
+          const _list = sortByFieldName(response.data.results, "news_position");
+          const data = pagetype === "home" ? _list.slice(0, 4) : _list;
           setNews(data);
         }
       } catch (error) {
         console.log("unable to access ulr because of server is down");
       }
     };
-    if (!componentEdit.news || !addNewsState) {
+    if (componentEdit.news || !addNewsState) {
       getNews();
     }
-  }, [componentEdit.news, addNewsState, pagetype, setNews]);
+  }, [componentEdit.news, addNewsState, pagetype]);
 
   /**
    *
@@ -110,6 +117,32 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
     setShowModelBg(false);
   };
 
+  const onDragEnd = async (result) => {
+    const { source, destination } = result;
+    if (!destination) return true;
+
+    const _items = reorder(news, source.index, destination.index);
+    const _parentObjects = updateArrIndex(_items, "news_position");
+    const response = await updateObjectsIndex(_parentObjects);
+    if (response.length > 0) {
+      setNews(response);
+    }
+  };
+
+  const updateObjectsIndex = async (data) => {
+    try {
+      let response = await axiosServiceApi.put(
+        `/appNews/updateNewsIndex/`,
+        data
+      );
+      if (response?.data?.appNews) {
+        return response.data.appNews;
+      }
+    } catch (error) {
+      console.log("unable to save news position");
+    }
+  };
+
   return (
     <>
       {isLoading ? (
@@ -124,103 +157,65 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
         ""
       )}
 
-      {news.length > 0 ? (
-        news.map((item) => (
-          <div className="col-md-6 col-lg-3 mb-4 mb-lg-0" key={item.id}>
-            <NewsStyled>
-              <div className="card homeNews">
-                {/* Edit News */}
-                {isAdmin && hasPermission && (
-                  <div className="d-flex justify-content-end gap-2">
-                    {/* <EditIcon editHandler={() => editHandler("news", true, item)} /> */}
-                    <Link
-                      onClick={() => editHandler("news", true, item)}
-                      className=" p-2"
-                    >
-                      <i
-                        className="fa fa-pencil fs-5 text-warning"
-                        aria-hidden="true"
-                      ></i>
-                    </Link>
-
-                    <Link
-                      onClick={(event) => DeleteNews(item.id, item.news_title)}
-                      className=" p-2"
-                    >
-                      <i
-                        className="fa fa-trash-o fs-5 text-danger"
-                        aria-hidden="true"
-                      ></i>
-                    </Link>
-                  </div>
-                )}
-
-                <img
-                  src={item.path}
-                  className="img-fluid"
-                  alt={item.alternitivetext}
-                />
-                <div className="card-body p-3">
-                  <Title
-                    title={
-                      item.news_title ? item.news_title : "Update news Title"
-                    }
-                    cssClass="fs-5 fw-bold lh-sm mb-2 lineClamp lc1"
-                  />
-                  <div className="card-text mb-4 lineClamp lc2">
-                    {item.news_description ? (
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: item.news_description,
-                        }}
-                      ></div>
-                    ) : (
-                      "update new description"
-                    )}
-                  </div>
-                  {/* <p>{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</p> */}
-                  <Ancher
-                    AncherLabel="Read more"
-                    Ancherpath="/news"
-                    AncherClass="btn btn-more d-flex justify-content-center align-items-center gap-2"
-                    AnchersvgColor="#17427C"
-                    handleModel={() => handleModel(item)}
-                  />
-                </div>
-              </div>
-            </NewsStyled>
-          </div>
-        ))
-      ) : (
-        <div className="text-center">
-          {isAdmin && hasPermission ? (
-            <>
-              {location.pathname === "/news" ? (
-                <p className="text-center fs-6">Please add news items</p>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId={"NewsList"} id="newsList">
+          {(provided, snapshot) => (
+            <div
+              className="row"
+              ref={provided.innerRef}
+              style={getListStyle(snapshot.isDraggingOver)}
+              {...provided.droppableProps}
+            >
+              {news.length > 0 ? (
+                news.map((item, index) => {
+                  return (
+                    <NewsItem
+                      item={item}
+                      key={item.id}
+                      index={index}
+                      handleModel={handleModel}
+                      DeleteNews={DeleteNews}
+                      editHandler={editHandler}
+                    />
+                  );
+                })
               ) : (
-                <>
-                  <p className="text-center fs-6">
-                    Currently there are no news items found.
-                  </p>
-                  <Ancher
-                    AncherLabel="Go To News"
-                    Ancherpath="/news"
-                    AncherClass="btn btn-secondary d-flex justify-content-center align-items-center gap-3"
-                    AnchersvgColor="#ffffff"
-                  />
-                  {/* <Link to="/news" className="btn btn-primary fs-6">
+                <div className="text-center">
+                  {isAdmin && hasPermission ? (
+                    <>
+                      {location.pathname === "/news" ? (
+                        <p className="text-center fs-6">
+                          Please add news items
+                        </p>
+                      ) : (
+                        <>
+                          <p className="text-center fs-6">
+                            Currently there are no news items found.
+                          </p>
+                          <Ancher
+                            AncherLabel="Go To News"
+                            Ancherpath="/news"
+                            AncherClass="btn btn-secondary d-flex justify-content-center align-items-center gap-3"
+                            AnchersvgColor="#ffffff"
+                          />
+                          {/* <Link to="/news" className="btn btn-primary fs-6">
                     Go To News
                   </Link> */}
-                </>
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-center fs-6">
+                      {!isLoading && "Currently there are no news items found."}
+                    </p>
+                  )}
+                </div>
               )}
-            </>
-          ) : (
-            <p className="text-center fs-6">
-              {!isLoading && "Currently there are no news items found."}
-            </p>
+              {provided.placeholder}
+            </div>
           )}
-        </div>
-      )}
+        </Droppable>
+      </DragDropContext>
 
       {componentEdit.news ? (
         <div className="adminEditTestmonial">
@@ -276,6 +271,104 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
 
       {show && <ModelBg />}
     </>
+  );
+};
+
+const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
+  const { isAdmin, hasPermission } = useAdminLoginStatus();
+  return (
+    <Draggable
+      isDragDisabled={isAdmin ? false : true}
+      key={item.id}
+      index={index}
+      draggableId={item.id}
+      id={item.id}
+    >
+      {(provided) => (
+        <div
+          className={`${isAdmin ? "col-12" : "col-md-3"} image`}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <div className="col-md-12 col-lg-12 mb-4 mb-lg-0" key={item.id}>
+            <NewsStyled>
+              <div
+                className={`card homeNews ${isAdmin ? "adminView" : ""}`}
+                style={{ minHeight: isAdmin ? "auto" : "" }}
+              >
+                {/* Edit News */}
+                {isAdmin && hasPermission && (
+                  <div className="d-flex justify-content-end gap-2">
+                    {/* <EditIcon editHandler={() => editHandler("news", true, item)} /> */}
+                    <Link
+                      onClick={() => editHandler("news", true, item)}
+                      className=" p-2"
+                    >
+                      <i
+                        className="fa fa-pencil fs-5 text-warning"
+                        aria-hidden="true"
+                      ></i>
+                    </Link>
+
+                    <Link
+                      onClick={(event) => DeleteNews(item.id, item.news_title)}
+                      className=" p-2"
+                    >
+                      <i
+                        className="fa fa-trash-o fs-5 text-danger"
+                        aria-hidden="true"
+                      ></i>
+                    </Link>
+                  </div>
+                )}
+
+                <div style={{ display: isAdmin ? "flex" : "" }}>
+                  <img
+                    src={getImagePath(item.path)}
+                    className="img-fluid"
+                    alt={item.alternitivetext}
+                  />
+                  <div className="card-body p-3">
+                    <Title
+                      title={
+                        item.news_title ? item.news_title : "Update news Title"
+                      }
+                      cssClass={` fw-bold lh-sm mb-2 lineClamp lc1 ${
+                        isAdmin ? "fs-6" : "fs-5"
+                      }`}
+                    />
+                    <div
+                      className={`card-text  lineClamp lc2 ${
+                        isAdmin ? "mb-0" : "mb-4"
+                      }`}
+                    >
+                      {item.news_description ? (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: item.news_description,
+                          }}
+                        ></div>
+                      ) : (
+                        "update new description"
+                      )}
+                    </div>
+                    {/* <p>{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</p> */}
+                    <Ancher
+                      AncherLabel="Read more"
+                      Ancherpath="/news"
+                      AncherClass="btn btn-more d-flex justify-content-center align-items-center gap-2"
+                      AnchersvgColor="#17427C"
+                      handleModel={() => handleModel(item)}
+                    />
+                  </div>
+                </div>
+              </div>
+            </NewsStyled>
+          </div>
+        </div>
+      )}
+    </Draggable>
   );
 };
 

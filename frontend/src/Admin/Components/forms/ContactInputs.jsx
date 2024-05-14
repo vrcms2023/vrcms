@@ -40,12 +40,12 @@ const ContactInputs = ({ editHandler, componentType }) => {
                 </div>
               </div>
 
-              <div className="d-flex justify-content-center align-items-center gap-1 gap-md-3 mt-5">
+              <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-1 gap-md-3 mt-5">
                 <button className="btn btn-secondary mx-3">Clear</button>
                 <button className="btn btn-primary">Save</button>
                 <Button
                   type="submit"
-                  cssClass="btn border"
+                  cssClass="btn btn-more"
                   label={"Close"}
                   handlerChange={closeHandler}
                 />

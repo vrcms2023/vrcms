@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
-import { getBaseURL } from "../../../util/ulrUtil";
 import { toast } from "react-toastify";
 import FileUpload from "../../Components/FileUpload";
 import { getCookie } from "../../../util/cookieUtil";
@@ -31,8 +30,6 @@ const ImageInputsForm = ({
   const [editCarousel, setEditCarousel] = useState({});
   const [carousel, setcarouseData] = useState("");
 
-  const baseURL = getBaseURL();
-
   const closeHandler = () => {
     editHandler(componentType, false);
     document.body.style.overflow = "";
@@ -45,7 +42,7 @@ const ImageInputsForm = ({
     const getBannerData = async () => {
       try {
         const response = await axiosFileUploadServiceApi.get(
-          `${imageGetURL}${pageType}/`,
+          `${imageGetURL}${pageType}/`
         );
         if (response?.status === 200 && response.data.imageModel) {
           setcarouseData(response.data.imageModel);
@@ -66,9 +63,9 @@ const ImageInputsForm = ({
   const thumbDelete = (id, name) => {
     const deleteImageByID = async () => {
       const response = await axiosFileUploadServiceApi.delete(
-        `${imageDeleteURL}${id}/`,
+        `${imageDeleteURL}${id}/`
       );
-      if (response.status == 204) {
+      if (response.status === 204) {
         setcarouseData("");
         toast.success(`Record deleted successfully`);
       }

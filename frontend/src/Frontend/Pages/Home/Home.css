@@ -88,4 +88,23 @@
   border-bottom: 1px solid #ddd;
 }
 
+
+
+
+.homePage .pageBanner img {
+  height: calc(100vh - 100px);
+  object-fit: cover;
+}
+
+.homePage .pageBanner .titleCaption {
+  padding: 10px 120px 150px !important;
+}
+
+@media (max-width: 576px) {
+  .homePage .pageBanner .titleCaption {
+    padding: 10px 50px 120px !important;
+  }
+}
+
+
 /*  End of Eight Blocks */

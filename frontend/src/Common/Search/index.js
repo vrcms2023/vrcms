@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 // Components
 import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
-import { sortCreatedDateByDesc } from "../../util/dataFormatUtil";
 import { getCookie } from "../../util/cookieUtil";
 
 const Search = ({
@@ -15,7 +14,7 @@ const Search = ({
   setSearchquery,
   searchQuery,
   imageGallery,
-  setImageGallery
+  setImageGallery,
 }) => {
   const userCookie = getCookie("access");
 
@@ -29,34 +28,33 @@ const Search = ({
     }
   };
 
-  const searchResults = () => {
-    const searchResults = imageGallery?.filter(image => image.title.toLowerCase() === searchQuery.toLowerCase())
-    setImageGallery(searchResults);
-  };
-
-  // const searchResults = async () => {
-  //   let response;
-  //   try {
-  //     if (searchQuery) {
-  //       response = await axiosClientServiceApi.get(
-  //         `${clientSearchURL}${searchQuery}/`,
-  //       );
-
-  //     } else if (userCookie) {
-  //       response = await axiosServiceApi.get(adminSearchURL);
-  //     } else {
-  //       response = await axiosClientServiceApi.get(clientDefaultURL);
-  //     }
-  //     setObject(response.data);
-  //     setPageloadResults(false);
-  //   } catch (error) {
-  //     console.log("Unable to get the  data");
-  //   }
+  // const searchResults = () => {
+  //   const searchResults = imageGallery?.filter(image => image.title.toLowerCase() === searchQuery.toLowerCase())
+  //   setImageGallery(searchResults);
   // };
+
+  const searchResults = async () => {
+    let response;
+    try {
+      if (searchQuery) {
+        response = await axiosClientServiceApi.get(
+          `${clientSearchURL}${searchQuery}/`
+        );
+      } else if (userCookie) {
+        response = await axiosServiceApi.get(adminSearchURL);
+      } else {
+        response = await axiosClientServiceApi.get(clientDefaultURL);
+      }
+      setObject(response.data);
+      setPageloadResults(false);
+    } catch (error) {
+      console.log("Unable to get the  data");
+    }
+  };
 
   return (
     <div className="d-flex justify-conent-start align-items-start flex-column">
-      <div className="input-group mb-1 search">
+      <div className="input-group mb-1 search my-3 my-md-0">
         <input
           type="text"
           className="form-control"

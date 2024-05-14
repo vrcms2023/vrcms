@@ -3,7 +3,6 @@ import careerBgImg from "../../Images/careers-bg.jpg";
 
 export const GlobalStyles = createGlobalStyle`
 
-@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;500&family=Poppins:wght@100;200;300;400;600&family=Roboto:wght@300;500&display=swap');
 
 * {
     margin:0;
@@ -29,19 +28,7 @@ body {
 }
 
 
-.navbar {
-    background-color:${({ theme }) => theme.navbarBg}; 
-    box-shadow: 0px 5px 30px #111111;
-    height: 80px;
 
-    .nav-Link {
-        color:${({ theme }) => theme.navbarLinkColor}; 
-
-        &:hover {
-            color:${({ theme }) => theme.navbarLinkHoverColor};
-        }
-    }
-}
 
 .carousel-caption {
     h1 { color:${({ theme }) => theme.carouselSlideTitleColor};     }
@@ -50,7 +37,7 @@ body {
 
 
 .ABrief {
-    background-color:${({ theme }) => theme.ABriefBg}; 
+    background-color:${({ theme }) => theme.verylightgray}; 
     color:${({ theme }) => theme.ABriefTextColor};
 }
 .ABrief h3, .ABrief .title {border-color: ${({ theme }) =>
@@ -93,7 +80,7 @@ body {
 }
 
 .btn {
-    border-radius: 50px !important;
+    border-radius: 0.375rem !important;
     transition: all .35s;
 
     // &:hover svg { transform: rotate(-45deg);}
@@ -103,36 +90,48 @@ body {
     &:hover svg { 
       transform: translateX(10px);
     }
+
+    @media (max-width: 480px) {
+      width: 100%;
+    }
 }
 .btn-primary {
     background-color:${({ theme }) => theme.primaryColor}; 
-    color:${({ theme }) => theme.white};
+    color:${({ theme }) => theme.black};
 }
 .btn-primary:hover {
-    background-color:${({ theme }) => theme.secondaryColor}; 
-    color:${({ theme }) => theme.primaryColor};
+    background-color:${({ theme }) => theme.primaryHoverColor}; 
+    color:${({ theme }) => theme.white};
 }
 
 .btn-secondary {
     background-color:${({ theme }) => theme.secondaryColor}; 
-    color:${({ theme }) => theme.white};
+    color:${({ theme }) => theme.black};
 }
 
 .btn-secondary:hover {
-    background-color:${({ theme }) => theme.primaryColor}; 
-    color:${({ theme }) => theme.secondaryColor};
+    background-color:${({ theme }) => theme.secondaryHoverColor}; 
+    color:${({ theme }) => theme.lightgray};
 }
 
 .btn-outline {
-    border: 3px solid ${({ theme }) => theme.secondaryColor} !important; 
-    color:${({ theme }) => theme.primaryColor};
+    border: 1px solid ${({ theme }) => theme.black} !important; 
+    color:${({ theme }) => theme.black} !important; 
 }
 
-.btn-outline:hover { }
+.btn-outline:hover { 
+    border: 1px solid ${({ theme }) => theme.black} !important; 
+    color:${({ theme }) => theme.black};
+}
 
 .btn-more {
-  border: 1px solid ${({ theme }) => theme.lightgray} !important; 
-  color:${({ theme }) => theme.primaryColor};
+  border: 1px solid ${({ theme }) => theme.gray} !important; 
+  color:${({ theme }) => theme.gray};
+}
+.btn-more:hover {
+  background-color:${({ theme }) => theme.verylightgray}; 
+  border: 1px solid ${({ theme }) => theme.black} !important; 
+  color:${({ theme }) => theme.black};
 }
 
 .homeCareers {
@@ -172,6 +171,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    border-radius: 30px;
     // padding: 70px 75px !important;
 
     .testimonialImg {

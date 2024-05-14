@@ -14,7 +14,7 @@ import { getDashBoardProjects } from "../../../features/project/projectActions";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { projects, error } = useSelector((state) => state.dashBoardProjects);
+  const { projects } = useSelector((state) => state.dashBoardProjects);
   const [liveProjects, setLiveProject] = useState([]);
   const [archiveProject, setArchiveProject] = useState([]);
   const [pubishProject, setpubishProject] = useState([]);
@@ -29,7 +29,7 @@ const Dashboard = () => {
    */
   useEffect(() => {
     dispatch(getDashBoardProjects());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (projects && projects?.projectList?.length > 0) {
@@ -53,7 +53,7 @@ const Dashboard = () => {
         list?.future?.length > 0 ||
         list?.ongoing?.length > 0
         ? true
-        : false,
+        : false
     );
   };
 
@@ -80,7 +80,7 @@ const Dashboard = () => {
   const getCategoryPorjectList = (data) => {
     const projList = [];
 
-    data.map((proj) => {
+    data.forEach((proj) => {
       if (!projList[proj.projectCategoryValue]) {
         projList[proj.projectCategoryValue] = [];
       }
@@ -94,7 +94,7 @@ const Dashboard = () => {
     try {
       const response = await axiosServiceApi.patch(
         `/project/archiveProject/${id}/`,
-        data,
+        data
       );
       if (response.data?.projectList?.length > 0) {
         toast.success(`${project.projectTitle} ${message}`);
@@ -102,7 +102,7 @@ const Dashboard = () => {
       }
     } catch (error) {
       toast.error(
-        `${project.projectTitle} project unabel to process your request`,
+        `${project.projectTitle} project unabel to process your request`
       );
     }
   };

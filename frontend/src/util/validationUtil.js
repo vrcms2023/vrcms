@@ -22,6 +22,13 @@ export const fieldValidation = {
       message: "Please enter valid Email format",
     },
   },
+  emailid_2: {
+    pattern: {
+      value:
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      message: "Please enter valid Email format",
+    },
+  },
   phonen_number: {
     required: "Please enter Phone Number.",
     pattern: {
@@ -37,5 +44,8 @@ export const fieldValidation = {
   },
   description: {
     required: "Please enter Description",
+  },
+  company_name: {
+    required: "Please enter Company",
   },
 };
