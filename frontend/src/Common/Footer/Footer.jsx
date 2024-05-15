@@ -43,13 +43,14 @@ const Footer = () => {
   const dispatch = useDispatch();
 
   const { menuList } = useSelector((state) => state.auth);
-
+  const [counter, setCounter] = useState(0);
   const date = new Date();
   const fullYear = date.getFullYear();
 
   useEffect(() => {
-    if (!componentEdit.address || footerData?.length === 0) {
+    if (!componentEdit.address || (footerData?.length === 0 && counter < 3)) {
       dispatch(getFooterValues());
+      setCounter(counter + 1);
     }
   }, [componentEdit.address, footerData.length, dispatch]);
 
@@ -60,8 +61,9 @@ const Footer = () => {
   }, [footerData]);
 
   useEffect(() => {
-    if (addressList?.length === 0) {
+    if (addressList?.length === 0 && counter < 3) {
       dispatch(getAddressList());
+      setCounter(counter + 1);
     }
     if (addressList?.length > 0) {
       setAddress(addressList[0]);

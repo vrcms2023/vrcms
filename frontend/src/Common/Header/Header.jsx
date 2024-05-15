@@ -69,6 +69,8 @@ const Header = () => {
   ];
   const isHideBurgetIcon = hideHandBurgerIcon(burgetHide);
   const [serviceMenuList, setServiceMenuList] = useState([]);
+  const [counter, setCounter] = useState(0);
+  const [showAddMenuMessage, setshowAddMenuMessage] = useState(false);
 
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -95,8 +97,11 @@ const Header = () => {
     if (!userInfo && getCookie("access")) {
       dispatch(getUser());
     }
-    if (menuList.length === 0) {
+    if (menuList.length === 0 && counter < 3) {
       dispatch(getMenu());
+      setCounter(counter + 1);
+    } else if (menuList.length === 0 && counter >= 3) {
+      setshowAddMenuMessage(true);
     }
   }, [userInfo, dispatch, menuList]);
 
@@ -164,7 +169,7 @@ const Header = () => {
             <img src={Logo} alt="" />
           </Link>
 
-          {!isHideBurgetIcon ? (
+          {!isHideBurgetIcon && !showAddMenuMessage && (
             <button
               className="navbar-toggler"
               type="button"
@@ -176,8 +181,13 @@ const Header = () => {
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-          ) : (
-            ""
+          )}
+          {showAddMenuMessage && (
+            <div className="w-75 text-end">
+              <Link to="/adminPagesConfigurtion" className="btn btn-outline ">
+                Go for Menu Creation
+              </Link>
+            </div>
           )}
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             {!isHideMenu && (

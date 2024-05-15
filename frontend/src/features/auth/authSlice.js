@@ -135,8 +135,9 @@ const authSlice = createSlice({
     builder.addCase(getMenu.fulfilled, (state, action) => {
       state.loading = false;
       state.menuList =
-        action.payload?.PageDetails &&
-        getMenuObject(action.payload?.PageDetails);
+        action.payload?.PageDetails?.length > 0
+          ? getMenuObject(action.payload?.PageDetails)
+          : [];
     });
     builder.addCase(getMenu.rejected, (state, action) => {
       state.loading = false;

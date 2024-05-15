@@ -24,7 +24,8 @@ const footerSlice = createSlice({
     });
     builder.addCase(getFooterValues.fulfilled, (state, action) => {
       state.loading = false;
-      state.footerData = action.payload;
+      state.footerData =
+        action.payload?.address?.length > 0 ? action.payload : [];
     });
     builder.addCase(getFooterValues.rejected, (state, action) => {
       state.loading = false;
