@@ -6,10 +6,12 @@ import {
   getImageGalleryFields,
   imageDimensionsJson,
 } from "../../util/dynamicFormFields";
-import ModelBg from "../../Common/ModelBg";
-import DynamicCarousel from "../Components/DynamicCarousel";
-import { getImagePath } from "../../util/commonUtil";
+
+import { paginationDataFormat } from "../../util/commonUtil";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
+import { ImageGalleryStyled } from "../../Common/StyledComponents/Styled-ImageGallery";
+import ImageGalleryComponent from "../Components/ImageGalleryComponent";
+import CustomPagination from "../../Common/CustomPagination";
 
 const ImagesGallery = () => {
   const editComponentObj = {
@@ -18,15 +20,18 @@ const ImagesGallery = () => {
 
   const pageType = "imageGallery";
   const { isAdmin, hasPermission } = useAdminLoginStatus();
-  const [show, setShow] = useState(false);
+  //const [show, setShow] = useState(false);
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [imageGallery, setImageGallery] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [img, setImg] = useState(null);
+  //const [showModal, setShowModal] = useState(false);
+  //const [img, setImg] = useState(null);
+  const [paginationData, setPaginationData] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  //const [pageLoadResult, setPageloadResults] = useState(false);
 
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
-    setShow(value);
+    //setShow(value);
     document.body.style.overflow = "hidden";
   };
 
@@ -38,8 +43,7 @@ const ImagesGallery = () => {
         );
 
         if (response?.status === 200) {
-          let key = Object.keys(response.data);
-          setImageGallery(response.data[key]);
+          setResponseData(response?.data);
         }
       } catch (error) {
         console.log("unable to access ulr because of server is down");
@@ -54,78 +58,79 @@ const ImagesGallery = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const findThumbHandler = (id) => {
-    const findImg = imageGallery.find((allGallery) => allGallery.id === id);
-    setShowModal(!showModal);
-    setImg(findImg);
-  };
+  // const findThumbHandler = (id) => {
+  //   const findImg = imageGallery.find((allGallery) => allGallery.id === id);
+  //   setShowModal(!showModal);
+  //   setImg(findImg);
+  // };
 
-  const closeModel = () => {
-    setShowModal(!showModal);
+  // const closeModel = () => {
+  //   setShowModal(!showModal);
+  // };
+  const setResponseData = (data) => {
+    setImageGallery(data.results);
+    setPaginationData(paginationDataFormat(data));
+    setCurrentPage(1);
   };
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-12 py-5">
-          {isAdmin && hasPermission && (
-            <EditIcon editHandler={() => editHandler("gallery", true)} />
-          )}
-          {componentEdit.gallery && (
-            <div className="adminEditTestmonial">
-              <AdminBanner
-                editHandler={editHandler}
-                componentType="gallery"
-                getImageListURL={`imgGallery/createImageVidoeGallery/${pageType}/`}
-                deleteImageURL="imgGallery/updateImageVidoeGallery/"
-                imagePostURL="imgGallery/createImageVidoeGallery/"
-                imageUpdateURL="imgGallery/updateImageVidoeGallery/"
-                imageLabel="Add Image"
-                showDescription={false}
-                showExtraFormFields={getImageGalleryFields("imageGallery")}
-                dimensions={imageDimensionsJson("imageGallery")}
-                validTypes={"video/quicktime,video/mp4,video/avi"}
-              />
+    <>
+      <ImageGalleryStyled>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12 py-5">
+              {isAdmin && hasPermission && (
+                <EditIcon editHandler={() => editHandler("gallery", true)} />
+              )}
+              {componentEdit.gallery && (
+                <div className="adminEditTestmonial">
+                  <AdminBanner
+                    editHandler={editHandler}
+                    componentType="gallery"
+                    getImageListURL={`imgGallery/createImageVidoeGallery/${pageType}/`}
+                    deleteImageURL="imgGallery/updateImageVidoeGallery/"
+                    imagePostURL="imgGallery/createImageVidoeGallery/"
+                    imageUpdateURL="imgGallery/updateImageVidoeGallery/"
+                    imageIndexURL=""
+                    imageLabel="Add Image"
+                    showDescription={false}
+                    showExtraFormFields={getImageGalleryFields("imageGallery")}
+                    dimensions={imageDimensionsJson("imageGallery")}
+                  />
+                </div>
+              )}
             </div>
-          )}
+          </div>
+
+          <ImageGalleryComponent
+            pageType={pageType}
+            componentEdit={componentEdit}
+            imageGallery={imageGallery}
+          />
         </div>
+      </ImageGalleryStyled>
+      <div className="row my-5">
+        {paginationData?.total_count && (
+          <CustomPagination
+            paginationData={paginationData}
+            paginationURL={
+              isAdmin
+                ? `imgGallery/createImageVidoeGallery/${pageType}/`
+                : `imgGallery/clientImageVidoeGallery/${pageType}/`
+            }
+            paginationSearchURL={
+              isAdmin
+                ? `imgGallery/createImageVidoeGallery/${pageType}/`
+                : `imgGallery/clientImageVidoeGallery/${pageType}/`
+            }
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            setResponseData={setResponseData}
+            pageLoadResult=""
+          />
+        )}
       </div>
-
-      <div className="row gallery">
-        {imageGallery.length > 0 &&
-          imageGallery?.map((item, index) => (
-            <div className="col-4 mb-4" key={item.id}>
-              <img
-                src={getImagePath(item.path)}
-                alt={item.alternitivetext}
-                className="d-block w-75"
-                onClick={() => findThumbHandler(item.id)}
-              />
-
-              <div className="carousel-caption ">
-                {item.image_title && (
-                  <h1 className="fw-bold">{item.image_title}</h1>
-                )}
-
-                {item.image_description && (
-                  <p className="fw-normal description fs-5">
-                    {item.image_description}
-                  </p>
-                )}
-              </div>
-            </div>
-          ))}
-      </div>
-      {show && <ModelBg />}
-      {showModal && (
-        <DynamicCarousel
-          obj={img}
-          all={imageGallery}
-          closeCarousel={closeModel}
-        />
-      )}
-      {showModal && <ModelBg closeModel={closeModel} />}
-    </div>
+    </>
   );
 };
 export default ImagesGallery;

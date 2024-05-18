@@ -16,20 +16,20 @@ const addressSlice = createSlice({
       state.addressList = payload;
     },
   },
-  extraReducers: {
+  extraReducers: (builder) => {
     // Footer
-    [getAddressList.pending]: (state) => {
+    builder.addCase(getAddressList.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [getAddressList.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(getAddressList.fulfilled, (state, action) => {
       state.loading = false;
-      state.addressList = payload;
-    },
-    [getAddressList.rejected]: (state, { payload }) => {
+      state.addressList = action.payload;
+    });
+    builder.addCase(getAddressList.rejected, (state, action) => {
       state.loading = false;
-      state.error = payload;
-    },
+      state.error = action.payload;
+    });
   },
 });
 

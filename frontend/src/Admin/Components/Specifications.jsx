@@ -32,7 +32,7 @@ const Specifications = ({
       if (objId !== undefined) {
         try {
           const response = await axiosServiceApi.delete(
-            `/project/deleteSpecifications/${objId}/`,
+            `/project/deleteSpecifications/${objId}/`
           );
           if (response.status === 204) {
             toast.success(`${deleteVal[i].title} is deleted`);
@@ -67,10 +67,10 @@ const Specifications = ({
   useEffect(() => {
     const getSelectedSpecification = async () => {
       const response = await axiosServiceApi.get(
-        `/project/getSpecification/${project.id}/`,
+        `/project/getSpecification/${project.id}/`
       );
       if (
-        response?.status == 200 &&
+        response?.status === 200 &&
         response.data?.specification !== undefined
       ) {
         const orderReverse = response?.data?.specification;

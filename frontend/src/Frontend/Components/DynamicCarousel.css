@@ -1,15 +1,15 @@
 .dcarousel {
   position: fixed !important;
-  top: 20%;
+  top: 15vh;
   left: 0;
   right: 0;
   bottom: 0;
-  width: 80%;
-  height: 510px;
+  width: 1000px;
+  height: 560px;
   overflow: hidden;
   margin: 0 auto;
   z-index: 99999;
-  border: 5px solid #ffffff;
+  /* border: 5px solid #ffffff; */
   border-radius: 10px;
 }
 
@@ -18,31 +18,70 @@
 }
 
 .dcarousel .carousel-item img {
-  object-fit: fill;
-  width: auto;
-  height: 600px;
+  object-fit: cover;
+  /* width: auto;
+  height: 600px; */
+  width: 1000px;
   margin: 0 auto;
 }
 
+
+
 .dcarousel .closeCarousel {
   position: absolute;
-  top: -3px;
-  right: -3px;
-  background: #fff;
-  z-index: 99;
-  width: 40px;
-  height: 40px;
-  border-radius: 25px;
-  border-top-right-radius: 0;
-  text-align: center;
-  line-height: 45px;
-  color: #666;
+  top: 15px;
+  right: 15px;
+  color: #000;
   cursor: pointer;
-  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.6);
+  z-index: 99;
+  /* background: #fff; */
+  /* width: 40px;
+  height: 40px; */
+  /* border-radius: 25px; */
+  /* border-top-right-radius: 0; */
+  /* text-align: center; */
+  /* line-height: 45px; */
+  /* box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.6); */
+}
+
+@media (max-width: 991px) {
+  .dcarousel {
+    width: 100%;
+  }
+  .dcarousel .carousel-inner {
+    width: 90%;
+    margin: auto;
+  }
+
+  .dcarousel .carousel-item img {
+    width: 100%;
+  }
+  
+  .dcarousel .closeCarousel {
+    right:unset;
+    right: 60px;
+  }
+
+  .dcarousel .closeCarousel {
+    right:unset;
+    right: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .dcarousel .closeCarousel {
+    right:unset;
+    right: 30px;
+  }
+
+  .carousel-control-next, .carousel-control-prev {
+    height: 50vh;
+    width: 20%;
+  }
 }
 
 .dcarousel .closeCarousel:hover i {
-  color: red;
+  color: #DDFF86;
 }
 
 /* .dcarousel .carousel-item {

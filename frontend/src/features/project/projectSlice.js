@@ -16,20 +16,20 @@ const projectSlice = createSlice({
       state.projects = payload;
     },
   },
-  extraReducers: {
-    // admin project
-    [getDashBoardProjects.pending]: (state) => {
+  extraReducers: (builder) => {
+    // Client projects
+    builder.addCase(getDashBoardProjects.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [getDashBoardProjects.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(getDashBoardProjects.fulfilled, (state, action) => {
       state.loading = false;
-      state.projects = payload;
-    },
-    [getDashBoardProjects.rejected]: (state, { payload }) => {
+      state.projects = action.payload;
+    });
+    builder.addCase(getDashBoardProjects.rejected, (state, action) => {
       state.loading = false;
-      state.error = payload;
-    },
+      state.error = action.payload;
+    });
   },
 });
 

@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../features/auth/authSlice";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
 
 const ChangePassword = () => {
@@ -16,7 +15,6 @@ const ChangePassword = () => {
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const resetPassword = async (formData) => {
     const data = {
@@ -28,9 +26,9 @@ const ChangePassword = () => {
     try {
       const data = await axiosServiceApi.post(
         `/user/auth/users/set_password/`,
-        body,
+        body
       );
-      if (data.status == 204) {
+      if (data.status === 204) {
         setSuccess(true);
         toast.success(`Password updated successfully `);
         setTimeout(() => {

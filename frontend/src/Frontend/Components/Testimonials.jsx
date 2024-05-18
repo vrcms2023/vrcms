@@ -1,27 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import Title from "../../Common/Title";
-import { getBaseURL } from "../../util/ulrUtil";
 import { getImagePath } from "../../util/commonUtil";
 
 const Testimonials = ({ testimonis }) => {
-  const editComponentObj = {
-    logo: false,
-    menu: false,
-  };
-
-  const [admin, setAdmin] = useState(true);
-  const [componentEdit, SetComponentEdit] = useState(editComponentObj);
-  const [show, setShow] = useState(false);
-
-  const editHandler = (name, value) => {
-    SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
-    setShow(!show);
-  };
-
   const [index, setIndex] = useState(0);
-  const baseURL = getBaseURL();
+
   useEffect(() => {
     if (testimonis.length > 1) {
       const lastIndex = testimonis?.length - 1;
@@ -33,7 +17,7 @@ const Testimonials = ({ testimonis }) => {
         setIndex(0);
       }
     }
-  }, [index]);
+  }, [index, testimonis]);
 
   useEffect(() => {
     if (testimonis.length > 1) {
@@ -44,15 +28,9 @@ const Testimonials = ({ testimonis }) => {
         clearInterval(slider);
       };
     }
-  }, [index]);
+  }, [index, testimonis]);
 
   const ListOfTestimonials = testimonis?.map((item, indexPeople) => {
-    const {
-      testimonial_description,
-      testimonial_sub_title,
-      testimonial_title,
-      path,
-    } = item;
     let position = "nextSlide";
     if (indexPeople === index) {
       position = "activeSlide";
@@ -79,7 +57,7 @@ const Testimonials = ({ testimonis }) => {
             alt="User"
           />
         )}
-        <p className="mt-3 mb-5 px-3 px-md-5 fs-6">
+        <p className="w-75 m-auto mt-3 mb-5 px-3 px-md-5 fs-6">
           {item.testimonial_description}
         </p>
         <div className="d-flex justify-content-center gap-5">

@@ -24,9 +24,9 @@ const Home = () => {
     const getTestimonial = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `/testimonials/clientTestimonials/`,
+          `/testimonials/clientTestimonials/`
         );
-        if (response?.status == 200) {
+        if (response?.status === 200) {
           setTestmonis(response.data.testimonial);
         }
       } catch (e) {

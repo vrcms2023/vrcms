@@ -1,25 +1,24 @@
 import store from "./app/store";
 import React from "react";
-import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import reportWebVitals from "./reportWebVitals";
 
-//const root = ReactDOM.createRoot(document.getElementById("root"));
-render(
+const root = createRoot(document.getElementById("root"));
+
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <CookiesProvider>
         <App />
       </CookiesProvider>
     </Provider>
-  </React.StrictMode>,
-  document.getElementById("root"),
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

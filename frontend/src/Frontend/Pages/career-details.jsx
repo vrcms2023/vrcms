@@ -54,7 +54,7 @@ const Careers = () => {
           response = await axiosServiceApi.get(`/careers/createCareer/${id}/`);
         } else {
           response = await axiosClientServiceApi.get(
-            `/careers/clientSelectedCareers/${id}/`,
+            `/careers/clientSelectedCareers/${id}/`
           );
         }
         let keys = Object.keys(response.data);
@@ -68,7 +68,7 @@ const Careers = () => {
       }
     };
     getCareerData();
-  }, [id]);
+  }, [id, isAdmin]);
 
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));

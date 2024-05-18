@@ -63,9 +63,9 @@ export const AdminTestimonial = () => {
 
   const getTestimonialList = async () => {
     const response = await axiosServiceApi.get(
-      `/testimonials/createTestimonials/`,
+      `/testimonials/createTestimonials/`
     );
-    if (response?.status == 200 && response.data?.testimonial?.length > 0) {
+    if (response?.status === 200 && response.data?.testimonial?.length > 0) {
       const listReverseOrder = response.data.testimonial;
       const sortData = sortByDate(listReverseOrder);
       setTestimonialList(sortData);
@@ -121,19 +121,19 @@ export const AdminTestimonial = () => {
           `/testimonials/updateTestimonials/${id}/`,
           {
             ...testimonial,
-          },
+          }
         );
       } else {
         response = await axiosServiceApi.post(
           `/testimonials/createTestimonials/`,
           {
             ...testimonial,
-          },
+          }
         );
       }
-      if (response?.status == 200 || response?.status == 201) {
+      if (response?.status === 200 || response?.status === 201) {
         toast.success(
-          `${testimonialState.title} news ${editState ? "Update" : "created"}`,
+          `${testimonialState.title} news ${editState ? "Update" : "created"}`
         );
         setEditState(false);
         setTestimonialState(testimonialKeys);
@@ -151,15 +151,7 @@ export const AdminTestimonial = () => {
 
   const handleTestimonialEdit = (event, testimonial) => {
     event.preventDefault();
-    const {
-      imageId,
-      projectID,
-      originalname,
-      imageUrl,
-      description,
-      title,
-      id,
-    } = testimonial;
+    const { projectID, description, title, id } = testimonial;
     setTestimonialObject([]);
     const testimonialObj = {
       title: title,
@@ -181,13 +173,13 @@ export const AdminTestimonial = () => {
     const deleteSelectedNews = async () => {
       try {
         const response = await axiosServiceApi.delete(
-          `/testimonials/updateTestimonials/${testimonial.id}/`,
+          `/testimonials/updateTestimonials/${testimonial.id}/`
         );
         if (response.status !== 204) {
           setErrorMessage(response.data.message);
           toast.error("Unable to Delete testimonial");
         }
-        if (response.status == 204) {
+        if (response.status === 204) {
           toast.success(`${testimonial.title} testimonial deleted`);
           setEditState(false);
           setTestimonialState(testimonialKeys);

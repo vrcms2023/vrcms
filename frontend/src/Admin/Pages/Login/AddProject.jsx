@@ -70,14 +70,14 @@ const AddProject = () => {
   useEffect(() => {
     const getPorjectCategory = async () => {
       const response = await axiosServiceApi.get(`/project/categorylist/`);
-      if (response?.status == 200) {
+      if (response?.status === 200) {
         setDefaultProjectType(response.data);
       } else {
         navigate("/login");
       }
     };
     getPorjectCategory();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     setUserName(getCookie("userName"));
@@ -157,10 +157,10 @@ const AddProject = () => {
         isActive: true,
         publish: false,
       });
-      if (response?.status == 400) {
+      if (response?.status === 400) {
         setErrorMessage(response.data.message);
       }
-      if (response?.status == 201) {
+      if (response?.status === 201) {
         const project = response.data;
         toast.success(`${project.projectTitle} Project created`);
         setNewProject(project);
@@ -188,7 +188,7 @@ const AddProject = () => {
         setErrorMessage(response.data.message);
         toast.error("Unable to Process your request");
       }
-      if (response.status == 200) {
+      if (response.status === 200) {
         const project = response.data.project;
         setProjectType([
           {
@@ -237,7 +237,7 @@ const AddProject = () => {
     };
     const basicProjectDetails = axiosServiceApi.put(
       `/project/editProject/${newProject.id}/`,
-      basicDetail,
+      basicDetail
     );
 
     const amenitiesData = {
@@ -253,12 +253,12 @@ const AddProject = () => {
     if (amenities.id === "") {
       amenitiesDeatils = axiosServiceApi.post(
         `/project/amenities/`,
-        amenitiesData,
+        amenitiesData
       );
     } else {
       amenitiesDeatils = axiosServiceApi.put(
         `/project/getAmenitiesById/${newProject.id}/`,
-        amenitiesData,
+        amenitiesData
       );
     }
 
@@ -292,14 +292,14 @@ const AddProject = () => {
     if (listOfnewSpecifications.length > 0) {
       newspecification = axiosServiceApi.post(
         `/project/specification/`,
-        listOfnewSpecifications,
+        listOfnewSpecifications
       );
       url.push(newspecification);
     }
     if (listOfexitSpecifications.length > 0) {
       exitSpecification = axiosServiceApi.put(
         `/project/updatespecification/${newProject.id}/`,
-        listOfexitSpecifications,
+        listOfexitSpecifications
       );
       url.push(exitSpecification);
     }
@@ -343,13 +343,13 @@ const AddProject = () => {
       };
       const response = await axiosServiceApi.patch(
         `/project/publishProject/${newProject.id}/`,
-        data,
+        data
       );
       if (response.status === 200) {
         const publisher = JSON.parse(response.data.project.publish);
         setProjectPublish(publisher);
         toast.success(
-          `${readOnlyTitle} ${publisher ? "published" : "unPublished"}`,
+          `${readOnlyTitle} ${publisher ? "published" : "unPublished"}`
         );
       }
     };

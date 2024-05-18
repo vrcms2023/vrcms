@@ -26,5 +26,14 @@ export const NewsStyled = styled.div`
       //     }
       // }
     }
+    
+  }
+  .adminView {
+    img {
+      width: 80px !important;
+      height: 80px;
+    }
+
+    
   }
 `;

@@ -43,6 +43,10 @@ const Login = () => {
   }, [access, dispatch]);
 
   useEffect(() => {
+    removeAllCookies();
+  }, []);
+
+  useEffect(() => {
     if (userInfo) {
       if (!isAppAccess(userInfo)) {
         removeAllCookies();

@@ -1,9 +1,8 @@
 import React from "react";
-import { getBaseURL } from "../util/ulrUtil";
 
 const Model = ({ obj, closeModel, flag }) => {
   // console.log(obj)
-  const baseURL = getBaseURL();
+
   // const { dec, title, cr, crm } = privacy;
 
   // const newImages = obj.imageUrls.length > 0 ? (

@@ -17,26 +17,38 @@
 }
 
 .carousel-item {
-  border-bottom-right-radius: 250px;
-  border-bottom-left-radius: 250px;
   overflow: hidden;
-  box-shadow: 0 15px 0px #3cd9d2;
+  /* box-shadow: 0 15px 0px #3cd9d2; */
 }
 .carousel-item img {
-  height: 65vh;
+  height: 85vh;
   object-fit: cover;
 }
 
 .carousel-caption {
   z-index: 999;
-  text-align: left !important;
-  top: 40%;
-  width: 45%;
+  text-align: right !important;
+  bottom: 20%;
+  right: 10%;
+  /* width: 75%; */
 }
 
 .carousel-caption h1 {
-  letter-spacing: 0.1rem;
-  font-size: 3rem;
+  letter-spacing: 0.25rem;
+  font-size: 3.5rem;
+  margin: 0px;
+  font-family: "PT Sans Narrow", sans-serif;
+  font-weight: 700 !important;
+  font-style: normal;
+  text-shadow: 0px 4px 0 rgba(0,0,0, .3)
+}
+
+.subtitle {
+  color: #DDFF86;
+  letter-spacing: .3rem;
+  text-transform: uppercase;
+  font-weight: normal !important;
+  font-family: "PT Sans Narrow", sans-serif;
 }
 
 @media (max-width: 768px) {

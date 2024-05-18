@@ -25,14 +25,14 @@ const BriefIntroFrontend = ({ pageType, introState }) => {
     if (!introState) {
       getBriefIntro();
     }
-  }, [introState]);
+  }, [introState, pageType]);
 
   return (
     <div className="container-fluid">
       <div className="row">
         <BriefIntroStyled>
           <div className=" briefIntro">
-            <div className="col-md-10 offset-md-1 py-2 py-md-5 ">
+            <div className="col-md-10 offset-md-1 py-3 py-md-5 ">
               {introValue?.intro_title === "" ? (
                 ""
               ) : (

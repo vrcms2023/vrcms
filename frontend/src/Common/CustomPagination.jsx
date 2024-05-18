@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { axiosClientServiceApi, axiosServiceApi } from "../util/axiosUtil";
@@ -30,7 +30,7 @@ const CustomPagination = ({
         response = await axiosClientServiceApi.get(`${apiURL}?p=${number}`);
       }
 
-      if (response?.status == 200 && response.data?.results?.length > 0) {
+      if (response?.status === 200 && response.data?.results?.length > 0) {
         setResponseData(response.data);
         setCurrentPage(number);
       }

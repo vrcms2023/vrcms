@@ -16,20 +16,20 @@ const serviceSlice = createSlice({
       state.serviceMenu = payload;
     },
   },
-  extraReducers: {
-    // Servicelist
-    [getServiceValues.pending]: (state) => {
+  extraReducers: (builder) => {
+    // Client projects
+    builder.addCase(getServiceValues.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [getServiceValues.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(getServiceValues.fulfilled, (state, action) => {
       state.loading = false;
-      state.serviceMenu = sortByCreatedDate(payload?.services);
-    },
-    [getServiceValues.rejected]: (state, { payload }) => {
+      state.serviceMenu = sortByCreatedDate(action?.payload?.services);
+    });
+    builder.addCase(getServiceValues.rejected, (state, action) => {
       state.loading = false;
-      state.error = payload;
-    },
+      state.error = action.payload;
+    });
   },
 });
 

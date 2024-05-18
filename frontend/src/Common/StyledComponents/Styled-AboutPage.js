@@ -5,6 +5,15 @@ export const AboutPageStyled = styled.div`
     color: ${({ theme }) => theme.aboutPageTitleColor};
   }
   .aboutPage {
+
+    
+    .leftColumn {
+      background-color: ${({ theme }) => theme.white};
+    }
+    .rightColumn {
+      background-color: ${({ theme }) => theme.verylightgray};
+    }
+
     ul {
       padding: 0;
       margin: 25px 0;

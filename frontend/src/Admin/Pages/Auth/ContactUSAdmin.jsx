@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Title from "../../../Common/Title";
-import Button from "../../../Common/Button";
-import { useNavigate } from "react-router-dom";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { toast } from "react-toastify";
 import Search from "../../../Common/Search";
@@ -16,29 +13,30 @@ const ContactUSAdmin = () => {
   const [pageLoadResult, setPageloadResults] = useState(false);
   const [searchQuery, setSearchquery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const navigate = useNavigate();
 
   /**
    * get User details
    */
-  const getAllUserDetails = async () => {
-    try {
-      const response = await axiosServiceApi.get(`/contactus/`);
-      if (response?.status == 200 && response.data?.results?.length > 0) {
-        setResponseData(response.data);
-        setPageloadResults(true);
-      }
-    } catch (error) {
-      toast.error("Unable to load contactus details");
-    }
-  };
+
   useEffect(() => {
+    const getAllUserDetails = async () => {
+      try {
+        const response = await axiosServiceApi.get(`/contactus/`);
+        if (response?.status === 200 && response.data?.results?.length > 0) {
+          setResponseData(response.data);
+          setPageloadResults(true);
+        }
+      } catch (error) {
+        toast.error("Unable to load contactus details");
+      }
+    };
+
     getAllUserDetails();
   }, []);
 
   const setResponseData = (data) => {
     setUserDetails(
-      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : [],
+      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []
     );
     setPaginationData(paginationDataFormat(data));
     setCurrentPage(1);

@@ -22,12 +22,40 @@
   color: #333 !important;
 }
 
-.briefServices {
+/* .briefServices {
   background-image: url("../../Images/logo-symbol.svg");
   background-repeat: no-repeat;
   background-position: 180px -50px;
   background-size: 95%;
+} */
+
+.briefServices a {
+  position: relative;
+  animation: myout .4s ease-out;
+  animation-fill-mode: backwards;
 }
+
+.briefServices a:hover {
+  position: relative;
+  animation: mymove .2s ease-in;
+  animation-fill-mode: forwards;
+}
+
+.briefServices a:hover img {
+ opacity: .2  
+}
+
+@keyframes mymove {
+  from {left: 0px;}
+  to {left: 20px; }
+}
+
+@keyframes myout {
+  from {left: 20px;}
+  to {left: 0px; }
+}
+
+
 
 .ABriefImg .servicesList li {
   display: flex;
@@ -48,6 +76,6 @@
 
 @media (max-width: 756px) {
   .ABriefImg img {
-    display: none;
+    /* display: none; */
   }
 }

@@ -10,7 +10,6 @@ import {
   storeServiceMenuValueinCookie,
   urlStringFormat,
 } from "../../util/commonUtil";
-import { getCookie } from "../../util/cookieUtil";
 import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 // import { getImagePath } from "../../util/commonUtil";
@@ -18,12 +17,11 @@ import { getFormDynamicFields } from "../../util/dynamicFormFields";
 
 // Image Import
 // import Logo from "../../../src/Images/logo.svg";
-import circleArrow from "../../../src/Images/circleArrow.svg";
+import circleArrow from "../../../src/Images/arrow-right-circle.png";
 import EditIcon from "../../Common/AdminEditIcon";
 
 // Styles
 import "./ABrief.css";
-import Ancher from "../../Common/Ancher";
 import { useSelector } from "react-redux";
 
 const ABrief = ({ title, cssClass, linkClass, moreLink, dimensions }) => {
@@ -37,31 +35,6 @@ const ABrief = ({ title, cssClass, linkClass, moreLink, dimensions }) => {
   const [bannerdata, setBannerData] = useState([]);
   const { serviceMenu } = useSelector((state) => state.serviceMenu);
 
-  // const ServiceBannerFormField = {
-  //   imageTitle: {
-  //     label: "Title",
-  //     type: "text",
-  //     fieldName: "imageTitle",
-  //   },
-  //   bannerTitle: {
-  //     label: "Sub Title",
-  //     type: "text",
-  //     fieldName: "bannerTitle",
-  //   },
-  //   imageDescription: {
-  //     label: "Description",
-  //     type: "textarea",
-  //     fieldName: "imageDescription",
-  //   },
-  //   pageType: {
-  //     label: "News Title",
-  //     readonly: true,
-  //     type: "hidden",
-  //     value: pageType ? pageType : "",
-  //     fieldName: "pageType",
-  //   },
-  // };
-
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setShow(!show);
@@ -72,7 +45,7 @@ const ABrief = ({ title, cssClass, linkClass, moreLink, dimensions }) => {
     const getBannerData = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `banner/clientBannerIntro/${pageType}/`,
+          `banner/clientBannerIntro/${pageType}/`
         );
         if (response?.status === 200) {
           setBannerData(response.data.imageModel);
@@ -123,7 +96,7 @@ const ABrief = ({ title, cssClass, linkClass, moreLink, dimensions }) => {
                     <img src={circleArrow} alt="" />
                     <Link
                       to={`/services/${urlStringFormat(
-                        item.services_page_title,
+                        item.services_page_title
                       )}/`}
                       onClick={() => {
                         storeServiceMenuValueinCookie(item);
@@ -147,6 +120,15 @@ const ABrief = ({ title, cssClass, linkClass, moreLink, dimensions }) => {
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("homecareers", true)} />
         )}
+
+        <div className="d-flex align-items-center mb-5">
+          <i
+            className="fa fa-angle-left text-muted fs-1 me-2"
+            aria-hidden="true"
+          ></i>
+          <Title title={"OUR WORK LOCATIONS"} cssClass={"fs-4 fw-medium"} />
+        </div>
+
         {bannerdata ? (
           <Title title={bannerdata.banner_title} cssClass={cssClass} />
         ) : (
@@ -159,14 +141,18 @@ const ABrief = ({ title, cssClass, linkClass, moreLink, dimensions }) => {
           cssClass={cssClass}
         /> */}
 
-        <p className="lh-md mt-md-3">
+        <p className="lh-lg mt-md-3">
           {bannerdata?.banner_descripiton
             ? bannerdata.banner_descripiton
             : "upload Description"}
         </p>
 
         <div>
-          <Ancher
+          <Link to="/about">
+            <img src={circleArrow} alt="circlearrow" />
+          </Link>
+
+          {/* <Ancher
             AncherLabel="More services"
             url
             Ancherpath={`/services/${urlStringFormat(
@@ -174,7 +160,7 @@ const ABrief = ({ title, cssClass, linkClass, moreLink, dimensions }) => {
             )}/`}
             AncherClass="btn btn-secondary d-flex justify-content-center align-items-center gap-3"
             AnchersvgColor="#ffffff"
-          />
+          /> */}
         </div>
       </div>
       {componentEdit.homecareers ? (

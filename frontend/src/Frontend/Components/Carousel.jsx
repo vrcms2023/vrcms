@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 
 // Components
 import { axiosClientServiceApi } from "../../util/axiosUtil";
-import { getBaseURL } from "../../util/ulrUtil";
-import { getImagePath } from "../../util/commonUtil";
+import { getImagePath, sortByFieldName } from "../../util/commonUtil";
 
 // Styles
 import "./Carousel.css";
@@ -13,18 +12,23 @@ import SkeletonImage from "../../Common/Skeltons/SkeletonImage";
 const Carousel = ({ carouselState }) => {
   const { isLoading } = useSelector((state) => state.loader);
   const [carousel, setCarousel] = useState([]);
-  const baseURL = getBaseURL();
+  const pageType = "imagegallery";
 
   useEffect(() => {
     const getCarousels = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `carousel/clientCarousel/`,
+          `imgGallery/clientImageVidoeGallery/${pageType}/`
         );
 
-        if (response?.status == 200) {
+        if (response?.status === 200) {
           let key = Object.keys(response.data);
-          setCarousel(response.data[key]);
+          const carouselList = sortByFieldName(
+            response.data[key],
+            "carouse_position"
+          );
+
+          setCarousel(carouselList);
         }
       } catch (error) {
         console.log("unable to access ulr because of server is down");
@@ -46,40 +50,7 @@ const Carousel = ({ carouselState }) => {
 
         {carousel.length > 0 ? (
           carousel?.map((item, index) => (
-            <div
-              className={`carousel-item ${index == 0 ? "active" : ""}`}
-              key={item.id}
-            >
-              <img
-                src={getImagePath(item.path)}
-                alt={item.alternitivetext}
-                className="d-block w-100"
-              />
-
-              <div className="carousel-caption ">
-                {item.carouse_title ? (
-                  <h1 className="fw-bold">{item.carouse_title}</h1>
-                ) : (
-                  ""
-                )}
-
-                {item.carouse_sub_title ? (
-                  <span className="fw-normal subtitle fs-6">
-                    {item.carouse_sub_title}
-                  </span>
-                ) : (
-                  ""
-                )}
-
-                {item.carouse_description ? (
-                  <p className="fw-normal description fs-5">
-                    {item.carouse_description}
-                  </p>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
+            <CarouselItem key={index} item={item} index={index} />
           ))
         ) : (
           <div className="d-flex justify-content-center align-items-center fs-5 text-muted text-center noImg">
@@ -107,24 +78,74 @@ const Carousel = ({ carouselState }) => {
           </div>
         ))} */}
       </div>
-      <button
-        className="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev"
-      >
-        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Previous</span>
-      </button>
-      <button
-        className="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next"
-      >
-        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Next</span>
-      </button>
+
+      {carousel.length > 1 ? (
+        <>
+          <button
+            className="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev"
+          >
+            <span
+              className="carousel-control-prev-icon"
+              aria-hidden="true"
+            ></span>
+            <span className="visually-hidden">Previous</span>
+          </button>
+          <button
+            className="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next"
+          >
+            <span
+              className="carousel-control-next-icon"
+              aria-hidden="true"
+            ></span>
+            <span className="visually-hidden">Next</span>
+          </button>
+        </>
+      ) : (
+        ""
+      )}
+    </div>
+  );
+};
+
+const CarouselItem = ({ item, index }) => {
+  return (
+    <div
+      className={`carousel-item ${index === 0 ? "active" : ""}`}
+      key={item.id}
+    >
+      <img
+        src={getImagePath(item.path)}
+        alt={item.alternitivetext}
+        className="d-block w-100"
+      />
+
+      <div className="carousel-caption ">
+        {item.carouse_title ? (
+          <h1 className="fw-bold">{item.carouse_title}</h1>
+        ) : (
+          ""
+        )}
+
+        {item.carouse_sub_title ? (
+          <span className="subtitle">{item.carouse_sub_title}</span>
+        ) : (
+          ""
+        )}
+
+        {item.carouse_description ? (
+          <p className="fw-normal description fs-5">
+            {item.carouse_description}
+          </p>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };

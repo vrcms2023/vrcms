@@ -22,17 +22,17 @@ footer .socialLinks i {
   margin: 25px 10px 0;
 }
 
-.footerDetails {
-}
 
-.footerCopyRights {
+
+/* .footerCopyRights {
   font-size: 1rem !important;
 }
 
 .dby,
 .dby a {
-  font-size: 0.95rem;
-}
+  font-size: 0.8rem;
+  color: #999999;
+} */
 
 @media (max-width: 991px) {
   footer .socialLinks img {

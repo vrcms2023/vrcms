@@ -37,14 +37,14 @@ const FooterAdminFeilds = ({ editHandler, componentType, footerValues }) => {
         data["updated_by"] = userName;
         response = await axiosServiceApi.put(
           `/footer/updateAddress/${data.id}/`,
-          data,
+          data
         );
       } else {
         data["created_by"] = userName;
         response = await axiosServiceApi.post(`/footer/createAddress/`, data);
       }
 
-      if (response.status == 200 || response.status == 201) {
+      if (response.status === 200 || response.status === 201) {
         reset(response.data.address[0]);
         toast.success(`Footer Values are updated successfully `);
         closeHandler();
@@ -60,7 +60,7 @@ const FooterAdminFeilds = ({ editHandler, componentType, footerValues }) => {
       <form className="" onSubmit={handleSubmit(onSubmit)}>
         <div className="container">
           <div className="row p-4">
-            <div className="col-md-6 mb-md-0">
+            {/* <div className="col-md-6 mb-md-0">
               <InputField
                 label="Door Number"
                 fieldName="address_dr_no"
@@ -98,9 +98,9 @@ const FooterAdminFeilds = ({ editHandler, componentType, footerValues }) => {
                 fieldName="phonen_number_2"
                 register={register}
               />
-            </div>
+            </div> */}
 
-            <div className="col-md-6 mb-md-0">
+            <div className="col-md-12 mb-md-0">
               <InputField
                 label="Facebook"
                 fieldName="facebook_url"
@@ -139,7 +139,7 @@ const FooterAdminFeilds = ({ editHandler, componentType, footerValues }) => {
             </div>
           </div>
           <div className="row">
-            <div className="d-flex justify-content-center align-items-center gap-2 mb-4">
+            <div className="d-flex justify-content-center flex-wap flex-column flex-sm-row align-items-center gap-2 mb-4">
               <button type="reset" className="btn btn-secondary">
                 Clear
               </button>

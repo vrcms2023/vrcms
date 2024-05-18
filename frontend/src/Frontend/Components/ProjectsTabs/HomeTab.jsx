@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import Title from "../../../Common/Title";
 import HomeImg from "../../../Images/project1.png";
-import { getCookie, setCookie, removeCookie } from "../../../util/cookieUtil";
-import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../../util/cookieUtil";
 import { getBaseURL } from "../../../util/ulrUtil";
-
-import { confirmAlert } from "react-confirm-alert";
-import DeleteDialog from "../../../Common/DeleteDialog";
-import Model from "../../../Common/Model";
 import ModelBg from "../../../Common/ModelBg";
 import ContactModel from "../../../Common/contactModel";
 
@@ -16,9 +11,7 @@ const HomeTab = ({ project, thumbImgs, pdfs }) => {
   const [pathName, setPathName] = useState("");
   const [fileName, setFileName] = useState("");
 
-  const navigate = useNavigate();
-
-  const { aboutstitle, aboutussubtitle, description, projectTitle } = project;
+  const { aboutstitle, aboutussubtitle, description } = project;
 
   const baseURL = getBaseURL();
 

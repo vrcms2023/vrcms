@@ -102,6 +102,33 @@ export const getCarouselFields = (category) => {
   };
 };
 
+export const getserviceOfferedFields = (category) => {
+  return {
+    carouse_title: {
+      label: "Service Title",
+      type: "text",
+      fieldName: "carouse_title",
+    },
+    carouse_sub_title: {
+      label: "Service Sub Title",
+      type: "text",
+      fieldName: "carouse_sub_title",
+    },
+    carouse_description: {
+      label: "Description",
+      type: "textarea",
+      fieldName: "carouse_description",
+    },
+    category: {
+      label: "News Title",
+      readonly: true,
+      type: "hidden",
+      value: category ? category : "",
+      fieldName: "category",
+    },
+  };
+};
+
 export const getNewslFields = () => {
   return {
     news_title: {
@@ -203,7 +230,7 @@ export const getTeamMemberFields = () => {
     },
     team_member_about_us: {
       label: "About ",
-      type: "textarea",
+      type: "richText",
       fieldName: "team_member_about_us",
     },
     twitter_url: {

@@ -100,7 +100,7 @@ export const getSelectedUserPermissions = createAsyncThunk(
         const key = Object.keys(error.response.data);
         return rejectWithValue(error.response.data[key][0]);
       } else {
-        return rejectWithValue(error.message);
+        return rejectWithValue(error);
       }
     }
   }

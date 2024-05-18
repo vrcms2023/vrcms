@@ -49,3 +49,7 @@ background: linear-gradient(350deg, rgba(218,87,0,0.9332107843137255) 0%, rgba(2
 /* .error {
   color: red;
 } */
+
+.lableIconPlaceholder {
+  padding-left: 15px;
+}

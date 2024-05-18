@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 // Component
 import Title from "../Title";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
-import { getBaseURL } from "../../util/ulrUtil";
 import { getDummyImage, getImagePath } from "../../util/commonUtil";
 import SkeletonImage from "../Skeltons/SkeletonImage";
 
@@ -12,13 +11,12 @@ import { PageBannerStyled } from "../StyledComponents/Styled-PageBanner";
 
 const Banner = ({ getBannerAPIURL, bannerState, pageLoadServiceName }) => {
   const [bannerdata, setBannerData] = useState([]);
-  const baseURL = getBaseURL();
 
   useEffect(() => {
     const getBannerData = async () => {
       try {
         const response = await axiosClientServiceApi.get(getBannerAPIURL);
-        if (response?.status == 200) {
+        if (response?.status === 200) {
           setBannerData(response.data.imageModel);
         } else {
           setBannerData({});
@@ -31,7 +29,7 @@ const Banner = ({ getBannerAPIURL, bannerState, pageLoadServiceName }) => {
     if (!bannerState) {
       getBannerData();
     }
-  }, [bannerState, pageLoadServiceName]);
+  }, [bannerState, pageLoadServiceName, getBannerAPIURL]);
 
   return (
     <PageBannerStyled>

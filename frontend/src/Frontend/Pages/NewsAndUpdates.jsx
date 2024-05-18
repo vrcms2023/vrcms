@@ -22,10 +22,13 @@ import {
 } from "../../util/dynamicFormFields";
 
 // Styles
-import AdminBanner from "../../Admin/Components/forms/ImgTitleIntoForm-List";
 import CustomPagination from "../../Common/CustomPagination";
-import { paginationDataFormat } from "../../util/commonUtil";
-import { sortCreatedDateByDesc } from "../../util/dataFormatUtil";
+import {
+  getObjectPositionKey,
+  paginationDataFormat,
+  sortByFieldName,
+} from "../../util/commonUtil";
+import NoteComponent from "../../Common/NoteComponent";
 
 const NewsAndUpdates = () => {
   const editComponentObj = {
@@ -56,16 +59,18 @@ const NewsAndUpdates = () => {
   });
 
   const setResponseData = (data) => {
-    setNews(data.length > 0 ? sortCreatedDateByDesc(data) : []);
+    const _positionKey = getObjectPositionKey(data.results[0]);
+    const _newslList = sortByFieldName(data.results, _positionKey);
+    setNews(_newslList);
     setPaginationData(paginationDataFormat(data));
     setCurrentPage(1);
   };
 
-  const articleHandler = (id) => {
-    const searchObj = news.find((newsItem) => newsItem.id === id);
-    setObj(searchObj);
-    setShowModal(!showModal);
-  };
+  // const articleHandler = (id) => {
+  //   const searchObj = news.find((newsItem) => newsItem.id === id);
+  //   setObj(searchObj);
+  //   setShowModal(!showModal);
+  // };
 
   const closeModel = () => {
     setShowModal(!showModal);
@@ -139,6 +144,9 @@ const NewsAndUpdates = () => {
             />
           </div>
         </div>
+        {isAdmin && (
+          <NoteComponent note="Use drag option to shuffle the Items" />
+        )}
 
         <div className="row mb-5">
           {componentEdit.addNews ? (
@@ -180,8 +188,8 @@ const NewsAndUpdates = () => {
                   searchQuery
                     ? `appNews/searchAppNews/${searchQuery}/`
                     : isAdmin
-                    ? "/appNews/createAppNews/"
-                    : "/appNews/clientAppNews/"
+                      ? "/appNews/createAppNews/"
+                      : "/appNews/clientAppNews/"
                 }
                 searchQuery={searchQuery}
                 setCurrentPage={setCurrentPage}

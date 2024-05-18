@@ -3,7 +3,6 @@ import BgSymbol from "../../Images/logo-symbol.svg";
 import styled from "styled-components";
 
 export const FooterStyled = styled.div`
-  background-color: ${({ theme }) => theme.footerBgColor};
   background-image: url(${BgSymbol});
   background-repeat: no-repeat;
   background-position: 120% -250px;
@@ -33,33 +32,62 @@ export const FooterStyled = styled.div`
     text-align: left
   }
 
+  .reachUs p {
+    word-wrap: break-word;
+  }
+
+  @media (max-width: 991px ) {
+    .footerLogo {
+      width: 95%;
+    }
+  }
+
+  @media (max-width: 768px ) {
+    .footerLogo {
+      width: 50%;
+    }
+  }
+  
+
   .socialLinks {
     // padding: 15px 0;
 
     img {
-      width: 80%;
+      width: 70%;
     }
 
     i {
       font-size: 2.5rem;
       margin: 25px 10px 0;
+      color: ${({ theme }) => theme.black};
+    }
+  }
+
+  .footerDetails {
+    color: ${({ theme }) => theme.black};
+
+    a {
+      color: ${({ theme }) => theme.black};
     }
   }
 
   .footerCopyRights {
+    background-color: ${({ theme }) => theme.footerBgColor};
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 1rem !important;
+    font-size: 0.85rem !important;
 
     a {
       color: ${({ theme }) => theme.footerLinkColor};
+      font-size: 0.8rem !important;
       &:hover {
-        color: ${({ theme }) => theme.secondaryColor};
+        color: ${({ theme }) => theme.footerLinkHoverColor};
       }
     }
 
     .dby,
     .dby a {
-      font-size: 0.95rem;
+      font-size: 0.85rem;
+      color: #999999
     }
   }
 

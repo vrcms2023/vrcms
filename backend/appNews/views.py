@@ -116,3 +116,30 @@ class NewsSearchAPIView(generics.ListAPIView):
 
         serializer = AppNewsSerializer(snippet, many=True)
         return Response({"appNews": serializer.data}, status=status.HTTP_200_OK)
+    
+class UpdateClientIndex(APIView):
+    """
+    Retrieve, update or delete a address instance.
+    """
+
+    def get_object(self, obj_id):
+        try:
+            return AppNews.objects.get(id=obj_id)
+        except (AppNews.DoesNotExist):
+            raise status.HTTP_400_BAD_REQUEST
+        
+    def put(self, request, *args, **kwargs):
+        obj_list = request.data
+        instances = []
+        user = request.user
+        for item in obj_list:
+            obj = self.get_object(obj_id=item["id"])
+            obj.updated_by = user.userName
+            obj.news_position = item["news_position"]
+            obj.save()
+            instances.append(obj)
+
+        serializer = AppNewsSerializer(instances,  many=True)
+        
+        return Response({"appNews": serializer.data}, status=status.HTTP_200_OK)
+       

@@ -7,8 +7,6 @@ import FooterAdminFeilds from "../../Admin/Components/forms/FooterInputs";
 import ContactInputs from "../../Admin/Components/forms/ContactInputs";
 import AdminTermsPolicy from "../../Admin/Components/TermsPrivacy/index";
 import { getFooterValues } from "../../features/footer/footerActions";
-import { getCookie } from "../../util/cookieUtil";
-import { urlStringFormat } from "../../util/commonUtil";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 import { useAdminLoginStatus } from "../customhook/useAdminLoginStatus";
 import { getAddressList } from "../../features/address/addressActions";
@@ -19,7 +17,7 @@ import ModelBg from "../ModelBg";
 
 // Images
 import EditIcon from "../AdminEditIcon";
-import Logo from "../../../src/Images/logo.svg";
+import Logo from "../../Images/logo.png";
 
 // Styles
 import { FooterStyled } from "../StyledComponents/Styled-Footer";
@@ -36,28 +34,25 @@ const Footer = () => {
   const [address, setAddress] = useState({});
   const [show, setShow] = useState(false);
   const [modelShow, setModelShow] = useState(false);
-  const { isAdmin, hasPermission } = useAdminLoginStatus();
+  const { isAdmin } = useAdminLoginStatus();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [termsAndPolicyData, setTermsAndPolicyData] = useState({});
   const [termsAndConditionData, setTermsAndConditionData] = useState({});
-  const { footerData, error } = useSelector((state) => state.footerData);
+  const { footerData } = useSelector((state) => state.footerData);
   const { addressList } = useSelector((state) => state.addressList);
   const dispatch = useDispatch();
 
+  const { menuList } = useSelector((state) => state.auth);
+  const [counter, setCounter] = useState(0);
   const date = new Date();
   const fullYear = date.getFullYear();
 
   useEffect(() => {
-    if (footerData?.length === 0) {
+    if (!componentEdit.address || (footerData?.length === 0 && counter < 3)) {
       dispatch(getFooterValues());
+      setCounter(counter + 1);
     }
-  }, []);
-
-  useEffect(() => {
-    if (!componentEdit.address && footerData?.address?.length > 0) {
-      dispatch(getFooterValues());
-    }
-  }, [componentEdit.address]);
+  }, [componentEdit.address, footerData.length, dispatch]);
 
   useEffect(() => {
     if (footerData?.address?.length > 0) {
@@ -66,16 +61,15 @@ const Footer = () => {
   }, [footerData]);
 
   useEffect(() => {
-    if (addressList?.length === 0) {
+    if (addressList?.length === 0 && counter < 3) {
       dispatch(getAddressList());
+      setCounter(counter + 1);
     }
-  }, []);
+    if (addressList?.length > 0) {
+      setAddress(addressList[0]);
+    }
+  }, [dispatch, addressList, addressList.length]);
 
-  useEffect(() => {
-    if (addressList?.addressList?.length > 0) {
-      setAddress(addressList.addressList[0]);
-    }
-  }, [addressList]);
   const showModel = (type) => {
     if (type === "PP") {
       setTermsAndConditionData({
@@ -124,9 +118,13 @@ const Footer = () => {
         <div className="container py-5 footerDetails">
           <div className="row">
             <div className="col-md-3 text-center text-md-start">
-              <h5>Company</h5>
+              <h5 className="text-center text-md-start">Company</h5>
               <ul className="">
-                <li>
+                {menuList?.map((menu) => {
+                  return <ChildMenuContent menu={menu} key={menu.id} />;
+                })}
+
+                {/* <li>
                   <Link to="/" className="ms-0">
                     Home
                   </Link>
@@ -151,7 +149,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link to="/contact">Contact Us</Link>
-                </li>
+                </li> */}
                 {/* <li>
                   <Link to="" onClick={showModel}>
                     Privacy Policy
@@ -159,27 +157,125 @@ const Footer = () => {
                 </li> */}
               </ul>
             </div>
-            <hr className="d-block d-md-none" />
-            
+            <hr className="d-block d-md-none mt-3" />
 
+            <div className="col-md-3 text-center text-md-start">
+              {address && (
+                <>
+                  <h5 className="text-center text-md-start">Address</h5>
+                  <p className="m-0 fw-bold">{address.company_name}</p>
+                  <p className="m-0">{address.address_dr_no}</p>
+                  <p className="m-0">{address.street} </p>
+                  <p className="m-0">{address.location} </p>
+                  <p className="m-0">{address.city} </p>
+                  <p className="m-0">{address.state}</p>
+                  <p className="m-0">{address.location_title}</p>
+                </>
+              )}
+            </div>
+
+            <div className="col-md-3 text-center text-md-start mb-3 reachUs">
+              <h5 className="d-none d-sm-block">Reach Us</h5>
+              {address.phonen_number ? (
+                <p className="m-0 ">
+                  <i
+                    className="fa fa-phone-square fs-4 me-2"
+                    aria-hidden="true"
+                  ></i>
+                  {address?.phonen_number}
+                </p>
+              ) : (
+                ""
+              )}
+              {address.phonen_number_2 ? (
+                <p className="m-0 ">
+                  <i
+                    className="fa fa-phone-square fs-4 me-2"
+                    aria-hidden="true"
+                  ></i>
+                  {address?.phonen_number_2}
+                </p>
+              ) : (
+                ""
+              )}
+              {address.phonen_number_3 ? (
+                <p className="m-0 ">
+                  <i
+                    className="fa fa-whatsapp fs-4 me-2"
+                    aria-hidden="true"
+                  ></i>
+                  {address?.phonen_number_3}
+                </p>
+              ) : (
+                ""
+              )}
+              <br />
+              {address.emailid ? (
+                <>
+                  <p className="m-0 ">
+                    <i
+                      className="fa fa-envelope-o fs-4 me-2"
+                      aria-hidden="true"
+                    ></i>
+                    {address?.emailid}
+                  </p>
+                </>
+              ) : (
+                ""
+              )}
+              {address.emailid_2 ? (
+                <>
+                  <p className="m-0 ">
+                    <i
+                      className="fa fa-envelope-o fs-4 me-2"
+                      aria-hidden="true"
+                    ></i>
+                    {address?.emailid_2}
+                  </p>
+                </>
+              ) : (
+                ""
+              )}
+              {address.emailid_3 ? (
+                <>
+                  <p className="m-0 ">
+                    <i
+                      className="fa fa-envelope-o fs-4 me-2"
+                      aria-hidden="true"
+                    ></i>
+                    {address?.emailid_3}
+                  </p>
+                </>
+              ) : (
+                ""
+              )}
+            </div>
             <hr className="d-block d-md-none" />
-              { <div className="col-md-3 pb-3 pb-md-0">
+            {
+              <div className="col-md-3 pb-3 pb-md-0">
+                <img
+                  src={Logo}
+                  alt="SAP Design Studio"
+                  className="footerLogo"
+                />
                 <div className="socialLinks">
-                  <h5>Social Media</h5>
-                  {footerValues.facebook_url ? (
+                  {/* <h5>Social Media</h5> */}
+                  {footerValues.facebook_url && (
                     <Link to={footerValues.facebook_url} target="_blank">
-                      <i className="fa fa-facebook-square" aria-hidden="true"></i>
+                      <i
+                        className="fa fa-facebook-square"
+                        aria-hidden="true"
+                      ></i>
                     </Link>
-                  ) : (
-                    ""
                   )}
 
-                  {footerValues.twitter_url ? (
+                  {footerValues.twitter_url && (
                     <Link to={footerValues.twitter_url} target="_blank">
-                      <i className="fa fa-twitter-square" aria-hidden="true"></i>
+                      <i
+                        className="fa fa-twitter-square"
+                        aria-hidden="true"
+                      ></i>
                     </Link>
-                  ) : (
-                    ""
                   )}
 
                   {footerValues.youtube_url ? (
@@ -190,45 +286,40 @@ const Footer = () => {
                     ""
                   )}
 
-                  {footerValues.linkedIn_url ? (
+                  {footerValues.linkedIn_url && (
                     <Link to={footerValues.linkedIn_url} target="_blank">
-                      <i className="fa fa-linkedin-square" aria-hidden="true"></i>
+                      <i
+                        className="fa fa-linkedin-square"
+                        aria-hidden="true"
+                      ></i>
                     </Link>
-                  ) : (
-                    ""
                   )}
 
-                  {footerValues.instagram_url ? (
+                  {footerValues.instagram_url && (
                     <Link to={footerValues.instagram_url} target="_blank">
                       <i className="fa fa-instagram" aria-hidden="true"></i>
                     </Link>
-                  ) : (
-                    ""
                   )}
 
-                  {footerValues.vimeo_url ? (
+                  {footerValues.vimeo_url && (
                     <Link to={footerValues.vimeo_url} target="_blank">
                       <i className="fa fa-vimeo" aria-hidden="true"></i>
                     </Link>
-                  ) : (
-                    ""
                   )}
 
-                  {footerValues.pinterest_url ? (
+                  {footerValues.pinterest_url && (
                     <Link to={footerValues.pinterest_url} target="_blank">
                       <i className="fa fa-pinterest" aria-hidden="true"></i>
                     </Link>
-                  ) : (
-                    ""
+                  )}
+                  {isAdmin && (
+                    <EditIcon
+                      editHandler={() => editHandler("address", true)}
+                    />
                   )}
                 </div>
-               
-              </div> } 
-
-            <hr className="d-block d-md-none" />
-            <div className="col-md-6 text-center socialLinks d-flex justify-content-end align-items-center">
-              <img src={Logo} alt="VRCMS" style={{ opacity: 0.2 }} />
-            </div>
+              </div>
+            }
           </div>
         </div>
 
@@ -257,7 +348,7 @@ const Footer = () => {
             </Link>
           </div>
           <span className="d-block mt-2 dby">
-            designed by{" "}
+            designed & developed by{" "}
             <a href="http://www.varadesigns.com">
               <small className="p-1 fw-bold d-inline-block ">
                 VARA-DESIGNS
@@ -313,3 +404,13 @@ const Footer = () => {
   );
 };
 export default Footer;
+
+const ChildMenuContent = ({ menu }) => {
+  return (
+    <li>
+      <Link to={menu?.page_url} className="ms-0">
+        {menu?.page_label}
+      </Link>
+    </li>
+  );
+};

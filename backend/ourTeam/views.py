@@ -109,3 +109,28 @@ class OurteamSearchAPIView(generics.ListAPIView):
 
         serializer = OurTeamSerializer(snippet, many=True)
         return Response({"team": serializer.data}, status=status.HTTP_200_OK)
+    
+class UpdateTeamIndex(APIView):
+    """
+    Retrieve, update or delete a Carousel instance.
+    """
+
+    def get_object(self, obj_id):
+        try:
+            return OurTeam.objects.get(id=obj_id)
+        except (OurTeam.DoesNotExist):
+            raise status.HTTP_400_BAD_REQUEST
+        
+    def put(self, request, *args, **kwargs):
+        obj_list = request.data
+        instances = []
+        user = request.user
+        for item in obj_list:
+            obj = self.get_object(obj_id=item["id"])
+            obj.updated_by = user.userName
+            obj.team_member_position = item["team_member_position"]
+            obj.save()
+            instances.append(obj)
+
+        serializer = OurTeamSerializer(instances,  many=True)
+        return Response({"team": serializer.data}, status=status.HTTP_200_OK)

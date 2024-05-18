@@ -27,7 +27,7 @@ const CaseStudiesDetails = () => {
   const [selectedCaseStudieDetails, setselectedCaseStudieDetails] = useState();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [show, setShow] = useState(false);
-  const [editCarousel, setEditCarousel] = useState({});
+  //const [editCarousel, setEditCarousel] = useState({});
   const pageType = "casestudiedetails";
   const { isAdmin, hasPermission } = useAdminLoginStatus();
 
@@ -35,7 +35,7 @@ const CaseStudiesDetails = () => {
     const getCAseStutiesvalues = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `/caseStudies/clientSelectedCaseStudies/${id}`,
+          `/caseStudies/clientSelectedCaseStudies/${id}`
         );
         if (response?.status === 200) {
           setselectedCaseStudieDetails(response.data.caseStudies);
@@ -50,11 +50,11 @@ const CaseStudiesDetails = () => {
   const editHandler = (name, value, item) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setShow(!show);
-    if (item?.id) {
-      setEditCarousel(item);
-    } else {
-      setEditCarousel({});
-    }
+    // if (item?.id) {
+    //   setEditCarousel(item);
+    // } else {
+    //   setEditCarousel({});
+    // }
     document.body.style.overflow = "hidden";
   };
   return (

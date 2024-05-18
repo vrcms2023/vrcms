@@ -13,13 +13,9 @@ import JobPostFrom from "../../Admin/Components/forms/JobpostForm";
 import { axiosServiceApi } from "../../util/axiosUtil";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 import { getCookie } from "../../util/cookieUtil";
-import {
-  getFirstShortDescription,
-  sortCreatedDateByDesc,
-} from "../../util/dataFormatUtil";
+import { getFirstShortDescription } from "../../util/dataFormatUtil";
 import { showPosteddate } from "../../util/commonUtil";
 
-import EditIcon from "../../Common/AdminEditIcon";
 import SkeletonNews from "../../Common/Skeltons/SkeltonNews";
 // Styles
 
@@ -56,7 +52,7 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
         setPageloadResults(true);
       } else {
         response = await axiosClientServiceApi.get(
-          `/careers/clientCareersList/`,
+          `/careers/clientCareersList/`
         );
         setPageloadResults(false);
       }
@@ -70,7 +66,7 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
   const deleteJobPost = (id, title) => {
     const deleteImageByID = async () => {
       const response = await axiosServiceApi.delete(
-        `/careers/updateCareer/${id}/`,
+        `/careers/updateCareer/${id}/`
       );
       if (response.status === 204) {
         toast.success(`${title} Career is delete successfully `);
@@ -96,7 +92,7 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
     try {
       response = await axiosServiceApi.patch(
         `/careers/publishCareers/${item.id}/`,
-        { publish: !item.publish },
+        { publish: !item.publish }
       );
 
       if (response.status === 200) {
@@ -104,7 +100,7 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
         toast.success(
           `Career ${
             careers.publish ? "published" : "un published"
-          } successfully`,
+          } successfully`
         );
         getCareerData();
       }
@@ -249,7 +245,7 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
               </div>
               <small className="d-block">
                 <Title title="Posted on" cssClass="fw-bold fs-6" />
-                {showPosteddate(item.posted_date) == 0 ? (
+                {showPosteddate(item.posted_date) === 0 ? (
                   "Today"
                 ) : (
                   <>

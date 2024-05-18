@@ -10,11 +10,6 @@ import {
 import { removeAllCookies } from "../../util/cookieUtil";
 import { getMenuObject } from "../../util/commonUtil";
 
-// initialize userToken from local storage
-const userToken = localStorage.getItem("access")
-  ? localStorage.getItem("access")
-  : null;
-
 const initialState = {
   loading: false,
   userInfo: null,
@@ -56,95 +51,98 @@ const authSlice = createSlice({
       state.permissions = ["ALL"];
     },
   },
-  extraReducers: {
+  extraReducers: (builder) => {
     // login user
-    [userLogin.pending]: (state) => {
+    builder.addCase(userLogin.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [userLogin.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(userLogin.fulfilled, (state, action) => {
       state.loading = false;
       state.isAuthenticated = true;
-      state.access = payload.access;
-      state.refresh = payload.refresh;
-    },
-    [userLogin.rejected]: (state, { payload }) => {
+      state.access = action.payload.access;
+      state.refresh = action.payload.refresh;
+    });
+    builder.addCase(userLogin.rejected, (state, action) => {
       state.loading = false;
       state.isAuthenticated = false;
-      state.error = payload;
-    },
+      state.error = action.payload;
+    });
+
     // register user
-    [registerUser.pending]: (state) => {
+    builder.addCase(registerUser.pending, (state, action) => {
       state.loading = true;
       state.error = null;
-    },
-    [registerUser.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(registerUser.fulfilled, (state, action) => {
       state.loading = false;
-      state.success = true; // registration successful
-    },
-    [registerUser.rejected]: (state, { payload }) => {
+      state.success = true;
+    });
+    builder.addCase(registerUser.rejected, (state, action) => {
       state.loading = false;
-      state.error = payload;
-    },
+      state.error = action.payload;
+    });
 
     // load user
-    [getUser.pending]: (state) => {
+    builder.addCase(getUser.pending, (state, action) => {
       state.loading = true;
       state.error = null;
-    },
-    [getUser.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
-      state.userInfo = payload; // get user informaiton
-    },
-    [getUser.rejected]: (state, { payload }) => {
+      state.userInfo = action.payload; // get user informaiton
+    });
+    builder.addCase(getUser.rejected, (state, action) => {
       state.loading = false;
-      state.error = payload;
-    },
+      state.error = action.payload;
+    });
 
     // Refesh Token
-    [getRefreshToken.pending]: (state) => {
+    builder.addCase(getRefreshToken.pending, (state, action) => {
       state.loading = true;
       state.error = null;
-    },
-    [getRefreshToken.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(getRefreshToken.fulfilled, (state, action) => {
       state.loading = false;
       state.isAuthenticated = true;
-      state.access = payload.access;
-      state.refresh = payload.refresh;
-    },
-    [getRefreshToken.rejected]: (state, { payload }) => {
+      state.access = action.payload.access;
+      state.refresh = action.payload.refresh;
+    });
+    builder.addCase(getRefreshToken.rejected, (state, action) => {
       state.loading = false;
-      state.error = payload;
-    },
+      state.error = action.payload;
+    });
 
     // get permissions
-    [getSelectedUserPermissions.pending]: (state) => {
+    builder.addCase(getSelectedUserPermissions.pending, (state, action) => {
       state.loading = true;
       state.error = null;
-    },
-    [getSelectedUserPermissions.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(getSelectedUserPermissions.fulfilled, (state, action) => {
       state.loading = false;
-      state.permissions = payload?.userPermissions?.user_permission_list;
-    },
-    [getSelectedUserPermissions.rejected]: (state, { payload }) => {
+      state.permissions = action.payload?.userPermissions?.user_permission_list;
+    });
+    builder.addCase(getSelectedUserPermissions.rejected, (state, action) => {
       state.loading = false;
-      state.error = payload;
-    },
+      state.error = action.payload;
+    });
 
     // get Menu
-    [getMenu.pending]: (state) => {
+    builder.addCase(getMenu.pending, (state, action) => {
       state.loading = true;
       state.error = null;
-    },
-    [getMenu.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(getMenu.fulfilled, (state, action) => {
       state.loading = false;
       state.menuList =
-        payload?.PageDetails && getMenuObject(payload?.PageDetails);
-    },
-    [getMenu.rejected]: (state, { payload }) => {
+        action.payload?.PageDetails?.length > 0
+          ? getMenuObject(action.payload?.PageDetails)
+          : [];
+    });
+    builder.addCase(getMenu.rejected, (state, action) => {
       state.loading = false;
-      state.error = payload;
-    },
+      state.error = action.payload;
+    });
   },
 });
 

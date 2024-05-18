@@ -1,6 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
 import { Features } from "../../Common/StyledComponents/Features-Styled";
 
 // Image Imports

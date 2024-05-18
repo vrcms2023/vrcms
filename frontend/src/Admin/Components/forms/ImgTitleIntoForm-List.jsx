@@ -11,8 +11,19 @@ import {
   getObjectDescription,
   getImagePath,
   getDummyImage,
+  getListStyle,
+  reorder,
+  updateArrIndex,
+  getObjectPositionKey,
+  sortByFieldName,
 } from "../../../util/commonUtil";
-import { axiosFileUploadServiceApi } from "../../../util/axiosUtil";
+import {
+  axiosFileUploadServiceApi,
+  axiosServiceApi,
+} from "../../../util/axiosUtil";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
+import NoteComponent from "../../../Common/NoteComponent";
 
 const AdminBanner = ({
   editHandler,
@@ -21,6 +32,7 @@ const AdminBanner = ({
   deleteImageURL,
   imagePostURL,
   imageUpdateURL,
+  imageIndexURL,
   imageLabel = "Add Images",
   extraFormParamas,
   titleTitle = "Title",
@@ -55,9 +67,19 @@ const AdminBanner = ({
         if (response?.status === 200) {
           let key = Object.keys(response.data);
           if (key.length > 1) {
-            setcarouseData(response.data.results);
+            const _positionKey = getObjectPositionKey(response.data.results[0]);
+            const _carouselList = sortByFieldName(
+              response.data.results,
+              _positionKey
+            );
+            setcarouseData(_carouselList);
           } else {
-            setcarouseData(response.data[key]);
+            const _positionKey = getObjectPositionKey(response.data[key][0]);
+            const _carouselList = sortByFieldName(
+              response.data[key],
+              _positionKey
+            );
+            setcarouseData(_carouselList);
           }
         }
       } catch (e) {
@@ -103,71 +125,74 @@ const AdminBanner = ({
     });
   };
 
+  const onDragEnd = async (result) => {
+    const { source, destination } = result;
+    if (!destination) return true;
+    const _positionKey = getObjectPositionKey(carousel[0]);
+
+    const _items = reorder(carousel, source.index, destination.index);
+    const _parentObjects = updateArrIndex(_items, _positionKey);
+    const response = await updateObjectsIndex(_parentObjects);
+    if (response?.length > 0) {
+      setcarouseData(response);
+    }
+  };
+
+  const updateObjectsIndex = async (data) => {
+    try {
+      let response = await axiosServiceApi.put(imageIndexURL, data);
+      let key = Object.keys(response?.data);
+      if (key.length > 0) {
+        return response.data[key];
+      }
+    } catch (error) {
+      console.log("unable to save clinet position");
+    }
+  };
+
   return (
     <div>
       <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
+
       <hr className="m-0" />
-      <div className="container">
+
+      <div className="container mt-4">
+        <NoteComponent note="Use drag option to shuffle the addresses" />
+
         <div className="row d-flex flex-row-reverse">
           {carousel?.length > 0 ? (
-            <div className="col-md-12 my-3">
+            <div className="heightCtrl imglist">
               <div className="container">
-                {carousel?.map((item, index) => (
-                  <div className="row mb-4 slideItem" key={index}>
-                    <div className="col-2 col-md-2">
-                      <i
-                        className="fa fa-picture-o fs-2 d-lg-none"
-                        aria-hidden="true"
-                      ></i>
-                      <img
-                        src={
-                          item.path ? getImagePath(item.path) : getDummyImage()
-                        }
-                        alt={item.alternitivetext}
-                        className="w-100 d-none d-lg-block"
-                      />
-                    </div>
-                    <div className="col col-md-8 ">
-                      <h6 className="fw-bold m-0 fs-6">
-                        {getObjectTitle(componentType, item)}
-                      </h6>
-                      <small className="description text-muted d-none d-md-block">
-                        {getObjectDescription(componentType, item)}
-                        {item.carouseDescription && item.carouseDescription}
-                        {item.image_description && item.image_description}
-                      </small>
-                    </div>
-                    <div className="col-4 col-md-2 d-flex justify-content-around align-items-center flex-md-row gap-3">
-                      <Link
-                        onClick={(event) => handleCarouselEdit(event, item)}
-                      >
-                        <i
-                          className="fa fa-pencil fs-4 text-warning"
-                          aria-hidden="true"
-                        ></i>
-                      </Link>
-                      <Link
-                        onClick={(event) =>
-                          thumbDelete(
-                            item.id,
-                            getObjectTitle(componentType, item)
-                          )
-                        }
-                      >
-                        <i
-                          className="fa fa-trash fs-4 text-danger"
-                          aria-hidden="true"
-                        ></i>
-                      </Link>
-                    </div>
-                  </div>
-                ))}
+                <DragDropContext onDragEnd={onDragEnd}>
+                  {carousel?.map((item, index) => (
+                    <Droppable key={index} droppableId={item.id}>
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          style={getListStyle(snapshot.isDraggingOver)}
+                          {...provided.droppableProps}
+                        >
+                          <AdminCarouselItem
+                            item={item}
+                            index={index}
+                            key={index}
+                            componentType={componentType}
+                            handleCarouselEdit={handleCarouselEdit}
+                            thumbDelete={thumbDelete}
+                          />
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                  ))}
+                </DragDropContext>
               </div>
             </div>
           ) : (
             ""
           )}
           <hr className="" />
+
           <div
             className={`mb-5 mb-md-0 ${
               carousel?.length > 0 ? "col-md-12" : "col-md-12"
@@ -196,11 +221,81 @@ const AdminBanner = ({
               showExtraFormFields={showExtraFormFields}
               dimensions={dimensions}
               closeHandler={closeHandler}
+              scrollEnable={true}
             />
           </div>
         </div>
       </div>
     </div>
+  );
+};
+
+const AdminCarouselItem = ({
+  item,
+  index,
+  componentType,
+  handleCarouselEdit,
+  thumbDelete,
+}) => {
+  const { isAdmin, hasPermission } = useAdminLoginStatus();
+  return (
+    <Draggable
+      isDragDisabled={!isAdmin || componentType === "gallery" ? true : false}
+      key={item.id}
+      draggableId={item.id}
+      index={index}
+      id={item.id}
+    >
+      {(provided) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <div className="row mb-4 p-2 slideItem" key={index}>
+            <div className="col-2 col-md-2">
+              <i
+                className="fa fa-picture-o fs-2 d-lg-none"
+                aria-hidden="true"
+              ></i>
+              <img
+                src={item.path ? getImagePath(item.path) : getDummyImage()}
+                alt={item.alternitivetext}
+                className="w-100 d-none d-lg-block"
+              />
+            </div>
+            <div className="col col-md-8 ">
+              <h6 className="fw-bold m-0 fs-6">
+                {getObjectTitle(componentType, item)}
+              </h6>
+              <small className="description text-muted d-none d-md-block">
+                {getObjectDescription(componentType, item)}
+                {item.carouseDescription && item.carouseDescription}
+                {item.image_description && item.image_description}
+              </small>
+            </div>
+            <div className="col-4 col-md-2 d-flex justify-content-around align-items-center flex-md-row gap-3">
+              <Link onClick={(event) => handleCarouselEdit(event, item)}>
+                <i
+                  className="fa fa-pencil fs-4 text-warning"
+                  aria-hidden="true"
+                ></i>
+              </Link>
+              <Link
+                onClick={(event) =>
+                  thumbDelete(item.id, getObjectTitle(componentType, item))
+                }
+              >
+                <i
+                  className="fa fa-trash fs-4 text-danger"
+                  aria-hidden="true"
+                ></i>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+    </Draggable>
   );
 };
 

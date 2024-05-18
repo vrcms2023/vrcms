@@ -26,6 +26,7 @@ import {
 
 // Styles
 import "./Contact.css";
+import { ContactPageStyled } from "../../Common/StyledComponents/Styled-ContactPage";
 
 // images
 import { getAddressList } from "../../features/address/addressActions";
@@ -44,20 +45,11 @@ const Contact = () => {
     map: false,
   };
 
-  const formObject = {
-    firstName: "",
-    email: "",
-    phoneNumber: "",
-    description: "",
-  };
-  const defautURL =
-    "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15226.413145928846!2d78.441906!3d17.430816!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x80e4d67809745a48!2sHPR+INFRA+PROJECTS!5e0!3m2!1sen!2sin!4v1442574301202";
   const pageType = "contactus";
   const { isAdmin, hasPermission } = useAdminLoginStatus();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
-  const [formData, setFormData] = useState(formObject);
+
   const [show, setShow] = useState(false);
-  const [formerror, setFormerror] = useState({});
   const [success, setsuccess] = useState(false);
 
   const [mapValues, setMapValues] = useState("");
@@ -105,13 +97,13 @@ const Contact = () => {
     if (addressList?.length === 0) {
       dispatch(getAddressList());
     }
-  }, []);
+  }, [addressList?.length]);
 
   useEffect(() => {
     if (!componentEdit.address) {
       dispatch(getAddressList());
     }
-  }, [componentEdit.address]);
+  }, [componentEdit?.address]);
 
   useEffect(() => {
     if (!componentEdit.map) {
@@ -140,7 +132,7 @@ const Contact = () => {
   };
 
   return (
-    <>
+    <ContactPageStyled>
       {/* Page Banner Component */}
       <div className="position-relative">
         {isAdmin && hasPermission && (
@@ -192,7 +184,7 @@ const Contact = () => {
 
       <div className="container-fluid">
         <div className="row">
-          <div className="contactAddress position-relative col-md-12 text-white blueBg-500 p-5 py-3 p-md-5">
+          <div className="contactAddress position-relative col-md-12 text-white blueBg-500 p-3 p-md-5">
             {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("address", true)} />
             )}
@@ -211,24 +203,28 @@ const Contact = () => {
             <div className="container">
               <div className="row">
                 {addressList?.map((item, index) => (
-                  <div className="col-md-3 my-4 my-nd-0" key={index}>
+                  <div
+                    className={`my-4 my-nd-0 ${addressList.length === 1 ? "col-md-12 text-center" : addressList.length === 2 ? "col-md-6" : addressList.length === 3 ? "col-md-4" : "col-md-3"}`}
+                    key={index}
+                  >
                     <Title
                       title={item.location_title}
                       cssClass="mb-2 fs-4 text-black"
                     />
-                    <div className="mb-2">
+                    <div className="mb-2 contactAddress">
+                      <p className="m-0 fw-bold">{item.company_name}</p>
                       <p className="m-0">{item.address_dr_no}</p>
-                      <p className="m-0">{item.location} </p>
                       <p className="m-0">{item.street} </p>
+                      <p className="m-0">{item.location} </p>
                       <p className="m-0">{item.city} </p>
-                      {/* <p className="m-0">Pincode - {item.postcode}</p> */}
                       <p className="mb-3">{item.state}</p>
+                      {/* <p className="m-0">Pincode - {item.postcode}</p> */}
                       <p className="mt-2">
                         {item.phonen_number && (
                           <>
                             {/* <Title title="Phone Number :" cssClass="mb-2" /> */}
                             <i
-                              className="fa fa-phone-square text-white fs-4 me-2"
+                              className="fa fa-phone-square fs-4 me-2"
                               aria-hidden="true"
                             ></i>{" "}
                             {item.phonen_number}
@@ -238,22 +234,45 @@ const Contact = () => {
                       <p className="mt-2">
                         {item.phonen_number_2 && (
                           <>
+                            {/* <Title title="Phone Number :" cssClass="mb-2" /> */}
                             <i
-                              className="fa fa-whatsapp text-white fs-4 me-2"
+                              className="fa fa-phone-square fs-4 me-2"
                               aria-hidden="true"
                             ></i>{" "}
-                            {item.phonen_number_2}{" "}
+                            {item.phonen_number_2}
+                          </>
+                        )}
+                      </p>
+                      <p className="mt-2">
+                        {item.phonen_number_3 && (
+                          <>
+                            <i
+                              className="fa fa-whatsapp fs-4 me-2"
+                              aria-hidden="true"
+                            ></i>{" "}
+                            {item.phonen_number_3}{" "}
                           </>
                         )}
                       </p>
                       <p className="mt-0">
-                        {item.emailid && (
+                        {item.emailid_2 && (
                           <>
                             <i
-                              className="fa fa-envelope-o text-white fs-4 me-2"
+                              className="fa fa-envelope-o fs-4 me-2"
                               aria-hidden="true"
                             ></i>{" "}
-                            {item.emailid}{" "}
+                            {item.emailid_2}{" "}
+                          </>
+                        )}
+                      </p>
+                      <p className="mt-0">
+                        {item.emailid_3 && (
+                          <>
+                            <i
+                              className="fa fa-envelope-o fs-4 me-2"
+                              aria-hidden="true"
+                            ></i>{" "}
+                            {item.emailid_3}{" "}
                           </>
                         )}
                       </p>
@@ -270,12 +289,19 @@ const Contact = () => {
         </div>
 
         <div className="row">
+          <div className="col-md-12 text-center py-4">
+            <Title
+              title="Quick contact"
+              cssClass="text-black fs-3 fw-bold mb-4"
+            />
+          </div>
           <div className="col-md-7 position-relative">
             {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("map", true)} />
             )}
-            {mapValues.google_map_url && (
+            {mapValues?.google_map_url && (
               <iframe
+                title="Google map"
                 className="googlemap"
                 src={mapValues?.google_map_url}
                 height="450"
@@ -287,18 +313,14 @@ const Contact = () => {
             {success && (
               <Alert
                 mesg={"Thank you for contact us"}
-                cssClass={`alert text-white w-75 mt-3 p-2 text-center bg-success`}
+                cssClass={`alert text-white w-50 mx-auto mt-3 p-2 text-center bg-success`}
               />
             )}
 
             <form
-              className="my-5 contactForm"
+              className="my-0 contactForm"
               onSubmit={handleSubmit(onFormSubmit)}
             >
-              <Title
-                title="Quick contact"
-                cssClass="text-black text-center fs-3 fw-bold mb-4"
-              />
               <InputField
                 label="Name"
                 fieldName="firstName"
@@ -308,17 +330,17 @@ const Contact = () => {
               />
               <InputField
                 label="Email"
-                fieldName="emailid"
+                fieldName="email"
                 register={register}
-                validationObject={fieldValidation.emailid}
-                error={errors?.emailid?.message}
+                validationObject={fieldValidation.email}
+                error={errors?.email?.message}
               />
               <InputField
                 label="Phone"
-                fieldName="phonen_number"
+                fieldName="phoneNumber"
                 register={register}
-                validationObject={fieldValidation.phonen_number}
-                error={errors?.phonen_number?.message}
+                validationObject={fieldValidation.phoneNumber}
+                error={errors?.phoneNumber?.message}
               />
               <TextAreaField
                 label="Message"
@@ -329,8 +351,7 @@ const Contact = () => {
               />
 
               <div className="mb-3 row">
-                <div className="col-sm-3"></div>
-                <div className="col-sm-9">
+                <div className="col-sm-12 mt-2">
                   <button
                     type="submit"
                     className="btn btn-primary w-100 text-uppercase py-2"
@@ -357,7 +378,7 @@ const Contact = () => {
       )}
 
       {show && <ModelBg />}
-    </>
+    </ContactPageStyled>
   );
 };
 export default Contact;

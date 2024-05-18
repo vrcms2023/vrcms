@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 
 // Components
 import Title from "../../Common/Title";
-import NewsForm from "../../Admin/Components/News/index";
-
-// Styles
-
 import "./ABriefAbout.css";
 
 // Images
@@ -39,9 +35,9 @@ const ABriefAbout = ({ cssClass, dimensions }) => {
     const getBannerData = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `banner/clientBannerIntro/${pageType}/`,
+          `banner/clientBannerIntro/${pageType}/`
         );
-        if (response?.status == 200) {
+        if (response?.status === 200) {
           setBannerData(response.data.imageModel);
         }
       } catch (error) {

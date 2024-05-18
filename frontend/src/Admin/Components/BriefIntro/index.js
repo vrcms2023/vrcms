@@ -36,7 +36,7 @@ export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
     const getintroValues = async () => {
       try {
         let response = await axiosServiceApi.get(
-          `/carousel/updateHomeIntro/${pageType}/`,
+          `/carousel/updateHomeIntro/${pageType}/`
         );
         let value = updateResponseData(response.data.intro);
         setIntroFormValues(value);
@@ -82,7 +82,7 @@ export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
           {
             ...intro,
           },
-          setSuccess(true),
+          setSuccess(true)
         );
       } else {
         intro.created_by = userName;
@@ -90,7 +90,7 @@ export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
           ...intro,
         });
       }
-      if (response.status == 200 || response.status == 201) {
+      if (response.status === 200 || response.status === 201) {
         setIntroFormValues(updateResponseData(response.data.intro));
         setSuccess(true);
         closeHandler();
@@ -122,10 +122,7 @@ export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="mb-3 row">
-              <label
-                htmlFor=""
-                className="col-sm-12 col-form-label"
-              >
+              <label htmlFor="" className="col-sm-12 col-form-label">
                 Title
               </label>
               <div className="col-sm-12">
@@ -142,10 +139,7 @@ export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
             </div>
 
             <div className="mb-3 row">
-              <label
-                htmlFor=""
-                className="col-sm-12 col-form-label"
-              >
+              <label htmlFor="" className="col-sm-12 col-form-label">
                 SubTitle
               </label>
               <div className="col-sm-12">
@@ -160,10 +154,7 @@ export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
             </div>
 
             <div className="mb-3 row">
-              <label
-                htmlFor=""
-                className="col-sm-12 col-form-label"
-              >
+              <label htmlFor="" className="col-sm-12 col-form-label">
                 Description
               </label>
               <div className="col-sm-12">
@@ -203,7 +194,7 @@ export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
               </div>
             </div> */}
 
-            <div className="d-flex justify-content-center align-items-center gap-3 mt-4">
+            <div className="d-flex justify-content-center flex-column flex-sm-row align-items-center gap-3 mt-4">
               {/* <Button
                 type="submit"
                 cssClass="btn btn-secondary mx-3"

@@ -57,10 +57,7 @@ export const InputFields = ({
     case "textarea":
       return (
         <div className="mb-2 row">
-          <label
-            htmlFor=""
-            className="col-sm-12 col-form-label"
-          >
+          <label htmlFor="" className="col-sm-12 col-form-label">
             {label}
           </label>
           <div className="col-sm-12">
@@ -138,6 +135,7 @@ export const InputField = ({
   cssClass,
   validationObject,
   error,
+  isRequired,
 }) => {
   return (
     <div className="mb-2 row">
@@ -147,7 +145,7 @@ export const InputField = ({
           cssClass ? cssClass : ""
         }`}
       >
-        {label}
+        {label} {isRequired && <span className="error">*</span>}
       </label>
       <div className="col-sm-12">
         <input
@@ -155,6 +153,7 @@ export const InputField = ({
           type={type}
           className="form-control p-2"
         />
+
         <span className="error">{error}</span>
       </div>
     </div>
@@ -172,7 +171,7 @@ export const SelectField = ({
     <div className="mb-2 row">
       <label
         htmlFor=""
-        className="col-sm-12 col-form-label text-start text-md-end text-capitalize"
+        className="col-sm-12 col-form-label text-start text-capitalize"
       >
         {label}
       </label>
@@ -203,10 +202,7 @@ export const TextAreaField = ({
 }) => {
   return (
     <div className="mb-2 row">
-      <label
-        htmlFor=""
-        className="col-sm-12 col-form-label text-start text-md-end"
-      >
+      <label htmlFor="" className="col-sm-12 col-form-label text-start">
         {label}
       </label>
       <div className="col-sm-12">
@@ -217,6 +213,55 @@ export const TextAreaField = ({
         ></textarea>
         <span className="error">{error}</span>
       </div>
+    </div>
+  );
+};
+
+export const CheckboxField = ({
+  label,
+  fieldName,
+  register,
+  validationObject,
+  error,
+  ...rest
+}) => {
+  return (
+    <div className="mb-2 row">
+      <div className="form-check">
+        <input
+          name={fieldName}
+          type="checkbox"
+          {...register(fieldName, validationObject)}
+          onChange={rest.onChange}
+          checked={rest.isChecked}
+          className="form-check-input mr-4"
+        />
+        <label
+          className="form-check-label col-form-label text-start text-md-end text-capitalize"
+          for="flexCheckDefault"
+        >
+          {label}
+        </label>
+      </div>
+
+      {/* <div className="mb-3 row">
+                <label
+                  htmlFor=""
+                  className="col-sm-3 col-form-label text-start text-md-end text-capitalize"
+                >
+                  Active Menu
+                </label>
+                <div className="col-sm-9">
+                  <input
+                    name="page_isActive"
+                    type="checkbox"
+                    {...register("page_isActive")}
+                    onChange={isActiveMenuHandler}
+                    checked={isActiveMenu}
+                    className="form-check-input mr-4"
+                  />
+                </div>
+              </div> */}
     </div>
   );
 };
