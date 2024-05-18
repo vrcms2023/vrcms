@@ -81,6 +81,12 @@ const Registration = () => {
             <div className="mb-3">
               {error && <Error>{error}</Error>}
               {customError && <Error>{customError}</Error>}
+              {success && (
+                <div>
+                  Your registration has been successful. You will receive an
+                  account activation email shortly.{" "}
+                </div>
+              )}
             </div>
             <div className="mb-3">
               <label

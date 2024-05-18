@@ -12,7 +12,7 @@ export const useAdminLoginStatus = () => {
 
   const location = useLocation();
   let permissionsPath = _.filter(permissions, (item) => {
-    return location.pathname.toLowerCase().match(item.name.toLowerCase());
+    return location.pathname?.toLowerCase().match(item?.name?.toLowerCase());
   });
   let getHome = _.filter(permissions, (item) => {
     return item.name === "/home";
