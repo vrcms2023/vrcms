@@ -48,15 +48,11 @@ const Careers = () => {
 
   useEffect(() => {
     const getCareerData = async () => {
-      let response = "";
       try {
-        if (isAdmin) {
-          response = await axiosServiceApi.get(`/careers/createCareer/${id}/`);
-        } else {
-          response = await axiosClientServiceApi.get(
-            `/careers/clientSelectedCareers/${id}/`
-          );
-        }
+        let response = await axiosClientServiceApi.get(
+          `/careers/clientSelectedCareers/${id}/`
+        );
+
         let keys = Object.keys(response.data);
         if (keys.length > 1) {
           setPosts(response.data.results);
