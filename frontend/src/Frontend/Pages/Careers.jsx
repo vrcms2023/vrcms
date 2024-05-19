@@ -167,14 +167,14 @@ const Careers = () => {
               </div>
             </div>
 
-            <div className="row">
+            {/* <div className="row">
               <JobPost
                 addJobs={componentEdit.addjob}
                 posts={posts}
                 setPosts={setResponseData}
                 setPageloadResults={setPageloadResults}
               />
-            </div>
+            </div> */}
               
           </CareersPageStyled>
           <div>

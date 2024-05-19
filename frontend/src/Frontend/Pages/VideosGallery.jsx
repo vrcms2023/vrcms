@@ -92,8 +92,8 @@ const VideosGallery = () => {
         </div>
       </div>
 
-      <div className="row gallery">
-        {imageGallery.length > 0 &&
+      <div className="row gallery"> 
+        {imageGallery?.length > 0 &&
           imageGallery?.map((item, index) => (
             <div className="col-4 mb-4" key={item.id}>
               <video

@@ -174,7 +174,7 @@ function App() {
               <Route exact path="/team" element={<Team />} />
               <Route exact path="/projects" element={<Projects />} />
               <Route exact path="/project-details" element={<ProjectTabs />} />
-              <Route exact path="/gallery" element={<ProjectsGallery />} />
+              <Route exact path="/projectgallery" element={<ProjectsGallery />} />
               <Route exact path="/imagegallery" element={<ImagesGallery />} />
               <Route exact path="/videogallery" element={<VideosGallery />} />
               <Route exact path="/casestudies" element={<CaseStudies />} />

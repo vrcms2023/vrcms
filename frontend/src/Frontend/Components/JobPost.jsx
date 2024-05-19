@@ -232,7 +232,7 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
                 <p className="m-0">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: getFirstShortDescription(item.description),
+                      __html: getFirstShortDescription(item?.description),
                     }}
                   />
                 </p>
