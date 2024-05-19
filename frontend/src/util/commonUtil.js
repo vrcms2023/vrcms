@@ -4,7 +4,7 @@ import _ from "lodash";
 import { removeCookie, setCookie } from "./cookieUtil";
 
 export const generateOptionLength = (values) => {
-  let value = Array.from({ length: values }, (_, i) => i + 1);
+  let value = Array.from({ length: values }, (_, i) => i);
   let optionList = [];
   value.forEach(function test(item) {
     let option = {
