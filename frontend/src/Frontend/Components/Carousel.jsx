@@ -18,7 +18,7 @@ const Carousel = ({ carouselState }) => {
     const getCarousels = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `imgGallery/clientImageVidoeGallery/${pageType}/`
+          `carousel/clientCarousel/`,
         );
 
         if (response?.status === 200) {

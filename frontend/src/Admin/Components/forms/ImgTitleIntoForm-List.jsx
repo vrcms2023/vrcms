@@ -221,7 +221,7 @@ const AdminBanner = ({
               showExtraFormFields={showExtraFormFields}
               dimensions={dimensions}
               closeHandler={closeHandler}
-              scrollEnable={true}
+              scrollEnable={carousel.lengh > 0 ? true : false}
             />
           </div>
         </div>
