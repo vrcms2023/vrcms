@@ -72,6 +72,7 @@ const PagesConfiguration = () => {
       if (response.status === 204) {
         toast.success(`${title} Memu is delete successfully `);
         getAllPagesDetails();
+        dispatch(getMenu());
       }
     };
 
