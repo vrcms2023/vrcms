@@ -163,7 +163,7 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
             <div
               className="row"
               ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
+              // style={getListStyle(snapshot.isDraggingOver)}
               {...provided.droppableProps}
             >
               {news.length > 0 ? (
@@ -286,7 +286,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
     >
       {(provided) => (
         <div
-          className={`${isAdmin ? "col-12" : "col-md-3"} image`}
+          className={`${isAdmin ? "col-12" : "col-md-4"} image`}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -354,13 +354,13 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                       )}
                     </div>
                     {/* <p>{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</p> */}
-                    <Ancher
+                    {/* <Ancher
                       AncherLabel="Read more"
                       Ancherpath="/news"
                       AncherClass="btn btn-more d-flex justify-content-center align-items-center gap-2"
                       AnchersvgColor="#17427C"
                       handleModel={() => handleModel(item)}
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

@@ -321,7 +321,7 @@ const Home = () => {
         <div className="row py-5 homeNews">
           <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="container">
-              <h2 className="mb-5 fw-bold">News</h2>
+              <Title title="News" cssClass="fs-3 text-center mb-5 pt-5" />
               <div className="row">
                 <HomeNews news={news} setNews={setNews} pagetype={pageType} />
               </div>
