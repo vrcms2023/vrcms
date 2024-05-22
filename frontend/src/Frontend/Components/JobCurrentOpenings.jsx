@@ -5,16 +5,24 @@ import { Link } from "react-router-dom";
 import Title from "../../Common/Title";
 
 // Styles
-import { axiosClientServiceApi } from "../../util/axiosUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
+import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
 
 const JobCurrentOpenings = () => {
   const [posts, setPosts] = useState([]);
+  const { isAdmin, hasPermission } = useAdminLoginStatus();
   useEffect(() => {
     const getCareerData = async () => {
       try {
-        const response = await axiosClientServiceApi.get(
-          `/careers/clientCareersList/`,
-        );
+        let response = "";
+        if (isAdmin) {
+          response = await axiosServiceApi.get(`/careers/createCareer/`);
+        } else {
+          response = await axiosClientServiceApi.get(
+            `/careers/clientCareersList/`
+          );
+        }
+
         let keys = Object.keys(response.data);
         if (keys.length > 1) {
           setPosts(response.data.results);
@@ -26,7 +34,7 @@ const JobCurrentOpenings = () => {
       }
     };
     getCareerData();
-  }, []);
+  }, [isAdmin]);
 
   return (
     <div className="py-4 px-3 bg-white currentOpenings">

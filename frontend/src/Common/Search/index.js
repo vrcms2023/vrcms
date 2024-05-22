@@ -46,7 +46,7 @@ const Search = ({
       } else {
         response = await axiosClientServiceApi.get(clientDefaultURL);
       }
-      setObject(response.data.results);
+      setObject(response.data);
       setPageloadResults(false);
     } catch (error) {
       console.log("Unable to get the  data");
