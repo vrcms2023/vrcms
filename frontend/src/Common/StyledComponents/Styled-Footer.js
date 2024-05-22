@@ -3,17 +3,17 @@ import BgSymbol from "../../Images/logo-symbol.svg";
 import styled from "styled-components";
 
 export const FooterStyled = styled.div`
-  background-image: url(${BgSymbol});
-  background-repeat: no-repeat;
-  background-position: 120% -250px;
-  background-size: 40%;
-
-  color: ${({ theme }) => theme.footerTextColor};
+  // background-image: url(${BgSymbol});
+  // background-repeat: no-repeat;
+  // background-position: 120% -250px;
+  // background-size: 40%;
+  background: linear-gradient(360deg, ${({ theme }) => theme.white} 0%, ${({ theme }) => theme.primaryColor} 100%);
+  color:${({ theme }) => theme.textColor};
 
   a {
-    color: ${({ theme }) => theme.footerLinkColor};
+    color: ${({ theme }) => theme.black};
     &:hover {
-      color: ${({ theme }) => theme.footerLinkHoverColor};
+      color: ${({ theme }) => theme.secondaryColor};
     }
   }
 
@@ -22,13 +22,20 @@ export const FooterStyled = styled.div`
 
     li {
       padding: 3px 0;
+
+      a {
+        color: ${({ theme }) => theme.black};
+        &:hover {
+          color: ${({ theme }) => theme.secondaryColor};
+        }
+      }
     }
   }
 
   h5 {
-    // color: ${({ theme }) => theme.footerTitleColor};
+    color: ${({ theme }) => theme.secondaryColor};
     margin: 0 0 20px;
-    font-size: 1.6rem;
+    font-size: 1.3rem;
     text-align: left
   }
 
@@ -59,7 +66,7 @@ export const FooterStyled = styled.div`
     i {
       font-size: 2.5rem;
       margin: 25px 10px 0;
-      color: ${({ theme }) => theme.black};
+      color: ${({ theme }) => theme.secondaryColor};
     }
   }
 
@@ -72,12 +79,13 @@ export const FooterStyled = styled.div`
   }
 
   .footerCopyRights {
-    background-color: ${({ theme }) => theme.footerBgColor};
+    background-color: ${({ theme }) => theme.primaryColor};
+    color: ${({ theme }) => theme.black};
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 0.85rem !important;
 
     a {
-      color: ${({ theme }) => theme.footerLinkColor};
+      color: ${({ theme }) => theme.black};
       font-size: 0.8rem !important;
       &:hover {
         color: ${({ theme }) => theme.footerLinkHoverColor};
@@ -87,7 +95,7 @@ export const FooterStyled = styled.div`
     .dby,
     .dby a {
       font-size: 0.85rem;
-      color: #999999
+      color: ${({ theme }) => theme.secondaryColor};
     }
   }
 

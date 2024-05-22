@@ -243,32 +243,32 @@ const Home = () => {
 
 
         {/* HOME List of Services DEVELOPED FOR LEOMTECH  */}
-        <div className="container py-5 homeServices">
+        {/* <div className="container py-5 homeServices">
           <h2 className="mb-5">What We Do</h2>
           <HomeServices />
         </div>
-       
+        */}
 
         {/* FEATURES SPECICALLY DEVELOPED FOR RISHISYSTEMS */}
         {/* <Features /> */}
 
         {/* HOME WHY CHOOSE RISHSYSTEMS */}
-        <div className="row ABriefAbout mb-5">
+        {/* <div className="row ABriefAbout mb-5">
           <ABriefAbout
             cssClass="mb-2 fw-bold title text-black"
             dimensions={imageDimensionsJson("whoweare")}
           />
-        </div>
+        </div> */}
 
         {/*  HOME Services SPECICALLY DEVELOPED FOR RISHISYSTEMS */}
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12 ABrief">
             <ABrief
               cssClass="fw-bold title"
               dimensions={imageDimensionsJson("homeCareers")}
             />
           </div>
-        </div>
+        </div> */}
 
 
         {/* TESTIMONIAL COMPONENT */}
@@ -330,7 +330,7 @@ const Home = () => {
         </div>
 
         {/* HOME Careers */}
-        <div className="row homeCareers py-5">
+        {/* <div className="row homeCareers py-5">
           <div className="col-lg-6"></div>
           <div className="col-md-12 col-lg-6 pe-lg-5">
             <BriefIntroFrontend
@@ -346,7 +346,7 @@ const Home = () => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <hr />
@@ -389,7 +389,7 @@ const Home = () => {
         {/* SERVICES OFFERED COMPONENT 
         DEVELOPED FOR SPECIFICALLY SAP DESIGNS */}
 
-        <div className="text-center mb-5" style={{ marginTop: "100px" }}>
+        {/* <div className="text-center mb-5" style={{ marginTop: "100px" }}>
           <span
             className="fs-1 px-4 py-2"
             style={{ borderBottom: "1px solid #444444" }}
@@ -428,10 +428,10 @@ const Home = () => {
               dimensions={imageDimensionsJson("carousel")}
             />
           </div>
-        )}
+        )} */}
 
         {/* CLIENTS COMPONENTS DEVELOPER IN SAP DESIGNS */}
-        <HomeClientsStyled>
+        {/* <HomeClientsStyled>
           <div className="text-center mb-5" style={{ marginTop: "100px" }}>
             <span
               className="fs-1 px-4 py-2"
@@ -452,7 +452,7 @@ const Home = () => {
               View All
             </Link>
           </div>
-        </HomeClientsStyled>
+        </HomeClientsStyled> */}
 
         {/* END OF SAP DESIGN STUDIO COMPONENTS */}
 
@@ -460,9 +460,9 @@ const Home = () => {
         {/* HPR INFRA */}
 
 {/* Project Cards */}
-<hr />
-<Title title="HPR INFRA" cssClass="text-center fs-1" />
-<div className="row my-5 homeProjectsBg">
+      {/* <hr />
+      <Title title="HPR INFRA" cssClass="text-center fs-1" />
+      <div className="row my-5 homeProjectsBg">
         <div className="col-md-12 d-flex justify-content-center align-items-center">
           <div className="container">
             <div className="row">
@@ -588,7 +588,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
         {/* END OF HPR INFRA COMPONENTS */}
 
