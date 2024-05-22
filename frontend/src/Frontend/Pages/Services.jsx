@@ -234,7 +234,7 @@ const Services = () => {
         >
           <div className="row">
             <div
-              className={isAdmin && hasPermission ? "col-md-8" : "col-md-12"}
+              className={isAdmin && hasPermission ? "col-md-12" : "col-md-12"}
             >
               {isAdmin && hasPermission && selectedServiceProject?.id && (
                 <div className="d-flex justify-content-end align-items-center mb-3">
@@ -355,7 +355,7 @@ const Services = () => {
               ))}
             </div>
 
-            {isAdmin && hasPermission && (
+            {/* {isAdmin && hasPermission && (
               <div className="col-md-4">
                 <AddService
                   setSelectedServiceProject={setSelectedServiceProject}
@@ -363,7 +363,7 @@ const Services = () => {
                   pageType="service"
                 />
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </ServicesStyled>

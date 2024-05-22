@@ -8,6 +8,7 @@ import {
   axiosServiceApi,
 } from "../../../util/axiosUtil";
 import Error from "../Error";
+import _ from "lodash";
 import { getCookie, removeCookie } from "../../../util/cookieUtil";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
@@ -16,6 +17,9 @@ import moment from "moment";
 import { sortByCreatedDate } from "../../../util/dataFormatUtil";
 import { storeServiceMenuValueinCookie } from "../../../util/commonUtil";
 import { getServiceValues } from "../../../features/services/serviceActions";
+import { useLocation } from "react-router-dom";
+import { getSelectedMenuDetails } from "../../../util/menuUtil";
+import { getMenu } from "../../../features/auth/authActions";
 
 const AddService = ({
   setSelectedServiceProject,
@@ -31,7 +35,9 @@ const AddService = ({
   const { serviceMenu, serviceerror } = useSelector(
     (state) => state.serviceMenu
   );
+  const { menuList } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const onChangeHandler = (event) => {
     setError("");
@@ -66,16 +72,23 @@ const AddService = ({
     };
     try {
       if (editServiceObject?.id) {
+        const _tempEditObj = _.cloneDeep(editServiceObject);
         data["id"] = editServiceObject.id;
         data["updated_by"] = userName;
         response = await axiosServiceApi.put(
           `/services/updateService/${editServiceObject.id}/`,
           data
         );
+        createChildMenu(
+          response.data.services,
+          true,
+          editServiceObject.services_page_title
+        );
         setServiceName("");
         setEditServiceObject({});
       } else {
         response = await axiosServiceApi.post(`/services/createService/`, data);
+        createChildMenu(response.data.services, false, "");
       }
       if (response?.status === 201 || response?.status === 200) {
         toast.success(`${serviceName} service is created `);
@@ -181,6 +194,18 @@ const AddService = ({
   const CancelServiceNameChange = () => {
     setServiceName("");
     setEditServiceObject({});
+  };
+
+  const createChildMenu = async (serviceResponse, isEdit, oldTilte) => {
+    const _data = await getSelectedMenuDetails(
+      menuList,
+      location,
+      serviceResponse,
+      isEdit,
+      oldTilte
+    );
+
+    dispatch(getMenu());
   };
 
   return (
