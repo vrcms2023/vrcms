@@ -59,11 +59,15 @@ const NewsAndUpdates = () => {
   });
 
   const setResponseData = (data) => {
-    const _positionKey = getObjectPositionKey(data.results[0]);
-    const _newslList = sortByFieldName(data.results, _positionKey);
-    setNews(_newslList);
-    setPaginationData(paginationDataFormat(data));
-    setCurrentPage(1);
+    if (data?.results.length > 0) {
+      const _positionKey = getObjectPositionKey(data.results[0]);
+      const _newslList = sortByFieldName(data.results, _positionKey);
+      setNews(_newslList);
+      setPaginationData(paginationDataFormat(data));
+      setCurrentPage(1);
+    } else {
+      setNews([]);
+    }
   };
 
   // const articleHandler = (id) => {

@@ -65,9 +65,9 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
           //const data = sortCreatedDateByDesc(response.data.appNews);
 
           //setPageloadResults(true);
-          const _list = sortByFieldName(response.data.results, "news_position");
-          const data = pagetype === "home" ? _list.slice(0, 4) : _list;
-          setNews(data);
+          //const _list = sortByFieldName(response.data.results, "news_position");
+          //const data = pagetype === "home" ? _list.slice(0, 4) : _list;
+          setNews(response.data);
         }
       } catch (error) {
         console.log("unable to access ulr because of server is down");
@@ -338,13 +338,10 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                         isAdmin ? "fs-6" : "fs-5"
                       }`}
                     />
-                    <div
-                      className={`card-text  ${
-                        isAdmin ? "mb-0" : "mb-2"
-                      }`}
-                    >
+                    <div className={`card-text  ${isAdmin ? "mb-0" : "mb-2"}`}>
                       {item.news_description ? (
-                        <div className="lineClamp lc2"
+                        <div
+                          className="lineClamp lc2"
                           dangerouslySetInnerHTML={{
                             __html: item.news_description,
                           }}
