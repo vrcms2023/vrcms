@@ -39,16 +39,22 @@ import {
 
 import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
 
+// // import Img1 from '../../../Images/future.png';
+// import randomImg1 from '../../../Images/randomService1.png'
+// import randomImg2 from '../../../Images/randomService2.png'
+// import randomImg3 from '../../../Images/randomService3.png'
+
 // Styles
 import "./Home.css";
 
 // Images
-import imgOngoing from "../../../Images/ongoing.png";
-import imgCompleted from "../../../Images/completed.png";
-import imgFuture from "../../../Images/future.png";
+import imgOngoing from "../../../Images/carousel1.jpg";
+import imgCompleted from "../../../Images/carousel2.jpg";
+import imgFuture from "../../../Images/carousel3.jpg";
 import ProductsList from "../Products/ProductsList";
 import { ProductHilightsStyled } from "../../../Common/StyledComponents/Styled-Products-Hilights";
 import { TestimonialCarouselPageStyled } from "../../../Common/StyledComponents/Styled-TestimonialCarousel";
+import { RandomHomeServicesStyled } from "../../../Common/StyledComponents/Random-HomeServices";
 
 const Home = () => {
   const editComponentObj = {
@@ -127,34 +133,6 @@ const Home = () => {
     <>
       <div className="container-fluid">
 
-        {/* BANNER COMPONENT  */}
-        {/* <div className="row">
-          <div className="col-md-12 p-0 position-relative homePage">
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("banner", true)} />
-            )}
-            <Banner
-              getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-              bannerState={componentEdit.banner}
-            />
-          </div>
-        </div>
-        {componentEdit.banner ? (
-          <div className="adminEditTestmonial">
-            <ImageInputsForm
-              editHandler={editHandler}
-              componentType="banner"
-              pageType={`${pageType}-banner`}
-              imageLabel="Banner Image"
-              showDescription={false}
-              showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-              dimensions={imageDimensionsJson("banner")}
-            />
-          </div>
-        ) : (
-          ""
-        )} */}
-
         {/* CAROUSEL COMPONENT  */}
         <div className="row">
           <div className="col-md-12 p-0 carousel">
@@ -207,7 +185,7 @@ const Home = () => {
         </ProductHilightsStyled>
 
         <div className="container mt-3 mt-md-5 pt-md-5">
-          <Title title="Products" cssClass="text-center fs-3 pt-4 pt-sm-5 " />
+          <Title title="Products" cssClass="fs-3 text-center fw-medium mb-5 pt-5" />
           <ProductsList />
           <div className='text-center p-3'>
             <Link to="" className="btn btn-outline">Load More</Link>
@@ -242,38 +220,58 @@ const Home = () => {
         )}
 
 
-        {/* HOME List of Services DEVELOPED FOR LEOMTECH  */}
-        {/* <div className="container py-5 homeServices">
-          <h2 className="mb-5">What We Do</h2>
-          <HomeServices />
-        </div>
-        */}
-
-        {/* FEATURES SPECICALLY DEVELOPED FOR RISHISYSTEMS */}
-        {/* <Features /> */}
-
-        {/* HOME WHY CHOOSE RISHSYSTEMS */}
-        {/* <div className="row ABriefAbout mb-5">
-          <ABriefAbout
-            cssClass="mb-2 fw-bold title text-black"
-            dimensions={imageDimensionsJson("whoweare")}
-          />
-        </div> */}
-
-        {/*  HOME Services SPECICALLY DEVELOPED FOR RISHISYSTEMS */}
-        {/* <div className="row">
-          <div className="col-md-12 ABrief">
-            <ABrief
-              cssClass="fw-bold title"
-              dimensions={imageDimensionsJson("homeCareers")}
-            />
+      {/* Random Home Services */}
+      <RandomHomeServicesStyled>
+      <div className="container py-5 randomServices">
+        <div className="row">
+          <div className="col-md-6">
+            <img src={imgOngoing} alt="" className="w-100" />
           </div>
-        </div> */}
+          <div className="col-md-6 p-3 p-md-5 d-flex flex-column justify-content-center">
+            <Title title="Product portfolio" cssClass="text-black fs-3 fw-medium" />
+            <p>Through our relentless pursuit of quality and innovation, we have achieved several milestones that highlight our success in the healthcare industry.</p>
+            <Link to="" className="moreLink">More...</Link>
+          </div>
+        </div>
+
+        <div className="row my-2 my-md-5 d-flex flex-row flex-md-row-reverse">
+          <div className="col-md-6">
+            <img src={imgCompleted} alt="" className="w-100" />
+          </div>
+          <div className="col-md-6 p-3 p-md-5 d-flex flex-column justify-content-center">
+            <Title title="Promoting healt and well being" cssClass="text-black fs-3 fw-medium" />
+            <p>Through our relentless pursuit of quality and innovation, we have achieved several milestones that highlight our success in the healthcare industry.</p>
+            <Link to="" className="moreLink">More...</Link>
+          </div>
+          
+        </div>
+
+        <div className="row">
+          <div className="col-md-6">
+            <img src={imgFuture} alt="" className="w-100" />
+          </div>
+          <div className="col-md-6 p-3 p-md-5 d-flex flex-column justify-content-center">
+            <Title title="What we do" cssClass="text-black fs-3 fw-medium" />
+            <p>Through our relentless pursuit of quality and innovation, we have achieved several milestones that highlight our success in the healthcare industry.</p>
+            <Link to="" className="moreLink">More...</Link>
+          </div>
+        </div>
+
+      </div>
+      </RandomHomeServicesStyled>
+
+
+        
 
 
         {/* TESTIMONIAL COMPONENT */}
         <TestimonialCarouselPageStyled>
         <div className="container">
+        <div className="row">
+            <div className="col-md-12">
+              <Title title="Testimonials" cssClass="fs-3 text-center fw-medium mb-5 pt-5" />
+            </div>
+        </div>
           <div className="row">
             <div className="col-md-12 p-5 testimonials text-center">
               {isAdmin && hasPermission && (
@@ -321,23 +319,81 @@ const Home = () => {
         <div className="row py-5 homeNews">
           <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="container">
-              <Title title="News" cssClass="fs-3 text-center mb-5 pt-5" />
-              <div className="row">
+              <Title title="News" cssClass="fs-3 text-center fw-medium mb-5 pt-5" />
                 <HomeNews news={news} setNews={setNews} pagetype={pageType} />
-              </div>
               <div>
+              
+              <div className="row">
+                <div className="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
               <Ancher
                       AncherLabel="Read more"
                       Ancherpath="/news"
-                      AncherClass="btn btn-outline my-5 w-25 m-auto d-flex justify-content-center align-items-center gap-2"
+                      AncherClass="btn btn-outline my-2 my-md-5 w-75 m-auto d-flex justify-content-center align-items-center gap-2"
                       AnchersvgColor="#17427C"
                       // handleModel={() => handleModel(item)}
                     />
-                
+                    </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* HOME List of Services DEVELOPED FOR LEOMTECH  */}
+        {/* <div className="container py-5 homeServices">
+          <h2 className="mb-5">What We Do</h2>
+          <HomeServices />
+        </div>
+        */}
+
+        {/* FEATURES SPECICALLY DEVELOPED FOR RISHISYSTEMS */}
+        {/* <Features /> */}
+
+        {/* HOME WHY CHOOSE RISHSYSTEMS */}
+        {/* <div className="row ABriefAbout mb-5">
+          <ABriefAbout
+            cssClass="mb-2 fw-bold title text-black"
+            dimensions={imageDimensionsJson("whoweare")}
+          />
+        </div> */}
+
+        {/*  HOME Services SPECICALLY DEVELOPED FOR RISHISYSTEMS */}
+        {/* <div className="row">
+          <div className="col-md-12 ABrief">
+            <ABrief
+              cssClass="fw-bold title"
+              dimensions={imageDimensionsJson("homeCareers")}
+            />
+          </div>
+        </div> */}
+
+        {/* BANNER COMPONENT  */}
+        {/* <div className="row">
+          <div className="col-md-12 p-0 position-relative homePage">
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("banner", true)} />
+            )}
+            <Banner
+              getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+              bannerState={componentEdit.banner}
+            />
+          </div>
+        </div>
+        {componentEdit.banner ? (
+          <div className="adminEditTestmonial">
+            <ImageInputsForm
+              editHandler={editHandler}
+              componentType="banner"
+              pageType={`${pageType}-banner`}
+              imageLabel="Banner Image"
+              showDescription={false}
+              showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+              dimensions={imageDimensionsJson("banner")}
+            />
+          </div>
+        ) : (
+          ""
+        )} */}
 
         {/* HOME Careers */}
         {/* <div className="row homeCareers py-5">
