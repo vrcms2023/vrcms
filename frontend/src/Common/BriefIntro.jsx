@@ -39,7 +39,7 @@ const BriefIntroFrontend = ({ pageType, introState }) => {
               ) : (
                 <Title
                   title={introValue?.intro_title}
-                  cssClass="mb-4 fs-2 text-center"
+                  cssClass="fs-3 text-center fw-medium mb-5 pt-5"
                 />
               )}
               {introValue?.subTitle === "" ? (
