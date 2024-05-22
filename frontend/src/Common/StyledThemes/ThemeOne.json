@@ -4,7 +4,7 @@
   "background": "#E1F2FD",
   "bodyBgImage": "",
 
-  "textColor": "#333333",
+  "textColor": "#444444",
 
   "white": "#ffffff",
   "black": "#000000",
@@ -65,7 +65,7 @@
   "teamIconColor": "#000000",
 
   "briefIntroBg": "#ffffff",
-  "briefIntroTitleColor": "#006690",
+  "briefIntroTitleColor": "#000000",
   "briefIntroTextColor": "#3F3F3F",
 
   "newsCardBg": "#ffffff",

@@ -5,6 +5,7 @@ import { axiosClientServiceApi } from "../util/axiosUtil";
 // Styles
 
 import { BriefIntroStyled } from "./StyledComponents/Styled-BriefIntro";
+import Ancher from "./Ancher";
 
 const BriefIntroFrontend = ({ pageType, introState }) => {
   const [introValue, setIntroValues] = useState([]);
@@ -31,14 +32,14 @@ const BriefIntroFrontend = ({ pageType, introState }) => {
     <div className="container-fluid">
       <div className="row">
         <BriefIntroStyled>
-          <div className=" briefIntro">
+          <div className="briefIntro">
             <div className="col-md-10 offset-md-1 py-3 py-md-5 ">
               {introValue?.intro_title === "" ? (
                 ""
               ) : (
                 <Title
                   title={introValue?.intro_title}
-                  cssClass="mb-0 fw-bold fs-2 text-center"
+                  cssClass="mb-4 fw-bold fs-2 text-center"
                 />
               )}
               {introValue?.subTitle === "" ? (
@@ -54,6 +55,15 @@ const BriefIntroFrontend = ({ pageType, introState }) => {
                   ? introValue?.intro_desc
                   : "Please Update Brief Intro"}
               </p>
+            </div>
+
+            <div className="d-flex justify-content-center align-items-center">
+              <Ancher
+                AncherLabel="Read More"
+                Ancherpath="/about"
+                AncherClass="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                AnchersvgColor="#17427C"
+              />
             </div>
           </div>
         </BriefIntroStyled>
