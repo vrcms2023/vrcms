@@ -191,15 +191,15 @@ const Home = () => {
           <div className="container position-relative d-none d-md-block">
             <div className="row text-white rounded-3 overflow-hidden position-absolute hiligntsContainer">
               <div className="col-sm-4 p-4 p-lg-5 ">
-                <Title title="product development" cssClass="fs-5 mb-3" />
+                <Title title="product development" cssClass="fs-5 fw-medium mb-3" />
                 <p>We offer a wide range of solutions for global pharmaceutical organizations</p>
               </div>
               <div className="col-sm-4 p-4 p-lg-5">
-                <Title title="product development" cssClass="fs-5 mb-3" />
+                <Title title="product distribution" cssClass="fs-5 fw-medium mb-3" />
                 <p>We comprised of dedicated professionals who are passionate about making</p>
               </div>
               <div className="col-sm-4 p-4 p-lg-5">
-                <Title title="product development" cssClass="fs-5 mb-3" />
+                <Title title="product registration" cssClass="fs-5 fw-medium mb-3" />
                 <p>we work collaboratively to ensure that our products and services meet the highest </p>
               </div>
             </div>
@@ -210,7 +210,7 @@ const Home = () => {
           <Title title="Products" cssClass="text-center fs-3 pt-4 pt-sm-5 " />
           <ProductsList />
           <div className='text-center p-3'>
-            <Link to="">Load More</Link>
+            <Link to="" className="btn btn-outline">Load More</Link>
           </div>
         </div>
 
@@ -325,6 +325,16 @@ const Home = () => {
               <div className="row">
                 <HomeNews news={news} setNews={setNews} pagetype={pageType} />
               </div>
+              <div>
+              <Ancher
+                      AncherLabel="Read more"
+                      Ancherpath="/news"
+                      AncherClass="btn btn-outline my-5 w-25 m-auto d-flex justify-content-center align-items-center gap-2"
+                      AnchersvgColor="#17427C"
+                      // handleModel={() => handleModel(item)}
+                    />
+                
+              </div>
             </div>
           </div>
         </div>
@@ -349,8 +359,8 @@ const Home = () => {
         </div> */}
       </div>
 
-      <hr />
-    <Title title="SAP DESIGN STUDIO" cssClass="text-center fs-1" />
+      {/* <hr /> */}
+    {/* <Title title="SAP DESIGN STUDIO" cssClass="text-center fs-1" /> */}
 
        {/* IMAGE GALLERY SPECIFICALLY DESIGNED FOR SAP DESIGN STUDIO */}
       {/* It will be work only one carosel in the page */}

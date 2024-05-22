@@ -286,7 +286,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
     >
       {(provided) => (
         <div
-          className={`${isAdmin ? "col-12" : "col-md-4"} image`}
+          className={`${isAdmin ? "col-12" : "col-sm-6 col-lg-4 px-2 px-md-4 px-lg-5"} image`}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -339,12 +339,12 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                       }`}
                     />
                     <div
-                      className={`card-text  lineClamp lc2 ${
-                        isAdmin ? "mb-0" : "mb-4"
+                      className={`card-text  ${
+                        isAdmin ? "mb-0" : "mb-2"
                       }`}
                     >
                       {item.news_description ? (
-                        <div
+                        <div className="lineClamp lc2"
                           dangerouslySetInnerHTML={{
                             __html: item.news_description,
                           }}
@@ -357,10 +357,17 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                     {/* <Ancher
                       AncherLabel="Read more"
                       Ancherpath="/news"
-                      AncherClass="btn btn-more d-flex justify-content-center align-items-center gap-2"
+                      AncherClass="btn btn-more w-75 m-auto d-flex justify-content-center align-items-center gap-2"
                       AnchersvgColor="#17427C"
                       handleModel={() => handleModel(item)}
                     /> */}
+
+                    <Ancher
+                      AncherLabel="More..."
+                      Ancherpath="/news"
+                      AncherClass="moreLink"
+                      handleModel={() => handleModel(item)}
+                    />
                   </div>
                 </div>
               </div>

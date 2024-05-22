@@ -12,7 +12,7 @@ const Ancher = ({
     <>
       <Link to={Ancherpath} className={AncherClass} onClick={handleModel}>
         <span>{AncherLabel}</span>
-        {AnchersvgColor && (
+        {/* {AnchersvgColor && (
           <svg
             width="30"
             height="16"
@@ -25,7 +25,7 @@ const Ancher = ({
               fill={AnchersvgColor}
             />
           </svg>
-        )}
+        )} */}
       </Link>
     </>
   );
