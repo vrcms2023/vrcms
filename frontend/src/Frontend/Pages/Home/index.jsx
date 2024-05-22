@@ -184,37 +184,6 @@ const Home = () => {
 
         
 
-        {/* INTRODUCTION COMPONENT */}
-        {/* {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-        )}
-        <div className="row my-4">
-          <BriefIntroFrontend
-            introState={componentEdit.briefIntro}
-            pageType="Home"
-          />
-          <div className="d-flex justify-content-center align-items-center">
-            <Ancher
-              AncherLabel="Know More About"
-              Ancherpath="/about"
-              AncherClass="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-              AnchersvgColor="#17427C"
-            />
-          </div>
-        </div>
-
-        {componentEdit.briefIntro ? (
-          <div className="adminEditTestmonial">
-            <BriefIntroAdmin
-              editHandler={editHandler}
-              componentType="briefIntro"
-              pageType="Home"
-            />
-          </div>
-        ) : (
-          ""
-        )} */}
-
         {/* LEON Pharma Products  */}
 
         <ProductHilightsStyled>
@@ -243,6 +212,33 @@ const Home = () => {
             <Link to="">Load More</Link>
           </div>
         </div>
+
+
+        {/* INTRODUCTION COMPONENT */}
+        {isAdmin && hasPermission && (
+          <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+        )}
+        <div className="container">
+          <div className="row my-4">
+            <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              pageType="Home"
+            />
+            
+          </div>
+        </div>
+
+        {componentEdit.briefIntro ? (
+          <div className="adminEditTestmonial">
+            <BriefIntroAdmin
+              editHandler={editHandler}
+              componentType="briefIntro"
+              pageType="Home"
+            />
+          </div>
+        ) : (
+          ""
+        )}
 
 
         {/* HOME List of Services DEVELOPED FOR LEOMTECH  */}
