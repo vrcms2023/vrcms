@@ -12,6 +12,7 @@ import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getCookie } from "../../../util/cookieUtil";
 import { getMenu } from "../../../features/auth/authActions";
 import { useDispatch } from "react-redux";
+import { getMenuPosition, updatedMenu } from "../../../util/menuUtil";
 
 const MenuForm = ({ editHandler, menuList, editMenu, componentType }) => {
   const dispatch = useDispatch();
@@ -106,13 +107,7 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType }) => {
         return item.id === data.page_parent_ID;
       })[0];
       data["page_url"] = getSelectedParentObject.page_url + data["page_url"];
-      const page_position =
-        getSelectedParentObject?.childMenu?.length > 0
-          ? parseInt(getSelectedParentObject.page_position) * 10 +
-            getSelectedParentObject.childMenu.length +
-            1
-          : parseInt(getSelectedParentObject.page_position) * 10 + 1;
-      data["page_position"] = page_position;
+      data["page_position"] = getMenuPosition(getSelectedParentObject);
     } else {
       data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
     }
@@ -125,19 +120,9 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType }) => {
     data["is_Admin_menu"] = true;
 
     const body = JSON.stringify(data);
+
     try {
-      let response = "";
-      if (data?.id) {
-        response = await axiosServiceApi.patch(
-          `/pageMenu/updatePageMenu/${data?.id}/`,
-          body
-        );
-      } else {
-        response = await axiosServiceApi.post(
-          `/pageMenu/createPageMenu/`,
-          body
-        );
-      }
+      let response = await updatedMenu(data);
       if (
         (response?.status === 201 || response?.status === 200) &&
         response?.data?.PageDetails
