@@ -64,12 +64,16 @@ const Team = () => {
   };
 
   const setResponseData = (data) => {
-    const _positionKey = getObjectPositionKey(data.results[0]);
-    const _teamlList = sortByFieldName(data.results, _positionKey);
-    setTeam(_teamlList);
+    if (data?.results?.length > 0) {
+      const _positionKey = getObjectPositionKey(data.results[0]);
+      const _teamlList = sortByFieldName(data.results, _positionKey);
+      setTeam(_teamlList);
 
-    setPaginationData(paginationDataFormat(data));
-    setCurrentPage(1);
+      setPaginationData(paginationDataFormat(data));
+      setCurrentPage(1);
+    } else {
+      setTeam([]);
+    }
   };
 
   useEffect(() => {

@@ -144,7 +144,6 @@ const Home = () => {
   return (
     <>
       <div className="container-fluid">
-
         {/* BANNER COMPONENT  */}
         {/* <div className="row">
           <div className="col-md-12 p-0 position-relative homePage">
@@ -172,7 +171,6 @@ const Home = () => {
         ) : (
           ""
         )} */}
-
 
         {/* CAROUSEL COMPONENT  */}
         <div className="row">
@@ -240,7 +238,10 @@ const Home = () => {
         </ProductHilightsStyled>
 
         <div className="container mt-3 mt-md-5 pt-md-5">
-          <Title title="Products" cssClass="fs-3 text-center fw-medium mb-5 pt-5" />
+          <Title
+            title="Products"
+            cssClass="fs-3 text-center fw-medium mb-5 pt-5"
+          />
           <ProductsList />
           <div className="text-center p-3">
             <Link to="" className="btn btn-outline">
@@ -274,99 +275,123 @@ const Home = () => {
           ""
         )}
 
+        {/* Random Home Services */}
+        <RandomHomeServicesStyled>
+          <div className="container py-5 randomServices">
+            <div className="row">
+              <div className="col-md-6">
+                <img src={imgOngoing} alt="" className="w-100" />
+              </div>
+              <div className="col-md-6 p-3 p-md-5 d-flex flex-column justify-content-center">
+                <Title
+                  title="Product portfolio"
+                  cssClass="text-black fs-3 fw-medium"
+                />
+                <p>
+                  Through our relentless pursuit of quality and innovation, we
+                  have achieved several milestones that highlight our success in
+                  the healthcare industry.
+                </p>
+                <Link to="" className="moreLink">
+                  More...
+                </Link>
+              </div>
+            </div>
 
-      {/* Random Home Services */}
-      <RandomHomeServicesStyled>
-      <div className="container py-5 randomServices">
-        <div className="row">
-          <div className="col-md-6">
-            <img src={imgOngoing} alt="" className="w-100" />
+            <div className="row my-2 my-md-5 d-flex flex-row flex-md-row-reverse">
+              <div className="col-md-6">
+                <img src={imgCompleted} alt="" className="w-100" />
+              </div>
+              <div className="col-md-6 p-3 p-md-5 d-flex flex-column justify-content-center">
+                <Title
+                  title="Promoting healt and well being"
+                  cssClass="text-black fs-3 fw-medium"
+                />
+                <p>
+                  Through our relentless pursuit of quality and innovation, we
+                  have achieved several milestones that highlight our success in
+                  the healthcare industry.
+                </p>
+                <Link to="" className="moreLink">
+                  More...
+                </Link>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-6">
+                <img src={imgFuture} alt="" className="w-100" />
+              </div>
+              <div className="col-md-6 p-3 p-md-5 d-flex flex-column justify-content-center">
+                <Title
+                  title="What we do"
+                  cssClass="text-black fs-3 fw-medium"
+                />
+                <p>
+                  Through our relentless pursuit of quality and innovation, we
+                  have achieved several milestones that highlight our success in
+                  the healthcare industry.
+                </p>
+                <Link to="" className="moreLink">
+                  More...
+                </Link>
+              </div>
+            </div>
           </div>
-          <div className="col-md-6 p-3 p-md-5 d-flex flex-column justify-content-center">
-            <Title title="Product portfolio" cssClass="text-black fs-3 fw-medium" />
-            <p>Through our relentless pursuit of quality and innovation, we have achieved several milestones that highlight our success in the healthcare industry.</p>
-            <Link to="" className="moreLink">More...</Link>
-          </div>
-
-        </div>
-
-        <div className="row my-2 my-md-5 d-flex flex-row flex-md-row-reverse">
-          <div className="col-md-6">
-            <img src={imgCompleted} alt="" className="w-100" />
-          </div>
-          <div className="col-md-6 p-3 p-md-5 d-flex flex-column justify-content-center">
-            <Title title="Promoting healt and well being" cssClass="text-black fs-3 fw-medium" />
-            <p>Through our relentless pursuit of quality and innovation, we have achieved several milestones that highlight our success in the healthcare industry.</p>
-            <Link to="" className="moreLink">More...</Link>
-          </div>
-          
-        </div>
-
-        <div className="row">
-          <div className="col-md-6">
-            <img src={imgFuture} alt="" className="w-100" />
-          </div>
-          <div className="col-md-6 p-3 p-md-5 d-flex flex-column justify-content-center">
-            <Title title="What we do" cssClass="text-black fs-3 fw-medium" />
-            <p>Through our relentless pursuit of quality and innovation, we have achieved several milestones that highlight our success in the healthcare industry.</p>
-            <Link to="" className="moreLink">More...</Link>
-          </div>
-        </div>
-
-      </div>
-      </RandomHomeServicesStyled>
-
-
-        
+        </RandomHomeServicesStyled>
 
         {/* TESTIMONIAL COMPONENT */}
         <TestimonialCarouselPageStyled>
-
-        <div className="container">
-        <div className="row">
-            <div className="col-md-12">
-              <Title title="Testimonials" cssClass="fs-3 text-center fw-medium mb-5 pt-5" />
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <Title
+                  title="Testimonials"
+                  cssClass="fs-3 text-center fw-medium mb-5 pt-5"
+                />
+              </div>
             </div>
-        </div>
-          <div className="row">
-            <div className="col-md-12 p-5 testimonials text-center">
-              {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler("testmonial", true)} />
-              )}
-              
-              {testimonis.length < 1 ? (
-                (testimonis.length, "No Testimonials Found")
-              ) : testimonis.length === 1 ? (
-                <h4>Please add 2 or more testimonials.</h4>
-              ) : testimonis.length > 1 ? (
-                <Testimonials testimonis={testimonis} />
+            <div className="row">
+              <div className="col-md-12 p-5 testimonials text-center">
+                {isAdmin && hasPermission && (
+                  <EditIcon
+                    editHandler={() => editHandler("testmonial", true)}
+                  />
+                )}
+
+                {testimonis.length < 1 ? (
+                  (testimonis.length, "No Testimonials Found")
+                ) : testimonis.length === 1 ? (
+                  <h4>Please add 2 or more testimonials.</h4>
+                ) : testimonis.length > 1 ? (
+                  <Testimonials testimonis={testimonis} />
+                ) : (
+                  ""
+                )}
+              </div>
+
+              {componentEdit.testmonial ? (
+                <div className="adminEditTestmonial">
+                  <AdminBanner
+                    editHandler={editHandler}
+                    componentType="testmonial"
+                    getImageListURL="testimonials/clientTestimonials/"
+                    deleteImageURL="testimonials/updateTestimonials/"
+                    imagePostURL="testimonials/createTestimonials/"
+                    imageUpdateURL="testimonials/updateTestimonials/"
+                    imageIndexURL="testimonials/updateTestimonialsindex/"
+                    imageLabel="Add your Image"
+                    titleTitle="Testmonial Name"
+                    descriptionTitle="Testimonial Writeup "
+                    showDescription={false}
+                    showExtraFormFields={getTestimonialsFields("testmonial")}
+                    dimensions={imageDimensionsJson("testimonial")}
+                  />
+                </div>
               ) : (
                 ""
               )}
-
             </div>
-
-            {componentEdit.testmonial ? (
-              <div className="adminEditTestmonial">
-                <AdminBanner
-                  editHandler={editHandler}
-                  componentType="testmonial"
-                  getImageListURL="testimonials/clientTestimonials/"
-                  deleteImageURL="testimonials/updateTestimonials/"
-                  imagePostURL="testimonials/createTestimonials/"
-                  imageUpdateURL="testimonials/updateTestimonials/"
-                  imageIndexURL="testimonials/updateTestimonialsindex/"
-                  imageLabel="Add your Image"
-                  titleTitle="Testmonial Name"
-                  descriptionTitle="Testimonial Writeup "
-                  showDescription={false}
-                  showExtraFormFields={getTestimonialsFields("testmonial")}
-                  dimensions={imageDimensionsJson("testimonial")}
-                />
-              </div>
-            ) : (
-              ""
-            )}
           </div>
         </TestimonialCarouselPageStyled>
 
@@ -374,23 +399,27 @@ const Home = () => {
         <div className="row py-5 homeNews">
           <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="container">
-
-              <Title title="News" cssClass="fs-3 text-center fw-medium mb-5 pt-5" />
-                <HomeNews news={news} setNews={setNews} pagetype={pageType} />
+              <Title
+                title="News"
+                cssClass="fs-3 text-center fw-medium mb-5 pt-5"
+              />
+              <HomeNews
+                news={news}
+                setNews={setResponseData}
+                pagetype={pageType}
+              />
               <div>
-              
-              <div className="row">
-                <div className="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-              <Ancher
+                <div className="row">
+                  <div className="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+                    <Ancher
                       AncherLabel="Read more"
                       Ancherpath="/news"
                       AncherClass="btn btn-outline my-2 my-md-5 w-75 m-auto d-flex justify-content-center align-items-center gap-2"
                       AnchersvgColor="#17427C"
                       // handleModel={() => handleModel(item)}
                     />
-                    </div>
+                  </div>
                 </div>
-
               </div>
             </div>
           </div>

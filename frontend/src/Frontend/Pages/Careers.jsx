@@ -65,7 +65,7 @@ const Careers = () => {
 
   const setResponseData = (data) => {
     setPosts(
-      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : [],
+      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []
     );
     setPaginationData(paginationDataFormat(data));
     setCurrentPage(1);
@@ -167,42 +167,41 @@ const Careers = () => {
               </div>
             </div>
 
-            {/* <div className="row">
+            <div className="row">
               <JobPost
                 addJobs={componentEdit.addjob}
                 posts={posts}
                 setPosts={setResponseData}
                 setPageloadResults={setPageloadResults}
               />
-            </div> */}
-              
+            </div>
           </CareersPageStyled>
           <div>
-                {paginationData?.total_count ? (
-                  <CustomPagination
-                    paginationData={paginationData}
-                    paginationURL={
-                      isAdmin
-                        ? "/careers/createCareer/"
-                        : "/careers/clientCareersList/"
-                    }
-                    paginationSearchURL={
-                      searchQuery
-                        ? `/careers/searchCareers/${searchQuery}/`
-                        : isAdmin
-                        ? "/careers/createCareer/"
-                        : "/careers/clientCareersList/"
-                    }
-                    searchQuery={searchQuery}
-                    setCurrentPage={setCurrentPage}
-                    currentPage={currentPage}
-                    setResponseData={setResponseData}
-                    pageLoadResult={pageLoadResult}
-                  />
-                ) : (
-                  ""
-                )}
-              </div>
+            {paginationData?.total_count ? (
+              <CustomPagination
+                paginationData={paginationData}
+                paginationURL={
+                  isAdmin
+                    ? "/careers/createCareer/"
+                    : "/careers/clientCareersList/"
+                }
+                paginationSearchURL={
+                  searchQuery
+                    ? `/careers/searchCareers/${searchQuery}/`
+                    : isAdmin
+                      ? "/careers/createCareer/"
+                      : "/careers/clientCareersList/"
+                }
+                searchQuery={searchQuery}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                setResponseData={setResponseData}
+                pageLoadResult={pageLoadResult}
+              />
+            ) : (
+              ""
+            )}
+          </div>
         </div>
 
         {show && <ModelBg />}
