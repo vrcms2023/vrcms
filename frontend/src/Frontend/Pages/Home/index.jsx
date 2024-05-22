@@ -236,8 +236,8 @@ const Home = () => {
           </div>
         </ProductHilightsStyled>
 
-        <div className="container mt-4 mt-sm-5">
-          <Title title="Products" cssClass="text-center fs-3 pt-4 pt-sm-5" />
+        <div className="container mt-3 mt-md-5 pt-md-5">
+          <Title title="Products" cssClass="text-center fs-3 pt-4 pt-sm-5 " />
           <ProductsList />
           <div className='text-center p-3'>
             <Link to="">Load More</Link>
