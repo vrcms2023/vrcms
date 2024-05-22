@@ -30,6 +30,8 @@ const Home = lazy(() => import("./Frontend/Pages/Home/index"));
 const About = lazy(() => import("./Frontend/Pages/About"));
 const Contact = lazy(() => import("./Frontend/Pages/Contact"));
 const Services = lazy(() => import("./Frontend/Pages/Services"));
+const Products = lazy(() => import("./Frontend/Pages/Products/"));
+const ProductDetails = lazy(() => import("./Frontend/Pages/Products/ProductDetails"));
 const ClientsList = lazy(() => import("./Frontend/Pages/ClientsList"));
 const Careers = lazy(() => import("./Frontend/Pages/Careers"));
 const CareerDetails = lazy(() => import("./Frontend/Pages/career-details"));
@@ -162,6 +164,8 @@ function App() {
               <Route exact path="/home" element={<Home />} />
               <Route exact path="/about" element={<About />} />
               <Route exact path="/contact" element={<Contact />} />
+              <Route exact path="/products" element={<Products />} />
+              <Route exact path="/products/:uid/" element={<ProductDetails />} />
               <Route exact path="/services" element={<Services />} />
               <Route exact path="/services/:uid/" element={<Services />} />
               <Route exact path="/clients" element={<ClientsList />} />

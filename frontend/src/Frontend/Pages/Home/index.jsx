@@ -46,6 +46,7 @@ import "./Home.css";
 import imgOngoing from "../../../Images/ongoing.png";
 import imgCompleted from "../../../Images/completed.png";
 import imgFuture from "../../../Images/future.png";
+import ProductsList from "../Products/ProductsList";
 
 const Home = () => {
   const editComponentObj = {
@@ -178,6 +179,10 @@ const Home = () => {
           </div>
         )}
 
+        {/* LEON Pharma Products  */}
+
+       
+
         {/* INTRODUCTION COMPONENT */}
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("briefIntro", true)} />
@@ -208,6 +213,15 @@ const Home = () => {
         ) : (
           ""
         )}
+
+        <div className="container">
+          <Title title="Products" cssClass="text-center fs-1" />
+          <ProductsList />
+          <div className='text-center p-3'>
+            <Link to="">Load More</Link>
+          </div>
+        </div>
+
 
         {/* HOME List of Services DEVELOPED FOR LEOMTECH  */}
         <div className="container py-5 homeServices">
@@ -549,8 +563,6 @@ const Home = () => {
       </div>
 
         {/* END OF HPR INFRA COMPONENTS */}
-
-      
 
       {componentEdit.projects ? (
         <div className="adminEditTestmonial">
