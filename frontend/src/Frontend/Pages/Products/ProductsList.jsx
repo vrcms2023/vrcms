@@ -20,7 +20,7 @@ const ProductsList = () => {
   const [products, setProducts] = useState(productList);
   return (
     
-      <div className='row py-5'>
+      <div className='row py-4'>
         <Product products={products}/>
       </div>
   )

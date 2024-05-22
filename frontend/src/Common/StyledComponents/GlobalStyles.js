@@ -327,4 +327,32 @@ body {
       right: 0px;
       padding: 0 !important;
     }
+
+    .mt-6 {
+      margin-top: 6rem;
+    }
+
+    .mt-7 {
+      margin-top: 7rem;
+    }
+
+    .mt-8 {
+      margin-top: 8rem;
+    }
+
+    .mt-9 {
+      margin-top: 9rem;
+    }
+
+    .mt-10 {
+      margin-top: 10rem;
+    }
+
+    .mt-11 {
+      margin-top: 11rem;
+    }
+
+    .mt-12 {
+      margin-top: 12rem;
+    }
 `;

@@ -47,6 +47,7 @@ import imgOngoing from "../../../Images/ongoing.png";
 import imgCompleted from "../../../Images/completed.png";
 import imgFuture from "../../../Images/future.png";
 import ProductsList from "../Products/ProductsList";
+import { ProductHilightsStyled } from "../../../Common/StyledComponents/Styled-Products-Hilights";
 
 const Home = () => {
   const editComponentObj = {
@@ -159,6 +160,8 @@ const Home = () => {
             {isAdmin && hasPermission && <EditIcon editHandler={editHandler} />}
             <Carousel carouselState={componentEdit.carousel} />
           </div>
+
+          
         </div>
 
         {componentEdit.carousel && (
@@ -179,12 +182,10 @@ const Home = () => {
           </div>
         )}
 
-        {/* LEON Pharma Products  */}
-
-       
+        
 
         {/* INTRODUCTION COMPONENT */}
-        {isAdmin && hasPermission && (
+        {/* {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("briefIntro", true)} />
         )}
         <div className="row my-4">
@@ -212,10 +213,31 @@ const Home = () => {
           </div>
         ) : (
           ""
-        )}
+        )} */}
 
-        <div className="container">
-          <Title title="Products" cssClass="text-center fs-1" />
+        {/* LEON Pharma Products  */}
+
+        <ProductHilightsStyled>
+          <div className="container position-relative d-none d-md-block">
+            <div className="row text-white rounded-3 overflow-hidden position-absolute hiligntsContainer">
+              <div className="col-sm-4 p-4 p-lg-5 ">
+                <Title title="product development" cssClass="fs-5 mb-3" />
+                <p>We offer a wide range of solutions for global pharmaceutical organizations</p>
+              </div>
+              <div className="col-sm-4 p-4 p-lg-5">
+                <Title title="product development" cssClass="fs-5 mb-3" />
+                <p>We comprised of dedicated professionals who are passionate about making</p>
+              </div>
+              <div className="col-sm-4 p-4 p-lg-5">
+                <Title title="product development" cssClass="fs-5 mb-3" />
+                <p>we work collaboratively to ensure that our products and services meet the highest </p>
+              </div>
+            </div>
+          </div>
+        </ProductHilightsStyled>
+
+        <div className="container mt-4 mt-sm-5">
+          <Title title="Products" cssClass="text-center fs-3 pt-4 pt-sm-5" />
           <ProductsList />
           <div className='text-center p-3'>
             <Link to="">Load More</Link>
