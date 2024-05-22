@@ -15,9 +15,9 @@
   "verylightgray": "#f3f3f3",
   "error": "#f23838",
 
-  "primaryColor": "#3CD9D2",
+  "primaryColor": "#E1F2FD",
   "primaryHoverColor": "#000000",
-  "secondaryColor": "#888888",
+  "secondaryColor": "#407EC2",
   "secondaryHoverColor": "#333333",
   "teritoryColor": "#2A5CA0",
   "teritoryHoverColor": "#2A5CA0",
@@ -29,7 +29,7 @@
   "topStripLinkColor": "#ffffff",
   "topStripLinkHoverColor": "#3CD9D2",
 
-  "navbarBg": "#ffffff",
+  "navbarBg": "#E1F2FD",
   "navbarTextColor": "#ffffff",
   "navbarLinkColor": "#000000",
   "navbarLinkBgColor": "#748E31",

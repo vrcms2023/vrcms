@@ -4,39 +4,39 @@ export const StyledMenu = styled.menu`
   margin-left: auto;
 
   .navbar {
-    background-color:${({ theme }) => theme.navbarBg}; 
-    box-shadow: 0px 5px 30px #111111;
+    background-color:${({ theme }) => theme.primaryColor}; 
+    box-shadow: 0px 2px 10px ${({ theme }) => theme.secondaryColor};
     
     .navbar-toggler {
-      background-color:${({ theme }) => theme.black} !important; 
-      border: 1px solid ${({ theme }) => theme.black}; 
+      background-color:${({ theme }) => theme.secondaryColor} !important; 
+      border: 1px solid ${({ theme }) => theme.white}; 
     }
     .nav-Link {
-        color:${({ theme }) => theme.navbarLinkColor}; 
+        color:${({ theme }) => theme.black}; 
         &:before {
           position: absolute;
           content: "";
           width: 0%;
           /* height: 1px; */
-          border-bottom: 2px solid #000;
+          border-bottom: 2px solid ${({ theme }) => theme.secondaryColor}; 
           bottom: -4px;
           transition: width 0.3s;
         }
 
         &.active {
-          color:${({ theme }) => theme.black};
+          color:${({ theme }) => theme.secondaryColor};
           
           &:before {
             position: absolute;
             content: "";
             width: 35%;
             /* height: 1px; */
-            border-bottom: 2px solid #000;
+            border-bottom: 2px solid ${({ theme }) => theme.secondaryColor}; 
             bottom: -4px;
           }
         }
         &:hover {
-            color:${({ theme }) => theme.navbarLinkHoverColor};
+            color:${({ theme }) => theme.secondaryColor};
 
             &:before {
               width: 35%;
@@ -85,13 +85,16 @@ export const StyledMenu = styled.menu`
         font-size: 0.9rem;
         font-weight: normal;
         position: relative;
-        text-transform: uppercase;
+        // text-transform: uppercase;
       }
 
       ul.dropdown-menu {
-        background-color: ${({ theme }) => theme.black};
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        // background-color: ${({ theme }) => theme.primaryColor};
+        // border-radius: 10px;
+        // box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        border: 0px; 
+        padding: 0px;
+        margin: 0px;
         
     
         // @media (max-width: 991px) {
@@ -99,8 +102,12 @@ export const StyledMenu = styled.menu`
         // }
     
         .nav-item {
-          background-color: ${({ theme }) => theme.black};
-          padding: 5px 0px;
+          background-color: ${({ theme }) => theme.primaryColor};
+          padding: 0px !important;
+
+          &:last-child {
+            border: 0px;
+          }
     
           a.active {
             background-color: ${({ theme }) => theme.primaryColor};
@@ -108,15 +115,17 @@ export const StyledMenu = styled.menu`
         }
   
         a {
-          color: ${({ theme }) => theme.navbarChildLinkColor};
+          color: ${({ theme }) => theme.black};
+          padding: 10px 0;
+          font-size: 0.9rem;
       
           &:hover {
-            color: ${({ theme }) => theme.navbarChildLinkHoverColor};
-            background-color: ${({ theme }) => theme.navbarChildLinkBgColor};
+            color: ${({ theme }) => theme.primaryColor};
+            background-color: ${({ theme }) => theme.secondaryColor};
       
-            @media (max-width: 991px) {
-              background-color: ${({ theme }) => theme.navbarChildLinkBgColor};
-            }
+            // @media (max-width: 991px) {
+            //   background-color: ${({ theme }) => theme.secondaryColor};
+            // }
           }
         }
       }
