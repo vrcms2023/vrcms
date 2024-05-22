@@ -72,11 +72,11 @@ body {
     }
 
     a.btn {
-        background-color:${({ theme }) => theme.primaryHoverColor};
+        background-color:${({ theme }) => theme.primaryColor};
     }
 
     a.btn:hover {
-        background-color:${({ theme }) => theme.primaryColor};
+        background-color:${({ theme }) => theme.secondaryColor};
     }
 }
 
@@ -101,7 +101,7 @@ body {
     color:${({ theme }) => theme.black};
 }
 .btn-primary:hover {
-    background-color:${({ theme }) => theme.primaryHoverColor}; 
+    background-color:${({ theme }) => theme.secondaryColor}; 
     color:${({ theme }) => theme.white};
 }
 
@@ -111,28 +111,38 @@ body {
 }
 
 .btn-secondary:hover {
-    background-color:${({ theme }) => theme.secondaryHoverColor}; 
+    background-color:${({ theme }) => theme.primaryColor}; 
     color:${({ theme }) => theme.lightgray};
 }
 
 .btn-outline {
-    border: 1px solid ${({ theme }) => theme.black} !important; 
-    color:${({ theme }) => theme.black} !important; 
+    border: 1px solid ${({ theme }) => theme.secondaryColor} !important; 
+    background-color:${({ theme }) => theme.primaryColor}; 
+    color:${({ theme }) => theme.secondaryColor}; 
 }
 
 .btn-outline:hover { 
-    border: 1px solid ${({ theme }) => theme.black} !important; 
-    color:${({ theme }) => theme.black};
+    border: 1px solid ${({ theme }) => theme.primaryColor} !important; 
+    color:${({ theme }) => theme.secondaryColor};
 }
 
 .btn-more {
-  border: 1px solid ${({ theme }) => theme.gray} !important; 
-  color:${({ theme }) => theme.gray};
+  border: 1px solid ${({ theme }) => theme.secondaryColor} !important; 
+  color:${({ theme }) => theme.secondaryColor};
 }
 .btn-more:hover {
-  background-color:${({ theme }) => theme.verylightgray}; 
-  border: 1px solid ${({ theme }) => theme.black} !important; 
-  color:${({ theme }) => theme.black};
+  background-color:${({ theme }) => theme.primaryColor}; 
+  border: 1px solid ${({ theme }) => theme.secondaryColor} !important; 
+  color:${({ theme }) => theme.secondaryColor};
+}
+
+.moreLink {
+  color:${({ theme }) => theme.secondaryColor};
+  font-size: .9rem
+}
+
+.moreLink:hover {
+  color:${({ theme }) => theme.gray444};
 }
 
 .homeCareers {
