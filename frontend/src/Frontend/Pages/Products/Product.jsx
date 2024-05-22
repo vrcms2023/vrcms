@@ -7,7 +7,7 @@ const Product = ({products}) => {
     <>
     {products.map(item => (
   
-      <div className='col-md-4 col-lg-3 text-center'>
+      <div className='col-sm-6 col-md-4 col-lg-3 text-center'>
         <Link to={`/products/${item.id}`}
         // onClick={() =>
         //   Navigate()
@@ -15,7 +15,7 @@ const Product = ({products}) => {
         >
           <img src={item.img} alt={item.prodName} className='w-75 h-75 rounded-3 border border-white border-4' />
         </Link>
-        <Title title={item.prodName} cssClass="fs-6 fw-bold pt-3" />
+        <Title title={item.prodName} cssClass="fs-6 py-3" />
       </div>
     
     ))}
