@@ -10,8 +10,11 @@ import Error from "../Error";
 import { generateOptionLength } from "../../../util/commonUtil";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getCookie } from "../../../util/cookieUtil";
+import { getMenu } from "../../../features/auth/authActions";
+import { useDispatch } from "react-redux";
 
 const MenuForm = ({ editHandler, menuList, editMenu, componentType }) => {
+  const dispatch = useDispatch();
   const closeHandler = () => {
     editHandler(componentType, false);
     document.body.style.overflow = "";
@@ -102,6 +105,7 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType }) => {
       const getSelectedParentObject = _.filter(menuList, (item) => {
         return item.id === data.page_parent_ID;
       })[0];
+      data["page_url"] = getSelectedParentObject.page_url + data["page_url"];
       const page_position =
         getSelectedParentObject?.childMenu?.length > 0
           ? parseInt(getSelectedParentObject.page_position) * 10 +
@@ -139,6 +143,7 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType }) => {
         response?.data?.PageDetails
       ) {
         closeHandler();
+        dispatch(getMenu());
       }
     } catch (error) {
       toast.error("Unable to load user details");
