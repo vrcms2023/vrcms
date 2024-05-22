@@ -22,13 +22,16 @@ import { HomeClientItem } from "../../Components/HomeClientItem";
 // Common Compoenents
 import Banner from "../../../Common/Banner";
 import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
-import {ImageGalleryStyled} from '../../../Common/StyledComponents/Styled-ImageGallery';
+import { ImageGalleryStyled } from "../../../Common/StyledComponents/Styled-ImageGallery";
 import { HomeClientsStyled } from "../../../Common/StyledComponents/Styled-HomeClients";
 
 // Utilities
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import { removeActiveClass } from "../../../util/ulrUtil";
-import { sortByFieldName } from "../../../util/commonUtil";
+import {
+  getObjectPositionKey,
+  sortByFieldName,
+} from "../../../util/commonUtil";
 import {
   getCarouselFields,
   getFormDynamicFields,
@@ -80,6 +83,16 @@ const Home = () => {
     document.body.style.overflow = "hidden";
   };
 
+  const setResponseData = (data) => {
+    if (data?.results.length > 0) {
+      const _positionKey = getObjectPositionKey(data.results[0]);
+      const _newslList = sortByFieldName(data.results, _positionKey);
+      setNews(_newslList.slice(0, 4));
+    } else {
+      setNews([]);
+    }
+  };
+
   useEffect(() => {
     removeActiveClass();
   }, []);
@@ -127,11 +140,39 @@ const Home = () => {
 
     getClientList();
   }, []);
-  
 
   return (
     <>
       <div className="container-fluid">
+
+        {/* BANNER COMPONENT  */}
+        {/* <div className="row">
+          <div className="col-md-12 p-0 position-relative homePage">
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("banner", true)} />
+            )}
+            <Banner
+              getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+              bannerState={componentEdit.banner}
+            />
+          </div>
+        </div>
+        {componentEdit.banner ? (
+          <div className="adminEditTestmonial">
+            <ImageInputsForm
+              editHandler={editHandler}
+              componentType="banner"
+              pageType={`${pageType}-banner`}
+              imageLabel="Banner Image"
+              showDescription={false}
+              showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+              dimensions={imageDimensionsJson("banner")}
+            />
+          </div>
+        ) : (
+          ""
+        )} */}
+
 
         {/* CAROUSEL COMPONENT  */}
         <div className="row">
@@ -139,8 +180,6 @@ const Home = () => {
             {isAdmin && hasPermission && <EditIcon editHandler={editHandler} />}
             <Carousel carouselState={componentEdit.carousel} />
           </div>
-
-          
         </div>
 
         {componentEdit.carousel && (
@@ -161,24 +200,40 @@ const Home = () => {
           </div>
         )}
 
-        
-
         {/* LEON Pharma Products  */}
 
         <ProductHilightsStyled>
           <div className="container position-relative d-none d-md-block">
             <div className="row text-white rounded-3 overflow-hidden position-absolute hiligntsContainer">
               <div className="col-sm-4 p-4 p-lg-5 ">
-                <Title title="product development" cssClass="fs-5 fw-medium mb-3" />
-                <p>We offer a wide range of solutions for global pharmaceutical organizations</p>
+                <Title
+                  title="product development"
+                  cssClass="fs-5 fw-medium mb-3"
+                />
+                <p>
+                  We offer a wide range of solutions for global pharmaceutical
+                  organizations
+                </p>
               </div>
               <div className="col-sm-4 p-4 p-lg-5">
-                <Title title="product distribution" cssClass="fs-5 fw-medium mb-3" />
-                <p>We comprised of dedicated professionals who are passionate about making</p>
+                <Title
+                  title="product distribution"
+                  cssClass="fs-5 fw-medium mb-3"
+                />
+                <p>
+                  We comprised of dedicated professionals who are passionate
+                  about making
+                </p>
               </div>
               <div className="col-sm-4 p-4 p-lg-5">
-                <Title title="product registration" cssClass="fs-5 fw-medium mb-3" />
-                <p>we work collaboratively to ensure that our products and services meet the highest </p>
+                <Title
+                  title="product registration"
+                  cssClass="fs-5 fw-medium mb-3"
+                />
+                <p>
+                  we work collaboratively to ensure that our products and
+                  services meet the highest{" "}
+                </p>
               </div>
             </div>
           </div>
@@ -187,11 +242,12 @@ const Home = () => {
         <div className="container mt-3 mt-md-5 pt-md-5">
           <Title title="Products" cssClass="fs-3 text-center fw-medium mb-5 pt-5" />
           <ProductsList />
-          <div className='text-center p-3'>
-            <Link to="" className="btn btn-outline">Load More</Link>
+          <div className="text-center p-3">
+            <Link to="" className="btn btn-outline">
+              Load More
+            </Link>
           </div>
         </div>
-
 
         {/* INTRODUCTION COMPONENT */}
         {isAdmin && hasPermission && (
@@ -203,7 +259,6 @@ const Home = () => {
               introState={componentEdit.briefIntro}
               pageType="Home"
             />
-            
           </div>
         </div>
 
@@ -232,6 +287,7 @@ const Home = () => {
             <p>Through our relentless pursuit of quality and innovation, we have achieved several milestones that highlight our success in the healthcare industry.</p>
             <Link to="" className="moreLink">More...</Link>
           </div>
+
         </div>
 
         <div className="row my-2 my-md-5 d-flex flex-row flex-md-row-reverse">
@@ -263,9 +319,9 @@ const Home = () => {
 
         
 
-
         {/* TESTIMONIAL COMPONENT */}
         <TestimonialCarouselPageStyled>
+
         <div className="container">
         <div className="row">
             <div className="col-md-12">
@@ -287,38 +343,38 @@ const Home = () => {
               ) : (
                 ""
               )}
-            </div>
-          </div>
-          
 
-          {componentEdit.testmonial ? (
-        <div className="adminEditTestmonial">
-          <AdminBanner
-            editHandler={editHandler}
-            componentType="testmonial"
-            getImageListURL="testimonials/clientTestimonials/"
-            deleteImageURL="testimonials/updateTestimonials/"
-            imagePostURL="testimonials/createTestimonials/"
-            imageUpdateURL="testimonials/updateTestimonials/"
-            imageIndexURL="testimonials/updateTestimonialsindex/"
-            imageLabel="Add your Image"
-            titleTitle="Testmonial Name"
-            descriptionTitle="Testimonial Writeup "
-            showDescription={false}
-            showExtraFormFields={getTestimonialsFields("testmonial")}
-            dimensions={imageDimensionsJson("testimonial")}
-          />
-        </div>
-      ) : (
-        ""
-      )}
-        </div>
+            </div>
+
+            {componentEdit.testmonial ? (
+              <div className="adminEditTestmonial">
+                <AdminBanner
+                  editHandler={editHandler}
+                  componentType="testmonial"
+                  getImageListURL="testimonials/clientTestimonials/"
+                  deleteImageURL="testimonials/updateTestimonials/"
+                  imagePostURL="testimonials/createTestimonials/"
+                  imageUpdateURL="testimonials/updateTestimonials/"
+                  imageIndexURL="testimonials/updateTestimonialsindex/"
+                  imageLabel="Add your Image"
+                  titleTitle="Testmonial Name"
+                  descriptionTitle="Testimonial Writeup "
+                  showDescription={false}
+                  showExtraFormFields={getTestimonialsFields("testmonial")}
+                  dimensions={imageDimensionsJson("testimonial")}
+                />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
         </TestimonialCarouselPageStyled>
 
         {/* HOME News */}
         <div className="row py-5 homeNews">
           <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="container">
+
               <Title title="News" cssClass="fs-3 text-center fw-medium mb-5 pt-5" />
                 <HomeNews news={news} setNews={setNews} pagetype={pageType} />
               <div>
@@ -334,6 +390,7 @@ const Home = () => {
                     />
                     </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -416,11 +473,11 @@ const Home = () => {
       </div>
 
       {/* <hr /> */}
-    {/* <Title title="SAP DESIGN STUDIO" cssClass="text-center fs-1" /> */}
+      {/* <Title title="SAP DESIGN STUDIO" cssClass="text-center fs-1" /> */}
 
-       {/* IMAGE GALLERY SPECIFICALLY DESIGNED FOR SAP DESIGN STUDIO */}
+      {/* IMAGE GALLERY SPECIFICALLY DESIGNED FOR SAP DESIGN STUDIO */}
       {/* It will be work only one carosel in the page */}
-       {/* <ImageGalleryStyled>
+      {/* <ImageGalleryStyled>
           <div className="text-center mb-5" style={{ marginTop: "100px" }}>
             <span
               className="fs-1 px-4 py-2"
@@ -450,12 +507,12 @@ const Home = () => {
           </div>
         </ImageGalleryStyled> */}
 
-        {/* SAP DESIGN STUDIO */}
+      {/* SAP DESIGN STUDIO */}
 
-        {/* SERVICES OFFERED COMPONENT 
+      {/* SERVICES OFFERED COMPONENT 
         DEVELOPED FOR SPECIFICALLY SAP DESIGNS */}
 
-        {/* <div className="text-center mb-5" style={{ marginTop: "100px" }}>
+      {/* <div className="text-center mb-5" style={{ marginTop: "100px" }}>
           <span
             className="fs-1 px-4 py-2"
             style={{ borderBottom: "1px solid #444444" }}
@@ -496,8 +553,8 @@ const Home = () => {
           </div>
         )} */}
 
-        {/* CLIENTS COMPONENTS DEVELOPER IN SAP DESIGNS */}
-        {/* <HomeClientsStyled>
+      {/* CLIENTS COMPONENTS DEVELOPER IN SAP DESIGNS */}
+      {/* <HomeClientsStyled>
           <div className="text-center mb-5" style={{ marginTop: "100px" }}>
             <span
               className="fs-1 px-4 py-2"
@@ -520,12 +577,11 @@ const Home = () => {
           </div>
         </HomeClientsStyled> */}
 
-        {/* END OF SAP DESIGN STUDIO COMPONENTS */}
+      {/* END OF SAP DESIGN STUDIO COMPONENTS */}
 
+      {/* HPR INFRA */}
 
-        {/* HPR INFRA */}
-
-{/* Project Cards */}
+      {/* Project Cards */}
       {/* <hr />
       <Title title="HPR INFRA" cssClass="text-center fs-1" />
       <div className="row my-5 homeProjectsBg">
@@ -656,7 +712,7 @@ const Home = () => {
         </div>
       </div> */}
 
-        {/* END OF HPR INFRA COMPONENTS */}
+      {/* END OF HPR INFRA COMPONENTS */}
 
       {componentEdit.projects ? (
         <div className="adminEditTestmonial">

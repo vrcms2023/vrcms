@@ -15,7 +15,7 @@ const Search = ({
   searchQuery,
   imageGallery,
   setImageGallery,
-  noSearchBy
+  noSearchBy,
 }) => {
   const userCookie = getCookie("access");
 
@@ -46,7 +46,7 @@ const Search = ({
       } else {
         response = await axiosClientServiceApi.get(clientDefaultURL);
       }
-      setObject(response.data);
+      setObject(response.data.results);
       setPageloadResults(false);
     } catch (error) {
       console.log("Unable to get the  data");
@@ -71,16 +71,15 @@ const Search = ({
           <i className="fa fa-search" aria-hidden="true"></i>
         </span>
       </div>
-      {noSearchBy && 
-      <div className="d-flex justify-conent-center align-items-center gap-2">
-      {/* <span className="text-muted">Search by</span> */}
-      <small className="text-dark">
-        <span className="fw-bolder">Search by</span> :{" "}
-        {searchfiledDeatails ? searchfiledDeatails : ""}
-      </small>
-    </div>
-      }
-      
+      {noSearchBy && (
+        <div className="d-flex justify-conent-center align-items-center gap-2">
+          {/* <span className="text-muted">Search by</span> */}
+          <small className="text-dark">
+            <span className="fw-bolder">Search by</span> :{" "}
+            {searchfiledDeatails ? searchfiledDeatails : ""}
+          </small>
+        </div>
+      )}
     </div>
   );
 };
