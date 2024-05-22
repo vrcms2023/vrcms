@@ -43,10 +43,7 @@ const Testimonials = ({ testimonis }) => {
     }
     return (
       <div className={`${position} article position-absolute`} key={item.id}>
-        <Title
-          title={item.testimonial_title}
-          cssClass="mb-2 fw-normal px-3 fs-2 fw-bold title"
-        />
+        
 
         {!item.path ? (
           <i className="fa fa-user" aria-hidden="true"></i>
@@ -57,6 +54,10 @@ const Testimonials = ({ testimonis }) => {
             alt="User"
           />
         )}
+        <Title
+          title={item.testimonial_title}
+          cssClass="mb-2 px-3 fs-3 title"
+        />
         <p className="w-75 m-auto mt-3 mb-5 px-3 px-md-5 fs-6">
           {item.testimonial_description}
         </p>
@@ -64,12 +65,12 @@ const Testimonials = ({ testimonis }) => {
           <Link to="" onClick={() => setIndex(index + 1)}>
             {" "}
             {/* <img src={leftArrow} alt="Previous" width="42" height="42" /> */}
-            <i className="fa fa-chevron-left fs-1" aria-hidden="true"></i>
+            <i className="fa fa-chevron-left fs-3" aria-hidden="true"></i>
           </Link>
           <Link to="" onClick={() => setIndex(index - 1)}>
             {" "}
             {/* <img src={rightArrow} alt="Next" width="42" height="42" /> */}
-            <i className="fa fa-chevron-right fs-1" aria-hidden="true"></i>
+            <i className="fa fa-chevron-right fs-3" aria-hidden="true"></i>
           </Link>
         </div>
       </div>

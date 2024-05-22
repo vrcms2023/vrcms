@@ -48,6 +48,7 @@ import imgCompleted from "../../../Images/completed.png";
 import imgFuture from "../../../Images/future.png";
 import ProductsList from "../Products/ProductsList";
 import { ProductHilightsStyled } from "../../../Common/StyledComponents/Styled-Products-Hilights";
+import { TestimonialCarouselPageStyled } from "../../../Common/StyledComponents/Styled-TestimonialCarousel";
 
 const Home = () => {
   const editComponentObj = {
@@ -249,7 +250,7 @@ const Home = () => {
        
 
         {/* FEATURES SPECICALLY DEVELOPED FOR RISHISYSTEMS */}
-        <Features />
+        {/* <Features /> */}
 
         {/* HOME WHY CHOOSE RISHSYSTEMS */}
         <div className="row ABriefAbout mb-5">
@@ -267,22 +268,30 @@ const Home = () => {
               dimensions={imageDimensionsJson("homeCareers")}
             />
           </div>
+        </div>
 
-          <div className="col-md-12 p-5 testimonials text-center">
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("testmonial", true)} />
-            )}
-            {/* TESTIMONIAL COMPONENT */}
-            {testimonis.length < 1 ? (
-              (testimonis.length, "No Testimonials Found")
-            ) : testimonis.length === 1 ? (
-              <h4>Please add 2 or more testimonials.</h4>
-            ) : testimonis.length > 1 ? (
-              <Testimonials testimonis={testimonis} />
-            ) : (
-              ""
-            )}
+
+        {/* TESTIMONIAL COMPONENT */}
+        <TestimonialCarouselPageStyled>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12 p-5 testimonials text-center">
+              {isAdmin && hasPermission && (
+                <EditIcon editHandler={() => editHandler("testmonial", true)} />
+              )}
+              
+              {testimonis.length < 1 ? (
+                (testimonis.length, "No Testimonials Found")
+              ) : testimonis.length === 1 ? (
+                <h4>Please add 2 or more testimonials.</h4>
+              ) : testimonis.length > 1 ? (
+                <Testimonials testimonis={testimonis} />
+              ) : (
+                ""
+              )}
+            </div>
           </div>
+          
 
           {componentEdit.testmonial ? (
         <div className="adminEditTestmonial">
@@ -306,6 +315,7 @@ const Home = () => {
         ""
       )}
         </div>
+        </TestimonialCarouselPageStyled>
 
         {/* HOME News */}
         <div className="row py-5 homeNews">
