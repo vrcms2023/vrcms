@@ -416,7 +416,6 @@ const Home = () => {
                       Ancherpath="/news"
                       AncherClass="btn btn-outline my-2 my-md-5 w-75 m-auto d-flex justify-content-center align-items-center gap-2"
                       AnchersvgColor="#17427C"
-                      // handleModel={() => handleModel(item)}
                     />
                   </div>
                 </div>

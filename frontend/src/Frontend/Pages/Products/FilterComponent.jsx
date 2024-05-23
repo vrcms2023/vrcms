@@ -23,7 +23,7 @@ const FilterComponent = () => {
               setPageloadResults={""}
               setSearchquery={""}
               searchQuery={""}
-              noSearchBy={false}
+              hideSearchBy="true"
             />
           </div>
         </div>
