@@ -31,8 +31,9 @@ class CarouselAPIView(generics.CreateAPIView):
      List all Carousel, or create a new Carousel.
      """
         
-     def get(self, request, category, format=None):
-        snippets = self.get_object(category)
+     def get(self, request, format=None):
+        #snippets = self.get_object(category)
+        snippets = Carousel.objects.all()
         serializer = CarouselSerializer(snippets, many=True)
         return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
         
