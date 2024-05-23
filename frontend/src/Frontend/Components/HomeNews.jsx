@@ -29,6 +29,7 @@ import {
   sortByFieldName,
   updateArrIndex,
 } from "../../util/commonUtil";
+import moment from "moment";
 
 const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
   const location = useLocation();
@@ -238,7 +239,7 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
       )}
 
       {showModel ? (
-        <div className="newsModel">
+        <div className="newsModel ">
           <div className="newsModalWrapper p-4 bg-white shadow-lg">
             <div className="d-flex justify-content-between align-items-center gap-4 mb-1 pb-2 border-bottom">
               <Title title={obj.news_title} cssClass="fw-bold fs-6" />
@@ -250,10 +251,10 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
                 <i className="fa fa-times fs-3" aria-hidden="true"></i>
               </Link>
             </div>
-            <div>
-              <img className="w-100" src={obj.path} alt={obj.news_title} />
-            </div>
             <div className="my-3 newsDetails">
+            <div>
+              <img className="w-100" style={{height: "300px", objectFit: "cover"}} src={obj.path} alt={obj.news_title} />
+            </div>
               {obj.news_description ? (
                 <div
                   dangerouslySetInnerHTML={{ __html: obj.news_description }}
@@ -338,6 +339,8 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                         isAdmin ? "fs-6" : "fs-5"
                       }`}
                     />
+                    {/* <small className="d-block my-2">{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</small> */}
+                    <small className="d-block my-2">{moment(item.created_at).format('MMM DD, YYYY')}</small>
                     <div className={`card-text  ${isAdmin ? "mb-0" : "mb-2"}`}>
                       {item.news_description ? (
                         <div
@@ -350,7 +353,6 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                         "update new description"
                       )}
                     </div>
-                    {/* <p>{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</p> */}
                     {/* <Ancher
                       AncherLabel="Read more"
                       Ancherpath="/news"
@@ -359,12 +361,14 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                       handleModel={() => handleModel(item)}
                     /> */}
 
-                    <Ancher
-                      AncherLabel="More..."
-                      Ancherpath="/news"
-                      AncherClass="moreLink"
-                      handleModel={() => handleModel(item)}
-                    />
+                   
+                    <Link
+                  className="text-primary moreLink"
+                  onClick={() => handleModel(item)}
+                >
+                  More..
+                </Link>
+                    
                   </div>
                 </div>
               </div>
