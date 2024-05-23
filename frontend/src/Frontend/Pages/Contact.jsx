@@ -292,7 +292,7 @@ const Contact = () => {
           <div className="col-md-12 text-center py-4">
             <Title
               title="Quick contact"
-              cssClass="text-black fs-3 fw-bold mb-4"
+              cssClass="fs-3 text-center fw-medium mb-2 pt-5"
             />
           </div>
           <div className="col-md-7 position-relative">
@@ -309,7 +309,7 @@ const Contact = () => {
               ></iframe>
             )}
           </div>
-          <div className="col-md-5">
+          <div className="col-md-5 contact">
             {success && (
               <Alert
                 mesg={"Thank you for contact us"}
