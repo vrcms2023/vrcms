@@ -281,7 +281,7 @@ const Home = () => {
           <div className="container py-5 randomServices">
             <div className="row">
               <div className="col-md-6">
-                <img src={imgOngoing} alt="" className="w-100" />
+                <img src={imgOngoing} alt="" className="w-100 shadow" />
               </div>
               <div className="col-md-6 p-3 p-md-5 d-flex flex-column justify-content-center">
                 <Title
@@ -301,7 +301,7 @@ const Home = () => {
 
             <div className="row my-2 my-md-5 d-flex flex-row flex-md-row-reverse">
               <div className="col-md-6">
-                <img src={imgCompleted} alt="" className="w-100" />
+                <img src={imgCompleted} alt="" className="w-100 shadow" />
               </div>
               <div className="col-md-6 p-3 p-md-5 d-flex flex-column justify-content-center">
                 <Title
@@ -321,7 +321,7 @@ const Home = () => {
 
             <div className="row">
               <div className="col-md-6">
-                <img src={imgFuture} alt="" className="w-100" />
+                <img src={imgFuture} alt="" className="w-100 shadow" />
               </div>
               <div className="col-md-6 p-3 p-md-5 d-flex flex-column justify-content-center">
                 <Title
