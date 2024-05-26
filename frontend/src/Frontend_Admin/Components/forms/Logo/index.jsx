@@ -1,5 +1,5 @@
 import React from "react";
-import EditAdminPopupHeader from "../EditAdminPopupHeader";
+import EditAdminPopupHeader from "../../EditAdminPopupHeader";
 const AdminHeader = ({ editHandler }) => {
   const closeHandler = () => {
     editHandler("menu", false);
