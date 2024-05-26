@@ -2,31 +2,31 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Components
-import BriefIntroFrontend from "../../Common/BriefIntro";
-import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
-import AdminBriefIntro from "../../Admin/Components/BriefIntro/index";
-import EditIcon from "../../Common/AdminEditIcon";
-import ModelBg from "../../Common/ModelBg";
-import Banner from "../../Common/Banner";
-import CustomPagination from "../../Common/CustomPagination";
+import BriefIntroFrontend from "../../../Common/BriefIntro";
+import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
+import AdminBriefIntro from "../../../Admin/Components/BriefIntro/index";
+import EditIcon from "../../../Common/AdminEditIcon";
+import ModelBg from "../../../Common/ModelBg";
+import Banner from "../../../Common/Banner";
+import CustomPagination from "../../../Common/CustomPagination";
 
-import { removeActiveClass } from "../../util/ulrUtil";
+import { removeActiveClass } from "../../../util/ulrUtil";
 import {
   getFormDynamicFields,
   imageDimensionsJson,
-} from "../../util/dynamicFormFields";
-import { paginationDataFormat } from "../../util/commonUtil";
-import { sortCreatedDateByDesc } from "../../util/dataFormatUtil";
-import { useAdminLoginStatus } from "../../Common/customhook/useAdminLoginStatus";
+} from "../../../util/dynamicFormFields";
+import { paginationDataFormat } from "../../../util/commonUtil";
+import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
+import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
 
 // Images Imports
-import Title from "../../Common/Title";
-import Search from "../../Common/Search";
+import Title from "../../../Common/Title";
+import Search from "../../../Common/Search";
 
 // Styles
-import JobPost from "../Components/JobPost";
-import JobPostFrom from "../../Admin/Components/forms/JobpostForm";
-import { CareersPageStyled } from "../../Common/StyledComponents/Styled-CareersPage";
+import JobPost from "../../Components/JobPost";
+import JobPostFrom from "../../../Admin/Components/forms/JobpostForm";
+import { CareersPageStyled } from "../../../Common/StyledComponents/Styled-CareersPage";
 
 const Careers = () => {
   const editComponentObj = {

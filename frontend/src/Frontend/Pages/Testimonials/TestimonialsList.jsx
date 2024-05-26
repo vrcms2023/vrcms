@@ -1,30 +1,35 @@
 import React, { useState, useEffect } from "react";
-import EditIcon from "../../Common/AdminEditIcon";
-import Banner from "../../Common/Banner";
-import BriefIntroFrontend from "../../Common/BriefIntro";
-import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
-import AdminBriefIntro from "../../Admin/Components/BriefIntro/index";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+
+
+import EditIcon from "../../../Common/AdminEditIcon";
+import Banner from "../../../Common/Banner";
+import BriefIntroFrontend from "../../../Common/BriefIntro";
+import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
+import AdminBriefIntro from "../../../Admin/Components/BriefIntro/index";
 import {
   getFormDynamicFields,
   imageDimensionsJson,
-} from "../../util/dynamicFormFields";
-import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
-import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
-import { getImagePath, paginationDataFormat } from "../../util/commonUtil";
-import Title from "../../Common/Title";
-import { Link } from "react-router-dom";
-import { confirmAlert } from "react-confirm-alert";
-import DeleteDialog from "../../Common/DeleteDialog";
-import AddEditAdminNews from "../../Admin/Components/News";
-import { toast } from "react-toastify";
+} from "../../../util/dynamicFormFields";
+import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
+import { getImagePath, paginationDataFormat } from "../../../util/commonUtil";
+import Title from "../../../Common/Title";
 
-import { getTestimonialsFields } from "../../util/dynamicFormFields";
-import Search from "../../Common/Search";
-import { sortCreatedDateByDesc } from "../../util/dataFormatUtil";
-import CustomPagination from "../../Common/CustomPagination";
-import SkeletonImage from "../../Common/Skeltons/SkeletonImage";
-import { useSelector } from "react-redux";
-import { TestimonialsListPageStyled } from "../../Common/StyledComponents/Styled-TestimonialsList";
+import { confirmAlert } from "react-confirm-alert";
+import DeleteDialog from "../../../Common/DeleteDialog";
+import AddEditAdminNews from "../../../Admin/Components/News";
+
+
+import { getTestimonialsFields } from "../../../util/dynamicFormFields";
+import Search from "../../../Common/Search";
+import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
+import CustomPagination from "../../../Common/CustomPagination";
+import SkeletonImage from "../../../Common/Skeltons/SkeletonImage";
+
+import { TestimonialsListPageStyled } from "../../../Common/StyledComponents/Styled-TestimonialsList";
 
 const TestimonialsList = () => {
   const editComponentObj = {

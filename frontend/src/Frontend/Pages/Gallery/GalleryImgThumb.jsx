@@ -1,8 +1,7 @@
 import React from "react";
-import { getImagesByDate } from "../../util/dataFormatUtil";
+import { getImagesByDate } from "../../../util/dataFormatUtil";
+import { getBaseURL } from "../../../util/ulrUtil";
 import "./Gallery.css";
-import { getBaseURL } from "../../util/ulrUtil";
-
 const GalleryImgThumb = ({
   imgs,
   imageDescription,

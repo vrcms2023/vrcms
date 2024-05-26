@@ -3,32 +3,32 @@ import { Link } from "react-router-dom";
 
 // Components
 
-import Title from "../../Common/Title";
-import Model from "../../Common/Model";
-import ModelBg from "../../Common/ModelBg";
-import Banner from "../../Common/Banner";
-import { useAdminLoginStatus } from "../../Common/customhook/useAdminLoginStatus";
-import Search from "../../Common/Search";
-import EditIcon from "../../Common/AdminEditIcon";
-import HomeNews from "../Components/HomeNews";
-import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
-import AddEditAdminNews from "../../Admin/Components/News/index";
+import Title from "../../../Common/Title";
+import Model from "../../../Common/Model";
+import ModelBg from "../../../Common/ModelBg";
+import Banner from "../../../Common/Banner";
+import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
+import Search from "../../../Common/Search";
+import EditIcon from "../../../Common/AdminEditIcon";
+import HomeNews from "../../Components/HomeNews";
+import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
+import AddEditAdminNews from "../../../Admin/Components/News/index";
 
-import { removeActiveClass } from "../../util/ulrUtil";
+import { removeActiveClass } from "../../../util/ulrUtil";
 import {
   getFormDynamicFields,
   getNewslFields,
   imageDimensionsJson,
-} from "../../util/dynamicFormFields";
+} from "../../../util/dynamicFormFields";
 
 // Styles
-import CustomPagination from "../../Common/CustomPagination";
+import CustomPagination from "../../../Common/CustomPagination";
 import {
   getObjectPositionKey,
   paginationDataFormat,
   sortByFieldName,
-} from "../../util/commonUtil";
-import NoteComponent from "../../Common/NoteComponent";
+} from "../../../util/commonUtil";
+import NoteComponent from "../../../Common/NoteComponent";
 
 const NewsAndUpdates = () => {
   const editComponentObj = {

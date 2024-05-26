@@ -2,25 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 // Components
-import BriefIntroFrontend from "../../Common/BriefIntro";
-import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
-import AdminBriefIntro from "../../Admin/Components/BriefIntro/index";
-import EditIcon from "../../Common/AdminEditIcon";
-import ModelBg from "../../Common/ModelBg";
-import Banner from "../../Common/Banner";
-import JobCurrentOpenings from "../Components/JobCurrentOpenings";
-import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
+import BriefIntroFrontend from "../../../Common/BriefIntro";
+import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
+import AdminBriefIntro from "../../../Admin/Components/BriefIntro/index";
+import EditIcon from "../../../Common/AdminEditIcon";
+import ModelBg from "../../../Common/ModelBg";
+import Banner from "../../../Common/Banner";
+import JobCurrentOpenings from "../../Components/JobCurrentOpenings";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 
-import { removeActiveClass } from "../../util/ulrUtil";
-import { getFormDynamicFields } from "../../util/dynamicFormFields";
-import { useAdminLoginStatus } from "../../Common/customhook/useAdminLoginStatus";
+import { removeActiveClass } from "../../../util/ulrUtil";
+import { getFormDynamicFields } from "../../../util/dynamicFormFields";
+import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
 
 // Images Imports
-import Title from "../../Common/Title";
+import Title from "../../../Common/Title";
 
 // Styles
-import JobBriefDetails from "../Components/JobBriefDetails";
-import { CareersPageStyled } from "../../Common/StyledComponents/Styled-CareersPage";
+import JobBriefDetails from "../../Components/JobBriefDetails";
+import { CareersPageStyled } from "../../../Common/StyledComponents/Styled-CareersPage";
 
 const Careers = () => {
   const editComponentObj = {

@@ -3,15 +3,16 @@ import Banner from "../Components/Banner";
 import Title from "../../Common/Title";
 import { Link } from "react-router-dom";
 
-import "./Home.css";
+import "./HPR-Home.css";
 
 import imgOngoing from "../../Images/ongoing.png";
 import imgCompleted from "../../Images/completed.png";
 import imgFuture from "../../Images/future.png";
 
 import { axiosClientServiceApi } from "../../util/axiosUtil";
-import Testimonials from "../Components/Testimonials";
+
 import { removeActiveClass } from "../../util/ulrUtil";
+import Testimonials from "../Components/Testimonials";
 
 const Home = () => {
   const [testimonis, setTestmonis] = useState([]);
@@ -27,7 +28,7 @@ const Home = () => {
           `/testimonials/clientTestimonials/`
         );
         if (response?.status === 200) {
-          setTestmonis(response.data.testimonial);
+          setTestmonis(response.data.results);
         }
       } catch (e) {
         console.log("unable to access ulr because of server is down");
@@ -249,7 +250,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <Testimonials testimonis={testimonis} />
+        {/* <Testimonials testimonis={testimonis} /> */}
       </div>
       {/* <div className='row shadow-lg' style={{margin: "70px"}}>
         <div className='col-md-7' style={{background: "url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'"}}></div>

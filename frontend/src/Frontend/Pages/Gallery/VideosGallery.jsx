@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import EditIcon from "../../Common/AdminEditIcon";
-import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
-import AdminBanner from "../../Admin/Components/forms/ImgTitleIntoForm-List";
+import EditIcon from "../../../Common/AdminEditIcon";
+import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
+import AdminBanner from "../../../Admin/Components/forms/ImgTitleIntoForm-List";
 import {
   getImageGalleryFields,
   imageDimensionsJson,
-} from "../../util/dynamicFormFields";
-import ModelBg from "../../Common/ModelBg";
-import DynamicCarousel from "../Components/DynamicCarousel";
-import { getImagePath } from "../../util/commonUtil";
-import { axiosClientServiceApi } from "../../util/axiosUtil";
+} from "../../../util/dynamicFormFields";
+import ModelBg from "../../../Common/ModelBg";
+import DynamicCarousel from "../../Components/DynamicCarousel";
+import { getImagePath } from "../../../util/commonUtil";
+import { axiosClientServiceApi } from "../../../util/axiosUtil";
 
 const VideosGallery = () => {
   const editComponentObj = {

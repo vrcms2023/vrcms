@@ -1,5 +1,6 @@
 import React from "react";
-import UserContactForm from "../Frontend/Pages/UserContactForm";
+import UserContactForm from "../Frontend/Components/UserContactForm";
+
 
 const ContactModel = ({ closeModel, downloadPDF }) => {
   return (

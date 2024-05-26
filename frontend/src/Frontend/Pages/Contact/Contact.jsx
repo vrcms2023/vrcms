@@ -3,38 +3,39 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 // Components
-import Title from "../../Common/Title";
-import BriefIntroFrontend from "../../Common/BriefIntro";
-import Alert from "../../Common/Alert";
-import Banner from "../../Common/Banner";
-import EditIcon from "../../Common/AdminEditIcon";
-import ModelBg from "../../Common/ModelBg";
-import { useAdminLoginStatus } from "../../Common/customhook/useAdminLoginStatus";
-import AdminBriefIntro from "../../Admin/Components/BriefIntro/index";
 
-import AddressForm from "../../Admin/Components/forms/AddressForm";
-import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
-import GoogleMap from "../../Admin/Components/forms/GoogleMap";
+import BriefIntroFrontend from "../../../Common/BriefIntro";
+import Alert from "../../../Common/Alert";
+import Banner from "../../../Common/Banner";
+import EditIcon from "../../../Common/AdminEditIcon";
+import ModelBg from "../../../Common/ModelBg";
+import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
+import AdminBriefIntro from "../../../Admin/Components/BriefIntro/index";
 
-import { axiosClientServiceApi } from "../../util/axiosUtil";
-import { removeCookie, setCookie } from "../../util/cookieUtil";
-import { removeActiveClass } from "../../util/ulrUtil";
+import AddressForm from "../../../Admin/Components/forms/AddressForm";
+import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
+import GoogleMap from "../../../Admin/Components/forms/GoogleMap";
+
+import { axiosClientServiceApi } from "../../../util/axiosUtil";
+import { removeCookie, setCookie } from "../../../util/cookieUtil";
+import { removeActiveClass } from "../../../util/ulrUtil";
 import {
   getFormDynamicFields,
   imageDimensionsJson,
-} from "../../util/dynamicFormFields";
+} from "../../../util/dynamicFormFields";
 
 // Styles
 import "./Contact.css";
-import { ContactPageStyled } from "../../Common/StyledComponents/Styled-ContactPage";
+import { ContactPageStyled } from "../../../Common/StyledComponents/Styled-ContactPage";
 
 // images
-import { getAddressList } from "../../features/address/addressActions";
+import { getAddressList } from "../../../features/address/addressActions";
 import {
   InputField,
   TextAreaField,
-} from "../../Admin/Components/forms/FormFields";
-import { fieldValidation } from "../../util/validationUtil";
+} from "../../../Admin/Components/forms/FormFields";
+import { fieldValidation } from "../../../util/validationUtil";
+import Title from "../../../Common/Title";
 
 const Contact = () => {
   const editComponentObj = {

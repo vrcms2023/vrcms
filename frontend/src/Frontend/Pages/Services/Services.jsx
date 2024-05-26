@@ -4,31 +4,31 @@ import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 
 // Components
-import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
-import AdminBriefIntro from "../../Admin/Components/BriefIntro/index";
-import EditIcon from "../../Common/AdminEditIcon";
-import ModelBg from "../../Common/ModelBg";
-import Banner from "../../Common/Banner";
-import Title from "../../Common/Title";
-import BriefIntroFrontend from "../../Common/BriefIntro";
-import { useAdminLoginStatus } from "../../Common/customhook/useAdminLoginStatus";
+import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
+import AdminBriefIntro from "../../../Admin/Components/BriefIntro/index";
+import EditIcon from "../../../Common/AdminEditIcon";
+import ModelBg from "../../../Common/ModelBg";
+import Banner from "../../../Common/Banner";
+import Title from "../../../Common/Title";
+import BriefIntroFrontend from "../../../Common/BriefIntro";
+import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
 
-import DeleteDialog from "../../Common/DeleteDialog";
-import AddService from "../../Admin/Components/Services";
-import AddEditAdminNews from "../../Admin/Components/News";
-import { getReactHostDetils, removeActiveClass } from "../../util/ulrUtil";
+import DeleteDialog from "../../../Common/DeleteDialog";
+import AddService from "../../../Admin/Components/Services";
+import AddEditAdminNews from "../../../Admin/Components/News";
+import { getReactHostDetils, removeActiveClass } from "../../../util/ulrUtil";
 import {
   getFormDynamicFields,
   getServiceFormFields,
   imageDimensionsJson,
-} from "../../util/dynamicFormFields";
-import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
-import { getImagePath, urlStringFormat } from "../../util/commonUtil";
-import { sortByCreatedDate } from "../../util/dataFormatUtil";
-import { getCookie } from "../../util/cookieUtil";
+} from "../../../util/dynamicFormFields";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
+import { getImagePath, urlStringFormat } from "../../../util/commonUtil";
+import { sortByCreatedDate } from "../../../util/dataFormatUtil";
+import { getCookie } from "../../../util/cookieUtil";
 
 // CSS Imports
-import { ServicesStyled } from "../../Common/StyledComponents/Styled-Services";
+import { ServicesStyled } from "../../../Common/StyledComponents/Styled-Services";
 
 const Services = () => {
   const editComponentObj = {

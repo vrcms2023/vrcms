@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../Common/Button";
 import { useDispatch, useSelector } from "react-redux";
-import "./Gallery.css";
-import { getClientProjects } from "../../features/project/clientProjectActions";
+import Button from "../../../Common/Button";
+import "../Gallery/Gallery.css";
+import { getClientProjects } from "../../../features/project/clientProjectActions";
 
 import ProjectGalleryView from "./ProjectGalleryView";
-import { removeActiveClass } from "../../util/ulrUtil";
+import { removeActiveClass } from "../../../util/ulrUtil";
 
 const ProjectsGallery = () => {
   const [all, setAll] = useState([]);

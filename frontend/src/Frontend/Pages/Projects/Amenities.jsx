@@ -1,5 +1,5 @@
 import React from "react";
-import Title from "../../Common/Title";
+import Title from "../../../Common/Title";
 
 const Amenities = () => {
   return (

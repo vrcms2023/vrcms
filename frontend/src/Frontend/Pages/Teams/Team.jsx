@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
+import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
 import {
   getFormDynamicFields,
   getTeamMemberFields,
   imageDimensionsJson,
-} from "../../util/dynamicFormFields";
-import Title from "../../Common/Title";
-import Banner from "../../Common/Banner";
-import EditIcon from "../../Common/AdminEditIcon";
-import BriefIntroFrontend from "../../Common/BriefIntro";
-import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
-import AdminBriefIntro from "../../Admin/Components/BriefIntro/index";
-import AddEditTeam from "../../Admin/Components/News";
+} from "../../../util/dynamicFormFields";
+import Title from "../../../Common/Title";
+import Banner from "../../../Common/Banner";
+import EditIcon from "../../../Common/AdminEditIcon";
+import BriefIntroFrontend from "../../../Common/BriefIntro";
+import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
+import AdminBriefIntro from "../../../Admin/Components/BriefIntro/index";
+import AddEditTeam from "../../../Admin/Components/News";
 import {
   getImagePath,
   getListStyle,
@@ -21,15 +21,15 @@ import {
   reorder,
   sortByFieldName,
   updateArrIndex,
-} from "../../util/commonUtil";
-import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
+} from "../../../util/commonUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 import { confirmAlert } from "react-confirm-alert";
-import DeleteDialog from "../../Common/DeleteDialog";
+import DeleteDialog from "../../../Common/DeleteDialog";
 import { toast } from "react-toastify";
-import Search from "../../Common/Search";
-import CustomPagination from "../../Common/CustomPagination";
-import { removeActiveClass } from "../../util/ulrUtil";
-import { TeamStyled } from "../../Common/StyledComponents/Styled-Team";
+import Search from "../../../Common/Search";
+import CustomPagination from "../../../Common/CustomPagination";
+import { removeActiveClass } from "../../../util/ulrUtil";
+import { TeamStyled } from "../../../Common/StyledComponents/Styled-Team";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
 const Team = () => {
