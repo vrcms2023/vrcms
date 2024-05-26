@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Title from "../../../Common/Title";
 import { useDispatch } from "react-redux";
-import { logout } from "../../../features/auth/authSlice";
+import { logout } from "../../../redux/auth/authSlice";
 import { removeAllCookies } from "../../../util/cookieUtil";
 
 const UnauthorizedPage = () => {

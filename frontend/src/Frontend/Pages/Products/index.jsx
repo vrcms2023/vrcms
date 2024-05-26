@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 
 import BriefIntroFrontend from "../../../Common/BriefIntro";
 
-
 import Banner from "../../../Common/Banner";
 import EditIcon from "../../../Common/AdminEditIcon";
 import ModelBg from "../../../Common/ModelBg";
@@ -15,17 +14,14 @@ import AdminBriefIntro from "../../../Admin/Components/BriefIntro/index";
 
 import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
 
-import { ProductStyled } from '../../../Common/StyledComponents/Styled-Products'
-
+import { ProductStyled } from "../../../Common/StyledComponents/Styled-Products";
 
 import {
   getFormDynamicFields,
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
-import Products from "./ProductsList";
 import SearchFilter from "./FilterComponent";
-
-
+import ProductsList from "./ProductsList";
 
 const ProductsPage = () => {
   const editComponentObj = {
@@ -41,7 +37,7 @@ const ProductsPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setShow(!show);
@@ -73,9 +69,9 @@ const ProductsPage = () => {
             dimensions={imageDimensionsJson("banner")}
           />
         </div>
-    ) : (
-    ""
-    )}
+      ) : (
+        ""
+      )}
 
       {/* Introduction */}
       {/* {isAdmin && hasPermission && (
@@ -101,7 +97,7 @@ const ProductsPage = () => {
         <SearchFilter />
 
         <div className="container productsList">
-          <Products />
+          <ProductsList />
         </div>
       </ProductStyled>
 

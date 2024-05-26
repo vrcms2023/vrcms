@@ -6,7 +6,7 @@ import Title from "../../../Common/Title";
 import Error from "../../Components/Error";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../../../features/auth/authSlice";
+import { logout } from "../../../redux/auth/authSlice";
 import { toast } from "react-toastify";
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
 

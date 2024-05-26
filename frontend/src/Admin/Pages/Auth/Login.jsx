@@ -16,8 +16,8 @@ import {
   userLogin,
   getUser,
   getSelectedUserPermissions,
-} from "../../../features/auth/authActions";
-import { updatedPermisisons } from "../../../features/auth/authSlice";
+} from "../../../redux/auth/authActions";
+import { updatedPermisisons } from "../../../redux/auth/authSlice";
 import CSRFToken from "../../../Frontend/Components/CRSFToken";
 
 // CSS Styles

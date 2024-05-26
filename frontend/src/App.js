@@ -34,25 +34,39 @@ const Home = lazy(() => import("./Frontend/Pages/Home/index"));
 const About = lazy(() => import("./Frontend/Pages/About/About"));
 const Contact = lazy(() => import("./Frontend/Pages/Contact/Contact"));
 const Services = lazy(() => import("./Frontend/Pages/Services/Services"));
-const Products = lazy(() => import("./Frontend/Pages/Products/Product"));
-const ProductDetails = lazy(() => import("./Frontend/Pages/Products/ProductDetails"));
+const Products = lazy(() => import("./Frontend/Pages/Products/index"));
+const ProductDetails = lazy(
+  () => import("./Frontend/Pages/Products/ProductDetails")
+);
 const ClientsList = lazy(() => import("./Frontend/Pages/Clients/ClientsList"));
 const Careers = lazy(() => import("./Frontend/Pages/Careers/Careers"));
-const CareerDetails = lazy(() => import("./Frontend/Pages/Careers/career-details"));
+const CareerDetails = lazy(
+  () => import("./Frontend/Pages/Careers/career-details")
+);
 const Team = lazy(() => import("./Frontend/Pages/Teams/Team"));
 const Projects = lazy(() => import("./Frontend/Pages/Projects/Projects"));
-const ProjectsGallery = lazy(() => import("./Frontend/Pages/Projects/ProjectsGallery"));
+const ProjectsGallery = lazy(
+  () => import("./Frontend/Pages/Projects/ProjectsGallery")
+);
 const ProjectTabs = lazy(
   () => import("./Frontend/Components/ProjectsTabs/ProjecTabs")
 );
 
-const ImagesGallery = lazy(() => import("./Frontend/Pages/Gallery/ImagesGallery"));
-const VideosGallery = lazy(() => import("./Frontend/Pages/Gallery/VideosGallery"));
-const CaseStudies = lazy(() => import("./Frontend/Pages/Casestudies/CaseStudies"));
+const ImagesGallery = lazy(
+  () => import("./Frontend/Pages/Gallery/ImagesGallery")
+);
+const VideosGallery = lazy(
+  () => import("./Frontend/Pages/Gallery/VideosGallery")
+);
+const CaseStudies = lazy(
+  () => import("./Frontend/Pages/Casestudies/CaseStudies")
+);
 const CaseStudiesDetails = lazy(
   () => import("./Frontend/Pages/Casestudies/caseStudies-details")
 );
-const NewsAndUpdates = lazy(() => import("./Frontend/Pages/News/NewsAndUpdates"));
+const NewsAndUpdates = lazy(
+  () => import("./Frontend/Pages/News/NewsAndUpdates")
+);
 const TestimonialsList = lazy(
   () => import("./Frontend/Pages/Testimonials/TestimonialsList")
 );
@@ -171,7 +185,11 @@ function App() {
               <Route exact path="/about" element={<About />} />
               <Route exact path="/contact" element={<Contact />} />
               <Route exact path="/products" element={<Products />} />
-              <Route exact path="/products/:uid/" element={<ProductDetails />} />
+              <Route
+                exact
+                path="/products/:uid/"
+                element={<ProductDetails />}
+              />
               <Route exact path="/services" element={<Services />} />
               <Route exact path="/services/:uid/" element={<Services />} />
               <Route exact path="/clients" element={<ClientsList />} />
@@ -184,7 +202,11 @@ function App() {
               <Route exact path="/team" element={<Team />} />
               <Route exact path="/projects" element={<Projects />} />
               <Route exact path="/project-details" element={<ProjectTabs />} />
-              <Route exact path="/projectgallery" element={<ProjectsGallery />} />
+              <Route
+                exact
+                path="/projectgallery"
+                element={<ProjectsGallery />}
+              />
               <Route exact path="/imagegallery" element={<ImagesGallery />} />
               <Route exact path="/videogallery" element={<VideosGallery />} />
               <Route exact path="/casestudies" element={<CaseStudies />} />
@@ -237,7 +259,13 @@ function App() {
         </BrowserRouter>
       </ThemeProvider>
       <ToastContainer autoClose={2000} theme="colored" />
-      <ScrollToTop smooth color="#fff" height="20" style={{background: "#999"}} className="shadow rounded-circle" />
+      <ScrollToTop
+        smooth
+        color="#fff"
+        height="20"
+        style={{ background: "#999" }}
+        className="shadow rounded-circle"
+      />
     </>
   );
 }

@@ -18,13 +18,13 @@ import {
   getMenu,
   getSelectedUserPermissions,
   getUser,
-} from "../../features/auth/authActions";
+} from "../../redux/auth/authActions";
 import {
   storeServiceMenuValueinCookie,
   urlStringFormat,
 } from "../../util/commonUtil";
 
-import { getServiceValues } from "../../features/services/serviceActions";
+import { getServiceValues } from "../../redux/services/serviceActions";
 import { isAppAccess } from "../../util/permissions";
 
 import Logo from "../../Images/logo.png";

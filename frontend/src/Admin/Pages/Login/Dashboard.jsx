@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 
 import { axiosServiceApi } from "../../../util/axiosUtil";
-import { getDashBoardProjects } from "../../../features/project/projectActions";
+import { getDashBoardProjects } from "../../../redux/project/projectActions";
 
 const Dashboard = () => {
   const navigate = useNavigate();

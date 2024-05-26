@@ -29,7 +29,7 @@ import "./Contact.css";
 import { ContactPageStyled } from "../../../Common/StyledComponents/Styled-ContactPage";
 
 // images
-import { getAddressList } from "../../../features/address/addressActions";
+import { getAddressList } from "../../../redux/address/addressActions";
 import {
   InputField,
   TextAreaField,

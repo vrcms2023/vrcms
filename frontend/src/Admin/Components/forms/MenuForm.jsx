@@ -10,7 +10,7 @@ import Error from "../Error";
 import { generateOptionLength } from "../../../util/commonUtil";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getCookie } from "../../../util/cookieUtil";
-import { getMenu } from "../../../features/auth/authActions";
+import { getMenu } from "../../../redux/auth/authActions";
 import { useDispatch } from "react-redux";
 import { getMenuPosition, updatedMenu } from "../../../util/menuUtil";
 
