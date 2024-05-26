@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import FooterAdminFeilds from "../../Admin/Components/forms/FooterInputs";
 import ContactInputs from "../../Admin/Components/forms/ContactInputs";
 import AdminTermsPolicy from "../../Admin/Components/TermsPrivacy/index";
-import { getFooterValues } from "../../features/footer/footerActions";
+import { getFooterValues } from "../../redux/footer/footerActions";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 import { useAdminLoginStatus } from "../customhook/useAdminLoginStatus";
-import { getAddressList } from "../../features/address/addressActions";
+import { getAddressList } from "../../redux/address/addressActions";
 
 // Modal
 import Model from "../../Common/Model";

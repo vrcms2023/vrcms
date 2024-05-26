@@ -18,7 +18,7 @@ import {
 } from "../../../util/commonUtil";
 import { showContentPerRole } from "../../../util/permissions";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import { getMenu } from "../../../features/auth/authActions";
+import { getMenu } from "../../../redux/auth/authActions";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
 
 const PagesConfiguration = () => {

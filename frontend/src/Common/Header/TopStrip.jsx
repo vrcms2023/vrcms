@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 // Components
 import Title from "../Title";
 import { getCookie, removeAllCookies } from "../../util/cookieUtil";
-import { logout } from "../../features/auth/authSlice";
+import { logout } from "../../redux/auth/authSlice";
 import { useAdminLoginStatus } from "../customhook/useAdminLoginStatus";
 
 // Stylesheet

@@ -16,10 +16,10 @@ import Title from "../../../Common/Title";
 import moment from "moment";
 import { sortByCreatedDate } from "../../../util/dataFormatUtil";
 import { storeServiceMenuValueinCookie } from "../../../util/commonUtil";
-import { getServiceValues } from "../../../features/services/serviceActions";
+
 import { useLocation } from "react-router-dom";
 import { getSelectedMenuDetails } from "../../../util/menuUtil";
-import { getMenu } from "../../../features/auth/authActions";
+import { getMenu } from "../../../redux/auth/authActions";
 
 const AddService = ({
   setSelectedServiceProject,

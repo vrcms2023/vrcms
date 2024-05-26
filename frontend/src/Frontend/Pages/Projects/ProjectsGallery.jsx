@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../../Common/Button";
 import "../Gallery/Gallery.css";
-import { getClientProjects } from "../../../features/project/clientProjectActions";
+import { getClientProjects } from "../../../redux/project/clientProjectActions";
 
 import ProjectGalleryView from "./ProjectGalleryView";
 import { removeActiveClass } from "../../../util/ulrUtil";

@@ -1,8 +1,8 @@
-import store from "../app/store";
+import store from "../redux/store";
 import axios from "axios";
 import { getBaseURL } from "./ulrUtil";
 import { getCookie } from "./cookieUtil";
-import { startLoading, stoptLoading } from "../features/project/loadingSlice";
+import { startLoading, stoptLoading } from "../redux/project/loadingSlice";
 
 axios.defaults.baseURL = getBaseURL() + "/api/v1";
 /**
@@ -88,27 +88,27 @@ const clientresponseInterceptorErrortHanler = async (error) => {
 
 axiosServiceApi.interceptors.request.use(
   requestInterceptorRequestHanler,
-  requestInterceptorErrortHanler,
+  requestInterceptorErrortHanler
 );
 axiosServiceApi.interceptors.response.use(
   responseInterceptorResponseHanler,
-  responseInterceptorErrortHanler,
+  responseInterceptorErrortHanler
 );
 
 axiosFileUploadServiceApi.interceptors.request.use(
   requestInterceptorRequestHanler,
-  requestInterceptorErrortHanler,
+  requestInterceptorErrortHanler
 );
 axiosFileUploadServiceApi.interceptors.response.use(
   responseInterceptorResponseHanler,
-  responseInterceptorErrortHanler,
+  responseInterceptorErrortHanler
 );
 
 axiosClientServiceApi.interceptors.request.use(
   requestInterceptorClientRequestHanler,
-  requestInterceptorErrortHanler,
+  requestInterceptorErrortHanler
 );
 axiosClientServiceApi.interceptors.response.use(
   responseInterceptorResponseHanler,
-  clientresponseInterceptorErrortHanler,
+  clientresponseInterceptorErrortHanler
 );

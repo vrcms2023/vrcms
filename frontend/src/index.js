@@ -1,4 +1,3 @@
-import store from "./app/store";
 import React from "react";
 import "./index.css";
 import App from "./App";
@@ -8,6 +7,7 @@ import { CookiesProvider } from "react-cookie";
 import { createRoot } from "react-dom/client";
 
 import reportWebVitals from "./reportWebVitals";
+import store from "./redux/store";
 
 const root = createRoot(document.getElementById("root"));
 

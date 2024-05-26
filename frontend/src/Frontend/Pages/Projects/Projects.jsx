@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BriefIntroFrontend from "../../../Common/BriefIntro";
 import { useDispatch, useSelector } from "react-redux";
-import { getClientProjects } from "../../../features/project/clientProjectActions";
+import { getClientProjects } from "../../../redux/project/clientProjectActions";
 import ProjectItem from "../../Components/projectItem";
 import AdminBriefIntro from "../../../Admin/Components/BriefIntro/index";
 import EditIcon from "../../../Common/AdminEditIcon";
@@ -72,21 +72,21 @@ const Projects = () => {
           bannerState={componentEdit.banner}
         />
 
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Project Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
-      ) : (
-        ""
-      )}
+        {componentEdit.banner ? (
+          <div className="adminEditTestmonial">
+            <ImageInputsForm
+              editHandler={editHandler}
+              componentType="banner"
+              pageType={`${pageType}-banner`}
+              imageLabel="Project Banner Image"
+              showDescription={false}
+              showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+              dimensions={imageDimensionsJson("banner")}
+            />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
 
       {/* Introduction */}
@@ -123,8 +123,6 @@ const Projects = () => {
       ) : (
         ""
       )}
-
-      
 
       {componentEdit.briefIntro ? (
         <div className="adminEditTestmonial">
