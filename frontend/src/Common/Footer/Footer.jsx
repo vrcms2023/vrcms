@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // Components
-import FooterAdminFeilds from "../../Admin/Components/forms/FooterInputs";
-import ContactInputs from "../../Admin/Components/forms/ContactInputs";
-import AdminTermsPolicy from "../../Admin/Components/TermsPrivacy/index";
+import FooterAdminFeilds from "../../Frontend_Admin/Components/forms/FooterInputs";
+import ContactInputs from "../../Frontend_Admin/Components/forms/ContactInputs";
+import AdminTermsPolicy from "../../Frontend_Admin/Components/TermsPrivacy/index";
 import { getFooterValues } from "../../redux/footer/footerActions";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 import { useAdminLoginStatus } from "../customhook/useAdminLoginStatus";
