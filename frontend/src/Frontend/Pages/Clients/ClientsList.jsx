@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from "react";
-import EditIcon from "../../Common/AdminEditIcon";
-import Banner from "../../Common/Banner";
-import BriefIntroFrontend from "../../Common/BriefIntro";
-import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
-import AdminBriefIntro from "../../Admin/Components/BriefIntro/index";
+
+
+import BriefIntroFrontend from "../../../Common/BriefIntro";
+import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
+import AdminBriefIntro from "../../../Admin/Components/BriefIntro/index";
 import {
   getFormDynamicFields,
   imageDimensionsJson,
-} from "../../util/dynamicFormFields";
-import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
-import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
-import { paginationDataFormat, sortByFieldName } from "../../util/commonUtil";
-import Title from "../../Common/Title";
+} from "../../../util/dynamicFormFields";
+import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
+import { paginationDataFormat, sortByFieldName } from "../../../util/commonUtil";
+import Title from "../../../Common/Title";
 import { confirmAlert } from "react-confirm-alert";
-import DeleteDialog from "../../Common/DeleteDialog";
-import AddEditAdminNews from "../../Admin/Components/News";
+import DeleteDialog from "../../../Common/DeleteDialog";
+import AddEditAdminNews from "../../../Admin/Components/News";
 import { toast } from "react-toastify";
 
-import { getClinetLogsFields } from "../../util/dynamicFormFields";
-import Search from "../../Common/Search";
-import CustomPagination from "../../Common/CustomPagination";
-import { ClientStyled } from "../../Common/StyledComponents/Styled-Clients";
-import { ClientListComponent } from "../Components/ClientListComponent";
-import NoteComponent from "../../Common/NoteComponent";
+import { getClinetLogsFields } from "../../../util/dynamicFormFields";
+import Search from "../../../Common/Search";
+import CustomPagination from "../../../Common/CustomPagination";
+import { ClientStyled } from "../../../Common/StyledComponents/Styled-Clients";
+import { ClientListComponent } from "../../Components/ClientListComponent";
+import NoteComponent from "../../../Common/NoteComponent";
+import EditIcon from "../../../Common/AdminEditIcon";
+import Banner from "../../../Common/Banner";
 
 const ClientsList = () => {
   const editComponentObj = {

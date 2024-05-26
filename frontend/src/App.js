@@ -23,33 +23,38 @@ import "./App.css";
 import "react-toastify/dist/ReactToastify.min.css";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import Advertisement from "./Common/Advertisement/Advertisement";
+import ScrollToTop from "react-scroll-to-top";
 
 // Lazy Loading
-const PageNotFound = lazy(() => import("./Frontend/Pages/PageNotFound"));
+
+const HPRHome = lazy(() => import("./Frontend/Pages/HPR-Home"));
+
+const PageNotFound = lazy(() => import("./Frontend/Pages/404/PageNotFound"));
 const Home = lazy(() => import("./Frontend/Pages/Home/index"));
-const About = lazy(() => import("./Frontend/Pages/About"));
-const Contact = lazy(() => import("./Frontend/Pages/Contact"));
-const Services = lazy(() => import("./Frontend/Pages/Services"));
-const Products = lazy(() => import("./Frontend/Pages/Products/"));
+const About = lazy(() => import("./Frontend/Pages/About/About"));
+const Contact = lazy(() => import("./Frontend/Pages/Contact/Contact"));
+const Services = lazy(() => import("./Frontend/Pages/Services/Services"));
+const Products = lazy(() => import("./Frontend/Pages/Products/Product"));
 const ProductDetails = lazy(() => import("./Frontend/Pages/Products/ProductDetails"));
-const ClientsList = lazy(() => import("./Frontend/Pages/ClientsList"));
-const Careers = lazy(() => import("./Frontend/Pages/Careers"));
-const CareerDetails = lazy(() => import("./Frontend/Pages/career-details"));
-const Team = lazy(() => import("./Frontend/Pages/Team"));
-const Projects = lazy(() => import("./Frontend/Pages/Projects"));
+const ClientsList = lazy(() => import("./Frontend/Pages/Clients/ClientsList"));
+const Careers = lazy(() => import("./Frontend/Pages/Careers/Careers"));
+const CareerDetails = lazy(() => import("./Frontend/Pages/Careers/career-details"));
+const Team = lazy(() => import("./Frontend/Pages/Teams/Team"));
+const Projects = lazy(() => import("./Frontend/Pages/Projects/Projects"));
+const ProjectsGallery = lazy(() => import("./Frontend/Pages/Projects/ProjectsGallery"));
 const ProjectTabs = lazy(
   () => import("./Frontend/Components/ProjectsTabs/ProjecTabs")
 );
-const ProjectsGallery = lazy(() => import("./Frontend/Pages/ProjectsGallery"));
-const ImagesGallery = lazy(() => import("./Frontend/Pages/ImagesGallery"));
-const VideosGallery = lazy(() => import("./Frontend/Pages/VideosGallery"));
-const CaseStudies = lazy(() => import("./Frontend/Pages/CaseStudies"));
+
+const ImagesGallery = lazy(() => import("./Frontend/Pages/Gallery/ImagesGallery"));
+const VideosGallery = lazy(() => import("./Frontend/Pages/Gallery/VideosGallery"));
+const CaseStudies = lazy(() => import("./Frontend/Pages/Casestudies/CaseStudies"));
 const CaseStudiesDetails = lazy(
-  () => import("./Frontend/Pages/caseStudies-details")
+  () => import("./Frontend/Pages/Casestudies/caseStudies-details")
 );
-const NewsAndUpdates = lazy(() => import("./Frontend/Pages/NewsAndUpdates"));
+const NewsAndUpdates = lazy(() => import("./Frontend/Pages/News/NewsAndUpdates"));
 const TestimonialsList = lazy(
-  () => import("./Frontend/Pages/TestimonialsList")
+  () => import("./Frontend/Pages/Testimonials/TestimonialsList")
 );
 
 const Login = lazy(() => import("./Admin/Pages/Auth/Login"));
@@ -162,6 +167,7 @@ function App() {
               <Route exact path="*" element={<PageNotFound />} />
               <Route exact path="/" element={<Home />} />
               <Route exact path="/home" element={<Home />} />
+              <Route exact path="/hpr-home" element={<HPRHome />} />
               <Route exact path="/about" element={<About />} />
               <Route exact path="/contact" element={<Contact />} />
               <Route exact path="/products" element={<Products />} />
@@ -231,6 +237,7 @@ function App() {
         </BrowserRouter>
       </ThemeProvider>
       <ToastContainer autoClose={2000} theme="colored" />
+      <ScrollToTop smooth color="#fff" height="20" style={{background: "#999"}} className="shadow rounded-circle" />
     </>
   );
 }

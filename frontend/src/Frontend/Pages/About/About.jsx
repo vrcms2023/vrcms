@@ -4,30 +4,30 @@ import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 
 // Components
-import Title from "../../Common/Title";
-import BriefIntroFrontend from "../../Common/BriefIntro";
-import EditIcon from "../../Common/AdminEditIcon";
-import ModelBg from "../../Common/ModelBg";
-import Banner from "../../Common/Banner";
-import DeleteDialog from "../../Common/DeleteDialog";
-import { useAdminLoginStatus } from "../../Common/customhook/useAdminLoginStatus";
+import Title from "../../../Common/Title";
+import BriefIntroFrontend from "../../../Common/BriefIntro";
+import EditIcon from "../../../Common/AdminEditIcon";
+import ModelBg from "../../../Common/ModelBg";
+import Banner from "../../../Common/Banner";
+import DeleteDialog from "../../../Common/DeleteDialog";
+import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
 
-import AddEditAdminNews from "../../Admin/Components/News";
-import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
-import AdminBriefIntro from "../../Admin/Components/BriefIntro/index";
+import AddEditAdminNews from "../../../Admin/Components/News";
+import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
+import AdminBriefIntro from "../../../Admin/Components/BriefIntro/index";
 
-import { removeActiveClass } from "../../util/ulrUtil";
+import { removeActiveClass } from "../../../util/ulrUtil";
 import {
   getFormDynamicFields,
   getAboutUSSectionFields,
   imageDimensionsJson,
-} from "../../util/dynamicFormFields";
-import { getImagePath } from "../../util/commonUtil";
-import { sortByUpdatedDate } from "../../util/dataFormatUtil";
-import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
+} from "../../../util/dynamicFormFields";
+import { getImagePath } from "../../../util/commonUtil";
+import { sortByUpdatedDate } from "../../../util/dataFormatUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 
 // CSS
-import { AboutPageStyled } from "../../Common/StyledComponents/Styled-AboutPage";
+import { AboutPageStyled } from "../../../Common/StyledComponents/Styled-AboutPage";
 
 const About = () => {
   const editComponentObj = {

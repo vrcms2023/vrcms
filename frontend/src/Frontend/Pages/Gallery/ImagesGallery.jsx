@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import EditIcon from "../../Common/AdminEditIcon";
-import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
-import AdminBanner from "../../Admin/Components/forms/ImgTitleIntoForm-List";
+import EditIcon from "../../../Common/AdminEditIcon";
+import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
+import AdminBanner from "../../../Admin/Components/forms/ImgTitleIntoForm-List";
 import {
   getImageGalleryFields,
   imageDimensionsJson,
-} from "../../util/dynamicFormFields";
+} from "../../../util/dynamicFormFields";
 
-import { paginationDataFormat } from "../../util/commonUtil";
-import { axiosClientServiceApi } from "../../util/axiosUtil";
-import { ImageGalleryStyled } from "../../Common/StyledComponents/Styled-ImageGallery";
-import ImageGalleryComponent from "../Components/ImageGalleryComponent";
-import CustomPagination from "../../Common/CustomPagination";
+import { paginationDataFormat } from "../../../util/commonUtil";
+import { axiosClientServiceApi } from "../../../util/axiosUtil";
+import { ImageGalleryStyled } from "../../../Common/StyledComponents/Styled-ImageGallery";
+import ImageGalleryComponent from "../../Components/ImageGalleryComponent";
+import CustomPagination from "../../../Common/CustomPagination";
 
 const ImagesGallery = () => {
   const editComponentObj = {

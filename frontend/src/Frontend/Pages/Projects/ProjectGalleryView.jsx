@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "./Gallery.css";
-import GalleryImgThumb from "./GalleryImgThumb";
+import "../Gallery/Gallery.css";
+import GalleryImgThumb from "../Gallery/GalleryImgThumb";
 
-import ModelBg from "../../Common/ModelBg";
-import DynamicCarousel from "../Components/DynamicCarousel";
+import ModelBg from "../../../Common/ModelBg";
+import DynamicCarousel from "../../Components/DynamicCarousel";
 
 const ProjectGalleryView = ({ projectImages, type }) => {
   const [showModal, setShowModal] = useState(false);

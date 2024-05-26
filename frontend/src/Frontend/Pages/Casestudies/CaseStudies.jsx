@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from "react";
-import EditIcon from "../../Common/AdminEditIcon";
-import Banner from "../../Common/Banner";
-import BriefIntroFrontend from "../../Common/BriefIntro";
-import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
-import AdminBriefIntro from "../../Admin/Components/BriefIntro/index";
-import Ancher from "../../Common/Ancher";
+import EditIcon from "../../../Common/AdminEditIcon";
+import Banner from "../../../Common/Banner";
+import BriefIntroFrontend from "../../../Common/BriefIntro";
+import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
+import AdminBriefIntro from "../../../Admin/Components/BriefIntro/index";
+import Ancher from "../../../Common/Ancher";
 import {
   getFormDynamicFields,
   imageDimensionsJson,
-} from "../../util/dynamicFormFields";
-import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
-import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
-import { getImagePath, paginationDataFormat } from "../../util/commonUtil";
-import Title from "../../Common/Title";
+} from "../../../util/dynamicFormFields";
+import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
+import { getImagePath, paginationDataFormat } from "../../../util/commonUtil";
+import Title from "../../../Common/Title";
 import { Link } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
-import DeleteDialog from "../../Common/DeleteDialog";
-import AddEditAdminNews from "../../Admin/Components/News";
+import DeleteDialog from "../../../Common/DeleteDialog";
+import AddEditAdminNews from "../../../Admin/Components/News";
 import { toast } from "react-toastify";
-import { getCaseStudiesFields } from "../../util/dynamicFormFields";
-import { removeActiveClass } from "../../util/ulrUtil";
-import Search from "../../Common/Search";
-import CustomPagination from "../../Common/CustomPagination";
-import { sortCreatedDateByDesc } from "../../util/dataFormatUtil";
-import { CaseStudiesPageStyled } from "../../Common/StyledComponents/Styled-Casestudies";
+import { getCaseStudiesFields } from "../../../util/dynamicFormFields";
+import { removeActiveClass } from "../../../util/ulrUtil";
+import Search from "../../../Common/Search";
+import CustomPagination from "../../../Common/CustomPagination";
+import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
+import { CaseStudiesPageStyled } from "../../../Common/StyledComponents/Styled-Casestudies";
 import { useSelector } from "react-redux";
-import SkeletonImage from "../../Common/Skeltons/SkeletonImage";
+import SkeletonImage from "../../../Common/Skeltons/SkeletonImage";
 
 const CaseStudies = () => {
   const editComponentObj = {

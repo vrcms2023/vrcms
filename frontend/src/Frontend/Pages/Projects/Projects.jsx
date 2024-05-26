@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
-import BriefIntroFrontend from "../../Common/BriefIntro";
+import BriefIntroFrontend from "../../../Common/BriefIntro";
 import { useDispatch, useSelector } from "react-redux";
-import { getClientProjects } from "../../features/project/clientProjectActions";
-import ProjectItem from "../Components/projectItem";
-import AdminBriefIntro from "../../Admin/Components/BriefIntro/index";
-import EditIcon from "../../Common/AdminEditIcon";
-import ModelBg from "../../Common/ModelBg";
-import Banner from "../../Common/Banner";
-import { dataFormatedByCatergoryName } from "../../util/dataFormatUtil";
+import { getClientProjects } from "../../../features/project/clientProjectActions";
+import ProjectItem from "../../Components/projectItem";
+import AdminBriefIntro from "../../../Admin/Components/BriefIntro/index";
+import EditIcon from "../../../Common/AdminEditIcon";
+import ModelBg from "../../../Common/ModelBg";
+import Banner from "../../../Common/Banner";
+import { dataFormatedByCatergoryName } from "../../../util/dataFormatUtil";
 import {
   getFormDynamicFields,
   imageDimensionsJson,
-} from "../../util/dynamicFormFields";
+} from "../../../util/dynamicFormFields";
 import "./Projects.css";
-import ImageInputsForm from "../../Admin/Components/forms/ImgTitleIntoForm";
-import { removeActiveClass } from "../../util/ulrUtil";
-import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
+import ImageInputsForm from "../../../Admin/Components/forms/ImgTitleIntoForm";
+import { removeActiveClass } from "../../../util/ulrUtil";
+import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
 
 const Projects = () => {
   const editComponentObj = {

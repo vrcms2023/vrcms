@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./ProjectTabs.css";
 
 import Title from "../../../Common/Title";
-import ProjectGalleryView from "../../Pages/ProjectGalleryView";
+
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import HomeTab from "./HomeTab";
 import Amenities from "./Amenities";
@@ -11,6 +11,7 @@ import Spefifications from "./Spefifications";
 import Location from "./Location";
 import Cost from "./Cost";
 import Button from "../../../Common/Button";
+import ProjectGalleryView from "../../Pages/Projects/ProjectGalleryView";
 
 const ProjectTabs = () => {
   const location = useLocation();

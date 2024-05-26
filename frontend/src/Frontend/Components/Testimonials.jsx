@@ -7,7 +7,7 @@ const Testimonials = ({ testimonis }) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    if (testimonis.length > 1) {
+    if (testimonis?.length > 1) {
       const lastIndex = testimonis?.length - 1;
       if (index < 0) {
         setIndex(lastIndex);
@@ -20,7 +20,7 @@ const Testimonials = ({ testimonis }) => {
   }, [index, testimonis]);
 
   useEffect(() => {
-    if (testimonis.length > 1) {
+    if (testimonis?.length > 1) {
       let slider = setInterval(() => {
         setIndex(index + 1);
       }, 5000);
@@ -37,7 +37,7 @@ const Testimonials = ({ testimonis }) => {
     }
     if (
       indexPeople === index - 1 ||
-      (index === 0 && indexPeople === testimonis.length - 1)
+      (index === 0 && indexPeople === testimonis?.length - 1)
     ) {
       position = "lastSlide";
     }

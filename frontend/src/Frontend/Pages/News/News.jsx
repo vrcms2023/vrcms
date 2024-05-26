@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import Title from "../../Common/Title";
 import { Link } from "react-router-dom";
-import { getBaseURL, removeActiveClass } from "../../util/ulrUtil";
+import Title from "../../../Common/Title";
+import { getBaseURL, removeActiveClass } from "../../../util/ulrUtil";
 
 const News = ({ item, dateFormat, articleHandler }) => {
   const baseURL = getBaseURL();

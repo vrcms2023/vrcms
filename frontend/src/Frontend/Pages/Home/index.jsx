@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ScrollToTop from "react-scroll-to-top";
 
 // Components
 import Title from "../../../Common/Title";
@@ -752,6 +753,7 @@ const Home = () => {
 
       {show && <ModelBg />}
       {/* {showEditPop && <ModelBg />} */}
+      
     </>
   );
 };
