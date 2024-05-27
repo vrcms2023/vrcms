@@ -102,12 +102,13 @@ const ProductsPage = () => {
         </div>
 
         <ABriefIntroStyled>
-          <div className="container">
+          <div className="container productForm">
             <div className="row py-4">
               <ABriefAbout
-                col1="col-md-5"
-                col2="col-md-7"
+                col1="col-md-5 p-5"
+                col2="col-md-7 p-5 p-md-5 d-flex justify-content-center align-items-start flex-column"
                 cssClass="fs-3 text-center fw-medium title"
+                imageClass="w-100 h-100 object-fit-cover rounded-end rounded-end-5"
                 dimensions={imageDimensionsJson("whoweare")}
                 pageType={"products"}
                 componentFlip={false}
