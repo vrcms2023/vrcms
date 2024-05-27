@@ -277,8 +277,7 @@ function App() {
         smooth
         color="#fff"
         height="20"
-        style={{ background: "#999" }}
-        className="shadow rounded-circle"
+        className="shadow rounded-circle scrollTop"
       />
     </>
   );

@@ -6,6 +6,7 @@ import { ProductStyled } from "../../../Common/StyledComponents/Styled-Products"
 import Img1 from "../../../Images/future.png";
 import Img2 from "../../../Images/ongoing.png";
 import Img3 from "../../../Images/quality.png";
+import Button from "../../../Common/Button";
 
 const ProductsList = () => {
   const productList = [
@@ -66,11 +67,16 @@ const ProductsList = () => {
   ];
   const [products, setProducts] = useState(productList);
   return (
-    <div className="row py-4">
+    <>
+    <div className="row ">
       {products?.map((item, index) => (
         <Product item={item} key={item.id} />
       ))}
     </div>
+    <div className=" pb-5">
+      <Button label={"Load More"} cssClass={"btn btn-outline m-auto"}/>
+  </div>
+  </>
   );
 };
 

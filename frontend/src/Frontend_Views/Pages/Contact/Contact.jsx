@@ -36,6 +36,7 @@ import {
 } from "../../../Frontend_Admin/Components/forms/FormFields";
 import { fieldValidation } from "../../../util/validationUtil";
 import Title from "../../../Common/Title";
+import ContactForm from "../../../Common/Forms/ContactForm";
 
 const Contact = () => {
   const editComponentObj = {
@@ -318,7 +319,7 @@ const Contact = () => {
               />
             )}
 
-            <form
+            {/* <form
               className="my-0 contactForm"
               onSubmit={handleSubmit(onFormSubmit)}
             >
@@ -361,7 +362,9 @@ const Contact = () => {
                   </button>
                 </div>
               </div>
-            </form>
+            </form> */}
+
+            <ContactForm />
           </div>
         </div>
       </div>

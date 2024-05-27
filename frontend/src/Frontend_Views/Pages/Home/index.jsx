@@ -59,6 +59,7 @@ import ProductsList from "../Products/ProductsList";
 import { ProductHilightsStyled } from "../../../Common/StyledComponents/Styled-Products-Hilights";
 import { TestimonialCarouselPageStyled } from "../../../Common/StyledComponents/Styled-TestimonialCarousel";
 import { RandomHomeServicesStyled } from "../../../Common/StyledComponents/Random-HomeServices";
+import Button from "../../../Common/Button";
 
 const Home = () => {
   const editComponentObj = {
@@ -244,11 +245,7 @@ const Home = () => {
             cssClass="fs-3 text-center fw-medium mb-5 pt-5"
           />
           <ProductsList />
-          <div className="text-center p-3">
-            <Link to="" className="btn btn-outline">
-              Load More
-            </Link>
-          </div>
+          
         </div>
 
         {/* INTRODUCTION COMPONENT */}
@@ -276,6 +273,37 @@ const Home = () => {
           ""
         )}
 
+
+        <div className="container">
+        <div className="row ABriefAbout mb-5">
+          <ABriefAbout
+            col1="col-md-6"
+            col2="col-md-6"
+            cssClass="fs-3 text-center fw-medium mb-5 pt-5 title"
+            dimensions={imageDimensionsJson("whoweare")}
+            pageType={"productPortfolio"}
+            componentFlip={false}
+          />
+
+          <ABriefAbout
+            col1="col-md-6"
+            col2="col-md-6"
+            cssClass="fs-3 text-center fw-medium mb-5 pt-5 title"
+            dimensions={imageDimensionsJson("whoweare")}
+            pageType={"promoting"}
+            componentFlip={false}
+          />
+
+          <ABriefAbout
+            col1="col-md-6"
+            col2="col-md-6"
+            cssClass="fs-3 text-center fw-medium mb-5 pt-5 title"
+            dimensions={imageDimensionsJson("whoweare")}
+            pageType={"whatwedo"}
+            componentFlip={false}
+          />
+        </div>
+        </div>
         {/* Random Home Services */}
         <RandomHomeServicesStyled>
           <div className="container py-5 randomServices">
@@ -538,7 +566,7 @@ const Home = () => {
 
       {/* SAP DESIGN STUDIO */}
 
-      {/* SERVICES OFFERED COMPONENT 
+      {/* SERVICES OFFERED COMPONENT -
         DEVELOPED FOR SPECIFICALLY SAP DESIGNS */}
 
       {/* <div className="text-center mb-5" style={{ marginTop: "100px" }}>
@@ -582,7 +610,7 @@ const Home = () => {
           </div>
         )} */}
 
-      {/* CLIENTS COMPONENTS DEVELOPER IN SAP DESIGNS */}
+      {/* CLIENTS - COMPONENTS DEVELOPER IN SAP DESIGNS */}
       {/* <HomeClientsStyled>
           <div className="text-center mb-5" style={{ marginTop: "100px" }}>
             <span

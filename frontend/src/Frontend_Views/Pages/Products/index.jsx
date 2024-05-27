@@ -10,10 +10,8 @@ import Banner from "../../../Common/Banner";
 import EditIcon from "../../../Common/AdminEditIcon";
 import ModelBg from "../../../Common/ModelBg";
 import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
-import AdminBriefIntro from "../../../Frontend_Admin/Components/BriefIntro/index";
 
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
-
 import { ProductStyled } from "../../../Common/StyledComponents/Styled-Products";
 
 import {
@@ -22,6 +20,9 @@ import {
 } from "../../../util/dynamicFormFields";
 import SearchFilter from "./FilterComponent";
 import ProductsList from "./ProductsList";
+import ABriefAbout from "../../Components/ABriefAbout";
+import { ABriefIntroStyled } from "../../../Common/StyledComponents/Styled-ABriefAbout";
+import Button from "../../../Common/Button";
 
 const ProductsPage = () => {
   const editComponentObj = {
@@ -34,9 +35,9 @@ const ProductsPage = () => {
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -96,9 +97,25 @@ const ProductsPage = () => {
       <ProductStyled>
         <SearchFilter />
 
-        <div className="container productsList">
+        <div className="container productsList pt-5">
           <ProductsList />
         </div>
+
+        <ABriefIntroStyled>
+          <div className="container">
+            <div className="row py-4">
+              <ABriefAbout
+                col1="col-md-5"
+                col2="col-md-7"
+                cssClass="fs-3 text-center fw-medium title"
+                dimensions={imageDimensionsJson("whoweare")}
+                pageType={"products"}
+                componentFlip={false}
+                showForm={true}
+              />
+            </div>
+          </div>
+        </ABriefIntroStyled>
       </ProductStyled>
 
       {show && <ModelBg />}

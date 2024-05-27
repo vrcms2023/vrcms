@@ -15,6 +15,11 @@ export const getFormDynamicFields = (pageType) => {
       type: "textarea",
       fieldName: "banner_descripiton",
     },
+    moreLink: {
+      label: "PageToLink",
+      type: "text",
+      fieldName: "more_link",
+    },
     pageType: {
       label: "News Title",
       readonly: true,
