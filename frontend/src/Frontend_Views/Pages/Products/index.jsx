@@ -23,6 +23,7 @@ import ProductsList from "./ProductsList";
 import ABriefAbout from "../../Components/ABriefAbout";
 import { ABriefIntroStyled } from "../../../Common/StyledComponents/Styled-ABriefAbout";
 import Button from "../../../Common/Button";
+import BriefIntroAdmin from "../../../Frontend_Admin/Components/BriefIntro";
 
 const ProductsPage = () => {
   const editComponentObj = {
@@ -52,9 +53,18 @@ const ProductsPage = () => {
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("banner", true)} />
         )}
+        {/* <Banner
+          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+          bannerState={componentEdit.banner}
+        /> */}
         <Banner
           getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
           bannerState={componentEdit.banner}
+          bannerContainerCss={"titleCaption d-flex align-items-end justify-content-end flex-column"}
+          bannerTitleCss={"title text-end fs-2"}
+          bannerSubTitleCss={"subTitle text-end fw-normal"}
+          bannerDescriptionCss={"description text-end d-block mt-2 fs-6"}
+          imageCss={"w-100"}
         />
       </div>
 
@@ -100,6 +110,40 @@ const ProductsPage = () => {
         <div className="container productsList pt-5">
           <ProductsList />
         </div>
+
+        {/* INTRODUCTION COMPONENT */}
+        {isAdmin && hasPermission && (
+          <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+        )}
+        <div className="container">
+          <div className="row my-4">
+            <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+              linkLabel="Read More"
+              moreLink=""
+              introTitleCss="fs-2 text-center fw-medium mb-3 pt-3"
+              introSubTitleCss="mb-3 fw-bold text-secondary text-center"
+              introDecTitleCss="text-center lh-md m-0 fw-medium"
+              detailsContainerCss="col-md-10 offset-md-1 py-3"
+              anchorContainer="d-flex justify-content-center align-items-center mt-4"
+              anchersvgColor="#17427C"
+              pageType={pageType}
+            />
+          </div>
+        </div>
+
+        {componentEdit.briefIntro ? (
+          <div className="adminEditTestmonial">
+            <BriefIntroAdmin
+              editHandler={editHandler}
+              componentType="briefIntro"
+              pageType={pageType}
+            />
+          </div>
+        ) : (
+          ""
+        )}
 
         <ABriefIntroStyled>
           <div className="container productForm">

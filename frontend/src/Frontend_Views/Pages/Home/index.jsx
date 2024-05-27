@@ -243,10 +243,9 @@ const Home = () => {
         <div className="container mt-3 mt-md-5 pt-md-5">
           <Title
             title="Products"
-            cssClass="fs-3 text-center fw-medium mb-5 pt-5"
+            cssClass="fs-2 text-center my-5 pt-5"
           />
           <ProductsList />
-          
         </div>
 
         {/* INTRODUCTION COMPONENT */}
@@ -274,8 +273,9 @@ const Home = () => {
           ""
         )}
 
+        {/* Random Hilights */}
         <ABriefIntroStyled>
-        <div className="container mt-5 mb-3 my-md-5 randomServices">
+        <div className="container randomServices">
         <div className="row">
           <ABriefAbout
             col1="col-md-6"
@@ -386,7 +386,7 @@ const Home = () => {
               <div className="col-md-12">
                 <Title
                   title="Testimonials"
-                  cssClass="fs-3 text-center fw-medium mb-5 pt-5"
+                  cssClass="fs-2 text-center fw-medium mb-5 pt-5"
                 />
               </div>
             </div>
@@ -440,25 +440,23 @@ const Home = () => {
             <div className="container">
               <Title
                 title="News"
-                cssClass="fs-3 text-center fw-medium mb-5 pt-5"
+                cssClass="fs-2 text-center fw-medium mb-5 pt-5"
               />
               <HomeNews
                 news={news}
                 setNews={setResponseData}
                 pagetype={pageType}
               />
-              <div>
-                <div className="row">
-                  <div className="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+              
+                  <div className="d-flex justify-content-center align-items-center mt-4">
                     <Ancher
                       AncherLabel="Read more"
                       Ancherpath="/news"
-                      AncherClass="btn btn-outline my-2 my-md-5 w-75 m-auto d-flex justify-content-center align-items-center gap-2"
+                      AncherClass="btn btn-outline d-flex justify-content-center align-items-center "
                       AnchersvgColor="#17427C"
                     />
                   </div>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ import { axiosClientServiceApi } from "../util/axiosUtil";
 import { BriefIntroStyled } from "./StyledComponents/Styled-BriefIntro";
 import Ancher from "./Ancher";
 
-const BriefIntroFrontend = ({ pageType, introState }) => {
+const BriefIntroFrontend = ({ pageType, introState, linkCss, linkLabel, moreLink, introDecTitleCss, introSubTitleCss, introTitleCss, detailsContainerCss, anchorContainer, anchersvgColor, showLink }) => {
   const [introValue, setIntroValues] = useState([]);
 
   useEffect(() => {
@@ -32,14 +32,13 @@ const BriefIntroFrontend = ({ pageType, introState }) => {
     <div className="container-fluid">
       <div className="row">
         <BriefIntroStyled>
-          <div className="briefIntro">
-            <div className="col-md-10 offset-md-1 py-3 py-md-5 ">
+            <div className={`${detailsContainerCss} briefIntro`}>
               {introValue?.intro_title === "" ? (
                 ""
               ) : (
                 <Title
                   title={introValue?.intro_title}
-                  cssClass="fs-3 text-center fw-medium mb-5 pt-5"
+                  cssClass={introTitleCss}
                 />
               )}
               {introValue?.subTitle === "" ? (
@@ -47,25 +46,29 @@ const BriefIntroFrontend = ({ pageType, introState }) => {
               ) : (
                 <Title
                   title={introValue?.subTitle}
-                  cssClass="mb-3 fw-bold text-secondary text-center"
+                  cssClass={introSubTitleCss}
                 />
               )}
-              <p className="text-center lh-md m-0 fw-medium">
+              <p className={introDecTitleCss}>
                 {introValue?.intro_desc
                   ? introValue?.intro_desc
                   : "Please Update Brief Intro"}
               </p>
+              
+              {showLink && (
+                <div className={anchorContainer}>
+                <Ancher
+                  AncherLabel={linkLabel}
+                  Ancherpath={moreLink}
+                  AncherClass={linkCss}
+                  AnchersvgColor={anchersvgColor}
+                />
+              </div>
+              )}
+              
             </div>
 
-            <div className="d-flex justify-content-center align-items-center">
-              <Ancher
-                AncherLabel="Read More"
-                Ancherpath="/about"
-                AncherClass="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-                AnchersvgColor="#17427C"
-              />
-            </div>
-          </div>
+            
         </BriefIntroStyled>
       </div>
     </div>
