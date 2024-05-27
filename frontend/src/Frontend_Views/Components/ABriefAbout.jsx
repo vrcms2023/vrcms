@@ -16,7 +16,7 @@ import { getFormDynamicFields } from "../../util/dynamicFormFields";
 import Ancher from "../../Common/Ancher";
 import ContactForm from "../../Common/Forms/ContactForm";
 
-const ABriefAbout = ({ cssClass, col1, col2, dimensions, pageType = "HomeWhoWeAre", componentFlip = false, showForm = false }) => {
+const ABriefAbout = ({ cssClass, col1, col2, imageClass, dimensions, pageType = "HomeWhoWeAre", componentFlip = false, showForm = false }) => {
   const editComponentObj = {
     whoweare: false,
   };
@@ -53,51 +53,48 @@ const ABriefAbout = ({ cssClass, col1, col2, dimensions, pageType = "HomeWhoWeAr
 
   return (
     <>
-      <div className={`${col1} py-5`}>
-        <img src={getImagePath(bannerData?.path)} alt="" className="w-100 h-100 object-fit-cover rounded-end rounded-end-5" />
+      <div className={`${col1}`}>
+        <img src={getImagePath(bannerData?.path)} alt="" className={imageClass} />
       </div>
-      <div className={`${col2} p-5`}>
-        {/* Edit News */}
+      
+      <div className={`${col2}`}>
+        {/* Edit */}
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("whoweare", true)} />
         )}
-        <div className="row h-100">
-          <div className="col-md-12 p-4 pt-0 p-lg-5 pt-lg-0 d-flex justify-content-center align-items-start flex-column">
-            {bannerData.banner_title ? (
-              <Title title={bannerData.banner_title} cssClass={cssClass} />
-            ) : (
-              ""
-            )}
-            {bannerData.banner_subTitle ? (
-              <Title
-                title={bannerData.banner_subTitle}
-                cssClass="fs-6 my-3"
-              />
-            ) : (
-              ""
-            )}
-            <div>
-              <p className="lh-md">
-                {bannerData?.banner_descripiton
-                  ? bannerData.banner_descripiton
-                  : "Update description"}
-              </p>
-            </div>
-            {showForm && (
-               <ContactForm /> 
-            ) }
-            {bannerData.more_link ? (
-            <div>
-              <Ancher
-                AncherLabel="Know More"
-                Ancherpath={bannerData.more_link ?  bannerData.more_link : "" }
-                AncherClass="btn btn-secondary d-flex justify-content-center align-items-center gap-3"
-                AnchersvgColor="#ffffff"
-              />
-            </div> )
-            : "" }
+          {bannerData.banner_title ? (
+            <Title title={bannerData.banner_title} cssClass={cssClass} />
+          ) : (
+            ""
+          )}
+          {bannerData.banner_subTitle ? (
+            <Title
+              title={bannerData.banner_subTitle}
+              cssClass="fs-6 my-3"
+            />
+          ) : (
+            ""
+          )}
+          <div>
+            <p className="lh-md">
+              {bannerData?.banner_descripiton
+                ? bannerData.banner_descripiton
+                : "Update description"}
+            </p>
           </div>
-        </div>
+          {showForm && (
+              <ContactForm /> 
+          ) }
+          {bannerData.more_link ? (
+          <div>
+            <Ancher
+              AncherLabel="Know More"
+              Ancherpath={bannerData.more_link ?  bannerData.more_link : "" }
+              AncherClass="btn btn-secondary d-flex justify-content-center align-items-center gap-3"
+              AnchersvgColor="#ffffff"
+            />
+          </div> )
+          : "" }
       </div>
 
       {componentEdit.whoweare ? (

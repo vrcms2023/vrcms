@@ -49,19 +49,16 @@ body {
 
 
 
-.ABriefAbout {
-    background: rgb(225,242,253);
-    background: linear-gradient(90deg, rgba(225,242,253,1) 0%, rgba(255,255,255,1) 100%);
-    // background-color:${({ theme }) => theme.ABriefAboutBg}; 
-    color:${({ theme }) => theme.ABriefAboutTextColor};
-}
+// .ABriefAbout {
+//     background: rgb(225,242,253);
+//     background: linear-gradient(90deg, rgba(225,242,253,1) 0%, rgba(255,255,255,1) 100%);
+//     background-color:${({ theme }) => theme.ABriefAboutBg}; 
+//     color:${({ theme }) => theme.ABriefAboutTextColor};
+// }
 
-.ABriefAbout h3, .ABriefAbout .title { border-color: ${({ theme }) =>
-  theme.ABriefAboutTitleBorderColor}; }
+// .ABriefAbout h3, .ABriefAbout .title { border-color: ${({ theme }) => theme.ABriefAboutTitleBorderColor}; }
 
-.ABriefAbout h3::before, .ABriefAbout .title::before { border-color: ${({
-  theme,
-}) => theme.ABriefAboutTitleBorderColor}; }
+// .ABriefAbout h3::before, .ABriefAbout .title::before { border-color: ${({ theme}) => theme.ABriefAboutTitleBorderColor}; }
 
 
 .homeServices {

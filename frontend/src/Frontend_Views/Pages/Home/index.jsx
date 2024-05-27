@@ -60,6 +60,7 @@ import { ProductHilightsStyled } from "../../../Common/StyledComponents/Styled-P
 import { TestimonialCarouselPageStyled } from "../../../Common/StyledComponents/Styled-TestimonialCarousel";
 import { RandomHomeServicesStyled } from "../../../Common/StyledComponents/Random-HomeServices";
 import Button from "../../../Common/Button";
+import { ABriefIntroStyled } from "../../../Common/StyledComponents/Styled-ABriefAbout";
 
 const Home = () => {
   const editComponentObj = {
@@ -273,38 +274,47 @@ const Home = () => {
           ""
         )}
 
-
-        <div className="container">
-        <div className="row ABriefAbout mb-5">
+        <ABriefIntroStyled>
+        <div className="container mt-5 mb-3 my-md-5 randomServices">
+        <div className="row">
           <ABriefAbout
             col1="col-md-6"
-            col2="col-md-6"
-            cssClass="fs-3 text-center fw-medium mb-5 pt-5 title"
+            col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+            cssClass="fs-3fw-medium title"
+            imageClass="w-100 object-fit-cover rounded-end rounded-end-5 shadow"
             dimensions={imageDimensionsJson("whoweare")}
             pageType={"productPortfolio"}
             componentFlip={false}
           />
+        </div>
 
+        <div className="row d-flex flex-row-reverse my-3 my-md-5">
           <ABriefAbout
             col1="col-md-6"
-            col2="col-md-6"
-            cssClass="fs-3 text-center fw-medium mb-5 pt-5 title"
+            col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+            cssClass="fs-3 fw-medium title"
+            imageClass="w-100 object-fit-cover rounded-start rounded-start-5 shadow"
             dimensions={imageDimensionsJson("whoweare")}
             pageType={"promoting"}
             componentFlip={false}
           />
 
+        </div>
+        <div className="row">
           <ABriefAbout
             col1="col-md-6"
-            col2="col-md-6"
-            cssClass="fs-3 text-center fw-medium mb-5 pt-5 title"
+            col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+            cssClass="fs-3 fw-medium title"
+            imageClass="w-100 object-fit-cover rounded-end rounded-end-5 shadow"
             dimensions={imageDimensionsJson("whoweare")}
             pageType={"whatwedo"}
             componentFlip={false}
           />
         </div>
         </div>
-        {/* Random Home Services */}
+        </ABriefIntroStyled>
+
+        {/* Random Home Services 
         <RandomHomeServicesStyled>
           <div className="container py-5 randomServices">
             <div className="row">
@@ -368,7 +378,7 @@ const Home = () => {
             </div>
           </div>
         </RandomHomeServicesStyled>
-
+        */}
         {/* TESTIMONIAL COMPONENT */}
         <TestimonialCarouselPageStyled>
           <div className="container">
