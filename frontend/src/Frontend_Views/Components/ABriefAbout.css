@@ -17,12 +17,12 @@
 } */
 
 .ABriefAbout img {
-  object-fit: cover;
-  object-position: right;
-  width: 75%;
-  border-radius: 100%;
-  border-top-right-radius: 0;
-  box-shadow: 0 15px 0px #3cd9d2;
+  object-fit: contain;
+  /* object-position: right; */
+  /* width: 75%; */
+  /* border-radius: 100%; */
+  /* border-top-right-radius: 0; */
+  /* box-shadow: 0 15px 0px #3cd9d2; */
 }
 
 .ABriefAbout label {

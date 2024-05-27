@@ -47,8 +47,12 @@ body {
   .ABrief h3::before, .ABrief .title::before {border-color: ${({ theme }) =>
     theme.ABriefTitleBorderColor}; }
 
+
+
 .ABriefAbout {
-    background-color:${({ theme }) => theme.ABriefAboutBg}; 
+    background: rgb(225,242,253);
+    background: linear-gradient(90deg, rgba(225,242,253,1) 0%, rgba(255,255,255,1) 100%);
+    // background-color:${({ theme }) => theme.ABriefAboutBg}; 
     color:${({ theme }) => theme.ABriefAboutTextColor};
 }
 
@@ -320,8 +324,11 @@ body {
     input,
     textarea {
       background-color: ${({theme}) => theme.white};
-      border: 1px solid ${({theme}) => theme.lightgray};
+      border: 1px solid ${({theme}) => theme.secondaryColor} !important;
       padding: 12px 10px;
+    }
 
+    .scrollTop {
+      background-color: ${({theme}) => theme.secondaryColor};
     }
 `;

@@ -6,7 +6,7 @@ import { ProductItemStyled } from "../../../Common/StyledComponents/Styled-Produ
 const Product = ({ item }) => {
   return (
     
-    <div className="col-sm-6 col-md-4 col-lg-3 text-center product">
+    <div className="col-sm-6 col-md-4 col-lg-3 text-center product px-4">
       <ProductItemStyled>
         <Link
           to={`/products/${item?.id}`}
@@ -17,10 +17,10 @@ const Product = ({ item }) => {
           <img
             src={item.img}
             alt={item.prodName}
-            className="w-75 h-75 rounded-1 border-4 shadow"
+            className="w-100 h-50 rounded-2 shadow object-fit-cover"
           />
         </Link>
-        <Title title={item.prodName} cssClass="fs-6 py-3" />
+        <Title title={item.prodName} cssClass="fs-6 py-3 text-black fw-bold" />
         </ProductItemStyled>
     </div>
    

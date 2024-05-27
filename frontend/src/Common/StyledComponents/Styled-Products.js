@@ -51,7 +51,7 @@ l`;
 export const ProductItemStyled = styled.span`
 
     img {
-
+        border: 2px solid ${({theme}) => theme.white};
         transition: transform 0.7s ease-out, rotate 0.3s ease-in-out;
         &:hover {
             transform: scale(1.1);
