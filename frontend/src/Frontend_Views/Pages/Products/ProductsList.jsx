@@ -73,7 +73,7 @@ const ProductsList = () => {
         <Product item={item} key={item.id} />
       ))}
     </div>
-    <div className=" pb-5">
+    <div className="mt-5 pb-5">
       <Button label={"Load More"} cssClass={"btn btn-outline m-auto"}/>
   </div>
   </>

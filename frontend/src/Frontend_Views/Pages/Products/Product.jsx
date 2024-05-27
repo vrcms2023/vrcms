@@ -17,7 +17,7 @@ const Product = ({ item }) => {
           <img
             src={item.img}
             alt={item.prodName}
-            className="w-100 h-50 rounded-2 shadow object-fit-cover"
+            className="w-100 rounded-2 shadow object-fit-cover"
           />
         </Link>
         <Title title={item.prodName} cssClass="fs-6 py-3 text-black fw-bold" />

@@ -133,9 +133,18 @@ const TestimonialsList = () => {
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("banner", true)} />
         )}
+        {/* <Banner
+          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+          bannerState={componentEdit.banner}
+        /> */}
         <Banner
           getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
           bannerState={componentEdit.banner}
+          bannerContainerCss={"titleCaption d-flex align-items-end justify-content-end flex-column"}
+          bannerTitleCss={"title text-end fs-2"}
+          bannerSubTitleCss={"subTitle text-end fw-normal"}
+          bannerDescriptionCss={"description text-end d-block mt-2 fs-6"}
+          imageCss={"w-100"}
         />
       </div>
       {componentEdit.banner ? (
@@ -155,14 +164,24 @@ const TestimonialsList = () => {
       )}
 
       {/* Brief Introduction */}
-      {isAdmin && hasPermission && (
+      {/* {isAdmin && hasPermission && (
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
       )}
 
-      <BriefIntroFrontend
-        introState={componentEdit.briefIntro}
-        pageType={pageType}
-      />
+
+            <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+              linkLabel="Read More"
+              moreLink=""
+              introTitleCss="fs-2 text-center fw-medium mb-3 pt-3"
+              introSubTitleCss="mb-3 fw-bold text-secondary text-center"
+              introDecTitleCss="text-center lh-md m-0 fw-medium"
+              detailsContainerCss="col-md-10 offset-md-1 py-3"
+              anchorContainer="d-flex justify-content-center align-items-center mt-4"
+              anchersvgColor="#17427C"
+              pageType={pageType}
+            />
 
       {componentEdit.briefIntro ? (
         <div className="adminEditTestmonial">
@@ -174,7 +193,7 @@ const TestimonialsList = () => {
         </div>
       ) : (
         ""
-      )}
+      )} */}
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
