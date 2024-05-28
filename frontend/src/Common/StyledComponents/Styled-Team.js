@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const TeamStyled = styled.div`
-  background-color: ${({ theme }) => theme.teamBg};
+  background-color: ${({ theme }) => theme.transparent};
 
   .editIcon {
     top: 10px;
@@ -24,15 +24,17 @@ export const TeamStyled = styled.div`
   img {
     object-fit: cover;
     object-position: top;
-    border-radius: 5px !important;
   }
 
   .aboutMe {
   }
 
   .memberCard {
-    background-color: ${({ theme }) => theme.verylightgray};
+    background-color: ${({ theme }) => theme.primaryColor};
+    border:1px solid ${({ theme }) => theme.secondaryColor};
     border-radius: 15px;
+    margin: 15px 0;
+    overflow:hidden;
 
     .memberDetails {
       color: ${({ theme }) => theme.teamTextColor};

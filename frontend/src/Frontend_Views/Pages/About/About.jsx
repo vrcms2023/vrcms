@@ -260,11 +260,11 @@ const About = () => {
                         </Link>
                       </>
                     )}
-                    <div className="col-12 col-lg-6 p-3 p-md-4 py-md-4 d-flex align-items-start flex-column leftColumn">
+                    <div className="col-12 col-lg-6 p-3 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column leftColumn">
                       {item.aboutus_title ? (
                         <Title
                           title={item.aboutus_title}
-                          cssClass="fs-2 mb-1 title"
+                          cssClass="fs-2 mb-2 fw-medium title"
                         />
                       ) : (
                         ""
@@ -295,18 +295,17 @@ const About = () => {
                       />
                     </div>
 
-                    <div className="col-lg-6 d-none d-lg-block h-100">
-                      <div className="h-100 p-3 p-md-5 py-md-4 d-flex flex-column justify-content-center align-items-center rightColumn">
-                        <Title
+                    <div className="col-lg-6 d-none d-lg-block p-5 pe-0 d-flex justify-content-center align-items-start flex-column rightColumn">
+                      {/* <Title
                           title={"OUR WORK LOCATIONS"}
                           cssClass="fs-5 my-5 title"
-                        />
+                        /> */}
                         <img
                           src={getImagePath(item.path)}
                           alt=""
-                          className="img-fluid rounded-circle shadow-lg"
+                          className="w-100 h-100 object-fit-cover shadow"
                         />
-                      </div>
+                     
                     </div>
                   </div>
                   <hr className="border-secondary" />
