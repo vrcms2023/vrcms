@@ -254,9 +254,23 @@ const Home = () => {
         )}
         <div className="container">
           <div className="row my-4">
-            <BriefIntroFrontend
+            {/* <BriefIntroFrontend
               introState={componentEdit.briefIntro}
               pageType="Home"
+            /> */}
+
+          <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+              linkLabel="Read More"
+              moreLink=""
+              introTitleCss="fs-2 text-center fw-medium mb-3 pt-3"
+              introSubTitleCss="mb-3 fw-bold text-secondary text-center"
+              introDecTitleCss="text-center lh-md m-0 fw-medium"
+              detailsContainerCss="col-md-10 offset-md-1 py-3"
+              anchorContainer="d-flex justify-content-center align-items-center mt-4"
+              anchersvgColor="#17427C"
+              pageType={pageType}
             />
           </div>
         </div>

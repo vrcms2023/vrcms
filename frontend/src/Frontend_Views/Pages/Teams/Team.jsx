@@ -290,9 +290,9 @@ const Team = () => {
               <Droppable droppableId={"teamList"} id="teamList">
                 {(provided, snapshot) => (
                   <div
-                    className="row d-flex justify-content-evenly"
+                    className="row"
                     ref={provided.innerRef}
-                    style={getListStyle(snapshot.isDraggingOver)}
+                    // style={getListStyle(snapshot.isDraggingOver)}
                     {...provided.droppableProps}
                   >
                     {team.length > 0 ? (
@@ -360,14 +360,14 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
     >
       {(provided) => (
         <div
-          className="col-md-6 text-center"
+          className="col-md-6 col-lg-4"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
           <div
             key={item.id}
-            className={`mx-md-4 mx-lg-5 p-md-5 p-lg-3 memberCard ${
+            className={`mx-md-1 mx-lg-1  memberCard ${
               isAdmin ? "border border-warning position-relative" : ""
             } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
           >
@@ -387,9 +387,9 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
                 </Link>
               </>
             )}
-            <img src={getImagePath(item.path)} alt="" className="img-fluid" />
+            <img src={getImagePath(item.path)} alt="" className="w-100" />
 
-            <div className="p-3 px-lg-5 text-start memberDetails">
+            <div className="my-3 text-start p-2 memberDetails">
               {item.team_member_designation && (
                 <small className="mb-1 fw-bold">
                   {item.team_member_designation}
