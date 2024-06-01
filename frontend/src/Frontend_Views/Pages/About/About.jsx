@@ -129,11 +129,6 @@ const About = () => {
         <Banner
           getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
           bannerState={componentEdit.banner}
-          bannerContainerCss={"titleCaption d-flex align-items-end justify-content-end flex-column"}
-          bannerTitleCss={"title text-end fs-2"}
-          bannerSubTitleCss={"subTitle text-end fw-normal"}
-          bannerDescriptionCss={"description text-end d-block mt-2 fs-6"}
-          imageCss={"w-100"}
         />
       </div>
       {componentEdit.banner ? (
@@ -300,12 +295,11 @@ const About = () => {
                           title={"OUR WORK LOCATIONS"}
                           cssClass="fs-5 my-5 title"
                         /> */}
-                        <img
-                          src={getImagePath(item.path)}
-                          alt=""
-                          className="w-100 h-100 object-fit-cover shadow"
-                        />
-                     
+                      <img
+                        src={getImagePath(item.path)}
+                        alt=""
+                        className="w-100 h-100 object-fit-cover shadow"
+                      />
                     </div>
                   </div>
                   <hr className="border-secondary" />

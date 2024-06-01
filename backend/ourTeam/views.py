@@ -8,7 +8,7 @@ from rest_framework import status
 from django.http import Http404
 from django.db.models import Q
 from common.CustomPagination import CustomPagination
-from common.utility import get_custom_paginated_data
+from common.utility import get_custom_paginated_data, get_Team_data_From_request_Object
 
 # Create your views here.
  
@@ -32,7 +32,10 @@ class CreateOurTeam(generics.CreateAPIView):
         return Response({"team": serializer.data}, status=status.HTTP_200_OK)
     
     def post(self, request, format=None):
-        serializer = OurTeamSerializer(data=request.data)
+        user = request.user
+        requestObj = get_Team_data_From_request_Object(request)
+        requestObj['created_by'] = user.userName
+        serializer = OurTeamSerializer(data=requestObj)
         if serializer.is_valid():
             serializer.save()
             return Response({"team": serializer.data}, status=status.HTTP_201_CREATED)
@@ -56,7 +59,10 @@ class UpdateAndDeleteOurteamDetail(APIView):
 
     def patch(self, request, pk, format=None):
         snippet = self.get_object(pk)
-        serializer = OurTeamSerializer(snippet, data=request.data)
+        user = request.user
+        requestObj = get_Team_data_From_request_Object(request)
+        requestObj['updated_by'] = user.userName
+        serializer = OurTeamSerializer(snippet, requestObj)
         if serializer.is_valid():
             serializer.save()
             return Response({"team": serializer.data}, status=status.HTTP_200_OK)
