@@ -38,7 +38,7 @@ const FileUpload = ({
   gallerysetState,
   galleryState,
   saveState,
-  validTypes,
+  validTypes = "image/png,image/jpeg",
   disabledFile = false,
   descriptionTitle = "Image desccription",
   titleTitle = "Title",
@@ -172,7 +172,10 @@ const FileUpload = ({
    */
   const creteFileObj = async () => {
     let imageURL = "";
-    if (editImage.path.split("/")[0] === "http:") {
+    if (
+      editImage.path.split("/")[0] === "http:" ||
+      editImage.path.split("/")[0] === "https:"
+    ) {
       imageURL = editImage.path;
     } else {
       imageURL = `${baseURL}${editImage.path}`;

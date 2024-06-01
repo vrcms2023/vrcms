@@ -1,3 +1,32 @@
+import { fieldValidation } from "./validationUtil";
+
+export const getProductCategoryBannerFormFields = (pageType) => {
+  return {
+    banner_title: {
+      label: "Title",
+      type: "text",
+      fieldName: "banner_title",
+    },
+    banner_subTitle: {
+      label: "Sub Title",
+      type: "text",
+      fieldName: "banner_subTitle",
+    },
+    banner_descripiton: {
+      label: "Description",
+      type: "textarea",
+      fieldName: "banner_descripiton",
+    },
+    pageType: {
+      label: "News Title",
+      readonly: true,
+      type: "hidden",
+      value: pageType ? pageType : "",
+      fieldName: "pageType",
+    },
+  };
+};
+
 export const getFormDynamicFields = (pageType) => {
   return {
     banner_title: {
@@ -211,7 +240,7 @@ export const getServiceFormFields = (id, title) => {
   };
 };
 
-export const getTeamMemberFields = () => {
+export const getTeamMemberFields = (position) => {
   return {
     team_member_name: {
       label: "Name",
@@ -237,6 +266,13 @@ export const getTeamMemberFields = () => {
       label: "About ",
       type: "richText",
       fieldName: "team_member_about_us",
+    },
+    team_member_position: {
+      label: "About ",
+      readonly: true,
+      type: "hidden",
+      value: position ? position : 0,
+      fieldName: "team_member_position",
     },
     twitter_url: {
       label: "twitter url",
@@ -298,6 +334,108 @@ export const getImageGalleryFields = (category) => {
   };
 };
 
+export const getCategoryFormDynamicFields = () => {
+  return {
+    category_name: {
+      label: "Category Name",
+      type: "text",
+      fieldName: "category_name",
+      validationObject: { required: "Please enter Category" },
+    },
+    is_available: {
+      label: "is available",
+      readonly: true,
+      type: "hidden",
+      value: true,
+      fieldName: "is_available",
+    },
+    description: {
+      label: "Category Description",
+      type: "textarea",
+      fieldName: "description",
+    },
+    fileuplod: {
+      label: "Upload File",
+      type: "file",
+      accept:
+        "application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      fieldName: "fileuplod",
+    },
+    company_id: {
+      label: "company_id",
+      readonly: true,
+      type: "hidden",
+      value: "d0c2cd08-6948-47bd-8ab6-78bad09ec7a2",
+      fieldName: "company_id",
+    },
+    company_name: {
+      label: "company_name",
+      readonly: true,
+      type: "hidden",
+      value: "LeonPharma",
+      fieldName: "company_name",
+    },
+  };
+};
+
+export const getProductFormDynamicFields = (selectedCategory) => {
+  return {
+    product_name: {
+      label: "Product Name",
+      type: "text",
+      fieldName: "product_name",
+      validationObject: { required: "Please enter Product name" },
+    },
+    is_available: {
+      label: "is available",
+      readonly: true,
+      type: "hidden",
+      value: true,
+      fieldName: "is_available",
+    },
+    description: {
+      label: "Product Description",
+      type: "textarea",
+      fieldName: "description",
+    },
+    category_id: {
+      label: "category_id",
+      readonly: true,
+      type: "hidden",
+      value: selectedCategory.id,
+      fieldName: "category_id",
+    },
+    category_name: {
+      label: "category_name",
+      readonly: true,
+      type: "hidden",
+      value: selectedCategory?.category_name,
+      fieldName: "category_name",
+    },
+    company_id: {
+      label: "company_id",
+      readonly: true,
+      type: "hidden",
+      value: "d0c2cd08-6948-47bd-8ab6-78bad09ec7a2",
+      fieldName: "company_id",
+    },
+    company_name: {
+      label: "company_name",
+      readonly: true,
+      type: "hidden",
+      value: "LeonPharma",
+      fieldName: "company_name",
+    },
+    price: {
+      label: "price",
+      readonly: true,
+      type: "hidden",
+      value: 20,
+      fieldName: "price",
+    },
+  };
+};
+
 export const imageDimensionsJson = (component) => {
   const imgDimension = {
     carousel: {
@@ -339,6 +477,10 @@ export const imageDimensionsJson = (component) => {
     VideosGallery: {
       w: "800px",
       h: "800px",
+    },
+    product: {
+      w: "300px",
+      h: "200px",
     },
   };
   return imgDimension[component];

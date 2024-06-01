@@ -1,82 +1,78 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Product from "./Product";
 
 import { ProductStyled } from "../../../Common/StyledComponents/Styled-Products";
 
-import Img1 from "../../../Images/future.png";
-import Img2 from "../../../Images/ongoing.png";
-import Img3 from "../../../Images/quality.png";
 import Button from "../../../Common/Button";
+import {
+  axiosClientServiceApi,
+  axiosFileUploadServiceApi,
+} from "../../../util/axiosUtil";
+import { confirmAlert } from "react-confirm-alert";
+import DeleteDialog from "../../../Common/DeleteDialog";
+import { getProductsByCategory } from "../../../redux/products/productsActions";
 
-const ProductsList = () => {
-  const productList = [
-    {
-      id: 1,
-      img: Img1,
-      prodCategory: "onchology",
-      prodName: "OncProduct-0",
-      companyName: "Sun Pharma",
-      productDesc: "Description",
-      file: "",
-    },
-    {
-      id: 2,
-      img: Img2,
-      prodCategory: "onchology",
-      prodName: "OncProduct-1",
-      companyName: "Sun Pharma",
-      productDesc: "Description",
-      file: "",
-    },
-    {
-      id: 3,
-      img: Img3,
-      prodCategory: "onchology",
-      prodName: "OncProduct-2",
-      companyName: "Sun Pharma",
-      productDesc: "Description",
-      file: "",
-    },
-    {
-      id: 4,
-      img: Img1,
-      prodCategory: "onchology",
-      prodName: "OncProduct-0",
-      companyName: "Sun Pharma",
-      productDesc: "Description",
-      file: "",
-    },
-    {
-      id: 5,
-      img: Img2,
-      prodCategory: "onchology",
-      prodName: "OncProduct-1",
-      companyName: "Sun Pharma",
-      productDesc: "Description",
-      file: "",
-    },
-    {
-      id: 6,
-      img: Img3,
-      prodCategory: "onchology",
-      prodName: "OncProduct-2",
-      companyName: "Sun Pharma",
-      productDesc: "Description",
-      file: "",
-    },
-  ];
-  const [products, setProducts] = useState(productList);
+const ProductsList = ({ compState, selectedCategory, editHandler }) => {
+  const [productsList, setProductsList] = useState([]);
+  const { products } = useSelector((state) => state.productList);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (selectedCategory?.id) {
+      dispatch(getProductsByCategory(selectedCategory.id));
+    }
+  }, [compState, selectedCategory]);
+
+  useEffect(() => {
+    if (products) {
+      setProductsList(products);
+    }
+  }, [products]);
+
+  const deleteProduct = (item) => {
+    const { id, product_name } = item;
+    const deleteImageByID = async () => {
+      const response = await axiosFileUploadServiceApi.delete(
+        `/products/updateProduct/${id}/`
+      );
+      if (response.status === 204) {
+        const list = productsList.filter((item) => item.id !== id);
+        setProductsList(list);
+      }
+    };
+
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <DeleteDialog
+            onClose={onClose}
+            callback={deleteImageByID}
+            message={`deleting the ${product_name} Product?`}
+          />
+        );
+      },
+    });
+  };
+
   return (
     <>
-    <div className="row ">
-      {products?.map((item, index) => (
-        <Product item={item} key={item.id} />
-      ))}
-    </div>
-    <div className="mt-5 pb-5">
-      <Button label={"Load More"} cssClass={"btn btn-outline m-auto"}/>
-  </div>
-  </>
+      <div className="row ">
+        {productsList?.map((item) => (
+          <Product
+            item={item}
+            key={item.id}
+            editHandler={editHandler}
+            deleteProduct={deleteProduct}
+          />
+        ))}
+      </div>
+      {productsList.length > 0 && (
+        <div className="mt-5 pb-5">
+          <Button label={"Load More"} cssClass={"btn btn-outline m-auto"} />
+        </div>
+      )}
+    </>
   );
 };
 

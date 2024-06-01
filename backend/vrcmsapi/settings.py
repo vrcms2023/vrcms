@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'pagesAdministration',
     'pagePermissions',
     'debug_toolbar',
+    'products'
 ]
 
 MIDDLEWARE = [

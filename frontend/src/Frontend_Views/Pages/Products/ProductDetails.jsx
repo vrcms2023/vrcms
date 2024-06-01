@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -25,129 +26,64 @@ import {
 
 import Img1 from "../../../Images/Banner_11.jpg";
 import Title from "../../../Common/Title";
+import { axiosClientServiceApi } from "../../../util/axiosUtil";
+import { getImagePath } from "../../../util/commonUtil";
+import Product from "./Product";
+import { getProductsByCategory } from "../../../redux/products/productsActions";
 
 const ProductDetails = () => {
-  const editComponentObj = {
-    banner: false,
-    briefIntro: false,
-  };
-
-  const pageType = "products";
-  const { isAdmin, hasPermission } = useAdminLoginStatus();
-  const [componentEdit, SetComponentEdit] = useState(editComponentObj);
-  const [show, setShow] = useState(false);
+  const { id } = useParams();
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const { products } = useSelector((state) => state.productList);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const editHandler = (name, value) => {
-    SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
-    setShow(!show);
-    document.body.style.overflow = "hidden";
-  };
+    const getSelectedProductData = async () => {
+      try {
+        let response = await axiosClientServiceApi.get(
+          `/products/getClinetSelectedProduct/${id}/`
+        );
+        const data = response?.data?.product;
+        setSelectedProduct(data);
+        if (products.length === 0) {
+          dispatch(getProductsByCategory(data.category_id));
+        }
+      } catch (error) {
+        console.log("Unable to get the Career data");
+      }
+    };
+    getSelectedProductData();
+  }, [id]);
 
   return (
     <>
-      {/* Page Banner Component */}
-      {/* <div className="position-relative">
-        {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
-        )}
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        />
-      </div> */}
-      {/* 
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Project Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
-    ) : (
-    ""
-    )} */}
-      {/* Introduction */}
-      {/* {isAdmin && hasPermission && (
-        <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-      )}
-
-      <BriefIntroFrontend
-        introState={componentEdit.briefIntro}
-        pageType={pageType}
-      />
-
-      {componentEdit.briefIntro ? (
-        <div className="adminEditTestmonial">
-          <AdminBriefIntro
-            editHandler={editHandler}
-            componentType="briefIntro"
-            pageType={pageType}
-          />
-        </div>
-      ) : (
-        ""
-      )} */}
       <ProductStyled>
         <div className="container productDetails">
           <div className="row">
             <div className="col-md-10 offset-md-1 pt-5 text-center">
-              <img src={Img1} alt="" className="w-100 rounded-3" />
+              <img
+                src={getImagePath(selectedProduct?.path)}
+                alt={selectedProduct?.alternitivetext}
+                className="w-100 rounded-3"
+              />
             </div>
             <div className="col-md-10 offset-md-1 py-3">
-              <Title title="Brentuximab" cssClass="fs-4 fw-bold" />
-              <Title title="Sun Pharmaceuticals" cssClass="fs-6" />
-              <Title title="Product Details" cssClass="fs-6 fw-bold mt-4" />
-              <p>
-                If you have diabetes, checking your blood sugar is simple, easy
-                and affordable with ReliOn Platinum Blood Glucose Test Strips.
-                ReliOn Platinum test strips are compatible with the ReliOn
-                Platinum Blood Glucose Meter; an affordable, accurate, Bluetooth
-                meter with advanced features. ReliOn Platinum test strips have a
-                wide dosing area, making it easy to apply a small amount of
-                blood anywhere along the test strip edge. Package includes 50
-                ReliOn Platinum blood glucose test strips.
-              </p>
-              <p>
-                The manufacturer warrants that your ReliOn Platinum test strips
-                will be free from defects in materials and workmanship until the
-                product expiration date printed on the label if the test strips
-                are used and stored in the manner described in this package
-                insert and in your ReliOn Platinum blood glucose meter User’s
-                Manual. If, prior to the expiration date of the test strips,
-                there is a defect in materials or workmanship, the manufacturer
-                will replace the test strips free of charge.
-              </p>
-              <p>
-                Failure to follow testing instructions or test strip storage and
-                handling instructions can lead to an incorrect test result that
-                may lead to improper therapy. Carefully read and follow the
-                instructions in the User's Manual and package inserts for the
-                test strips.
-              </p>
-              <p>
-                Together, we impact life and health with science. We offer one
-                of the broadest portfolios in the industry for scientists,
-                best-in-class products for pharmaceutical development and
-                manufacturing, and a fully integrated service organization to
-                support CDMO and contract testing across traditional and novel
-                modalities. Our vision is a world where our innovative products,
-                services, and digital offerings help create solutions for people
-                globally and a sustainable future for generations to come.
-              </p>
+              <Title
+                title={selectedProduct?.product_name}
+                cssClass="fs-4 fw-bold"
+              />
+
+              <p>{selectedProduct?.description}</p>
             </div>
+          </div>
+
+          <div className="row ">
+            {products?.map(
+              (item) => item.id !== id && <Product item={item} key={item.id} />
+            )}
           </div>
         </div>
       </ProductStyled>
-      {show && <ModelBg />}
     </>
   );
 };

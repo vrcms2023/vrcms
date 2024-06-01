@@ -175,11 +175,6 @@ const Services = () => {
           getBannerAPIURL={`banner/clientBannerIntro/${pageType}-${pageLoadServiceName}-banner/`}
           bannerState={componentEdit.banner}
           pageLoadServiceName={pageLoadServiceName}
-          bannerContainerCss={"titleCaption d-flex align-items-end justify-content-end flex-column"}
-          bannerTitleCss={"title text-end fs-2"}
-          bannerSubTitleCss={"subTitle text-end fw-normal"}
-          bannerDescriptionCss={"description text-end d-block mt-2 fs-6"}
-          imageCss={"w-100"}
         />
       </div>
 

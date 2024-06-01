@@ -9,7 +9,16 @@ import SkeletonImage from "../Skeltons/SkeletonImage";
 // Styles
 import { PageBannerStyled } from "../StyledComponents/Styled-PageBanner";
 
-const Banner = ({ getBannerAPIURL, bannerState, pageLoadServiceName, bannerTitleCss, bannerSubTitleCss, bannerDescriptionCss, imageCss, bannerContainerCss }) => {
+const Banner = ({
+  getBannerAPIURL,
+  bannerState,
+  pageLoadServiceName,
+  bannerTitleCss = "title text-end fs-2",
+  bannerSubTitleCss = "subTitle text-end fw-normal",
+  bannerDescriptionCss = "description text-end d-block mt-2 fs-6",
+  imageCss = "w-100",
+  bannerContainerCss = "titleCaption d-flex align-items-end justify-content-end flex-column",
+}) => {
   const [bannerdata, setBannerData] = useState([]);
 
   useEffect(() => {
@@ -46,10 +55,7 @@ const Banner = ({ getBannerAPIURL, bannerState, pageLoadServiceName, bannerTitle
           {bannerdata.banner_title === "" ? (
             ""
           ) : (
-            <Title
-              title={bannerdata.banner_title}
-              cssClass={bannerTitleCss}
-            />
+            <Title title={bannerdata.banner_title} cssClass={bannerTitleCss} />
           )}
           {bannerdata.banner_subTitle === "" ? (
             ""

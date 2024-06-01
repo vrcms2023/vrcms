@@ -157,10 +157,8 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType }) => {
       <div className="container">
         <div className="row py-0 pb-md-5">
           <div className="col-md-8 offset-md-2 mb-5 mb-md-0">
-            {error ? (
+            {error && (
               <div className="fw-bold">{error && <Error>{error}</Error>}</div>
-            ) : (
-              ""
             )}
             <form onSubmit={handleSubmit(saveMenu)}>
               <InputFields

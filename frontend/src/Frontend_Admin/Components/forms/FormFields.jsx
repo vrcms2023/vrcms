@@ -7,6 +7,9 @@ export const InputFields = ({
   fieldName,
   register,
   value,
+  onChange,
+  error,
+  validationObject,
   ...rest
 }) => {
   switch (type) {
@@ -21,12 +24,13 @@ export const InputFields = ({
           </label>
           <div className="col-sm-12">
             <input
-              {...register(fieldName)}
+              {...register(fieldName, validationObject)}
               value={value}
               type={type}
-              onChange={rest.onChange}
+              onChange={onChange}
               className="form-control p-2"
             />
+            <span className="error">{error}</span>
           </div>
         </div>
       );
@@ -42,7 +46,7 @@ export const InputFields = ({
           <div className="col-sm-12">
             <select
               className="custom-select custom-select-lg form-control p-2"
-              {...register(fieldName)}
+              {...register(fieldName, validationObject)}
             >
               <option selected>Choose...</option>
               {rest.options.map((option, index) => (
@@ -51,6 +55,7 @@ export const InputFields = ({
                 </option>
               ))}
             </select>
+            <span className="error">{error}</span>
           </div>
         </div>
       );
@@ -63,31 +68,57 @@ export const InputFields = ({
           <div className="col-sm-12">
             <textarea
               className="form-control"
-              {...register(fieldName)}
+              {...register(fieldName, validationObject)}
               value={value}
               rows="3"
+              onChange={onChange}
             ></textarea>
+            <span className="error">{error}</span>
           </div>
         </div>
       );
     case "checkbox":
       return (
+        <div className=" mt-3">
+          <div className="col-sm-12 form-check">
+            <input
+              {...register(fieldName, validationObject)}
+              onChange={onChange}
+              checked={value}
+              defaultChecked={rest.defaultChecked}
+              type={type}
+              className="form-check-input"
+            />
+            <label
+              htmlFor=""
+              className="form-check-label ms-2 col-form-label text-start text-md-end text-capitalize"
+            >
+              {label}
+            </label>
+            <span className="error">{error}</span>
+          </div>
+        </div>
+      );
+    case "file":
+      return (
         <div className="mb-2 row">
           <label
             htmlFor=""
-            className="col-sm-12 col-form-label text-start text-md-end text-capitalize"
+            className="col-sm-12 col-form-label text-capitalize"
           >
             {label}
           </label>
           <div className="col-sm-12">
             <input
-              {...{
-                checked: rest.checked,
-                onChange: rest.changeHandler,
-              }}
+              {...register(fieldName, validationObject)}
+              value={value}
               type={type}
-              className="form-check-input"
+              onChange={onChange}
+              accept={rest.accept}
+              className="form-control p-2"
             />
+
+            <span className="error">{error}</span>
           </div>
         </div>
       );

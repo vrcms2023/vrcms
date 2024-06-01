@@ -85,11 +85,6 @@ const Careers = () => {
         <Banner
           getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
           bannerState={componentEdit.banner}
-          bannerContainerCss={"titleCaption d-flex align-items-end justify-content-end flex-column"}
-          bannerTitleCss={"title text-end fs-2"}
-          bannerSubTitleCss={"subTitle text-end fw-normal"}
-          bannerDescriptionCss={"description text-end d-block mt-2 fs-6"}
-          imageCss={"w-100"}
         />
       </div>
 
@@ -118,20 +113,20 @@ const Careers = () => {
         pageType={pageType}
       /> */}
 
-          <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              linkCss="btn btn-outline d-flex justify-content-center align-items-center"
-              linkLabel="Read More"
-              moreLink=""
-              showLink={false}
-              introTitleCss="fs-2 fw-medium mb-3 pt-3"
-              introSubTitleCss="mb-3 fw-bold text-secondary "
-              introDecTitleCss="lh-md m-0 fw-medium"
-              detailsContainerCss="col-md-10 offset-md-1"
-              anchorContainer="d-flex justify-content-start align-items-start mt-4"
-              anchersvgColor="#17427C"
-              pageType={pageType}
-            />
+      <BriefIntroFrontend
+        introState={componentEdit.briefIntro}
+        linkCss="btn btn-outline d-flex justify-content-center align-items-center"
+        linkLabel="Read More"
+        moreLink=""
+        showLink={false}
+        introTitleCss="fs-2 fw-medium mb-3 pt-3"
+        introSubTitleCss="mb-3 fw-bold text-secondary "
+        introDecTitleCss="lh-md m-0 fw-medium"
+        detailsContainerCss="col-md-10 offset-md-1"
+        anchorContainer="d-flex justify-content-start align-items-start mt-4"
+        anchersvgColor="#17427C"
+        pageType={pageType}
+      />
 
       {componentEdit.briefIntro ? (
         <div className="adminEditTestmonial">
