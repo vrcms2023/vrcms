@@ -36,6 +36,8 @@ class CreateOurTeam(generics.CreateAPIView):
         requestObj = get_Team_data_From_request_Object(request)
         requestObj['created_by'] = user.userName
         serializer = OurTeamSerializer(data=requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"team": serializer.data}, status=status.HTTP_201_CREATED)
@@ -63,6 +65,8 @@ class UpdateAndDeleteOurteamDetail(APIView):
         requestObj = get_Team_data_From_request_Object(request)
         requestObj['updated_by'] = user.userName
         serializer = OurTeamSerializer(snippet, requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"team": serializer.data}, status=status.HTTP_200_OK)

@@ -23,6 +23,9 @@ class ImageGalleryView(viewsets.ModelViewSet):
   
 
             serializer = GallerySerializer(data=requestObj)
+            if 'path' in request.data and not request.data['path']:
+                serializer.remove_fields(['path','originalname','contentType'])
+            
             if serializer.is_valid():
                 serializer.save()
         
@@ -66,6 +69,9 @@ class UpdateGalleryViewSet(viewsets.ModelViewSet):
                                                data= requestObj, # or request.data
                                                context={'author': user},
                                                partial=True)
+            
+            if 'path' in request.data and not request.data['path']:
+                serializer.remove_fields(['path','originalname','contentType'])
             if serializer.is_valid():
                 serializer.save()
                 return Response({"imageModel" : serializer.data}, status=status.HTTP_200_OK)

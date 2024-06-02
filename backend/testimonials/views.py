@@ -34,6 +34,8 @@ class CreateTestimonials(generics.CreateAPIView):
         requestObj = get_testimonial_data_From_request_Object(request)
         requestObj['created_by'] = request.data["created_by"]
         serializer = TestimonialsSerializer(data=requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"testimonial": serializer.data}, status=status.HTTP_201_CREATED)
@@ -60,6 +62,8 @@ class TestimonialsDetail(APIView):
         requestObj = get_testimonial_data_From_request_Object(request)
         requestObj['updated_by'] = request.data["updated_by"]
         serializer = TestimonialsSerializer(snippet, data=requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"testimonial": serializer.data}, status=status.HTTP_200_OK)

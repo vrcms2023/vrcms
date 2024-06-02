@@ -33,6 +33,8 @@ class CreateCaseStudies(generics.CreateAPIView):
     
     def post(self, request, format=None):
         serializer = CaseStudiesSerializer(data=request.data)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"caseStudies": serializer.data}, status=status.HTTP_201_CREATED)
@@ -57,6 +59,8 @@ class UpdateAndDeleteCaseStudiesDetail(APIView):
     def patch(self, request, pk, format=None):
         snippet = self.get_object(pk)
         serializer = CaseStudiesSerializer(snippet, data=request.data)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"caseStudies": serializer.data}, status=status.HTTP_200_OK)

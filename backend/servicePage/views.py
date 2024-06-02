@@ -25,6 +25,8 @@ class CreateService(generics.CreateAPIView):
     
     def post(self, request, format=None):
         serializer = ServiceSerializer(data=request.data)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"services": serializer.data}, status=status.HTTP_201_CREATED)
@@ -48,6 +50,8 @@ class ServicesDetail(APIView):
     def put(self, request, pk, format=None):
         snippet = self.get_object(pk)
         serializer = ServiceSerializer(snippet, data=request.data)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"services": serializer.data}, status=status.HTTP_200_OK)
@@ -66,6 +70,8 @@ class PublishServiceAPIView(generics.RetrieveUpdateAPIView):
     def patch(self, request, pk, format=None):
         snippet = Services.objects.get(pk=pk)
         serializer = ServiceSerializer(snippet, data=request.data, partial=True)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"services" : serializer.data}, status=status.HTTP_200_OK)
@@ -166,6 +172,8 @@ class CreateFeatureService(generics.CreateAPIView):
         requestObj = get_service_data_From_request_Object(request)
         requestObj['created_by'] = request.data["created_by"]
         serializer = ServiceFeatureSerializer(data=requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"servicesFeatures": serializer.data}, status=status.HTTP_201_CREATED)
@@ -191,6 +199,8 @@ class FeatureServicesDetail(APIView):
         requestObj = get_service_data_From_request_Object(request)
         requestObj['updated_by'] = request.data["updated_by"]
         serializer = ServiceFeatureSerializer(snippet, data=requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"servicesFeatures": serializer.data}, status=status.HTTP_200_OK)
@@ -223,6 +233,8 @@ class CreateServiceAccordion(generics.CreateAPIView):
     
     def post(self, request, format=None):
         serializer = ServiceAccordionSerializer(data=request.data)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"servicesAccordion": serializer.data}, status=status.HTTP_201_CREATED)
@@ -246,6 +258,8 @@ class ServicesAccordionDetail(APIView):
     def put(self, request, pk, format=None):
         snippet = self.get_object(pk)
         serializer = ServiceAccordionSerializer(snippet, data=request.data)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"servicesAccordion": serializer.data}, status=status.HTTP_200_OK)

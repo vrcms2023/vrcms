@@ -1,6 +1,7 @@
 from django.db import models
 from common.BaseModel import ImageModel, BaseModel
 
+
 class Carousel(ImageModel):
     carouse_title =         models.CharField(max_length=200, null=True, blank=True)
     carouse_sub_title =     models.CharField(max_length=200, null=True, blank=True)

@@ -30,6 +30,8 @@ class BannerAndIntroAPIView(generics.CreateAPIView):
         requestObj['created_by'] = request.data["created_by"]
 
         serializer = BannerAndIntroSerializer(data=requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"imageModel": serializer.data}, status=status.HTTP_201_CREATED)
@@ -57,6 +59,8 @@ class BannerAndIntroUpdateAndDeleteView(APIView):
         requestObj = get_banner_data_From_request_Object(request)
         requestObj['updated_by'] = request.data["updated_by"]
         serializer = BannerAndIntroSerializer(snippet, data=requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"imageModel": serializer.data}, status=status.HTTP_200_OK)
