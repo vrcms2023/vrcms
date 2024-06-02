@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from common.utility import exclude_fields
 from .models import *
 
 
@@ -34,4 +36,7 @@ class GallerySerializer(serializers.ModelSerializer):
       class Meta:
         model = Gallery
         fields = '__all__'
+
+      def remove_fields(self, fields_to_exclude=None):
+         return exclude_fields(self, fields_to_exclude)
        

@@ -41,6 +41,8 @@ class CarouselAPIView(generics.CreateAPIView):
         requestObj = get_carousel_data_From_request_Object(request)
         requestObj['created_by'] = request.data["created_by"]
         serializer = CarouselSerializer(data=requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"carousel": serializer.data}, status=status.HTTP_201_CREATED)
@@ -68,6 +70,8 @@ class CarouselUpdateAndDeleteView(APIView):
         requestObj = get_carousel_data_From_request_Object(request)
         requestObj['updated_by'] = request.data["updated_by"]
         serializer = CarouselSerializer(snippet, data=requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
@@ -243,6 +247,8 @@ class ClientLogoAPIView(generics.CreateAPIView):
     
      def post(self, request, format=None):
         serializer = ClientLogoSerializer(data=request.data)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"clientLogo": serializer.data}, status=status.HTTP_201_CREATED)
@@ -268,6 +274,8 @@ class ClientLogoUpdateAndDeleteView(APIView):
     def patch(self, request, pk, format=None):
         snippet = self.get_object(pk)
         serializer = ClientLogoSerializer(snippet, data=request.data)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)

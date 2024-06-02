@@ -33,6 +33,8 @@ class ImageAndVideoGalleryAPIView(generics.CreateAPIView):
         user = request.user
         requestObj['created_by'] = user.userName
         serializer = imageAndVideoGallerySerializer(data=requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"imageAndVideoGallery": serializer.data}, status=status.HTTP_201_CREATED)
@@ -61,6 +63,8 @@ class ImageAndVideoGalleryUpdateAndDeleteView(APIView):
         user = request.user
         requestObj['updated_by'] = user.userName
         serializer = imageAndVideoGallerySerializer(snippet, data=requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"imageAndVideoGallery": serializer.data}, status=status.HTTP_200_OK)

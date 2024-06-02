@@ -32,6 +32,8 @@ class CreateCareer(generics.CreateAPIView):
     
     def post(self, request, format=None):
         serializer = CareerSerializer(data=request.data)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"careers": serializer.data}, status=status.HTTP_201_CREATED)
@@ -55,6 +57,8 @@ class UpdateCareersDetail(APIView):
     def put(self, request, pk, format=None):
         snippet = self.get_object(pk)
         serializer = CareerSerializer(snippet, data=request.data)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"careers": serializer.data}, status=status.HTTP_200_OK)
