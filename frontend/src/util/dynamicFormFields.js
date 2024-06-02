@@ -354,12 +354,12 @@ export const getCategoryFormDynamicFields = () => {
       type: "textarea",
       fieldName: "description",
     },
-    fileuplod: {
+    category_fileuplod: {
       label: "Upload File",
       type: "file",
       accept:
         "application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      fieldName: "fileuplod",
+      fieldName: "category_fileuplod",
     },
     company_id: {
       label: "company_id",
