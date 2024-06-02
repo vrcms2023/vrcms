@@ -13,11 +13,11 @@ const Banner = ({
   getBannerAPIURL,
   bannerState,
   pageLoadServiceName,
-  bannerTitleCss,
-  bannerSubTitleCss,
-  bannerDescriptionCss = "description",
-  imageCss,
-  bannerContainerCss,
+  bannerTitleCss = "title text-end fs-2",
+  bannerSubTitleCss = "subTitle text-end fw-normal",
+  bannerDescriptionCss = "description text-end d-block mt-2 fs-6",
+  imageCss = "w-100",
+  bannerContainerCss = "titleCaption d-flex align-items-end justify-content-end flex-column",
 }) => {
   const [bannerdata, setBannerData] = useState([]);
 
