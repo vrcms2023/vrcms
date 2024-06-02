@@ -17,7 +17,7 @@ const FilterComponent = ({
   return (
     <div className="container position-relative ">
       <div className="row rounded-3 position-absolute overflow-hidden productCategorySearch">
-        <div className="col-md-12 px-5 productCategory d-flex justify-content-center align-items-center">
+        <div className="col-md-12 px-md-5 productCategory d-flex justify-content-center align-items-center">
           <select
             className="form-select"
             aria-label="Default select example"

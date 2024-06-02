@@ -111,12 +111,13 @@ body {
 
 .btn-secondary {
     background-color:${({ theme }) => theme.secondaryColor}; 
-    color:${({ theme }) => theme.black};
+    color:${({ theme }) => theme.white};
 }
 
 .btn-secondary:hover {
     background-color:${({ theme }) => theme.primaryColor}; 
-    color:${({ theme }) => theme.lightgray};
+    border: 1px solid ${({ theme }) => theme.secondaryColor} !important; 
+    color:${({ theme }) => theme.black};
 }
 
 .btn-outline {

@@ -55,7 +55,7 @@ const Search = ({
 
   return (
     <div className="d-flex justify-conent-start align-items-start flex-column">
-      <div className="input-group mb-1 search my-3 my-md-0">
+      <div className="input-group mb-1 search my-2 my-md-0 ">
         <input
           type="text"
           className="form-control"

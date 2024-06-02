@@ -42,9 +42,9 @@ const Product = ({ item, editHandler, deleteProduct }) => {
         </Link>
         <Title
           title={item.product_name}
-          cssClass="fs-6 py-3 text-black fw-bold"
+          cssClass="fs-6 py-3 text-black fw-medium"
         />
-        {item.description}
+        {/* <p>{item.description}</p> */}
       </ProductItemStyled>
     </div>
   );

@@ -13,11 +13,11 @@ const Banner = ({
   getBannerAPIURL,
   bannerState,
   pageLoadServiceName,
-  bannerTitleCss = "title text-end fs-2",
-  bannerSubTitleCss = "subTitle text-end fw-normal",
-  bannerDescriptionCss = "description text-end d-block mt-2 fs-6",
-  imageCss = "w-100",
-  bannerContainerCss = "titleCaption d-flex align-items-end justify-content-end flex-column",
+  bannerTitleCss,
+  bannerSubTitleCss,
+  bannerDescriptionCss = "description",
+  imageCss,
+  bannerContainerCss,
 }) => {
   const [bannerdata, setBannerData] = useState([]);
 
@@ -48,27 +48,27 @@ const Banner = ({
             (bannerdata.banner_descripiton && bannerdata.banner_title) ||
             bannerdata.banner_descripiton ||
             bannerdata.banner_title
-              ? bannerContainerCss
+              ? `titleCaption ${bannerContainerCss}`
               : ""
           }
         >
           {bannerdata.banner_title === "" ? (
             ""
           ) : (
-            <Title title={bannerdata.banner_title} cssClass={bannerTitleCss} />
+            <Title title={bannerdata.banner_title} cssClass={`title ${bannerTitleCss}`} />
           )}
           {bannerdata.banner_subTitle === "" ? (
             ""
           ) : (
             <Title
               title={bannerdata.banner_subTitle}
-              cssClass={bannerSubTitleCss}
+              cssClass={`subTitle ${bannerSubTitleCss}`}
             />
           )}
           {bannerdata.banner_descripiton === "" ? (
             ""
           ) : (
-            <small className={bannerDescriptionCss}>
+            <small className={`description ${bannerDescriptionCss}`}>
               {bannerdata.banner_descripiton}
             </small>
           )}
