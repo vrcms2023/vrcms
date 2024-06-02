@@ -57,7 +57,7 @@ const ProductsList = ({ compState, selectedCategory, editHandler }) => {
 
   return (
     <>
-      <div className="row ">
+      <div className="row my-5">
         {productsList?.map((item) => (
           <Product
             item={item}
@@ -67,7 +67,7 @@ const ProductsList = ({ compState, selectedCategory, editHandler }) => {
           />
         ))}
       </div>
-      {productsList.length > 0 && (
+      {productsList.length > 12 && (
         <div className="mt-5 pb-5">
           <Button label={"Load More"} cssClass={"btn btn-outline m-auto"} />
         </div>

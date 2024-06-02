@@ -140,13 +140,14 @@ const Contact = () => {
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("banner", true)} />
         )}
-        {/* <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        /> */}
         <Banner
           getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
           bannerState={componentEdit.banner}
+          bannerTitleCss = "text-end fs-2"
+          bannerSubTitleCss = "text-end fw-normal"
+          bannerDescriptionCss = "text-end d-block mt-2 fs-6"
+          imageCss = "w-100"
+          bannerContainerCss = "d-flex align-items-end justify-content-end flex-column"
         />
       </div>
 

@@ -59,10 +59,10 @@ const ProductsPage = () => {
     if (item) {
       setSelectedProduct(item);
       setComptitle(
-        `${selectedCategory.category_name} > ${item.product_name} - Edit Product`
+        `${selectedCategory?.category_name} > ${item.product_name} - Edit Product`
       );
     } else {
-      setComptitle(`${selectedCategory.category_name} - Add New Product`);
+      setComptitle(`${selectedCategory?.category_name} - Add New Product`);
     }
 
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -128,13 +128,15 @@ const ProductsPage = () => {
   return (
     <>
       {isAdmin && hasPermission && (
-        <div class="container">
+        <div className="container my-5">
           <div className="row">
-            <div class="col-xs-6">
+            <div className="col-md-6 fw-bold fw-md-medium py-3 py-md-0 fs-5 fs-md-4 text-center d-flex justify-content-md-end align-items-center">Create New - Edit - Delete "CATEGORY"</div>
+            <div className="col-md-6 d-flex justify-content-center gap-2">
+              
               <Button
                 type="button"
-                cssClass="btn btn-more"
-                label={"Create new Category"}
+                cssClass="btn btn-secondary"
+                label={"Create"}
                 handlerChange={() => {
                   editHandler("category", true);
                 }}
@@ -150,7 +152,7 @@ const ProductsPage = () => {
               {selectedCategory?.id && (
                 <Button
                   type="button"
-                  cssClass="btn btn-more"
+                  cssClass="btn bg-danger text-white"
                   label={"Delete"}
                   handlerChange={categoryDeleteHandler}
                 />
@@ -186,6 +188,11 @@ const ProductsPage = () => {
             <Banner
               getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
               bannerState={componentEdit.banner}
+              bannerTitleCss = "text-end fs-2"
+              bannerSubTitleCss = "text-end fw-normal"
+              bannerDescriptionCss = "text-end d-block mt-2 fs-6"
+              imageCss = "w-100"
+              bannerContainerCss = "d-flex align-items-end justify-content-center flex-column"
             />
           </div>
 
@@ -207,26 +214,33 @@ const ProductsPage = () => {
         </>
       )}
 
-      <div className="py-5"></div>
       <ProductStyled>
         <SearchFilter
           category={category}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
         />
-        <Title title={selectedCategory?.category_name} />
-        <div className="container productsList pt-5">
+        <div />
+        
+        <div className="container productsList pt-5" style={{marginTop: "100px"}}>
+
+        <div className="row mb-4">
+          <div className="col-md-6 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0 align-items-center"><Title title={`${selectedCategory?.category_name} Products`} cssClass={"fw-medium fs-5"} /> </div>
+          <div className="col-md-6 d-flex justify-content-end align-items-center">
           {selectedCategory?.id && isAdmin && hasPermission && (
             <Button
               type="button"
-              cssClass="btn btn-more"
+              cssClass="btn btn-secondary"
               label={"Add New Product"}
               handlerChange={() => {
                 editHandler("product", true);
               }}
             />
             // <EditIcon editHandler={() => editHandler("product", true)} />
-          )}
+          )}</div>
+        </div>
+        
+          
           {selectedCategory?.id && (
             <ProductsList
               compState={componentEdit.product}
@@ -300,11 +314,11 @@ const ProductsPage = () => {
         {selectedCategory?.id && (
           <>
             <ABriefIntroStyled>
-              <div className="container productForm">
+              <div className="container-lg px-0  productForm">
                 <div className="row py-4">
                   <ABriefAbout
-                    col1="col-md-5 p-5"
-                    col2="col-md-7 p-5 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                    col1="col-md-5 p-lg-5 ps-lg-0 d-none d-md-block"
+                    col2="col-md-7 p-lg-5 d-flex justify-content-center align-items-start flex-column"
                     cssClass="fs-3 text-center fw-medium title"
                     imageClass="w-100 h-100 object-fit-cover rounded-end rounded-end-5"
                     dimensions={imageDimensionsJson("whoweare")}

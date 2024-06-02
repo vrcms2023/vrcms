@@ -179,7 +179,7 @@ const PagesConfiguration = () => {
                   )}
                   {node.page_label}
                 </td>
-                <td>{node.page_url}</td>
+                <td><Link to={node.page_url}>{node.page_url}</Link></td>
                 <td>{node.is_Parent ? "Parent Menu" : "Child Menu"}</td>
                 {/* <td className="text-center">
                   <input
