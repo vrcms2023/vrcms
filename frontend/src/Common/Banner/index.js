@@ -48,27 +48,27 @@ const Banner = ({
             (bannerdata.banner_descripiton && bannerdata.banner_title) ||
             bannerdata.banner_descripiton ||
             bannerdata.banner_title
-              ? `titleCaption ${bannerContainerCss}`
+              ? bannerContainerCss
               : ""
           }
         >
           {bannerdata.banner_title === "" ? (
             ""
           ) : (
-            <Title title={bannerdata.banner_title} cssClass={`title ${bannerTitleCss}`} />
+            <Title title={bannerdata.banner_title} cssClass={bannerTitleCss} />
           )}
           {bannerdata.banner_subTitle === "" ? (
             ""
           ) : (
             <Title
               title={bannerdata.banner_subTitle}
-              cssClass={`subTitle ${bannerSubTitleCss}`}
+              cssClass={bannerSubTitleCss}
             />
           )}
           {bannerdata.banner_descripiton === "" ? (
             ""
           ) : (
-            <small className={`description ${bannerDescriptionCss}`}>
+            <small className={bannerDescriptionCss}>
               {bannerdata.banner_descripiton}
             </small>
           )}
