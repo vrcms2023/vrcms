@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -16,7 +16,7 @@ import AdminBriefIntro from "../../../Frontend_Admin/Components/BriefIntro/index
 
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 
-import { ProductStyled } from "../../../Common/StyledComponents/Styled-Products";
+import { ProductItemStyled } from "../../../Common/StyledComponents/Styled-Products";
 import SearchFilter from "./FilterComponent";
 
 import {
@@ -24,14 +24,20 @@ import {
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
 
-import Img1 from "../../../Images/Banner_11.jpg";
+
 import Title from "../../../Common/Title";
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import { getImagePath } from "../../../util/commonUtil";
 import Product from "./Product";
 import { getProductsByCategory } from "../../../redux/products/productsActions";
 
+
+
 const ProductDetails = () => {
+
+  const location = useLocation();
+  const pathName = location.pathname
+
   const { id } = useParams();
   const [selectedProduct, setSelectedProduct] = useState("");
   const { products } = useSelector((state) => state.productList);
@@ -57,33 +63,39 @@ const ProductDetails = () => {
 
   return (
     <>
-      <ProductStyled>
+      <ProductItemStyled>
         <div className="container productDetails">
           <div className="row">
-            <div className="col-md-10 offset-md-1 pt-5 text-center">
+            <div className="col-md-12 col-lg-9 py-5 pb-3 imgSelected">
               <img
                 src={getImagePath(selectedProduct?.path)}
                 alt={selectedProduct?.alternitivetext}
                 className="w-100 rounded-3"
               />
-            </div>
-            <div className="col-md-10 offset-md-1 py-3">
+              <div className="py-3">
               <Title
                 title={selectedProduct?.product_name}
-                cssClass="fs-4 fw-bold"
+                cssClass="fs-4 fw-medium mt-1 mt-md-4"
               />
 
-              <p>{selectedProduct?.description}</p>
+              <p className="mt-2">{selectedProduct?.description}</p>
             </div>
+            </div>
+
+            <div className="col-lg-2 my-5 allProducts rightPositioned d-none d-lg-block position-fixed rounded-4 shadow-lg">
+            {products?.map(
+              (item) => item.id !== id && <Product item={item} key={item.id} pathName={pathName}/>
+            )}
+          </div>
           </div>
 
-          <div className="row ">
+          <div className="row my-0 my-md-5 allProducts bottomPositioned d-lg-none">
             {products?.map(
               (item) => item.id !== id && <Product item={item} key={item.id} />
             )}
           </div>
         </div>
-      </ProductStyled>
+      </ProductItemStyled>
     </>
   );
 };

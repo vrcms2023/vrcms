@@ -94,9 +94,10 @@ export default function DynamicForm({
         closeHandler={closeHandler}
         title={componentTitle}
       />
+      <hr />
       <div className="container">
-        <div className="row py-0 pb-md-5">
-          <div className="col-md-8 offset-md-2 mb-5 mb-md-0">
+        <div className="row">
+          <div className="col-md-12 px-5">
             {error && (
               <div className="fw-bold">{error && <Error>{error}</Error>}</div>
             )}
@@ -129,19 +130,27 @@ export default function DynamicForm({
                 }
               })}
               {editObject?.category_fileuplod ? (
-                <Link
+                <div className="text-end">
+                <Link className="moreLink "
                   onClick={() => downloadFile(editObject?.category_fileuplod)}
                 >
-                  Download File
+                  Download File <i class="fa fa-download ms-1 fs-5 rounded-2 p-2 border border-1 border-info bg-white" aria-hidden="true"></i>
                 </Link>
+                </div>
               ) : (
                 ""
               )}
               <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-1 gap-md-3 mt-5">
                 <button className="btn btn-secondary mx-3">save</button>
+                {/* <Button
+                  type="button"
+                  cssClass="btn btn-secondary"
+                  label={"Save"}
+                  handlerChange={()=> {}}
+                /> */}
                 <Button
                   type="submit"
-                  cssClass="btn border"
+                  cssClass="btn btn-outline"
                   label={"Close"}
                   handlerChange={closeHandler}
                 />
