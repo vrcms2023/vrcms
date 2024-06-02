@@ -26,9 +26,11 @@ class CreateCategory(generics.CreateAPIView):
         return Response({"category": serializer.data}, status=status.HTTP_200_OK)
     
     def post(self, request, format=None):
-        user = request.user
-        request.data.update({"created_by": user.userName})
+        # user = request.user
+        # request.data.update({"created_by": user.userName})
         serializer = CategorySerializer(data=request.data)
+        if 'category_fileuplod' in request.data and not request.data['category_fileuplod']:
+            serializer.remove_fields(['category_fileuplod'])
         if serializer.is_valid():
             serializer.save()
             return Response({"category": serializer.data}, status=status.HTTP_201_CREATED)
@@ -50,10 +52,10 @@ class UpdateCategory(APIView):
         return Response({"category": serializer.data}, status=status.HTTP_200_OK)
 
     def patch(self, request, pk, format=None):
-        user = request.user
-        request.data.update({"updated_by": user.userName})
         snippet = self.get_object(pk)
-        serializer = CategorySerializer(snippet, data=request.data)
+        serializer = CategorySerializer(snippet, data=request.data, partial=True)
+        if 'category_fileuplod' in request.data and not request.data['category_fileuplod']:
+            serializer.remove_fields(['category_fileuplod'])
         if serializer.is_valid():
             serializer.save()
             return Response({"category": serializer.data}, status=status.HTTP_200_OK)
@@ -106,6 +108,8 @@ class CreateProduct(generics.CreateAPIView):
         requestObj = get_product_data_From_request_Object(request)
         requestObj['created_by'] = user.userName
         serializer = ProductSerializer(data=requestObj)
+        if 'category_fileuplod' in request.data and not request.data['category_fileuplod']:
+            serializer.remove_fields(['category_fileuplod'])
         if serializer.is_valid():
             serializer.save()
             return Response({"product": serializer.data}, status=status.HTTP_201_CREATED)
@@ -131,8 +135,9 @@ class UpdateProduct(APIView):
         user = request.user
         requestObj = get_product_data_From_request_Object(request)
         requestObj['updated_by'] = user.userName
-        
         serializer = ProductSerializer(snippet, requestObj)
+        if 'path' in request.data and not request.data['path']:
+            serializer.remove_fields(['path','originalname','contentType'])
         if serializer.is_valid():
             serializer.save()
             return Response({"product": serializer.data}, status=status.HTTP_200_OK)

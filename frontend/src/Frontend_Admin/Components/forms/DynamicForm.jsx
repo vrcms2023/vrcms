@@ -7,6 +7,8 @@ import Button from "../../../Common/Button";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { Link } from "react-router-dom";
 import { getBaseURL } from "../../../util/ulrUtil";
+import { toast } from "react-toastify";
+import { getCookie } from "../../../util/cookieUtil";
 
 export default function DynamicForm({
   editHandler,
@@ -14,7 +16,7 @@ export default function DynamicForm({
   componentTitle,
   editObject,
   setEditState,
-  setSavedObject,
+  setSaveState,
   dynamicFormFields = [],
   formPostURL,
   formUpdateURL,
@@ -43,10 +45,12 @@ export default function DynamicForm({
     let formData = new FormData();
     const _fieldKeys = Object.keys(data);
     _fieldKeys.forEach((item) => {
-      if (item === "fileuplod") {
+      if (item === "category_fileuplod") {
         formData.append(
-          "category_fileuplod",
-          data[item].length > 0 ? data[item][0] : []
+          item,
+          typeof data[item] !== "string" && data[item]?.length > 0
+            ? data[item][0]
+            : ""
         );
       } else formData.append(item, data[item]);
     });
@@ -55,22 +59,27 @@ export default function DynamicForm({
     const header = {
       "Content-Type": "multipart/form-data",
     };
-    if (data?.id) {
-      response = await axiosServiceApi.patch(
-        `${formUpdateURL}${data.id}/`,
-        formData,
-        {
+    try {
+      if (data?.id) {
+        formData.append("updated_by", getCookie("userName"));
+        response = await axiosServiceApi.patch(
+          `${formUpdateURL}${data.id}/`,
+          formData,
+          {
+            headers: header,
+          }
+        );
+      } else {
+        formData.append("created_by", getCookie("userName"));
+        response = await axiosServiceApi.post(formPostURL, formData, {
           headers: header,
-        }
-      );
-    } else {
-      response = await axiosServiceApi.post(formPostURL, formData, {
-        headers: header,
-      });
+        });
+      }
+      setSaveState(response.data.category);
+      closeHandler();
+    } catch (e) {
+      toast.error(e[0]);
     }
-
-    setSavedObject(response.data.category);
-    closeHandler();
   };
 
   const downloadFile = (path) => {

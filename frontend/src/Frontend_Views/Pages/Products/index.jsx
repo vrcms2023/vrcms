@@ -59,10 +59,10 @@ const ProductsPage = () => {
     if (item) {
       setSelectedProduct(item);
       setComptitle(
-        `${selectedCategory.category_name} > ${item.product_name} - Edit Product`
+        `${selectedCategory?.category_name} > ${item.product_name} - Edit Product`
       );
     } else {
-      setComptitle(`${selectedCategory.category_name} - Add New Product`);
+      setComptitle(`${selectedCategory?.category_name} - Add New Product`);
     }
 
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -76,13 +76,19 @@ const ProductsPage = () => {
         let response = await axiosClientServiceApi.get(
           `/products/getClinetCategory/`
         );
-        setCategory(response?.data?.category);
-        if (pageload.current) {
-          const data = response?.data?.category[0];
-          setSelectedCategory(data);
-          pageload.current = false;
-          setPageType(data?.id ? data?.id : pageType);
+        const _category = response?.data?.category;
+        setCategory(_category);
+        let _data = "";
+        if (selectedCategory?.id) {
+          _data = _category.filter(
+            (item) => item.id === selectedCategory.id
+          )[0];
+        } else {
+          _data = _category[0];
         }
+
+        setSelectedCategory(_data);
+        setPageType(_data?.id ? _data?.id : pageType);
       } catch (error) {
         console.log("Unable to get the intro");
       }
@@ -90,7 +96,7 @@ const ProductsPage = () => {
 
     getCategory();
     setPageType(selectedCategory?.id ? selectedCategory?.id : pageType);
-  }, [selectedCategory, pageload]);
+  }, [pageload, !componentEdit.category]);
 
   const categoryEditHandler = () => {
     setEditCategoryState(true);
@@ -168,7 +174,7 @@ const ProductsPage = () => {
             componentType={"category"}
             editObject={editCategoryState ? selectedCategory : ""}
             setEditState={setEditCategoryState}
-            setSavedObject={setSelectedCategory}
+            setSaveState={setSelectedCategory}
             dynamicFormFields={getCategoryFormDynamicFields()}
             formPostURL={"/products/createCategory/"}
             formUpdateURL={"/products/updateCategory/"}

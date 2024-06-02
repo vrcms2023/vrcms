@@ -206,7 +206,7 @@ const FileUpload = ({
         formData.append("path", files[0].file);
       } else if (editImage.path) {
         let file = await creteFileObj();
-        formData.append("path", file);
+        formData.append("path", "");
       } else if (!editImage.path) {
         setError("Please add an image ");
         return true;
