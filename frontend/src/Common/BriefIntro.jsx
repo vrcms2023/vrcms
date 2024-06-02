@@ -7,7 +7,19 @@ import { axiosClientServiceApi } from "../util/axiosUtil";
 import { BriefIntroStyled } from "./StyledComponents/Styled-BriefIntro";
 import Ancher from "./Ancher";
 
-const BriefIntroFrontend = ({ pageType, introState, linkCss, linkLabel, moreLink, introDecTitleCss, introSubTitleCss, introTitleCss, detailsContainerCss, anchorContainer, anchersvgColor, showLink }) => {
+const BriefIntroFrontend = ({ 
+pageType, 
+introState, 
+linkCss, 
+linkLabel, 
+moreLink, 
+introDecTitleCss = "text-center lh-md m-auto w-75 fw-medium", 
+introSubTitleCss = "my-2 fw-medium text-secondary text-center", 
+introTitleCss = "fs-2 fw-medium px-4 py-2 text-black text-center", 
+detailsContainerCss, 
+anchorContainer, 
+anchersvgColor, 
+showLink }) => {
   const [introValue, setIntroValues] = useState([]);
 
   useEffect(() => {
