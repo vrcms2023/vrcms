@@ -5,6 +5,17 @@ export const AboutPageStyled = styled.div`
     color: ${({ theme }) => theme.aboutPageTitleColor};
   }
   .aboutPage {
+    .row {
+      border-bottom: 2px solid ${({ theme }) => theme.white};
+
+      &:last-child {
+        border-bottom: 0 !important;
+      }
+    }
+    
+      
+    }
+    
     .leftColumn {
       background-color: ${({ theme }) => theme.transparent};
     }
@@ -14,6 +25,7 @@ export const AboutPageStyled = styled.div`
       img {
         position: relative;
         transition: opacity 0.5s ease, transform 0.5s ease, border-radius 0.5s ease;
+        border-radius: 2%;
         
       
         &:hover {
@@ -28,12 +40,11 @@ export const AboutPageStyled = styled.div`
             border-radius: inherit;
           }
       
-          transform: scale(1.1) rotate(-3deg);
+          transform: scale(1.1) rotate(-0deg);
           border-radius: 5%; /* Change the border-radius to 50% for a circle */
         }
-      
-        
       }
+
       
       
       
@@ -65,5 +76,13 @@ export const AboutPageStyled = styled.div`
     hr:last-child {
       display: none;
     }
+
+    .normalCSS,
+      .flipCSS {
+      }
+      
+      .flipCSS {
+        flex-direction: row-reverse;
+      }
   }
 `;

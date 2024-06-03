@@ -115,7 +115,7 @@ const Footer = () => {
   return (
     <FooterStyled>
       <footer className="text-center">
-        <div className="container py-5 footerDetails">
+        <div className="container py-4 footerDetails">
           <div className="row">
             <div className="col-md-3 text-center text-md-start">
               <h5 className="text-center text-md-start">Company</h5>
@@ -157,7 +157,7 @@ const Footer = () => {
                 </li> */}
               </ul>
             </div>
-            <hr className="d-block d-md-none mt-3" />
+            <hr className="d-block d-md-none my-3" />
 
             <div className="col-md-3 text-center text-md-start">
               {address && (
@@ -169,7 +169,7 @@ const Footer = () => {
                   <p className="m-0">{address.location} </p>
                   <p className="m-0">{address.city} </p>
                   <p className="m-0">{address.state}</p>
-                  <p className="m-0">{address.location_title}</p>
+                  <p className="mb-4">{address.location_title}</p>
                 </>
               )}
             </div>
@@ -177,7 +177,7 @@ const Footer = () => {
             <div className="col-md-3 text-center text-md-start mb-3 reachUs">
               <h5 className="d-none d-sm-block">Reach Us</h5>
               {address.phonen_number ? (
-                <p className="m-0 ">
+                <p className="m-0 pb-3">
                   <i
                     className="fa fa-phone-square fs-4 me-2"
                     aria-hidden="true"
@@ -188,7 +188,7 @@ const Footer = () => {
                 ""
               )}
               {address.phonen_number_2 ? (
-                <p className="m-0 ">
+                <p className="m-0 pb-3">
                   <i
                     className="fa fa-phone-square fs-4 me-2"
                     aria-hidden="true"
@@ -212,7 +212,7 @@ const Footer = () => {
               <br />
               {address.emailid ? (
                 <>
-                  <p className="m-0 ">
+                  <p className="m-0 pb-3">
                     <i
                       className="fa fa-envelope-o fs-4 me-2"
                       aria-hidden="true"
@@ -225,7 +225,7 @@ const Footer = () => {
               )}
               {address.emailid_2 ? (
                 <>
-                  <p className="m-0 ">
+                  <p className="m-0 pb-3">
                     <i
                       className="fa fa-envelope-o fs-4 me-2"
                       aria-hidden="true"
@@ -407,8 +407,8 @@ export default Footer;
 
 const ChildMenuContent = ({ menu }) => {
   return (
-    <li>
-      <Link to={menu?.page_url} className="ms-0">
+    <li className="mb-4">
+      <Link to={menu?.page_url} >
         {menu?.page_label}
       </Link>
     </li>

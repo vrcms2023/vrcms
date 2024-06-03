@@ -42,8 +42,9 @@ showLink }) => {
 
   return (
     <div className="container-fluid">
-      <div className="row">
+      
         <BriefIntroStyled>
+        <div className="row">
             <div className={`${detailsContainerCss} briefIntro`}>
               {introValue?.intro_title === "" ? (
                 ""
@@ -79,10 +80,8 @@ showLink }) => {
               )}
               
             </div>
-
-            
+          </div>
         </BriefIntroStyled>
-      </div>
     </div>
   );
 };

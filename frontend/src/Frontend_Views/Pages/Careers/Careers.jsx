@@ -191,7 +191,7 @@ const Careers = () => {
               />
             </div>
           </CareersPageStyled>
-          <div>
+          <div className="my-3">
             {paginationData?.total_count ? (
               <CustomPagination
                 paginationData={paginationData}

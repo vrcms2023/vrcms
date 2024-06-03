@@ -37,8 +37,8 @@ const JobCurrentOpenings = () => {
   }, [isAdmin]);
 
   return (
-    <div className="py-4 px-3 bg-white currentOpenings">
-      <Title title="CURRENT OPENINGS" cssClass="mb-3 fw-bold fs-5" />
+    <div className="py-4 px-3 currentOpenings">
+      <Title title="CURRENT OPENINGS" cssClass="mb-3 fs-5 title" />
       <ul>
         {posts.map((item) => (
           <li className="" key={item.id}>
