@@ -16,7 +16,7 @@ export const TeamStyled = styled.div`
   }
 
   .social i {
-    color: ${({ theme }) => theme.teamIconColor};
+    color: ${({ theme }) => theme.secondaryColor};
     font-size: 2rem;
     margin: 10px;
   }
@@ -24,6 +24,8 @@ export const TeamStyled = styled.div`
   img {
     object-fit: cover;
     object-position: top;
+    height: 100%;
+    max-height: 180px;
   }
 
   .aboutMe {

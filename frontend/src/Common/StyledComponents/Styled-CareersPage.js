@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const CareersPageStyled = styled.div`
   .jobTitle {
-    color: ${({ theme }) => theme.primaryColor};
+    color: ${({ theme }) => theme.secondaryColor};
   }
 
   .title {
@@ -10,8 +10,8 @@ export const CareersPageStyled = styled.div`
   }
 
   .jobPost {
-    border: 1px solid ${({ theme }) => theme.lightgray};
-    background-color: ${({ theme }) => theme.white};
+    border: 2px solid ${({ theme }) => theme.white};
+    background-color: ${({ theme }) => theme.primaryColor};
     border-bottom: 4px solid ${({ theme }) => theme.secondaryColor};
 
     &:hover {
