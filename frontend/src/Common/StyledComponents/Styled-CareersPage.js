@@ -28,7 +28,14 @@ export const CareersPageStyled = styled.div`
   }
 
   .currentOpenings {
-    border: 1px solid ${({ theme }) => theme.lightgray};
+    .title {
+      color: ${({ theme }) => theme.primaryColor};
+      border-bottom: 1px solid ${({ theme }) => theme.white};
+      text-align: center;
+    }
+
+    background: ${({ theme }) => theme.secondaryColor};
+    border: 1px solid ${({ theme }) => theme.white};
 
     ul {
       list-style: none;
@@ -52,11 +59,13 @@ export const CareersPageStyled = styled.div`
   }
 
   .jobBriefDetails {
-    background-color: ${({ theme }) => theme.verylightgray};
+    background-color: rgba(255,255,255, .3);
+    // border: 1px solid ${({ theme }) => theme.white};
   }
 
   .jobDescription {
-    background-color: ${({ theme }) => theme.white};
+    background-color: ${({ theme }) => theme.primaryColor};
+    // border: 1px solid ${({ theme }) => theme.white};
 
     ul {
       margin-left: 25px;

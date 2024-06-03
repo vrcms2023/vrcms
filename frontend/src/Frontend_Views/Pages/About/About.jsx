@@ -148,7 +148,7 @@ const About = () => {
       )}
 
       {/* Brief Introduction */}
-      {/* {isAdmin && hasPermission && (
+      {isAdmin && hasPermission && (
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
       )}
 
@@ -176,7 +176,7 @@ const About = () => {
         </div>
       ) : (
         ""
-      )} */}
+      )}
 
       <AboutPageStyled>
         <div className="container-fluid container-lg my-md-5 ">
@@ -225,13 +225,13 @@ const About = () => {
             ""
           )}
 
-          <div className="row aboutPage">
+          <div className="aboutPage">
             {aboutList.length > 0 ? (
               aboutList.map((item, index) => (
-                <div key={item.id}>
+                <>
                   <div
                     key={item.id}
-                    className={`row mb-2 ${
+                    className={`row ${
                       isAdmin
                         ? "border border-warning mb-3 position-relative"
                         : ""
@@ -255,7 +255,7 @@ const About = () => {
                         </Link>
                       </>
                     )}
-                    <div className="col-12 col-lg-6 p-3 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column leftColumn">
+                    <div className="col-12 col-lg-7 p-4 py-2 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column leftColumn">
                       {item.aboutus_title ? (
                         <Title
                           title={item.aboutus_title}
@@ -267,7 +267,7 @@ const About = () => {
 
                       {item.aboutus_sub_title ? (
                         <Title
-                          title={item.aboutus_sub_title}
+                        title={item.aboutus_sub_title}
                           cssClass="fs-5 text-secondary mb-2"
                         />
                       ) : (
@@ -290,7 +290,7 @@ const About = () => {
                       />
                     </div>
 
-                    <div className="col-lg-6 d-none d-lg-block p-5 pe-0 d-flex justify-content-center align-items-start flex-column rightColumn">
+                    <div className="col-lg-5 p-1 p-lg-5 pe-lg-0 d-flex justify-content-center align-items-start flex-column rightColumn">
                       {/* <Title
                           title={"OUR WORK LOCATIONS"}
                           cssClass="fs-5 my-5 title"
@@ -298,12 +298,12 @@ const About = () => {
                       <img
                         src={getImagePath(item.path)}
                         alt=""
-                        className="w-100 h-100 object-fit-cover shadow"
+                        className="w-75 h-75 object-fit-cover shadow m-auto"
                       />
                     </div>
                   </div>
-                  <hr className="border-secondary" />
-                </div>
+                  {/* <hr className="border-white" /> */}
+                </>
               ))
             ) : (
               <p className="text-center text-muted py-5">
