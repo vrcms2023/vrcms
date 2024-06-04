@@ -43,7 +43,8 @@ const Product = ({ item, editHandler, deleteProduct, pathName }) => {
             )}
           </div>
         )}
-        <Link to={`/products/${item?.id}/`}>
+        {/* <Link to={`/products/${item?.id}/`}> */}
+          <Link to={locationPath.pathname === "/" || locationPath.pathname === "/home" ? "/products" : `/products/${item?.id}/`}>
           <img
             src={getImagePath(item.path)}
             alt={item.alternitivetext}
