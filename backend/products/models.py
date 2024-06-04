@@ -19,7 +19,7 @@ class Category(BaseModel):
     category_name =     models.CharField(max_length=100, unique=True)
     category_fileuplod = models.FileField(blank=True, null=True, upload_to=image_upload_path )
     is_available =      models.BooleanField(default=True)
-    description =       models.CharField(max_length=500, null=True, blank=True )
+    description =       models.CharField(max_length=10000, null=True, blank=True )
 
     def __str__(self):
         return self.company_name
@@ -30,7 +30,7 @@ class Product(ImageModel):
     category_name =     models.CharField(max_length=100, null=False)
     is_available =      models.BooleanField(default=True)
     product_name =      models.CharField(max_length=100, null=True)
-    description =       models.CharField(max_length=500, null=True)
+    description =       models.CharField(max_length=10000, null=True)
     price =             models.IntegerField(default=0)
 
     def __str__(self):
