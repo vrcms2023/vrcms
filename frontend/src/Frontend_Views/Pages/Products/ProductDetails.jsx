@@ -47,7 +47,7 @@ const ProductDetails = () => {
         );
         const data = response?.data?.product;
         setSelectedProduct(data);
-        if (products?.results.length === 0) {
+        if (products?.length === 0) {
           dispatch(getProductsByCategory(data.category_id));
         }
       } catch (error) {
@@ -56,6 +56,7 @@ const ProductDetails = () => {
     };
     getSelectedProductData();
   }, [id]);
+
   useEffect(() => {
     console.log(products);
   }, [products]);
@@ -66,8 +67,13 @@ const ProductDetails = () => {
         <div className="container productDetails">
           <div className="row">
             <div className="col-md-12 col-lg-10 py-4 imgSelected">
-              <Link to="/products" className="btn btn-primary d-inline-flex justify-content-center align-items-center">
-              <i class="fa fa-angle-left fs-5 me-2" aria-hidden="true"></i> Back </Link>
+              <Link
+                to="/products"
+                className="btn btn-primary d-inline-flex justify-content-center align-items-center"
+              >
+                <i class="fa fa-angle-left fs-5 me-2" aria-hidden="true"></i>{" "}
+                Back{" "}
+              </Link>
             </div>
           </div>
           <div className="row">
