@@ -82,8 +82,12 @@ const ProductDetails = () => {
                   title={selectedProduct?.product_name}
                   cssClass="fs-4 fw-medium mt-1 mt-md-4"
                 />
-
-                <p className="mt-2">{selectedProduct?.description}</p>
+                <div
+                  className="mt-2"
+                  dangerouslySetInnerHTML={{
+                    __html: selectedProduct?.description,
+                  }}
+                ></div>
               </div>
             </div>
 
