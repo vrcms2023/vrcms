@@ -6,6 +6,10 @@ const FilterComponent = ({
   category,
   selectedCategory,
   setSelectedCategory,
+  setResponseData,
+  setPageloadResults,
+  setSearchquery,
+  searchQuery,
 }) => {
   if (category.length === 0) return;
   const changeCategory = (event) => {
@@ -37,15 +41,14 @@ const FilterComponent = ({
         </div>
         <div className="col-md-12 p-0 productSearch d-flex justify-content-center align-items-center">
           <Search
-            setObject={""}
-            clientSearchURL={""}
-            adminSearchURL={""}
-            clientDefaultURL={""}
-            searchfiledDeatails={"Product Name"}
-            setPageloadResults={""}
-            setSearchquery={""}
-            searchQuery={""}
-            hideSearchBy="true"
+            setObject={setResponseData}
+            clientSearchURL={`/products/productSearch/${selectedCategory.id}/`}
+            adminSearchURL={`/products/createProduct/${selectedCategory.id}/`}
+            clientDefaultURL={`/products/productSearch/${selectedCategory.id}/`}
+            searchfiledDeatails={"Category  / Product  / Product Description"}
+            setPageloadResults={setPageloadResults}
+            setSearchquery={setSearchquery}
+            searchQuery={searchQuery}
           />
         </div>
       </div>

@@ -90,6 +90,7 @@ class CreateProduct(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    pagination_class = CustomPagination
 
     """
     Get Category Details, or create a new Category Details.
@@ -102,6 +103,11 @@ class CreateProduct(generics.CreateAPIView):
         
     def get(self, request, categoryID, format=None):
         snippets = self.get_object(categoryID)
+         
+        results = get_custom_paginated_data(self, snippets)
+        if results is not None:
+            return results
+        
         serializer = ProductSerializer(snippets, many=True)
         return Response({"product": serializer.data}, status=status.HTTP_200_OK)
     
@@ -193,6 +199,29 @@ class ClientSelectedProductAPIView(generics.ListAPIView):
         serializer = ProductSerializer(snippets)
         return Response({"product": serializer.data}, status=status.HTTP_200_OK)
     
+    
+class ProductsSearchAPIView(generics.ListAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = ProductSerializer
+    pagination_class = CustomPagination
+  
+    def get_object(self, query, categoryID):
+        try:
+            return Product.objects.filter(
+                (Q(category_name__icontains=query) | Q(description__icontains=query) | Q(product_name__icontains=query)) & Q(category_id=categoryID)
+            )
+        except Product.DoesNotExist:
+            raise Http404
+
+    def get(self, request,categoryID, query, format=None):
+        snippet = self.get_object(query, categoryID)
+        results = get_custom_paginated_data(self, snippet)
+        if results is not None:
+            return results
+
+        serializer = ProductSerializer(snippet, many=True)
+        return Response({"product": serializer.data}, status=status.HTTP_200_OK)
+
 
 # class ClientHomePageCategoryProductAPIView(generics.ListAPIView):
 #     permission_classes = [permissions.AllowAny]

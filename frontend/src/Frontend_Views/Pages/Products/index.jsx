@@ -246,7 +246,11 @@ const ProductsPage = () => {
         <SearchFilter
           category={category}
           selectedCategory={selectedCategory}
+          setResponseData={setResponseData}
           setSelectedCategory={setSelectedCategory}
+          setPageloadResults={setPageloadResults}
+          setSearchquery={setSearchquery}
+          searchQuery={searchQuery}
         />
         <div />
 
@@ -296,7 +300,7 @@ const ProductsPage = () => {
               componentTitle={compTtile}
               selectedItem={selectedProduct}
               setSelectedItemState={setSelectedProduct}
-              imageGetURL={`/products/createAppNews/${selectedCategory.id}/`}
+              imageGetURL={`/products/createProduct/${selectedCategory.id}/`}
               imagePostURL="/products/createProduct/"
               imageUpdateURL="/products/updateProduct/"
               imageDeleteURL="/products/updateProduct/"
@@ -314,15 +318,11 @@ const ProductsPage = () => {
           {paginationData?.total_count ? (
             <CustomPagination
               paginationData={paginationData}
-              paginationURL={
-                isAdmin ? "/appNews/createAppNews/" : "/appNews/clientAppNews/"
-              }
+              paginationURL={`/products/getClinetProduct/${selectedCategory.id}/`}
               paginationSearchURL={
                 searchQuery
-                  ? `appNews/searchAppNews/${searchQuery}/`
-                  : isAdmin
-                    ? "/appNews/createAppNews/"
-                    : "/appNews/clientAppNews/"
+                  ? `products/productSearch/${searchQuery}/`
+                  : `/products/getClinetProduct/${selectedCategory.id}/`
               }
               searchQuery={searchQuery}
               setCurrentPage={setCurrentPage}
