@@ -194,24 +194,24 @@ class ClientSelectedProductAPIView(generics.ListAPIView):
         return Response({"product": serializer.data}, status=status.HTTP_200_OK)
     
 
-class ClientHomePageCategoryProductAPIView(generics.ListAPIView):
-    permission_classes = [permissions.AllowAny]
-    serializer_class = ProductSerializer
-    pagination_class = Product
+# class ClientHomePageCategoryProductAPIView(generics.ListAPIView):
+#     permission_classes = [permissions.AllowAny]
+#     serializer_class = ProductSerializer
+#     pagination_class = Product
   
-    def get_object(self, id):
-        try:
-            return Product.objects.filter(category_id=id)
-        except Product.DoesNotExist:
-            raise Http404
+#     def get_object(self, id):
+#         try:
+#             return Product.objects.filter(category_id=id)
+#         except Product.DoesNotExist:
+#             raise Http404
         
-    def get(self, request, format=None):
-        obj_list = request.query_params.get("categoryId").split(',')
-        instances = []
-        obj = self.get_object(obj_list[0])
-        # for item in obj_list:
-        #      obj = self.get_object(item)
-        #      instances.append(obj)
+#     def get(self, request, format=None):
+#         obj_list = request.query_params.get("categoryId").split(',')
+#         instances = []
+#         obj = self.get_object(obj_list[0])
+#         # for item in obj_list:
+#         #      obj = self.get_object(item)
+#         #      instances.append(obj)
 
-        serializer = ProductSerializer(obj,  many=True)
-        return Response({"product": serializer.data}, status=status.HTTP_200_OK)
+#         serializer = ProductSerializer(obj,  many=True)
+#         return Response({"product": serializer.data}, status=status.HTTP_200_OK)
