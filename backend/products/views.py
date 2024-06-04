@@ -208,7 +208,7 @@ class ProductsSearchAPIView(generics.ListAPIView):
     def get_object(self, query, categoryID):
         try:
             return Product.objects.filter(
-                (Q(category_name__icontains=query) | Q(description__icontains=query) | Q(product_name__icontains=query)) & Q(category_id=categoryID)
+                Q(product_name__icontains=query) & Q(category_id=categoryID)
             )
         except Product.DoesNotExist:
             raise Http404
