@@ -65,7 +65,7 @@ export const ClientListComponent = ({
                 <div
                   className="row"
                   ref={provided.innerRef}
-                  style={getListStyle(snapshot.isDraggingOver)}
+                  // style={getListStyle(snapshot.isDraggingOver)}
                   {...provided.droppableProps}
                 >
                   {clientsList.length > 0 ? (
@@ -108,7 +108,7 @@ const Client = ({ item, index, editHandler, deleteAboutSection }) => {
       {(provided) => (
         <div
           className={`${
-            isAdmin ? "col-12 clientAdmin" : "col-md-3 clientFrontend"
+            isAdmin ? "col-12 clientAdmin" : "col-md-3 clientFrontend "
           } image`}
           ref={provided.innerRef}
           {...provided.draggableProps}
@@ -119,7 +119,7 @@ const Client = ({ item, index, editHandler, deleteAboutSection }) => {
             className={`mb-3 ${
               isAdmin
                 ? "border border-warning mb-3 position-relative"
-                : "clientFrontend overlayContainer border p-3"
+                : "clientFrontend overlayContainer p-3 d-flex justify-content-center aling-items-center flex-column"
             } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
           >
             {isAdmin && hasPermission && (
@@ -144,10 +144,10 @@ const Client = ({ item, index, editHandler, deleteAboutSection }) => {
                 <img
                   src={getImagePath(item.path)}
                   alt=""
-                  className="img-fluid shadow-lg img-thumbnail"
+                  className="img-fluid shadow img-thumbnail"
                 />
               </div>
-              <div className="mt-3 d-flex justify-content-center align-items-center justify-content-md-start align-items-md-start flex-column  clientDetails ms-3">
+              <div className="mt-3 d-flex justify-content-center align-items-center justify-content-md-center align-items-md-center flex-column  clientDetails ms-3">
                 {item.client_title && (
                   <Title
                     title={item.client_title}
