@@ -67,8 +67,9 @@ export const ProductItemStyled = styled.div`
     
     .allProducts.rightPositioned {
         right: 100px;
-        top: 100px;
-        height: 75vh;
+        top: 90px;
+        height: 65vh;
+        resize: vertical;
         overflow-y: scroll;
         // background: ${({theme}) => theme.primaryColor};
         background: linear-gradient(17deg, rgba(225,242,253,1) 0%, rgba(255,255,255,1) 100%);
