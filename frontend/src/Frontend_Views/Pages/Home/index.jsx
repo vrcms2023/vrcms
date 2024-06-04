@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ScrollToTop from "react-scroll-to-top";
 
@@ -32,6 +33,7 @@ import { removeActiveClass } from "../../../util/ulrUtil";
 import {
   getObjectPositionKey,
   sortByFieldName,
+  genereateCategoryProducts,
 } from "../../../util/commonUtil";
 import {
   getCarouselFields,
@@ -61,6 +63,8 @@ import { TestimonialCarouselPageStyled } from "../../../Common/StyledComponents/
 import { RandomHomeServicesStyled } from "../../../Common/StyledComponents/Random-HomeServices";
 import Button from "../../../Common/Button";
 import { ABriefIntroStyled } from "../../../Common/StyledComponents/Styled-ABriefAbout";
+import { getAllCategories } from "../../../redux/products/categoryActions";
+import Product from "../Products/Product";
 
 const Home = () => {
   const editComponentObj = {
@@ -79,6 +83,9 @@ const Home = () => {
   const [show, setShow] = useState(false);
   const [news, setNews] = useState([]);
   const [clientsList, setClientsList] = useState([]);
+  const [homeCategoriesList, setHomeCategoriesList] = useState([]);
+  const { categories } = useSelector((state) => state.categoryList);
+  const dispatch = useDispatch();
 
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -95,6 +102,30 @@ const Home = () => {
       setNews([]);
     }
   };
+
+  useEffect(() => {
+    const getHomePageCategoryList = async () => {
+      const ids = categories.map((item) => item.id);
+      let categoryId = "";
+      const arrURL = [];
+      categories.forEach((item, index) => {
+        arrURL.push(
+          axiosClientServiceApi.get(`/products/getClinetProduct/${item.id}/`)
+        );
+      });
+
+      await Promise.all(arrURL).then(function (values) {
+        const result = genereateCategoryProducts(values, categories);
+        setHomeCategoriesList(result);
+      });
+    };
+
+    if (categories.length > 0 && homeCategoriesList.length === 0) {
+      getHomePageCategoryList();
+    } else {
+      dispatch(getAllCategories());
+    }
+  }, [categories]);
 
   useEffect(() => {
     removeActiveClass();
@@ -241,11 +272,18 @@ const Home = () => {
         </ProductHilightsStyled>
 
         <div className="container mt-3 mt-md-5 pt-md-5">
-          <Title
-            title="Products"
-            cssClass="fs-2 text-center my-5 pt-5"
-          />
-          <ProductsList />
+          <Title title="Products" cssClass="fs-2 text-center my-5 pt-5" />
+          <div className="row">
+            {homeCategoriesList.map(
+              (category) =>
+                category?.products?.length > 0 && (
+                  <>
+                    <Product item={category.products[0]} />
+                    {category.category_name}
+                  </>
+                )
+            )}
+          </div>
         </div>
 
         {/* INTRODUCTION COMPONENT */}
@@ -259,7 +297,7 @@ const Home = () => {
               pageType="Home"
             /> */}
 
-          <BriefIntroFrontend
+            <BriefIntroFrontend
               introState={componentEdit.briefIntro}
               linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
               linkLabel="Read More"
@@ -289,43 +327,42 @@ const Home = () => {
 
         {/* Random Hilights */}
         <ABriefIntroStyled>
-        <div className="container randomServices">
-        <div className="row">
-          <ABriefAbout
-            col1="col-md-6"
-            col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-            cssClass="fs-3fw-medium title"
-            imageClass="w-100 object-fit-cover rounded-end rounded-end-5 shadow"
-            dimensions={imageDimensionsJson("whoweare")}
-            pageType={"productPortfolio"}
-            componentFlip={false}
-          />
-        </div>
+          <div className="container randomServices">
+            <div className="row">
+              <ABriefAbout
+                col1="col-md-6"
+                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                cssClass="fs-3fw-medium title"
+                imageClass="w-100 object-fit-cover rounded-end rounded-end-5 shadow"
+                dimensions={imageDimensionsJson("whoweare")}
+                pageType={"productPortfolio"}
+                componentFlip={false}
+              />
+            </div>
 
-        <div className="row d-flex flex-row-reverse my-3 my-md-5">
-          <ABriefAbout
-            col1="col-md-6"
-            col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-            cssClass="fs-3 fw-medium title"
-            imageClass="w-100 object-fit-cover rounded-start rounded-start-5 shadow"
-            dimensions={imageDimensionsJson("whoweare")}
-            pageType={"promoting"}
-            componentFlip={false}
-          />
-
-        </div>
-        <div className="row">
-          <ABriefAbout
-            col1="col-md-6"
-            col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-            cssClass="fs-3 fw-medium title"
-            imageClass="w-100 object-fit-cover rounded-end rounded-end-5 shadow"
-            dimensions={imageDimensionsJson("whoweare")}
-            pageType={"whatwedo"}
-            componentFlip={false}
-          />
-        </div>
-        </div>
+            <div className="row d-flex flex-row-reverse my-3 my-md-5">
+              <ABriefAbout
+                col1="col-md-6"
+                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                cssClass="fs-3 fw-medium title"
+                imageClass="w-100 object-fit-cover rounded-start rounded-start-5 shadow"
+                dimensions={imageDimensionsJson("whoweare")}
+                pageType={"promoting"}
+                componentFlip={false}
+              />
+            </div>
+            <div className="row">
+              <ABriefAbout
+                col1="col-md-6"
+                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                cssClass="fs-3 fw-medium title"
+                imageClass="w-100 object-fit-cover rounded-end rounded-end-5 shadow"
+                dimensions={imageDimensionsJson("whoweare")}
+                pageType={"whatwedo"}
+                componentFlip={false}
+              />
+            </div>
+          </div>
         </ABriefIntroStyled>
 
         {/* Random Home Services 
@@ -461,16 +498,15 @@ const Home = () => {
                 setNews={setResponseData}
                 pagetype={pageType}
               />
-              
-                  <div className="d-flex justify-content-center align-items-center mt-4">
-                    <Ancher
-                      AncherLabel="Read more"
-                      Ancherpath="/news"
-                      AncherClass="btn btn-outline d-flex justify-content-center align-items-center "
-                      AnchersvgColor="#17427C"
-                    />
-                  </div>
-              
+
+              <div className="d-flex justify-content-center align-items-center mt-4">
+                <Ancher
+                  AncherLabel="Read more"
+                  Ancherpath="/news"
+                  AncherClass="btn btn-outline d-flex justify-content-center align-items-center "
+                  AnchersvgColor="#17427C"
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -190,3 +190,34 @@ export const getObjectPositionKey = (item) => {
     return key.indexOf("position") !== -1 ? key : "";
   })[0];
 };
+
+export const getShortByDate = (item) => {
+  const _keys = Object.keys(item);
+  return _keys.filter((key) => {
+    return key.indexOf("position") !== -1 ? key : "";
+  })[0];
+};
+
+export const genereateCategoryProducts = (data, categories) => {
+  const results = [];
+  categories.forEach((catergory) => {
+    let tempObj = "";
+    data.forEach((item) => {
+      if (item.data.results.length > 0) {
+        let _categoryID = item.data.results[0].category_id;
+        if (catergory.id === _categoryID) {
+          tempObj = {
+            ...catergory,
+            products: item.data.results,
+          };
+        }
+      }
+    });
+    if (tempObj) {
+      results.push(tempObj);
+    } else {
+      results.push(catergory);
+    }
+  });
+  return results;
+};

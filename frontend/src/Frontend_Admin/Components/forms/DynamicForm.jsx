@@ -86,6 +86,7 @@ export default function DynamicForm({
     const link = document.createElement("a");
     link.download = editObject.category_name;
     link.href = baseURL + path;
+    link.target = "_blank";
     link.click();
   };
   return (
@@ -131,11 +132,16 @@ export default function DynamicForm({
               })}
               {editObject?.category_fileuplod ? (
                 <div className="text-end">
-                <Link className="moreLink "
-                  onClick={() => downloadFile(editObject?.category_fileuplod)}
-                >
-                  Download File <i class="fa fa-download ms-1 fs-5 rounded-2 p-2 border border-1 border-info bg-white" aria-hidden="true"></i>
-                </Link>
+                  <Link
+                    className="moreLink "
+                    onClick={() => downloadFile(editObject?.category_fileuplod)}
+                  >
+                    Download File{" "}
+                    <i
+                      class="fa fa-download ms-1 fs-5 rounded-2 p-2 border border-1 border-info bg-white"
+                      aria-hidden="true"
+                    ></i>
+                  </Link>
                 </div>
               ) : (
                 ""

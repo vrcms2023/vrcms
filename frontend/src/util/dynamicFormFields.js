@@ -395,7 +395,7 @@ export const getProductFormDynamicFields = (selectedCategory) => {
     },
     description: {
       label: "Product Description",
-      type: "textarea",
+      type: "richText",
       fieldName: "description",
     },
     category_id: {

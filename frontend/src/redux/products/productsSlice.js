@@ -19,7 +19,7 @@ const productsSlice = createSlice({
     });
     builder.addCase(getProductsByCategory.fulfilled, (state, action) => {
       state.loading = false;
-      state.products = action.payload?.product;
+      state.products = action.payload;
     });
     builder.addCase(getProductsByCategory.rejected, (state, action) => {
       state.loading = false;

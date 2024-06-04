@@ -36,6 +36,13 @@ import Title from "../../../Common/Title";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
 import SingleImageUlploadWithForm from "../../../Frontend_Admin/Components/forms/SingleImageUlploadWithForm";
+import { getAllCategories } from "../../../redux/products/categoryActions";
+import {
+  getObjectPositionKey,
+  paginationDataFormat,
+  sortByFieldName,
+} from "../../../util/commonUtil";
+import CustomPagination from "../../../Common/CustomPagination";
 
 const ProductsPage = () => {
   const editComponentObj = {
@@ -54,6 +61,15 @@ const ProductsPage = () => {
   const [editCategoryState, setEditCategoryState] = useState(false);
   const [pageType, setPageType] = useState("products");
   const [compTtile, setComptitle] = useState("Add Product");
+  const [productsList, setProductsList] = useState([]);
+
+  const [paginationData, setPaginationData] = useState({});
+  const [pageLoadResult, setPageloadResults] = useState(false);
+  const [searchQuery, setSearchquery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const dispatch = useDispatch();
+  const { categories } = useSelector((state) => state.categoryList);
 
   const editHandler = (name, value, item) => {
     if (item) {
@@ -70,33 +86,42 @@ const ProductsPage = () => {
     document.body.style.overflow = "hidden";
   };
 
+  const setResponseData = (data) => {
+    if (data?.results?.length > 0) {
+      //const _positionKey = getShortByDate(data.results[0]);
+      const _productList = sortByFieldName(data.results, "created_at");
+      setProductsList(_productList);
+      setPaginationData(paginationDataFormat(data));
+      setCurrentPage(1);
+    } else {
+      setProductsList([]);
+    }
+  };
+
   useEffect(() => {
-    const getCategory = async () => {
-      try {
-        let response = await axiosClientServiceApi.get(
-          `/products/getClinetCategory/`
-        );
-        const _category = response?.data?.category;
-        setCategory(_category);
-        let _data = "";
-        if (selectedCategory?.id) {
-          _data = _category.filter(
-            (item) => item.id === selectedCategory.id
-          )[0];
-        } else {
-          _data = _category[0];
-        }
-
-        setSelectedCategory(_data);
-        setPageType(_data?.id ? _data?.id : pageType);
-      } catch (error) {
-        console.log("Unable to get the intro");
+    if (categories.length > 0) {
+      setCategory(categories);
+      let _data = "";
+      if (selectedCategory?.id) {
+        _data = categories.filter((item) => item.id === selectedCategory.id)[0];
+      } else {
+        _data = categories[0];
       }
-    };
 
-    getCategory();
+      setSelectedCategory(_data);
+      setPageType(_data?.id ? _data?.id : pageType);
+    } else {
+      dispatch(getAllCategories());
+    }
+  }, [categories]);
+
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }, [!componentEdit.category]);
+
+  useEffect(() => {
     setPageType(selectedCategory?.id ? selectedCategory?.id : pageType);
-  }, [pageload, !componentEdit.category]);
+  }, [selectedCategory]);
 
   const categoryEditHandler = () => {
     setEditCategoryState(true);
@@ -136,9 +161,10 @@ const ProductsPage = () => {
       {isAdmin && hasPermission && (
         <div className="container my-5">
           <div className="row">
-            <div className="col-md-6 fw-bold fw-md-medium py-3 py-md-0 fs-5 fs-md-4 text-center d-flex justify-content-md-end align-items-center">Create New - Edit - Delete "CATEGORY"</div>
+            <div className="col-md-6 fw-bold fw-md-medium py-3 py-md-0 fs-5 fs-md-4 text-center d-flex justify-content-md-end align-items-center">
+              Create New - Edit - Delete "CATEGORY"
+            </div>
             <div className="col-md-6 d-flex justify-content-center gap-2">
-              
               <Button
                 type="button"
                 cssClass="btn btn-secondary"
@@ -194,7 +220,7 @@ const ProductsPage = () => {
             <Banner
               getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
               bannerState={componentEdit.banner}
-              bannerContainerCss = "titleCaption d-flex align-items-end justify-content-center flex-column"
+              bannerContainerCss="titleCaption d-flex align-items-end justify-content-center flex-column"
             />
           </div>
 
@@ -223,31 +249,41 @@ const ProductsPage = () => {
           setSelectedCategory={setSelectedCategory}
         />
         <div />
-        
-        <div className="container productsList pt-5" style={{marginTop: "100px"}}>
 
-        <div className="row mb-4">
-          <div className="col-md-6 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0 align-items-center"><Title title={`${selectedCategory?.category_name} Products`} cssClass={"fw-medium fs-5"} /> </div>
-          <div className="col-md-6 d-flex justify-content-end align-items-center">
-          {selectedCategory?.id && isAdmin && hasPermission && (
-            <Button
-              type="button"
-              cssClass="btn btn-secondary"
-              label={"Add New Product"}
-              handlerChange={() => {
-                editHandler("product", true);
-              }}
-            />
-            // <EditIcon editHandler={() => editHandler("product", true)} />
-          )}</div>
-        </div>
-        
-          
+        <div
+          className="container productsList pt-5"
+          style={{ marginTop: "100px" }}
+        >
+          <div className="row mb-4">
+            <div className="col-md-6 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0 align-items-center">
+              <Title
+                title={`${selectedCategory?.category_name} Products`}
+                cssClass={"fw-medium fs-5"}
+              />{" "}
+            </div>
+            <div className="col-md-6 d-flex justify-content-end align-items-center">
+              {selectedCategory?.id && isAdmin && hasPermission && (
+                <Button
+                  type="button"
+                  cssClass="btn btn-secondary"
+                  label={"Add New Product"}
+                  handlerChange={() => {
+                    editHandler("product", true);
+                  }}
+                />
+                // <EditIcon editHandler={() => editHandler("product", true)} />
+              )}
+            </div>
+          </div>
+
           {selectedCategory?.id && (
             <ProductsList
               compState={componentEdit.product}
               selectedCategory={selectedCategory}
               editHandler={editHandler}
+              setResponseData={setResponseData}
+              productsList={productsList}
+              setProductsList={setProductsList}
             />
           )}
         </div>
@@ -273,6 +309,31 @@ const ProductsPage = () => {
             />
           </div>
         )}
+
+        <div>
+          {paginationData?.total_count ? (
+            <CustomPagination
+              paginationData={paginationData}
+              paginationURL={
+                isAdmin ? "/appNews/createAppNews/" : "/appNews/clientAppNews/"
+              }
+              paginationSearchURL={
+                searchQuery
+                  ? `appNews/searchAppNews/${searchQuery}/`
+                  : isAdmin
+                    ? "/appNews/createAppNews/"
+                    : "/appNews/clientAppNews/"
+              }
+              searchQuery={searchQuery}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              setResponseData={setResponseData}
+              pageLoadResult={pageLoadResult}
+            />
+          ) : (
+            ""
+          )}
+        </div>
 
         {selectedCategory?.id && (
           <>
