@@ -24,19 +24,15 @@ import {
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
 
-
 import Title from "../../../Common/Title";
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import { getImagePath } from "../../../util/commonUtil";
 import Product from "./Product";
 import { getProductsByCategory } from "../../../redux/products/productsActions";
 
-
-
 const ProductDetails = () => {
-
   const location = useLocation();
-  const pathName = location.pathname
+  const pathName = location.pathname;
 
   const { id } = useParams();
   const [selectedProduct, setSelectedProduct] = useState("");
@@ -51,7 +47,7 @@ const ProductDetails = () => {
         );
         const data = response?.data?.product;
         setSelectedProduct(data);
-        if (products.length === 0) {
+        if (products?.results.length === 0) {
           dispatch(getProductsByCategory(data.category_id));
         }
       } catch (error) {
@@ -60,6 +56,9 @@ const ProductDetails = () => {
     };
     getSelectedProductData();
   }, [id]);
+  useEffect(() => {
+    console.log(products);
+  }, [products]);
 
   return (
     <>
@@ -73,24 +72,27 @@ const ProductDetails = () => {
                 className="w-100 rounded-3"
               />
               <div className="py-3">
-              <Title
-                title={selectedProduct?.product_name}
-                cssClass="fs-4 fw-medium mt-1 mt-md-4"
-              />
+                <Title
+                  title={selectedProduct?.product_name}
+                  cssClass="fs-4 fw-medium mt-1 mt-md-4"
+                />
 
-              <p className="mt-2">{selectedProduct?.description}</p>
-            </div>
+                <p className="mt-2">{selectedProduct?.description}</p>
+              </div>
             </div>
 
             <div className="col-lg-2 my-5 allProducts rightPositioned d-none d-lg-block position-fixed rounded-4 shadow-lg">
-            {products?.map(
-              (item) => item.id !== id && <Product item={item} key={item.id} pathName={pathName}/>
-            )}
-          </div>
+              {products?.results?.map(
+                (item) =>
+                  item.id !== id && (
+                    <Product item={item} key={item.id} pathName={pathName} />
+                  )
+              )}
+            </div>
           </div>
 
           <div className="row my-0 my-md-5 allProducts bottomPositioned d-lg-none">
-            {products?.map(
+            {products?.results?.map(
               (item) => item.id !== id && <Product item={item} key={item.id} />
             )}
           </div>
