@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Title from "../../../Common/Title";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { ProductItemStyled } from "../../../Common/StyledComponents/Styled-Products";
 import { getImagePath } from "../../../util/commonUtil";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
@@ -11,6 +11,9 @@ const Product = ({ item, editHandler, deleteProduct, pathName }) => {
   }, []);
 
   const { isAdmin, hasPermission } = useAdminLoginStatus();
+
+  const locationPath = useLocation()
+  console.log(locationPath)
 
   return (
     <div
@@ -47,8 +50,9 @@ const Product = ({ item, editHandler, deleteProduct, pathName }) => {
             className="w-100 rounded-2 shadow object-fit-cover"
           />
         </Link>
+        
         <Title
-          title={item.product_name}
+          title={locationPath.pathname === "/" || locationPath.pathname === "/home" ? item.category_name : item.product_name}
           cssClass="productName fs-6 py-3 text-black fw-medium"
         />
         {/* <p>{item.description}</p> */}

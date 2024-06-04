@@ -279,7 +279,7 @@ const Home = () => {
                 category?.products?.length > 0 && (
                   <>
                     <Product item={category.products[0]} />
-                    {category.category_name}
+                    {/* {category.category_name} */}
                   </>
                 )
             )}
