@@ -6,7 +6,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from django.http import Http404
-from common.utility import get_product_data_From_request_Object 
+from common.utility import get_custom_paginated_data, get_product_data_From_request_Object 
+from django.db.models import Q
+from common.CustomPagination import CustomPagination
 
 # Create your views here.
 
@@ -156,6 +158,7 @@ class ClientProductAPIView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = ProductSerializer
     pagination_class = Product
+    pagination_class = CustomPagination
   
     def get_object(self, categoryID):
         try:
@@ -165,8 +168,14 @@ class ClientProductAPIView(generics.ListAPIView):
         
     def get(self, request,categoryID, format=None):
         snippets = self.get_object(categoryID)
+        
+        results = get_custom_paginated_data(self, snippets)
+        if results is not None:
+            return results
+        
         serializer = ProductSerializer(snippets, many=True)
         return Response({"product": serializer.data}, status=status.HTTP_200_OK)
+    
     
 class ClientSelectedProductAPIView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
@@ -184,3 +193,25 @@ class ClientSelectedProductAPIView(generics.ListAPIView):
         serializer = ProductSerializer(snippets)
         return Response({"product": serializer.data}, status=status.HTTP_200_OK)
     
+
+class ClientHomePageCategoryProductAPIView(generics.ListAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = ProductSerializer
+    pagination_class = Product
+  
+    def get_object(self, id):
+        try:
+            return Product.objects.filter(category_id=id)
+        except Product.DoesNotExist:
+            raise Http404
+        
+    def get(self, request, format=None):
+        obj_list = request.query_params.get("categoryId").split(',')
+        instances = []
+        obj = self.get_object(obj_list[0])
+        # for item in obj_list:
+        #      obj = self.get_object(item)
+        #      instances.append(obj)
+
+        serializer = ProductSerializer(obj,  many=True)
+        return Response({"product": serializer.data}, status=status.HTTP_200_OK)

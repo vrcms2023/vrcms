@@ -142,6 +142,8 @@ const FileUpload = ({
             formData.append("case_studies_description", editorState);
           } else if (key === "client_description") {
             formData.append("client_description", editorState);
+          } else if (key === "description") {
+            formData.append("description", editorState);
           } else if (
             key === "banner_descripiton" &&
             listofAboutSection.indexOf(pageType) > -1
@@ -423,7 +425,9 @@ const FileUpload = ({
                                   ? editImage?.case_studies_description
                                   : editImage?.team_member_about_us
                                     ? editImage?.team_member_about_us
-                                    : ""
+                                    : editImage?.description
+                                      ? editImage?.description
+                                      : ""
                     }
                   />
                 );

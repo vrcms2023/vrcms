@@ -6,15 +6,16 @@ import { getImagePath } from "../../../util/commonUtil";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
 
 const Product = ({ item, editHandler, deleteProduct, pathName }) => {
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   const { isAdmin, hasPermission } = useAdminLoginStatus();
-  console.log(pathName, "From Product Component")
+
   return (
-    <div className={`${pathName ? "" : "col-sm-6 col-md-4 col-lg-3" } text-center product px-4`}>
+    <div
+      className={`${pathName ? "" : "col-sm-6 col-md-4 col-lg-3"} text-center product px-4`}
+    >
       <ProductItemStyled>
         {isAdmin && hasPermission && (
           <div className="d-flex justify-content-end gap-2">

@@ -13,8 +13,14 @@ import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
 import { getProductsByCategory } from "../../../redux/products/productsActions";
 
-const ProductsList = ({ compState, selectedCategory, editHandler }) => {
-  const [productsList, setProductsList] = useState([]);
+const ProductsList = ({
+  compState,
+  selectedCategory,
+  editHandler,
+  setResponseData,
+  productsList,
+  setProductsList,
+}) => {
   const { products } = useSelector((state) => state.productList);
   const dispatch = useDispatch();
 
@@ -25,8 +31,10 @@ const ProductsList = ({ compState, selectedCategory, editHandler }) => {
   }, [compState, selectedCategory]);
 
   useEffect(() => {
-    if (products) {
-      setProductsList(products);
+    if (products?.results?.length > 0) {
+      setResponseData(products);
+    } else {
+      setProductsList([]);
     }
   }, [products]);
 
