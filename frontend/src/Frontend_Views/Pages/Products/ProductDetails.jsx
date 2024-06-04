@@ -65,7 +65,13 @@ const ProductDetails = () => {
       <ProductItemStyled>
         <div className="container productDetails">
           <div className="row">
-            <div className="col-md-12 col-lg-9 py-5 pb-3 imgSelected">
+            <div className="col-md-12 col-lg-10 py-4 imgSelected">
+              <Link to="/products" className="btn btn-primary d-inline-flex justify-content-center align-items-center">
+              <i class="fa fa-angle-left fs-5 me-2" aria-hidden="true"></i> Back </Link>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12 col-lg-10  pb-3 imgSelected">
               <img
                 src={getImagePath(selectedProduct?.path)}
                 alt={selectedProduct?.alternitivetext}
@@ -81,7 +87,7 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            <div className="col-lg-2 my-5 allProducts rightPositioned d-none d-lg-block position-fixed rounded-4 shadow-lg">
+            <div className="col-lg-2 my-5 allProducts rightPositioned d-none d-lg-block position-fixed rounded shadow-lg">
               {products?.results?.map(
                 (item) =>
                   item.id !== id && (
