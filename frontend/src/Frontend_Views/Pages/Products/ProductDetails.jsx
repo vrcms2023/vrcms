@@ -58,7 +58,7 @@ const ProductDetails = () => {
   }, [id]);
 
   useEffect(() => {
-    console.log(products);
+    // console.log(products);
   }, [products]);
 
   return (

@@ -272,13 +272,13 @@ const Home = () => {
         </ProductHilightsStyled>
 
         <div className="container mt-3 mt-md-5 pt-md-5">
-          <Title title="Products" cssClass="fs-2 text-center my-5 pt-5" />
+          <Title title="Products Category" cssClass="fs-2 text-center my-5 pt-5" />
           <div className="row">
             {homeCategoriesList.map(
               (category) =>
                 category?.products?.length > 0 && (
                   <>
-                    <Product item={category.products[0]} />
+                    <Product item={category.products[0]} categoryId={category.id} homeCategoriesList={homeCategoriesList} />
                     {/* {category.category_name} */}
                   </>
                 )
