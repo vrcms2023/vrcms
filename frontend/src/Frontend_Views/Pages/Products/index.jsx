@@ -167,16 +167,18 @@ const ProductsPage = () => {
   return (
     <>
       {isAdmin && hasPermission && (
-        <div className="container my-5">
-          <div className="row">
-            <div className="col-md-6 fw-bold fw-md-medium py-3 py-md-0 fs-5 fs-md-4 text-center d-flex justify-content-md-end align-items-center">
-              Create New - Edit - Delete "CATEGORY"
-            </div>
-            <div className="col-md-6 d-flex justify-content-center gap-2">
+        <div className="container py-4">
+          <div className="row ">
+            {/* <div className="col-md-6 fw-bold fw-md-medium py-3 py-md-0 fs-5 fs-md-4 text-center d-flex justify-content-md-end align-items-center">
+              <Title title="CATEGORY" cssClass={"fw-medium"}  />
+            </div> */}
+            <div className="col-md-12 d-flex justify-content-end align-items-center gap-2">
+              <span><Title title="CATEGORY - " cssClass={"fw-medium fs-6"}  /></span>
               <Button
                 type="button"
                 cssClass="btn btn-secondary"
                 label={"Create"}
+                icon="fa-plus"
                 handlerChange={() => {
                   editHandler("category", true);
                 }}
@@ -186,6 +188,7 @@ const ProductsPage = () => {
                   type="button"
                   cssClass="btn btn-more"
                   label={"Edit"}
+                  icon="fa-pencil"
                   handlerChange={categoryEditHandler}
                 />
               )}
@@ -194,6 +197,7 @@ const ProductsPage = () => {
                   type="button"
                   cssClass="btn bg-danger text-white"
                   label={"Delete"}
+                  icon="fa-trash-o"
                   handlerChange={categoryDeleteHandler}
                 />
               )}
@@ -269,8 +273,8 @@ const ProductsPage = () => {
           <div className="row mb-4">
             <div className="col-md-6 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0 align-items-center">
               <Title
-                title={`${selectedCategory?.category_name} Products`}
-                cssClass={"fw-medium fs-5"}
+                title={`CATEGORY -> ${selectedCategory?.category_name}`}
+                cssClass={"fw-medium fs-4"}
               />{" "}
             </div>
             <div className="col-md-6 d-flex justify-content-end align-items-center">
@@ -278,7 +282,8 @@ const ProductsPage = () => {
                 <Button
                   type="button"
                   cssClass="btn btn-secondary"
-                  label={"Add New Product"}
+                  label={" Add Product"}
+                  icon="fa-plus"
                   handlerChange={() => {
                     editHandler("product", true);
                   }}

@@ -89,6 +89,10 @@ export default function DynamicForm({
     link.target = "_blank";
     link.click();
   };
+
+  const deleteFileHandler = (fileId) => {
+    console.log(fileId)
+  }
   return (
     <>
       <EditAdminPopupHeader
@@ -130,6 +134,8 @@ export default function DynamicForm({
                   );
                 }
               })}
+
+              
               {editObject?.category_fileuplod ? (
                 <div className="text-end">
                   <Link
@@ -142,6 +148,9 @@ export default function DynamicForm({
                       aria-hidden="true"
                     ></i>
                   </Link>
+                  <Link to=""
+                    onClick={deleteFileHandler(editObject)}
+                  ><i class="fa fa-trash-o ms-2 fs-5 rounded-1 p-1 text-danger" aria-hidden="true"></i></Link>
                 </div>
               ) : (
                 ""
