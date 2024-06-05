@@ -114,6 +114,10 @@ export const ProductItemStyled = styled.div`
     -webkit-box-shadow: inset 0 0 6px rgba(0,137,207,0.7); 
 }
 
+.productImage {
+    height: 130px;
+}
+
 // .rightPositioned::before,  .rightPositioned::after {
 //     background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0) 100%);
 //     content: "";

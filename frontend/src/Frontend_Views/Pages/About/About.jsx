@@ -255,7 +255,7 @@ const About = () => {
                         </Link>
                       </>
                     )}
-                    <div className="col-12 col-lg-7 p-4 py-2 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column leftColumn">
+                    <div className="col-12 col-lg-7 p-4 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column leftColumn">
                       {item.aboutus_title ? (
                         <Title
                           title={item.aboutus_title}

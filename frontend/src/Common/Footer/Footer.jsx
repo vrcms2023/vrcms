@@ -407,7 +407,7 @@ export default Footer;
 
 const ChildMenuContent = ({ menu }) => {
   return (
-    <li className="mb-4">
+    <li className="mb-2 mb-md-1">
       <Link to={menu?.page_url} >
         {menu?.page_label}
       </Link>

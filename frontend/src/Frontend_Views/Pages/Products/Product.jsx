@@ -48,7 +48,7 @@ const Product = ({ item, categoryId, editHandler, deleteProduct, pathName }) => 
           <img
             src={getImagePath(item.path)}
             alt={item.alternitivetext}
-            className="w-100 rounded-2 shadow object-fit-cover"
+            className="w-100 rounded-2 shadow object-fit-cover productImage"
           />
         </Link>
         

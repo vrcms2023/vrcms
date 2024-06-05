@@ -271,8 +271,8 @@ const Home = () => {
           </div>
         </ProductHilightsStyled>
 
-        <div className="container mt-3 mt-md-5 pt-md-5">
-          <Title title="Product Categories" cssClass="fs-2 text-center my-5 pt-5" />
+        <div className="container mt-0 mt-md-5 pt-md-5">
+          <Title title="Product Categories" cssClass="fs-2 text-center my-5 my-md-5 pt-0 pt-md-5" />
           <div className="row">
             {homeCategoriesList.map(
               (category) =>
@@ -333,7 +333,7 @@ const Home = () => {
                 col1="col-md-6"
                 col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
                 cssClass="fs-3fw-medium title"
-                imageClass="w-100 object-fit-cover rounded-end rounded-end-5 shadow"
+                imageClass="w-100 object-fit-cover imgStylingLeft shadow"
                 dimensions={imageDimensionsJson("whoweare")}
                 pageType={"productPortfolio"}
                 componentFlip={false}
@@ -345,7 +345,7 @@ const Home = () => {
                 col1="col-md-6"
                 col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
                 cssClass="fs-3 fw-medium title"
-                imageClass="w-100 object-fit-cover rounded-start rounded-start-5 shadow"
+                imageClass="w-100 object-fit-cover imgStylingRight shadow imgStyling"
                 dimensions={imageDimensionsJson("whoweare")}
                 pageType={"promoting"}
                 componentFlip={false}
@@ -356,7 +356,7 @@ const Home = () => {
                 col1="col-md-6"
                 col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
                 cssClass="fs-3 fw-medium title"
-                imageClass="w-100 object-fit-cover rounded-end rounded-end-5 shadow"
+                imageClass="w-100 object-fit-cover imgStylingLeft shadow"
                 dimensions={imageDimensionsJson("whoweare")}
                 pageType={"whatwedo"}
                 componentFlip={false}
