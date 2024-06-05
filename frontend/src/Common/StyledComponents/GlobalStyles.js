@@ -116,8 +116,8 @@ body {
 
 .btn-secondary:hover {
     background-color:${({ theme }) => theme.primaryColor}; 
-    border: 1px solid ${({ theme }) => theme.secondaryColor} 
-    color:${({ theme }) => theme.black};
+    border: 1px solid ${({ theme }) => theme.secondaryColor} !important;
+    color:${({ theme }) => theme.secondaryColor};
 }
 
 .btn-outline {

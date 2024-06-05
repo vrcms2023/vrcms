@@ -7,6 +7,7 @@ export const ProductStyled = styled.div`
     min-width: 500px;
     right: 25px; 
     top: -170px; 
+    z-index: 999;
     background: rgb(0,132,207);
 
     .productCategory {
