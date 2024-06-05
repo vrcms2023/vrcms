@@ -423,7 +423,7 @@ const ProductsPage = () => {
                 <div className="row py-4">
                   <ABriefAbout
                     col1="col-md-5 p-lg-5 ps-lg-0 d-none d-md-block"
-                    col2="col-md-7 p-lg-5 d-flex justify-content-center align-items-start flex-column"
+                    col2="col-md-7 px-4 p-lg-5 d-flex justify-content-center align-items-start flex-column"
                     cssClass="fs-3 text-center fw-medium title"
                     imageClass="w-100 h-100 object-fit-cover rounded-end rounded-end-5"
                     dimensions={imageDimensionsJson("whoweare")}

@@ -236,7 +236,7 @@ const Team = () => {
           </div>
         </div>
 
-        <div className="row mb-4 py-4">
+        <div className="row mb-0 mb-md-4 py-2 py-md-4">
           <div className="col-md-6 fs-3 mt-4 mt-md-0">
             <Title title="Our Team" cssClass="fs-1 pageTitle" />
           </div>
@@ -357,7 +357,7 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
     >
       {(provided) => (
         <div
-          className="col-md-6 col-lg-4"
+          className="col-md-6 col-lg-3 px-4 px-md-3"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

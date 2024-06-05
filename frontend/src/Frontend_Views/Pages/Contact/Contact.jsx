@@ -290,28 +290,14 @@ const Contact = () => {
           </div>
         </div>
 
-        <div className="row">
-          <div className="col-md-12 text-center py-4">
+        <div className="row d-flex flex-row-reverse flex-md-row-reverse">
+          <div className="col-md-12 text-center py-0 py-md-4">
             <Title
               title="Quick contact"
               cssClass="fs-3 text-center fw-medium mb-2 pt-5"
             />
           </div>
-          <div className="col-md-7 position-relative">
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("map", true)} />
-            )}
-            {mapValues?.google_map_url && (
-              <iframe
-                title="Google map"
-                className="googlemap"
-                src={mapValues?.google_map_url}
-                height="450"
-                width="100%"
-              ></iframe>
-            )}
-          </div>
-          <div className="col-md-5 contact">
+          <div className="col-md-5 contact mb-5">
             {success && (
               <Alert
                 mesg={"Thank you for contact us"}
@@ -366,6 +352,21 @@ const Contact = () => {
 
             <ContactForm />
           </div>
+          <div className="col-md-7 position-relative">
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("map", true)} />
+            )}
+            {mapValues?.google_map_url && (
+              <iframe
+                title="Google map"
+                className="googlemap"
+                src={mapValues?.google_map_url}
+                height="450"
+                width="100%"
+              ></iframe>
+            )}
+          </div>
+          
         </div>
       </div>
 
