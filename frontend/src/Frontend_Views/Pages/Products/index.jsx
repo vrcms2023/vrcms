@@ -43,8 +43,12 @@ import {
   sortByFieldName,
 } from "../../../util/commonUtil";
 import CustomPagination from "../../../Common/CustomPagination";
+import { useLocation, useParams } from "react-router-dom";
 
 const ProductsPage = () => {
+
+  const { id } = useParams();
+
   const editComponentObj = {
     banner: false,
     briefIntro: false,
@@ -104,16 +108,20 @@ const ProductsPage = () => {
       let _data = "";
       if (selectedCategory?.id) {
         _data = categories.filter((item) => item.id === selectedCategory.id)[0];
-      } else {
+      } else if(id) {
+          _data = categories.filter((item) => item.id === id)[0];
+      }
+      else {
         _data = categories[0];
       }
 
+      
       setSelectedCategory(_data);
       setPageType(_data?.id ? _data?.id : pageType);
     } else {
       dispatch(getAllCategories());
     }
-  }, [categories]);
+  }, [categories, id]);
 
   useEffect(() => {
     dispatch(getAllCategories());
@@ -149,7 +157,7 @@ const ProductsPage = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSection}
-            message={`deleting the ${selectedCategory?.category_name} Service?`}
+            message={`Do you want to delete the ${selectedCategory?.category_name} ?`}
           />
         );
       },

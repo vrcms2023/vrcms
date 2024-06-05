@@ -5,7 +5,7 @@ import { ProductItemStyled } from "../../../Common/StyledComponents/Styled-Produ
 import { getImagePath } from "../../../util/commonUtil";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
 
-const Product = ({ item, editHandler, deleteProduct, pathName }) => {
+const Product = ({ homeCategoriesList, item, categoryId, editHandler, deleteProduct, pathName }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -13,11 +13,16 @@ const Product = ({ item, editHandler, deleteProduct, pathName }) => {
   const { isAdmin, hasPermission } = useAdminLoginStatus();
 
   const locationPath = useLocation()
-  console.log(locationPath)
+  // console.log(homeCategoriesList.length, "homeCategoriesList")
 
   return (
     <div
       className={`${pathName ? "" : "col-sm-6 col-md-4 col-lg-3"} text-center product px-4`}
+      // className={`${pathName ? "" : homeCategoriesList?.length >= 4 ? "col-lg-3" 
+      // : homeCategoriesList?.length === 3 ? "col-md-4" 
+      // : homeCategoriesList?.length <= 2 ? "col-sm-6" : ""
+      // } text-center product px-4`}
+
     >
       <ProductItemStyled>
         {isAdmin && hasPermission && (
@@ -44,7 +49,7 @@ const Product = ({ item, editHandler, deleteProduct, pathName }) => {
           </div>
         )}
         {/* <Link to={`/products/${item?.id}/`}> */}
-          <Link to={locationPath.pathname === "/" || locationPath.pathname === "/home" ? "/products" : `/products/${item?.id}/`}>
+          <Link to={locationPath.pathname === "/" || locationPath.pathname === "/home" ? `/categories/${categoryId}/` : `/products/${item?.id}/`}>
           <img
             src={getImagePath(item.path)}
             alt={item.alternitivetext}

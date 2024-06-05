@@ -199,6 +199,7 @@ function App() {
               <Route exact path="/about" element={<About />} />
               <Route exact path="/contact" element={<Contact />} />
               <Route exact path="/products" element={<Products />} />
+              <Route exact path="/categories/:id" element={<Products />} />
               <Route exact path="/products/:id/" element={<ProductDetails />} />
               <Route exact path="/services" element={<Services />} />
               <Route exact path="/services/:uid/" element={<Services />} />
