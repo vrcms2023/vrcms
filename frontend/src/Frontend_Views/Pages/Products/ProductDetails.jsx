@@ -71,7 +71,7 @@ const ProductDetails = () => {
                 to="/products"
                 className="btn btn-primary d-inline-flex justify-content-center align-items-center"
               >
-                <i class="fa fa-angle-left fs-5 me-2" aria-hidden="true"></i>{" "}
+                <i className="fa fa-angle-left fs-5 me-2" aria-hidden="true"></i>{" "}
                 Back{" "}
               </Link>
             </div>
@@ -96,8 +96,7 @@ const ProductDetails = () => {
                 ></div>
               </div>
             </div>
-
-            <div className="col-lg-2 my-5 allProducts rightPositioned d-none d-lg-block position-fixed rounded shadow-lg">
+            {products?.results.length <= 1 ? "" : <div className="col-lg-2 my-5 allProducts rightPositioned d-none d-lg-block position-fixed rounded shadow-lg">
               {products?.results?.map(
                 (item) =>
                   item.id !== id && (
@@ -105,6 +104,8 @@ const ProductDetails = () => {
                   )
               )}
             </div>
+            }
+            
           </div>
 
           <div className="row my-0 my-md-5 allProducts bottomPositioned d-lg-none">

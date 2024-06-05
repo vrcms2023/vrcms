@@ -5,7 +5,7 @@ import { ProductItemStyled } from "../../../Common/StyledComponents/Styled-Produ
 import { getImagePath } from "../../../util/commonUtil";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
 
-const Product = ({ homeCategoriesList, item, categoryId, editHandler, deleteProduct, pathName }) => {
+const Product = ({ item, categoryId, editHandler, deleteProduct, pathName }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -18,11 +18,6 @@ const Product = ({ homeCategoriesList, item, categoryId, editHandler, deleteProd
   return (
     <div
       className={`${pathName ? "" : "col-sm-6 col-md-4 col-lg-3"} text-center product px-4`}
-      // className={`${pathName ? "" : homeCategoriesList?.length >= 4 ? "col-lg-3" 
-      // : homeCategoriesList?.length === 3 ? "col-md-4" 
-      // : homeCategoriesList?.length <= 2 ? "col-sm-6" : ""
-      // } text-center product px-4`}
-
     >
       <ProductItemStyled>
         {isAdmin && hasPermission && (
