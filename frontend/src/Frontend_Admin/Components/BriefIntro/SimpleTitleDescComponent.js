@@ -7,6 +7,7 @@ import Title from "../../../Common/Title";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getCookie } from "../../../util/cookieUtil";
+import { Link } from "react-router-dom";
 
 export const SimpleTitleDescComponent = ({
   componentEdit,
@@ -32,6 +33,7 @@ export const SimpleTitleDescComponent = ({
     <>
       <Title title={formvalues?.intro_title} cssClass="fs-5 fw-medium mb-3" />
       <p>{formvalues?.intro_desc}</p>
+      <Link to={formvalues?.intro_morelink}>More</Link>
     </>
   );
 };
