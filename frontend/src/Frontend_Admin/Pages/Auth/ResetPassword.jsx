@@ -7,6 +7,7 @@ import Title from "../../../Common/Title";
 import Error from "../../Components/Error";
 
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
+import Ancher from "../../../Common/Ancher";
 
 const ResetPassword = () => {
   const { register, handleSubmit } = useForm();
@@ -43,24 +44,16 @@ const ResetPassword = () => {
 
   return (
     <LoginStyled>
-      <div className="login">
-        <div className="bg-white d-flex justify-content-center align-items-center flex-column">
-          <div className="container">
+      <div className="login mt-5">
             <div className="d-flex flex-column justify-content-center align-items-center">
               <form
                 onSubmit={handleSubmit(resetPassword)}
                 className="shadow-lg"
               >
-                {serverError ? (
-                  <p className="fw-bold">
-                    {serverError && <Error>{serverError}</Error>}
-                  </p>
-                ) : (
-                  ""
-                )}
+                
                 <Title
                   title="Reset Password"
-                  cssClass="text-center text-dark mb-4 fw-bold fs-4"
+                  cssClass="text-center text-dark mb-4 fw-medium fs-4"
                 />
                 {success ? (
                   <div>Email sent to your resgister email id please check</div>
@@ -75,20 +68,35 @@ const ResetPassword = () => {
                       id="userName"
                       aria-describedby="emailHelp"
                     />
+                    {serverError ? (
+                      <p className="fw-medium">
+                        {serverError && <Error>{serverError}</Error>}
+                      </p>
+                    ) : (
+                      ""
+                    )}
 
-                    <div className="d-grid gap-2 mt-4">
+                    <div className="d-flex justify-content-center gap-2 mt-4">
+                      
+                      <Ancher 
+                        Ancherpath="/login"
+                        AncherClass="btn btn-outline  w-auto"
+                        handleModel=""
+                        AncherLabel="Cancel"
+                        icon=""
+                        // icon="fa-arrow-right"
+                        iconCss="fs-4"
+                      />
                       <Button
                         type="submit"
                         cssClass="btn btn-lg btn-primary"
                         handlerChange={loginHandler}
-                        label="Reset Password"
+                        label="Reset"
                       />
                     </div>
                   </>
                 )}
               </form>
-            </div>
-          </div>
         </div>
       </div>
     </LoginStyled>
