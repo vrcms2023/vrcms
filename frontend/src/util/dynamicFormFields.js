@@ -444,6 +444,12 @@ export const getTitleAndDescriptionFields = (pageType) => {
       fieldName: "intro_title",
       validationObject: { required: "Please enter Title" },
     },
+    intro_morelink: {
+      label: "More link",
+      type: "text",
+      fieldName: "intro_morelink",
+      validationObject: { required: "Please enter Title" },
+    },
     intro_desc: {
       label: "Description",
       type: "textarea",
