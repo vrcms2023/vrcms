@@ -33,7 +33,7 @@ export const TeamStyled = styled.div`
 
   .memberCard {
     background-color: ${({ theme }) => theme.primaryColor};
-    border:1px solid ${({ theme }) => theme.secondaryColor};
+    // border:1px solid ${({ theme }) => theme.secondaryColor};
     border-radius: 15px;
     margin: 15px 0;
     overflow:hidden;
