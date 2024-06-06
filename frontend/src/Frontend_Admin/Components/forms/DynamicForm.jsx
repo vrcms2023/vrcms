@@ -144,7 +144,7 @@ export default function DynamicForm({
                   >
                     Download File{" "}
                     <i
-                      class="fa fa-download ms-1 fs-5 rounded-2 p-2 border border-1 border-info bg-white"
+                      class="fa fa-download ms-1 fs-5 rounded-2 p-2 text-info bg-white shadow"
                       aria-hidden="true"
                     ></i>
                   </Link>
