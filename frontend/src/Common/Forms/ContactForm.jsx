@@ -38,7 +38,7 @@ const ContactForm = () => {
 
   return (
     <form
-    className="my-3 mx-auto contactForm"
+    className="my-0 mx-auto contactForm"
     onSubmit={handleSubmit(onFormSubmit)}
   >
     <InputFields

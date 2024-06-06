@@ -6,7 +6,7 @@ export const ProductStyled = styled.div`
     width: 35%;
     min-width: 500px;
     right: 25px; 
-    top: -170px; 
+    top: -130px; 
     z-index: 999;
     background: rgb(0,132,207);
 
@@ -48,20 +48,26 @@ export const ProductStyled = styled.div`
 
 export const ProductItemStyled = styled.div`
 
-.productDetails .imgSelected {
-    padding-left: 100px;
-    padding-right: 100px;
-    img {
-        height: 300px;
-        object-fit: cover;
+.productDetails {
+    .imgSelected {
+        padding-left: 100px;
+        padding-right: 100px;
+        img {
+            height: 250px;
+            object-fit: cover;
+    
+            @media (max-width: 480px) {
+                height: 200px;
+            }
+        }  
 
-        @media (max-width: 480px) {
-            height: 200px;
+        .btn {
+            width: auto;
         }
-    }  
-
-    @media (max-width: 991px) {
-        padding: 15px;
+    
+        @media (max-width: 991px) {
+            padding: 15px;
+        }
     }
 }
 
@@ -75,7 +81,12 @@ export const ProductItemStyled = styled.div`
         // background: ${({theme}) => theme.primaryColor};
         background: linear-gradient(17deg, rgba(225,242,253,1) 0%, rgba(255,255,255,1) 100%);
         border: 2px solid ${({theme}) => theme.white};
-        padding: 20px 0;
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+        @media(min-width: 991px) and (max-width: 1024px) {
+            right: 60px;
+        }
         img {
             border: 2px solid ${({theme}) => theme.white};
             transition: transform 0.7s ease-out, rotate 0.3s ease-in-out;
@@ -86,6 +97,12 @@ export const ProductItemStyled = styled.div`
                 // rotate: 5deg;
             }
             }
+        
+        .product {
+            padding-right: 0px !important;
+            padding-left: 0px !important;
+        }
+
         .productName  {
             padding: 10px 0 !important ;
             font-size: .8rem !important;
@@ -94,9 +111,12 @@ export const ProductItemStyled = styled.div`
 }
 
 .allProducts.bottomPositioned {
-    .product img {
-        @media (max-width: 480px) {
-            height: 120px;
+    .product {
+        
+        img {
+            @media (max-width: 480px) {
+                height: 150px;
+            }
         }
     }
 }
