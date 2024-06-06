@@ -7,6 +7,7 @@ const Button = ({
   handlerChange,
   disabled = false,
   icon,
+  isMobile
 }) => {
   return (
     <button
@@ -16,7 +17,7 @@ const Button = ({
       onClick={() => handlerChange(label)}
     >
       {icon ? <i className={`fa ${icon}`} aria-hidden="true"></i> : ""}
-      <span className="">{label}</span>
+      {isMobile ? " " : <span className="">{label}</span>}
     </button>
   );
 };

@@ -165,21 +165,29 @@ const ProductsPage = () => {
     });
   };
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  
+
   return (
     <>
       {isAdmin && hasPermission && (
         <div className="container py-4">
           <div className="row ">
-            {/* <div className="col-md-6 fw-bold fw-md-medium py-3 py-md-0 fs-5 fs-md-4 text-center d-flex justify-content-md-end align-items-center">
-              <Title title="CATEGORY" cssClass={"fw-medium"}  />
-            </div> */}
             <div className="col-md-12 d-flex justify-content-end align-items-center gap-2">
               <span><Title title="CATEGORY - " cssClass={"fw-medium fs-6"}  /></span>
               <Button
                 type="button"
-                cssClass="btn btn-secondary"
+                cssClass="btn btn-secondary w-auto"
                 label={"Create"}
-                icon="fa-plus"
+                icon="fa-plus fs-5"
+                isMobile={isMobile}
                 handlerChange={() => {
                   editHandler("category", true);
                 }}
@@ -187,18 +195,20 @@ const ProductsPage = () => {
               {selectedCategory?.id && (
                 <Button
                   type="button"
-                  cssClass="btn btn-more"
+                  cssClass="btn btn-more w-auto"
                   label={"Edit"}
-                  icon="fa-pencil"
+                  icon="fa-pencil fs-5"
+                  isMobile={isMobile}
                   handlerChange={categoryEditHandler}
                 />
               )}
               {selectedCategory?.id && (
                 <Button
                   type="button"
-                  cssClass="btn bg-danger text-white"
+                  cssClass="btn bg-danger text-white w-auto"
                   label={"Delete"}
-                  icon="fa-trash-o"
+                  icon="fa-trash-o fs-5"
+                  isMobile={isMobile}
                   handlerChange={categoryDeleteHandler}
                 />
               )}
@@ -281,7 +291,7 @@ const ProductsPage = () => {
               {selectedCategory?.id && isAdmin && hasPermission && (
                 <Button
                   type="button"
-                  cssClass="btn btn-secondary"
+                  cssClass="btn btn-secondary w-auto"
                   label={" Add Product"}
                   icon="fa-plus"
                   handlerChange={() => {

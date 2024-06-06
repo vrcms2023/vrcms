@@ -180,24 +180,26 @@ const About = () => {
 
       <AboutPageStyled>
         <div className="container-fluid container-lg my-md-5 ">
-          <div className="row">
+          <div className="row my-3 d-flex align-items-center">
             {/* <div className="col-md-6 fs-3 mt-4 mt-md-0">
               <Title title="About Us" cssClass="fs-1 pageTitle" />
             </div> */}
             {isAdmin && hasPermission && (
-              <div className="col-md-12">
-                <div className="d-flex justify-content-end align-items-center mb-3">
+              <>
+              <div className="col-6">
                   <span className="fw-bold me-2">Add content </span>
-                  <button
-                    type="submit"
-                    className="btn btn-primary px-3"
-                    onClick={() => editHandler("addSection", true)}
-                  >
-                    {" "}
-                    <i className="fa fa-plus" aria-hidden="true"></i>
-                  </button>
-                </div>
               </div>
+              <div className="col-6 text-end">
+              <button
+                  type="submit"
+                  className="btn btn-primary px-3 w-auto"
+                  onClick={() => editHandler("addSection", true)}
+                >
+                  {" "}
+                  <i className="fa fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+              </>
             )}
           </div>
 
