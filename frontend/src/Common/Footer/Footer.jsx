@@ -160,7 +160,24 @@ const Footer = () => {
             </div>
             <hr className="d-block d-md-none my-3" />
 
-            <div className="col-md-3 text-center text-md-start">
+            <div 
+              className={`col-md-3 text-center text-md-start ${
+                isAdmin
+                  ? "border border-warning mb-3 position-relative"
+                  : ""
+              }`}
+            >
+               {isAdmin && (
+                  <Ancher 
+                    Ancherpath="/contact"
+                    AncherClass="btn btn-warning float-end"
+                    handleModel=""
+                    AncherLabel="Edit"
+                    icon=""
+                    // icon="fa-arrow-right"
+                    iconCss="ms-2 m-auto"
+                  />
+                )}
               {address && (
                 <>
                   <h5 className="text-center text-md-start">Address</h5>
@@ -172,22 +189,27 @@ const Footer = () => {
                   <p className="m-0">{address.state}</p>
                   <p className="mb-4">{address.location_title}</p>
                 </>
-              )}
+              )}              
+            </div>
 
-            
-               {isAdmin && (
+            <div 
+              className={`col-md-3 text-center text-md-start mb-3 reachUs ${
+                isAdmin
+                  ? "border border-warning mb-3 position-relative"
+                  : ""
+              }`}
+            >
+              {isAdmin && (
                   <Ancher 
                     Ancherpath="/contact"
-                    AncherClass="btn btn-outline"
+                    AncherClass="btn btn-warning float-end"
                     handleModel=""
-                    AncherLabel="To edit"
-                    icon="fa-arrow-right"
+                    AncherLabel="Edit"
+                    icon=""
+                    // icon="fa-arrow-right"
                     iconCss="ms-2 m-auto"
                   />
                 )}
-            </div>
-
-            <div className="col-md-3 text-center text-md-start mb-3 reachUs">
               <h5 className="d-none d-sm-block">Reach Us</h5>
               {address.phonen_number ? (
                 <p className="m-0 pb-3">
@@ -265,14 +287,21 @@ const Footer = () => {
             </div>
             <hr className="d-block d-md-none" />
             {
-              <div className="col-md-3 pb-3 pb-md-0">
+              <div 
+                  className={`col-md-3 pb-3 pb-md-0 ${
+                    isAdmin
+                      ? "border border-warning mb-3 position-relative"
+                      : ""
+                  }`}
+              >
+                <h5>Social Media</h5>
                 <img
                   src={Logo}
                   alt="SAP Design Studio"
                   className="footerLogo"
                 />
                 <div className="socialLinks position-relative">
-                  {/* <h5>Social Media</h5> */}
+                  
                   {isAdmin && (
                     <EditIcon
                       editHandler={() => editHandler("address", true)}
