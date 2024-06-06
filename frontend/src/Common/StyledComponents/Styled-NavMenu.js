@@ -24,6 +24,7 @@ export const StyledMenu = styled.menu`
     box-shadow: 0px 2px 10px ${({ theme }) => theme.secondaryColor};
     
     .nav-item {
+
         .nav-Link {
           color:${({ theme }) => theme.black}; 
           margin: 0 12px;
@@ -64,7 +65,8 @@ export const StyledMenu = styled.menu`
         }
 
         @media (max-width: 992px) {
-          background: ${({theme}) => theme.white};
+          // background: ${({theme}) => theme.white};
+          background: linear-gradient(90deg, rgba(225,242,253,1) 0%, rgba(255,255,255,1) 50%, rgba(225,242,253,1) 100%);
           border-bottom: 1px solid ${({theme}) => theme.verylightgray};
           text-align:center;
           padding: 8px;

@@ -10,6 +10,8 @@ const FilterComponent = ({
   setPageloadResults,
   setSearchquery,
   searchQuery,
+  searchBy,
+  hideSearchBy
 }) => {
   if (category.length === 0) return;
   const changeCategory = (event) => {
@@ -50,6 +52,8 @@ const FilterComponent = ({
             setPageloadResults={setPageloadResults}
             setSearchquery={setSearchquery}
             searchQuery={searchQuery}
+            searchBy={searchBy ? searchBy : "Search By"}
+            hideSearchBy={hideSearchBy}
           />
         </div>
       </div>

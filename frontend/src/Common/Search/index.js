@@ -16,6 +16,7 @@ const Search = ({
   imageGallery,
   setImageGallery,
   hideSearchBy,
+  searchBy = " Search "
 }) => {
   const userCookie = getCookie("access");
 
@@ -28,6 +29,8 @@ const Search = ({
       searchResults();
     }
   };
+
+  console.log(hideSearchBy, "hideSearchBy")
 
   // const searchResults = () => {
   //   const searchResults = imageGallery?.filter(image => image.title.toLowerCase() === searchQuery.toLowerCase())
@@ -59,7 +62,7 @@ const Search = ({
         <input
           type="text"
           className="form-control"
-          placeholder="Search by"
+          placeholder={searchBy}
           aria-label="Search"
           onChange={onChangeInputHandler}
           onKeyDown={handleKeyDown}
@@ -71,7 +74,7 @@ const Search = ({
           <i className="fa fa-search" aria-hidden="true"></i>
         </span>
       </div>
-      {hideSearchBy === "true" ? null : (
+      {hideSearchBy && (
         <div className="d-flex justify-conent-center align-items-center gap-2">
           {/* <span className="text-muted">Search by</span> */}
           <small className="text-dark">
