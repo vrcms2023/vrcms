@@ -265,7 +265,7 @@ const Home = () => {
                   )}
 
                   <SimpleTitleDescComponent
-                    formgetURL={`/carousel/updateHomeIntro/${productComp.product_development}/`}
+                    formgetURL={`/carousel/clientHomeIntro/${productComp.product_development}/`}
                     componentEdit={componentEdit.product_development}
                     setFormValues={setProductDevelopment}
                     formvalues={productDevelopment}
@@ -297,7 +297,7 @@ const Home = () => {
                     />
                   )}
                   <SimpleTitleDescComponent
-                    formgetURL={`/carousel/updateHomeIntro/${productComp.product_distribution}/`}
+                    formgetURL={`/carousel/clientHomeIntro/${productComp.product_distribution}/`}
                     componentEdit={componentEdit.product_distribution}
                     setFormValues={setProductDistribution}
                     formvalues={productDistribution}
@@ -330,7 +330,7 @@ const Home = () => {
                     />
                   )}
                   <SimpleTitleDescComponent
-                    formgetURL={`/carousel/updateHomeIntro/${productComp.product_registration}/`}
+                    formgetURL={`/carousel/clientHomeIntro/${productComp.product_registration}/`}
                     componentEdit={componentEdit.product_registration}
                     setFormValues={setProductRegistration}
                     formvalues={productRegistration}
