@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const LoginStyled = styled.div`
     // background-color: ${({ theme }) => theme.lightgray};
-    color: ${({ theme }) => theme.black};
+    // color: ${({ theme }) => theme.black};
 
     form {
         background-color: ${({ theme }) => theme.white};
