@@ -327,9 +327,9 @@ const ProductsPage = () => {
                     className="moreLink "
                     // onClick={() => downloadFile(editObject?.category_fileuplod)}
                   >
-                    File 
+                    {/* File  */}
                     <i
-                      class="fa fa-download ms-1 fs-5 rounded-2 p-1 border border-1 border-info bg-white"
+                      class="fa fa-download ms-1 fs-4 rounded-2 p-4 p-md-2 text-info bg-white shadow"
                       aria-hidden="true"
                     ></i>
                   </Link>
