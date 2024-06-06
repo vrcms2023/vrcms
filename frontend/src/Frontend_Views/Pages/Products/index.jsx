@@ -274,6 +274,8 @@ const ProductsPage = () => {
           setPageloadResults={setPageloadResults}
           setSearchquery={setSearchquery}
           searchQuery={searchQuery}
+          searchBy={"Search By Product Name"}
+          hideSearchBy={false}
         />
         <div />
 
