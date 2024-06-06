@@ -47,7 +47,7 @@ export const getFormDynamicFields = (pageType) => {
     moreLink: {
       label: "PageToLink",
       type: "text",
-      fieldName: "more_link",
+      fieldName: "moreLink",
     },
     pageType: {
       label: "News Title",
@@ -432,6 +432,29 @@ export const getProductFormDynamicFields = (selectedCategory) => {
       type: "hidden",
       value: 20,
       fieldName: "price",
+    },
+  };
+};
+
+export const getTitleAndDescriptionFields = (pageType) => {
+  return {
+    intro_title: {
+      label: "Title",
+      type: "text",
+      fieldName: "intro_title",
+      validationObject: { required: "Please enter Title" },
+    },
+    intro_desc: {
+      label: "Description",
+      type: "textarea",
+      fieldName: "intro_desc",
+    },
+    pageType: {
+      label: "News Title",
+      readonly: true,
+      type: "hidden",
+      value: pageType ? pageType : "",
+      fieldName: "pageType",
     },
   };
 };

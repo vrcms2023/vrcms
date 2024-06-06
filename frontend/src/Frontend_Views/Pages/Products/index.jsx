@@ -45,9 +45,9 @@ import {
 import CustomPagination from "../../../Common/CustomPagination";
 import { useLocation, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import DynamicFormwithFileUplod from "../../../Frontend_Admin/Components/forms/DynamicFormwithFileUplod";
 
 const ProductsPage = () => {
-
   const { id } = useParams();
 
   const editComponentObj = {
@@ -109,14 +109,12 @@ const ProductsPage = () => {
       let _data = "";
       if (selectedCategory?.id) {
         _data = categories.filter((item) => item.id === selectedCategory.id)[0];
-      } else if(id) {
-          _data = categories.filter((item) => item.id === id)[0];
-      }
-      else {
+      } else if (id) {
+        _data = categories.filter((item) => item.id === id)[0];
+      } else {
         _data = categories[0];
       }
 
-      
       setSelectedCategory(_data);
       setPageType(_data?.id ? _data?.id : pageType);
     } else {
@@ -181,7 +179,9 @@ const ProductsPage = () => {
         <div className="container py-4">
           <div className="row ">
             <div className="col-md-12 d-flex justify-content-end align-items-center gap-2">
-              <span><Title title="CATEGORY - " cssClass={"fw-medium fs-6"}  /></span>
+              <span>
+                <Title title="CATEGORY - " cssClass={"fw-medium fs-6"} />
+              </span>
               <Button
                 type="button"
                 cssClass="btn btn-secondary w-auto"
@@ -219,7 +219,7 @@ const ProductsPage = () => {
 
       {componentEdit.category && (
         <div className="adminEditTestmonial">
-          <DynamicForm
+          <DynamicFormwithFileUplod
             editHandler={editHandler}
             componentTitle={"Crete New Category"}
             componentType={"category"}
@@ -279,9 +279,7 @@ const ProductsPage = () => {
         />
         <div />
 
-        <div
-          className="container productsList pt-5"
-        >
+        <div className="container productsList pt-5">
           <div className="row mb-4">
             <div className="col-md-12 col-lg-6 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0 align-items-center">
               <Title
@@ -304,9 +302,10 @@ const ProductsPage = () => {
               )}
               <div>
                 {/* Showing 1 –  */}
-                {productsList?.length} of <strong>{productsList?.length}</strong> 
+                {productsList?.length} of{" "}
+                <strong>{productsList?.length}</strong>
                 {/* results */}
-                </div>
+              </div>
               <span className="d-none d-md-block"> | </span>
               <div className="d-flex justify-content-end align-items-center gap-1">
                 {/* <span>Show </span> */}
@@ -318,22 +317,24 @@ const ProductsPage = () => {
                   <option value="3">50</option>
                   <option value="3">75</option>
                   <option value="3">100</option>
-                </select> 
+                </select>
                 {/* <span>entries</span> */}
               </div>
               <span className="d-none d-md-block"> | </span>
               <div>
-                  <Link
-                    className="moreLink "
-                    // onClick={() => downloadFile(editObject?.category_fileuplod)}
-                  >
-                    {/* File  */}
-                    <i
-                      class="fa fa-download ms-1 fs-4 rounded-2 p-4 p-md-2 text-info bg-white shadow"
-                      aria-hidden="true"
-                    ></i>
-                  </Link>
-                  </div>
+
+                <Link
+                  className="moreLink "
+                  // onClick={() => downloadFile(editObject?.category_fileuplod)}
+                >
+                  File
+                  <i
+                    class="fa fa-download ms-1 fs-5 rounded-2 p-1 border border-1 border-info bg-white"
+                    aria-hidden="true"
+                  ></i>
+                </Link>
+              </div>
+
             </div>
           </div>
 

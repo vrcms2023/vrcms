@@ -43,6 +43,7 @@ const FilterComponent = ({
         </div>
         <div className="col-md-12 p-0 productSearch d-flex justify-content-center align-items-center">
           <Search
+            results={category}
             setObject={setResponseData}
             clientSearchURL={`/products/productSearch/${selectedCategory.id}/`}
             adminSearchURL={`/products/createProduct/${selectedCategory.id}/`}

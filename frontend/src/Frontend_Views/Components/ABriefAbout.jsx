@@ -16,7 +16,16 @@ import { getFormDynamicFields } from "../../util/dynamicFormFields";
 import Ancher from "../../Common/Ancher";
 import ContactForm from "../../Common/Forms/ContactForm";
 
-const ABriefAbout = ({ cssClass, col1, col2, imageClass, dimensions, pageType = "HomeWhoWeAre", componentFlip = false, showForm = false }) => {
+const ABriefAbout = ({
+  cssClass,
+  col1,
+  col2,
+  imageClass,
+  dimensions,
+  pageType = "HomeWhoWeAre",
+  componentFlip = false,
+  showForm = false,
+}) => {
   const editComponentObj = {
     whoweare: false,
   };
@@ -24,8 +33,6 @@ const ABriefAbout = ({ cssClass, col1, col2, imageClass, dimensions, pageType = 
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [show, setShow] = useState(false);
   const [bannerData, setBannerData] = useState("");
-
-
 
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -54,47 +61,48 @@ const ABriefAbout = ({ cssClass, col1, col2, imageClass, dimensions, pageType = 
   return (
     <>
       <div className={`${col1}`}>
-        <img src={getImagePath(bannerData?.path)} alt="" className={imageClass} />
+        <img
+          src={getImagePath(bannerData?.path)}
+          alt=""
+          className={imageClass}
+        />
       </div>
-      
+
       <div className={`${col2}`}>
         {/* Edit */}
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("whoweare", true)} />
         )}
-          {bannerData.banner_title ? (
-            <Title title={bannerData.banner_title} cssClass={cssClass} />
-          ) : (
-            ""
-          )}
-          {bannerData.banner_subTitle ? (
-            <Title
-              title={bannerData.banner_subTitle}
-              cssClass="fs-6 my-3"
-            />
-          ) : (
-            ""
-          )}
-          <div>
-            <p className="lh-md">
-              {bannerData?.banner_descripiton
-                ? bannerData.banner_descripiton
-                : "Update description"}
-            </p>
-          </div>
-          {showForm && (
-              <ContactForm /> 
-          ) }
-          {bannerData.more_link ? (
+        {bannerData.banner_title ? (
+          <Title title={bannerData.banner_title} cssClass={cssClass} />
+        ) : (
+          ""
+        )}
+        {bannerData.banner_subTitle ? (
+          <Title title={bannerData.banner_subTitle} cssClass="fs-6 my-3" />
+        ) : (
+          ""
+        )}
+        <div>
+          <p className="lh-md">
+            {bannerData?.banner_descripiton
+              ? bannerData.banner_descripiton
+              : "Update description"}
+          </p>
+        </div>
+        {showForm && <ContactForm />}
+        {bannerData.moreLink ? (
           <div>
             <Ancher
               AncherLabel="Know More"
-              Ancherpath={bannerData.more_link ?  bannerData.more_link : "" }
+              Ancherpath={bannerData.moreLink ? bannerData.moreLink : ""}
               AncherClass="btn btn-secondary d-flex justify-content-center align-items-center gap-3"
               AnchersvgColor="#ffffff"
             />
-          </div> )
-          : "" }
+          </div>
+        ) : (
+          ""
+        )}
       </div>
 
       {componentEdit.whoweare ? (

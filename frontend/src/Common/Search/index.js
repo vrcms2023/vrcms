@@ -81,7 +81,8 @@ const Search = ({
             <span className="fw-bolder">Search by</span> :{" "}
             {searchfiledDeatails ? searchfiledDeatails : ""}
           </small>
-        </div> ) } 
+        </div>
+      )}
     </div>
   );
 };
