@@ -23,6 +23,7 @@ import CSRFToken from "../../../Frontend_Views/Components/CRSFToken";
 // CSS Styles
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
 import { isAppAccess } from "../../../util/permissions";
+import Ancher from "../../../Common/Ancher";
 
 const Login = () => {
   const { access, userInfo, error, permissions } = useSelector(
@@ -87,16 +88,25 @@ const Login = () => {
   return (
     <LoginStyled>
       <div className="text-center">
-        <button
+        {/* <button
           className="btn btn-secondary mt-4"
           onClick={() => navigate("/")}
         >
           Back to Home
-        </button>
+        </button> */}
+        <Ancher 
+            Ancherpath="/"
+            AncherClass="btn btn-outline mt-5 w-auto"
+            handleModel=""
+            AncherLabel=""
+            icon="fa-home"
+            // icon="fa-arrow-right"
+            iconCss="fs-4"
+          />
       </div>
       <div className="login">
         <div className="d-flex justify-content-center align-items-center flex-column">
-          <form onSubmit={handleSubmit(submitForm)} className="shadow-lg">
+          <form onSubmit={handleSubmit(submitForm)} className="shadow">
             <CSRFToken />
             {error ? (
               <p className="fw-bold">{error && <Error>{error}</Error>}</p>
@@ -109,10 +119,10 @@ const Login = () => {
               name="csrfmiddlewaretoken"
               value="m6pDnuW9RPTEuK66x0H4oc09JSfyv6bD"
             />
-            <Title
-              title="Admin login"
-              cssClass="text-center text-dark mb-4 fw-bold fs-4"
-            />
+            {/* <Title
+              title="login"
+              cssClass="text-center text-dark mb-4 fw-medium fs-4"
+            /> */}
             <div className="mb-3">
               <label
                 htmlFor="userName"

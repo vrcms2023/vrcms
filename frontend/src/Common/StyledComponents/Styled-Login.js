@@ -1,19 +1,19 @@
 import styled from "styled-components";
 
 export const LoginStyled = styled.div`
-    background-color: ${({ theme }) => theme.lightgray};
+    // background-color: ${({ theme }) => theme.lightgray};
     color: ${({ theme }) => theme.black};
 
     form {
         background-color: ${({ theme }) => theme.white};
-        width: 35%;
+        // width: 35%;
         margin: 20px 0;
         padding: 50px;
         border: 1px solid color: ${({ theme }) => theme.gray};
 
         input {
-            background-color: ${({ theme }) => theme.lightgray} !important;
-            border-radius: 50px !important;
+            // background-color: ${({ theme }) => theme.lightgray} !important;
+            // border-radius: 50px !important;
         }
     }
 

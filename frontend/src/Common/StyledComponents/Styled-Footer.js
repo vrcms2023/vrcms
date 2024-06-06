@@ -70,8 +70,20 @@ export const FooterStyled = styled.div`
     }
 
     .editIcon  {
-      top: -7px;
-      right: -20px;
+      top: -65px;
+      right: -13px;
+
+      @media(max-width: 768px) {
+        top: -100px;
+      }
+
+      @media(max-width: 768px) {
+        top: -67px;
+      }
+
+      i {
+        margin: 0px;
+      }
     }
   }
 
