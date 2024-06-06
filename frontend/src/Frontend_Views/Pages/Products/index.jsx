@@ -269,16 +269,15 @@ const ProductsPage = () => {
 
         <div
           className="container productsList pt-5"
-          style={{ marginTop: "100px" }}
         >
           <div className="row mb-4">
-            <div className="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0 align-items-center">
+            <div className="col-md-12 col-lg-6 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0 align-items-center">
               <Title
                 title={`CATEGORY -> ${selectedCategory?.category_name}`}
                 cssClass={"fw-medium fs-4"}
               />{" "}
             </div>
-            <div className="col-md-8 d-flex flex-column flex-sm-row justify-content-end align-items-center gap-3">
+            <div className="col-md-12 col-lg-6 d-flex flex-column flex-sm-row justify-content-end align-items-center gap-3">
               {selectedCategory?.id && isAdmin && hasPermission && (
                 <Button
                   type="button"
@@ -291,10 +290,14 @@ const ProductsPage = () => {
                 />
                 // <EditIcon editHandler={() => editHandler("product", true)} />
               )}
-              <div>Showing 1 – {productsList?.length} of <strong>{productsList?.length}</strong> results</div>
+              <div>
+                {/* Showing 1 –  */}
+                {productsList?.length} of <strong>{productsList?.length}</strong> 
+                {/* results */}
+                </div>
               <span className="d-none d-md-block"> | </span>
               <div className="d-flex justify-content-end align-items-center gap-1">
-                <span>Show </span>
+                {/* <span>Show </span> */}
                 <select class="form-select" aria-label="Default select example">
                   <option selected>show</option>
                   <option value="1">5</option>
@@ -304,7 +307,7 @@ const ProductsPage = () => {
                   <option value="3">75</option>
                   <option value="3">100</option>
                 </select> 
-                <span>entries</span>
+                {/* <span>entries</span> */}
               </div>
               <span className="d-none d-md-block"> | </span>
               <div>

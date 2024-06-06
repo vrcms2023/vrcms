@@ -327,12 +327,12 @@ const Home = () => {
 
         {/* Random Hilights */}
         <ABriefIntroStyled>
-          <div className="container randomServices">
+          <div className="container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices">
             <div className="row">
               <ABriefAbout
-                col1="col-md-6"
+                col1="col-md-6 ps-sm-0"
                 col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-                cssClass="fs-3fw-medium title"
+                cssClass="fs-3 fw-medium title"
                 imageClass="w-100 object-fit-cover imgStylingLeft shadow"
                 dimensions={imageDimensionsJson("whoweare")}
                 pageType={"productPortfolio"}
@@ -342,7 +342,7 @@ const Home = () => {
 
             <div className="row d-flex flex-row-reverse my-3 my-md-5">
               <ABriefAbout
-                col1="col-md-6"
+                col1="col-md-6 pe-sm-0"
                 col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
                 cssClass="fs-3 fw-medium title"
                 imageClass="w-100 object-fit-cover imgStylingRight shadow imgStyling"
@@ -353,7 +353,7 @@ const Home = () => {
             </div>
             <div className="row">
               <ABriefAbout
-                col1="col-md-6"
+                col1="col-md-6 ps-sm-0"
                 col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
                 cssClass="fs-3 fw-medium title"
                 imageClass="w-100 object-fit-cover imgStylingLeft shadow"

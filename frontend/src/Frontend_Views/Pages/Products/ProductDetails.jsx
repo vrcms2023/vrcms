@@ -69,7 +69,7 @@ const ProductDetails = () => {
             <div className="col-md-12 col-lg-10 py-4 imgSelected">
               <Link
                 to="/products"
-                className="btn btn-primary d-inline-flex justify-content-center align-items-center"
+                className="btn btn-primary d-inline-flex justify-content-center align-items-center m-auto"
               >
                 <i className="fa fa-angle-left fs-5 me-2" aria-hidden="true"></i>{" "}
                 Back{" "}
@@ -81,7 +81,7 @@ const ProductDetails = () => {
               <img
                 src={getImagePath(selectedProduct?.path)}
                 alt={selectedProduct?.alternitivetext}
-                className="w-100 rounded-3"
+                className="w-100 rounded-2"
               />
               <div className="py-3">
                 <Title
