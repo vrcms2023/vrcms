@@ -254,7 +254,7 @@ const Home = () => {
         <ProductHilightsStyled>
           <div className="container position-relative d-none d-md-block">
             <div className="row text-white rounded-3 overflow-hidden position-absolute hiligntsContainer">
-              <div className="col-sm-4 p-4 p-lg-5 ">
+              <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
                 <div className="position-relative">
                   {isAdmin && hasPermission && (
                     <EditIcon
@@ -287,7 +287,7 @@ const Home = () => {
                   )}
                 </div>
               </div>
-              <div className="col-sm-4 p-4 p-lg-5">
+              <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
                 <div className="position-relative">
                   {isAdmin && hasPermission && (
                     <EditIcon
@@ -320,7 +320,7 @@ const Home = () => {
                   )}
                 </div>
               </div>
-              <div className="col-sm-4 p-4 p-lg-5">
+              <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
                 <div className="position-relative">
                   {isAdmin && hasPermission && (
                     <EditIcon
