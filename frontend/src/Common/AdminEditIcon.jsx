@@ -1,11 +1,15 @@
 import React from "react";
 import "./AdminEditIcon.css";
 
-const EditIcon = ({ editHandler }) => {
+const EditIcon = ({ 
+  editHandler,
+  icon = "fa-pencil",
+  iconCss = "text-warning cursor-pointer fs-3"
+ }) => {
   return (
     <span className="position-absolute editIcon">
       <i
-        className="fa fa-pencil text-warning cursor-pointer fs-3"
+        className={`fa ${icon} ${iconCss}`}
         aria-hidden="true"
         onClick={() => editHandler("carousel", true)}
       ></i>

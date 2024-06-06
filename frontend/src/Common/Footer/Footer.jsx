@@ -21,6 +21,7 @@ import Logo from "../../Images/logo.png";
 
 // Styles
 import { FooterStyled } from "../StyledComponents/Styled-Footer";
+import Ancher from "../Ancher";
 
 const Footer = () => {
   const editComponentObj = {
@@ -172,6 +173,18 @@ const Footer = () => {
                   <p className="mb-4">{address.location_title}</p>
                 </>
               )}
+
+            
+               {isAdmin && (
+                  <Ancher 
+                    Ancherpath="/contact"
+                    AncherClass="btn btn-outline"
+                    handleModel=""
+                    AncherLabel="To edit"
+                    icon="fa-arrow-right"
+                    iconCss="ms-2 m-auto"
+                  />
+                )}
             </div>
 
             <div className="col-md-3 text-center text-md-start mb-3 reachUs">
@@ -258,8 +271,13 @@ const Footer = () => {
                   alt="SAP Design Studio"
                   className="footerLogo"
                 />
-                <div className="socialLinks">
+                <div className="socialLinks position-relative">
                   {/* <h5>Social Media</h5> */}
+                  {isAdmin && (
+                    <EditIcon
+                      editHandler={() => editHandler("address", true)}
+                    />
+                  )}
                   {footerValues.facebook_url && (
                     <Link to={footerValues.facebook_url} target="_blank">
                       <i
@@ -312,11 +330,7 @@ const Footer = () => {
                       <i className="fa fa-pinterest" aria-hidden="true"></i>
                     </Link>
                   )}
-                  {isAdmin && (
-                    <EditIcon
-                      editHandler={() => editHandler("address", true)}
-                    />
-                  )}
+                  
                 </div>
               </div>
             }
