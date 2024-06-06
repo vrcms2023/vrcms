@@ -163,6 +163,8 @@ class HomeIntroAPIView(generics.CreateAPIView):
         return Response({"intro": serializer.data}, status=status.HTTP_200_OK)
     
      def post(self, request, format=None):
+        user = request.user
+        request.data.update({"created_by": user.userName})
         serializer = HomeIntroSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -180,6 +182,12 @@ class HomeIntroUpdateAndDeleteView(APIView):
             return HomeIntro.objects.get(pageType=pk)
         except HomeIntro.DoesNotExist:
             raise Http404
+        
+    def get_object_pk(self, pk):
+        try:
+            return HomeIntro.objects.get(pk=pk)
+        except HomeIntro.DoesNotExist:
+            raise Http404
 
     def get(self, request, pk, format=None):
         snippet = self.get_object(pk)
@@ -187,7 +195,9 @@ class HomeIntroUpdateAndDeleteView(APIView):
         return Response({"intro": serializer.data}, status=status.HTTP_200_OK)
 
     def put(self, request, pk, format=None):
-        snippet = self.get_object(pk)
+        snippet = self.get_object_pk(pk)
+        user = request.user
+        request.data.update({"updated_by": user.userName})
         serializer = HomeIntroSerializer(snippet, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -195,7 +205,7 @@ class HomeIntroUpdateAndDeleteView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
+        snippet = self.get_object_pk(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

@@ -37,6 +37,7 @@ def get_banner_data_From_request_Object(request):
         requestObj['banner_title'] = request.data["banner_title"]
         requestObj['banner_subTitle'] = request.data["banner_subTitle"]
         requestObj['banner_descripiton'] = request.data["banner_descripiton"]
+        requestObj['moreLink'] = request.data["moreLink"]
         return requestObj
 
 def get_service_data_From_request_Object(request):

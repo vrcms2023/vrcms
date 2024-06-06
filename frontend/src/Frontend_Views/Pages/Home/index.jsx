@@ -39,6 +39,7 @@ import {
   getCarouselFields,
   getFormDynamicFields,
   getTestimonialsFields,
+  getTitleAndDescriptionFields,
   getserviceOfferedFields,
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
@@ -65,6 +66,8 @@ import Button from "../../../Common/Button";
 import { ABriefIntroStyled } from "../../../Common/StyledComponents/Styled-ABriefAbout";
 import { getAllCategories } from "../../../redux/products/categoryActions";
 import Product from "../Products/Product";
+import { SimpleTitleDescComponent } from "../../../Frontend_Admin/Components/BriefIntro/SimpleTitleDescComponent";
+import DynamicForm from "../../../Frontend_Admin/Components/forms/DynamicForm";
 
 const Home = () => {
   const editComponentObj = {
@@ -73,6 +76,14 @@ const Home = () => {
     projects: false,
     testmonial: false,
     serviceOffered: false,
+    product_development: false,
+    product_distribution: false,
+  };
+
+  const productComp = {
+    product_development: "product_development",
+    product_distribution: "product_distribution",
+    product_registration: "product_registration",
   };
 
   const pageType = "home";
@@ -85,6 +96,11 @@ const Home = () => {
   const [clientsList, setClientsList] = useState([]);
   const [homeCategoriesList, setHomeCategoriesList] = useState([]);
   const { categories } = useSelector((state) => state.categoryList);
+  const { isLoading } = useSelector((state) => state.loader);
+
+  const [productDevelopment, setProductDevelopment] = useState("");
+  const [productDistribution, setProductDistribution] = useState("");
+  const [productRegistration, setProductRegistration] = useState("");
   const dispatch = useDispatch();
 
   const editHandler = (name, value) => {
@@ -120,10 +136,11 @@ const Home = () => {
       });
     };
 
+    if (categories.length === 0) {
+      dispatch(getAllCategories());
+    }
     if (categories.length > 0 && homeCategoriesList.length === 0) {
       getHomePageCategoryList();
-    } else {
-      dispatch(getAllCategories());
     }
   }, [categories]);
 
@@ -238,47 +255,122 @@ const Home = () => {
           <div className="container position-relative d-none d-md-block">
             <div className="row text-white rounded-3 overflow-hidden position-absolute hiligntsContainer">
               <div className="col-sm-4 p-4 p-lg-5 ">
-                <Title
-                  title="product development"
-                  cssClass="fs-5 fw-medium mb-3"
-                />
-                <p>
-                  We offer a wide range of solutions for global pharmaceutical
-                  organizations
-                </p>
+                <div className="position-relative">
+                  {isAdmin && hasPermission && (
+                    <EditIcon
+                      editHandler={() =>
+                        editHandler(productComp.product_development, true)
+                      }
+                    />
+                  )}
+
+                  <SimpleTitleDescComponent
+                    formgetURL={`/carousel/updateHomeIntro/${productComp.product_development}/`}
+                    componentEdit={componentEdit.product_development}
+                    setFormValues={setProductDevelopment}
+                    formvalues={productDevelopment}
+                  />
+                  {componentEdit.product_development && (
+                    <div className="adminEditTestmonial">
+                      <DynamicForm
+                        editHandler={editHandler}
+                        componentType={productComp.product_development}
+                        componentTitle="Product Development component"
+                        formPostURL={`/carousel/createHomeIntro/`}
+                        formUpdateURL={`/carousel/updateHomeIntro/`}
+                        editObject={productDevelopment}
+                        dynamicFormFields={getTitleAndDescriptionFields(
+                          productComp.product_development
+                        )}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="col-sm-4 p-4 p-lg-5">
-                <Title
-                  title="product distribution"
-                  cssClass="fs-5 fw-medium mb-3"
-                />
-                <p>
-                  We comprised of dedicated professionals who are passionate
-                  about making
-                </p>
+                <div className="position-relative">
+                  {isAdmin && hasPermission && (
+                    <EditIcon
+                      editHandler={() =>
+                        editHandler(productComp.product_distribution, true)
+                      }
+                    />
+                  )}
+                  <SimpleTitleDescComponent
+                    formgetURL={`/carousel/updateHomeIntro/${productComp.product_distribution}/`}
+                    componentEdit={componentEdit.product_distribution}
+                    setFormValues={setProductDistribution}
+                    formvalues={productDistribution}
+                  />
+
+                  {componentEdit.product_distribution && (
+                    <div className="adminEditTestmonial">
+                      <DynamicForm
+                        editHandler={editHandler}
+                        componentType={productComp.product_distribution}
+                        componentTitle="Product Distribution component"
+                        formPostURL={`/carousel/createHomeIntro/`}
+                        formUpdateURL={`/carousel/updateHomeIntro/`}
+                        editObject={productDistribution}
+                        dynamicFormFields={getTitleAndDescriptionFields(
+                          productComp.product_distribution
+                        )}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="col-sm-4 p-4 p-lg-5">
-                <Title
-                  title="product registration"
-                  cssClass="fs-5 fw-medium mb-3"
-                />
-                <p>
-                  we work collaboratively to ensure that our products and
-                  services meet the highest{" "}
-                </p>
+                <div className="position-relative">
+                  {isAdmin && hasPermission && (
+                    <EditIcon
+                      editHandler={() =>
+                        editHandler(productComp.product_registration, true)
+                      }
+                    />
+                  )}
+                  <SimpleTitleDescComponent
+                    formgetURL={`/carousel/updateHomeIntro/${productComp.product_registration}/`}
+                    componentEdit={componentEdit.product_registration}
+                    setFormValues={setProductRegistration}
+                    formvalues={productRegistration}
+                  />
+
+                  {componentEdit.product_registration && (
+                    <div className="adminEditTestmonial">
+                      <DynamicForm
+                        editHandler={editHandler}
+                        componentType={productComp.product_registration}
+                        componentTitle="Product Distribution component"
+                        formPostURL={`/carousel/createHomeIntro/`}
+                        formUpdateURL={`/carousel/updateHomeIntro/`}
+                        editObject={productRegistration}
+                        dynamicFormFields={getTitleAndDescriptionFields(
+                          productComp.product_registration
+                        )}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </ProductHilightsStyled>
 
         <div className="container mt-0 mt-md-5 pt-md-5">
-          <Title title="Product Categories" cssClass="fs-2 text-center my-5 my-md-5 pt-0 pt-md-5" />
+          <Title
+            title="Product Categories"
+            cssClass="fs-2 text-center my-5 my-md-5 pt-0 pt-md-5"
+          />
           <div className="row">
             {homeCategoriesList.map(
               (category) =>
                 category?.products?.length > 0 && (
                   <>
-                    <Product item={category.products[0]} categoryId={category.id}  />
+                    <Product
+                      item={category.products[0]}
+                      categoryId={category.id}
+                    />
                     {/* {category.category_name} */}
                   </>
                 )
@@ -313,7 +405,7 @@ const Home = () => {
           </div>
         </div>
 
-        {componentEdit.briefIntro ? (
+        {componentEdit.briefIntro && (
           <div className="adminEditTestmonial">
             <BriefIntroAdmin
               editHandler={editHandler}
@@ -321,8 +413,6 @@ const Home = () => {
               pageType="Home"
             />
           </div>
-        ) : (
-          ""
         )}
 
         {/* Random Hilights */}
