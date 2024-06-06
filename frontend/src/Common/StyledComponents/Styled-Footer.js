@@ -68,6 +68,11 @@ export const FooterStyled = styled.div`
       margin: 25px 10px 0;
       color: ${({ theme }) => theme.secondaryColor};
     }
+
+    .editIcon  {
+      top: -7px;
+      right: -20px;
+    }
   }
 
   .footerDetails {
