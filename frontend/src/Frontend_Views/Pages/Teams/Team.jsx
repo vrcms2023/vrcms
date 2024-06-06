@@ -364,7 +364,7 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
         >
           <div
             key={item.id}
-            className={`mx-md-1 mx-lg-1  memberCard ${
+            className={`mx-md-1 mx-lg-1 memberCard shadow ${
               isAdmin ? "border border-warning position-relative" : ""
             } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
           >
