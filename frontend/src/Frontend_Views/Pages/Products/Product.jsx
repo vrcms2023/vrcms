@@ -17,7 +17,7 @@ const Product = ({ item, categoryId, editHandler, deleteProduct, pathName }) => 
 
   return (
     <div
-      className={`${pathName ? "" : "col-sm-6 col-md-4 col-lg-3"} text-center product px- mb-4`}
+      className={`${pathName ? "" : "col-sm-6 col-md-4 col-lg-3"} text-center product px-mb-4`}
     >
       <ProductItemStyled>
         {isAdmin && hasPermission && (
