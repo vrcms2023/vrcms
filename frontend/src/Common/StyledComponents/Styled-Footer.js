@@ -39,6 +39,14 @@ export const FooterStyled = styled.div`
     text-align: left
   }
 
+  .mainTitle {
+    color: ${({ theme }) => theme.secondaryColor};
+  }
+
+  .subtitle {
+
+  }
+
   .reachUs p {
     word-wrap: break-word;
   }
@@ -56,42 +64,55 @@ export const FooterStyled = styled.div`
   }
   
 
-  .socialLinks {
-    // padding: 15px 0;
-
-    img {
-      width: 70%;
-    }
-
-    i {
-      font-size: 2.5rem;
-      margin: 25px 10px 0;
-      color: ${({ theme }) => theme.secondaryColor};
-    }
-
-    .editIcon  {
-      top: -65px;
-      right: -13px;
-
-      @media(max-width: 768px) {
-        top: -100px;
-      }
-
-      @media(max-width: 768px) {
-        top: -67px;
-      }
-
-      i {
-        margin: 0px;
-      }
-    }
-  }
+  
 
   .footerDetails {
     color: ${({ theme }) => theme.black};
 
     a {
       color: ${({ theme }) => theme.black};
+    }
+
+    .socialMedia {
+      text-align: left;
+      .socialLinks {
+        // padding: 15px 0;
+    
+        img {
+          width: 70%;
+        }
+    
+        i {
+          font-size: 2rem;
+          margin: 25px 8px 0;
+          color: ${({ theme }) => theme.secondaryColor};
+        }
+    
+        .editIcon  {
+          top: -65px;
+          right: -13px;
+    
+          @media(max-width: 768px) {
+            top: -100px;
+          }
+    
+          @media(max-width: 768px) {
+            top: -67px;
+          }
+    
+          i {
+            margin: 0px;
+          }
+        }
+      }
+
+      .footerLogo {
+        width: 150px;
+      }
+
+      @media(max-width: 576px) {
+        text-align: center;
+      }
     }
   }
 
@@ -122,8 +143,7 @@ export const FooterStyled = styled.div`
         width: 50%;
       }
       i {
-        font-size: 2rem;
-        margin: 15px 9px 0;
+        margin: 15px 8px 0;
       }
     }
 

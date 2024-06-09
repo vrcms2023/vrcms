@@ -84,7 +84,7 @@ body {
 .btn {
     border-radius: 0.375rem !important;
     transition: all .35s;
-    padding: 6px 16px !important;
+    padding: 6px 12px !important;
 
     // &:hover svg { transform: rotate(-45deg);}
     &:hover {
@@ -321,10 +321,14 @@ body {
     }
 
     input,
-    textarea {
+    textarea, select {
       background-color: ${({theme}) => theme.white};
       border: 1px solid ${({theme}) => theme.secondaryColor} !important;
       padding: 12px 10px;
+    }
+    input[type="checkbox"], input[type="radio"] {
+      padding: 0;
+      margin: 0;
     }
 
     .scrollTop {

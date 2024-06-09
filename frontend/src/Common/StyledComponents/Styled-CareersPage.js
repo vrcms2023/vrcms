@@ -28,6 +28,23 @@ export const CareersPageStyled = styled.div`
   }
 
   .currentOpenings {
+    max-height: 300px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(225,242,253,0.3); 
+        border-radius: 3px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(232,252,187,0.5); 
+    }
+
     .title {
       color: ${({ theme }) => theme.primaryColor};
       border-bottom: 1px solid ${({ theme }) => theme.white};
@@ -59,8 +76,9 @@ export const CareersPageStyled = styled.div`
   }
 
   .jobBriefDetails {
-    background-color: rgba(255,255,255, .3);
-    // border: 1px solid ${({ theme }) => theme.white};
+    background: linear-gradient(90deg, rgba(225,242,253,1) 0%, ${({ theme }) => theme.white} 50%, rgba(225,242,253,1) 100%);
+    // background-color: rgba(255,255,255, .3);
+    // border: 1px solid ${({ theme }) => theme.secondaryColor};
   }
 
   .jobDescription {
