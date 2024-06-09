@@ -24,6 +24,9 @@ import Title from "../../../Common/Title";
 // Styles
 import JobBriefDetails from "../../Components/JobBriefDetails";
 import { CareersPageStyled } from "../../../Common/StyledComponents/Styled-CareersPage";
+import ApplyForm from "./ApplyForm";
+import CareersFilter from "../../Components/CareersSearch/CareersFilter";
+import { CareerFilterStyled } from "../../../Common/StyledComponents/Styled-CareerFilter";
 
 const Careers = () => {
   const editComponentObj = {
@@ -114,13 +117,12 @@ const Careers = () => {
         pageType={pageType}
       />
 
-      <CareersPageStyled>
-        <div className="container py-4 my-md-5 py-md-4">
-          <div className="row">
+      <div className="container my-4">
+      <div className="row">
             <div className="col-8 col-md-10">
               <Title
                 title="Careers Details"
-                cssClass="fw-bold fs-4 pageTitle "
+                cssClass="fw-medium fs-4 pageTitle "
               />
               
             </div>
@@ -128,15 +130,25 @@ const Careers = () => {
               
               <Link
                 to="/careers"
-                className="btn btn-outline d-flex justify-content-center align-items-center gap-2"
+                className="btn btn-outline m-auto w-auto d-flex justify-content-center align-items-center gap-2"
               >
                 <i className="fa fa-chevron-left" aria-hidden="true"></i>
                 <span className="">Back</span>
               </Link>
             </div>
           </div>
+      </div>
 
-          <div className="row mt-4 d-flex flex-rowreverse">
+      <CareerFilterStyled>
+        <div className="container p-5 py-3 careersFilter">
+          <CareersFilter />
+        </div>
+      </CareerFilterStyled>
+
+      <CareersPageStyled>
+        <div className="container py-4 mb-md-5 py-md-4">
+          
+          <div className="row d-flex flex-rowreverse">
             <div className="col-md-9 px-3">
               <JobBriefDetails jobDetails={posts} />
               <div className="jobDescription p-4">
@@ -160,6 +172,8 @@ const Careers = () => {
             </div>
             <div className="col-md-3 mt-4 mt-md-0">
               <JobCurrentOpenings />
+
+              <ApplyForm />
             </div>
           </div>
         </div>

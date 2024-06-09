@@ -27,6 +27,8 @@ import Search from "../../../Common/Search";
 import JobPost from "../../Components/JobPost";
 import JobPostFrom from "../../../Frontend_Admin/Components/forms/JobpostForm";
 import { CareersPageStyled } from "../../../Common/StyledComponents/Styled-CareersPage";
+import CareersFilter from "../../Components/CareersSearch/CareersFilter";
+import { CareerFilterStyled } from "../../../Common/StyledComponents/Styled-CareerFilter";
 
 const Careers = () => {
   const editComponentObj = {
@@ -83,6 +85,8 @@ const Careers = () => {
           bannerState={componentEdit.banner}
         />
       </div>
+      
+      
 
       {componentEdit.banner ? (
         <div className="adminEditTestmonial">
@@ -101,13 +105,9 @@ const Careers = () => {
       )}
 
       {/* Introduction */}
-      {isAdmin && hasPermission && (
+      {/* {isAdmin && hasPermission && (
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
       )}
-      {/* <BriefIntroFrontend
-        introState={componentEdit.briefIntro}
-        pageType={pageType}
-      /> */}
 
       <BriefIntroFrontend
         introState={componentEdit.briefIntro}
@@ -134,7 +134,13 @@ const Careers = () => {
         </div>
       ) : (
         ""
-      )}
+      )} */}
+
+      <CareerFilterStyled>
+        <div className="container p-5 py-3 careersFilter">
+          <CareersFilter />
+        </div>
+      </CareerFilterStyled>
 
       <div className="container mt-4 my-md-5 careerItems">
         {isAdmin && hasPermission && (
@@ -163,7 +169,7 @@ const Careers = () => {
         )}
         <div>
           <CareersPageStyled>
-            <div className="row mb-4 py-4">
+            <div className="row mb-4 pb-4">
               <div className="col-md-6">
                 <Title title="Careers" cssClass="fs-3 pageTitle" />
               </div>

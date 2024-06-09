@@ -22,6 +22,7 @@ import Logo from "../../Images/logo.png";
 // Styles
 import { FooterStyled } from "../StyledComponents/Styled-Footer";
 import Ancher from "../Ancher";
+import Title from "../Title";
 
 const Footer = () => {
   const editComponentObj = {
@@ -119,7 +120,7 @@ const Footer = () => {
         <div className="container py-4 footerDetails">
           <div className="row">
             <div className="col-md-3 text-center text-md-start">
-              <h5 className="text-center text-md-start">Company</h5>
+              <Title title="Company" />
               <ul className="">
                 {menuList?.map((menu) => {
                   return <ChildMenuContent menu={menu} key={menu.id} />;
@@ -180,7 +181,8 @@ const Footer = () => {
                 )}
               {address && (
                 <>
-                  <h5 className="text-center text-md-start">Address</h5>
+                  <Title title="Address"  />
+
                   <p className="m-0 fw-bold">{address.company_name}</p>
                   <p className="m-0">{address.address_dr_no}</p>
                   <p className="m-0">{address.street} </p>
@@ -210,7 +212,8 @@ const Footer = () => {
                     iconCss="ms-2 m-auto"
                   />
                 )}
-              <h5 className="d-none d-sm-block">Reach Us</h5>
+              {/* <h5 className="d-none d-sm-block">Reach Us</h5> */}
+              <Title title="Reach Us"  />
               {address.phonen_number ? (
                 <p className="m-0 pb-3">
                   <i
@@ -288,19 +291,20 @@ const Footer = () => {
             <hr className="d-block d-md-none" />
             {
               <div 
-                  className={`col-md-3 pb-3 pb-md-0 ${
+                  className={`col-md-3 pb-3 pb-md-0 socialMedia ${
                     isAdmin
                       ? "border border-warning mb-3 position-relative"
                       : ""
                   }`}
               >
-                <h5>Social Media</h5>
+                
+                <Title title="Social Media" />
                 <img
                   src={Logo}
                   alt="SAP Design Studio"
                   className="footerLogo"
                 />
-                <div className="socialLinks position-relative">
+                <div className="socialLinks ">
                   
                   {isAdmin && (
                     <EditIcon
