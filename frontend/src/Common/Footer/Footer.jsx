@@ -204,7 +204,7 @@ const Footer = () => {
             </div> */}
 
              <div 
-              className={`col-md-3 text-center text-md-start reachUs ${
+              className={`col-md-4 col-lg-3 text-center text-md-start reachUs ${
                 isAdmin
                   ? "border border-warning position-relative"
                   : ""
@@ -299,7 +299,7 @@ const Footer = () => {
             <hr className="d-block d-md-none mt-3 mb-4" />
             {
               <div 
-                  className={`col-md-6 pb-md-0 socialMedia d-flex flex-column align-items-center justify-content-md-end align-items-md-end ${
+                  className={`col-md-5 col-lg-6 pb-md-0 socialMedia d-flex flex-column align-items-center justify-content-md-center justify-content-lg-end align-items-md-end ${
                     isAdmin
                       ? "border border-warning mb-3 position-relative"
                       : ""
@@ -373,7 +373,7 @@ const Footer = () => {
                   )}
                   
                 </div>
-                <small className="mt-3 fw-medium"> {fullYear} Copyright Leon Pharma Corp. All rights reserved.</small>
+                <small className="mt-3 fw-medium text-center text-md-end"> {fullYear} Copyright Leon Pharma Corp. All rights reserved.</small>
               </div>
               
             }
