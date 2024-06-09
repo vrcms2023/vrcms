@@ -14,6 +14,14 @@ export const fieldValidation = {
   postcode: {
     required: "Please enter Postcode.",
   },
+  email: {
+    required: "Please enter Email",
+    pattern: {
+      value:
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      message: "Please enter valid Email format",
+    },
+  },
   emailid: {
     required: "Please enter Email",
     pattern: {
@@ -27,6 +35,13 @@ export const fieldValidation = {
       value:
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       message: "Please enter valid Email format",
+    },
+  },
+  phoneNumber: {
+    required: "Please enter Phone Number.",
+    pattern: {
+      value: /\d+/,
+      message: "Please enter valid Phone number only.",
     },
   },
   phonen_number: {

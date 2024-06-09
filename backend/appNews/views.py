@@ -15,7 +15,7 @@ from common.CustomPagination import CustomPagination
     
 class CreateAppNews(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    queryset = AppNews.objects.all()
+    queryset = AppNews.objects.all().order_by("news_position")
     serializer_class = AppNewsSerializer
     pagination_class = CustomPagination
 
@@ -24,7 +24,7 @@ class CreateAppNews(generics.CreateAPIView):
     """
 
     def get(self, request, format=None):
-        snippets = AppNews.objects.all()
+        snippets = AppNews.objects.all().order_by("news_position")
         results = get_custom_paginated_data(self, snippets)
         if results is not None:
             return results
@@ -81,7 +81,7 @@ class AppNewsDetail(APIView):
 
 class ClientAppNews(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
-    queryset = AppNews.objects.all()
+    queryset = AppNews.objects.all().order_by("news_position")
     serializer_class = AppNewsSerializer
     pagination_class = CustomPagination
 
@@ -90,7 +90,7 @@ class ClientAppNews(generics.CreateAPIView):
     """
 
     def get(self, request, format=None):
-        snippets = AppNews.objects.all()
+        snippets = AppNews.objects.all().order_by("news_position")
         results = get_custom_paginated_data(self, snippets)
         if results is not None:
             return results

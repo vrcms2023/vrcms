@@ -138,6 +138,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
+EMAIL_THANK_YOU_MESSAGE="Thank you contact VRCMS"
 
 # env properties not workign need check later
 # EMAIL_HOST = 'smtp.gmail.com'

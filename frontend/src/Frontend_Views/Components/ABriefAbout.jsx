@@ -25,6 +25,7 @@ const ABriefAbout = ({
   pageType = "HomeWhoWeAre",
   componentFlip = false,
   showForm = false,
+  categoryId,
 }) => {
   const editComponentObj = {
     whoweare: false,
@@ -90,7 +91,7 @@ const ABriefAbout = ({
               : "Update description"}
           </p>
         </div>
-        {showForm && <ContactForm />}
+        {showForm && <ContactForm categoryId={categoryId} />}
         {bannerData.moreLink ? (
           <div>
             <Ancher

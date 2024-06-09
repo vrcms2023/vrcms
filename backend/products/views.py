@@ -68,6 +68,26 @@ class UpdateCategory(APIView):
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class DeleteCategoryFile(APIView):
+    """
+    Retrieve, update or delete a Category instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Category.objects.get(pk=pk)
+        except Category.DoesNotExist:
+            raise Http404
+
+    def patch(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        snippet.category_fileuplod
+        serializer = CategorySerializer(snippet, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"category": serializer.data}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 """ 
 Client Category View
 """

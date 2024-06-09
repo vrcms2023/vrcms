@@ -8,7 +8,7 @@ from rest_framework import status
 from django.http import Http404
 from common.utility import get_carousel_data_From_request_Object, get_custom_paginated_data
 from django.db.models import Q
-from common.CustomPagination import CustomPagination
+from common.CustomPaginationForImageGallery import CustomPaginationForImageGallery
 
 
 # Create your views here.
@@ -238,8 +238,8 @@ class ClientHomeIntroView(generics.CreateAPIView):
 class ClientLogoAPIView(generics.CreateAPIView):
      permission_classes = [permissions.IsAuthenticated]
      serializer_class = ClientLogoSerializer
-     queryset = ClientLogo.objects.all()
-     pagination_class = CustomPagination
+     queryset = ClientLogo.objects.all().order_by('client_position',"-created_at")
+     pagination_class = CustomPaginationForImageGallery
 
      """
      List all ClientLogo, or create a new ClientLogo.
@@ -247,7 +247,7 @@ class ClientLogoAPIView(generics.CreateAPIView):
 
 
      def get(self, request, format=None):
-        snippets = ClientLogo.objects.all()
+        snippets = ClientLogo.objects.all().order_by('client_position',"-created_at")
         results = get_custom_paginated_data(self, snippets)
         if results is not None:
             return results
@@ -300,20 +300,33 @@ class ClientLogoUpdateAndDeleteView(APIView):
    
 class ClientLogoImagesView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
-    queryset = ClientLogo.objects.all()
+    queryset = ClientLogo.objects.all().order_by('client_position')
     serializer_class = ClientLogoSerializer
-    pagination_class = CustomPagination
-
+    pagination_class = CustomPaginationForImageGallery
+   
     """
     List all ClientLogo, or create a new ClientLogo.
     """
 
     def get(self, request, format=None):
-        snippets = ClientLogo.objects.all()
+        snippets = ClientLogo.objects.all().order_by('client_position',"-created_at")
         results = get_custom_paginated_data(self, snippets)
         if results is not None:
             return results
 
+        serializer = ClientLogoSerializer(snippets, many=True)
+        return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
+
+class AllClientLogoImagesView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = ClientLogo.objects.all().order_by('client_position',"-created_at")
+    serializer_class = ClientLogoSerializer
+    """
+    List all ClientLogo, or create a new ClientLogo.
+    """
+
+    def get(self, request, format=None):
+        snippets = ClientLogo.objects.all().order_by('client_position',"-created_at")
         serializer = ClientLogoSerializer(snippets, many=True)
         return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
     
@@ -321,7 +334,7 @@ class ClientLogoImagesView(generics.CreateAPIView):
 class ClientLogoSearchAPIView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = ClientLogoSerializer
-    pagination_class = CustomPagination
+    pagination_class = CustomPaginationForImageGallery
   
     def get_object(self, query):
         try:
