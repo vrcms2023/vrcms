@@ -38,6 +38,7 @@ import DeleteDialog from "../../../Common/DeleteDialog";
 import SingleImageUlploadWithForm from "../../../Frontend_Admin/Components/forms/SingleImageUlploadWithForm";
 import { getAllCategories } from "../../../redux/products/categoryActions";
 import {
+  getImagePath,
   getObjectPositionKey,
   paginationDataFormat,
   sortByFieldName,
@@ -167,11 +168,9 @@ const ProductsPage = () => {
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  
 
   return (
     <>
@@ -322,7 +321,6 @@ const ProductsPage = () => {
               </div>
               <span className="d-none d-md-block"> | </span>
               <div>
-
                 <Link
                   className="moreLink "
                   // onClick={() => downloadFile(editObject?.category_fileuplod)}
@@ -334,7 +332,6 @@ const ProductsPage = () => {
                   ></i>
                 </Link>
               </div>
-
             </div>
           </div>
 
@@ -443,9 +440,10 @@ const ProductsPage = () => {
                     cssClass="fs-3 text-center fw-medium title"
                     imageClass="w-100 h-100 object-fit-cover rounded-end rounded-end-5"
                     dimensions={imageDimensionsJson("whoweare")}
-                    pageType={"products"}
+                    pageType={"products-Abrief"}
                     componentFlip={false}
                     showForm={true}
+                    categoryId={selectedCategory.id}
                   />
                 </div>
               </div>

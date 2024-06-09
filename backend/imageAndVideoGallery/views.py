@@ -8,19 +8,19 @@ from rest_framework import status
 from django.http import Http404
 from common.utility import get_imageAndVidoe_data_From_request_Object
 from common.utility import get_custom_paginated_data
-from common.CustomPagination import CustomPagination
+from common.CustomPaginationForImageGallery import CustomPaginationForImageGallery
 
 class ImageAndVideoGalleryAPIView(generics.CreateAPIView):
      permission_classes = [permissions.IsAuthenticated]
      serializer_class = imageAndVideoGallerySerializer
-     queryset = imageAndVideoGallery.objects.all()
-     pagination_class = CustomPagination
-
+     queryset = imageAndVideoGallery.objects.all().order_by('position',"-created_at")
+     pagination_class = CustomPaginationForImageGallery
+    
      """
      List all imageAndVideoGallery, or create a new imageAndVideoGallery.
      """
      def get(self, request, category, format=None):
-        snippets = imageAndVideoGallery.objects.filter(category = category)
+        snippets = imageAndVideoGallery.objects.filter(category = category).order_by('position',"-created_at")
         results = get_custom_paginated_data(self, snippets)
         if results is not None:
             return results
@@ -79,18 +79,62 @@ class ImageAndVideoGalleryUpdateAndDeleteView(APIView):
    
 class ClientImageAndVideoGalleryView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
-    queryset = imageAndVideoGallery.objects.all()
+    queryset = imageAndVideoGallery.objects.all().order_by('position',"-created_at")
     serializer_class = imageAndVideoGallerySerializer
-    pagination_class = CustomPagination
+    pagination_class = CustomPaginationForImageGallery
 
     """
     List all imageAndVideoGallery, or create a new imageAndVideoGallery.
     """
 
     def get(self, request, category, format=None):
-        snippets = imageAndVideoGallery.objects.filter(category = category)
+        snippets = imageAndVideoGallery.objects.filter(category = category).order_by('position',"-created_at")
         results = get_custom_paginated_data(self, snippets)
         if results is not None:
             return results
         serializer = imageAndVideoGallerySerializer(snippets, many=True)
         return Response({"imageAndVideoGallery": serializer.data}, status=status.HTTP_200_OK)
+
+
+class ClientAlImageAndVideoGalleryView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = imageAndVideoGallery.objects.all().order_by('position',"-created_at")
+    serializer_class = imageAndVideoGallerySerializer
+
+    """
+    List all imageAndVideoGallery, or create a new imageAndVideoGallery.
+    """
+
+    def get(self, request, category, format=None):
+        snippets = imageAndVideoGallery.objects.filter(category = category).order_by('position',"-created_at")
+        serializer = imageAndVideoGallerySerializer(snippets, many=True)
+        return Response({"imageAndVideoGallery": serializer.data}, status=status.HTTP_200_OK)
+    
+
+      
+class UpdateClientIndex(APIView):
+    """
+    Retrieve, update or delete a address instance.
+    """
+
+    def get_object(self, obj_id):
+        try:
+            return imageAndVideoGallery.objects.get(id=obj_id)
+        except (imageAndVideoGallery.DoesNotExist):
+            raise status.HTTP_400_BAD_REQUEST
+        
+    def put(self, request, *args, **kwargs):
+        obj_list = request.data
+        instances = []
+        user = request.user
+        for item in obj_list:
+            obj = self.get_object(obj_id=item["id"])
+            obj.updated_by = user.userName
+            obj.position = item["position"]
+            obj.save()
+            instances.append(obj)
+
+        serializer = imageAndVideoGallerySerializer(instances,  many=True)
+        
+        return Response({"imageAndVideoGallery": serializer.data}, status=status.HTTP_200_OK)
+       

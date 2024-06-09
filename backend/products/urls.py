@@ -5,6 +5,7 @@ from .views import *
 urlpatterns = [
     path('createCategory/', CreateCategory.as_view(), name="create_Category"),
     path('updateCategory/<pk>/', UpdateCategory.as_view(), name='retrieve_update_delete_Category'),
+    path('deleteCategoryFile/<pk>/', DeleteCategoryFile.as_view(), name='retrieve_update_delete_Category'),
     path('getClinetCategory/', ClientCategoryAPIView.as_view(), name='get_client_Category'),
     path('createProduct/', CreateProduct.as_view(), name="create_Product"),
     path('createProduct/<categoryID>/', CreateProduct.as_view(), name="create_Product"),

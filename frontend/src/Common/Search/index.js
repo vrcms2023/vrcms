@@ -16,7 +16,7 @@ const Search = ({
   imageGallery,
   setImageGallery,
   hideSearchBy,
-  searchBy = " Search "
+  searchBy = " Search ",
 }) => {
   const userCookie = getCookie("access");
 
@@ -30,7 +30,7 @@ const Search = ({
     }
   };
 
-  console.log(hideSearchBy, "hideSearchBy")
+  // console.log(hideSearchBy, "hideSearchBy")
 
   // const searchResults = () => {
   //   const searchResults = imageGallery?.filter(image => image.title.toLowerCase() === searchQuery.toLowerCase())

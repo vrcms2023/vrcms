@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import { getBaseURL } from "../../../util/ulrUtil";
 import { toast } from "react-toastify";
 import { getCookie } from "../../../util/cookieUtil";
+import { confirmAlert } from "react-confirm-alert";
+import DeleteDialog from "../../../Common/DeleteDialog";
 
 export default function DynamicFormwithFileUplod({
   editHandler,
@@ -20,6 +22,7 @@ export default function DynamicFormwithFileUplod({
   dynamicFormFields = [],
   formPostURL,
   formUpdateURL,
+  formDeleteURL,
 }) {
   const closeHandler = () => {
     setEditState(false);
@@ -90,8 +93,31 @@ export default function DynamicFormwithFileUplod({
     link.click();
   };
 
-  const deleteFileHandler = (fileId) => {
-    console.log(fileId);
+  const deleteFileHandler = (item) => {
+    const { id, category_name } = item;
+    const _body = JSON.parse(JSON.stringify(item));
+    _body["category_fileuplod"] = "";
+    const deleteImageByID = async () => {
+      const response = await axiosServiceApi.patch(
+        `${formDeleteURL}${id}/`,
+        _body
+      );
+      if (response) {
+        console.log(response);
+      }
+    };
+
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <DeleteDialog
+            onClose={onClose}
+            callback={deleteImageByID}
+            message={`deleting the ${category_name} image?`}
+          />
+        );
+      },
+    });
   };
   return (
     <>
@@ -147,7 +173,7 @@ export default function DynamicFormwithFileUplod({
                       aria-hidden="true"
                     ></i>
                   </Link>
-                  <Link to="" onClick={deleteFileHandler(editObject)}>
+                  <Link to="" onClick={() => deleteFileHandler(editObject)}>
                     <i
                       class="fa fa-trash-o ms-2 fs-5 rounded-1 p-1 text-danger"
                       aria-hidden="true"
