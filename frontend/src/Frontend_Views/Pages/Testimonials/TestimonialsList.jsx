@@ -19,7 +19,8 @@ import {
 } from "../../../util/axiosUtil";
 import { getImagePath, paginationDataFormat } from "../../../util/commonUtil";
 import Title from "../../../Common/Title";
-
+import Model from "../../../Common/Model";
+import ModelBg from "../../../Common/ModelBg";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
 import AddEditAdminNews from "../../../Frontend_Admin/Components/News";
@@ -31,6 +32,7 @@ import CustomPagination from "../../../Common/CustomPagination";
 import SkeletonImage from "../../../Common/Skeltons/SkeletonImage";
 
 import { TestimonialsListPageStyled } from "../../../Common/StyledComponents/Styled-TestimonialsList";
+
 
 const TestimonialsList = () => {
   const editComponentObj = {
@@ -48,11 +50,12 @@ const TestimonialsList = () => {
   const [clientsList, setClientsList] = useState([]);
   const [show, setShow] = useState(false);
   const [editCarousel, setEditCarousel] = useState({});
-
+  const [modelShow, setModelShow] = useState(false);
   const [paginationData, setPaginationData] = useState({});
   const [pageLoadResult, setPageloadResults] = useState(false);
   const [searchQuery, setSearchquery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [modelItem, setModelItem] = useState({})
 
   const setResponseData = (data) => {
     setClientsList(
@@ -124,6 +127,17 @@ const TestimonialsList = () => {
         );
       },
     });
+  };
+
+  const showModel = (item) => {
+    setModelItem(item)
+    setShow(!show)
+    setModelShow(!modelShow);
+  };
+
+  const closeModel = () => {
+    setModelShow(!modelShow);
+    setShow(!show)
   };
 
   return (
@@ -310,13 +324,27 @@ const TestimonialsList = () => {
 
                     <div className="col-lg-2 d-none d-lg-block h-100">
                       <div className="h-100 p-3 p-md-5 py-md-4 testimonialAvatar ">
+                      <Link
+                        to=""
+                        className="text-decoration-underline"
+                        onClick={() => showModel(item)}
+                      >
                         <img
                           src={getImagePath(item.path)}
                           alt=""
                           className="img-fluid rounded-circle border border-3 border-light shadow-lg img-thumbnail "
                         />
+                        </Link>
                       </div>
                     </div>
+                    <Link
+                        to=""
+                        className="btn btn-outline w-auto mx-4 text-decoration-underline d-flex d-lg-none"
+                        onClick={() => showModel(item)}
+                      >
+                        More
+                      </Link>
+                      
                   </div>
                   <hr className="border-secondary" />
                 </div>
@@ -353,6 +381,16 @@ const TestimonialsList = () => {
           ""
         )}
       </div>
+      {modelShow && (
+                      <Model
+                        obj={modelItem}
+                        privacy={""}
+                        closeModel={closeModel}
+                        flag="footer"
+                      />
+                    )}
+
+      {show && <ModelBg />}
     </>
   );
 };
