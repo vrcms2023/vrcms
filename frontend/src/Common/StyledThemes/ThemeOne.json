@@ -8,26 +8,36 @@
 
   "white": "#ffffff",
   "black": "#000000",
+  "gray111": "#111111",
+  "gray222": "#222222",
+  "gray333": "#333333",
   "gray444": "#444444",
+  "gray555": "#555555",
+  "gray666": "#666666",
+  "gray777": "#777777",
   "gray888": "#888888",
-  "gray": "#999999",
+  "gray999": "#999999",
+  "grayaaa": "#aaaaaa",
+  "graybbb": "#bbbbbb",
+  "grayccc": "#cccccc",
+  "grayddd": "#dddddd",
+  "grayeee": "#eeeeee",
+
+  "yellow": "#ffff00",
+  
   "lightgray": "#e3e3e3",
   "verylightgray": "#f3f3f3",
   "error": "#f23838",
+  "transparent": "transparent",
 
   "primaryColor": "#E1F2FD",
   "primaryHoverColor": "#000000",
+
   "secondaryColor": "#0084CF",
   "secondaryHoverColor": "#333333",
+
   "teritoryColor": "#44B2E5",
   "teritoryHoverColor": "#2A5CA0",
-  "transparent": "transparent",
-
-  "topStripBgColor": "#000000",
-  "topStripTextColor": "#ffffff",
-  "topStripTitleColor": "",
-  "topStripLinkColor": "#ffffff",
-  "topStripLinkHoverColor": "#3CD9D2",
 
   "navbarBg": "#E1F2FD",
   "navbarTextColor": "#ffffff",

@@ -1,12 +1,19 @@
 import React from "react";
 
-const Title = ({ title, subTitle = "", cssClass }) => {
+const Title = ({ 
+  title = "",
+  subTitle = "", 
+  cssClass,
+  mainTitleClassess="",
+  subTitleClassess="subtitle"
+}) => {
+  
   return (
     <>
-      <div className={`${cssClass} mb-3 text-center text-md-start text-capitalize fw-medium mainTitle `}>
-        {title}{" "}
+      <div className={`${mainTitleClassess}`}>
+        {title}
         {subTitle ? (
-          <span className={"fs-6 text-black fw-normal subtitle"}> / {subTitle}</span>
+          <span className={`${subTitleClassess}`}> / {subTitle}</span>
         ) : (
           ""
         )}

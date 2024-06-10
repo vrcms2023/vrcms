@@ -1,22 +1,23 @@
 import styled from "styled-components";
 
 export const TopStripStyled = styled.div`
-  background-color: ${({ theme }) => theme.topStripBgColor};
-  color: ${({ theme }) => theme.topStripTextColor};
 
-  a {
-    color: ${({ theme }) => theme.topStripLinkColor};
-  }
+  .topStrip { 
+    background-color: ${({ theme }) => theme.gray555};
+    color: ${({ theme }) => theme.graybbb};
 
-  a:hover {
-    color: ${({ theme }) => theme.topStripLinkHoverColor};
-  }
+    a { 
+      color: ${({ theme }) => theme.graybbb};
+      &:hover { color: ${({ theme }) => theme.black}};
+    }
+    
+    a.logOut {
+      color: ${({ theme }) => theme.white};
+      &:hover { text-decoration: underline};
+    }
 
-  h3 {
-    font-size: 0.9rem;
-    margin: 0px;
-  }
-  .topStrip {
-    padding: 5px 10px;
+    i {
+      color: ${({ theme }) => theme.primaryColor};
+    }
   }
 `;
