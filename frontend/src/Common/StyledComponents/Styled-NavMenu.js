@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 export const StyledMenu = styled.menu`
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 99999;
   margin-left: auto;
 
   .navbar-brand {
@@ -17,16 +21,14 @@ export const StyledMenu = styled.menu`
   }
 
 
-
-
   .navbar {
-    background-color:${({ theme }) => theme.primaryColor}; 
-    box-shadow: 0px 2px 10px ${({ theme }) => theme.secondaryColor};
+    background-color:${({ theme }) => theme.navbarBg}; 
+    // box-shadow: 0px 2px 10px ${({ theme }) => theme.secondaryColor};
+    
     
     .nav-item {
-
         .nav-Link {
-          color:${({ theme }) => theme.black}; 
+          color:${({ theme }) => theme.navbarTextColor}; 
           margin: 0 12px;
           text-decoration: none;
           font-size: 0.9rem;
@@ -38,25 +40,25 @@ export const StyledMenu = styled.menu`
             content: "";
             width: 0%;
             /* height: 1px; */
-            border-bottom: 2px solid ${({ theme }) => theme.secondaryColor}; 
+            border-bottom: 2px solid ${({ theme }) => theme.navbarLinkActiveColor}; 
             bottom: -4px;
             transition: width 0.3s;
           }
 
           &.active {
-            color:${({ theme }) => theme.secondaryColor};
+            color:${({ theme }) => theme.navbarLinkActiveColor};
             
             &:before {
               position: absolute;
               content: "";
               width: 35%;
               /* height: 1px; */
-              border-bottom: 2px solid ${({ theme }) => theme.secondaryColor}; 
+              // border-bottom: 2px solid ${({ theme }) => theme.secondaryColor}; 
               bottom: -4px;
             }
           }
           &:hover {
-              color:${({ theme }) => theme.secondaryColor};
+              color:${({ theme }) => theme.navbarLinkHoverColor};
 
               &:before {
                 width: 35%;
@@ -65,9 +67,9 @@ export const StyledMenu = styled.menu`
         }
 
         @media (max-width: 992px) {
-          // background: ${({theme}) => theme.white};
-          background: linear-gradient(90deg, rgba(225,242,253,1) 0%, rgba(255,255,255,1) 50%, rgba(225,242,253,1) 100%);
-          border-bottom: 1px solid ${({theme}) => theme.verylightgray};
+          background: ${({theme}) => theme.gray555};
+          // background: linear-gradient(90deg, rgba(225,242,253,1) 0%, rgba(255,255,255,1) 50%, rgba(225,242,253,1) 100%);
+          border-bottom: 1px solid ${({theme}) => theme.gray666};
           text-align:center;
           padding: 8px;
         }
@@ -78,8 +80,8 @@ export const StyledMenu = styled.menu`
     }
 
     .navbar-toggler {
-      background-color:${({ theme }) => theme.secondaryColor} !important; 
-      border: 1px solid ${({ theme }) => theme.white}; 
+      background-color:${({ theme }) => theme.navbarLinkActiveColor} !important; 
+      border: 1px solid ${({ theme }) => theme.navbarLinkActiveColor}; 
     }
     .navbar-collapse {
       .navbar-nav {
@@ -92,9 +94,9 @@ export const StyledMenu = styled.menu`
 // ++++++++++++++ DROPDOWN ++++++++++++++++
 
       ul.dropdown-menu {
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        // border-radius: 10px;
+        // overflow: hidden;
+        // box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
         border: 0px; 
         padding: 0px;
         margin: 0px;
@@ -114,28 +116,27 @@ export const StyledMenu = styled.menu`
         // transform-origin: top center;
     
         .nav-item {
-          background-color: ${({ theme }) => theme.primaryColor};
-          border-bottom: 1px solid ${({ theme }) => theme.secondaryColor};
+          background-color: ${({ theme }) => theme.navbarBg};
+          // border-bottom: 1px solid ${({ theme }) => theme.gray555};
 
           &:last-child {
-            border: 0px;
+            border: 0px ;
           }
     
           a.active {
-            background-color: ${({ theme }) => theme.white};
+            background-color: ${({ theme }) => theme.navbarLinkActiveColor};
           }
         }
   
         .dropdown-item {
-          color: ${({ theme }) => theme.black};
+          color: ${({ theme }) => theme.navbarLinkColor};
           padding: 10px 20px;
-          font-weight: 600;
           transition: transform 250ms, opacity 400ms;
           // transition: transform 250ms cubic-bezier(0.1, 0.2, 0.3, 0.4);
       
           &:hover {
-            color: ${({ theme }) => theme.white};
-            background-color: ${({ theme }) => theme.secondaryColor};
+            color: ${({ theme }) => theme.navbarLinkColor};
+            background-color: ${({ theme }) => theme.navbarLinkHoverColor};
             transform: scale(1.1)
           }
         }

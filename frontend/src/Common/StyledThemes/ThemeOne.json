@@ -8,6 +8,7 @@
 
   "white": "#ffffff",
   "black": "#000000",
+
   "gray111": "#111111",
   "gray222": "#222222",
   "gray333": "#333333",
@@ -30,7 +31,7 @@
   "error": "#f23838",
   "transparent": "transparent",
 
-  "primaryColor": "#E1F2FD",
+  "primaryColor": "#444444",
   "primaryHoverColor": "#000000",
 
   "secondaryColor": "#0084CF",
@@ -39,12 +40,12 @@
   "teritoryColor": "#44B2E5",
   "teritoryHoverColor": "#2A5CA0",
 
-  "navbarBg": "#E1F2FD",
-  "navbarTextColor": "#ffffff",
-  "navbarLinkColor": "#000000",
+  "navbarBg": "#444444",
+  "navbarTextColor": "#e3e3e3",
+  "navbarLinkColor": "#e3e3e3",
   "navbarLinkBgColor": "#748E31",
-  "navbarLinkActiveColor": "#27AAE1",
-  "navbarLinkHoverColor": "#748E31",
+  "navbarLinkActiveColor": "#c4165f",
+  "navbarLinkHoverColor": "#c4165f",
 
   "navbarChildLinkBgColor": "#3cd9d2",
   "navbarChildLinkColor": "#ffffff",
