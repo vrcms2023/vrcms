@@ -13,11 +13,19 @@ export const TopStripStyled = styled.div`
     
     a.logOut {
       color: ${({ theme }) => theme.white};
-      &:hover { text-decoration: underline};
+      &:hover { 
+        text-decoration: underline;
+        color: ${({ theme }) => theme.navbarLinkHoverColor};
+
+        i {
+          color: ${({ theme }) => theme.navbarLinkHoverColor};
+        }
+
+      };
     }
 
     i {
-      color: ${({ theme }) => theme.primaryColor};
+      color: ${({ theme }) => theme.white};
     }
   }
 `;
