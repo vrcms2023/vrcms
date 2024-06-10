@@ -186,7 +186,7 @@ const Contact = () => {
 
       <div className="container-fluid">
         <div className="row">
-          <div className="contactAddress position-relative col-md-12 text-white blueBg-500 p-3 p-md-5">
+          <div className="contactPage position-relative col-md-12 text-white blueBg-500 p-3 p-md-5">
             {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("address", true)} />
             )}
@@ -292,7 +292,7 @@ const Contact = () => {
                   </div>
                   </div>
 
-                  <div className="col-md-12 col-lg-4 p-5 px-4 p-md-5 mb-md-5 quickContact"> 
+                  <div className="col-md-12 col-lg-4 p-5 px-4 py-3  mb-md-5 quickContact"> 
                   {success && (
                       <Alert
                         mesg={"Thank you for contact us"}
