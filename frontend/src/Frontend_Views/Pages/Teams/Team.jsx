@@ -197,9 +197,9 @@ const Team = () => {
         linkLabel="Read More"
         moreLink=""
         showLink={false}
-        introTitleCss="fs-2 fw-medium mb-3 pt-3"
-        introSubTitleCss="mb-3 fw-bold text-secondary "
-        introDecTitleCss="lh-md m-0 fw-medium"
+        introTitleCss = "fs-3 fw-medium text-md-center"
+        introSubTitleCss = "fw-medium text-muted text-md-center"
+        introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
         detailsContainerCss="col-md-10 offset-md-1"
         anchorContainer="d-flex justify-content-start align-items-start mt-4"
         anchersvgColor="#17427C"

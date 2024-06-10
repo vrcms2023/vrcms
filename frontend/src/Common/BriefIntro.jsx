@@ -13,9 +13,9 @@ introState,
 linkCss, 
 linkLabel, 
 moreLink, 
-introDecTitleCss = "text-center lh-md m-auto w-75 fw-medium", 
-introSubTitleCss = "my-2 fw-medium text-secondary text-center", 
-introTitleCss = "fs-2 fw-medium px-4 py-4 py-md-3 text-black text-center", 
+introTitleCss = "", 
+introSubTitleCss = "", 
+introDecTitleCss = "", 
 detailsContainerCss, 
 anchorContainer, 
 anchersvgColor, 
@@ -41,7 +41,7 @@ showLink }) => {
   }, [introState, pageType]);
 
   return (
-    <div className="container-fluid">
+    <div className="container">
       
         <BriefIntroStyled>
         <div className="row">

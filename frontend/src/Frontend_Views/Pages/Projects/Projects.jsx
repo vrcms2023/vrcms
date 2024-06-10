@@ -102,6 +102,9 @@ const Projects = () => {
       <BriefIntroFrontend
         introState={componentEdit.briefIntro}
         pageType={pageType}
+        introTitleCss = "fs-3 fw-medium text-md-center"
+        introSubTitleCss = "fw-medium text-muted text-md-center"
+        introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
       />
 
       {ongoing?.length > 0 ? (
