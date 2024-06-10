@@ -206,11 +206,11 @@ const Footer = () => {
              <div 
               className={`col-md-4 col-lg-3 text-center text-md-start reachUs ${
                 isAdmin
-                  ? "border border-warning position-relative"
+                  ? ""
                   : ""
               }`}
             >
-              {isAdmin && (
+              {/* {isAdmin && (
                   <Ancher 
                     Ancherpath="/contact"
                     AncherClass="btn btn-warning float-end"
@@ -219,7 +219,7 @@ const Footer = () => {
                     icon=""
                     iconCss="ms-2 m-auto"
                   />
-                )}
+                )} */}
               {/* <Title title="Reach Us"  /> */}
               {address.phonen_number ? (
                 <p className="m-0 pb-3">
@@ -373,7 +373,7 @@ const Footer = () => {
                   )}
                   
                 </div>
-                <small className="mt-3 fw-medium text-center text-md-end"> {fullYear} Copyright Leon Pharma Corp. All rights reserved.</small>
+                <small className="mt-3 fw-medium text-center text-md-end copyRight"> {fullYear} Copyright Leon Pharma Corp. All rights reserved.</small>
               </div>
               
             }

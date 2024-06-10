@@ -7,15 +7,17 @@ export const FooterStyled = styled.div`
   // background-repeat: no-repeat;
   // background-position: 120% -250px;
   // background-size: 40%;
-  background: linear-gradient(360deg, ${({ theme }) => theme.white} 0%, ${({ theme }) => theme.primaryColor} 100%);
+  // background: linear-gradient(360deg, ${({ theme }) => theme.white} 0%, ${({ theme }) => theme.primaryColor} 100%);
+    background: ${({ theme }) => theme.gray444};
+    color: ${({ theme }) => theme.footerLinkColor};
 
   .footerDetails {
 
     .logo img { width: 150px; }
     a {
-      color: ${({ theme }) => theme.black};
+      color: ${({ theme }) => theme.footerTextColor};
       &:hover {
-        color: ${({ theme }) => theme.secondaryColor};
+        color: ${({ theme }) => theme.footerLinkHoverColor};
       }
     }
   
@@ -30,16 +32,16 @@ export const FooterStyled = styled.div`
         }
   
         a {
-          color: ${({ theme }) => theme.black};
+          color: ${({ theme }) => theme.footerTextColor};
           &:hover {
-            color: ${({ theme }) => theme.secondaryColor};
+            color: ${({ theme }) => theme.footerLinkHoverColor};
           }
         }
       }
     }
   
     .mainTitle {
-      color: ${({ theme }) => theme.secondaryColor};
+      color: ${({ theme }) => theme.footerLinkHoverColor};
     }
   
     .subtitle { }
@@ -64,7 +66,11 @@ export const FooterStyled = styled.div`
     i {
       font-size: 2rem;
       margin: 0 8px 0;
-      color: ${({ theme }) => theme.secondaryColor};
+      color: ${({ theme }) => theme.gray888};
+
+      &:hover {
+        color: ${({ theme }) => theme.footerLinkHoverColor};
+      }
     }
 
     .socialMedia {
@@ -77,15 +83,15 @@ export const FooterStyled = styled.div`
       .socialLinks {
     
         .editIcon  {
-          top: -65px;
-          right: -13px;
+          top: 65px;
+          right: 0px;
     
           @media(max-width: 768px) {
-            top: -100px;
+            top: 0px;
           }
     
           @media(max-width: 768px) {
-            top: -67px;
+            top: 0px;
           }
     
           i {
@@ -109,6 +115,10 @@ export const FooterStyled = styled.div`
           // }
       }
 
+      .copyRight {
+        color: ${({ theme }) => theme.gray888};
+        
+      }
       
 
       @media(max-width: 576px) {
@@ -118,11 +128,12 @@ export const FooterStyled = styled.div`
   }
 
   .footerCopyRights {
-    background-color: ${({ theme }) => theme.primaryColor};
+    background-color: ${({ theme }) => theme.gray555};
     font-size: 0.85rem !important;
+    color: ${({ theme }) => theme.footerLinkColor};
 
     a {
-      color: ${({ theme }) => theme.black};
+      color: ${({ theme }) => theme.footerLinkColor};
       font-size: 0.8rem !important;
       &:hover {
         color: ${({ theme }) => theme.footerLinkHoverColor};
@@ -132,7 +143,7 @@ export const FooterStyled = styled.div`
     .dby,
     .dby a {
       font-size: 0.85rem;
-      color: ${({ theme }) => theme.secondaryColor};
+      color: ${({ theme }) => theme.footerLinkHoverColor};
     }
   }
 `;
