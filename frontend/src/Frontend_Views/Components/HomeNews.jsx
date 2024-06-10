@@ -372,7 +372,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                       className="text-primary moreLink"
                       onClick={() => handleModel(item)}
                     >
-                      More..
+                      Read more..
                     </Link>
                   </div>
                 </div>
