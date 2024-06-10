@@ -89,11 +89,11 @@
   "pageBannerTitleColor": "#ffffff",
   "pageBannerSubTitleColor": "#DDFF86",
 
-  "footerBgColor": "#000000",
+  "footerBgColor": "#444444",
   "footerTextColor": "#ffffff",
   "footerTitleColor": "#ffffff",
   "footerLinkColor": "#ffffff",
-  "footerLinkHoverColor": "#748E31",
+  "footerLinkHoverColor": "#c4165f",
 
   "pageTitleColor": "#000000",
 
