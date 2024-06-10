@@ -35,14 +35,15 @@ const TopStrip = () => {
   return (
     <TopStripStyled>
       {isAdmin && (
-        <div className="d-flex justify-content-center justify-content-md-between align-items-center topStrip">
+        <div className="d-flex justify-content-center justify-content-md-between align-items-center px-3 py-2 topStrip">
           <div className="d-none d-md-flex">
             <Title
-              title="Welcome to SAP Design Studio"
-              cssClass={"fs-6 fw-normal"}
+              title="Welcome to VRCMS"
+              mainTitleClassess="fw-normal"
+              subTitleClassess=""
             />
           </div>
-          <div className="d-flex justify-content-between gap-4 quickContact">
+          <div className="d-flex justify-content-between quickContact gap-4">
             <span className="d-none d-md-flex">
               {" "}
               {footerValues?.phonen_number
@@ -51,10 +52,10 @@ const TopStrip = () => {
             </span>
 
             {footerValues.emailid ? (
-              <span className="d-none d-md-flex">
-                <i className="fa fa-paper-plane me-1" aria-hidden="true"></i>
+              <span className="d-none d-md-flex justify-content-center align-items-center">
+                <i className="fa fa-paper-plane" aria-hidden="true"></i>
                 <a href={`mailto:${footerValues.emailid}`}>
-                  {footerValues.emailid}{" "}
+                  {footerValues.emailid}
                 </a>
               </span>
             ) : (
@@ -62,15 +63,13 @@ const TopStrip = () => {
             )}
 
             <>
-              <span className="d-none d-md-flex">
-                <i className="fa fa-user-o" aria-hidden="true"></i> &nbsp;
-                {getCookie("userName")}
+              <span className="d-none d-md-flex justify-content-center align-items-center">
+                <i className="fa fa-user-circle me-2" aria-hidden="true"></i>
+                <small>{getCookie("userName")}</small>
               </span>
 
               <span>
-                <a href="#nolink" onClick={logOutHandler}>
-                  Logout
-                </a>
+                <a href="#nolink" className="logOut" onClick={logOutHandler}> LOGOUT </a>
               </span>
             </>
           </div>

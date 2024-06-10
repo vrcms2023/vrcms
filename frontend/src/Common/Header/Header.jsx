@@ -122,25 +122,25 @@ const Header = () => {
     }, 2000);
   }, []);
 
-  useEffect(() => {
-    function scrollFunction() {
-      const navbar = document.getElementsByClassName("navbar")[0]; // Get the first element with the class name
-      //const logo = document.getElementsByClassName("logo")[0]; // Get the first element with the class name
-      if (
-        document.body.scrollTop > 80 ||
-        document.documentElement.scrollTop > 80
-      ) {
-        navbar.style.position = "fixed";
-        navbar.style.top = 0;
-        navbar.style.width = "100%";
-        navbar.style.transition = "0.4s";
-      } else {
-        navbar.style.position = "static";
-      }
-    }
+  // useEffect(() => {
+  //   function scrollFunction() {
+  //     const navbar = document.getElementsByClassName("navbar")[0]; // Get the first element with the class name
+  //     const logo = document.getElementsByClassName("logo")[0]; // Get the first element with the class name
+  //     if (
+  //       document.body.scrollTop > 80 ||
+  //       document.documentElement.scrollTop > 80
+  //     ) {
+  //       navbar.style.position = "fixed";
+  //       navbar.style.top = 0;
+  //       navbar.style.width = "100%";
+  //       navbar.style.transition = "0.4s";
+  //     } else {
+  //       navbar.style.position = "static";
+  //     }
+  //   }
 
-    window.addEventListener("scroll", scrollFunction);
-  });
+  //   window.addEventListener("scroll", scrollFunction);
+  // });
 
   // function logOutHandler() {
   //   removeAllCookies();
