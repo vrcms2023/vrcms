@@ -10,6 +10,7 @@ import {
 import { useForm } from "react-hook-form";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 import { toast } from "react-toastify";
+import Title from "../Title";
 
 const ContactForm = ({ categoryId }) => {
   const {
@@ -38,6 +39,8 @@ const ContactForm = ({ categoryId }) => {
   };
 
   return (
+    <>
+    <Title title="Contact Information" cssClass="fs-4 text-center fw-medium mb-2 text-black mb-4" />
     <form
       className="my-0 mx-auto contactForm"
       onSubmit={handleSubmit(onFormSubmit)}
@@ -82,6 +85,8 @@ const ContactForm = ({ categoryId }) => {
         </div>
       </div>
     </form>
+    </>
+    
   );
 };
 

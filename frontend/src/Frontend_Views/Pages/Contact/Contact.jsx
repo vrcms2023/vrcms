@@ -91,9 +91,9 @@ const Contact = () => {
     }
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   useEffect(() => {
     if (addressList?.length === 0) {
@@ -204,17 +204,25 @@ const Contact = () => {
             )}
             <div className="container">
               <div className="row">
-                {addressList?.map((item, index) => (
-                  <div
-                    className={`my-4 my-nd-0 ${addressList.length === 1 ? "col-md-12 text-center" : addressList.length === 2 ? "col-md-6" : addressList.length === 3 ? "col-md-4" : "col-md-3"}`}
-                    key={index}
-                  >
+                
+                  <>
+                  {/* <div
+                    className={`my-4 my-nd-0 ${addressList.length === 1 ? "col-md-8 text-center" : addressList.length === 2 ? "col-md-6" : addressList.length === 3 ? "col-md-4" : "col-md-3"}`}
+                    
+                  > */}
+                    <div
+                    className="col-md-12 col-lg-8" >
+                      <div className="row">
+                    {addressList?.map((item, index) => (
+                      <div
+                      className={`my-4 ${addressList.length === 1 ? "col-md-12 text-center" : addressList.length === 2 ? "col-md-6" : addressList.length === 3 ? "col-md-6" : "col-md-3"}`}
+                    >
                     <Title
                       title={item.location_title}
                       cssClass="mb-2 fs-4 text-black"
                     />
-                    <div className="mb-2 contactAddress">
-                      <p className="m-0 fw-bold">{item.company_name}</p>
+                    <div className="mb-2 contactAddress" key={index}>
+                      <p className="m-0 fw-medium">{item.company_name}</p>
                       <p className="m-0">{item.address_dr_no}</p>
                       <p className="m-0">{item.street} </p>
                       <p className="m-0">{item.location} </p>
@@ -279,8 +287,22 @@ const Contact = () => {
                         )}
                       </p>
                     </div>
+                    </div>
+                  ))}
                   </div>
-                ))}
+                  </div>
+
+                  <div className="col-md-12 col-lg-4 p-5 px-4 p-md-5 mb-md-5 quickContact"> 
+                  {success && (
+                      <Alert
+                        mesg={"Thank you for contact us"}
+                        cssClass={`alert text-white w-50 mx-auto mt-3 p-2 text-center bg-success`}
+                      />
+                    )}
+                    <ContactForm />
+                  </div>
+                  </>
+                
               </div>
             </div>
 
@@ -290,14 +312,14 @@ const Contact = () => {
           </div>
         </div>
 
-        <div className="row d-flex flex-row-reverse flex-md-row-reverse">
-          <div className="col-md-12 text-center py-0 py-md-4">
+        <div className="row">
+          {/* <div className="col-md-12 text-center py-0 py-md-4">
             <Title
               title="Quick contact"
               cssClass="fs-3 text-center fw-medium mb-2 pt-5"
             />
-          </div>
-          <div className="col-md-5 contact mb-5">
+          </div> */}
+          {/* <div className="col-md-5 contact mb-5">
             {success && (
               <Alert
                 mesg={"Thank you for contact us"}
@@ -305,54 +327,9 @@ const Contact = () => {
               />
             )}
 
-            {/* <form
-              className="my-0 contactForm"
-              onSubmit={handleSubmit(onFormSubmit)}
-            >
-              <InputField
-                label="Name"
-                fieldName="firstName"
-                register={register}
-                validationObject={fieldValidation.firstName}
-                error={errors?.firstName?.message}
-              />
-              <InputField
-                label="Email"
-                fieldName="email"
-                register={register}
-                validationObject={fieldValidation.email}
-                error={errors?.email?.message}
-              />
-              <InputField
-                label="Phone"
-                fieldName="phoneNumber"
-                register={register}
-                validationObject={fieldValidation.phoneNumber}
-                error={errors?.phoneNumber?.message}
-              />
-              <TextAreaField
-                label="Message"
-                fieldName="description"
-                register={register}
-                validationObject={fieldValidation.description}
-                error={errors?.description?.message}
-              />
-
-              <div className="mb-3 row">
-                <div className="col-sm-12 mt-2">
-                  <button
-                    type="submit"
-                    className="btn btn-primary w-100 text-uppercase py-2"
-                  >
-                    Send Request
-                  </button>
-                </div>
-              </div>
-            </form> */}
-
             <ContactForm />
-          </div>
-          <div className="col-md-7 position-relative">
+          </div> */}
+          <div className="col-md-12 position-relative mb-5">
             {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("map", true)} />
             )}
