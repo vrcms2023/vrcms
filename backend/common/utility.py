@@ -104,6 +104,7 @@ def get_Team_data_From_request_Object(request):
         requestObj['instagram_url'] = request.data["instagram_url"]
         requestObj['vimeo_url'] = request.data["vimeo_url"]
         requestObj['team_member_position'] = request.data["team_member_position"]
+        return requestObj
 
 def get_product_data_From_request_Object(request):
         requestObj = get_image_data_from_request(request)

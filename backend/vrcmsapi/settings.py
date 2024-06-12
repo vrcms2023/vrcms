@@ -117,6 +117,7 @@ WSGI_APPLICATION = 'vrcmsapi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+### ---------------------------- DATABASES Configuration for Local development ----------------------------- ###
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -127,6 +128,20 @@ DATABASES = {
         'PORT':os.environ.get('DB_PORT'),
     }
 }
+
+### ---------------------------- DATABASES Configuration for Production ----------------------------- ###
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'leomtechDB',
+#         'USER': 'leonpharmacorp',
+#         'PASSWORD': 'H?6[upt+FzW?',
+#         'HOST': 'demo.leonpharmacorp.com',
+#         'PORT':3306,
+#     }
+# }
+
+
 
 ### ---------------------------- Email Configuration for Local development ----------------------------- ###
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
