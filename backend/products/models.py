@@ -1,4 +1,4 @@
-from turtle import mode
+
 from django.db import models
 import os
 from django.utils import timezone
