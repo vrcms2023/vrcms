@@ -603,7 +603,27 @@ const Home = () => {
                 <Ancher
                   AncherLabel="Read more"
                   Ancherpath="/news"
+                  AncherClass="btn btn-primary d-flex justify-content-center align-items-center "
+                  AnchersvgColor="#17427C"
+                />
+                <Ancher
+                  AncherLabel="Read more"
+                  Ancherpath="/news"
+                  AncherClass="btn btn-secondary d-flex justify-content-center align-items-center "
+                  AnchersvgColor="#17427C"
+                />
+
+                <Ancher
+                  AncherLabel="Read more"
+                  Ancherpath="/news"
                   AncherClass="btn btn-outline d-flex justify-content-center align-items-center "
+                  AnchersvgColor="#17427C"
+                />
+
+                <Ancher
+                  AncherLabel="Read more"
+                  Ancherpath="/news"
+                  AncherClass="btn moreLink d-flex justify-content-center align-items-center "
                   AnchersvgColor="#17427C"
                 />
               </div>

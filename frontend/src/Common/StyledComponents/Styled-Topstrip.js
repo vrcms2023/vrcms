@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const TopStripStyled = styled.div`
 
   .topStrip { 
-    background-color: ${({ theme }) => theme.gray555};
+    background-color: ${({ theme }) => theme.black};
     color: ${({ theme }) => theme.graybbb};
 
     a { 

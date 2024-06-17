@@ -1,10 +1,10 @@
 {
   "name": "VRCMS Theme One",
   "fontFamily": "Poppins, 'Fira Sans', sans-serif, Arial, verdana",
-  "background": "#E1F2FD",
+  "background": "#ffffff",
   "bodyBgImage": "",
 
-  "textColor": "#444444",
+  "textColor": "#000000",
 
   "white": "#ffffff",
   "black": "#000000",
@@ -40,9 +40,9 @@
   "teritoryColor": "#44B2E5",
   "teritoryHoverColor": "#2A5CA0",
 
-  "navbarBg": "#444444",
-  "navbarTextColor": "#e3e3e3",
-  "navbarLinkColor": "#e3e3e3",
+  "navbarBg": "#f3f3f3",
+  "navbarTextColor": "#000000",
+  "navbarLinkColor": "#c4165f",
   "navbarLinkBgColor": "#748E31",
   "navbarLinkActiveColor": "#c4165f",
   "navbarLinkHoverColor": "#c4165f",
@@ -89,15 +89,40 @@
   "pageBannerTitleColor": "#ffffff",
   "pageBannerSubTitleColor": "#DDFF86",
 
-  "footerBgColor": "#444444",
-  "footerTextColor": "#ffffff",
+  "footerBgColor": "#ffffff",
+  "footerTextColor": "#000000",
   "footerTitleColor": "#ffffff",
-  "footerLinkColor": "#ffffff",
+  "footerLinkColor": "#000000",
   "footerLinkHoverColor": "#c4165f",
 
   "pageTitleColor": "#000000",
 
   "aboutPageBgColor": "",
   "aboutPageTitleColor": "",
-  "aboutPageTextColor": ""
+  "aboutPageTextColor": "",
+
+  "btnPrimary": "#c4165f",
+  "btnPrimaryHover": "#c4165f",
+  "btnPrimaryTextColor": "#ffffff",
+  "btnPrimaryTextHoverColor": "#ffffff",
+  "btnPrimaryBorderColor": "#c4165f",
+  "btnPrimaryBorderHoverColor": "#c4165f",
+
+  "btnSecondry": "#cccccc",
+  "btnSecondryHover": "#cccccc",
+  "btnSecondryTextColor": "#000000",
+  "btnSecondryTextHoverColor": "#000000",
+  "btnSecondryBorderColor": "#aaaaaa",
+  "btnSecondryBorderHoverColor": "#aaaaaa",
+
+  "btnOutline": "#ffffff",
+  "btnOutlineHover": "#ffffff",
+  "btnOutlineTextColor": "#000000",
+  "btnOutlineTextHoverColor": "#c4165f",
+  "btnOutlineBorderColor": "#aaaaaa",
+  "btnOutlineBorderHoverColor": "#c4165f",
+
+  "btnLinkTextColor": "#000000",
+  "btnLinkTextHoverColor": "#c4165f"
+ 
 }
