@@ -123,6 +123,13 @@
   "btnOutlineBorderHoverColor": "#c4165f",
 
   "btnLinkTextColor": "#000000",
-  "btnLinkTextHoverColor": "#c4165f"
+  "btnLinkTextHoverColor": "#c4165f",
+
+  "inputBg": "#ffffff",
+  "inputBorder": "#888888",
+  "inputCurve": "",
+
+  "iconColor": "#666666",
+  "iconHoverColor": ""
  
 }

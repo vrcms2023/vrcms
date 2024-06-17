@@ -312,8 +312,8 @@ body {
 
     input,
     textarea, select {
-      background-color: ${({theme}) => theme.white};
-      border: 1px solid ${({theme}) => theme.secondaryColor} !important;
+      background-color: ${({theme}) => theme.inputBg};
+      border: 1px solid ${({theme}) => theme.inputBorder} !important;
       padding: 12px 10px;
     }
     input[type="checkbox"], input[type="radio"] {

@@ -221,7 +221,7 @@ const Contact = () => {
                       <div className="row">
                     {addressList?.map((item, index) => (
                       <div
-                      className={`my-4 ${addressList.length === 1 ? "col-md-12 text-center" : addressList.length === 2 ? "col-md-6" : addressList.length === 3 ? "col-md-6" : "col-md-3"}`}
+                      className={`my-4 ${addressList.length === 1 ? "col-md-12" : addressList.length === 2 ? "col-md-6" : addressList.length === 3 ? "col-md-6" : "col-md-3"}`}
                     >
                     <Title
                       title={item.location_title}
