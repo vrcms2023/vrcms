@@ -137,9 +137,9 @@ const CaseStudies = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
-          <ImageInputsForm
+
+      <div className={`adminEditTestmonial ${componentEdit.banner  ? "selected" : "dismiss" } `}>
+        <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
             pageType={`${pageType}-banner`}
@@ -149,9 +149,12 @@ const CaseStudies = () => {
             dimensions={imageDimensionsJson("banner")}
           />
         </div>
+      {/* {componentEdit.banner ? (
+        
+          
       ) : (
         ""
-      )}
+      )} */}
 
       {/* Brief Introduction */}
       {isAdmin && hasPermission && (
@@ -166,17 +169,19 @@ const CaseStudies = () => {
         introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
       />
 
-      {componentEdit.briefIntro ? (
-        <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial ${componentEdit.briefIntro  ? "selected" : "dismiss" } `}>
           <AdminBriefIntro
             editHandler={editHandler}
             componentType="briefIntro"
             pageType={pageType}
           />
         </div>
+
+      {/* {componentEdit.briefIntro ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
@@ -218,8 +223,8 @@ const CaseStudies = () => {
             />
           </div>
         </div>
-        {componentEdit.editSection || componentEdit.addSection ? (
-          <div className="adminEditTestmonial">
+
+        <div className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection  ? "selected" : "dismiss" } `}>
             <AddEditAdminNews
               editHandler={editHandler}
               category="about"
@@ -238,9 +243,11 @@ const CaseStudies = () => {
               dimensions={imageDimensionsJson("aboutus")}
             />
           </div>
+        {/* {componentEdit.editSection || componentEdit.addSection ? (
+          
         ) : (
           ""
-        )}
+        )} */}
 
         <CaseStudiesPageStyled>
           <div className="caseStudie my-5">

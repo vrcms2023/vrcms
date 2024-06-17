@@ -102,8 +102,8 @@ const NewsAndUpdates = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
+
+      <div className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss" } `}>
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
@@ -114,9 +114,11 @@ const NewsAndUpdates = () => {
             dimensions={imageDimensionsJson("banner")}
           />
         </div>
+      {/* {componentEdit.banner ? (
+          
       ) : (
         ""
-      )}
+      )} */}
 
       <div className="container my-4 newsAndUpdates">
         {isAdmin && hasPermission && (
@@ -154,8 +156,7 @@ const NewsAndUpdates = () => {
         )}
 
         <div className="row mb-5">
-          {componentEdit.addNews ? (
-            <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial ${componentEdit.addNews ? "selected" : "dismiss" } `}>
               <AddEditAdminNews
                 editHandler={editHandler}
                 componentType="addNews"
@@ -169,9 +170,11 @@ const NewsAndUpdates = () => {
                 dimensions={imageDimensionsJson("addNews")}
               />
             </div>
+          {/* {componentEdit.addNews ? (
+              
           ) : (
             ""
-          )}
+          )} */}
 
           <HomeNews
             addNewsState={componentEdit.addNews}

@@ -231,8 +231,7 @@ const Home = () => {
           </div>
         </div>
 
-        {componentEdit.carousel && (
-          <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial ${componentEdit.carousel ? "selected" : "dismiss" } `}>
             <AdminBanner
               editHandler={editHandler}
               componentType="carousel"
@@ -247,7 +246,9 @@ const Home = () => {
               dimensions={imageDimensionsJson("carousel")}
             />
           </div>
-        )}
+          
+        {/* {componentEdit.carousel && (
+        )} */}
 
         {/* LEON Pharma Products  */}
 
@@ -270,8 +271,7 @@ const Home = () => {
                     setFormValues={setProductDevelopment}
                     formvalues={productDevelopment}
                   />
-                  {componentEdit.product_development && (
-                    <div className="adminEditTestmonial">
+                  <div className={`adminEditTestmonial ${componentEdit.product_development ? "selected" : "dismiss" } `}>
                       <DynamicForm
                         editHandler={editHandler}
                         componentType={productComp.product_development}
@@ -284,7 +284,9 @@ const Home = () => {
                         )}
                       />
                     </div>
-                  )}
+                  {/* {componentEdit.product_development && (
+                    
+                  )} */}
                 </div>
               </div>
               <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
@@ -303,8 +305,7 @@ const Home = () => {
                     formvalues={productDistribution}
                   />
 
-                  {componentEdit.product_distribution && (
-                    <div className="adminEditTestmonial">
+                    <div className={`adminEditTestmonial ${componentEdit.product_distribution ? "selected" : "dismiss" } `}>
                       <DynamicForm
                         editHandler={editHandler}
                         componentType={productComp.product_distribution}
@@ -317,7 +318,10 @@ const Home = () => {
                         )}
                       />
                     </div>
-                  )}
+
+                  {/* {componentEdit.product_distribution && (
+                    
+                  )} */}
                 </div>
               </div>
               <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
@@ -336,8 +340,7 @@ const Home = () => {
                     formvalues={productRegistration}
                   />
 
-                  {componentEdit.product_registration && (
-                    <div className="adminEditTestmonial">
+                    <div className={`adminEditTestmonial ${componentEdit.product_registration ? "selected" : "dismiss" } `}>
                       <DynamicForm
                         editHandler={editHandler}
                         componentType={productComp.product_registration}
@@ -350,7 +353,10 @@ const Home = () => {
                         )}
                       />
                     </div>
-                  )}
+
+                  {/* {componentEdit.product_registration && (
+                    
+                  )} */}
                 </div>
               </div>
             </div>
@@ -405,15 +411,17 @@ const Home = () => {
           </div>
         </div>
 
-        {componentEdit.briefIntro && (
-          <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss" } `}>
             <BriefIntroAdmin
               editHandler={editHandler}
               componentType="briefIntro"
               pageType="Home"
             />
           </div>
-        )}
+
+        {/* {componentEdit.briefIntro && (
+          
+        )} */}
 
         {/* Random Hilights */}
         <ABriefIntroStyled>
@@ -550,8 +558,7 @@ const Home = () => {
                 )}
               </div>
 
-              {componentEdit.testmonial ? (
-                <div className="adminEditTestmonial">
+              <div className={`adminEditTestmonial ${componentEdit.testmonial ? "selected" : "dismiss" } `}>
                   <AdminBanner
                     editHandler={editHandler}
                     componentType="testmonial"
@@ -568,9 +575,12 @@ const Home = () => {
                     dimensions={imageDimensionsJson("testimonial")}
                   />
                 </div>
+
+              {/* {componentEdit.testmonial ? (
+                
               ) : (
                 ""
-              )}
+              )} */}
             </div>
           </div>
         </TestimonialCarouselPageStyled>

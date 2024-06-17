@@ -72,8 +72,7 @@ const Projects = () => {
           bannerState={componentEdit.banner}
         />
 
-        {componentEdit.banner ? (
-          <div className="adminEditTestmonial">
+          <div className={`adminEditTestmonial ${componentEdit.banner  ? "selected" : "dismiss" } `}>
             <ImageInputsForm
               editHandler={editHandler}
               componentType="banner"
@@ -84,9 +83,11 @@ const Projects = () => {
               dimensions={imageDimensionsJson("banner")}
             />
           </div>
+        {/* {componentEdit.banner ? (
+          
         ) : (
           ""
-        )}
+        )} */}
       </div>
 
       {/* Introduction */}
@@ -127,17 +128,18 @@ const Projects = () => {
         ""
       )}
 
-      {componentEdit.briefIntro ? (
-        <div className="adminEditTestmonial">
-          <AdminBriefIntro
+      <div className={`adminEditTestmonial ${componentEdit.briefIntro  ? "selected" : "dismiss" } `}>
+      <AdminBriefIntro
             editHandler={editHandler}
             componentType="briefIntro"
             pageType={pageType}
           />
         </div>
+      {/* {componentEdit.briefIntro ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       {show && <ModelBg />}
     </>

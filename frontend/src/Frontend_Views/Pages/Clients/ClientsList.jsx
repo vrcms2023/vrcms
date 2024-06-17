@@ -138,8 +138,8 @@ const ClientsList = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
+
+      <div className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss" } `}>
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
@@ -150,9 +150,11 @@ const ClientsList = () => {
             dimensions={imageDimensionsJson("banner")}
           />
         </div>
+      {/* {componentEdit.banner ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       {/* Brief Introduction */}
       {isAdmin && hasPermission && (
@@ -167,17 +169,18 @@ const ClientsList = () => {
         introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
       />
 
-      {componentEdit.briefIntro ? (
-        <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss" } `}>
           <AdminBriefIntro
             editHandler={editHandler}
             componentType="briefIntro"
             pageType={pageType}
           />
         </div>
+      {/* {componentEdit.briefIntro ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
@@ -218,8 +221,7 @@ const ClientsList = () => {
           </div>
         </div>
 
-        {componentEdit.editSection || componentEdit.addSection ? (
-          <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss" } `}>
             <AddEditAdminNews
               editHandler={editHandler}
               category="about"
@@ -239,9 +241,12 @@ const ClientsList = () => {
               scrollEnable={false}
             />
           </div>
+
+        {/* {componentEdit.editSection || componentEdit.addSection ? (
+          
         ) : (
           ""
-        )}
+        )} */}
         <br />
         {isAdmin && (
           <NoteComponent note="Use drag option to shuffle the Items" />

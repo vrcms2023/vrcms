@@ -87,9 +87,7 @@ const Careers = () => {
       </div>
       
       
-
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
+      <div className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss" } `}>
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
@@ -100,9 +98,11 @@ const Careers = () => {
             dimensions={imageDimensionsJson("banner")}
           />
         </div>
+      {/* {componentEdit.banner ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       {/* Introduction */}
       {/* {isAdmin && hasPermission && (
@@ -156,17 +156,18 @@ const Careers = () => {
           </div>
         )}
 
-        {componentEdit.addjob ? (
-          <div className="adminEditTestmonial">
+          <div className={`adminEditTestmonial ${componentEdit.addjob ? "selected" : "dismiss" } `}>
             <JobPostFrom
               editHandler={editHandler}
               componentType="addjob"
               type="add"
             />
           </div>
+        {/* {componentEdit.addjob ? (
+          
         ) : (
           ""
-        )}
+        )} */}
         <div>
           <CareersPageStyled>
             <div className="row mb-4 pb-4">

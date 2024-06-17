@@ -341,9 +341,8 @@ const PagesConfiguration = () => {
           </Link>
           {/* <EditIcon editHandler={() => editHandler("menu", true)} /> */}
         </div>
-
-        {componentEdit.menu ? (
-          <div className="adminEditTestmonial">
+        
+        <div className={`adminEditTestmonial ${componentEdit.menu ? "selected" : "dismiss" } `}>
             <MenuForm
               editHandler={editHandler}
               menuList={pagesDetails}
@@ -351,9 +350,12 @@ const PagesConfiguration = () => {
               componentType="menu"
             />
           </div>
+
+        {/* {componentEdit.menu ? (
+          
         ) : (
           ""
-        )}
+        )} */}
       </div>
       <div className="row px-3 px-lg-5">
         <div className="text-end d-flex justify-content-between">

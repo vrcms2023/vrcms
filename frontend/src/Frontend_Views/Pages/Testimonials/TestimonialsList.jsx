@@ -152,8 +152,8 @@ const TestimonialsList = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
+
+      <div className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss" } `}>
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
@@ -164,9 +164,11 @@ const TestimonialsList = () => {
             dimensions={imageDimensionsJson("banner")}
           />
         </div>
+      {/* {componentEdit.banner ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       {/* Brief Introduction */}
       {/* {isAdmin && hasPermission && (
@@ -238,9 +240,8 @@ const TestimonialsList = () => {
           </div>
         </div>
 
-        {componentEdit.editSection || componentEdit.addSection ? (
-          <div className="adminEditTestmonial">
-            <AddEditAdminNews
+        <div className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss" } `}>
+        <AddEditAdminNews
               editHandler={editHandler}
               category="about"
               editCarousel={editCarousel}
@@ -258,9 +259,11 @@ const TestimonialsList = () => {
               dimensions={imageDimensionsJson("testimonial")}
             />
           </div>
+        {/* {componentEdit.editSection || componentEdit.addSection ? (
+         
         ) : (
           ""
-        )}
+        )} */}
 
         <TestimonialsListPageStyled>
           <div className="testimonialsPage my-5">

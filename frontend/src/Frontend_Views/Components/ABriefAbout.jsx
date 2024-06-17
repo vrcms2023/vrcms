@@ -106,8 +106,7 @@ const ABriefAbout = ({
         )}
       </div>
 
-      {componentEdit.whoweare ? (
-        <div className="adminEditTestmonial">
+      <div className={`adminEditTestmonial ${componentEdit.whoweare ? "selected" : "dismiss" } `}>
           <ImageInputsForm
             editHandler={editHandler}
             componentType="whoweare"
@@ -118,9 +117,12 @@ const ABriefAbout = ({
             showExtraFormFields={getFormDynamicFields(pageType)}
           />
         </div>
+
+      {/* {componentEdit.whoweare ? (
+          
       ) : (
         ""
-      )}
+      )} */}
 
       {show && <ModelBg />}
     </>

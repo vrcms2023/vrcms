@@ -146,8 +146,7 @@ const Contact = () => {
         />
       </div>
 
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
+      <div className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss" } `}>
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
@@ -158,9 +157,11 @@ const Contact = () => {
             dimensions={imageDimensionsJson("banner")}
           />
         </div>
+      {/* {componentEdit.banner ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       {/* Introduction */}
       {isAdmin && hasPermission && (
@@ -175,17 +176,18 @@ const Contact = () => {
         introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
       />
 
-      {componentEdit.briefIntro ? (
-        <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss" } `}>
           <AdminBriefIntro
             editHandler={editHandler}
             componentType="briefIntro"
             pageType={pageType}
           />
         </div>
+      {/* {componentEdit.briefIntro ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       <div className="container-fluid">
         <div className="row">
@@ -194,17 +196,18 @@ const Contact = () => {
               <EditIcon editHandler={() => editHandler("address", true)} />
             )}
 
-            {componentEdit.address ? (
-              <div className="adminEditTestmonial">
+          <div className={`adminEditTestmonial ${componentEdit.address ? "selected" : "dismiss" } `}>
                 <AddressForm
                   editHandler={editHandler}
                   componentType="address"
                   address={addressList}
                 />
               </div>
+            {/* {componentEdit.address ? (
+              
             ) : (
               ""
-            )}
+            )} */}
             <div className="container">
               <div className="row">
                 
@@ -349,18 +352,19 @@ const Contact = () => {
           
         </div>
       </div>
-
-      {componentEdit.map ? (
-        <div className="adminEditTestmonial">
+      
+      <div className={`adminEditTestmonial ${componentEdit.map ? "selected" : "dismiss" } `}>
           <GoogleMap
             mapValues={mapValues}
             editHandler={editHandler}
             componentType="map"
           />
         </div>
+      {/* {componentEdit.map ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       {show && <ModelBg />}
     </ContactPageStyled>

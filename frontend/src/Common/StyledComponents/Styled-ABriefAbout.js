@@ -53,7 +53,7 @@ export const ABriefIntroStyled = styled.div`
     
 
     form {
-        padding: 30px 50px;
+        // padding: 30px 50px;
         border-radius: 15px;
         border: 1px solid ${({theme}) =>  theme.lightgray};
         // background: ${({theme}) =>  theme.white};

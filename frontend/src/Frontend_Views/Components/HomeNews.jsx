@@ -218,8 +218,7 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
         </Droppable>
       </DragDropContext>
 
-      {componentEdit.news ? (
-        <div className="adminEditTestmonial">
+      <div className={`adminEditTestmonial ${componentEdit.news ? "selected" : "dismiss" } `}>
           <AddEditAdminNews
             editHandler={editHandler}
             editCarousel={editNews}
@@ -234,9 +233,12 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
             showExtraFormFields={getNewslFields()}
           />
         </div>
+
+      {/* {componentEdit.news ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       {showModel ? (
         <div className="newsModel ">

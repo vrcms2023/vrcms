@@ -311,17 +311,19 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
         </div>
       )}
 
-      {componentEdit.job ? (
-        <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial ${componentEdit.job ? "selected" : "dismiss" } `}>
           <JobPostFrom
             editHandler={editHandler}
             componentType="job"
             editPost={editPost}
           />
         </div>
+
+      {/* {componentEdit.job ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       {show && <ModelBg />}
     </>
