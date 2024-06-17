@@ -600,7 +600,7 @@ const Home = () => {
               />
 
               <div className="d-flex justify-content-center align-items-center mt-4">
-                <Ancher
+                {/* <Ancher
                   AncherLabel="Read more"
                   Ancherpath="/news"
                   AncherClass="btn btn-primary d-flex justify-content-center align-items-center "
@@ -611,7 +611,7 @@ const Home = () => {
                   Ancherpath="/news"
                   AncherClass="btn btn-secondary d-flex justify-content-center align-items-center "
                   AnchersvgColor="#17427C"
-                />
+                /> */}
 
                 <Ancher
                   AncherLabel="Read more"
@@ -620,12 +620,12 @@ const Home = () => {
                   AnchersvgColor="#17427C"
                 />
 
-                <Ancher
+                {/* <Ancher
                   AncherLabel="Read more"
                   Ancherpath="/news"
                   AncherClass="btn moreLink d-flex justify-content-center align-items-center "
                   AnchersvgColor="#17427C"
-                />
+                /> */}
               </div>
             </div>
           </div>

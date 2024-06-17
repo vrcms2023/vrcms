@@ -62,11 +62,11 @@
   "ABriefAboutTextColor": "#000000",
   "ABriefAboutTitleBorderColor": "#27AAE1",
 
-  "testimonialsBg": "#444444",
+  "testimonialsBg": "#ffffff",
   "testimonialsHeadingColor": "#DDFF86",
-  "testimonialsTextColor": "#ffffff",
-  "testimonialsLinkColor": "#44B2E5",
-  "testimonialsLinkHoverColor": "#444444",
+  "testimonialsTextColor": "#000000",
+  "testimonialsLinkColor": "#888888",
+  "testimonialsLinkHoverColor": "#000000",
 
   "teamBg": "#ffffff",
   "teamTitleColor": "#000000",
@@ -75,7 +75,7 @@
   "teamHoverColor": "#ffffff",
   "teamIconColor": "#000000",
 
-  "briefIntroBg": "#ffffff",
+  "briefIntroBg": "#eeeeee",
   "briefIntroTitleColor": "#000000",
   "briefIntroTextColor": "#3F3F3F",
 
