@@ -159,7 +159,7 @@ const AdminBanner = ({
       <div className="container mt-4">
         <NoteComponent note="Use drag option to shuffle the addresses" />
 
-        <div className="row d-flex flex-row-reverse">
+        <div className="row mt-3 d-flex flex-row-reverse">
           {carousel?.length > 0 ? (
             <div className="heightCtrl imglist">
               <div className="container">
@@ -194,7 +194,7 @@ const AdminBanner = ({
           <hr className="" />
 
           <div
-            className={`mb-5 mb-md-0 ${
+            className={`mb-5 mb-md-0 px-0 ${
               carousel?.length > 0 ? "col-md-12" : "col-md-12"
             }`}
           >

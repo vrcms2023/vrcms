@@ -218,8 +218,7 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
         </Droppable>
       </DragDropContext>
 
-      {componentEdit.news ? (
-        <div className="adminEditTestmonial">
+      <div className={`adminEditTestmonial ${componentEdit.news ? "selected" : "dismiss" } `}>
           <AddEditAdminNews
             editHandler={editHandler}
             editCarousel={editNews}
@@ -234,9 +233,12 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
             showExtraFormFields={getNewslFields()}
           />
         </div>
+
+      {/* {componentEdit.news ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       {showModel ? (
         <div className="newsModel ">
@@ -297,7 +299,8 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="col-md-12 col-lg-12 mb-4 mb-lg-0" key={item.id}>
+          {/* <div className="col-md-12 col-lg-12 mb-4 mb-lg-0 border border-1" key={item.id}> */}
+          <div className={`col-md-12 col-lg-12 mb-4 mb-lg-0 ${isAdmin ? "px-3" : ""}`} key={item.id}>
             <NewsStyled>
               <div
                 className={`card homeNews ${isAdmin ? "adminView" : ""}`}
@@ -319,7 +322,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
 
                     <Link
                       onClick={(event) => DeleteNews(item.id, item.news_title)}
-                      className=" p-2"
+                      className="p-2"
                     >
                       <i
                         className="fa fa-trash-o fs-5 text-danger"
@@ -332,26 +335,26 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                 <div style={{ display: isAdmin ? "flex" : "" }}>
                   <img
                     src={getImagePath(item.path)}
-                    className="img-fluid"
+                    className="img-fluid rounded-3"
                     alt={item.alternitivetext}
                   />
-                  <div className="card-body p-3">
+                  <div className={`${isAdmin ? "px-3" : "py-3"}`}>
                     <Title
                       title={
                         item.news_title ? item.news_title : "Update news Title"
                       }
-                      cssClass={` fw-bold lh-sm mb-2 lineClamp lc1 ${
-                        isAdmin ? "fs-6" : "fs-5"
-                      }`}
+                      cssClass="fs-4 fw-bold lineClamp lc2"
+                      mainTitleClassess={` fw-medium lh-sm lineClamp lc1 ${ isAdmin ? "fs-6" : "fs-5" }`}
+                      subTitleClassess=""
                     />
                     {/* <small className="d-block my-2">{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</small> */}
-                    <small className="d-block my-2">
+                    <small className="d-block mb-4">
                       {moment(item.created_at).format("MMM DD, YYYY")}
                     </small>
                     <div className={`card-text  ${isAdmin ? "mb-0" : "mb-2"}`}>
                       {item.news_description ? (
                         <div
-                          className="lineClamp lc2"
+                          className={`lineClamp ${isAdmin ? "lc1" : "lc2"}`}
                           dangerouslySetInnerHTML={{
                             __html: item.news_description,
                           }}
@@ -369,7 +372,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                     /> */}
 
                     <Link
-                      className="text-primary moreLink"
+                      className="moreLink"
                       onClick={() => handleModel(item)}
                     >
                       Read more..

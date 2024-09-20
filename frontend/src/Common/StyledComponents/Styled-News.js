@@ -5,9 +5,9 @@ export const NewsStyled = styled.div`
     min-height: 380px;
     background-color: ${({ theme }) => theme.newsCardBg};
     color: ${({ theme }) => theme.newsCardTextColor};
-    margin-bottom: 30px;
-    border-radius: 10px;
-    overflow: hidden;
+    // margin-bottom: 30px;
+    // border-radius: 10px;
+    // overflow: hidden;
     border: 0px;
 
     .title {
@@ -15,7 +15,7 @@ export const NewsStyled = styled.div`
     }
 
     img {
-      height: 200px;
+      height: 160px;
       width: 100%;
       object-fit: cover;
       object-position: bottom;

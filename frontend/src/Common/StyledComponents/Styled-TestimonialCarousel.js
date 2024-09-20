@@ -3,16 +3,16 @@ import styled from "styled-components";
 export const TestimonialCarouselPageStyled = styled.div`
 
 .testimonials {
-    // background-color:${({ theme }) => theme.testimonialsBg}; 
-    background: rgb(255,255,255);
-    background: linear-gradient(360deg, ${({ theme }) => theme.white} 0%, ${({ theme }) => theme.primaryColor} 100%);
-    padding: 100px 0;
-    color:${({ theme }) => theme.textColor};
-    min-height: 530px;
+    background-color:${({ theme }) => theme.testimonialsBg}; 
+    color:${({ theme }) => theme.testimonialsTextColor};
+    min-height: 480px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    // border: 1px solid ${({ theme }) => theme.gray888};
+    // background: rgb(255,255,255);
+    // background: linear-gradient(360deg, ${({ theme }) => theme.white} 0%, ${({ theme }) => theme.primaryColor} 100%);
     // border-radius: 30px;
     // padding: 70px 75px !important;
 

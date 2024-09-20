@@ -28,10 +28,10 @@ export const SimpleTitleDescComponent = ({
 
   return (
     <>
-      <Title title={formvalues?.intro_title} cssClass="fs-5 fw-medium mb-2" />
-      <p>{formvalues?.intro_desc}</p>
-      <Link to={formvalues?.intro_morelink} className="btn btn-outline mt-3">
-        More
+      <Title title={formvalues?.intro_title} cssClass="fs-4 fw-bold text-left" />
+      <p className="mt-2 mb-3">{formvalues?.intro_desc}</p>
+      <Link to={formvalues?.intro_morelink} className="moreLink">
+        more..
       </Link>
     </>
   );

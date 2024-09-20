@@ -231,8 +231,7 @@ const Home = () => {
           </div>
         </div>
 
-        {componentEdit.carousel && (
-          <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial ${componentEdit.carousel ? "selected" : "dismiss" } `}>
             <AdminBanner
               editHandler={editHandler}
               componentType="carousel"
@@ -247,13 +246,15 @@ const Home = () => {
               dimensions={imageDimensionsJson("carousel")}
             />
           </div>
-        )}
+          
+        {/* {componentEdit.carousel && (
+        )} */}
 
         {/* LEON Pharma Products  */}
 
         <ProductHilightsStyled>
           <div className="container position-relative d-none d-md-block">
-            <div className="row text-white rounded-3 overflow-hidden position-absolute hiligntsContainer">
+            <div className="row rounded-3 overflow-hidden position-absolute hiligntsContainer">
               <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
                 <div className="position-relative">
                   {isAdmin && hasPermission && (
@@ -270,8 +271,7 @@ const Home = () => {
                     setFormValues={setProductDevelopment}
                     formvalues={productDevelopment}
                   />
-                  {componentEdit.product_development && (
-                    <div className="adminEditTestmonial">
+                  <div className={`adminEditTestmonial ${componentEdit.product_development ? "selected" : "dismiss" } `}>
                       <DynamicForm
                         editHandler={editHandler}
                         componentType={productComp.product_development}
@@ -284,7 +284,9 @@ const Home = () => {
                         )}
                       />
                     </div>
-                  )}
+                  {/* {componentEdit.product_development && (
+                    
+                  )} */}
                 </div>
               </div>
               <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
@@ -303,8 +305,7 @@ const Home = () => {
                     formvalues={productDistribution}
                   />
 
-                  {componentEdit.product_distribution && (
-                    <div className="adminEditTestmonial">
+                    <div className={`adminEditTestmonial ${componentEdit.product_distribution ? "selected" : "dismiss" } `}>
                       <DynamicForm
                         editHandler={editHandler}
                         componentType={productComp.product_distribution}
@@ -317,7 +318,10 @@ const Home = () => {
                         )}
                       />
                     </div>
-                  )}
+
+                  {/* {componentEdit.product_distribution && (
+                    
+                  )} */}
                 </div>
               </div>
               <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
@@ -336,8 +340,7 @@ const Home = () => {
                     formvalues={productRegistration}
                   />
 
-                  {componentEdit.product_registration && (
-                    <div className="adminEditTestmonial">
+                    <div className={`adminEditTestmonial ${componentEdit.product_registration ? "selected" : "dismiss" } `}>
                       <DynamicForm
                         editHandler={editHandler}
                         componentType={productComp.product_registration}
@@ -350,17 +353,106 @@ const Home = () => {
                         )}
                       />
                     </div>
-                  )}
+
+                  {/* {componentEdit.product_registration && (
+                    
+                  )} */}
                 </div>
               </div>
             </div>
           </div>
         </ProductHilightsStyled>
 
-        <div className="container mt-0 mt-md-5 pt-md-5">
+
+        {/* INTRODUCTION COMPONENT */}
+        {isAdmin && hasPermission && (
+          <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+        )}
+        <div className="container">
+          <div className="row">
+            {/* <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              pageType="Home"
+              /> 
+            */}
+
+            <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+              linkLabel="Read More"
+              moreLink=""
+              introTitleCss = "fs-3 fw-bold text-center mb-4"
+              introSubTitleCss = "fw-medium text-muted text-center"
+              introDecTitleCss = "fs-6 fw-normal mx-4 text-center lh-6"
+              detailsContainerCss="col-md-12 py-3"
+              anchorContainer="d-flex justify-content-center align-items-center mt-4"
+              anchersvgColor="#17427C"
+              pageType={pageType}
+            />
+          </div>
+        </div>
+
+        <div className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss" } `}>
+            <BriefIntroAdmin
+              editHandler={editHandler}
+              componentType="briefIntro"
+              pageType="Home"
+            />
+          </div>
+
+        {/* {componentEdit.briefIntro && ( )} */}
+
+        {/* END OF INTRODUCTION COMPONENT ============================== */}
+
+        {/* Random Hilights */}
+        <ABriefIntroStyled>
+          <h1 className="fs-1 fw-bold text-center text-uppercase">Services</h1>
+          <div className="container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices">
+            <div className="row">
+              <ABriefAbout
+                col1="col-md-6 ps-sm-0"
+                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                cssClass="fs-3 mb-3 fw-bolder title"
+                imageClass="w-100 object-fit-cover imgStylingLeft shadow"
+                dimensions={imageDimensionsJson("whoweare")}
+                pageType={"productPortfolio"}
+                componentFlip={false}
+              />
+            </div>
+
+            <div className="row d-flex flex-row-reverse my-3 my-md-5">
+              <ABriefAbout
+                col1="col-md-6 pe-sm-0"
+                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                cssClass="fs-3 mb-3 fw-bolder title"
+                imageClass="w-100 object-fit-cover imgStylingRight shadow imgStyling"
+                dimensions={imageDimensionsJson("whoweare")}
+                pageType={"promoting"}
+                componentFlip={false}
+              />
+            </div>
+            <div className="row">
+              <ABriefAbout
+                col1="col-md-6 ps-sm-0"
+                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                cssClass="fs-3 mb-3 fw-bolder title"
+                imageClass="w-100 object-fit-cover imgStylingLeft shadow"
+                dimensions={imageDimensionsJson("whoweare")}
+                pageType={"whatwedo"}
+                componentFlip={false}
+              />
+            </div>
+          </div>
+        </ABriefIntroStyled>
+
+        {/* END OF Random Hilights ============================ */}
+
+        {/* PRODUCTS CATEGORIES */}
+
+        <div className="container">
           <Title
-            title="Product Categories"
-            cssClass="fs-2 text-center my-5 my-md-5 pt-0 pt-md-5"
+            title="Products"
+            cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
           />
           <div className="row">
             {homeCategoriesList.map(
@@ -378,82 +470,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* INTRODUCTION COMPONENT */}
-        {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-        )}
-        <div className="container">
-          <div className="row my-4">
-            {/* <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              pageType="Home"
-            /> */}
-
-            <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-              linkLabel="Read More"
-              moreLink=""
-              introTitleCss = "fs-3 fw-medium text-md-center"
-              introSubTitleCss = "fw-medium text-muted text-md-center"
-              introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
-              detailsContainerCss="col-md-10 offset-md-1 py-3"
-              anchorContainer="d-flex justify-content-center align-items-center mt-4"
-              anchersvgColor="#17427C"
-              pageType={pageType}
-            />
-          </div>
-        </div>
-
-        {componentEdit.briefIntro && (
-          <div className="adminEditTestmonial">
-            <BriefIntroAdmin
-              editHandler={editHandler}
-              componentType="briefIntro"
-              pageType="Home"
-            />
-          </div>
-        )}
-
-        {/* Random Hilights */}
-        <ABriefIntroStyled>
-          <div className="container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices">
-            <div className="row">
-              <ABriefAbout
-                col1="col-md-6 ps-sm-0"
-                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-                cssClass="fs-3 fw-medium title"
-                imageClass="w-100 object-fit-cover imgStylingLeft shadow"
-                dimensions={imageDimensionsJson("whoweare")}
-                pageType={"productPortfolio"}
-                componentFlip={false}
-              />
-            </div>
-
-            <div className="row d-flex flex-row-reverse my-3 my-md-5">
-              <ABriefAbout
-                col1="col-md-6 pe-sm-0"
-                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-                cssClass="fs-3 fw-medium title"
-                imageClass="w-100 object-fit-cover imgStylingRight shadow imgStyling"
-                dimensions={imageDimensionsJson("whoweare")}
-                pageType={"promoting"}
-                componentFlip={false}
-              />
-            </div>
-            <div className="row">
-              <ABriefAbout
-                col1="col-md-6 ps-sm-0"
-                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-                cssClass="fs-3 fw-medium title"
-                imageClass="w-100 object-fit-cover imgStylingLeft shadow"
-                dimensions={imageDimensionsJson("whoweare")}
-                pageType={"whatwedo"}
-                componentFlip={false}
-              />
-            </div>
-          </div>
-        </ABriefIntroStyled>
+        {/* END OF PRODUCTS CATEGORIES ============================== */}
 
         {/* Random Home Services 
         <RandomHomeServicesStyled>
@@ -520,19 +537,20 @@ const Home = () => {
           </div>
         </RandomHomeServicesStyled>
         */}
+
         {/* TESTIMONIAL COMPONENT */}
         <TestimonialCarouselPageStyled>
-          <div className="container">
+          <div className="container-fluid">
             <div className="row">
               <div className="col-md-12">
                 <Title
                   title="Testimonials"
-                  cssClass="fs-2 text-center fw-medium mb-5 pt-5"
+                  cssClass="fs-1 fw-bold text-center my-5 text-uppercase"
                 />
               </div>
             </div>
             <div className="row">
-              <div className="col-md-12 p-5 testimonials text-center">
+              <div className="col-md-12 testimonials text-center">
                 {isAdmin && hasPermission && (
                   <EditIcon
                     editHandler={() => editHandler("testmonial", true)}
@@ -550,8 +568,7 @@ const Home = () => {
                 )}
               </div>
 
-              {componentEdit.testmonial ? (
-                <div className="adminEditTestmonial">
+              <div className={`adminEditTestmonial ${componentEdit.testmonial ? "selected" : "dismiss" } `}>
                   <AdminBanner
                     editHandler={editHandler}
                     componentType="testmonial"
@@ -568,20 +585,25 @@ const Home = () => {
                     dimensions={imageDimensionsJson("testimonial")}
                   />
                 </div>
+
+              {/* {componentEdit.testmonial ? (
+                
               ) : (
                 ""
-              )}
+              )} */}
             </div>
           </div>
         </TestimonialCarouselPageStyled>
 
-        {/* HOME News */}
+        {/* END OF TESTIMONIAL COMPONENT ============================= */}
+
+        {/* HOME NEWS */}
         <div className="row py-5 homeNews">
           <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="container">
               <Title
                 title="News"
-                cssClass="fs-2 text-center fw-medium mb-5 pt-5"
+                cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
               />
               <HomeNews
                 news={news}
@@ -590,16 +612,38 @@ const Home = () => {
               />
 
               <div className="d-flex justify-content-center align-items-center mt-4">
+                {/* <Ancher
+                  AncherLabel="Read more"
+                  Ancherpath="/news"
+                  AncherClass="btn btn-primary d-flex justify-content-center align-items-center "
+                  AnchersvgColor="#17427C"
+                />
                 <Ancher
                   AncherLabel="Read more"
+                  Ancherpath="/news"
+                  AncherClass="btn btn-secondary d-flex justify-content-center align-items-center "
+                  AnchersvgColor="#17427C"
+                /> */}
+
+                <Ancher
+                  AncherLabel="View more news articles"
                   Ancherpath="/news"
                   AncherClass="btn btn-outline d-flex justify-content-center align-items-center "
                   AnchersvgColor="#17427C"
                 />
+
+                {/* <Ancher
+                  AncherLabel="Read more"
+                  Ancherpath="/news"
+                  AncherClass="btn moreLink d-flex justify-content-center align-items-center "
+                  AnchersvgColor="#17427C"
+                /> */}
               </div>
             </div>
           </div>
         </div>
+
+        {/* END OF HOME NEWS */}
 
         {/* HOME List of Services DEVELOPED FOR LEOMTECH  */}
         {/* <div className="container py-5 homeServices">

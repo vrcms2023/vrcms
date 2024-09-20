@@ -131,8 +131,7 @@ const About = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
+      <div className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss" } `}>
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
@@ -143,9 +142,11 @@ const About = () => {
             dimensions={imageDimensionsJson("banner")}
           />
         </div>
+      {/* {componentEdit.banner ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       {/* Brief Introduction */}
       {isAdmin && hasPermission && (
@@ -166,17 +167,19 @@ const About = () => {
               pageType={pageType}
             />
 
-      {componentEdit.briefIntro ? (
-        <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss" } `}>
           <AdminBriefIntro
             editHandler={editHandler}
             componentType="briefIntro"
             pageType={pageType}
           />
         </div>
+
+      {/* {componentEdit.briefIntro ? (
+       
       ) : (
         ""
-      )}
+      )} */}
 
       <AboutPageStyled>
         <div className="container-fluid container-lg my-md-5 ">
@@ -185,26 +188,20 @@ const About = () => {
               <Title title="About Us" cssClass="fs-1 pageTitle" />
             </div> */}
             {isAdmin && hasPermission && (
-              <>
-              <div className="col-6">
-                  <span className="fw-bold me-2">Add content </span>
+              <div className="col-12 text-end">
+                <span className="d-inline-block me-2">Add content</span>
+                <button
+                    type="submit"
+                    className="btn btn-primary "
+                    onClick={() => editHandler("addSection", true)}
+                  >
+                    <i className="fa fa-plus" aria-hidden="true"></i>
+                  </button>
               </div>
-              <div className="col-6 text-end">
-              <button
-                  type="submit"
-                  className="btn btn-primary px-3 w-auto"
-                  onClick={() => editHandler("addSection", true)}
-                >
-                  {" "}
-                  <i className="fa fa-plus" aria-hidden="true"></i>
-                </button>
-              </div>
-              </>
             )}
           </div>
 
-          {componentEdit.editSection || componentEdit.addSection ? (
-            <div className="adminEditTestmonial">
+          <div className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss" } `}>
               <AddEditAdminNews
                 editHandler={editHandler}
                 category="about"
@@ -223,9 +220,12 @@ const About = () => {
                 dimensions={imageDimensionsJson("aboutus")}
               />
             </div>
+
+          {/* {componentEdit.editSection || componentEdit.addSection ? (
+            
           ) : (
             ""
-          )}
+          )} */}
 
           <div className="aboutPage">
             {aboutList.length > 0 ? (
@@ -261,7 +261,9 @@ const About = () => {
                       {item.aboutus_title ? (
                         <Title
                           title={item.aboutus_title}
-                          cssClass="fs-2 mb-2 fw-medium title"
+                          cssClass=""
+                          mainTitleClassess="fs-2 mb-2 fw-medium title"
+                          subTitleClassess=""
                         />
                       ) : (
                         ""
@@ -270,7 +272,9 @@ const About = () => {
                       {item.aboutus_sub_title ? (
                         <Title
                         title={item.aboutus_sub_title}
-                          cssClass="fs-5 text-secondary mb-2"
+                          cssClass=""
+                          mainTitleClassess="fs-5 text-secondary mb-2"
+                          subTitleClassess=""
                         />
                       ) : (
                         ""
@@ -279,7 +283,9 @@ const About = () => {
                       {item.aboutus_sub_title ? (
                         <Title
                           title={item.aboutus_sub_title}
-                          cssClass="fs-5 text-secondary mb-2"
+                          cssClass=""
+                          mainTitleClassess="fs-5 text-secondary mb-2"
+                          subTitleClassess=""
                         />
                       ) : (
                         ""

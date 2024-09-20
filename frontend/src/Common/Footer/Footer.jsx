@@ -116,7 +116,7 @@ const Footer = () => {
 
   return (
     <FooterStyled>
-      <footer className="text-center">
+      <footer className="text-center pt-5">
         <div className="container footerDetails">
           <div className="logo text-center text-md-start">
               <img
@@ -222,7 +222,7 @@ const Footer = () => {
                 )} */}
               {/* <Title title="Reach Us"  /> */}
               {address.phonen_number ? (
-                <p className="m-0 pb-3">
+                <p className="m-0 pb-2">
                   <i
                     className="fa fa-phone fs-5 me-2"
                     aria-hidden="true"
@@ -233,7 +233,7 @@ const Footer = () => {
                 ""
               )}
               {address.phonen_number_2 ? (
-                <p className="m-0 pb-3">
+                <p className="m-0 pb-2">
                   <i
                     className="fa fa-phone fs-5 me-2"
                     aria-hidden="true"
@@ -244,7 +244,7 @@ const Footer = () => {
                 ""
               )}
               {address.phonen_number_3 ? (
-                <p className="m-0 ">
+                <p className="m-0 pb-2">
                   <i
                     className="fa fa-whatsapp fs-5 me-2"
                     aria-hidden="true"
@@ -432,7 +432,27 @@ const Footer = () => {
         />
       )}
 
-      {componentEdit.address ? (
+      <div className={`adminEditTestmonial ${componentEdit.address ? "selected" : "dismiss" } `}>
+          <FooterAdminFeilds
+            editHandler={editHandler}
+            componentType="address"
+            footerValues={footerValues}
+          />
+        </div>
+
+        <div className={`adminEditTestmonial ${componentEdit.termsPolacy ? "selected" : "dismiss" } `}>
+          <AdminTermsPolicy
+            termsAndConditionData={termsAndPolicyData}
+            editHandler={editHandler}
+            componentType="termsPolacy"
+          />
+        </div>
+
+        <div className={`adminEditTestmonial ${componentEdit.contact ? "selected" : "dismiss" } `}>
+          <ContactInputs editHandler={editHandler} componentType="contact" />
+        </div>
+
+      {/* {componentEdit.address ? (
         <div className="adminEditTestmonial">
           <FooterAdminFeilds
             editHandler={editHandler}
@@ -440,11 +460,11 @@ const Footer = () => {
             footerValues={footerValues}
           />
         </div>
-      ) : (
+      ) : ( 
         ""
-      )}
+      )} */}
 
-      {componentEdit.termsPolacy ? (
+      {/* {componentEdit.termsPolacy ? (
         <div className="adminEditTestmonial">
           <AdminTermsPolicy
             termsAndConditionData={termsAndPolicyData}
@@ -454,15 +474,15 @@ const Footer = () => {
         </div>
       ) : (
         ""
-      )}
+      )} */}
 
-      {componentEdit.contact ? (
+      {/* {componentEdit.contact ? (
         <div className="adminEditTestmonial">
           <ContactInputs editHandler={editHandler} componentType="contact" />
         </div>
       ) : (
         ""
-      )}
+      )} */}
 
       {show && <ModelBg />}
     </FooterStyled>

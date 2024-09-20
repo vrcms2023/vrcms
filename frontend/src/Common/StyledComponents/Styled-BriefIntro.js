@@ -1,14 +1,19 @@
 import styled from "styled-components";
 
 export const BriefIntroStyled = styled.div`
-    // background-color: ${({ theme }) => theme.verylightgray};
-    // background: linear-gradient(360deg, ${({ theme }) => theme.white} 0%, ${({ theme }) => theme.primaryColor} 100%);
-    background: rgb(255,255,255);
-    background: linear-gradient(90deg, rgba(225,242,253,1) 0%, ${({ theme }) => theme.white} 50%, rgba(225,242,253,1) 100%);
+    background-color: ${({ theme }) => theme.transparent};
     padding: 50px 0;
 
   p {
     color: ${({ theme }) => theme.textColor};
+  }
+
+  .briefIntro {
+    margin: 88px 0 0px;
+
+    @media(max-width: 768px) {
+      margin: 0px;
+    }
   }
 
   .briefIntro h3 {

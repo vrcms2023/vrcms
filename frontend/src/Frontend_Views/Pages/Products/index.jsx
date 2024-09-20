@@ -216,8 +216,7 @@ const ProductsPage = () => {
         </div>
       )}
 
-      {componentEdit.category && (
-        <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial ${componentEdit.category  ? "selected" : "dismiss" } `}>
           <DynamicFormwithFileUplod
             editHandler={editHandler}
             componentTitle={"Crete New Category"}
@@ -230,7 +229,9 @@ const ProductsPage = () => {
             formUpdateURL={"/products/updateCategory/"}
           />
         </div>
-      )}
+      {/* {componentEdit.category && (
+       
+      )} */}
       {selectedCategory?.id && (
         <>
           {/* Page Banner Component */}
@@ -245,9 +246,7 @@ const ProductsPage = () => {
               bannerContainerCss="titleCaption d-flex align-items-end justify-content-center flex-column"
             />
           </div>
-
-          {componentEdit.banner && (
-            <div className="adminEditTestmonial">
+            <div className={`adminEditTestmonial ${ componentEdit.banner ? "selected" : "dismiss" } `}>
               <ImageInputsForm
                 editHandler={editHandler}
                 componentType="banner"
@@ -260,7 +259,9 @@ const ProductsPage = () => {
                 dimensions={imageDimensionsJson("banner")}
               />
             </div>
-          )}
+          {/* {componentEdit.banner && (
+            
+          )} */}
         </>
       )}
 
@@ -347,8 +348,7 @@ const ProductsPage = () => {
           )}
         </div>
 
-        {componentEdit.product && (
-          <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial ${ componentEdit.product ? "selected" : "dismiss" } `}>
             <SingleImageUlploadWithForm
               editHandler={editHandler}
               componentType="product"
@@ -367,7 +367,10 @@ const ProductsPage = () => {
               dimensions={imageDimensionsJson("product")}
             />
           </div>
-        )}
+
+        {/* {componentEdit.product && (
+          
+        )} */}
 
         <div>
           {paginationData?.total_count ? (

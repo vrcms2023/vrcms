@@ -7,15 +7,16 @@ export const FooterStyled = styled.div`
   // background-repeat: no-repeat;
   // background-position: 120% -250px;
   // background-size: 40%;
-  // background: linear-gradient(360deg, ${({ theme }) => theme.white} 0%, ${({ theme }) => theme.primaryColor} 100%);
-    background: ${({ theme }) => theme.gray444};
-    color: ${({ theme }) => theme.footerLinkColor};
+  // background: linear-gradient(360deg, ${({ theme }) => theme.white} 0%, ${({ theme }) => theme.black} 100%);
+    background: ${({ theme }) => theme.footerBgColor};
+    color: ${({ theme }) => theme.black};
+    border-top: 1px solid ${({ theme }) => theme.grayccc};
 
   .footerDetails {
 
     .logo img { width: 150px; }
     a {
-      color: ${({ theme }) => theme.footerTextColor};
+      color: ${({ theme }) => theme.footerLinkColor};
       &:hover {
         color: ${({ theme }) => theme.footerLinkHoverColor};
       }
@@ -25,14 +26,14 @@ export const FooterStyled = styled.div`
       list-style: none;
   
       li {
-        padding: 7px 0;
+        padding: 5px 0;
 
         &::last-child {
           padding-bottom: 0;
         }
   
         a {
-          color: ${({ theme }) => theme.footerTextColor};
+          color: ${({ theme }) => theme.footerLinkColor};
           &:hover {
             color: ${({ theme }) => theme.footerLinkHoverColor};
           }
@@ -66,7 +67,7 @@ export const FooterStyled = styled.div`
     i {
       font-size: 2rem;
       margin: 0 8px 0;
-      color: ${({ theme }) => theme.gray888};
+      color: ${({ theme }) => theme.footerLinkColor};
 
       &:hover {
         color: ${({ theme }) => theme.footerLinkHoverColor};
@@ -128,7 +129,8 @@ export const FooterStyled = styled.div`
   }
 
   .footerCopyRights {
-    background-color: ${({ theme }) => theme.gray555};
+    border-top: 1px solid ${({ theme }) => theme.grayccc};
+    background-color: ${({ theme }) => theme.grayeee};
     font-size: 0.85rem !important;
     color: ${({ theme }) => theme.footerLinkColor};
 
@@ -143,7 +145,11 @@ export const FooterStyled = styled.div`
     .dby,
     .dby a {
       font-size: 0.85rem;
-      color: ${({ theme }) => theme.footerLinkHoverColor};
+      color: ${({ theme }) => theme.footerLinkColor};
+
+      &:hover {
+        color: ${({ theme }) => theme.footerLinkHoverColor};
+      }
     }
   }
 `;

@@ -165,8 +165,8 @@ const Team = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
+
+      <div className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss" } `}>
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
@@ -177,9 +177,11 @@ const Team = () => {
             dimensions={imageDimensionsJson("banner")}
           />
         </div>
+      {/* {componentEdit.banner ? (
+       
       ) : (
         ""
-      )}
+      )} */}
 
       {/* Brief Introduction */}
       {isAdmin && hasPermission && (
@@ -206,17 +208,18 @@ const Team = () => {
         pageType={pageType}
       />
 
-      {componentEdit.briefIntro ? (
-        <div className="adminEditTestmonial">
+      <div className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss" } `}>
           <AdminBriefIntro
             editHandler={editHandler}
             componentType="briefIntro"
             pageType={pageType}
           />
         </div>
+      {/* {componentEdit.briefIntro ? (
+        
       ) : (
         ""
-      )}
+      )} */}
 
       <div className="container">
         <div className="row">
@@ -254,10 +257,8 @@ const Team = () => {
             />
           </div>
         </div>
-
-        {componentEdit.editSection || componentEdit.addSection ? (
-          <div className="adminEditTestmonial">
-            <AddEditTeam
+        <div className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss" } `}>
+        <AddEditTeam
               editHandler={editHandler}
               category="team"
               editCarousel={editCarousel}
@@ -277,9 +278,11 @@ const Team = () => {
               dimensions={imageDimensionsJson("teams")}
             />
           </div>
+        {/* {componentEdit.editSection || componentEdit.addSection ? (
+   
         ) : (
           ""
-        )}
+        )} */}
 
         <TeamStyled>
           <div className={`${isAdmin ? "" : "teamFrontend"}`}>

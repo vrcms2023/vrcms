@@ -4,13 +4,13 @@ const Title = ({
   title = "",
   subTitle = "", 
   cssClass,
-  mainTitleClassess="",
-  subTitleClassess="subtitle"
+  mainTitleClassess="text-center fs-4",
+  subTitleClassess=""
 }) => {
   
   return (
     <>
-      <div className={`${mainTitleClassess}`}>
+      <div className={`${cssClass}`}>
         {title}
         {subTitle ? (
           <span className={`${subTitleClassess}`}> / {subTitle}</span>

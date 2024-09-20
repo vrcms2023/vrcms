@@ -340,7 +340,7 @@ const FileUpload = ({
   return (
     <>
       <form className="" onSubmit={handleSubmit(uploadFile)}>
-        <div className={`${scrollEnable ? "heightCtrl" : "fullHeightCtrl"}`}>
+        <div className={`px-4 ${scrollEnable ? "heightCtrl" : "fullHeightCtrl"}`}>
           <div className="mb-2 row">
             <label className="col-sm-12 col-form-label">
               <Title title={title} cssClass="requiredField" />

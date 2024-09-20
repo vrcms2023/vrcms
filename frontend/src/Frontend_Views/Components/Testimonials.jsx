@@ -50,13 +50,13 @@ const Testimonials = ({ testimonis }) => {
         ) : (
           <img
             src={getImagePath(item.path)}
-            className="rounded-circle my-4 testimonialImg shadow-lg border border-3"
+            className="rounded-circle my-4 testimonialImg shadow-lg"
             alt="User"
           />
         )}
         <Title
           title={item.testimonial_title}
-          cssClass="mb-2 px-3 fs-3 text-md-center title"
+          cssClass="mb-2 px-3 fs-3 fw-bold text-md-center title"
         />
         <p className="w-75 m-auto mt-3 mb-5 px-3 px-md-5 fs-6">
           {item.testimonial_description}
