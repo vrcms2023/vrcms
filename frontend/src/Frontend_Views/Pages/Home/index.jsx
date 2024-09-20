@@ -254,7 +254,7 @@ const Home = () => {
 
         <ProductHilightsStyled>
           <div className="container position-relative d-none d-md-block">
-            <div className="row text-white rounded-3 overflow-hidden position-absolute hiligntsContainer">
+            <div className="row rounded-3 overflow-hidden position-absolute hiligntsContainer">
               <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
                 <div className="position-relative">
                   {isAdmin && hasPermission && (
@@ -363,10 +363,96 @@ const Home = () => {
           </div>
         </ProductHilightsStyled>
 
-        <div className="container mt-0 mt-md-5 pt-md-5">
+
+        {/* INTRODUCTION COMPONENT */}
+        {isAdmin && hasPermission && (
+          <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+        )}
+        <div className="container">
+          <div className="row">
+            {/* <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              pageType="Home"
+              /> 
+            */}
+
+            <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+              linkLabel="Read More"
+              moreLink=""
+              introTitleCss = "fs-3 fw-bold text-center mb-4"
+              introSubTitleCss = "fw-medium text-muted text-center"
+              introDecTitleCss = "fs-6 fw-normal mx-4 text-center lh-6"
+              detailsContainerCss="col-md-12 py-3"
+              anchorContainer="d-flex justify-content-center align-items-center mt-4"
+              anchersvgColor="#17427C"
+              pageType={pageType}
+            />
+          </div>
+        </div>
+
+        <div className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss" } `}>
+            <BriefIntroAdmin
+              editHandler={editHandler}
+              componentType="briefIntro"
+              pageType="Home"
+            />
+          </div>
+
+        {/* {componentEdit.briefIntro && ( )} */}
+
+        {/* END OF INTRODUCTION COMPONENT ============================== */}
+
+        {/* Random Hilights */}
+        <ABriefIntroStyled>
+          <h1 className="fs-1 fw-bold text-center text-uppercase">Services</h1>
+          <div className="container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices">
+            <div className="row">
+              <ABriefAbout
+                col1="col-md-6 ps-sm-0"
+                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                cssClass="fs-3 mb-3 fw-bolder title"
+                imageClass="w-100 object-fit-cover imgStylingLeft shadow"
+                dimensions={imageDimensionsJson("whoweare")}
+                pageType={"productPortfolio"}
+                componentFlip={false}
+              />
+            </div>
+
+            <div className="row d-flex flex-row-reverse my-3 my-md-5">
+              <ABriefAbout
+                col1="col-md-6 pe-sm-0"
+                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                cssClass="fs-3 mb-3 fw-bolder title"
+                imageClass="w-100 object-fit-cover imgStylingRight shadow imgStyling"
+                dimensions={imageDimensionsJson("whoweare")}
+                pageType={"promoting"}
+                componentFlip={false}
+              />
+            </div>
+            <div className="row">
+              <ABriefAbout
+                col1="col-md-6 ps-sm-0"
+                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                cssClass="fs-3 mb-3 fw-bolder title"
+                imageClass="w-100 object-fit-cover imgStylingLeft shadow"
+                dimensions={imageDimensionsJson("whoweare")}
+                pageType={"whatwedo"}
+                componentFlip={false}
+              />
+            </div>
+          </div>
+        </ABriefIntroStyled>
+
+        {/* END OF Random Hilights ============================ */}
+
+        {/* PRODUCTS CATEGORIES */}
+
+        <div className="container">
           <Title
-            title="Product Categories"
-            cssClass="fs-2 text-center my-5 my-md-5 pt-0 pt-md-5"
+            title="Products"
+            cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
           />
           <div className="row">
             {homeCategoriesList.map(
@@ -384,84 +470,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* INTRODUCTION COMPONENT */}
-        {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-        )}
-        <div className="container">
-          <div className="row my-4">
-            {/* <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              pageType="Home"
-            /> */}
-
-            <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-              linkLabel="Read More"
-              moreLink=""
-              introTitleCss = "fs-3 fw-medium text-md-center"
-              introSubTitleCss = "fw-medium text-muted text-md-center"
-              introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
-              detailsContainerCss="col-md-10 offset-md-1 py-3"
-              anchorContainer="d-flex justify-content-center align-items-center mt-4"
-              anchersvgColor="#17427C"
-              pageType={pageType}
-            />
-          </div>
-        </div>
-
-        <div className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss" } `}>
-            <BriefIntroAdmin
-              editHandler={editHandler}
-              componentType="briefIntro"
-              pageType="Home"
-            />
-          </div>
-
-        {/* {componentEdit.briefIntro && (
-          
-        )} */}
-
-        {/* Random Hilights */}
-        <ABriefIntroStyled>
-          <div className="container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices">
-            <div className="row">
-              <ABriefAbout
-                col1="col-md-6 ps-sm-0"
-                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-                cssClass="fs-3 fw-medium title"
-                imageClass="w-100 object-fit-cover imgStylingLeft shadow"
-                dimensions={imageDimensionsJson("whoweare")}
-                pageType={"productPortfolio"}
-                componentFlip={false}
-              />
-            </div>
-
-            <div className="row d-flex flex-row-reverse my-3 my-md-5">
-              <ABriefAbout
-                col1="col-md-6 pe-sm-0"
-                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-                cssClass="fs-3 fw-medium title"
-                imageClass="w-100 object-fit-cover imgStylingRight shadow imgStyling"
-                dimensions={imageDimensionsJson("whoweare")}
-                pageType={"promoting"}
-                componentFlip={false}
-              />
-            </div>
-            <div className="row">
-              <ABriefAbout
-                col1="col-md-6 ps-sm-0"
-                col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-                cssClass="fs-3 fw-medium title"
-                imageClass="w-100 object-fit-cover imgStylingLeft shadow"
-                dimensions={imageDimensionsJson("whoweare")}
-                pageType={"whatwedo"}
-                componentFlip={false}
-              />
-            </div>
-          </div>
-        </ABriefIntroStyled>
+        {/* END OF PRODUCTS CATEGORIES ============================== */}
 
         {/* Random Home Services 
         <RandomHomeServicesStyled>
@@ -528,19 +537,20 @@ const Home = () => {
           </div>
         </RandomHomeServicesStyled>
         */}
+
         {/* TESTIMONIAL COMPONENT */}
         <TestimonialCarouselPageStyled>
-          <div className="container">
+          <div className="container-fluid">
             <div className="row">
               <div className="col-md-12">
                 <Title
                   title="Testimonials"
-                  cssClass="fs-2 text-center fw-medium mb-5 pt-5"
+                  cssClass="fs-1 fw-bold text-center my-5 text-uppercase"
                 />
               </div>
             </div>
             <div className="row">
-              <div className="col-md-12 p-5 testimonials text-center">
+              <div className="col-md-12 testimonials text-center">
                 {isAdmin && hasPermission && (
                   <EditIcon
                     editHandler={() => editHandler("testmonial", true)}
@@ -585,13 +595,15 @@ const Home = () => {
           </div>
         </TestimonialCarouselPageStyled>
 
-        {/* HOME News */}
+        {/* END OF TESTIMONIAL COMPONENT ============================= */}
+
+        {/* HOME NEWS */}
         <div className="row py-5 homeNews">
           <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="container">
               <Title
                 title="News"
-                cssClass="fs-2 text-center fw-medium mb-5 pt-5"
+                cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
               />
               <HomeNews
                 news={news}
@@ -614,7 +626,7 @@ const Home = () => {
                 /> */}
 
                 <Ancher
-                  AncherLabel="Read more"
+                  AncherLabel="View more news articles"
                   Ancherpath="/news"
                   AncherClass="btn btn-outline d-flex justify-content-center align-items-center "
                   AnchersvgColor="#17427C"
@@ -630,6 +642,8 @@ const Home = () => {
             </div>
           </div>
         </div>
+
+        {/* END OF HOME NEWS */}
 
         {/* HOME List of Services DEVELOPED FOR LEOMTECH  */}
         {/* <div className="container py-5 homeServices">

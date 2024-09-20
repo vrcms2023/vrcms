@@ -138,6 +138,10 @@ export const ProductItemStyled = styled.div`
     height: 130px;
 }
 
+.productName  {
+    color: ${({ theme }) => theme.gray444};
+}
+
 // .rightPositioned::before,  .rightPositioned::after {
 //     background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0) 100%);
 //     content: "";

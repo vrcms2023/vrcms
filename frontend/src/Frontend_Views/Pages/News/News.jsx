@@ -33,7 +33,7 @@ const News = ({ item, dateFormat, articleHandler }) => {
       <small>Posted at {dateFormat(item.created_at)}</small>
       <p className="card-text mb-4">{item.description}</p>
       <Link to="" onClick={() => articleHandler(item.id)} className="loadMore">
-        Read more
+        View more news
         <svg
           width="15"
           height="8"

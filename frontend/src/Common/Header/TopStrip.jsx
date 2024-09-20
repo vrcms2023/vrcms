@@ -35,7 +35,7 @@ const TopStrip = () => {
   return (
     <TopStripStyled>
       {isAdmin && (
-        <div className="d-flex justify-content-center justify-content-md-between align-items-center px-5 py-2 topStrip">
+        <div className="d-flex justify-content-center justify-content-md-between align-items-center px-5 py-3 topStrip">
           <div className="d-none d-md-flex">
             <Title
               title="Welcome to VRCMS"

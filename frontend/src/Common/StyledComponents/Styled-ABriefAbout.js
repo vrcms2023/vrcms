@@ -7,16 +7,16 @@ export const ABriefIntroStyled = styled.div`
     }
 
     .randomServices {
-        margin-top: 130px;
-        margin-bottom: 130px;
+        margin-top: 96px;
+        margin-bottom: 96px;
 
         @media(max-width: 768px) {
-            margin-top: 80px;
-            margin-bottom: 50px;
+            margin-top: 48px;
+            margin-bottom: 48px;
         }
 
         img {
-            height: 350px;
+            height: 300px;
             // filter: grayscale(100%);
             transition: filter 0.3s ease-in-out, transform 0.3s ease-in-out;
             
@@ -31,21 +31,23 @@ export const ABriefIntroStyled = styled.div`
         }
 
         .imgStylingLeft {
-            border-top-right-radius: 30px;
-            border-bottom-right-radius: 30px;
+            border-radius: 12px;
+            // border-top-right-radius: 30px;
+            // border-bottom-right-radius: 30px;
 
-            @media(max-width: 768px) {
-                border-radius: 10px
-            }
+            // @media(max-width: 768px) {
+            //     border-radius: 10px
+            // }
         }
 
         .imgStylingRight {
-            border-top-left-radius: 30px;
-            border-bottom-left-radius: 30px;
+            border-radius: 12px;
+            // border-top-left-radius: 30px;
+            // border-bottom-left-radius: 30px;
 
-            @media(max-width: 768px) {
-                border-radius: 10px
-            }
+            // @media(max-width: 768px) {
+            //     border-radius: 10px
+            // }
         }
     }
 

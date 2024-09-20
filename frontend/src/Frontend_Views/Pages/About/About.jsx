@@ -188,21 +188,16 @@ const About = () => {
               <Title title="About Us" cssClass="fs-1 pageTitle" />
             </div> */}
             {isAdmin && hasPermission && (
-              <>
-              <div className="col-6">
-                  <span className="fw-bold me-2">Add content </span>
+              <div className="col-12 text-end">
+                <span className="d-inline-block me-2">Add content</span>
+                <button
+                    type="submit"
+                    className="btn btn-primary "
+                    onClick={() => editHandler("addSection", true)}
+                  >
+                    <i className="fa fa-plus" aria-hidden="true"></i>
+                  </button>
               </div>
-              <div className="col-6 text-end">
-              <button
-                  type="submit"
-                  className="btn btn-primary px-3 w-auto"
-                  onClick={() => editHandler("addSection", true)}
-                >
-                  {" "}
-                  <i className="fa fa-plus" aria-hidden="true"></i>
-                </button>
-              </div>
-              </>
             )}
           </div>
 
@@ -266,7 +261,9 @@ const About = () => {
                       {item.aboutus_title ? (
                         <Title
                           title={item.aboutus_title}
-                          cssClass="fs-2 mb-2 fw-medium title"
+                          cssClass=""
+                          mainTitleClassess="fs-2 mb-2 fw-medium title"
+                          subTitleClassess=""
                         />
                       ) : (
                         ""
@@ -275,7 +272,9 @@ const About = () => {
                       {item.aboutus_sub_title ? (
                         <Title
                         title={item.aboutus_sub_title}
-                          cssClass="fs-5 text-secondary mb-2"
+                          cssClass=""
+                          mainTitleClassess="fs-5 text-secondary mb-2"
+                          subTitleClassess=""
                         />
                       ) : (
                         ""
@@ -284,7 +283,9 @@ const About = () => {
                       {item.aboutus_sub_title ? (
                         <Title
                           title={item.aboutus_sub_title}
-                          cssClass="fs-5 text-secondary mb-2"
+                          cssClass=""
+                          mainTitleClassess="fs-5 text-secondary mb-2"
+                          subTitleClassess=""
                         />
                       ) : (
                         ""

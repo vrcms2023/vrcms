@@ -26,7 +26,7 @@ export const FooterStyled = styled.div`
       list-style: none;
   
       li {
-        padding: 7px 0;
+        padding: 5px 0;
 
         &::last-child {
           padding-bottom: 0;
@@ -130,7 +130,7 @@ export const FooterStyled = styled.div`
 
   .footerCopyRights {
     border-top: 1px solid ${({ theme }) => theme.grayccc};
-    background-color: ${({ theme }) => theme.footerBgColor};
+    background-color: ${({ theme }) => theme.grayeee};
     font-size: 0.85rem !important;
     color: ${({ theme }) => theme.footerLinkColor};
 

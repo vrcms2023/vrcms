@@ -55,14 +55,21 @@ const Banner = ({
           {bannerdata.banner_title === "" ? (
             ""
           ) : (
-            <Title title={bannerdata.banner_title} cssClass={bannerTitleCss} />
+            <Title title={bannerdata.banner_title} 
+            // cssClass={bannerTitleCss} 
+              cssClass=""
+              mainTitleClassess="fs-1 fw-bold text-white "
+              subTitleClassess=""
+            />
           )}
           {bannerdata.banner_subTitle === "" ? (
             ""
           ) : (
             <Title
               title={bannerdata.banner_subTitle}
-              cssClass={bannerSubTitleCss}
+              cssClass=""
+              mainTitleClassess="fs-6 mb-2 fw-medium text-white "
+              subTitleClassess=""
             />
           )}
           {bannerdata.banner_descripiton === "" ? (

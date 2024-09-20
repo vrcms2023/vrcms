@@ -17,7 +17,7 @@ const Product = ({ item, categoryId, editHandler, deleteProduct, pathName }) => 
 
   return (
     <div
-      className={`${pathName ? "" : "col-sm-6 col-md-4 col-lg-3"} text-center product px-mb-4`}
+      className={`${pathName ? "" : "col-sm-6 col-md-4 col-lg-3"} text-center product px-mb-3 mb-5`}
     >
       <ProductItemStyled>
         {isAdmin && hasPermission && (
@@ -48,13 +48,13 @@ const Product = ({ item, categoryId, editHandler, deleteProduct, pathName }) => 
           <img
             src={getImagePath(item.path)}
             alt={item.alternitivetext}
-            className="w-100 rounded-2 shadow object-fit-cover productImage"
+            className="w-75 rounded-4 shadow object-fit-cover productImage"
           />
         </Link>
         
         <Title
           title={locationPath.pathname === "/" || locationPath.pathname === "/home" ? item.category_name : item.product_name}
-          cssClass="productName fs-6 py-3 text-black fw-medium"
+          cssClass="productName mt-3 fw-semibold"
         />
         {/* <p>{item.description}</p> */}
       </ProductItemStyled>

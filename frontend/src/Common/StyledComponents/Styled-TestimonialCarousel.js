@@ -5,12 +5,12 @@ export const TestimonialCarouselPageStyled = styled.div`
 .testimonials {
     background-color:${({ theme }) => theme.testimonialsBg}; 
     color:${({ theme }) => theme.testimonialsTextColor};
-    min-height: 530px;
+    min-height: 480px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    border: 1px solid ${({ theme }) => theme.gray888};
+    // border: 1px solid ${({ theme }) => theme.gray888};
     // background: rgb(255,255,255);
     // background: linear-gradient(360deg, ${({ theme }) => theme.white} 0%, ${({ theme }) => theme.primaryColor} 100%);
     // border-radius: 30px;

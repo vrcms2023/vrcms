@@ -95,9 +95,9 @@ const ABriefAbout = ({
         {bannerData.moreLink ? (
           <div>
             <Ancher
-              AncherLabel="Know More"
+              AncherLabel="more..."
               Ancherpath={bannerData.moreLink ? bannerData.moreLink : ""}
-              AncherClass="btn btn-secondary d-flex justify-content-center align-items-center gap-3"
+              AncherClass="moreLink d-flex justify-content-center align-items-center gap-3"
               AnchersvgColor="#ffffff"
             />
           </div>

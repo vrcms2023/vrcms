@@ -164,7 +164,7 @@ const Contact = () => {
       )} */}
 
       {/* Introduction */}
-      {isAdmin && hasPermission && (
+      {/* {isAdmin && hasPermission && (
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
       )}
 
@@ -182,7 +182,7 @@ const Contact = () => {
             componentType="briefIntro"
             pageType={pageType}
           />
-        </div>
+        </div> */}
       {/* {componentEdit.briefIntro ? (
         
       ) : (
@@ -335,7 +335,7 @@ const Contact = () => {
 
             <ContactForm />
           </div> */}
-          <div className="col-md-12 position-relative mb-5">
+          <div className="col-md-12 p-0 position-relative" style={{bottom: "-10px"}}>
             {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("map", true)} />
             )}

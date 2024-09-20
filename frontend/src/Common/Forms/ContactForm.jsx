@@ -40,7 +40,8 @@ const ContactForm = ({ categoryId }) => {
 
   return (
     <>
-    <Title title="Contact Information" cssClass="formTitle fs-4 fw-medium mb-4" />
+    <small>SEND US EMAIL</small>
+    <Title title="Contact Feel free to write" cssClass="formTitle fs-4 fw-bold mb-3" />
     <form
       className="my-0 mx-auto contactForm"
       onSubmit={handleSubmit(onFormSubmit)}
@@ -78,7 +79,7 @@ const ContactForm = ({ categoryId }) => {
         <div className="col-sm-12 mt-2">
           <button
             type="submit"
-            className="btn btn-primary w-100 text-uppercase py-2"
+            className="btn btn-primary"
           >
             Send Request
           </button>

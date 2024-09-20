@@ -31,7 +31,7 @@ body {
 .btn {
   border-radius: 0.375rem !important;
   transition: all .35s;
-  padding: 6px 12px !important;
+  padding: 1rem 3rem !important;
 
   // &:hover svg { transform: rotate(-45deg);}
   &:hover {
@@ -48,13 +48,13 @@ body {
 .btn-primary {
   background-color:${({ theme }) => theme.btnPrimary}; 
   color:${({ theme }) => theme.btnPrimaryTextColor};
-  border: 1px solid ${({ theme }) => theme.btnPrimaryBorderColor} !important; 
+  // border: 1px solid ${({ theme }) => theme.btnPrimaryBorderColor} !important; 
 
 }
 .btn-primary:hover {
   background-color:${({ theme }) => theme.btnPrimaryHover}; 
   color:${({ theme }) => theme.btnPrimaryTextHoverColor};
-  border: 1px solid ${({ theme }) => theme.btnPrimaryBorderHoverColor} !important; 
+  // border: 1px solid ${({ theme }) => theme.btnPrimaryBorderHoverColor} !important; 
 }
 
 .btn-secondary {
@@ -74,6 +74,7 @@ body {
   background-color:${({ theme }) => theme.btnOutline}; 
   color:${({ theme }) => theme.btnOutlineTextColor};
   border: 1px solid ${({ theme }) => theme.btnOutlineBorderColor} !important; 
+  font-weight: 600;
 }
 
 .btn-outline:hover { 
@@ -83,11 +84,11 @@ body {
 }
 
 .moreLink {
-  color:${({ theme }) => theme.btnLinkTextColor};
+  color:${({ theme }) => theme.primaryColor};
 }
 
 .moreLink:hover {
-  color:${({ theme }) => theme.btnLinkTextHoverColor} !important;
+  color:${({ theme }) => theme.secondaryColor} !important;
 }
 
 .carousel-caption {
