@@ -16,7 +16,7 @@ from django.http import Http404
 from django.db.models import Q
 from common.CustomPagination import CustomPagination
 from common.utility import get_custom_paginated_data
-import magic
+# import magic
 
 # Create your views here.
     
@@ -84,11 +84,11 @@ class ContactUSAPIView(generics.CreateAPIView):
                 if (category_fileuplod and category_fileuplod.strip()):
                         fileURL = 'backend'+category_fileuplod
         
-                        with open(fileURL, 'rb') as file:
-                            file_content = file.read()
+                        # with open(fileURL, 'rb') as file:
+                        #     file_content = file.read()
 
-                            mime_type = magic.from_buffer(file_content, mime=True)
-                            client_msg.attach(file_name, file_content, mime_type)
+                        #     mime_type = magic.from_buffer(file_content, mime=True)
+                        #     client_msg.attach(file_name, file_content, mime_type)
 
             client_msg.content_subtype ="html"# Main content is now text/html
             client_msg.send()

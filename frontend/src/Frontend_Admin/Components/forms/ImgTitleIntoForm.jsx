@@ -10,6 +10,7 @@ import DeleteDialog from "../../../Common/DeleteDialog";
 const ImageInputsForm = ({
   editHandler,
   componentType,
+  popupTitle,
   pageType,
   category = "banner",
   extraFormParamas,
@@ -88,7 +89,7 @@ const ImageInputsForm = ({
     // <>
     // {editCarousel.id ? (
     <div className="">
-      <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
+      <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
       <hr className="m-0 text-black" />
       <div className="container my-3">
         <div className="row py-0 pb-md-5">

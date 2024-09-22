@@ -112,7 +112,7 @@ const UserAdmin = () => {
                 <th>Name</th>
                 <th>Email</th>
                 <th>Admin type</th>
-                <th >Active status</th>
+                <th>Active status</th>
                 <th> Admin Permissions</th>
                 <th>Action</th>
               </tr>
@@ -175,28 +175,30 @@ const UserAdmin = () => {
           <h3>Not authorized to view this page </h3>
         )}
 
-        
         <div className="text-center my-5">
           {/* <p className="text-white h4 bg-info m-5 p-4">
             After activating the user account, granting page permissions is also
             required to access the application.
           </p> */}
-          {showMesg &&
-          <>
-          <p className="text-black bg-warning p-2 fs-4">
-          {/* After activating the admin account, <br />  */}
-          you'll need to grant permission to access the app's pages
-          </p>
-          <p className="text-center">
-          <i class="fa fa-arrow-down fs-1 text-warning" aria-hidden="true"></i>
-        </p>
-        </>
-          }
-          
+          {showMesg && (
+            <>
+              <p className="text-black bg-warning p-2 fs-4">
+                {/* After activating the admin account, <br />  */}
+                you'll need to grant permission to access the app's pages
+              </p>
+              <p className="text-center">
+                <i
+                  className="fa fa-arrow-down fs-1 text-warning"
+                  aria-hidden="true"
+                ></i>
+              </p>
+            </>
+          )}
+
           <Link to="/userPermission" className="btn btn-outline ">
             Go for Page Permissions
           </Link>
-        </div> 
+        </div>
       </div>
     </div>
   );

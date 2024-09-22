@@ -33,7 +33,6 @@ import SkeletonImage from "../../../Common/Skeltons/SkeletonImage";
 
 import { TestimonialsListPageStyled } from "../../../Common/StyledComponents/Styled-TestimonialsList";
 
-
 const TestimonialsList = () => {
   const editComponentObj = {
     banner: false,
@@ -55,7 +54,7 @@ const TestimonialsList = () => {
   const [pageLoadResult, setPageloadResults] = useState(false);
   const [searchQuery, setSearchquery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [modelItem, setModelItem] = useState({})
+  const [modelItem, setModelItem] = useState({});
 
   const setResponseData = (data) => {
     setClientsList(
@@ -130,14 +129,14 @@ const TestimonialsList = () => {
   };
 
   const showModel = (item) => {
-    setModelItem(item)
-    setShow(!show)
+    setModelItem(item);
+    setShow(!show);
     setModelShow(!modelShow);
   };
 
   const closeModel = () => {
     setModelShow(!modelShow);
-    setShow(!show)
+    setShow(!show);
   };
 
   return (
@@ -153,17 +152,20 @@ const TestimonialsList = () => {
         />
       </div>
 
-      <div className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss" } `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
+      <div
+        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
+      >
+        <ImageInputsForm
+          editHandler={editHandler}
+          componentType="banner"
+          popupTitle={`${pageType} Banner`}
+          pageType={`${pageType}-banner`}
+          imageLabel="Banner Image"
+          showDescription={false}
+          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+          dimensions={imageDimensionsJson("banner")}
+        />
+      </div>
       {/* {componentEdit.banner ? (
         
       ) : (
@@ -240,25 +242,27 @@ const TestimonialsList = () => {
           </div>
         </div>
 
-        <div className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss" } `}>
-        <AddEditAdminNews
-              editHandler={editHandler}
-              category="about"
-              editCarousel={editCarousel}
-              setEditCarousel={setEditCarousel}
-              componentType={`${
-                componentEdit.editSection ? "editSection" : "addSection"
-              }`}
-              getImageListURL="testimonials/clientTestimonials/"
-              deleteImageURL="testimonials/updateTestimonials/"
-              imagePostURL="testimonials/createTestimonials/"
-              imageUpdateURL="testimonials/updateTestimonials/"
-              imageLabel="Add Client Logo"
-              showDescription={false}
-              showExtraFormFields={getTestimonialsFields("testmonial")}
-              dimensions={imageDimensionsJson("testimonial")}
-            />
-          </div>
+        <div
+          className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss"} `}
+        >
+          <AddEditAdminNews
+            editHandler={editHandler}
+            category="about"
+            editCarousel={editCarousel}
+            setEditCarousel={setEditCarousel}
+            componentType={`${
+              componentEdit.editSection ? "editSection" : "addSection"
+            }`}
+            getImageListURL="testimonials/clientTestimonials/"
+            deleteImageURL="testimonials/updateTestimonials/"
+            imagePostURL="testimonials/createTestimonials/"
+            imageUpdateURL="testimonials/updateTestimonials/"
+            imageLabel="Add Client Logo"
+            showDescription={false}
+            showExtraFormFields={getTestimonialsFields("testmonial")}
+            dimensions={imageDimensionsJson("testimonial")}
+          />
+        </div>
         {/* {componentEdit.editSection || componentEdit.addSection ? (
          
         ) : (
@@ -327,27 +331,26 @@ const TestimonialsList = () => {
 
                     <div className="col-lg-2 d-none d-lg-block h-100">
                       <div className="h-100 p-3 p-md-5 py-md-4 testimonialAvatar ">
-                      <Link
-                        to=""
-                        className="text-decoration-underline"
-                        onClick={() => showModel(item)}
-                      >
-                        <img
-                          src={getImagePath(item.path)}
-                          alt=""
-                          className="img-fluid rounded-circle border border-3 border-light shadow-lg img-thumbnail "
-                        />
+                        <Link
+                          to=""
+                          className="text-decoration-underline"
+                          onClick={() => showModel(item)}
+                        >
+                          <img
+                            src={getImagePath(item.path)}
+                            alt=""
+                            className="img-fluid rounded-circle border border-3 border-light shadow-lg img-thumbnail "
+                          />
                         </Link>
                       </div>
                     </div>
                     <Link
-                        to=""
-                        className="btn btn-outline w-auto mx-4 text-decoration-underline d-flex d-lg-none"
-                        onClick={() => showModel(item)}
-                      >
-                        More
-                      </Link>
-                      
+                      to=""
+                      className="btn btn-outline w-auto mx-4 text-decoration-underline d-flex d-lg-none"
+                      onClick={() => showModel(item)}
+                    >
+                      More
+                    </Link>
                   </div>
                   <hr className="border-secondary" />
                 </div>
@@ -385,13 +388,13 @@ const TestimonialsList = () => {
         )}
       </div>
       {modelShow && (
-                      <Model
-                        obj={modelItem}
-                        privacy={""}
-                        closeModel={closeModel}
-                        flag="footer"
-                      />
-                    )}
+        <Model
+          obj={modelItem}
+          privacy={""}
+          closeModel={closeModel}
+          flag="footer"
+        />
+      )}
 
       {show && <ModelBg />}
     </>

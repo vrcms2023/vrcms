@@ -131,17 +131,20 @@ const About = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-      <div className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss" } `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
+      <div
+        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
+      >
+        <ImageInputsForm
+          editHandler={editHandler}
+          componentType="banner"
+          popupTitle="About Banner"
+          pageType={`${pageType}-banner`}
+          imageLabel="Banner Image"
+          showDescription={false}
+          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+          dimensions={imageDimensionsJson("banner")}
+        />
+      </div>
       {/* {componentEdit.banner ? (
         
       ) : (
@@ -153,27 +156,30 @@ const About = () => {
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
       )}
 
-        <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-              linkLabel="Read More"
-              moreLink=""
-              introTitleCss = "fs-3 fw-medium text-md-center"
-              introSubTitleCss = "fw-medium text-muted text-md-center"
-              introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
-              detailsContainerCss="col-md-10 offset-md-1 py-3"
-              anchorContainer="d-flex justify-content-center align-items-center mt-4"
-              anchersvgColor="#17427C"
-              pageType={pageType}
-            />
+      <BriefIntroFrontend
+        introState={componentEdit.briefIntro}
+        linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+        linkLabel="Read More"
+        moreLink=""
+        introTitleCss="fs-3 fw-medium text-md-center"
+        introSubTitleCss="fw-medium text-muted text-md-center"
+        introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
+        detailsContainerCss="col-md-10 offset-md-1 py-3"
+        anchorContainer="d-flex justify-content-center align-items-center mt-4"
+        anchersvgColor="#17427C"
+        pageType={pageType}
+      />
 
-        <div className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss" } `}>
-          <AdminBriefIntro
-            editHandler={editHandler}
-            componentType="briefIntro"
-            pageType={pageType}
-          />
-        </div>
+      <div
+        className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
+      >
+        <AdminBriefIntro
+          editHandler={editHandler}
+          componentType="briefIntro"
+          popupTitle="About Brief Intro"
+          pageType={pageType}
+        />
+      </div>
 
       {/* {componentEdit.briefIntro ? (
        
@@ -191,35 +197,37 @@ const About = () => {
               <div className="col-12 text-end">
                 <span className="d-inline-block me-2">Add content</span>
                 <button
-                    type="submit"
-                    className="btn btn-primary "
-                    onClick={() => editHandler("addSection", true)}
-                  >
-                    <i className="fa fa-plus" aria-hidden="true"></i>
-                  </button>
+                  type="submit"
+                  className="btn btn-primary "
+                  onClick={() => editHandler("addSection", true)}
+                >
+                  <i className="fa fa-plus" aria-hidden="true"></i>
+                </button>
               </div>
             )}
           </div>
 
-          <div className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss" } `}>
-              <AddEditAdminNews
-                editHandler={editHandler}
-                category="about"
-                editCarousel={editCarousel}
-                setEditCarousel={setEditCarousel}
-                componentType={`${
-                  componentEdit.editSection ? "editSection" : "addSection"
-                }`}
-                imageGetURL="aboutus/clientAboutus/"
-                imagePostURL="aboutus/createAboutus/"
-                imageUpdateURL="aboutus/updateAboutus/"
-                imageDeleteURL="aboutus/updateAboutus/"
-                imageLabel="Add About us Banner"
-                showDescription={false}
-                showExtraFormFields={getAboutUSSectionFields()}
-                dimensions={imageDimensionsJson("aboutus")}
-              />
-            </div>
+          <div
+            className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss"} `}
+          >
+            <AddEditAdminNews
+              editHandler={editHandler}
+              category="about"
+              editCarousel={editCarousel}
+              setEditCarousel={setEditCarousel}
+              componentType={`${
+                componentEdit.editSection ? "editSection" : "addSection"
+              }`}
+              imageGetURL="aboutus/clientAboutus/"
+              imagePostURL="aboutus/createAboutus/"
+              imageUpdateURL="aboutus/updateAboutus/"
+              imageDeleteURL="aboutus/updateAboutus/"
+              imageLabel="Add About us Banner"
+              showDescription={false}
+              showExtraFormFields={getAboutUSSectionFields()}
+              dimensions={imageDimensionsJson("aboutus")}
+            />
+          </div>
 
           {/* {componentEdit.editSection || componentEdit.addSection ? (
             
@@ -271,7 +279,7 @@ const About = () => {
 
                       {item.aboutus_sub_title ? (
                         <Title
-                        title={item.aboutus_sub_title}
+                          title={item.aboutus_sub_title}
                           cssClass=""
                           mainTitleClassess="fs-5 text-secondary mb-2"
                           subTitleClassess=""

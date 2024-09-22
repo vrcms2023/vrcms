@@ -119,17 +119,13 @@ const Footer = () => {
       <footer className="text-center pt-5">
         <div className="container footerDetails">
           <div className="logo text-center text-md-start">
-              <img
-                src={Logo}
-                alt="SAP Design Studio"
-                className="footerLogo"
-              />
+            <img src={Logo} alt="SAP Design Studio" className="footerLogo" />
           </div>
           <hr className="d-block d-md-none my-4" />
           <div className="row py-4 py-md-4">
             <div className="col-md-3 text-center text-md-start">
               {/* <Title title="Company" /> */}
-              
+
               <ul className="">
                 {menuList?.map((menu) => {
                   return <ChildMenuContent menu={menu} key={menu.id} />;
@@ -203,11 +199,9 @@ const Footer = () => {
               )}              
             </div> */}
 
-             <div 
+            <div
               className={`col-md-4 col-lg-3 text-center text-md-start reachUs ${
-                isAdmin
-                  ? ""
-                  : ""
+                isAdmin ? "" : ""
               }`}
             >
               {/* {isAdmin && (
@@ -223,10 +217,7 @@ const Footer = () => {
               {/* <Title title="Reach Us"  /> */}
               {address.phonen_number ? (
                 <p className="m-0 pb-2">
-                  <i
-                    className="fa fa-phone fs-5 me-2"
-                    aria-hidden="true"
-                  ></i>
+                  <i className="fa fa-phone fs-5 me-2" aria-hidden="true"></i>
                   {address?.phonen_number}
                 </p>
               ) : (
@@ -234,10 +225,7 @@ const Footer = () => {
               )}
               {address.phonen_number_2 ? (
                 <p className="m-0 pb-2">
-                  <i
-                    className="fa fa-phone fs-5 me-2"
-                    aria-hidden="true"
-                  ></i>
+                  <i className="fa fa-phone fs-5 me-2" aria-hidden="true"></i>
                   {address?.phonen_number_2}
                 </p>
               ) : (
@@ -254,7 +242,7 @@ const Footer = () => {
               ) : (
                 ""
               )}
-              
+
               {address.emailid ? (
                 <>
                   <p className="m-0 pb-2">
@@ -262,8 +250,9 @@ const Footer = () => {
                       className="fa fa-paper-plane fs-5 me-2"
                       aria-hidden="true"
                     ></i>
-                    <Link to={`mailto: ${address?.emailid}`}>{address?.emailid}</Link>
-                    
+                    <Link to={`mailto: ${address?.emailid}`}>
+                      {address?.emailid}
+                    </Link>
                   </p>
                 </>
               ) : (
@@ -276,7 +265,9 @@ const Footer = () => {
                       className="fa fa-paper-plane fs-5 me-2"
                       aria-hidden="true"
                     ></i>
-                    <Link to={`mailto: ${address?.emailid_2}`}>{address?.emailid_2}</Link>
+                    <Link to={`mailto: ${address?.emailid_2}`}>
+                      {address?.emailid_2}
+                    </Link>
                   </p>
                 </>
               ) : (
@@ -289,23 +280,23 @@ const Footer = () => {
                       className="fa fa-envelope fs-5 me-2"
                       aria-hidden="true"
                     ></i>
-                    <Link to={`mailto: ${address?.emailid_3}`}>{address?.emailid_3}</Link>
+                    <Link to={`mailto: ${address?.emailid_3}`}>
+                      {address?.emailid_3}
+                    </Link>
                   </p>
                 </>
               ) : (
                 ""
-              )}  
-            </div> 
+              )}
+            </div>
             <hr className="d-block d-md-none mt-3 mb-4" />
             {
-              <div 
-                  className={`col-md-5 col-lg-6 pb-md-0 socialMedia d-flex flex-column align-items-center justify-content-md-center justify-content-lg-end align-items-md-end ${
-                    isAdmin
-                      ? "border border-warning mb-3 position-relative"
-                      : ""
-                  }`}
+              <div
+                className={`col-md-5 col-lg-6 pb-md-0 socialMedia d-flex flex-column align-items-center justify-content-md-center justify-content-lg-end align-items-md-end ${
+                  isAdmin ? "border border-warning mb-3 position-relative" : ""
+                }`}
               >
-{/*                 
+                {/*                 
                 <Title title="Social Media" />
                 <img
                   src={Logo}
@@ -313,7 +304,6 @@ const Footer = () => {
                   className="footerLogo"
                 /> */}
                 <div className="socialLinks">
-                  
                   {isAdmin && (
                     <EditIcon
                       editHandler={() => editHandler("address", true)}
@@ -371,11 +361,12 @@ const Footer = () => {
                       <i className="fa fa-pinterest" aria-hidden="true"></i>
                     </Link>
                   )}
-                  
                 </div>
-                <small className="mt-3 fw-medium text-center text-md-end copyRight"> {fullYear} Copyright Leon Pharma Corp. All rights reserved.</small>
+                <small className="mt-3 fw-medium text-center text-md-end copyRight">
+                  {" "}
+                  {fullYear} Copyright Leon Pharma Corp. All rights reserved.
+                </small>
               </div>
-              
             }
           </div>
         </div>
@@ -385,40 +376,39 @@ const Footer = () => {
             <EditIcon editHandler={() => editHandler("termsPolacy", true)} />
           )}
 
-        <div className="container">
-          <div className="row">
-            <div className="d-flex flex-column flex-md-row justify-content-center gap-3">
-              <div className="d-flex justify-content-center align-items-center flex-column flex-md-row gap-2">
-                {/* <small>&copy; {fullYear} - All rights reserved</small> */}
-                {/* <span className="d-inline-block  d-none d-md-block">|</span> */}
-                <Link
-                  to=""
-                  className="text-decoration-underline"
-                  onClick={() => showModel("TC")}
-                >
-                  Terms & Conditions
-                </Link>{" "}
-                <span className="d-inline-block d-none d-md-block">|</span>
-                <Link
-                  to=""
-                  className="text-decoration-underline"
-                  onClick={() => showModel("PP")}
-                >
-                  Privacy Policy
-                </Link>
-                
-              </div>
+          <div className="container">
+            <div className="row">
+              <div className="d-flex flex-column flex-md-row justify-content-center gap-3">
+                <div className="d-flex justify-content-center align-items-center flex-column flex-md-row gap-2">
+                  {/* <small>&copy; {fullYear} - All rights reserved</small> */}
+                  {/* <span className="d-inline-block  d-none d-md-block">|</span> */}
+                  <Link
+                    to=""
+                    className="text-decoration-underline"
+                    onClick={() => showModel("TC")}
+                  >
+                    Terms & Conditions
+                  </Link>{" "}
+                  <span className="d-inline-block d-none d-md-block">|</span>
+                  <Link
+                    to=""
+                    className="text-decoration-underline"
+                    onClick={() => showModel("PP")}
+                  >
+                    Privacy Policy
+                  </Link>
+                </div>
 
-              <span className="d-block mt-2 ">
-                Designed & developed by{" "}
-                <a href="http://www.varadesigns.com" className="dby">
-                  <small className="p-1 fw-bold d-inline-block">
-                    VARA-DESIGNS
-                  </small>
-                </a>
-              </span>
+                <span className="d-block mt-2 ">
+                  Designed & developed by{" "}
+                  <a href="http://www.varadesigns.com" className="dby">
+                    <small className="p-1 fw-bold d-inline-block">
+                      VARA-DESIGNS
+                    </small>
+                  </a>
+                </span>
+              </div>
             </div>
-        </div>
           </div>
         </div>
       </footer>
@@ -432,25 +422,32 @@ const Footer = () => {
         />
       )}
 
-      <div className={`adminEditTestmonial ${componentEdit.address ? "selected" : "dismiss" } `}>
-          <FooterAdminFeilds
-            editHandler={editHandler}
-            componentType="address"
-            footerValues={footerValues}
-          />
-        </div>
+      <div
+        className={`adminEditTestmonial ${componentEdit.address ? "selected" : "dismiss"} `}
+      >
+        <FooterAdminFeilds
+          editHandler={editHandler}
+          componentType="address"
+          popupTitle="Social Media Links"
+          footerValues={footerValues}
+        />
+      </div>
 
-        <div className={`adminEditTestmonial ${componentEdit.termsPolacy ? "selected" : "dismiss" } `}>
-          <AdminTermsPolicy
-            termsAndConditionData={termsAndPolicyData}
-            editHandler={editHandler}
-            componentType="termsPolacy"
-          />
-        </div>
+      <div
+        className={`adminEditTestmonial ${componentEdit.termsPolacy ? "selected" : "dismiss"} `}
+      >
+        <AdminTermsPolicy
+          termsAndConditionData={termsAndPolicyData}
+          editHandler={editHandler}
+          componentType="termsPolacy"
+        />
+      </div>
 
-        <div className={`adminEditTestmonial ${componentEdit.contact ? "selected" : "dismiss" } `}>
-          <ContactInputs editHandler={editHandler} componentType="contact" />
-        </div>
+      <div
+        className={`adminEditTestmonial ${componentEdit.contact ? "selected" : "dismiss"} `}
+      >
+        <ContactInputs editHandler={editHandler} componentType="contact" />
+      </div>
 
       {/* {componentEdit.address ? (
         <div className="adminEditTestmonial">
@@ -493,9 +490,7 @@ export default Footer;
 const ChildMenuContent = ({ menu }) => {
   return (
     <li className="">
-      <Link to={menu?.page_url} >
-        {menu?.page_label}
-      </Link>
+      <Link to={menu?.page_url}>{menu?.page_label}</Link>
     </li>
   );
 };

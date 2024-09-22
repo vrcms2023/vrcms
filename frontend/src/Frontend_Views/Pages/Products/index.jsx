@@ -118,8 +118,6 @@ const ProductsPage = () => {
 
       setSelectedCategory(_data);
       setPageType(_data?.id ? _data?.id : pageType);
-    } else {
-      dispatch(getAllCategories());
     }
   }, [categories, id]);
 
@@ -216,19 +214,21 @@ const ProductsPage = () => {
         </div>
       )}
 
-        <div className={`adminEditTestmonial ${componentEdit.category  ? "selected" : "dismiss" } `}>
-          <DynamicFormwithFileUplod
-            editHandler={editHandler}
-            componentTitle={"Crete New Category"}
-            componentType={"category"}
-            editObject={editCategoryState ? selectedCategory : ""}
-            setEditState={setEditCategoryState}
-            setSaveState={setSelectedCategory}
-            dynamicFormFields={getCategoryFormDynamicFields()}
-            formPostURL={"/products/createCategory/"}
-            formUpdateURL={"/products/updateCategory/"}
-          />
-        </div>
+      <div
+        className={`adminEditTestmonial ${componentEdit.category ? "selected" : "dismiss"} `}
+      >
+        <DynamicFormwithFileUplod
+          editHandler={editHandler}
+          componentTitle={"Crete New Category"}
+          componentType={"category"}
+          editObject={editCategoryState ? selectedCategory : ""}
+          setEditState={setEditCategoryState}
+          setSaveState={setSelectedCategory}
+          dynamicFormFields={getCategoryFormDynamicFields()}
+          formPostURL={"/products/createCategory/"}
+          formUpdateURL={"/products/updateCategory/"}
+        />
+      </div>
       {/* {componentEdit.category && (
        
       )} */}
@@ -246,19 +246,22 @@ const ProductsPage = () => {
               bannerContainerCss="titleCaption d-flex align-items-end justify-content-center flex-column"
             />
           </div>
-            <div className={`adminEditTestmonial ${ componentEdit.banner ? "selected" : "dismiss" } `}>
-              <ImageInputsForm
-                editHandler={editHandler}
-                componentType="banner"
-                pageType={`${pageType}-banner`}
-                imageLabel="Category Banner Image"
-                showDescription={false}
-                showExtraFormFields={getProductCategoryBannerFormFields(
-                  `${pageType}-banner`
-                )}
-                dimensions={imageDimensionsJson("banner")}
-              />
-            </div>
+          <div
+            className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
+          >
+            <ImageInputsForm
+              editHandler={editHandler}
+              componentType="banner"
+              popupTitle="Products Banner"
+              pageType={`${pageType}-banner`}
+              imageLabel="Category Banner Image"
+              showDescription={false}
+              showExtraFormFields={getProductCategoryBannerFormFields(
+                `${pageType}-banner`
+              )}
+              dimensions={imageDimensionsJson("banner")}
+            />
+          </div>
           {/* {componentEdit.banner && (
             
           )} */}
@@ -309,7 +312,10 @@ const ProductsPage = () => {
               <span className="d-none d-md-block"> | </span>
               <div className="d-flex justify-content-end align-items-center gap-1">
                 {/* <span>Show </span> */}
-                <select class="form-select" aria-label="Default select example">
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                >
                   <option selected>show</option>
                   <option value="1">5</option>
                   <option value="2">10</option>
@@ -328,7 +334,7 @@ const ProductsPage = () => {
                 >
                   File
                   <i
-                    class="fa fa-download ms-1 fs-5 rounded-2 p-1 border border-1 border-info bg-white"
+                    className="fa fa-download ms-1 fs-5 rounded-2 p-1 border border-1 border-info bg-white"
                     aria-hidden="true"
                   ></i>
                 </Link>
@@ -348,25 +354,25 @@ const ProductsPage = () => {
           )}
         </div>
 
-        <div className={`adminEditTestmonial ${ componentEdit.product ? "selected" : "dismiss" } `}>
-            <SingleImageUlploadWithForm
-              editHandler={editHandler}
-              componentType="product"
-              componentTitle={compTtile}
-              selectedItem={selectedProduct}
-              setSelectedItemState={setSelectedProduct}
-              imageGetURL={`/products/createProduct/${selectedCategory.id}/`}
-              imagePostURL="/products/createProduct/"
-              imageUpdateURL="/products/updateProduct/"
-              imageDeleteURL="/products/updateProduct/"
-              imageLabel="Product Image"
-              showDescription={false}
-              showExtraFormFields={getProductFormDynamicFields(
-                selectedCategory
-              )}
-              dimensions={imageDimensionsJson("product")}
-            />
-          </div>
+        <div
+          className={`adminEditTestmonial ${componentEdit.product ? "selected" : "dismiss"} `}
+        >
+          <SingleImageUlploadWithForm
+            editHandler={editHandler}
+            componentType="product"
+            componentTitle={compTtile}
+            selectedItem={selectedProduct}
+            setSelectedItemState={setSelectedProduct}
+            imageGetURL={`/products/createProduct/${selectedCategory.id}/`}
+            imagePostURL="/products/createProduct/"
+            imageUpdateURL="/products/updateProduct/"
+            imageDeleteURL="/products/updateProduct/"
+            imageLabel="Product Image"
+            showDescription={false}
+            showExtraFormFields={getProductFormDynamicFields(selectedCategory)}
+            dimensions={imageDimensionsJson("product")}
+          />
+        </div>
 
         {/* {componentEdit.product && (
           

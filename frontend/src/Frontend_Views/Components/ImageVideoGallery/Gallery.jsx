@@ -96,6 +96,7 @@ const Gallery = () => {
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
+            popupTitle="Gallery Banner"
             pageType={`${pageType}-banner`}
             imageLabel="Gallery Image"
             showDescription={false}

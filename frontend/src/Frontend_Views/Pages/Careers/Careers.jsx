@@ -85,19 +85,21 @@ const Careers = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-      
-      
-      <div className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss" } `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
+
+      <div
+        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
+      >
+        <ImageInputsForm
+          editHandler={editHandler}
+          componentType="banner"
+          popupTitle={`${pageType} Banner`}
+          pageType={`${pageType}-banner`}
+          imageLabel="Banner Image"
+          showDescription={false}
+          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+          dimensions={imageDimensionsJson("banner")}
+        />
+      </div>
       {/* {componentEdit.banner ? (
         
       ) : (
@@ -156,13 +158,15 @@ const Careers = () => {
           </div>
         )}
 
-          <div className={`adminEditTestmonial ${componentEdit.addjob ? "selected" : "dismiss" } `}>
-            <JobPostFrom
-              editHandler={editHandler}
-              componentType="addjob"
-              type="add"
-            />
-          </div>
+        <div
+          className={`adminEditTestmonial ${componentEdit.addjob ? "selected" : "dismiss"} `}
+        >
+          <JobPostFrom
+            editHandler={editHandler}
+            componentType="addjob"
+            type="add"
+          />
+        </div>
         {/* {componentEdit.addjob ? (
           
         ) : (

@@ -93,10 +93,13 @@ const Careers = () => {
       </div>
 
       {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
+        <div
+          className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
+        >
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
+            popupTitle="Career Details Banner"
             pageType={`${pageType}-banner`}
             imageLabel="Banner Image"
             showDescription={false}
@@ -118,25 +121,23 @@ const Careers = () => {
       />
 
       <div className="container my-4">
-      <div className="row">
-            <div className="col-8 col-md-10">
-              <Title
-                title="Careers Details"
-                cssClass="fw-medium fs-4 pageTitle "
-              />
-              
-            </div>
-            <div className="col-4 col-md-2">
-              
-              <Link
-                to="/careers"
-                className="btn btn-outline m-auto w-auto d-flex justify-content-center align-items-center gap-2"
-              >
-                <i className="fa fa-chevron-left" aria-hidden="true"></i>
-                <span className="">Back</span>
-              </Link>
-            </div>
+        <div className="row">
+          <div className="col-8 col-md-10">
+            <Title
+              title="Careers Details"
+              cssClass="fw-medium fs-4 pageTitle "
+            />
           </div>
+          <div className="col-4 col-md-2">
+            <Link
+              to="/careers"
+              className="btn btn-outline m-auto w-auto d-flex justify-content-center align-items-center gap-2"
+            >
+              <i className="fa fa-chevron-left" aria-hidden="true"></i>
+              <span className="">Back</span>
+            </Link>
+          </div>
+        </div>
       </div>
 
       <CareerFilterStyled>
@@ -147,7 +148,6 @@ const Careers = () => {
 
       <CareersPageStyled>
         <div className="container py-4 mb-md-5 py-md-4">
-          
           <div className="row d-flex flex-rowreverse">
             <div className="col-md-9 px-3">
               <JobBriefDetails jobDetails={posts} />
@@ -180,10 +180,13 @@ const Careers = () => {
       </CareersPageStyled>
 
       {componentEdit.briefIntro ? (
-        <div className="adminEditTestmonial">
+        <div
+          className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
+        >
           <AdminBriefIntro
             editHandler={editHandler}
             componentType="briefIntro"
+            popupTitle="Career Details"
             pageType={pageType}
             extraFormParamas={[
               {

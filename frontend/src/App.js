@@ -226,7 +226,7 @@ function App() {
                 path="/casestudies-details/:id/"
                 element={<CaseStudiesDetails />}
               />
-              <Route exact path="/profile/news" element={<NewsAndUpdates />} />
+              <Route exact path="/news" element={<NewsAndUpdates />} />
               <Route
                 exact
                 path="/testimonials"
@@ -262,7 +262,11 @@ function App() {
               <Route exact path="/editproject/:id" element={<AddProject />} />
               <Route exact path="/adminNews" element={<AdminNews />} />
 
-              <Route exact path="/profile/testimonial" element={<AdminTestimonial />} />
+              <Route
+                exact
+                path="/profile/testimonial"
+                element={<AdminTestimonial />}
+              />
             </Routes>
           </Suspense>
 

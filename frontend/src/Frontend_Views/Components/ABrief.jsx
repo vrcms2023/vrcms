@@ -168,6 +168,7 @@ const ABrief = ({ title, cssClass, linkClass, moreLink, dimensions }) => {
           <ImageInputsForm
             editHandler={editHandler}
             componentType="homecareers"
+            popupTitle="Home Careers Banner"
             pageType={pageType}
             imageLabel="Banner Image"
             showDescription={false}
