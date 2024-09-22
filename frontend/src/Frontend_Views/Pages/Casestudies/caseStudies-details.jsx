@@ -74,6 +74,7 @@ const CaseStudiesDetails = () => {
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
+            popupTitle="Case Studies Details Banner"
             pageType={`${pageType}-banner`}
             imageLabel="Banner Image"
             showDescription={false}
@@ -96,9 +97,12 @@ const CaseStudiesDetails = () => {
       />
 
       {componentEdit.briefIntro ? (
-        <div className="adminEditTestmonial">
+        <div
+          className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
+        >
           <AdminBriefIntro
             editHandler={editHandler}
+            popupTitle="Case Studies Details"
             componentType="briefIntro"
             pageType={pageType}
           />

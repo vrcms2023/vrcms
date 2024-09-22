@@ -9,7 +9,12 @@ import Button from "../../../Common/Button";
 import { getCookie } from "../../../util/cookieUtil";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 
-const FooterAdminFeilds = ({ editHandler, componentType, footerValues }) => {
+const FooterAdminFeilds = ({
+  editHandler,
+  componentType,
+  popupTitle,
+  footerValues,
+}) => {
   const [userName, setUserName] = useState("");
   const { register, reset, handleSubmit } = useForm({
     defaultValues: useMemo(() => {
@@ -56,7 +61,7 @@ const FooterAdminFeilds = ({ editHandler, componentType, footerValues }) => {
 
   return (
     <div className="">
-      <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
+      <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
       <form className="" onSubmit={handleSubmit(onSubmit)}>
         <div className="container">
           <div className="row p-4">

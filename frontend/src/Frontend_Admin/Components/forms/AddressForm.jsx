@@ -22,7 +22,7 @@ import {
 } from "../../../util/commonUtil";
 import NoteComponent from "../../../Common/NoteComponent";
 
-const AddressForm = ({ editHandler, componentType, address }) => {
+const AddressForm = ({ editHandler, componentType, address, popupTitle }) => {
   const { addressList } = useSelector((state) => state.addressList);
   const [userName, setUserName] = useState("");
   const {
@@ -156,14 +156,14 @@ const AddressForm = ({ editHandler, componentType, address }) => {
 
   return (
     <div className="">
-      <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
+      <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
       <hr className="m-0 text-dark" />
       <form className="" onSubmit={handleSubmit(onSubmit)}>
         <div className="container my-3">
           <div className="row">
             <div className="col-md-12 mb-md-0  ">
               <NoteComponent note="Use drag option to shuffle the addresses" />
-              <div className={listofAddress.length > 0 && "heightCtrl" }>
+              <div className={listofAddress.length > 0 && "heightCtrl"}>
                 <DragDropContext onDragEnd={dragEnded}>
                   <Droppable droppableId="address-wrapper">
                     {(provided, snapshot) => (

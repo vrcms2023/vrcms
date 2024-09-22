@@ -169,13 +169,13 @@ export default function DynamicFormwithFileUplod({
                   >
                     Download File{" "}
                     <i
-                      class="fa fa-download ms-1 fs-5 rounded-2 p-2 border border-1 border-info bg-white"
+                      className="fa fa-download ms-1 fs-5 rounded-2 p-2 border border-1 border-info bg-white"
                       aria-hidden="true"
                     ></i>
                   </Link>
                   <Link to="" onClick={() => deleteFileHandler(editObject)}>
                     <i
-                      class="fa fa-trash-o ms-2 fs-5 rounded-1 p-1 text-danger"
+                      className="fa fa-trash-o ms-2 fs-5 rounded-1 p-1 text-danger"
                       aria-hidden="true"
                     ></i>
                   </Link>

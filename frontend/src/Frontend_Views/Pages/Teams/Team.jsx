@@ -166,17 +166,20 @@ const Team = () => {
         />
       </div>
 
-      <div className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss" } `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
+      <div
+        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
+      >
+        <ImageInputsForm
+          editHandler={editHandler}
+          componentType="banner"
+          popupTitle="Team Banner"
+          pageType={`${pageType}-banner`}
+          imageLabel="Banner Image"
+          showDescription={false}
+          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+          dimensions={imageDimensionsJson("banner")}
+        />
+      </div>
       {/* {componentEdit.banner ? (
        
       ) : (
@@ -199,22 +202,25 @@ const Team = () => {
         linkLabel="Read More"
         moreLink=""
         showLink={false}
-        introTitleCss = "fs-3 fw-medium text-md-center"
-        introSubTitleCss = "fw-medium text-muted text-md-center"
-        introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
+        introTitleCss="fs-3 fw-medium text-md-center"
+        introSubTitleCss="fw-medium text-muted text-md-center"
+        introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
         detailsContainerCss="col-md-10 offset-md-1"
         anchorContainer="d-flex justify-content-start align-items-start mt-4"
         anchersvgColor="#17427C"
         pageType={pageType}
       />
 
-      <div className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss" } `}>
-          <AdminBriefIntro
-            editHandler={editHandler}
-            componentType="briefIntro"
-            pageType={pageType}
-          />
-        </div>
+      <div
+        className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
+      >
+        <AdminBriefIntro
+          editHandler={editHandler}
+          popupTitle="Team Details"
+          componentType="briefIntro"
+          pageType={pageType}
+        />
+      </div>
       {/* {componentEdit.briefIntro ? (
         
       ) : (
@@ -257,27 +263,29 @@ const Team = () => {
             />
           </div>
         </div>
-        <div className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss" } `}>
-        <AddEditTeam
-              editHandler={editHandler}
-              category="team"
-              editCarousel={editCarousel}
-              setEditCarousel={setEditCarousel}
-              componentType={`${
-                componentEdit.editSection ? "editSection" : "addSection"
-              }`}
-              getImageListURL="ourteam/createteam/"
-              deleteImageURL="ourteam/UpdateOurteamDetail/"
-              imagePostURL="ourteam/createteam/"
-              imageUpdateURL="ourteam/UpdateOurteamDetail/"
-              imageLabel="Add Profile Image"
-              showDescription={false}
-              showExtraFormFields={getTeamMemberFields(
-                editCarousel?.team_member_position
-              )}
-              dimensions={imageDimensionsJson("teams")}
-            />
-          </div>
+        <div
+          className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss"} `}
+        >
+          <AddEditTeam
+            editHandler={editHandler}
+            category="team"
+            editCarousel={editCarousel}
+            setEditCarousel={setEditCarousel}
+            componentType={`${
+              componentEdit.editSection ? "editSection" : "addSection"
+            }`}
+            getImageListURL="ourteam/createteam/"
+            deleteImageURL="ourteam/UpdateOurteamDetail/"
+            imagePostURL="ourteam/createteam/"
+            imageUpdateURL="ourteam/UpdateOurteamDetail/"
+            imageLabel="Add Profile Image"
+            showDescription={false}
+            showExtraFormFields={getTeamMemberFields(
+              editCarousel?.team_member_position
+            )}
+            dimensions={imageDimensionsJson("teams")}
+          />
+        </div>
         {/* {componentEdit.editSection || componentEdit.addSection ? (
    
         ) : (

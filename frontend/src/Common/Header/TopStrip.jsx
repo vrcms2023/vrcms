@@ -69,9 +69,9 @@ const TopStrip = () => {
               </span>
 
               <span>
-                <a href="#nolink" className="logOut" onClick={logOutHandler}> 
-                <i class="fa fa-sign-out me-2" aria-hidden="true"></i>
-                  Logout 
+                <a href="#nolink" className="logOut" onClick={logOutHandler}>
+                  <i className="fa fa-sign-out me-2" aria-hidden="true"></i>
+                  Logout
                 </a>
               </span>
             </>

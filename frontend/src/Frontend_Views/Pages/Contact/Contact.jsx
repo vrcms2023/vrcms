@@ -146,17 +146,20 @@ const Contact = () => {
         />
       </div>
 
-      <div className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss" } `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
+      <div
+        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
+      >
+        <ImageInputsForm
+          editHandler={editHandler}
+          componentType="banner"
+          popupTitle="Contact  Banner"
+          pageType={`${pageType}-banner`}
+          imageLabel="Banner Image"
+          showDescription={false}
+          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+          dimensions={imageDimensionsJson("banner")}
+        />
+      </div>
       {/* {componentEdit.banner ? (
         
       ) : (
@@ -196,13 +199,16 @@ const Contact = () => {
               <EditIcon editHandler={() => editHandler("address", true)} />
             )}
 
-          <div className={`adminEditTestmonial ${componentEdit.address ? "selected" : "dismiss" } `}>
-                <AddressForm
-                  editHandler={editHandler}
-                  componentType="address"
-                  address={addressList}
-                />
-              </div>
+            <div
+              className={`adminEditTestmonial ${componentEdit.address ? "selected" : "dismiss"} `}
+            >
+              <AddressForm
+                editHandler={editHandler}
+                popupTitle="Address Details"
+                componentType="address"
+                address={addressList}
+              />
+            </div>
             {/* {componentEdit.address ? (
               
             ) : (
@@ -210,96 +216,94 @@ const Contact = () => {
             )} */}
             <div className="container">
               <div className="row">
-                
-                  <>
+                <>
                   {/* <div
                     className={`my-4 my-nd-0 ${addressList.length === 1 ? "col-md-8 text-center" : addressList.length === 2 ? "col-md-6" : addressList.length === 3 ? "col-md-4" : "col-md-3"}`}
                     
                   > */}
-                    <div
-                    className="col-md-12 col-lg-8" >
-                      <div className="row">
-                    {addressList?.map((item, index) => (
-                      <div
-                      className={`my-4 ${addressList.length === 1 ? "col-md-12" : addressList.length === 2 ? "col-md-6" : addressList.length === 3 ? "col-md-6" : "col-md-3"}`}
-                    >
-                    <Title
-                      title={item.location_title}
-                      cssClass="mb-2 fs-4 text-black"
-                    />
-                    <div className="mb-2 contactAddress" key={index}>
-                      <p className="m-0 fw-medium">{item.company_name}</p>
-                      <p className="m-0">{item.address_dr_no}</p>
-                      <p className="m-0">{item.street} </p>
-                      <p className="m-0">{item.location} </p>
-                      <p className="m-0">{item.city} </p>
-                      <p className="mb-3">{item.state}</p>
-                      {/* <p className="m-0">Pincode - {item.postcode}</p> */}
-                      <p className="mt-2">
-                        {item.phonen_number && (
-                          <>
-                            {/* <Title title="Phone Number :" cssClass="mb-2" /> */}
-                            <i
-                              className="fa fa-phone-square fs-4 me-2"
-                              aria-hidden="true"
-                            ></i>{" "}
-                            {item.phonen_number}
-                          </>
-                        )}
-                      </p>
-                      <p className="mt-2">
-                        {item.phonen_number_2 && (
-                          <>
-                            {/* <Title title="Phone Number :" cssClass="mb-2" /> */}
-                            <i
-                              className="fa fa-phone-square fs-4 me-2"
-                              aria-hidden="true"
-                            ></i>{" "}
-                            {item.phonen_number_2}
-                          </>
-                        )}
-                      </p>
-                      <p className="mt-2">
-                        {item.phonen_number_3 && (
-                          <>
-                            <i
-                              className="fa fa-whatsapp fs-4 me-2"
-                              aria-hidden="true"
-                            ></i>{" "}
-                            {item.phonen_number_3}{" "}
-                          </>
-                        )}
-                      </p>
-                      <p className="mt-0">
-                        {item.emailid_2 && (
-                          <>
-                            <i
-                              className="fa fa-envelope-o fs-4 me-2"
-                              aria-hidden="true"
-                            ></i>{" "}
-                            {item.emailid_2}{" "}
-                          </>
-                        )}
-                      </p>
-                      <p className="mt-0">
-                        {item.emailid_3 && (
-                          <>
-                            <i
-                              className="fa fa-envelope-o fs-4 me-2"
-                              aria-hidden="true"
-                            ></i>{" "}
-                            {item.emailid_3}{" "}
-                          </>
-                        )}
-                      </p>
+                  <div className="col-md-12 col-lg-8">
+                    <div className="row">
+                      {addressList?.map((item, index) => (
+                        <div
+                          className={`my-4 ${addressList.length === 1 ? "col-md-12" : addressList.length === 2 ? "col-md-6" : addressList.length === 3 ? "col-md-6" : "col-md-3"}`}
+                        >
+                          <Title
+                            title={item.location_title}
+                            cssClass="mb-2 fs-4 text-black"
+                          />
+                          <div className="mb-2 contactAddress" key={index}>
+                            <p className="m-0 fw-medium">{item.company_name}</p>
+                            <p className="m-0">{item.address_dr_no}</p>
+                            <p className="m-0">{item.street} </p>
+                            <p className="m-0">{item.location} </p>
+                            <p className="m-0">{item.city} </p>
+                            <p className="mb-3">{item.state}</p>
+                            {/* <p className="m-0">Pincode - {item.postcode}</p> */}
+                            <p className="mt-2">
+                              {item.phonen_number && (
+                                <>
+                                  {/* <Title title="Phone Number :" cssClass="mb-2" /> */}
+                                  <i
+                                    className="fa fa-phone-square fs-4 me-2"
+                                    aria-hidden="true"
+                                  ></i>{" "}
+                                  {item.phonen_number}
+                                </>
+                              )}
+                            </p>
+                            <p className="mt-2">
+                              {item.phonen_number_2 && (
+                                <>
+                                  {/* <Title title="Phone Number :" cssClass="mb-2" /> */}
+                                  <i
+                                    className="fa fa-phone-square fs-4 me-2"
+                                    aria-hidden="true"
+                                  ></i>{" "}
+                                  {item.phonen_number_2}
+                                </>
+                              )}
+                            </p>
+                            <p className="mt-2">
+                              {item.phonen_number_3 && (
+                                <>
+                                  <i
+                                    className="fa fa-whatsapp fs-4 me-2"
+                                    aria-hidden="true"
+                                  ></i>{" "}
+                                  {item.phonen_number_3}{" "}
+                                </>
+                              )}
+                            </p>
+                            <p className="mt-0">
+                              {item.emailid_2 && (
+                                <>
+                                  <i
+                                    className="fa fa-envelope-o fs-4 me-2"
+                                    aria-hidden="true"
+                                  ></i>{" "}
+                                  {item.emailid_2}{" "}
+                                </>
+                              )}
+                            </p>
+                            <p className="mt-0">
+                              {item.emailid_3 && (
+                                <>
+                                  <i
+                                    className="fa fa-envelope-o fs-4 me-2"
+                                    aria-hidden="true"
+                                  ></i>{" "}
+                                  {item.emailid_3}{" "}
+                                </>
+                              )}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    </div>
-                  ))}
-                  </div>
                   </div>
 
-                  <div className="col-md-12 col-lg-4 p-5 px-4 py-3  mb-md-5 quickContact"> 
-                  {success && (
+                  <div className="col-md-12 col-lg-4 p-5 px-4 py-3  mb-md-5 quickContact">
+                    {success && (
                       <Alert
                         mesg={"Thank you for contact us"}
                         cssClass={`alert text-white w-50 mx-auto mt-3 p-2 text-center bg-success`}
@@ -307,8 +311,7 @@ const Contact = () => {
                     )}
                     <ContactForm />
                   </div>
-                  </>
-                
+                </>
               </div>
             </div>
 
@@ -335,7 +338,10 @@ const Contact = () => {
 
             <ContactForm />
           </div> */}
-          <div className="col-md-12 p-0 position-relative" style={{bottom: "-10px"}}>
+          <div
+            className="col-md-12 p-0 position-relative"
+            style={{ bottom: "-10px" }}
+          >
             {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("map", true)} />
             )}
@@ -349,17 +355,18 @@ const Contact = () => {
               ></iframe>
             )}
           </div>
-          
         </div>
       </div>
-      
-      <div className={`adminEditTestmonial ${componentEdit.map ? "selected" : "dismiss" } `}>
-          <GoogleMap
-            mapValues={mapValues}
-            editHandler={editHandler}
-            componentType="map"
-          />
-        </div>
+
+      <div
+        className={`adminEditTestmonial ${componentEdit.map ? "selected" : "dismiss"} `}
+      >
+        <GoogleMap
+          mapValues={mapValues}
+          editHandler={editHandler}
+          componentType="map"
+        />
+      </div>
       {/* {componentEdit.map ? (
         
       ) : (

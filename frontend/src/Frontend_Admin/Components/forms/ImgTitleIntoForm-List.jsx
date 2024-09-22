@@ -28,6 +28,7 @@ import NoteComponent from "../../../Common/NoteComponent";
 const AdminBanner = ({
   editHandler,
   componentType,
+  popupTitle,
   getImageListURL,
   deleteImageURL,
   imagePostURL,
@@ -152,7 +153,7 @@ const AdminBanner = ({
 
   return (
     <div>
-      <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
+      <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
 
       <hr className="m-0" />
 

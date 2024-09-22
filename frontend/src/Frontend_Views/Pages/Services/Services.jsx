@@ -67,7 +67,8 @@ const Services = () => {
   });
 
   useEffect(() => {
-    getSelectedServiceObject(pageLoadServiceID);
+    if (pageLoadServiceID && pageLoadServiceName)
+      getSelectedServiceObject(pageLoadServiceID);
     setSelectedServiceName(pageLoadServiceName);
     setSelectedServiceProject({
       id: pageLoadServiceID,
@@ -173,19 +174,22 @@ const Services = () => {
         />
       </div>
 
-      <div className={`adminEditTestmonial ${componentEdit.banner  ? "selected" : "dismiss" } `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            pageType={`${pageType}-${pageLoadServiceName}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(
-              `${pageType}-${selectedServiceName}-banner`
-            )}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
+      <div
+        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
+      >
+        <ImageInputsForm
+          editHandler={editHandler}
+          componentType="banner"
+          popupTitle={`Service ${pageLoadServiceName ? "-" + pageLoadServiceName : ""} Banner`}
+          pageType={`${pageType}-${pageLoadServiceName}-banner`}
+          imageLabel="Banner Image"
+          showDescription={false}
+          showExtraFormFields={getFormDynamicFields(
+            `${pageType}-${selectedServiceName}-banner`
+          )}
+          dimensions={imageDimensionsJson("banner")}
+        />
+      </div>
 
       {/* {componentEdit.banner ? (
         
@@ -203,18 +207,21 @@ const Services = () => {
         <BriefIntroFrontend
           introState={componentEdit.briefIntro}
           pageType={pageType}
-          introTitleCss = "fs-3 fw-medium text-md-center"
-          introSubTitleCss = "fw-medium text-muted text-md-center"
-          introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
+          introTitleCss="fs-3 fw-medium text-md-center"
+          introSubTitleCss="fw-medium text-muted text-md-center"
+          introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
         />
 
-        <div className={`adminEditTestmonial ${componentEdit.briefIntro  ? "selected" : "dismiss" } `}>
-            <AdminBriefIntro
-              editHandler={editHandler}
-              componentType="briefIntro"
-              pageType={pageType}
-            />
-          </div>
+        <div
+          className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
+        >
+          <AdminBriefIntro
+            editHandler={editHandler}
+            popupTitle="Service Details"
+            componentType="briefIntro"
+            pageType={pageType}
+          />
+        </div>
 
         {/* {componentEdit.briefIntro ? (
          
@@ -268,30 +275,32 @@ const Services = () => {
                 </div>
               )}
 
-                <div className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection  ? "selected" : "dismiss" } `}>
-                  <AddEditAdminNews
-                    editHandler={editHandler}
-                    category="services"
-                    editCarousel={editCarousel}
-                    setEditCarousel={setEditCarousel}
-                    componentType={`${
-                      componentEdit.editSection ? "editSection" : "addSection"
-                    }`}
-                    imageGetURL="services/createServiceFeatures/"
-                    imagePostURL="services/createServiceFeatures/"
-                    imageUpdateURL="services/updateFeatureService/"
-                    imageDeleteURL="services/updateFeatureService/"
-                    imageLabel="Add Service Banner"
-                    showDescription={false}
-                    showExtraFormFields={getServiceFormFields(
-                      selectedServiceProject ? selectedServiceProject?.id : "",
-                      selectedServiceProject
-                        ? selectedServiceProject?.services_page_title
-                        : ""
-                    )}
-                    dimensions={imageDimensionsJson("addService")}
-                  />
-                </div>
+              <div
+                className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss"} `}
+              >
+                <AddEditAdminNews
+                  editHandler={editHandler}
+                  category="services"
+                  editCarousel={editCarousel}
+                  setEditCarousel={setEditCarousel}
+                  componentType={`${
+                    componentEdit.editSection ? "editSection" : "addSection"
+                  }`}
+                  imageGetURL="services/createServiceFeatures/"
+                  imagePostURL="services/createServiceFeatures/"
+                  imageUpdateURL="services/updateFeatureService/"
+                  imageDeleteURL="services/updateFeatureService/"
+                  imageLabel="Add Service Banner"
+                  showDescription={false}
+                  showExtraFormFields={getServiceFormFields(
+                    selectedServiceProject ? selectedServiceProject?.id : "",
+                    selectedServiceProject
+                      ? selectedServiceProject?.services_page_title
+                      : ""
+                  )}
+                  dimensions={imageDimensionsJson("addService")}
+                />
+              </div>
 
               {/* {componentEdit.editSection || componentEdit.addSection ? (
                 

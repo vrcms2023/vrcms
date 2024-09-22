@@ -8,7 +8,12 @@ import EditAdminPopupHeader from "../EditAdminPopupHeader";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getCookie } from "../../../util/cookieUtil";
 
-export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
+export const BriefIntroAdmin = ({
+  editHandler,
+  componentType,
+  popupTitle,
+  pageType,
+}) => {
   const closeHandler = () => {
     editHandler(componentType, false);
     document.body.style.overflow = "";
@@ -106,7 +111,7 @@ export const BriefIntroAdmin = ({ editHandler, componentType, pageType }) => {
 
   return (
     <>
-      <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
+      <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
       <hr className="m-0" />
       <div className="container my-3">
         {success ? (
