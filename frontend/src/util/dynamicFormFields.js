@@ -45,7 +45,7 @@ export const getFormDynamicFields = (pageType) => {
       fieldName: "banner_descripiton",
     },
     moreLink: {
-      label: "PageToLink",
+      label: "Page To Link",
       type: "text",
       fieldName: "moreLink",
     },

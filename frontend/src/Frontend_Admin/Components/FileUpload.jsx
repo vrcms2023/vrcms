@@ -340,12 +340,16 @@ const FileUpload = ({
   return (
     <>
       <form className="" onSubmit={handleSubmit(uploadFile)}>
-        <div className={`px-4 ${scrollEnable ? "heightCtrl" : "fullHeightCtrl"}`}>
+        <div
+          className={`px-4 ${scrollEnable ? "heightCtrl" : "fullHeightCtrl"}`}
+        >
           <div className="mb-2 row">
             <label className="col-sm-12 col-form-label">
               <Title title={title} cssClass="requiredField" />
             </label>
-            <div className="col-sm-12">
+            <div
+              className={`${editImage?.id && editImage.path ? "col-6" : "col-12"}`}
+            >
               {error ? <Error>{error}</Error> : ""}
               <div className="border border-3 mb-0 shadow-lg">
                 <FilePond
@@ -364,35 +368,31 @@ const FileUpload = ({
                   instantUpload={false}
                 />
               </div>
-              {dimensions ? (
-                <div>
-                  <small className="text-muted">
-                    Min. Width - {dimensions.w} & Height - {dimensions.h} will
-                    be the good for resolution.{" "}
-                  </small>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {editImage?.id && editImage.path ? (
-                <div>
-                  <img
-                    src={getImagePath(editImage.path, editImage.contentType)}
-                    alt={editImage?.alternitivetext}
-                    className=""
-                    style={{
-                      width: "100%",
-                      height: "100px",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
             </div>
+            {editImage?.id && editImage.path && (
+              <div className="col-6">
+                <img
+                  src={getImagePath(editImage.path, editImage.contentType)}
+                  alt={editImage?.alternitivetext}
+                  className=""
+                  style={{
+                    width: "100%",
+                    height: "100px",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+            )}
+            {dimensions && (
+              <div className="col-12">
+                <small className="text-muted">
+                  Min. Width - {dimensions.w} & Height - {dimensions.h} will be
+                  the good for resolution.{" "}
+                </small>
+              </div>
+            )}
           </div>
+
           <div>
             <InputFields
               label={alternitivetextTitle}
