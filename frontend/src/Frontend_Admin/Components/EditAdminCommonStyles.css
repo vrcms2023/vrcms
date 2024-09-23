@@ -72,11 +72,18 @@
 }
 
 .adminEditTestmonial a.close {
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .adminEditTestmonial a.close:hover {
-  color: #c30000 !important;
+  background-color: rgba(255, 255, 255, .5);
+  border-radius: 50%;
+  color: #222222 !important;; 
 }
 
 .adminEditTestmonialHeader {
@@ -105,7 +112,7 @@
 }
 
 .fullHeightCtrl {
-  height: 75vh !important; 
+  height: 80vh !important; 
   overflow: auto;
   overflow-x: hidden; 
   resize: vertical

@@ -31,7 +31,7 @@ body {
 .btn {
   border-radius: 0.375rem !important;
   transition: all .35s;
-  padding: 1rem 3rem !important;
+  padding: .6rem 1.2rem !important;
 
   // &:hover svg { transform: rotate(-45deg);}
   &:hover {
