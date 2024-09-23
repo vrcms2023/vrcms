@@ -118,9 +118,9 @@
 
   "btnOutline": "#ffffff",
   "btnOutlineHover": "#ffffff",
-  "btnOutlineTextColor": "#222222",
+  "btnOutlineTextColor": "#555555",
   "btnOutlineTextHoverColor": "#111111",
-  "btnOutlineBorderColor": "#e6e6e6",
+  "btnOutlineBorderColor": "#999999",
   "btnOutlineBorderHoverColor": "#f3f3f3",
 
   "btnLinkTextColor": "#007CB9",
