@@ -6,6 +6,7 @@ import FileUpload from "../FileUpload";
 export const News = ({
   editHandler,
   componentType,
+  popupTitle,
   category = "news",
   extraFormParamas,
   showExtraFormFields,
@@ -45,7 +46,7 @@ export const News = ({
     <>
       <EditAdminPopupHeader
         closeHandler={closeHandler}
-        title={componentType}
+        title={popupTitle}
         type={type}
       />
       <hr className="m-0" />
