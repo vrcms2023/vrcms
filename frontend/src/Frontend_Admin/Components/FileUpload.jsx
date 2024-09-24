@@ -348,10 +348,10 @@ const FileUpload = ({
               <Title title={title} cssClass="requiredField" />
             </label>
             <div
-              className={`${editImage?.id && editImage.path ? "col-6" : "col-12"}`}
+              className={`${editImage?.id && editImage.path ? "col-6 col-md-6 pe-0" : "col-12"}`}
             >
               {error ? <Error>{error}</Error> : ""}
-              <div className="border border-3 mb-0 shadow-lg">
+              <div className="mb-0" style={{height: "75px"}}>
                 <FilePond
                   labelIdle='Drag & Drop your files or <span className="filepond--label-action">Browse</span>'
                   labelInvalidField="invalid files"
@@ -377,15 +377,17 @@ const FileUpload = ({
                   className=""
                   style={{
                     width: "100%",
-                    height: "100px",
+                    height: "74px",
                     objectFit: "cover",
+                    objectPosition: 'center',
+                    borderRadius: "6px"
                   }}
                 />
               </div>
             )}
             {dimensions && (
               <div className="col-12">
-                <small className="text-muted">
+                <small className="" style={{fontSize: ".75rem"}}>
                   Min. Width - {dimensions.w} & Height - {dimensions.h} will be
                   the good for resolution.{" "}
                 </small>
@@ -446,8 +448,8 @@ const FileUpload = ({
             })}
           </div>
         </div>
-        <div className="row">
-          <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-2 my-3">
+        <div className="row fixed-bottom bg-white">
+          <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-2 my-3 px-5">
             {!editImage?.id ? (
               <button
                 type="button"
@@ -465,7 +467,7 @@ const FileUpload = ({
 
             <Button
               type="submit"
-              cssClass="btn btn-more"
+              cssClass="btn btn-outline"
               label={"Close"}
               handlerChange={closeHandler}
             />
