@@ -228,28 +228,24 @@ const Home = () => {
             <Carousel carouselState={componentEdit.carousel} />
           </div>
         </div>
-
-        <div
-          className={`adminEditTestmonial ${componentEdit.carousel ? "selected" : "dismiss"} `}
-        >
-          <AdminBanner
-            editHandler={editHandler}
-            componentType="carousel"
-            popupTitle="Carousel Banner"
-            getImageListURL="carousel/createCarousel/"
-            deleteImageURL="carousel/updateCarousel/"
-            imagePostURL="carousel/createCarousel/"
-            imageUpdateURL="carousel/updateCarousel/"
-            imageIndexURL="carousel/updateCarouselindex/"
-            imageLabel="Add Carousel Image"
-            showDescription={false}
-            showExtraFormFields={getCarouselFields("carousel")}
-            dimensions={imageDimensionsJson("carousel")}
-          />
-        </div>
-
-        {/* {componentEdit.carousel && (
-        )} */}
+        {componentEdit.carousel && (
+          <div className={`adminEditTestmonial selected `}>
+            <AdminBanner
+              editHandler={editHandler}
+              componentType="carousel"
+              popupTitle="Carousel Banner"
+              getImageListURL="carousel/createCarousel/"
+              deleteImageURL="carousel/updateCarousel/"
+              imagePostURL="carousel/createCarousel/"
+              imageUpdateURL="carousel/updateCarousel/"
+              imageIndexURL="carousel/updateCarouselindex/"
+              imageLabel="Add Carousel Image"
+              showDescription={false}
+              showExtraFormFields={getCarouselFields("carousel")}
+              dimensions={imageDimensionsJson("carousel")}
+            />
+          </div>
+        )}
 
         {/* LEON Pharma Products  */}
 
@@ -272,24 +268,21 @@ const Home = () => {
                     setFormValues={setProductDevelopment}
                     formvalues={productDevelopment}
                   />
-                  <div
-                    className={`adminEditTestmonial ${componentEdit.product_development ? "selected" : "dismiss"} `}
-                  >
-                    <DynamicForm
-                      editHandler={editHandler}
-                      componentType={productComp.product_development}
-                      componentTitle="Product Development component"
-                      formPostURL={`/carousel/createHomeIntro/`}
-                      formUpdateURL={`/carousel/updateHomeIntro/`}
-                      editObject={productDevelopment}
-                      dynamicFormFields={getTitleAndDescriptionFields(
-                        productComp.product_development
-                      )}
-                    />
-                  </div>
-                  {/* {componentEdit.product_development && (
-                    
-                  )} */}
+                  {componentEdit.product_development && (
+                    <div className={`adminEditTestmonial selected `}>
+                      <DynamicForm
+                        editHandler={editHandler}
+                        componentType={productComp.product_development}
+                        componentTitle="Product Development component"
+                        formPostURL={`/carousel/createHomeIntro/`}
+                        formUpdateURL={`/carousel/updateHomeIntro/`}
+                        editObject={productDevelopment}
+                        dynamicFormFields={getTitleAndDescriptionFields(
+                          productComp.product_development
+                        )}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
@@ -307,26 +300,21 @@ const Home = () => {
                     setFormValues={setProductDistribution}
                     formvalues={productDistribution}
                   />
-
-                  <div
-                    className={`adminEditTestmonial ${componentEdit.product_distribution ? "selected" : "dismiss"} `}
-                  >
-                    <DynamicForm
-                      editHandler={editHandler}
-                      componentType={productComp.product_distribution}
-                      componentTitle="Product Distribution component"
-                      formPostURL={`/carousel/createHomeIntro/`}
-                      formUpdateURL={`/carousel/updateHomeIntro/`}
-                      editObject={productDistribution}
-                      dynamicFormFields={getTitleAndDescriptionFields(
-                        productComp.product_distribution
-                      )}
-                    />
-                  </div>
-
-                  {/* {componentEdit.product_distribution && (
-                    
-                  )} */}
+                  {componentEdit.product_distribution && (
+                    <div className={`adminEditTestmonial selected `}>
+                      <DynamicForm
+                        editHandler={editHandler}
+                        componentType={productComp.product_distribution}
+                        componentTitle="Product Distribution component"
+                        formPostURL={`/carousel/createHomeIntro/`}
+                        formUpdateURL={`/carousel/updateHomeIntro/`}
+                        editObject={productDistribution}
+                        dynamicFormFields={getTitleAndDescriptionFields(
+                          productComp.product_distribution
+                        )}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
@@ -344,26 +332,21 @@ const Home = () => {
                     setFormValues={setProductRegistration}
                     formvalues={productRegistration}
                   />
-
-                  <div
-                    className={`adminEditTestmonial ${componentEdit.product_registration ? "selected" : "dismiss"} `}
-                  >
-                    <DynamicForm
-                      editHandler={editHandler}
-                      componentType={productComp.product_registration}
-                      componentTitle="Product Distribution component"
-                      formPostURL={`/carousel/createHomeIntro/`}
-                      formUpdateURL={`/carousel/updateHomeIntro/`}
-                      editObject={productRegistration}
-                      dynamicFormFields={getTitleAndDescriptionFields(
-                        productComp.product_registration
-                      )}
-                    />
-                  </div>
-
-                  {/* {componentEdit.product_registration && (
-                    
-                  )} */}
+                  {componentEdit.product_registration && (
+                    <div className={`adminEditTestmonial selected `}>
+                      <DynamicForm
+                        editHandler={editHandler}
+                        componentType={productComp.product_registration}
+                        componentTitle="Product Distribution component"
+                        formPostURL={`/carousel/createHomeIntro/`}
+                        formUpdateURL={`/carousel/updateHomeIntro/`}
+                        editObject={productRegistration}
+                        dynamicFormFields={getTitleAndDescriptionFields(
+                          productComp.product_registration
+                        )}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -397,19 +380,16 @@ const Home = () => {
             />
           </div>
         </div>
-
-        <div
-          className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
-        >
-          <BriefIntroAdmin
-            editHandler={editHandler}
-            componentType="briefIntro"
-            popupTitle="Brief Intro Banner"
-            pageType="Home"
-          />
-        </div>
-
-        {/* {componentEdit.briefIntro && ( )} */}
+        {componentEdit.briefIntro && (
+          <div className={`adminEditTestmonial selected `}>
+            <BriefIntroAdmin
+              editHandler={editHandler}
+              componentType="briefIntro"
+              popupTitle="Brief Intro Banner"
+              pageType="Home"
+            />
+          </div>
+        )}
 
         {/* END OF INTRODUCTION COMPONENT ============================== */}
 
@@ -576,33 +556,26 @@ const Home = () => {
                   ""
                 )}
               </div>
-
-              <div
-                className={`adminEditTestmonial ${componentEdit.testmonial ? "selected" : "dismiss"} `}
-              >
-                <AdminBanner
-                  editHandler={editHandler}
-                  componentType="testmonial"
-                  popupTitle={`Testmonial Banner`}
-                  getImageListURL="testimonials/clientTestimonials/"
-                  deleteImageURL="testimonials/updateTestimonials/"
-                  imagePostURL="testimonials/createTestimonials/"
-                  imageUpdateURL="testimonials/updateTestimonials/"
-                  imageIndexURL="testimonials/updateTestimonialsindex/"
-                  imageLabel="Add your Image"
-                  titleTitle="Testmonial Name"
-                  descriptionTitle="Testimonial Writeup "
-                  showDescription={false}
-                  showExtraFormFields={getTestimonialsFields("testmonial")}
-                  dimensions={imageDimensionsJson("testimonial")}
-                />
-              </div>
-
-              {/* {componentEdit.testmonial ? (
-                
-              ) : (
-                ""
-              )} */}
+              {componentEdit.testmonial && (
+                <div className={`adminEditTestmonial selected `}>
+                  <AdminBanner
+                    editHandler={editHandler}
+                    componentType="testmonial"
+                    popupTitle={`Testmonial Banner`}
+                    getImageListURL="testimonials/clientTestimonials/"
+                    deleteImageURL="testimonials/updateTestimonials/"
+                    imagePostURL="testimonials/createTestimonials/"
+                    imageUpdateURL="testimonials/updateTestimonials/"
+                    imageIndexURL="testimonials/updateTestimonialsindex/"
+                    imageLabel="Add your Image"
+                    titleTitle="Testmonial Name"
+                    descriptionTitle="Testimonial Writeup "
+                    showDescription={false}
+                    showExtraFormFields={getTestimonialsFields("testmonial")}
+                    dimensions={imageDimensionsJson("testimonial")}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </TestimonialCarouselPageStyled>

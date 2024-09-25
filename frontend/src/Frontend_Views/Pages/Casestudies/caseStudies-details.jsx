@@ -96,10 +96,8 @@ const CaseStudiesDetails = () => {
         pageType={pageType}
       />
 
-      {componentEdit.briefIntro ? (
-        <div
-          className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
-        >
+      {componentEdit.briefIntro && (
+        <div className={`adminEditTestmonial selected `}>
           <AdminBriefIntro
             editHandler={editHandler}
             popupTitle="Case Studies Details"
@@ -107,8 +105,6 @@ const CaseStudiesDetails = () => {
             pageType={pageType}
           />
         </div>
-      ) : (
-        ""
       )}
 
       {selectedCaseStudieDetails && (

@@ -82,11 +82,12 @@ const ImagesGallery = () => {
               {isAdmin && hasPermission && (
                 <EditIcon editHandler={() => editHandler("gallery", true)} />
               )}
-
-              <div className={`adminEditTestmonial ${componentEdit.gallery  ? "selected" : "dismiss" } `}>
-              <AdminBanner
+              {componentEdit.gallery && (
+                <div className={`adminEditTestmonial selected `}>
+                  <AdminBanner
                     editHandler={editHandler}
                     componentType="gallery"
+                    popupTitle="Image Gallery"
                     getImageListURL={`imgGallery/createImageVidoeGallery/${pageType}/`}
                     deleteImageURL="imgGallery/updateImageVidoeGallery/"
                     imagePostURL="imgGallery/createImageVidoeGallery/"
@@ -98,10 +99,7 @@ const ImagesGallery = () => {
                     dimensions={imageDimensionsJson("imageGallery")}
                   />
                 </div>
-              {/* {componentEdit.gallery && (
-                
-                  
-              )} */}
+              )}
             </div>
           </div>
 

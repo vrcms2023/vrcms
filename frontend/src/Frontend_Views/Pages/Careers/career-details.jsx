@@ -92,10 +92,8 @@ const Careers = () => {
         />
       </div>
 
-      {componentEdit.banner ? (
-        <div
-          className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-        >
+      {componentEdit.banner && (
+        <div className={`adminEditTestmonial selected `}>
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
@@ -106,8 +104,6 @@ const Careers = () => {
             showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
           />
         </div>
-      ) : (
-        ""
       )}
 
       {/* Introduction */}
@@ -179,10 +175,8 @@ const Careers = () => {
         </div>
       </CareersPageStyled>
 
-      {componentEdit.briefIntro ? (
-        <div
-          className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
-        >
+      {componentEdit.briefIntro && (
+        <div className={`adminEditTestmonial selected `}>
           <AdminBriefIntro
             editHandler={editHandler}
             componentType="briefIntro"
@@ -206,8 +200,6 @@ const Careers = () => {
             ]}
           />
         </div>
-      ) : (
-        ""
       )}
 
       {show && <ModelBg />}

@@ -52,13 +52,14 @@ const ClientsList = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const setResponseData = (data) => {
-    setClientsList(
-      data.results.length > 0
-        ? sortByFieldName(data.results, "client_position")
-        : []
-    );
-    setPaginationData(paginationDataFormat(data));
-    setCurrentPage(1);
+    if (data?.results?.length > 0) {
+      const _clientList = sortByFieldName(data.results, "client_position");
+      setClientsList(_clientList);
+      setPaginationData(paginationDataFormat(data));
+      setCurrentPage(1);
+    } else {
+      setClientsList(data.clientLogo);
+    }
   };
 
   useEffect(() => {
@@ -138,26 +139,20 @@ const ClientsList = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-      >
-        <ImageInputsForm
-          editHandler={editHandler}
-          componentType="banner"
-          popupTitle="Client List Banner"
-          pageType={`${pageType}-banner`}
-          imageLabel="Banner Image"
-          showDescription={false}
-          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-          dimensions={imageDimensionsJson("banner")}
-        />
-      </div>
-      {/* {componentEdit.banner ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.banner && (
+        <div className={`adminEditTestmonial selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="banner"
+            popupTitle="Client List Banner"
+            pageType={`${pageType}-banner`}
+            imageLabel="Banner Image"
+            showDescription={false}
+            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+            dimensions={imageDimensionsJson("banner")}
+          />
+        </div>
+      )}
 
       {/* Brief Introduction */}
       {isAdmin && hasPermission && (
@@ -171,22 +166,16 @@ const ClientsList = () => {
         introSubTitleCss="fw-medium text-muted text-md-center"
         introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
       />
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
-      >
-        <AdminBriefIntro
-          editHandler={editHandler}
-          popupTitle="Client list"
-          componentType="briefIntro"
-          pageType={pageType}
-        />
-      </div>
-      {/* {componentEdit.briefIntro ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.briefIntro && (
+        <div className={`adminEditTestmonial selected `}>
+          <AdminBriefIntro
+            editHandler={editHandler}
+            popupTitle="Client list"
+            componentType="briefIntro"
+            pageType={pageType}
+          />
+        </div>
+      )}
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
@@ -226,35 +215,32 @@ const ClientsList = () => {
             />
           </div>
         </div>
-
-        <div
-          className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss"} `}
-        >
-          <AddEditAdminNews
-            editHandler={editHandler}
-            category="about"
-            editCarousel={editCarousel}
-            setEditCarousel={setEditCarousel}
-            componentType={`${
-              componentEdit.editSection ? "editSection" : "addSection"
-            }`}
-            imageGetURL="client/createClientLogo/"
-            imagePostURL="client/createClientLogo/"
-            imageUpdateURL="client/updateClientLogo/"
-            imageDeleteURL="client/updateClientLogo/"
-            imageLabel="Add Client Logo"
-            showDescription={false}
-            showExtraFormFields={getClinetLogsFields()}
-            dimensions={imageDimensionsJson("aboutus")}
-            scrollEnable={false}
-          />
-        </div>
-
-        {/* {componentEdit.editSection || componentEdit.addSection ? (
-          
+        {componentEdit.editSection || componentEdit.addSection ? (
+          <div className={`adminEditTestmonial selected `}>
+            <AddEditAdminNews
+              editHandler={editHandler}
+              category="about"
+              popupTitle="Client"
+              editCarousel={editCarousel}
+              setEditCarousel={setEditCarousel}
+              componentType={`${
+                componentEdit.editSection ? "editSection" : "addSection"
+              }`}
+              imageGetURL="client/createClientLogo/"
+              imagePostURL="client/createClientLogo/"
+              imageUpdateURL="client/updateClientLogo/"
+              imageDeleteURL="client/updateClientLogo/"
+              imageLabel="Add Client Logo"
+              showDescription={false}
+              showExtraFormFields={getClinetLogsFields()}
+              dimensions={imageDimensionsJson("aboutus")}
+              scrollEnable={false}
+            />
+          </div>
         ) : (
           ""
-        )} */}
+        )}
+
         <br />
         {isAdmin && (
           <NoteComponent note="Use drag option to shuffle the Items" />

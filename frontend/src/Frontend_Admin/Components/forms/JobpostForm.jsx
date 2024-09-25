@@ -10,7 +10,13 @@ import moment from "moment";
 import { generateOptionLength } from "../../../util/commonUtil";
 import Button from "../../../Common/Button";
 
-const JobPost = ({ editHandler, componentType, type, editPost }) => {
+const JobPost = ({
+  editHandler,
+  componentType,
+  type,
+  editPost,
+  popupTitle,
+}) => {
   const [editorState, setEditorState] = useState("");
 
   const [userName, setUserName] = useState(getUserName());
@@ -63,7 +69,7 @@ const JobPost = ({ editHandler, componentType, type, editPost }) => {
     <>
       <EditAdminPopupHeader
         closeHandler={closeHandler}
-        title={componentType}
+        title={popupTitle}
         type={type}
       />
       <hr className="m-0" />

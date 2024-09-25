@@ -4,7 +4,7 @@ import React from "react";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
 import Button from "../../../Common/Button";
 
-const ContactInputs = ({ editHandler, componentType }) => {
+const ContactInputs = ({ editHandler, componentType, popupTitle }) => {
   const closeHandler = () => {
     editHandler(componentType, false);
     document.body.style.overflow = "";
@@ -12,7 +12,7 @@ const ContactInputs = ({ editHandler, componentType }) => {
 
   return (
     <>
-      <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
+      <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
       <div className="container">
         <div className="row py-0 pb-md-5">
           <div className="col-md-8 offset-md-2 mb-5 mb-md-0">

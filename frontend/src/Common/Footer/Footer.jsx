@@ -412,7 +412,6 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-
       {modelShow && (
         <Model
           obj={termsAndConditionData}
@@ -421,66 +420,35 @@ const Footer = () => {
           flag="footer"
         />
       )}
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.address ? "selected" : "dismiss"} `}
-      >
-        <FooterAdminFeilds
-          editHandler={editHandler}
-          componentType="address"
-          popupTitle="Social Media Links"
-          footerValues={footerValues}
-        />
-      </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.termsPolacy ? "selected" : "dismiss"} `}
-      >
-        <AdminTermsPolicy
-          termsAndConditionData={termsAndPolicyData}
-          editHandler={editHandler}
-          componentType="termsPolacy"
-        />
-      </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.contact ? "selected" : "dismiss"} `}
-      >
-        <ContactInputs editHandler={editHandler} componentType="contact" />
-      </div>
-
-      {/* {componentEdit.address ? (
-        <div className="adminEditTestmonial">
+      {componentEdit.address && (
+        <div className="adminEditTestmonial selected">
           <FooterAdminFeilds
             editHandler={editHandler}
             componentType="address"
+            popupTitle="Address"
             footerValues={footerValues}
           />
         </div>
-      ) : ( 
-        ""
-      )} */}
-
-      {/* {componentEdit.termsPolacy ? (
-        <div className="adminEditTestmonial">
+      )}
+      {componentEdit.termsPolacy && (
+        <div className="adminEditTestmonial selected">
           <AdminTermsPolicy
             termsAndConditionData={termsAndPolicyData}
             editHandler={editHandler}
-            componentType="termsPolacy"
+            popupTitle="Terms and Policy"
+            componentType="Terms and Polacy"
           />
         </div>
-      ) : (
-        ""
-      )} */}
-
-      {/* {componentEdit.contact ? (
-        <div className="adminEditTestmonial">
-          <ContactInputs editHandler={editHandler} componentType="contact" />
+      )}
+      {componentEdit.contact && (
+        <div className="adminEditTestmonial selected">
+          <ContactInputs
+            editHandler={editHandler}
+            componentType="contact"
+            popupTitle="Contact"
+          />
         </div>
-      ) : (
-        ""
-      )} */}
-
+      )}
       {show && <ModelBg />}
     </FooterStyled>
   );

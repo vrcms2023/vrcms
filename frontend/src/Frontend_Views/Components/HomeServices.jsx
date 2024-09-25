@@ -97,7 +97,11 @@ const HomeServices = ({ title }) => {
 
       {componentEdit.service ? (
         <div className="adminEditTestmonial">
-          <ServiceForm editHandler={editHandler} componentType="service" />
+          <ServiceForm
+            editHandler={editHandler}
+            componentType="service"
+            popupTitle="Service"
+          />
         </div>
       ) : (
         ""

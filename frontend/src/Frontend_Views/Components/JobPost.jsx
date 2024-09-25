@@ -310,20 +310,16 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
           )}
         </div>
       )}
-
-        <div className={`adminEditTestmonial ${componentEdit.job ? "selected" : "dismiss" } `}>
+      {componentEdit.job && (
+        <div className={`adminEditTestmonial selected `}>
           <JobPostFrom
             editHandler={editHandler}
             componentType="job"
+            popupTitle="Career"
             editPost={editPost}
           />
         </div>
-
-      {/* {componentEdit.job ? (
-        
-      ) : (
-        ""
-      )} */}
+      )}
 
       {show && <ModelBg />}
     </>

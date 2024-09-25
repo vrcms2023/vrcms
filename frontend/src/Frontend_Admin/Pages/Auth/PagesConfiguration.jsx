@@ -179,7 +179,9 @@ const PagesConfiguration = () => {
                   )}
                   {node.page_label}
                 </td>
-                <td><Link to={node.page_url}>{node.page_url}</Link></td>
+                <td>
+                  <Link to={node.page_url}>{node.page_url}</Link>
+                </td>
                 <td>{node.is_Parent ? "Parent Menu" : "Child Menu"}</td>
                 {/* <td className="text-center">
                   <input
@@ -341,21 +343,17 @@ const PagesConfiguration = () => {
           </Link>
           {/* <EditIcon editHandler={() => editHandler("menu", true)} /> */}
         </div>
-        
-        <div className={`adminEditTestmonial ${componentEdit.menu ? "selected" : "dismiss" } `}>
+        {componentEdit.menu && (
+          <div className={`adminEditTestmonial selected `}>
             <MenuForm
               editHandler={editHandler}
               menuList={pagesDetails}
+              popupTitle="Menu"
               editMenu={editMenu}
               componentType="menu"
             />
           </div>
-
-        {/* {componentEdit.menu ? (
-          
-        ) : (
-          ""
-        )} */}
+        )}
       </div>
       <div className="row px-3 px-lg-5">
         <div className="text-end d-flex justify-content-between">
