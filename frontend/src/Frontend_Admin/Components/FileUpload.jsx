@@ -351,7 +351,7 @@ const FileUpload = ({
               className={`${editImage?.id && editImage.path ? "col-6 col-md-6 pe-0" : "col-12"}`}
             >
               {error ? <Error>{error}</Error> : ""}
-              <div className="mb-0" style={{height: "75px"}}>
+              <div className="mb-0">
                 <FilePond
                   labelIdle='Drag & Drop your files or <span className="filepond--label-action">Browse</span>'
                   labelInvalidField="invalid files"
@@ -379,15 +379,15 @@ const FileUpload = ({
                     width: "100%",
                     height: "74px",
                     objectFit: "cover",
-                    objectPosition: 'center',
-                    borderRadius: "6px"
+                    objectPosition: "center",
+                    borderRadius: "6px",
                   }}
                 />
               </div>
             )}
             {dimensions && (
               <div className="col-12">
-                <small className="" style={{fontSize: ".75rem"}}>
+                <small className="" style={{ fontSize: ".75rem" }}>
                   Min. Width - {dimensions.w} & Height - {dimensions.h} will be
                   the good for resolution.{" "}
                 </small>

@@ -217,8 +217,8 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
           )}
         </Droppable>
       </DragDropContext>
-
-      <div className={`adminEditTestmonial ${componentEdit.news ? "selected" : "dismiss" } `}>
+      {componentEdit.news && (
+        <div className={`adminEditTestmonial  selected`}>
           <AddEditAdminNews
             editHandler={editHandler}
             editCarousel={editNews}
@@ -233,12 +233,7 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
             showExtraFormFields={getNewslFields()}
           />
         </div>
-
-      {/* {componentEdit.news ? (
-        
-      ) : (
-        ""
-      )} */}
+      )}
 
       {showModel ? (
         <div className="newsModel ">
@@ -300,7 +295,10 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
           {...provided.dragHandleProps}
         >
           {/* <div className="col-md-12 col-lg-12 mb-4 mb-lg-0 border border-1" key={item.id}> */}
-          <div className={`col-md-12 col-lg-12 mb-4 mb-lg-0 ${isAdmin ? "px-3" : ""}`} key={item.id}>
+          <div
+            className={`col-md-12 col-lg-12 mb-4 mb-lg-0 ${isAdmin ? "px-3" : ""}`}
+            key={item.id}
+          >
             <NewsStyled>
               <div
                 className={`card homeNews ${isAdmin ? "adminView" : ""}`}
@@ -344,7 +342,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                         item.news_title ? item.news_title : "Update news Title"
                       }
                       cssClass="fs-4 fw-bold lineClamp lc2"
-                      mainTitleClassess={` fw-medium lh-sm lineClamp lc1 ${ isAdmin ? "fs-6" : "fs-5" }`}
+                      mainTitleClassess={` fw-medium lh-sm lineClamp lc1 ${isAdmin ? "fs-6" : "fs-5"}`}
                       subTitleClassess=""
                     />
                     {/* <small className="d-block my-2">{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</small> */}
@@ -363,14 +361,6 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                         "update new description"
                       )}
                     </div>
-                    {/* <Ancher
-                      AncherLabel="Read more"
-                      Ancherpath="/news"
-                      AncherClass="btn btn-more w-75 m-auto d-flex justify-content-center align-items-center gap-2"
-                      AnchersvgColor="#17427C"
-                      handleModel={() => handleModel(item)}
-                    /> */}
-
                     <Link
                       className="moreLink"
                       onClick={() => handleModel(item)}

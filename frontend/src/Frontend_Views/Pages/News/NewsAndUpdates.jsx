@@ -102,26 +102,19 @@ const NewsAndUpdates = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-      >
-        <ImageInputsForm
-          editHandler={editHandler}
-          componentType="banner"
-          popupTitle="News Banner"
-          pageType={`${pageType}-banner`}
-          imageLabel="Banner Image"
-          showDescription={false}
-          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-          dimensions={imageDimensionsJson("banner")}
-        />
-      </div>
-      {/* {componentEdit.banner ? (
-          
-      ) : (
-        ""
-      )} */}
+      {componentEdit.banner && (
+        <div className={`adminEditTestmonial  selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="banner"
+            pageType={`${pageType}-banner`}
+            imageLabel="Banner Image"
+            showDescription={false}
+            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+            dimensions={imageDimensionsJson("banner")}
+          />
+        </div>
+      )}
 
       <div className="container my-4 newsAndUpdates">
         {isAdmin && hasPermission && (
@@ -164,27 +157,22 @@ const NewsAndUpdates = () => {
         )}
 
         <div className="row mb-5">
-          <div
-            className={`adminEditTestmonial ${componentEdit.addNews ? "selected" : "dismiss"} `}
-          >
-            <AddEditAdminNews
-              editHandler={editHandler}
-              componentType="addNews"
-              imageGetURL="appNews/createAppNews/"
-              imagePostURL="appNews/createAppNews/"
-              imageUpdateURL="appNews/updateAppNews/"
-              imageDeleteURL="appNews/updateAppNews/"
-              imageLabel="Add News Image"
-              showDescription={false}
-              showExtraFormFields={getNewslFields("addNews")}
-              dimensions={imageDimensionsJson("addNews")}
-            />
-          </div>
-          {/* {componentEdit.addNews ? (
-              
-          ) : (
-            ""
-          )} */}
+          {componentEdit.addNews && (
+            <div className={`adminEditTestmonial selected`}>
+              <AddEditAdminNews
+                editHandler={editHandler}
+                componentType="addNews"
+                imageGetURL="appNews/createAppNews/"
+                imagePostURL="appNews/createAppNews/"
+                imageUpdateURL="appNews/updateAppNews/"
+                imageDeleteURL="appNews/updateAppNews/"
+                imageLabel="Add News Image"
+                showDescription={false}
+                showExtraFormFields={getNewslFields("addNews")}
+                dimensions={imageDimensionsJson("addNews")}
+              />
+            </div>
+          )}
 
           <HomeNews
             addNewsState={componentEdit.addNews}

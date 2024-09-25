@@ -158,7 +158,7 @@ const TestimonialsList = () => {
         <ImageInputsForm
           editHandler={editHandler}
           componentType="banner"
-          popupTitle={`${pageType} Banner`}
+          popupTitle={`Testimonial Banner`}
           pageType={`${pageType}-banner`}
           imageLabel="Banner Image"
           showDescription={false}
@@ -248,6 +248,7 @@ const TestimonialsList = () => {
           <AddEditAdminNews
             editHandler={editHandler}
             category="about"
+            popupTitle={`Testimonial Banner`}
             editCarousel={editCarousel}
             setEditCarousel={setEditCarousel}
             componentType={`${
@@ -257,7 +258,7 @@ const TestimonialsList = () => {
             deleteImageURL="testimonials/updateTestimonials/"
             imagePostURL="testimonials/createTestimonials/"
             imageUpdateURL="testimonials/updateTestimonials/"
-            imageLabel="Add Client Logo"
+            imageLabel="Add Testimonial Image"
             showDescription={false}
             showExtraFormFields={getTestimonialsFields("testmonial")}
             dimensions={imageDimensionsJson("testimonial")}
