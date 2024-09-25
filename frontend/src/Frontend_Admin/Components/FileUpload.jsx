@@ -351,7 +351,7 @@ const FileUpload = ({
               className={`${editImage?.id && editImage.path ? "col-6 col-md-6 pe-0" : "col-12"}`}
             >
               {error ? <Error>{error}</Error> : ""}
-              <div className="mb-0" style={{height: "75px"}}>
+              <div className="mb-0">
                 <FilePond
                   labelIdle='Drag & Drop your files or <span className="filepond--label-action">Browse</span>'
                   labelInvalidField="invalid files"

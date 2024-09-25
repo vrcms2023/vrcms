@@ -4,7 +4,7 @@
   "background": "#ffffff",
   "bodyBgImage": "",
 
-  "textColor": "#222222",
+  "textColor": "#444444",
 
   "white": "#ffffff",
   "black": "#000000",
@@ -71,7 +71,7 @@
 
   "teamBg": "#ffffff",
   "teamTitleColor": "#000000",
-  "teamTextColor": "#000000",
+  "teamTextColor": "#444444",
   "teamLinkColor": "#27AAE1",
   "teamHoverColor": "#ffffff",
   "teamIconColor": "#000000",
@@ -88,7 +88,7 @@
 
   "pageBannerTextColor": "#ffffff",
   "pageBannerTitleColor": "#ffffff",
-  "pageBannerSubTitleColor": "#DDFF86",
+  "pageBannerSubTitleColor": "#ffffff",
 
   "footerBgColor": "#e6e6e6",
   "footerTextColor": "#222222",
