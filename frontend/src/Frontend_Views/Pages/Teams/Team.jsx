@@ -410,9 +410,6 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
                 }}
               />
 
-              {/* {item.team_member_phone_number ||
-                (item.team_member_email && <hr />)} */}
-
               {item.team_member_email && (
                 <div className="fs-6">
                   <a href={`mailto:${item.team_member_email}`}>

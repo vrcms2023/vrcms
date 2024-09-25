@@ -59,7 +59,6 @@ const Services = () => {
   }, []);
 
   useEffect(() => {
-    removeActiveClass();
     const id = document.getElementById("ServicesnavbarDropdown");
     if (id) {
       id.classList.add("active");
@@ -75,6 +74,10 @@ const Services = () => {
       services_page_title: pageLoadServiceName,
     });
   }, [uid, pageLoadServiceID]);
+
+  useEffect(() => {
+    removeActiveClass();
+  }, []);
 
   useEffect(() => {
     if (selectedServiceProject?.id) {

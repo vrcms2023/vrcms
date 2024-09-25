@@ -379,15 +379,15 @@ const FileUpload = ({
                     width: "100%",
                     height: "74px",
                     objectFit: "cover",
-                    objectPosition: 'center',
-                    borderRadius: "6px"
+                    objectPosition: "center",
+                    borderRadius: "6px",
                   }}
                 />
               </div>
             )}
             {dimensions && (
               <div className="col-12">
-                <small className="" style={{fontSize: ".75rem"}}>
+                <small className="" style={{ fontSize: ".75rem" }}>
                   Min. Width - {dimensions.w} & Height - {dimensions.h} will be
                   the good for resolution.{" "}
                 </small>

@@ -175,19 +175,25 @@ function App() {
           <Suspense fallback={<SkeletonPage />}>
             <Routes>
               <Route element={<ProtectedRoute />}>
-                <Route path="/change_password" element={<ChangePassword />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/contactUSList" element={<ContactUSAdmin />} />
+                <Route
+                  path="/admin/change_password"
+                  element={<ChangePassword />}
+                />
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route
+                  path="/admin/contactUSList"
+                  element={<ContactUSAdmin />}
+                />
               </Route>
 
               <Route element={<AdminProtectedRoute />}>
-                <Route path="/userAdmin" element={<UserAdmin />} />
+                <Route path="/admin/userAdmin" element={<UserAdmin />} />
                 <Route
-                  path="/userPermission"
+                  path="/admin/userPermission"
                   element={<UserPagePermission />}
                 />
                 <Route
-                  path="/adminPagesConfigurtion"
+                  path="/admin/adminPagesConfigurtion"
                   element={<PagesConfiguration />}
                 />
               </Route>
@@ -203,33 +209,45 @@ function App() {
               <Route exact path="/products/:id/" element={<ProductDetails />} />
               <Route exact path="/services" element={<Services />} />
               <Route exact path="/services/:uid/" element={<Services />} />
-              <Route exact path="/clients" element={<ClientsList />} />
-              <Route exact path="/careers" element={<Careers />} />
+              <Route exact path="/clients/clients" element={<ClientsList />} />
+              <Route exact path="/profile/careers" element={<Careers />} />
               <Route
                 exact
-                path="/career-details/:id/"
+                path="/profile/career-details/:id/"
                 element={<CareerDetails />}
               />
-              <Route exact path="/team" element={<Team />} />
-              <Route exact path="/projects" element={<Projects />} />
+              <Route exact path="/profile/team" element={<Team />} />
+              <Route exact path="/projects/projects" element={<Projects />} />
               <Route exact path="/project-details" element={<ProjectTabs />} />
               <Route
                 exact
-                path="/projectgallery"
+                path="/projects/projectgallery"
                 element={<ProjectsGallery />}
               />
-              <Route exact path="/imagegallery" element={<ImagesGallery />} />
-              <Route exact path="/videogallery" element={<VideosGallery />} />
-              <Route exact path="/casestudies" element={<CaseStudies />} />
               <Route
                 exact
-                path="/casestudies-details/:id/"
+                path="/gallery/imagegallery"
+                element={<ImagesGallery />}
+              />
+              <Route
+                exact
+                path="/gallery/videogallery"
+                element={<VideosGallery />}
+              />
+              <Route
+                exact
+                path="/clients/casestudies"
+                element={<CaseStudies />}
+              />
+              <Route
+                exact
+                path="/clients/casestudies-details/:id/"
                 element={<CaseStudiesDetails />}
               />
-              <Route exact path="/news" element={<NewsAndUpdates />} />
+              <Route exact path="/profile/news" element={<NewsAndUpdates />} />
               <Route
                 exact
-                path="/testimonials"
+                path="/profile/testimonials"
                 element={<TestimonialsList />}
               />
               <Route exact path="/login" element={<Login />} />
