@@ -180,11 +180,6 @@ const Team = () => {
           dimensions={imageDimensionsJson("banner")}
         />
       </div>
-      {/* {componentEdit.banner ? (
-       
-      ) : (
-        ""
-      )} */}
 
       {/* Brief Introduction */}
       {isAdmin && hasPermission && (
@@ -202,10 +197,10 @@ const Team = () => {
         linkLabel="Read More"
         moreLink=""
         showLink={false}
-        introTitleCss="fs-3 fw-medium text-md-center"
+        introTitleCss="fs-4 fw-medium text-md-center"
         introSubTitleCss="fw-medium text-muted text-md-center"
-        introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-        detailsContainerCss="col-md-10 offset-md-1"
+        introDecTitleCss="fs-6 fw-normal px-md-5 m-auto text-md-center"
+        detailsContainerCss="col-md-12"
         anchorContainer="d-flex justify-content-start align-items-start mt-4"
         anchersvgColor="#17427C"
         pageType={pageType}
@@ -228,10 +223,10 @@ const Team = () => {
       )} */}
 
       <div className="container">
-        <div className="row">
-          <div className="col-md-12 mt-4">
-            {isAdmin && hasPermission && (
-              <div className="text-end mb-4">
+        {isAdmin && hasPermission && (
+          <div className="row">
+            <div className="col-md-12">
+              <div className="text-end">
                 <Link
                   to="#"
                   className="btn btn-primary"
@@ -241,16 +236,16 @@ const Team = () => {
                   <i className="fa fa-plus ms-2" aria-hidden="true"></i>
                 </Link>
               </div>
-            )}
+            </div>
           </div>
-        </div>
+        )}
 
-        <div className="row mb-0 mb-md-4 py-2 py-md-4">
-          <div className="col-md-6 fs-3 mt-4 mt-md-0">
-            <Title title="Our Team" cssClass="fs-1 pageTitle" />
+        <div className="row mb-0 py-2">
+          <div className="col-md-8 fs-3 mt-4 mt-md-0">
+            {/* <Title title="Team" cssClass="pageTitle fs-5" /> */}
           </div>
 
-          <div className="col-md-6 mb-4">
+          <div className="col-md-4 mb-4">
             <Search
               setObject={setResponseData}
               clientSearchURL={"/ourteam/OurteamSearchAPIView/"}
@@ -397,15 +392,15 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
             )}
             <img src={getImagePath(item.path)} alt="" className="w-100" />
 
-            <div className="my-3 text-start p-2 memberDetails">
+            <div className="my-1 text-start p-2 memberDetails">
               {item.team_member_designation && (
-                <small className="mb-1 fw-bold">
+                <small className="mb-0 fw-normal">
                   {item.team_member_designation}
                 </small>
               )}
 
               {item.team_member_name && (
-                <Title title={item.team_member_name} cssClass="fs-4 title " />
+                <Title title={item.team_member_name} cssClass="title" />
               )}
 
               <div
@@ -416,22 +411,17 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
               />
 
               {item.team_member_email && (
-                <div className="mb-2">
+                <div className="fs-6">
                   <a href={`mailto:${item.team_member_email}`}>
                     {item.team_member_email}
                   </a>
                 </div>
               )}
               {item.team_member_phone_number && (
-                <p>{item.team_member_phone_number}</p>
-              )}
-              {item.team_member_phone_number || item.team_member_email ? (
-                <hr />
-              ) : (
-                ""
+                <p className="fs-6">{item.team_member_phone_number}</p>
               )}
 
-              <div className="social">
+              <div className="social pt-2">
                 {item.facebook_url && (
                   <Link to={item.facebook_url} target="_blank">
                     <i className="fa fa-facebook-square" aria-hidden="true"></i>
