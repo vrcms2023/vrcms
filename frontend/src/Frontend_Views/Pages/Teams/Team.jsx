@@ -180,7 +180,7 @@ const Team = () => {
           dimensions={imageDimensionsJson("banner")}
         />
       </div>
-   
+
       {/* Brief Introduction */}
       {isAdmin && hasPermission && (
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
@@ -223,9 +223,9 @@ const Team = () => {
       )} */}
 
       <div className="container">
-      {isAdmin && hasPermission && (
-        <div className="row">
-          <div className="col-md-12">
+        {isAdmin && hasPermission && (
+          <div className="row">
+            <div className="col-md-12">
               <div className="text-end">
                 <Link
                   to="#"
@@ -236,8 +236,8 @@ const Team = () => {
                   <i className="fa fa-plus ms-2" aria-hidden="true"></i>
                 </Link>
               </div>
+            </div>
           </div>
-        </div>
         )}
 
         <div className="row mb-0 py-2">
@@ -420,8 +420,7 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
               {item.team_member_phone_number && (
                 <p className="fs-6">{item.team_member_phone_number}</p>
               )}
-             
-              
+
               <div className="social pt-2">
                 {item.facebook_url && (
                   <Link to={item.facebook_url} target="_blank">
