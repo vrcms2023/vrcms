@@ -44,7 +44,7 @@ showLink }) => {
     <div className="container">
       
         <BriefIntroStyled>
-        <div className="row">
+        <div className="row ">
             <div className={`${detailsContainerCss} briefIntro`}>
               {introValue?.intro_title === "" ? (
                 ""
