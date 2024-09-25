@@ -56,8 +56,8 @@ const Banner = ({
             ""
           ) : (
             <Title title={bannerdata.banner_title} 
-            // cssClass={bannerTitleCss} 
-              cssClass=""
+            cssClass={bannerTitleCss} 
+              // cssClass=""
               mainTitleClassess="fs-1 fw-bold text-white "
               subTitleClassess=""
             />
@@ -67,9 +67,8 @@ const Banner = ({
           ) : (
             <Title
               title={bannerdata.banner_subTitle}
-              cssClass=""
+              cssClass={bannerSubTitleCss} 
               mainTitleClassess="fs-6 mb-2 fw-medium text-white "
-              subTitleClassess=""
             />
           )}
           {bannerdata.banner_descripiton === "" ? (

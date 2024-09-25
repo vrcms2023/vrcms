@@ -2,14 +2,18 @@ import styled from "styled-components";
 
 export const BriefIntroStyled = styled.div`
     background-color: ${({ theme }) => theme.transparent};
-    padding: 50px 0;
+    padding: 40px 0;
+
+    @media(max-width: 768px) {
+      padding-bottom: 0;
+    }
 
   p {
     color: ${({ theme }) => theme.textColor};
   }
 
   .briefIntro {
-    margin: 88px 0 0px;
+    // margin: 40px 0 0px;
 
     @media(max-width: 768px) {
       margin: 0px;

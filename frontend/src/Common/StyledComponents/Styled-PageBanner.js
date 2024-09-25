@@ -5,7 +5,7 @@ export const PageBannerStyled = styled.div`
     img {
       object-fit: cover;
       // object-position: center;
-      height: 350px;
+      height: 240px;
     }
     .titleCaption {
       position: absolute;
