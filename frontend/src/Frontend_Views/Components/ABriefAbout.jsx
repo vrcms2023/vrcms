@@ -105,27 +105,20 @@ const ABriefAbout = ({
           ""
         )}
       </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.whoweare ? "selected" : "dismiss"} `}
-      >
-        <ImageInputsForm
-          editHandler={editHandler}
-          componentType="whoweare"
-          pageType={pageType}
-          popupTitle="Who We Are Banner"
-          imageLabel="Banner Image"
-          showDescription={false}
-          dimensions={dimensions}
-          showExtraFormFields={getFormDynamicFields(pageType)}
-        />
-      </div>
-
-      {/* {componentEdit.whoweare ? (
-          
-      ) : (
-        ""
-      )} */}
+      {componentEdit.whoweare && (
+        <div className={`adminEditTestmonial selected`}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="whoweare"
+            pageType={pageType}
+            popupTitle="Who We Are Banner"
+            imageLabel="Banner Image"
+            showDescription={false}
+            dimensions={dimensions}
+            showExtraFormFields={getFormDynamicFields(pageType)}
+          />
+        </div>
+      )}
 
       {show && <ModelBg />}
     </>

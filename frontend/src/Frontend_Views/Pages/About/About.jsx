@@ -131,25 +131,20 @@ const About = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-      <div
-        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-      >
-        <ImageInputsForm
-          editHandler={editHandler}
-          componentType="banner"
-          popupTitle="About Banner"
-          pageType={`${pageType}-banner`}
-          imageLabel="Banner Image"
-          showDescription={false}
-          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-          dimensions={imageDimensionsJson("banner")}
-        />
-      </div>
-      {/* {componentEdit.banner ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.banner && (
+        <div className={`adminEditTestmonial selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="banner"
+            popupTitle="About Banner"
+            pageType={`${pageType}-banner`}
+            imageLabel="Banner Image"
+            showDescription={false}
+            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+            dimensions={imageDimensionsJson("banner")}
+          />
+        </div>
+      )}
 
       {/* Brief Introduction */}
       {isAdmin && hasPermission && (
@@ -169,23 +164,16 @@ const About = () => {
         anchersvgColor="#17427C"
         pageType={pageType}
       />
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
-      >
-        <AdminBriefIntro
-          editHandler={editHandler}
-          componentType="briefIntro"
-          popupTitle="About Brief Intro"
-          pageType={pageType}
-        />
-      </div>
-
-      {/* {componentEdit.briefIntro ? (
-       
-      ) : (
-        ""
-      )} */}
+      {componentEdit.briefIntro && (
+        <div className={`adminEditTestmonial selected `}>
+          <AdminBriefIntro
+            editHandler={editHandler}
+            componentType="briefIntro"
+            popupTitle="About Brief Intro"
+            pageType={pageType}
+          />
+        </div>
+      )}
 
       <AboutPageStyled>
         <div className="container-fluid container-lg my-md-5 ">
@@ -206,34 +194,28 @@ const About = () => {
               </div>
             )}
           </div>
-
-          <div
-            className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss"} `}
-          >
-            <AddEditAdminNews
-              editHandler={editHandler}
-              category="about"
-              editCarousel={editCarousel}
-              setEditCarousel={setEditCarousel}
-              componentType={`${
-                componentEdit.editSection ? "editSection" : "addSection"
-              }`}
-              imageGetURL="aboutus/clientAboutus/"
-              imagePostURL="aboutus/createAboutus/"
-              imageUpdateURL="aboutus/updateAboutus/"
-              imageDeleteURL="aboutus/updateAboutus/"
-              imageLabel="Add About us Banner"
-              showDescription={false}
-              showExtraFormFields={getAboutUSSectionFields()}
-              dimensions={imageDimensionsJson("aboutus")}
-            />
-          </div>
-
-          {/* {componentEdit.editSection || componentEdit.addSection ? (
-            
-          ) : (
-            ""
-          )} */}
+          {componentEdit.editSection ||
+            (componentEdit.addSection && (
+              <div className={`adminEditTestmonial selected `}>
+                <AddEditAdminNews
+                  editHandler={editHandler}
+                  category="about"
+                  editCarousel={editCarousel}
+                  setEditCarousel={setEditCarousel}
+                  componentType={`${
+                    componentEdit.editSection ? "editSection" : "addSection"
+                  }`}
+                  imageGetURL="aboutus/clientAboutus/"
+                  imagePostURL="aboutus/createAboutus/"
+                  imageUpdateURL="aboutus/updateAboutus/"
+                  imageDeleteURL="aboutus/updateAboutus/"
+                  imageLabel="Add About us Banner"
+                  showDescription={false}
+                  showExtraFormFields={getAboutUSSectionFields()}
+                  dimensions={imageDimensionsJson("aboutus")}
+                />
+              </div>
+            ))}
 
           <div className="aboutPage">
             {aboutList.length > 0 ? (

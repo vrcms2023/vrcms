@@ -138,26 +138,20 @@ const ClientsList = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-      >
-        <ImageInputsForm
-          editHandler={editHandler}
-          componentType="banner"
-          popupTitle="Client List Banner"
-          pageType={`${pageType}-banner`}
-          imageLabel="Banner Image"
-          showDescription={false}
-          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-          dimensions={imageDimensionsJson("banner")}
-        />
-      </div>
-      {/* {componentEdit.banner ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.banner && (
+        <div className={`adminEditTestmonial selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="banner"
+            popupTitle="Client List Banner"
+            pageType={`${pageType}-banner`}
+            imageLabel="Banner Image"
+            showDescription={false}
+            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+            dimensions={imageDimensionsJson("banner")}
+          />
+        </div>
+      )}
 
       {/* Brief Introduction */}
       {isAdmin && hasPermission && (
@@ -171,22 +165,16 @@ const ClientsList = () => {
         introSubTitleCss="fw-medium text-muted text-md-center"
         introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
       />
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
-      >
-        <AdminBriefIntro
-          editHandler={editHandler}
-          popupTitle="Client list"
-          componentType="briefIntro"
-          pageType={pageType}
-        />
-      </div>
-      {/* {componentEdit.briefIntro ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.briefIntro && (
+        <div className={`adminEditTestmonial selected `}>
+          <AdminBriefIntro
+            editHandler={editHandler}
+            popupTitle="Client list"
+            componentType="briefIntro"
+            pageType={pageType}
+          />
+        </div>
+      )}
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
@@ -226,35 +214,30 @@ const ClientsList = () => {
             />
           </div>
         </div>
+        {componentEdit.editSection ||
+          (componentEdit.addSection && (
+            <div className={`adminEditTestmonial selected `}>
+              <AddEditAdminNews
+                editHandler={editHandler}
+                category="about"
+                editCarousel={editCarousel}
+                setEditCarousel={setEditCarousel}
+                componentType={`${
+                  componentEdit.editSection ? "editSection" : "addSection"
+                }`}
+                imageGetURL="client/createClientLogo/"
+                imagePostURL="client/createClientLogo/"
+                imageUpdateURL="client/updateClientLogo/"
+                imageDeleteURL="client/updateClientLogo/"
+                imageLabel="Add Client Logo"
+                showDescription={false}
+                showExtraFormFields={getClinetLogsFields()}
+                dimensions={imageDimensionsJson("aboutus")}
+                scrollEnable={false}
+              />
+            </div>
+          ))}
 
-        <div
-          className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss"} `}
-        >
-          <AddEditAdminNews
-            editHandler={editHandler}
-            category="about"
-            editCarousel={editCarousel}
-            setEditCarousel={setEditCarousel}
-            componentType={`${
-              componentEdit.editSection ? "editSection" : "addSection"
-            }`}
-            imageGetURL="client/createClientLogo/"
-            imagePostURL="client/createClientLogo/"
-            imageUpdateURL="client/updateClientLogo/"
-            imageDeleteURL="client/updateClientLogo/"
-            imageLabel="Add Client Logo"
-            showDescription={false}
-            showExtraFormFields={getClinetLogsFields()}
-            dimensions={imageDimensionsJson("aboutus")}
-            scrollEnable={false}
-          />
-        </div>
-
-        {/* {componentEdit.editSection || componentEdit.addSection ? (
-          
-        ) : (
-          ""
-        )} */}
         <br />
         {isAdmin && (
           <NoteComponent note="Use drag option to shuffle the Items" />

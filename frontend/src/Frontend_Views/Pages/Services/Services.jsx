@@ -176,29 +176,22 @@ const Services = () => {
           pageLoadServiceName={pageLoadServiceName}
         />
       </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-      >
-        <ImageInputsForm
-          editHandler={editHandler}
-          componentType="banner"
-          popupTitle={`Service ${pageLoadServiceName ? "-" + pageLoadServiceName : ""} Banner`}
-          pageType={`${pageType}-${pageLoadServiceName}-banner`}
-          imageLabel="Banner Image"
-          showDescription={false}
-          showExtraFormFields={getFormDynamicFields(
-            `${pageType}-${selectedServiceName}-banner`
-          )}
-          dimensions={imageDimensionsJson("banner")}
-        />
-      </div>
-
-      {/* {componentEdit.banner ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.banner && (
+        <div className={`adminEditTestmonial selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="banner"
+            popupTitle={`Service ${pageLoadServiceName ? "-" + pageLoadServiceName : ""} Banner`}
+            pageType={`${pageType}-${pageLoadServiceName}-banner`}
+            imageLabel="Banner Image"
+            showDescription={false}
+            showExtraFormFields={getFormDynamicFields(
+              `${pageType}-${selectedServiceName}-banner`
+            )}
+            dimensions={imageDimensionsJson("banner")}
+          />
+        </div>
+      )}
 
       {/* End Of Page Banner Component */}
 
@@ -214,24 +207,16 @@ const Services = () => {
           introSubTitleCss="fw-medium text-muted text-md-center"
           introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
         />
-
-        <div
-          className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
-        >
-          <AdminBriefIntro
-            editHandler={editHandler}
-            popupTitle="Service Details"
-            componentType="briefIntro"
-            pageType={pageType}
-          />
-        </div>
-
-        {/* {componentEdit.briefIntro ? (
-         
-        ) : (
-          ""
-        )} */}
-
+        {componentEdit.briefIntro && (
+          <div className={`adminEditTestmonial selected `}>
+            <AdminBriefIntro
+              editHandler={editHandler}
+              popupTitle="Service Details"
+              componentType="briefIntro"
+              pageType={pageType}
+            />
+          </div>
+        )}
         {/* End Of Introduction */}
 
         {/* Add Service Page */}
@@ -277,39 +262,35 @@ const Services = () => {
                   </button>
                 </div>
               )}
-
-              <div
-                className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss"} `}
-              >
-                <AddEditAdminNews
-                  editHandler={editHandler}
-                  category="services"
-                  editCarousel={editCarousel}
-                  setEditCarousel={setEditCarousel}
-                  componentType={`${
-                    componentEdit.editSection ? "editSection" : "addSection"
-                  }`}
-                  imageGetURL="services/createServiceFeatures/"
-                  imagePostURL="services/createServiceFeatures/"
-                  imageUpdateURL="services/updateFeatureService/"
-                  imageDeleteURL="services/updateFeatureService/"
-                  imageLabel="Add Service Banner"
-                  showDescription={false}
-                  showExtraFormFields={getServiceFormFields(
-                    selectedServiceProject ? selectedServiceProject?.id : "",
-                    selectedServiceProject
-                      ? selectedServiceProject?.services_page_title
-                      : ""
-                  )}
-                  dimensions={imageDimensionsJson("addService")}
-                />
-              </div>
-
-              {/* {componentEdit.editSection || componentEdit.addSection ? (
-                
-              ) : (
-                ""
-              )} */}
+              {componentEdit.editSection ||
+                (componentEdit.addSection && (
+                  <div className={`adminEditTestmonial selected`}>
+                    <AddEditAdminNews
+                      editHandler={editHandler}
+                      category="services"
+                      editCarousel={editCarousel}
+                      setEditCarousel={setEditCarousel}
+                      componentType={`${
+                        componentEdit.editSection ? "editSection" : "addSection"
+                      }`}
+                      imageGetURL="services/createServiceFeatures/"
+                      imagePostURL="services/createServiceFeatures/"
+                      imageUpdateURL="services/updateFeatureService/"
+                      imageDeleteURL="services/updateFeatureService/"
+                      imageLabel="Add Service Banner"
+                      showDescription={false}
+                      showExtraFormFields={getServiceFormFields(
+                        selectedServiceProject
+                          ? selectedServiceProject?.id
+                          : "",
+                        selectedServiceProject
+                          ? selectedServiceProject?.services_page_title
+                          : ""
+                      )}
+                      dimensions={imageDimensionsJson("addService")}
+                    />
+                  </div>
+                ))}
 
               <div className="row ">
                 <div className="col-12 col-md-8">

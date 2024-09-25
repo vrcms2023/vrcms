@@ -71,27 +71,24 @@ const VideosGallery = () => {
           {isAdmin && hasPermission && (
             <EditIcon editHandler={() => editHandler("gallery", true)} />
           )}
-
-          <div className={`adminEditTestmonial ${componentEdit.gallery  ? "selected" : "dismiss" } `}>
-            <AdminBanner
-              editHandler={editHandler}
-              componentType="gallery"
-              getImageListURL={`imgGallery/createImageVidoeGallery/${pageType}/`}
-              deleteImageURL="imgGallery/updateImageVidoeGallery/"
-              imagePostURL="imgGallery/createImageVidoeGallery/"
-              imageUpdateURL="imgGallery/updateImageVidoeGallery/"
-              imageIndexURL=""
-              imageLabel="Add Image"
-              showDescription={false}
-              showExtraFormFields={getImageGalleryFields("VideosGallery")}
-              dimensions={imageDimensionsJson("VideosGallery")}
-              validTypes={"video/quicktime,video/mp4,video/avi"}
-            />
-          </div>
-          {/* {componentEdit.gallery && (
-            
-              
-          )} */}
+          {componentEdit.gallery && (
+            <div className={`adminEditTestmonial selected `}>
+              <AdminBanner
+                editHandler={editHandler}
+                componentType="gallery"
+                getImageListURL={`imgGallery/createImageVidoeGallery/${pageType}/`}
+                deleteImageURL="imgGallery/updateImageVidoeGallery/"
+                imagePostURL="imgGallery/createImageVidoeGallery/"
+                imageUpdateURL="imgGallery/updateImageVidoeGallery/"
+                imageIndexURL=""
+                imageLabel="Add Image"
+                showDescription={false}
+                showExtraFormFields={getImageGalleryFields("VideosGallery")}
+                dimensions={imageDimensionsJson("VideosGallery")}
+                validTypes={"video/quicktime,video/mp4,video/avi"}
+              />
+            </div>
+          )}
         </div>
       </div>
 

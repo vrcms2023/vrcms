@@ -137,27 +137,20 @@ const CaseStudies = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-      >
-        <ImageInputsForm
-          editHandler={editHandler}
-          componentType="banner"
-          popupTitle="Case Studies Banner"
-          pageType={`${pageType}-banner`}
-          imageLabel="Banner Image"
-          showDescription={false}
-          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-          dimensions={imageDimensionsJson("banner")}
-        />
-      </div>
-      {/* {componentEdit.banner ? (
-        
-          
-      ) : (
-        ""
-      )} */}
+      {componentEdit.banner && (
+        <div className={`adminEditTestmonial selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="banner"
+            popupTitle="Case Studies Banner"
+            pageType={`${pageType}-banner`}
+            imageLabel="Banner Image"
+            showDescription={false}
+            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+            dimensions={imageDimensionsJson("banner")}
+          />
+        </div>
+      )}
 
       {/* Brief Introduction */}
       {isAdmin && hasPermission && (
@@ -171,23 +164,16 @@ const CaseStudies = () => {
         introSubTitleCss="fw-medium text-muted text-md-center"
         introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
       />
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
-      >
-        <AdminBriefIntro
-          editHandler={editHandler}
-          popupTitle="Case Studies"
-          componentType="briefIntro"
-          pageType={pageType}
-        />
-      </div>
-
-      {/* {componentEdit.briefIntro ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.briefIntro && (
+        <div className={`adminEditTestmonial selected `}>
+          <AdminBriefIntro
+            editHandler={editHandler}
+            popupTitle="Case Studies"
+            componentType="briefIntro"
+            pageType={pageType}
+          />
+        </div>
+      )}
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
@@ -229,33 +215,28 @@ const CaseStudies = () => {
             />
           </div>
         </div>
-
-        <div
-          className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss"} `}
-        >
-          <AddEditAdminNews
-            editHandler={editHandler}
-            category="about"
-            editCarousel={editCarousel}
-            setEditCarousel={setEditCarousel}
-            componentType={`${
-              componentEdit.editSection ? "editSection" : "addSection"
-            }`}
-            imageGetURL="caseStudies/createCaseStudies/"
-            imagePostURL="caseStudies/createCaseStudies/"
-            imageUpdateURL="caseStudies/updateCaseStudies/"
-            imageDeleteURL="caseStudies/updateCaseStudies/"
-            imageLabel="Image"
-            showDescription={false}
-            showExtraFormFields={getCaseStudiesFields()}
-            dimensions={imageDimensionsJson("aboutus")}
-          />
-        </div>
-        {/* {componentEdit.editSection || componentEdit.addSection ? (
-          
-        ) : (
-          ""
-        )} */}
+        {componentEdit.editSection ||
+          (componentEdit.addSection && (
+            <div className={`adminEditTestmonial selected `}>
+              <AddEditAdminNews
+                editHandler={editHandler}
+                category="about"
+                editCarousel={editCarousel}
+                setEditCarousel={setEditCarousel}
+                componentType={`${
+                  componentEdit.editSection ? "editSection" : "addSection"
+                }`}
+                imageGetURL="caseStudies/createCaseStudies/"
+                imagePostURL="caseStudies/createCaseStudies/"
+                imageUpdateURL="caseStudies/updateCaseStudies/"
+                imageDeleteURL="caseStudies/updateCaseStudies/"
+                imageLabel="Image"
+                showDescription={false}
+                showExtraFormFields={getCaseStudiesFields()}
+                dimensions={imageDimensionsJson("aboutus")}
+              />
+            </div>
+          ))}
 
         <CaseStudiesPageStyled>
           <div className="caseStudie my-5">

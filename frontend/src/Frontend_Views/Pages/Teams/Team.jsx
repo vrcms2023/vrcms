@@ -165,21 +165,20 @@ const Team = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-      >
-        <ImageInputsForm
-          editHandler={editHandler}
-          componentType="banner"
-          popupTitle="Team Banner"
-          pageType={`${pageType}-banner`}
-          imageLabel="Banner Image"
-          showDescription={false}
-          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-          dimensions={imageDimensionsJson("banner")}
-        />
-      </div>
+      {componentEdit.banner && (
+        <div className={`adminEditTestmonial selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="banner"
+            popupTitle="Team Banner"
+            pageType={`${pageType}-banner`}
+            imageLabel="Banner Image"
+            showDescription={false}
+            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+            dimensions={imageDimensionsJson("banner")}
+          />
+        </div>
+      )}
 
       {/* Brief Introduction */}
       {isAdmin && hasPermission && (
@@ -205,22 +204,16 @@ const Team = () => {
         anchersvgColor="#17427C"
         pageType={pageType}
       />
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
-      >
-        <AdminBriefIntro
-          editHandler={editHandler}
-          popupTitle="Team Details"
-          componentType="briefIntro"
-          pageType={pageType}
-        />
-      </div>
-      {/* {componentEdit.briefIntro ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.briefIntro && (
+        <div className={`adminEditTestmonial selected `}>
+          <AdminBriefIntro
+            editHandler={editHandler}
+            popupTitle="Team Details"
+            componentType="briefIntro"
+            pageType={pageType}
+          />
+        </div>
+      )}
 
       <div className="container">
         {isAdmin && hasPermission && (
@@ -258,34 +251,30 @@ const Team = () => {
             />
           </div>
         </div>
-        <div
-          className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss"} `}
-        >
-          <AddEditTeam
-            editHandler={editHandler}
-            category="team"
-            editCarousel={editCarousel}
-            setEditCarousel={setEditCarousel}
-            componentType={`${
-              componentEdit.editSection ? "editSection" : "addSection"
-            }`}
-            getImageListURL="ourteam/createteam/"
-            deleteImageURL="ourteam/UpdateOurteamDetail/"
-            imagePostURL="ourteam/createteam/"
-            imageUpdateURL="ourteam/UpdateOurteamDetail/"
-            imageLabel="Add Profile Image"
-            showDescription={false}
-            showExtraFormFields={getTeamMemberFields(
-              editCarousel?.team_member_position
-            )}
-            dimensions={imageDimensionsJson("teams")}
-          />
-        </div>
-        {/* {componentEdit.editSection || componentEdit.addSection ? (
-   
-        ) : (
-          ""
-        )} */}
+        {componentEdit.editSection ||
+          (componentEdit.addSection && (
+            <div className={`adminEditTestmonial selected `}>
+              <AddEditTeam
+                editHandler={editHandler}
+                category="team"
+                editCarousel={editCarousel}
+                setEditCarousel={setEditCarousel}
+                componentType={`${
+                  componentEdit.editSection ? "editSection" : "addSection"
+                }`}
+                getImageListURL="ourteam/createteam/"
+                deleteImageURL="ourteam/UpdateOurteamDetail/"
+                imagePostURL="ourteam/createteam/"
+                imageUpdateURL="ourteam/UpdateOurteamDetail/"
+                imageLabel="Add Profile Image"
+                showDescription={false}
+                showExtraFormFields={getTeamMemberFields(
+                  editCarousel?.team_member_position
+                )}
+                dimensions={imageDimensionsJson("teams")}
+              />
+            </div>
+          ))}
 
         <TeamStyled>
           <div className={`${isAdmin ? "" : "teamFrontend"}`}>

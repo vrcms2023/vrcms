@@ -145,26 +145,20 @@ const Contact = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-      >
-        <ImageInputsForm
-          editHandler={editHandler}
-          componentType="banner"
-          popupTitle="Contact  Banner"
-          pageType={`${pageType}-banner`}
-          imageLabel="Banner Image"
-          showDescription={false}
-          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-          dimensions={imageDimensionsJson("banner")}
-        />
-      </div>
-      {/* {componentEdit.banner ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.banner && (
+        <div className={`adminEditTestmonial selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="banner"
+            popupTitle="Contact  Banner"
+            pageType={`${pageType}-banner`}
+            imageLabel="Banner Image"
+            showDescription={false}
+            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+            dimensions={imageDimensionsJson("banner")}
+          />
+        </div>
+      )}
 
       {/* Introduction */}
       {/* {isAdmin && hasPermission && (
@@ -178,19 +172,15 @@ const Contact = () => {
         introSubTitleCss = "fw-medium text-muted text-md-center"
         introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
       />
-
-        <div className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss" } `}>
+{componentEdit.briefIntro && (
+        <div className={`adminEditTestmonial selected `}>
           <AdminBriefIntro
             editHandler={editHandler}
             componentType="briefIntro"
             pageType={pageType}
           />
-        </div> */}
-      {/* {componentEdit.briefIntro ? (
-        
-      ) : (
-        ""
-      )} */}
+        </div> )}
+        */}
 
       <div className="container-fluid">
         <div className="row">
@@ -198,22 +188,17 @@ const Contact = () => {
             {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("address", true)} />
             )}
+            {componentEdit.address && (
+              <div className={`adminEditTestmonial selected `}>
+                <AddressForm
+                  editHandler={editHandler}
+                  popupTitle="Address Details"
+                  componentType="address"
+                  address={addressList}
+                />
+              </div>
+            )}
 
-            <div
-              className={`adminEditTestmonial ${componentEdit.address ? "selected" : "dismiss"} `}
-            >
-              <AddressForm
-                editHandler={editHandler}
-                popupTitle="Address Details"
-                componentType="address"
-                address={addressList}
-              />
-            </div>
-            {/* {componentEdit.address ? (
-              
-            ) : (
-              ""
-            )} */}
             <div className="container">
               <div className="row">
                 <>
@@ -357,21 +342,15 @@ const Contact = () => {
           </div>
         </div>
       </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.map ? "selected" : "dismiss"} `}
-      >
-        <GoogleMap
-          mapValues={mapValues}
-          editHandler={editHandler}
-          componentType="map"
-        />
-      </div>
-      {/* {componentEdit.map ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.map && (
+        <div className={`adminEditTestmonial selected `}>
+          <GoogleMap
+            mapValues={mapValues}
+            editHandler={editHandler}
+            componentType="map"
+          />
+        </div>
+      )}
 
       {show && <ModelBg />}
     </ContactPageStyled>

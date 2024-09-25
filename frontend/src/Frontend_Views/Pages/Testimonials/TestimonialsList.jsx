@@ -151,26 +151,20 @@ const TestimonialsList = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-      >
-        <ImageInputsForm
-          editHandler={editHandler}
-          componentType="banner"
-          popupTitle={`Testimonial Banner`}
-          pageType={`${pageType}-banner`}
-          imageLabel="Banner Image"
-          showDescription={false}
-          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-          dimensions={imageDimensionsJson("banner")}
-        />
-      </div>
-      {/* {componentEdit.banner ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.banner && (
+        <div className={`adminEditTestmonial selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="banner"
+            popupTitle={`Testimonial Banner`}
+            pageType={`${pageType}-banner`}
+            imageLabel="Banner Image"
+            showDescription={false}
+            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+            dimensions={imageDimensionsJson("banner")}
+          />
+        </div>
+      )}
 
       {/* Brief Introduction */}
       {/* {isAdmin && hasPermission && (
@@ -241,34 +235,29 @@ const TestimonialsList = () => {
             />
           </div>
         </div>
-
-        <div
-          className={`adminEditTestmonial ${componentEdit.editSection || componentEdit.addSection ? "selected" : "dismiss"} `}
-        >
-          <AddEditAdminNews
-            editHandler={editHandler}
-            category="about"
-            popupTitle={`Testimonial Banner`}
-            editCarousel={editCarousel}
-            setEditCarousel={setEditCarousel}
-            componentType={`${
-              componentEdit.editSection ? "editSection" : "addSection"
-            }`}
-            getImageListURL="testimonials/clientTestimonials/"
-            deleteImageURL="testimonials/updateTestimonials/"
-            imagePostURL="testimonials/createTestimonials/"
-            imageUpdateURL="testimonials/updateTestimonials/"
-            imageLabel="Add Testimonial Image"
-            showDescription={false}
-            showExtraFormFields={getTestimonialsFields("testmonial")}
-            dimensions={imageDimensionsJson("testimonial")}
-          />
-        </div>
-        {/* {componentEdit.editSection || componentEdit.addSection ? (
-         
-        ) : (
-          ""
-        )} */}
+        {componentEdit.editSection ||
+          (componentEdit.addSection && (
+            <div className={`adminEditTestmonial selected `}>
+              <AddEditAdminNews
+                editHandler={editHandler}
+                category="about"
+                popupTitle={`Testimonial Banner`}
+                editCarousel={editCarousel}
+                setEditCarousel={setEditCarousel}
+                componentType={`${
+                  componentEdit.editSection ? "editSection" : "addSection"
+                }`}
+                getImageListURL="testimonials/clientTestimonials/"
+                deleteImageURL="testimonials/updateTestimonials/"
+                imagePostURL="testimonials/createTestimonials/"
+                imageUpdateURL="testimonials/updateTestimonials/"
+                imageLabel="Add Testimonial Image"
+                showDescription={false}
+                showExtraFormFields={getTestimonialsFields("testmonial")}
+                dimensions={imageDimensionsJson("testimonial")}
+              />
+            </div>
+          ))}
 
         <TestimonialsListPageStyled>
           <div className="testimonialsPage my-5">

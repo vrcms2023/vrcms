@@ -71,26 +71,20 @@ const Projects = () => {
           getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
           bannerState={componentEdit.banner}
         />
-
-        <div
-          className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-        >
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle="Projects Banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Project Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
-        {/* {componentEdit.banner ? (
-          
-        ) : (
-          ""
-        )} */}
+        {componentEdit.banner && (
+          <div className={`adminEditTestmonial selected `}>
+            <ImageInputsForm
+              editHandler={editHandler}
+              componentType="banner"
+              popupTitle="Projects Banner"
+              pageType={`${pageType}-banner`}
+              imageLabel="Project Banner Image"
+              showDescription={false}
+              showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+              dimensions={imageDimensionsJson("banner")}
+            />
+          </div>
+        )}
       </div>
 
       {/* Introduction */}
@@ -130,22 +124,16 @@ const Projects = () => {
       ) : (
         ""
       )}
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.briefIntro ? "selected" : "dismiss"} `}
-      >
-        <AdminBriefIntro
-          editHandler={editHandler}
-          popupTitle="Project Details"
-          componentType="briefIntro"
-          pageType={pageType}
-        />
-      </div>
-      {/* {componentEdit.briefIntro ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.briefIntro && (
+        <div className={`adminEditTestmonial selected `}>
+          <AdminBriefIntro
+            editHandler={editHandler}
+            popupTitle="Project Details"
+            componentType="briefIntro"
+            pageType={pageType}
+          />
+        </div>
+      )}
 
       {show && <ModelBg />}
     </>

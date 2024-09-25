@@ -85,26 +85,20 @@ const Careers = () => {
           bannerState={componentEdit.banner}
         />
       </div>
-
-      <div
-        className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-      >
-        <ImageInputsForm
-          editHandler={editHandler}
-          componentType="banner"
-          popupTitle={`${pageType} Banner`}
-          pageType={`${pageType}-banner`}
-          imageLabel="Banner Image"
-          showDescription={false}
-          showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-          dimensions={imageDimensionsJson("banner")}
-        />
-      </div>
-      {/* {componentEdit.banner ? (
-        
-      ) : (
-        ""
-      )} */}
+      {componentEdit.banner && (
+        <div className={`adminEditTestmonial selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="banner"
+            popupTitle={`${pageType} Banner`}
+            pageType={`${pageType}-banner`}
+            imageLabel="Banner Image"
+            showDescription={false}
+            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+            dimensions={imageDimensionsJson("banner")}
+          />
+        </div>
+      )}
 
       {/* Introduction */}
       {/* {isAdmin && hasPermission && (
@@ -157,21 +151,16 @@ const Careers = () => {
             </Link>
           </div>
         )}
+        {componentEdit.addjob && (
+          <div className={`adminEditTestmonial selected `}>
+            <JobPostFrom
+              editHandler={editHandler}
+              componentType="addjob"
+              type="add"
+            />
+          </div>
+        )}
 
-        <div
-          className={`adminEditTestmonial ${componentEdit.addjob ? "selected" : "dismiss"} `}
-        >
-          <JobPostFrom
-            editHandler={editHandler}
-            componentType="addjob"
-            type="add"
-          />
-        </div>
-        {/* {componentEdit.addjob ? (
-          
-        ) : (
-          ""
-        )} */}
         <div>
           <CareersPageStyled>
             <div className="row mb-4 pb-4">

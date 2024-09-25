@@ -213,25 +213,22 @@ const ProductsPage = () => {
           </div>
         </div>
       )}
+      {componentEdit.category && (
+        <div className={`adminEditTestmonial selected `}>
+          <DynamicFormwithFileUplod
+            editHandler={editHandler}
+            componentTitle={"Crete New Category"}
+            componentType={"category"}
+            editObject={editCategoryState ? selectedCategory : ""}
+            setEditState={setEditCategoryState}
+            setSaveState={setSelectedCategory}
+            dynamicFormFields={getCategoryFormDynamicFields()}
+            formPostURL={"/products/createCategory/"}
+            formUpdateURL={"/products/updateCategory/"}
+          />
+        </div>
+      )}
 
-      <div
-        className={`adminEditTestmonial ${componentEdit.category ? "selected" : "dismiss"} `}
-      >
-        <DynamicFormwithFileUplod
-          editHandler={editHandler}
-          componentTitle={"Crete New Category"}
-          componentType={"category"}
-          editObject={editCategoryState ? selectedCategory : ""}
-          setEditState={setEditCategoryState}
-          setSaveState={setSelectedCategory}
-          dynamicFormFields={getCategoryFormDynamicFields()}
-          formPostURL={"/products/createCategory/"}
-          formUpdateURL={"/products/updateCategory/"}
-        />
-      </div>
-      {/* {componentEdit.category && (
-       
-      )} */}
       {selectedCategory?.id && (
         <>
           {/* Page Banner Component */}
@@ -246,25 +243,22 @@ const ProductsPage = () => {
               bannerContainerCss="titleCaption d-flex align-items-end justify-content-center flex-column"
             />
           </div>
-          <div
-            className={`adminEditTestmonial ${componentEdit.banner ? "selected" : "dismiss"} `}
-          >
-            <ImageInputsForm
-              editHandler={editHandler}
-              componentType="banner"
-              popupTitle="Products Banner"
-              pageType={`${pageType}-banner`}
-              imageLabel="Category Banner Image"
-              showDescription={false}
-              showExtraFormFields={getProductCategoryBannerFormFields(
-                `${pageType}-banner`
-              )}
-              dimensions={imageDimensionsJson("banner")}
-            />
-          </div>
-          {/* {componentEdit.banner && (
-            
-          )} */}
+          {componentEdit.banner && (
+            <div className={`adminEditTestmonial selected `}>
+              <ImageInputsForm
+                editHandler={editHandler}
+                componentType="banner"
+                popupTitle="Products Banner"
+                pageType={`${pageType}-banner`}
+                imageLabel="Category Banner Image"
+                showDescription={false}
+                showExtraFormFields={getProductCategoryBannerFormFields(
+                  `${pageType}-banner`
+                )}
+                dimensions={imageDimensionsJson("banner")}
+              />
+            </div>
+          )}
         </>
       )}
 
@@ -353,30 +347,27 @@ const ProductsPage = () => {
             />
           )}
         </div>
-
-        <div
-          className={`adminEditTestmonial ${componentEdit.product ? "selected" : "dismiss"} `}
-        >
-          <SingleImageUlploadWithForm
-            editHandler={editHandler}
-            componentType="product"
-            componentTitle={compTtile}
-            selectedItem={selectedProduct}
-            setSelectedItemState={setSelectedProduct}
-            imageGetURL={`/products/createProduct/${selectedCategory.id}/`}
-            imagePostURL="/products/createProduct/"
-            imageUpdateURL="/products/updateProduct/"
-            imageDeleteURL="/products/updateProduct/"
-            imageLabel="Product Image"
-            showDescription={false}
-            showExtraFormFields={getProductFormDynamicFields(selectedCategory)}
-            dimensions={imageDimensionsJson("product")}
-          />
-        </div>
-
-        {/* {componentEdit.product && (
-          
-        )} */}
+        {componentEdit.product && (
+          <div className={`adminEditTestmonial selected `}>
+            <SingleImageUlploadWithForm
+              editHandler={editHandler}
+              componentType="product"
+              componentTitle={compTtile}
+              selectedItem={selectedProduct}
+              setSelectedItemState={setSelectedProduct}
+              imageGetURL={`/products/createProduct/${selectedCategory.id}/`}
+              imagePostURL="/products/createProduct/"
+              imageUpdateURL="/products/updateProduct/"
+              imageDeleteURL="/products/updateProduct/"
+              imageLabel="Product Image"
+              showDescription={false}
+              showExtraFormFields={getProductFormDynamicFields(
+                selectedCategory
+              )}
+              dimensions={imageDimensionsJson("product")}
+            />
+          </div>
+        )}
 
         <div>
           {paginationData?.total_count ? (
