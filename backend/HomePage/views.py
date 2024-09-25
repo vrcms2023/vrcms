@@ -195,7 +195,7 @@ class HomeIntroUpdateAndDeleteView(APIView):
         return Response({"intro": serializer.data}, status=status.HTTP_200_OK)
 
     def put(self, request, pk, format=None):
-        snippet = self.get_object_pk(pk)
+        snippet = self.get_object(pk)
         user = request.user
         request.data.update({"updated_by": user.userName})
         serializer = HomeIntroSerializer(snippet, data=request.data)

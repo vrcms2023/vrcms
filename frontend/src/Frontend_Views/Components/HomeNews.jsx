@@ -224,6 +224,7 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
             editCarousel={editNews}
             setEditCarousel={setEditNews}
             componentType="news"
+            popupTitle="News"
             imageGetURL="appNews/createAppNews/"
             imagePostURL="appNews/createAppNews/"
             imageUpdateURL="appNews/updateAppNews/"

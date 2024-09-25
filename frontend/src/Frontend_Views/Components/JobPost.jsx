@@ -315,6 +315,7 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
           <JobPostFrom
             editHandler={editHandler}
             componentType="job"
+            popupTitle="Career"
             editPost={editPost}
           />
         </div>

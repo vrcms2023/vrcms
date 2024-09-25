@@ -52,13 +52,14 @@ const ClientsList = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const setResponseData = (data) => {
-    setClientsList(
-      data.results.length > 0
-        ? sortByFieldName(data.results, "client_position")
-        : []
-    );
-    setPaginationData(paginationDataFormat(data));
-    setCurrentPage(1);
+    if (data?.results?.length > 0) {
+      const _clientList = sortByFieldName(data.results, "client_position");
+      setClientsList(_clientList);
+      setPaginationData(paginationDataFormat(data));
+      setCurrentPage(1);
+    } else {
+      setClientsList(data.clientLogo);
+    }
   };
 
   useEffect(() => {
@@ -214,29 +215,31 @@ const ClientsList = () => {
             />
           </div>
         </div>
-        {componentEdit.editSection ||
-          (componentEdit.addSection && (
-            <div className={`adminEditTestmonial selected `}>
-              <AddEditAdminNews
-                editHandler={editHandler}
-                category="about"
-                editCarousel={editCarousel}
-                setEditCarousel={setEditCarousel}
-                componentType={`${
-                  componentEdit.editSection ? "editSection" : "addSection"
-                }`}
-                imageGetURL="client/createClientLogo/"
-                imagePostURL="client/createClientLogo/"
-                imageUpdateURL="client/updateClientLogo/"
-                imageDeleteURL="client/updateClientLogo/"
-                imageLabel="Add Client Logo"
-                showDescription={false}
-                showExtraFormFields={getClinetLogsFields()}
-                dimensions={imageDimensionsJson("aboutus")}
-                scrollEnable={false}
-              />
-            </div>
-          ))}
+        {componentEdit.editSection || componentEdit.addSection ? (
+          <div className={`adminEditTestmonial selected `}>
+            <AddEditAdminNews
+              editHandler={editHandler}
+              category="about"
+              popupTitle="Client"
+              editCarousel={editCarousel}
+              setEditCarousel={setEditCarousel}
+              componentType={`${
+                componentEdit.editSection ? "editSection" : "addSection"
+              }`}
+              imageGetURL="client/createClientLogo/"
+              imagePostURL="client/createClientLogo/"
+              imageUpdateURL="client/updateClientLogo/"
+              imageDeleteURL="client/updateClientLogo/"
+              imageLabel="Add Client Logo"
+              showDescription={false}
+              showExtraFormFields={getClinetLogsFields()}
+              dimensions={imageDimensionsJson("aboutus")}
+              scrollEnable={false}
+            />
+          </div>
+        ) : (
+          ""
+        )}
 
         <br />
         {isAdmin && (

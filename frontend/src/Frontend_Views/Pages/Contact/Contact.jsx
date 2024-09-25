@@ -348,6 +348,7 @@ const Contact = () => {
             mapValues={mapValues}
             editHandler={editHandler}
             componentType="map"
+            popupTitle="Google Map"
           />
         </div>
       )}

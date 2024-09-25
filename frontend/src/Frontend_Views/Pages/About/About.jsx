@@ -194,114 +194,113 @@ const About = () => {
               </div>
             )}
           </div>
-          {componentEdit.editSection ||
-            (componentEdit.addSection && (
-              <div className={`adminEditTestmonial selected `}>
-                <AddEditAdminNews
-                  editHandler={editHandler}
-                  category="about"
-                  editCarousel={editCarousel}
-                  setEditCarousel={setEditCarousel}
-                  componentType={`${
-                    componentEdit.editSection ? "editSection" : "addSection"
-                  }`}
-                  imageGetURL="aboutus/clientAboutus/"
-                  imagePostURL="aboutus/createAboutus/"
-                  imageUpdateURL="aboutus/updateAboutus/"
-                  imageDeleteURL="aboutus/updateAboutus/"
-                  imageLabel="Add About us Banner"
-                  showDescription={false}
-                  showExtraFormFields={getAboutUSSectionFields()}
-                  dimensions={imageDimensionsJson("aboutus")}
-                />
-              </div>
-            ))}
+          {componentEdit.editSection || componentEdit.addSection ? (
+            <div className={`adminEditTestmonial selected `}>
+              <AddEditAdminNews
+                editHandler={editHandler}
+                category="about"
+                popupTitle="About"
+                editCarousel={editCarousel}
+                setEditCarousel={setEditCarousel}
+                componentType={`${
+                  componentEdit.editSection ? "editSection" : "addSection"
+                }`}
+                imageGetURL="aboutus/clientAboutus/"
+                imagePostURL="aboutus/createAboutus/"
+                imageUpdateURL="aboutus/updateAboutus/"
+                imageDeleteURL="aboutus/updateAboutus/"
+                imageLabel="Add About us Banner"
+                showDescription={false}
+                showExtraFormFields={getAboutUSSectionFields()}
+                dimensions={imageDimensionsJson("aboutus")}
+              />
+            </div>
+          ) : (
+            ""
+          )}
 
           <div className="aboutPage">
             {aboutList.length > 0 ? (
               aboutList.map((item, index) => (
-                <>
-                  <div
-                    key={item.id}
-                    className={`row ${
-                      isAdmin
-                        ? "border border-warning mb-3 position-relative"
-                        : ""
-                    } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
-                  >
-                    {isAdmin && hasPermission && (
-                      <>
-                        <EditIcon
-                          editHandler={() =>
-                            editHandler("editSection", true, item)
-                          }
-                        />
-                        <Link
-                          className="deleteSection"
-                          onClick={() => deleteAboutSection(item)}
-                        >
-                          <i
-                            className="fa fa-trash-o text-danger fs-4"
-                            aria-hidden="true"
-                          ></i>
-                        </Link>
-                      </>
-                    )}
-                    <div className="col-12 col-lg-7 p-4 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column leftColumn">
-                      {item.aboutus_title ? (
-                        <Title
-                          title={item.aboutus_title}
-                          cssClass=""
-                          mainTitleClassess="fs-2 mb-2 fw-medium title"
-                          subTitleClassess=""
-                        />
-                      ) : (
-                        ""
-                      )}
-
-                      {item.aboutus_sub_title ? (
-                        <Title
-                          title={item.aboutus_sub_title}
-                          cssClass=""
-                          mainTitleClassess="fs-5 text-secondary mb-2"
-                          subTitleClassess=""
-                        />
-                      ) : (
-                        ""
-                      )}
-                      {/* <p>{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</p> */}
-                      {item.aboutus_sub_title ? (
-                        <Title
-                          title={item.aboutus_sub_title}
-                          cssClass=""
-                          mainTitleClassess="fs-5 text-secondary mb-2"
-                          subTitleClassess=""
-                        />
-                      ) : (
-                        ""
-                      )}
-
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: item.aboutus_description,
-                        }}
+                <div
+                  key={item.id}
+                  className={`row ${
+                    isAdmin
+                      ? "border border-warning mb-3 position-relative"
+                      : ""
+                  } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
+                >
+                  {isAdmin && hasPermission && (
+                    <>
+                      <EditIcon
+                        editHandler={() =>
+                          editHandler("editSection", true, item)
+                        }
                       />
-                    </div>
+                      <Link
+                        className="deleteSection"
+                        onClick={() => deleteAboutSection(item)}
+                      >
+                        <i
+                          className="fa fa-trash-o text-danger fs-4"
+                          aria-hidden="true"
+                        ></i>
+                      </Link>
+                    </>
+                  )}
+                  <div className="col-12 col-lg-7 p-4 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column leftColumn">
+                    {item.aboutus_title ? (
+                      <Title
+                        title={item.aboutus_title}
+                        cssClass=""
+                        mainTitleClassess="fs-2 mb-2 fw-medium title"
+                        subTitleClassess=""
+                      />
+                    ) : (
+                      ""
+                    )}
 
-                    <div className="col-lg-5 p-1 p-lg-5 pe-lg-0 d-flex justify-content-center align-items-start flex-column rightColumn">
-                      {/* <Title
+                    {item.aboutus_sub_title ? (
+                      <Title
+                        title={item.aboutus_sub_title}
+                        cssClass=""
+                        mainTitleClassess="fs-5 text-secondary mb-2"
+                        subTitleClassess=""
+                      />
+                    ) : (
+                      ""
+                    )}
+                    {/* <p>{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</p> */}
+                    {item.aboutus_sub_title ? (
+                      <Title
+                        title={item.aboutus_sub_title}
+                        cssClass=""
+                        mainTitleClassess="fs-5 text-secondary mb-2"
+                        subTitleClassess=""
+                      />
+                    ) : (
+                      ""
+                    )}
+
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: item.aboutus_description,
+                      }}
+                    />
+                  </div>
+
+                  <div className="col-lg-5 p-1 p-lg-5 pe-lg-0 d-flex justify-content-center align-items-start flex-column rightColumn">
+                    {/* <Title
                           title={"OUR WORK LOCATIONS"}
                           cssClass="fs-5 my-5 title"
                         /> */}
-                      <img
-                        src={getImagePath(item.path)}
-                        alt=""
-                        className="w-75 h-75 object-fit-cover shadow m-auto"
-                      />
-                    </div>
+                    <img
+                      src={getImagePath(item.path)}
+                      alt=""
+                      className="w-75 h-75 object-fit-cover shadow m-auto"
+                    />
                   </div>
-                  {/* <hr className="border-white" /> */}
-                </>
+                </div>
               ))
             ) : (
               <p className="text-center text-muted py-5">

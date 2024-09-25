@@ -235,29 +235,30 @@ const TestimonialsList = () => {
             />
           </div>
         </div>
-        {componentEdit.editSection ||
-          (componentEdit.addSection && (
-            <div className={`adminEditTestmonial selected `}>
-              <AddEditAdminNews
-                editHandler={editHandler}
-                category="about"
-                popupTitle={`Testimonial Banner`}
-                editCarousel={editCarousel}
-                setEditCarousel={setEditCarousel}
-                componentType={`${
-                  componentEdit.editSection ? "editSection" : "addSection"
-                }`}
-                getImageListURL="testimonials/clientTestimonials/"
-                deleteImageURL="testimonials/updateTestimonials/"
-                imagePostURL="testimonials/createTestimonials/"
-                imageUpdateURL="testimonials/updateTestimonials/"
-                imageLabel="Add Testimonial Image"
-                showDescription={false}
-                showExtraFormFields={getTestimonialsFields("testmonial")}
-                dimensions={imageDimensionsJson("testimonial")}
-              />
-            </div>
-          ))}
+        {componentEdit.editSection || componentEdit.addSection ? (
+          <div className={`adminEditTestmonial selected `}>
+            <AddEditAdminNews
+              editHandler={editHandler}
+              category="about"
+              popupTitle={`Testimonial Banner`}
+              editCarousel={editCarousel}
+              setEditCarousel={setEditCarousel}
+              componentType={`${
+                componentEdit.editSection ? "editSection" : "addSection"
+              }`}
+              getImageListURL="testimonials/clientTestimonials/"
+              deleteImageURL="testimonials/updateTestimonials/"
+              imagePostURL="testimonials/createTestimonials/"
+              imageUpdateURL="testimonials/updateTestimonials/"
+              imageLabel="Add Testimonial Image"
+              showDescription={false}
+              showExtraFormFields={getTestimonialsFields("testmonial")}
+              dimensions={imageDimensionsJson("testimonial")}
+            />
+          </div>
+        ) : (
+          ""
+        )}
 
         <TestimonialsListPageStyled>
           <div className="testimonialsPage my-5">

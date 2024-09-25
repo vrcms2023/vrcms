@@ -215,28 +215,29 @@ const CaseStudies = () => {
             />
           </div>
         </div>
-        {componentEdit.editSection ||
-          (componentEdit.addSection && (
-            <div className={`adminEditTestmonial selected `}>
-              <AddEditAdminNews
-                editHandler={editHandler}
-                category="about"
-                editCarousel={editCarousel}
-                setEditCarousel={setEditCarousel}
-                componentType={`${
-                  componentEdit.editSection ? "editSection" : "addSection"
-                }`}
-                imageGetURL="caseStudies/createCaseStudies/"
-                imagePostURL="caseStudies/createCaseStudies/"
-                imageUpdateURL="caseStudies/updateCaseStudies/"
-                imageDeleteURL="caseStudies/updateCaseStudies/"
-                imageLabel="Image"
-                showDescription={false}
-                showExtraFormFields={getCaseStudiesFields()}
-                dimensions={imageDimensionsJson("aboutus")}
-              />
-            </div>
-          ))}
+        {componentEdit.editSection || componentEdit.addSection ? (
+          <div className={`adminEditTestmonial selected `}>
+            <AddEditAdminNews
+              editHandler={editHandler}
+              category="about"
+              editCarousel={editCarousel}
+              setEditCarousel={setEditCarousel}
+              componentType={`${
+                componentEdit.editSection ? "editSection" : "addSection"
+              }`}
+              imageGetURL="caseStudies/createCaseStudies/"
+              imagePostURL="caseStudies/createCaseStudies/"
+              imageUpdateURL="caseStudies/updateCaseStudies/"
+              imageDeleteURL="caseStudies/updateCaseStudies/"
+              imageLabel="Image"
+              showDescription={false}
+              showExtraFormFields={getCaseStudiesFields()}
+              dimensions={imageDimensionsJson("aboutus")}
+            />
+          </div>
+        ) : (
+          ""
+        )}
 
         <CaseStudiesPageStyled>
           <div className="caseStudie my-5">

@@ -90,7 +90,7 @@ const Careers = () => {
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
-            popupTitle={`${pageType} Banner`}
+            popupTitle={`Careers Banner`}
             pageType={`${pageType}-banner`}
             imageLabel="Banner Image"
             showDescription={false}
@@ -156,6 +156,7 @@ const Careers = () => {
             <JobPostFrom
               editHandler={editHandler}
               componentType="addjob"
+              popupTitle="Add Career Details"
               type="add"
             />
           </div>

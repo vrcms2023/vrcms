@@ -352,6 +352,7 @@ const ProductsPage = () => {
             <SingleImageUlploadWithForm
               editHandler={editHandler}
               componentType="product"
+              popupTitle="Product"
               componentTitle={compTtile}
               selectedItem={selectedProduct}
               setSelectedItemState={setSelectedProduct}

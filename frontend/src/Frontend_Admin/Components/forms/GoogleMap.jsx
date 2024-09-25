@@ -7,7 +7,7 @@ import { getCookie } from "../../../util/cookieUtil";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 
-const GoogleMap = ({ editHandler, componentType, mapValues }) => {
+const GoogleMap = ({ editHandler, componentType, mapValues, popupTitle }) => {
   const closeHandler = () => {
     editHandler(componentType, false);
     document.body.style.overflow = "";
@@ -61,7 +61,7 @@ const GoogleMap = ({ editHandler, componentType, mapValues }) => {
 
   return (
     <div className="">
-      <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
+      <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
       <hr className="m-0" />
       <div className="container my-3">
         <div className="row">

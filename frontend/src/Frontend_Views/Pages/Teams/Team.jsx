@@ -8,6 +8,7 @@ import {
 } from "../../../util/dynamicFormFields";
 import Title from "../../../Common/Title";
 import Banner from "../../../Common/Banner";
+import ModelBg from "../../../Common/ModelBg";
 import EditIcon from "../../../Common/AdminEditIcon";
 import BriefIntroFrontend from "../../../Common/BriefIntro";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
@@ -196,10 +197,10 @@ const Team = () => {
         linkLabel="Read More"
         moreLink=""
         showLink={false}
-        introTitleCss="fs-4 fw-medium text-md-center"
+        introTitleCss="fs-3 fw-medium text-md-center"
         introSubTitleCss="fw-medium text-muted text-md-center"
-        introDecTitleCss="fs-6 fw-normal px-md-5 m-auto text-md-center"
-        detailsContainerCss="col-md-12"
+        introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
+        detailsContainerCss="col-md-10 offset-md-1"
         anchorContainer="d-flex justify-content-start align-items-start mt-4"
         anchersvgColor="#17427C"
         pageType={pageType}
@@ -208,18 +209,18 @@ const Team = () => {
         <div className={`adminEditTestmonial selected `}>
           <AdminBriefIntro
             editHandler={editHandler}
-            popupTitle="Team Details"
             componentType="briefIntro"
+            popupTitle="Team Brief"
             pageType={pageType}
           />
         </div>
       )}
 
       <div className="container">
-        {isAdmin && hasPermission && (
-          <div className="row">
-            <div className="col-md-12">
-              <div className="text-end">
+        <div className="row">
+          <div className="col-md-12 mt-4">
+            {isAdmin && hasPermission && (
+              <div className="text-end mb-4">
                 <Link
                   to="#"
                   className="btn btn-primary"
@@ -229,16 +230,16 @@ const Team = () => {
                   <i className="fa fa-plus ms-2" aria-hidden="true"></i>
                 </Link>
               </div>
-            </div>
+            )}
           </div>
-        )}
+        </div>
 
-        <div className="row mb-0 py-2">
-          <div className="col-md-8 fs-3 mt-4 mt-md-0">
-            {/* <Title title="Team" cssClass="pageTitle fs-5" /> */}
+        <div className="row mb-0 mb-md-4 py-2 py-md-4">
+          <div className="col-md-6 fs-3 mt-4 mt-md-0">
+            <Title title="Our Team" cssClass="fs-1 pageTitle" />
           </div>
 
-          <div className="col-md-4 mb-4">
+          <div className="col-md-6 mb-4">
             <Search
               setObject={setResponseData}
               clientSearchURL={"/ourteam/OurteamSearchAPIView/"}
@@ -251,30 +252,33 @@ const Team = () => {
             />
           </div>
         </div>
-        {componentEdit.editSection ||
-          (componentEdit.addSection && (
-            <div className={`adminEditTestmonial selected `}>
-              <AddEditTeam
-                editHandler={editHandler}
-                category="team"
-                editCarousel={editCarousel}
-                setEditCarousel={setEditCarousel}
-                componentType={`${
-                  componentEdit.editSection ? "editSection" : "addSection"
-                }`}
-                getImageListURL="ourteam/createteam/"
-                deleteImageURL="ourteam/UpdateOurteamDetail/"
-                imagePostURL="ourteam/createteam/"
-                imageUpdateURL="ourteam/UpdateOurteamDetail/"
-                imageLabel="Add Profile Image"
-                showDescription={false}
-                showExtraFormFields={getTeamMemberFields(
-                  editCarousel?.team_member_position
-                )}
-                dimensions={imageDimensionsJson("teams")}
-              />
-            </div>
-          ))}
+
+        {componentEdit.editSection || componentEdit.addSection ? (
+          <div className="adminEditTestmonial selected">
+            <AddEditTeam
+              editHandler={editHandler}
+              category="team"
+              popupTitle="Team"
+              editCarousel={editCarousel}
+              setEditCarousel={setEditCarousel}
+              componentType={`${
+                componentEdit.editSection ? "editSection" : "addSection"
+              }`}
+              getImageListURL="ourteam/createteam/"
+              deleteImageURL="ourteam/UpdateOurteamDetail/"
+              imagePostURL="ourteam/createteam/"
+              imageUpdateURL="ourteam/UpdateOurteamDetail/"
+              imageLabel="Add Profile Image"
+              showDescription={false}
+              showExtraFormFields={getTeamMemberFields(
+                editCarousel?.team_member_position
+              )}
+              dimensions={imageDimensionsJson("teams")}
+            />
+          </div>
+        ) : (
+          ""
+        )}
 
         <TeamStyled>
           <div className={`${isAdmin ? "" : "teamFrontend"}`}>
@@ -334,6 +338,7 @@ const Team = () => {
           )}
         </div>
       </div>
+      {show && <ModelBg />}
     </>
   );
 };
@@ -381,15 +386,15 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
             )}
             <img src={getImagePath(item.path)} alt="" className="w-100" />
 
-            <div className="my-1 text-start p-2 memberDetails">
+            <div className="my-3 text-start p-2 memberDetails">
               {item.team_member_designation && (
-                <small className="mb-0 fw-normal">
+                <small className="mb-1 fw-bold">
                   {item.team_member_designation}
                 </small>
               )}
 
               {item.team_member_name && (
-                <Title title={item.team_member_name} cssClass="title" />
+                <Title title={item.team_member_name} cssClass="fs-4 title " />
               )}
 
               <div
@@ -399,18 +404,26 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
                 }}
               />
 
+              {item.team_member_phone_number ||
+                (item.team_member_email && <hr />)}
+
               {item.team_member_email && (
-                <div className="fs-6">
+                <div className="mb-2">
                   <a href={`mailto:${item.team_member_email}`}>
                     {item.team_member_email}
                   </a>
                 </div>
               )}
               {item.team_member_phone_number && (
-                <p className="fs-6">{item.team_member_phone_number}</p>
+                <p>{item.team_member_phone_number}</p>
+              )}
+              {item.team_member_phone_number || item.team_member_email ? (
+                <hr />
+              ) : (
+                ""
               )}
 
-              <div className="social pt-2">
+              <div className="social">
                 {item.facebook_url && (
                   <Link to={item.facebook_url} target="_blank">
                     <i className="fa fa-facebook-square" aria-hidden="true"></i>

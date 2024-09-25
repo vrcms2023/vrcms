@@ -348,6 +348,7 @@ const PagesConfiguration = () => {
             <MenuForm
               editHandler={editHandler}
               menuList={pagesDetails}
+              popupTitle="Menu"
               editMenu={editMenu}
               componentType="menu"
             />

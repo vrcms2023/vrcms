@@ -107,6 +107,7 @@ const NewsAndUpdates = () => {
           <ImageInputsForm
             editHandler={editHandler}
             componentType="banner"
+            popupTitle="News Banner"
             pageType={`${pageType}-banner`}
             imageLabel="Banner Image"
             showDescription={false}
@@ -162,6 +163,7 @@ const NewsAndUpdates = () => {
               <AddEditAdminNews
                 editHandler={editHandler}
                 componentType="addNews"
+                popupTitle="Add News"
                 imageGetURL="appNews/createAppNews/"
                 imagePostURL="appNews/createAppNews/"
                 imageUpdateURL="appNews/updateAppNews/"

@@ -76,6 +76,7 @@ const VideosGallery = () => {
               <AdminBanner
                 editHandler={editHandler}
                 componentType="gallery"
+                popupTitle="Video Gallery"
                 getImageListURL={`imgGallery/createImageVidoeGallery/${pageType}/`}
                 deleteImageURL="imgGallery/updateImageVidoeGallery/"
                 imagePostURL="imgGallery/createImageVidoeGallery/"

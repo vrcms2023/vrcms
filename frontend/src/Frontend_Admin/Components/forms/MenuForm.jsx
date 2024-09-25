@@ -14,7 +14,13 @@ import { getMenu } from "../../../redux/auth/authActions";
 import { useDispatch } from "react-redux";
 import { getMenuPosition, updatedMenu } from "../../../util/menuUtil";
 
-const MenuForm = ({ editHandler, menuList, editMenu, componentType }) => {
+const MenuForm = ({
+  editHandler,
+  menuList,
+  editMenu,
+  componentType,
+  popupTitle,
+}) => {
   const dispatch = useDispatch();
   const closeHandler = () => {
     editHandler(componentType, false);
@@ -153,7 +159,7 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType }) => {
 
   return (
     <>
-      <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
+      <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
       <div className="container">
         <div className="row py-0 pb-md-5">
           <div className="col-md-8 offset-md-2 mb-5 mb-md-0">

@@ -17,6 +17,11 @@ export const getProductCategoryBannerFormFields = (pageType) => {
       type: "textarea",
       fieldName: "banner_descripiton",
     },
+    moreLink: {
+      label: "Page To Link",
+      type: "text",
+      fieldName: "moreLink",
+    },
     pageType: {
       label: "News Title",
       readonly: true,

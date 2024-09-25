@@ -220,13 +220,13 @@ const Services = () => {
         {/* End Of Introduction */}
 
         {/* Add Service Page */}
-        {/* {isAdmin && hasPermission && (
+        {isAdmin && hasPermission && (
           <AddService
             setSelectedServiceProject={setSelectedServiceProject}
             selectedServiceProject={selectedServiceProject}
             pageType="service"
           />
-        )} */}
+        )}
         {/* End of Add Service Page */}
 
         <div
@@ -262,35 +262,34 @@ const Services = () => {
                   </button>
                 </div>
               )}
-              {componentEdit.editSection ||
-                (componentEdit.addSection && (
-                  <div className={`adminEditTestmonial selected`}>
-                    <AddEditAdminNews
-                      editHandler={editHandler}
-                      category="services"
-                      editCarousel={editCarousel}
-                      setEditCarousel={setEditCarousel}
-                      componentType={`${
-                        componentEdit.editSection ? "editSection" : "addSection"
-                      }`}
-                      imageGetURL="services/createServiceFeatures/"
-                      imagePostURL="services/createServiceFeatures/"
-                      imageUpdateURL="services/updateFeatureService/"
-                      imageDeleteURL="services/updateFeatureService/"
-                      imageLabel="Add Service Banner"
-                      showDescription={false}
-                      showExtraFormFields={getServiceFormFields(
-                        selectedServiceProject
-                          ? selectedServiceProject?.id
-                          : "",
-                        selectedServiceProject
-                          ? selectedServiceProject?.services_page_title
-                          : ""
-                      )}
-                      dimensions={imageDimensionsJson("addService")}
-                    />
-                  </div>
-                ))}
+              {componentEdit.editSection || componentEdit.addSection ? (
+                <div className={`adminEditTestmonial selected`}>
+                  <AddEditAdminNews
+                    editHandler={editHandler}
+                    category="services"
+                    editCarousel={editCarousel}
+                    setEditCarousel={setEditCarousel}
+                    componentType={`${
+                      componentEdit.editSection ? "editSection" : "addSection"
+                    }`}
+                    imageGetURL="services/createServiceFeatures/"
+                    imagePostURL="services/createServiceFeatures/"
+                    imageUpdateURL="services/updateFeatureService/"
+                    imageDeleteURL="services/updateFeatureService/"
+                    imageLabel="Add Service Banner"
+                    showDescription={false}
+                    showExtraFormFields={getServiceFormFields(
+                      selectedServiceProject ? selectedServiceProject?.id : "",
+                      selectedServiceProject
+                        ? selectedServiceProject?.services_page_title
+                        : ""
+                    )}
+                    dimensions={imageDimensionsJson("addService")}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
 
               <div className="row ">
                 <div className="col-12 col-md-8">

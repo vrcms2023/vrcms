@@ -425,6 +425,7 @@ const Footer = () => {
           <FooterAdminFeilds
             editHandler={editHandler}
             componentType="address"
+            popupTitle="Address"
             footerValues={footerValues}
           />
         </div>
@@ -434,13 +435,18 @@ const Footer = () => {
           <AdminTermsPolicy
             termsAndConditionData={termsAndPolicyData}
             editHandler={editHandler}
-            componentType="termsPolacy"
+            popupTitle="Terms and Policy"
+            componentType="Terms and Polacy"
           />
         </div>
       )}
       {componentEdit.contact && (
         <div className="adminEditTestmonial selected">
-          <ContactInputs editHandler={editHandler} componentType="contact" />
+          <ContactInputs
+            editHandler={editHandler}
+            componentType="contact"
+            popupTitle="Contact"
+          />
         </div>
       )}
       {show && <ModelBg />}
