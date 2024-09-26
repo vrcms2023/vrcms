@@ -305,13 +305,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                 className={`card homeNews ${isAdmin ? "adminView" : ""}`}
                 style={{ minHeight: isAdmin ? "auto" : "" }}
               >
-                
-
-                <div 
-                // style={{ display: isAdmin ? "flex" : "", justifyContent: isAdmin ? "space-between" : "" }}
-                style={{
-                  ...(isAdmin && { display: "flex", alignItems: "center", marginBottom: ".8rem", border: "1px solid #ddd", padding: "8px", borderRadius: "5px" })
-                }}
+                <div className={`${isAdmin ? "d-flex align-items-center p-2 px-3 mb-3 border rounded" : "" } `}
                 >
                   {!isAdmin && (
                     <img
@@ -356,7 +350,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                       className="moreLink"
                       onClick={() => handleModel(item)}
                     >
-                      Read more..
+                      More..
                     </Link>
                   </div>
 

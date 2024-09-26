@@ -15,10 +15,10 @@ export const NewsStyled = styled.div`
     }
 
     img {
-      height: 160px;
-      width: 100%;
-      object-fit: cover;
-      object-position: bottom;
+      // height: 160px;
+      // width: 100%;
+      // object-fit: cover;
+      // object-position: bottom;
     }
 
     .card-body {
