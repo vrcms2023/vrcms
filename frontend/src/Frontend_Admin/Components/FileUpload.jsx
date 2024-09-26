@@ -67,7 +67,12 @@ const FileUpload = ({
 
   const [error, setError] = useState("");
 
-  const { register, reset, handleSubmit } = useForm({
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: useMemo(() => {
       return editImage;
     }, [editImage]),
@@ -440,8 +445,10 @@ const FileUpload = ({
                     label={label}
                     type={type}
                     value={value}
+                    error={errors?.[fieldName]?.message}
                     fieldName={fieldName}
                     register={register}
+                    {...showExtraFormFields[e]}
                   />
                 );
               }

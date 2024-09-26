@@ -251,11 +251,19 @@ export const getTeamMemberFields = (position) => {
       label: "Name",
       type: "text",
       fieldName: "team_member_name",
+      validationObject: { required: "Please enter Team Member name" },
     },
     team_member_email: {
       label: "Email",
       type: "text",
       fieldName: "team_member_email",
+      validationObject: {
+        required: "Please enter Team Member Email",
+        pattern: {
+          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+          message: "Please Enter A Valid Email!",
+        },
+      },
     },
     team_member_designation: {
       label: "Designation",
@@ -266,6 +274,13 @@ export const getTeamMemberFields = (position) => {
       label: "Phone Number",
       type: "text",
       fieldName: "team_member_phone_number",
+      validationObject: {
+        required: "Please enter Team Member Phone number",
+        pattern: {
+          value: /^[0-9]+$/,
+          message: "Please enter a Valid Mobile number",
+        },
+      },
     },
     team_member_about_us: {
       label: "About ",

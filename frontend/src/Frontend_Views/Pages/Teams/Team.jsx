@@ -396,16 +396,14 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
               {item.team_member_name && (
                 <Title title={item.team_member_name} cssClass="fs-4 title " />
               )}
-
-              <div
-                className="strengths my-3"
-                dangerouslySetInnerHTML={{
-                  __html: item.team_member_about_us,
-                }}
-              />
-
-              {item.team_member_phone_number ||
-                (item.team_member_email && <hr />)}
+              {item.team_member_about_us && (
+                <div
+                  className="strengths my-3"
+                  dangerouslySetInnerHTML={{
+                    __html: item.team_member_about_us,
+                  }}
+                />
+              )}
 
               {item.team_member_email && (
                 <div className="mb-2">
@@ -416,11 +414,6 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
               )}
               {item.team_member_phone_number && (
                 <p>{item.team_member_phone_number}</p>
-              )}
-              {item.team_member_phone_number || item.team_member_email ? (
-                <hr />
-              ) : (
-                ""
               )}
 
               <div className="social">
