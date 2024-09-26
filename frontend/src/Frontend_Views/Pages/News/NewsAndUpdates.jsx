@@ -119,7 +119,7 @@ const NewsAndUpdates = () => {
 
       <div className="container my-4 newsAndUpdates">
         {isAdmin && hasPermission && (
-          <div className="text-end mb-4">
+          <div className="text-end">
             <Link
               to="#"
               className="btn btn-primary"
@@ -131,16 +131,16 @@ const NewsAndUpdates = () => {
           </div>
         )}
 
-        <div className="row mb-4 py-4">
-          <div className="col-md-6">
+        <div className="row mb-2 py-4">
+          <div className="col-md-8">
             <Title
-              title="News And Updates"
+              title="News"
               cssClass=""
               mainTitleClassess="fs-4 fw-medium"
               subTitleClassess=""
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <Search
               setObject={setResponseData}
               clientSearchURL={"/appNews/searchAppNews/"}
@@ -153,11 +153,11 @@ const NewsAndUpdates = () => {
             />
           </div>
         </div>
-        {isAdmin && (
+        {/* {isAdmin && (
           <NoteComponent note="Use drag option to shuffle the Items" />
-        )}
+        )} */}
 
-        <div className="row mb-5">
+        <div className="row mb-5" >
           {componentEdit.addNews && (
             <div className={`adminEditTestmonial selected`}>
               <AddEditAdminNews

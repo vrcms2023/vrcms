@@ -240,20 +240,20 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
         <div className="newsModel ">
           <div className="newsModalWrapper p-4 bg-white shadow-lg">
             <div className="d-flex justify-content-between align-items-center gap-4 mb-1 pb-2 border-bottom">
-              <Title title={obj.news_title} cssClass="fw-bold fs-6" />
+              <Title title={obj.news_title} cssClass="fw-medium" />
               <Link
                 onClick={closeModel}
-                className="text-danger text-uppercase d-flex gap-2 justify-content-center align-items-center"
+                className="text-secondary "
               >
-                <span className="d-none d-lg-block">Close</span>
-                <i className="fa fa-times fs-3" aria-hidden="true"></i>
+                {/* <span className="d-none d-lg-block">Close</span> */}
+                <i className="fa fa-times fs-4" aria-hidden="true"></i>
               </Link>
             </div>
             <div className="my-3 newsDetails">
-              <div>
+              <div className="text-center">
                 <img
-                  className="w-100"
-                  style={{ height: "300px", objectFit: "cover" }}
+                  className="w-auto mb-3"
+                  style={{ height: "240px", objectFit: "cover" }}
                   src={obj.path}
                   alt={obj.news_title}
                 />
@@ -297,7 +297,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
         >
           {/* <div className="col-md-12 col-lg-12 mb-4 mb-lg-0 border border-1" key={item.id}> */}
           <div
-            className={`col-md-12 col-lg-12 mb-4 mb-lg-0 ${isAdmin ? "px-3" : ""}`}
+            className={`col-md-12 col-lg-12 ${isAdmin ? "px-3" : ""}`}
             key={item.id}
           >
             <NewsStyled>
@@ -305,7 +305,56 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                 className={`card homeNews ${isAdmin ? "adminView" : ""}`}
                 style={{ minHeight: isAdmin ? "auto" : "" }}
               >
-                {/* Edit News */}
+                <div className={`${isAdmin ? "d-flex align-items-center p-2 px-3 mb-3 border rounded" : "" } `}
+                >
+                  {!isAdmin && (
+                    <img
+                    src={getImagePath(item.path)}
+                    className="img-fluid rounded-3"
+                    alt={item.alternitivetext}
+                  />
+                  ) 
+                }
+                 {isAdmin && hasPermission ? ( <i class="fa fa-bars text-secondary" aria-hidden="true"></i> ) : "" }
+                 <div className="w-100" style={{display: "flex", justifyContent: "space-between"}}>
+                  <div className={`${isAdmin ? "px-3" : "py-3"}`}>
+                    <Title
+                      title={
+                        item.news_title ? item.news_title : "Update news Title"
+                      }
+                      cssClass={`fs-6 lineClamp lc2 ${!isAdmin && "fw-bold" }`}
+                      mainTitleClassess={` fw-medium lh-sm lineClamp lc1 ${isAdmin ? "fs-6" : "fs-5"}`}
+                      subTitleClassess=""
+                    />
+                    {/* <small className="d-block my-2">{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</small> */}
+                    {!isAdmin && (
+                    <small className="d-block mb-3">
+                      {moment(item.created_at).format("MMM DD, YYYY")}
+                    </small>
+                    )}
+                    {!isAdmin && (
+                    <div className={`card-text  ${isAdmin ? "mb-0" : "mb-2"}`}>
+                      {item.news_description ? (
+                        <div
+                          className={`lineClamp ${isAdmin ? "lc1" : "lc2"}`}
+                          dangerouslySetInnerHTML={{
+                            __html: item.news_description,
+                          }}
+                        ></div>
+                      ) : (
+                        "update new description"
+                      )}
+                    </div>
+                    )}
+                    <Link
+                      className="moreLink"
+                      onClick={() => handleModel(item)}
+                    >
+                      More..
+                    </Link>
+                  </div>
+
+                  {/* Edit News */}
                 {isAdmin && hasPermission && (
                   <div className="d-flex justify-content-end gap-2">
                     {/* <EditIcon editHandler={() => editHandler("news", true, item)} /> */}
@@ -330,45 +379,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                     </Link>
                   </div>
                 )}
-
-                <div style={{ display: isAdmin ? "flex" : "" }}>
-                  <img
-                    src={getImagePath(item.path)}
-                    className="img-fluid rounded-3"
-                    alt={item.alternitivetext}
-                  />
-                  <div className={`${isAdmin ? "px-3" : "py-3"}`}>
-                    <Title
-                      title={
-                        item.news_title ? item.news_title : "Update news Title"
-                      }
-                      cssClass="fs-4 fw-bold lineClamp lc2"
-                      mainTitleClassess={` fw-medium lh-sm lineClamp lc1 ${isAdmin ? "fs-6" : "fs-5"}`}
-                      subTitleClassess=""
-                    />
-                    {/* <small className="d-block my-2">{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</small> */}
-                    <small className="d-block mb-4">
-                      {moment(item.created_at).format("MMM DD, YYYY")}
-                    </small>
-                    <div className={`card-text  ${isAdmin ? "mb-0" : "mb-2"}`}>
-                      {item.news_description ? (
-                        <div
-                          className={`lineClamp ${isAdmin ? "lc1" : "lc2"}`}
-                          dangerouslySetInnerHTML={{
-                            __html: item.news_description,
-                          }}
-                        ></div>
-                      ) : (
-                        "update new description"
-                      )}
-                    </div>
-                    <Link
-                      className="moreLink"
-                      onClick={() => handleModel(item)}
-                    >
-                      Read more..
-                    </Link>
-                  </div>
+                </div>
                 </div>
               </div>
             </NewsStyled>
