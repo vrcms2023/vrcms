@@ -17,13 +17,13 @@ export const TeamStyled = styled.div`
     color: ${({ theme }) => theme.teamLinkColor};
   }
 
-  .social {
-  border-top: 1px solid ${({ theme }) => theme.graye6};
-  }
+  // .social {
+  // border-top: 1px solid ${({ theme }) => theme.graye6};
+  // }
 
   .social i {
     color: ${({ theme }) => theme.secondaryColor};
-    
+
     font-size: 1.6rem;
     margin: 7px;
   }
@@ -43,25 +43,25 @@ export const TeamStyled = styled.div`
     // border:1px solid ${({ theme }) => theme.secondaryColor};
     border-radius: 5px;
     margin: 15px 0;
-    overflow:hidden;
+    overflow: hidden;
 
     .memberDetails {
       color: ${({ theme }) => theme.teamTextColor};
 
       small {
-        font-size: .7rem;
-        text-transform: uppercase
+        font-size: 0.7rem;
+        text-transform: uppercase;
       }
 
       .strengths {
-        p:before {
-          content: "⬦  ";
-          font-size: 16px;
-        }
-        p{
-          margin-left: 10px;
-          margin-bottom: 0px;
-      }
+        // p:before {
+        //   content: "⬦  ";
+        //   font-size: 16px;
+        // }
+        // p {
+        //   margin-left: 10px;
+        //   margin-bottom: 0px;
+        // }
       }
     }
   }
