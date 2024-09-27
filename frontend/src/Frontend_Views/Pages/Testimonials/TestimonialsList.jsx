@@ -218,8 +218,8 @@ const TestimonialsList = () => {
           )}
         </div>
         <div className="row">
-          <div className="col-md-6 fs-3 mt-4 mt-md-0">
-            <Title title="Testimonials" cssClass="fs-1 pageTitle" />
+          <div className="col-md-6 d-flex align-items-center">
+            <Title title="Testimonials" cssClass="fw-medium pageTitle" />
           </div>
 
           <div className="col-md-6">
@@ -286,8 +286,10 @@ const TestimonialsList = () => {
                     } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
                   >
                     {isAdmin && hasPermission && (
-                      <>
+                      <div className="d-flex">
                         <EditIcon
+                          icon = "fa-pencil"
+                          // cssClasses="posistion-static"
                           editHandler={() =>
                             editHandler("editSection", true, item)
                           }
@@ -301,25 +303,33 @@ const TestimonialsList = () => {
                             aria-hidden="true"
                           ></i>
                         </Link>
-                      </>
+                      </div>
                     )}
-                    <div className="col-12 col-lg-10 p-3 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column">
+                    
+                    <div className={`col-12 col-lg-10 p-3 p-md-4 py-md-4 d-flex align-items-center ${isAdmin ? "flex-row" : "flex-column justify-content-center"}`}>
+                    
+                    {isAdmin && hasPermission ? ( <i class="fa fa-bars text-secondary me-2" aria-hidden="true"></i> ) : "" }
                       {item.testimonial_title ? (
                         <Title
                           title={item.testimonial_title}
-                          cssClass="fs-1 fw-bold mb-1"
+                          cssClass={`${isAdmin ? "fw-medium mb-1" : "fs-1 fw-bold mb-1"}`}
+                          // cssClass="fs-1 fw-bold mb-1"
                         />
                       ) : (
                         ""
                       )}
 
-                      <div
+                      {!isAdmin && 
+                        <div
                         dangerouslySetInnerHTML={{
                           __html: item.testimonial_description,
                         }}
                       />
+                      }
+                      
                     </div>
 
+                    {!isAdmin &&
                     <div className="col-lg-2 d-none d-lg-block h-100">
                       <div className="h-100 p-3 p-md-5 py-md-4 testimonialAvatar ">
                         <Link
@@ -335,6 +345,7 @@ const TestimonialsList = () => {
                         </Link>
                       </div>
                     </div>
+                    }
                     <Link
                       to=""
                       className="btn btn-outline w-auto mx-4 text-decoration-underline d-flex d-lg-none"
