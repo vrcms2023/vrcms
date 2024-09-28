@@ -157,7 +157,7 @@ const NewsAndUpdates = () => {
           <NoteComponent note="Use drag option to shuffle the Items" />
         )} */}
 
-        <div className="row mb-5" >
+        <div className="row mb-5">
           {componentEdit.addNews && (
             <div className={`adminEditTestmonial selected`}>
               <AddEditAdminNews
@@ -179,7 +179,8 @@ const NewsAndUpdates = () => {
           <HomeNews
             addNewsState={componentEdit.addNews}
             news={news}
-            setNews={setResponseData}
+            setNews={setNews}
+            setResponseData={setResponseData}
             setPageloadResults={setPageloadResults}
             pagetype={pageType}
           />

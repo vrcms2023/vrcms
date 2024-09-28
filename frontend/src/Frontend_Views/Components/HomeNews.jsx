@@ -31,7 +31,13 @@ import {
 } from "../../util/commonUtil";
 import moment from "moment";
 
-const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
+const HomeNews = ({
+  addNewsState,
+  news,
+  setNews,
+  setResponseData,
+  pagetype,
+}) => {
   const location = useLocation();
   const editComponentObj = {
     news: false,
@@ -68,7 +74,7 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
           //setPageloadResults(true);
           //const _list = sortByFieldName(response.data.results, "news_position");
           //const data = pagetype === "home" ? _list.slice(0, 4) : _list;
-          setNews(response.data);
+          setResponseData(response.data);
         }
       } catch (error) {
         console.log("unable to access ulr because of server is down");
@@ -241,10 +247,7 @@ const HomeNews = ({ addNewsState, news, setNews, pagetype }) => {
           <div className="newsModalWrapper p-4 bg-white shadow-lg">
             <div className="d-flex justify-content-between align-items-center gap-4 mb-1 pb-2 border-bottom">
               <Title title={obj.news_title} cssClass="fw-medium" />
-              <Link
-                onClick={closeModel}
-                className="text-secondary "
-              >
+              <Link onClick={closeModel} className="text-secondary ">
                 {/* <span className="d-none d-lg-block">Close</span> */}
                 <i className="fa fa-times fs-4" aria-hidden="true"></i>
               </Link>
@@ -293,7 +296,6 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
           className={`${isAdmin ? "col-12" : "col-sm-6 col-lg-4 px-2 px-md-4 px-lg-5"} image`}
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
         >
           {/* <div className="col-md-12 col-lg-12 mb-4 mb-lg-0 border border-1" key={item.id}> */}
           <div
@@ -305,81 +307,98 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                 className={`card homeNews ${isAdmin ? "adminView" : ""}`}
                 style={{ minHeight: isAdmin ? "auto" : "" }}
               >
-                <div className={`${isAdmin ? "d-flex align-items-center p-2 px-3 mb-3 border rounded" : "" } `}
+                <div
+                  className={`${isAdmin ? "d-flex align-items-center p-2 px-3 mb-3 border rounded" : ""} `}
                 >
                   {!isAdmin && (
                     <img
-                    src={getImagePath(item.path)}
-                    className="img-fluid rounded-3"
-                    alt={item.alternitivetext}
-                  />
-                  ) 
-                }
-                 {isAdmin && hasPermission ? ( <i class="fa fa-bars text-secondary" aria-hidden="true"></i> ) : "" }
-                 <div className="w-100" style={{display: "flex", justifyContent: "space-between"}}>
-                  <div className={`${isAdmin ? "px-3" : "py-3"}`}>
-                    <Title
-                      title={
-                        item.news_title ? item.news_title : "Update news Title"
-                      }
-                      cssClass={`fs-6 lineClamp lc2 ${!isAdmin && "fw-bold" }`}
-                      mainTitleClassess={` fw-medium lh-sm lineClamp lc1 ${isAdmin ? "fs-6" : "fs-5"}`}
-                      subTitleClassess=""
+                      src={getImagePath(item.path)}
+                      className="img-fluid rounded-3"
+                      alt={item.alternitivetext}
                     />
-                    {/* <small className="d-block my-2">{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</small> */}
-                    {!isAdmin && (
-                    <small className="d-block mb-3">
-                      {moment(item.created_at).format("MMM DD, YYYY")}
-                    </small>
-                    )}
-                    {!isAdmin && (
-                    <div className={`card-text  ${isAdmin ? "mb-0" : "mb-2"}`}>
-                      {item.news_description ? (
-                        <div
-                          className={`lineClamp ${isAdmin ? "lc1" : "lc2"}`}
-                          dangerouslySetInnerHTML={{
-                            __html: item.news_description,
-                          }}
-                        ></div>
-                      ) : (
-                        "update new description"
+                  )}
+                  {isAdmin && hasPermission ? (
+                    <i
+                      class="fa fa-bars text-secondary"
+                      aria-hidden="true"
+                      {...provided.dragHandleProps}
+                    ></i>
+                  ) : (
+                    ""
+                  )}
+                  <div
+                    className="w-100"
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div className={`${isAdmin ? "px-3" : "py-3"}`}>
+                      <Title
+                        title={
+                          item.news_title
+                            ? item.news_title
+                            : "Update news Title"
+                        }
+                        cssClass={`fs-6 lineClamp lc2 ${!isAdmin && "fw-bold"}`}
+                        mainTitleClassess={` fw-medium lh-sm lineClamp lc1 ${isAdmin ? "fs-6" : "fs-5"}`}
+                        subTitleClassess=""
+                      />
+                      {/* <small className="d-block my-2">{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</small> */}
+                      {!isAdmin && (
+                        <small className="d-block mb-3">
+                          {moment(item.created_at).format("MMM DD, YYYY")}
+                        </small>
                       )}
+                      {!isAdmin && (
+                        <div
+                          className={`card-text  ${isAdmin ? "mb-0" : "mb-2"}`}
+                        >
+                          {item.news_description ? (
+                            <div
+                              className={`lineClamp ${isAdmin ? "lc1" : "lc2"}`}
+                              dangerouslySetInnerHTML={{
+                                __html: item.news_description,
+                              }}
+                            ></div>
+                          ) : (
+                            "update new description"
+                          )}
+                        </div>
+                      )}
+                      <Link
+                        className="moreLink"
+                        onClick={() => handleModel(item)}
+                      >
+                        More..
+                      </Link>
                     </div>
+
+                    {/* Edit News */}
+                    {isAdmin && hasPermission && (
+                      <div className="d-flex justify-content-end gap-2">
+                        {/* <EditIcon editHandler={() => editHandler("news", true, item)} /> */}
+                        <Link
+                          onClick={() => editHandler("news", true, item)}
+                          className=" p-2"
+                        >
+                          <i
+                            className="fa fa-pencil fs-5 text-warning"
+                            aria-hidden="true"
+                          ></i>
+                        </Link>
+
+                        <Link
+                          onClick={(event) =>
+                            DeleteNews(item.id, item.news_title)
+                          }
+                          className="p-2"
+                        >
+                          <i
+                            className="fa fa-trash-o fs-5 text-danger"
+                            aria-hidden="true"
+                          ></i>
+                        </Link>
+                      </div>
                     )}
-                    <Link
-                      className="moreLink"
-                      onClick={() => handleModel(item)}
-                    >
-                      More..
-                    </Link>
                   </div>
-
-                  {/* Edit News */}
-                {isAdmin && hasPermission && (
-                  <div className="d-flex justify-content-end gap-2">
-                    {/* <EditIcon editHandler={() => editHandler("news", true, item)} /> */}
-                    <Link
-                      onClick={() => editHandler("news", true, item)}
-                      className=" p-2"
-                    >
-                      <i
-                        className="fa fa-pencil fs-5 text-warning"
-                        aria-hidden="true"
-                      ></i>
-                    </Link>
-
-                    <Link
-                      onClick={(event) => DeleteNews(item.id, item.news_title)}
-                      className="p-2"
-                    >
-                      <i
-                        className="fa fa-trash-o fs-5 text-danger"
-                        aria-hidden="true"
-                      ></i>
-                    </Link>
-                  </div>
-                )}
-                </div>
                 </div>
               </div>
             </NewsStyled>
