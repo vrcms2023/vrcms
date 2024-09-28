@@ -59,7 +59,7 @@ const CareersFilter = () => {
             value=""
             id="flexCheckDefault"
           />
-          <label className="form-check-label" for="flexCheckDefault">
+          <label className="form-check-label" htmlFor="flexCheckDefault">
             Freelance
           </label>
         </div>
@@ -69,9 +69,9 @@ const CareersFilter = () => {
             type="checkbox"
             value=""
             id="flexCheckDefault"
-            checked
+            defaultChecked
           />
-          <label className="form-check-label" for="flexCheckDefault">
+          <label className="form-check-label" htmlFor="flexCheckDefault">
             Remove
           </label>
         </div>
@@ -82,7 +82,7 @@ const CareersFilter = () => {
             value=""
             id="flexCheckDefault"
           />
-          <label className="form-check-label" for="flexCheckDefault">
+          <label className="form-check-label" htmlFor="flexCheckDefault">
             Hybrid
           </label>
         </div>
@@ -93,7 +93,7 @@ const CareersFilter = () => {
             value=""
             id="flexCheckDefault"
           />
-          <label className="form-check-label" for="flexCheckDefault">
+          <label className="form-check-label" htmlFor="flexCheckDefault">
             On-Site/Office
           </label>
         </div>
