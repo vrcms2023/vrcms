@@ -319,7 +319,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                   )}
                   {isAdmin && hasPermission ? (
                     <i
-                      class="fa fa-bars text-secondary"
+                      className="fa fa-bars text-secondary"
                       aria-hidden="true"
                       {...provided.dragHandleProps}
                     ></i>

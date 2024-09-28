@@ -38,6 +38,7 @@ export const getFormDynamicFields = (pageType) => {
       label: "Title",
       type: "text",
       fieldName: "banner_title",
+      validationObject: { required: "Please enter Title" },
     },
     banner_subTitle: {
       label: "Sub Title",
@@ -190,6 +191,7 @@ export const getTestimonialsFields = (category) => {
       label: "Testimonial Name",
       type: "text",
       fieldName: "testimonial_title",
+      validationObject: { required: "Please enter Testimonial Name" },
     },
     testimonial_sub_title: {
       label: "Sub Title",

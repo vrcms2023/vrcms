@@ -348,7 +348,7 @@ const TestimonialsList = () => {
               ))
             ) : (
               <p className="text-center text-muted py-5">
-                {!isLoading && <p>Please add page contents...</p>}
+                {!isLoading && <span>Please add page contents...</span>}
               </p>
             )}
           </div>
