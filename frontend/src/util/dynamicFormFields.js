@@ -199,7 +199,7 @@ export const getTestimonialsFields = (category) => {
       fieldName: "testimonial_sub_title",
     },
     testimonial_description: {
-      label: "Testimonial Writeup",
+      label: "Writeup",
       type: "textarea",
       fieldName: "testimonial_description",
     },
