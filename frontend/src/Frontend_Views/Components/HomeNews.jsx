@@ -257,7 +257,7 @@ const HomeNews = ({
                 <img
                   className="w-auto mb-3"
                   style={{ height: "240px", objectFit: "cover" }}
-                  src={obj.path}
+                  src={getImagePath(obj.path)}
                   alt={obj.news_title}
                 />
               </div>
