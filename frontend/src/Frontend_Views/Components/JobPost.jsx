@@ -229,13 +229,13 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
               </div>
               <div className="">
                 <Title title="Job Description" cssClass="fw-bold fs-6" />
-                <p className="m-0">
+                <div className="m-0">
                   <div
                     dangerouslySetInnerHTML={{
                       __html: getFirstShortDescription(item?.description),
                     }}
                   />
-                </p>
+                </div>
               </div>
 
               <div className="d-block my-2">

@@ -17,7 +17,12 @@ import {
   axiosClientServiceApi,
   axiosServiceApi,
 } from "../../../util/axiosUtil";
-import { getImagePath, paginationDataFormat } from "../../../util/commonUtil";
+import {
+  getImagePath,
+  paginationDataFormat,
+  reorder,
+  updateArrIndex,
+} from "../../../util/commonUtil";
 import Title from "../../../Common/Title";
 import Model from "../../../Common/Model";
 import ModelBg from "../../../Common/ModelBg";
@@ -32,6 +37,8 @@ import CustomPagination from "../../../Common/CustomPagination";
 import SkeletonImage from "../../../Common/Skeltons/SkeletonImage";
 
 import { TestimonialsListPageStyled } from "../../../Common/StyledComponents/Styled-TestimonialsList";
+
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
 const TestimonialsList = () => {
   const editComponentObj = {
@@ -137,6 +144,31 @@ const TestimonialsList = () => {
   const closeModel = () => {
     setModelShow(!modelShow);
     setShow(!show);
+  };
+
+  const onDragEnd = async (result) => {
+    const { source, destination } = result;
+    if (!destination) return true;
+
+    const _items = reorder(clientsList, source.index, destination.index);
+    const _parentObjects = updateArrIndex(_items, "testimonial_position");
+    const response = await updateObjectsIndex(_parentObjects);
+    if (response?.length > 0) {
+      setClientsList(response);
+    }
+  };
+  const updateObjectsIndex = async (data) => {
+    try {
+      let response = await axiosServiceApi.put(
+        `/testimonials/updateTestimonialsindex/`,
+        data
+      );
+      if (response?.data?.testimonial) {
+        return response.data.testimonial;
+      }
+    } catch (error) {
+      console.log("unable to save news position");
+    }
   };
 
   return (
@@ -274,94 +306,111 @@ const TestimonialsList = () => {
               ""
             )}
 
-            {clientsList.length > 0 ? (
-              clientsList.map((item, index) => (
-                <div key={item.id}>
+            <DragDropContext onDragEnd={onDragEnd}>
+              <Droppable droppableId={"NewsList"} id="newsList">
+                {(provided, snapshot) => (
                   <div
-                    key={item.id}
-                    className={`row mb-2 ${
-                      isAdmin
-                        ? "border border-warning mb-3 position-relative"
-                        : ""
-                    } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
+                    className="row"
+                    ref={provided.innerRef}
+                    // style={getListStyle(snapshot.isDraggingOver)}
+                    {...provided.droppableProps}
                   >
-                    {isAdmin && hasPermission && (
-                      <div className="d-flex">
-                        <EditIcon
-                          icon = "fa-pencil"
-                          // cssClasses="posistion-static"
-                          editHandler={() =>
-                            editHandler("editSection", true, item)
-                          }
-                        />
-                        <Link
-                          className="deleteSection"
-                          onClick={() => deleteAboutSection(item)}
+                    {clientsList.length > 0 ? (
+                      clientsList.map((item, index) => (
+                        <Draggable
+                          isDragDisabled={isAdmin ? false : true}
+                          key={item.id}
+                          index={index}
+                          draggableId={item.id}
+                          id={item.id}
                         >
-                          <i
-                            className="fa fa-trash-o text-danger fs-4"
-                            aria-hidden="true"
-                          ></i>
-                        </Link>
-                      </div>
+                          {(provided) => (
+                            <div
+                              key={item.id}
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <div
+                                key={item.id}
+                                className={`row mb-2 ${
+                                  isAdmin
+                                    ? "border border-warning mb-3 position-relative"
+                                    : ""
+                                } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
+                              >
+                                {isAdmin && hasPermission && (
+                                  <>
+                                    <EditIcon
+                                      editHandler={() =>
+                                        editHandler("editSection", true, item)
+                                      }
+                                    />
+                                    <Link
+                                      className="deleteSection"
+                                      onClick={() => deleteAboutSection(item)}
+                                    >
+                                      <i
+                                        className="fa fa-trash-o text-danger fs-4"
+                                        aria-hidden="true"
+                                      ></i>
+                                    </Link>
+                                  </>
+                                )}
+                                <div className="col-12 col-lg-10 p-3 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column">
+                                  {item.testimonial_title ? (
+                                    <Title
+                                      title={item.testimonial_title}
+                                      cssClass="fs-1 fw-bold mb-1"
+                                    />
+                                  ) : (
+                                    ""
+                                  )}
+
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html: item.testimonial_description,
+                                    }}
+                                  />
+                                </div>
+
+                                <div className="col-lg-2 d-none d-lg-block h-100">
+                                  <div className="h-100 p-3 p-md-5 py-md-4 testimonialAvatar ">
+                                    <Link
+                                      to=""
+                                      className="text-decoration-underline"
+                                      onClick={() => showModel(item)}
+                                    >
+                                      <img
+                                        src={getImagePath(item.path)}
+                                        alt=""
+                                        className="img-fluid rounded-circle border border-3 border-light shadow-lg img-thumbnail "
+                                      />
+                                    </Link>
+                                  </div>
+                                </div>
+                                <Link
+                                  to=""
+                                  className="btn btn-outline w-auto mx-4 text-decoration-underline d-flex d-lg-none"
+                                  onClick={() => showModel(item)}
+                                >
+                                  More
+                                </Link>
+                              </div>
+                            </div>
+                          )}
+                        </Draggable>
+                      ))
+                    ) : (
+                      <p className="text-center text-muted py-5">
+                        {!isLoading && <span>Please add page contents...</span>}
+                      </p>
                     )}
-                    
-                    <div className={`col-12 col-lg-10 p-3 p-md-4 py-md-4 d-flex align-items-center ${isAdmin ? "flex-row" : "flex-column justify-content-center"}`}>
-                    
-                    {isAdmin && hasPermission ? ( <i class="fa fa-bars text-secondary me-2" aria-hidden="true"></i> ) : "" }
-                      {item.testimonial_title ? (
-                        <Title
-                          title={item.testimonial_title}
-                          cssClass={`${isAdmin ? "fw-medium mb-1" : "fs-1 fw-bold mb-1"}`}
-                          // cssClass="fs-1 fw-bold mb-1"
-                        />
-                      ) : (
-                        ""
-                      )}
-
-                      {!isAdmin && 
-                        <div
-                        dangerouslySetInnerHTML={{
-                          __html: item.testimonial_description,
-                        }}
-                      />
-                      }
-                      
-                    </div>
-
-                    {!isAdmin &&
-                    <div className="col-lg-2 d-none d-lg-block h-100">
-                      <div className="h-100 p-3 p-md-5 py-md-4 testimonialAvatar ">
-                        <Link
-                          to=""
-                          className="text-decoration-underline"
-                          onClick={() => showModel(item)}
-                        >
-                          <img
-                            src={getImagePath(item.path)}
-                            alt=""
-                            className="img-fluid rounded-circle border border-3 border-light shadow-lg img-thumbnail "
-                          />
-                        </Link>
-                      </div>
-                    </div>
-                    }
-                    <Link
-                      to=""
-                      className="btn btn-outline w-auto mx-4 text-decoration-underline d-flex d-lg-none"
-                      onClick={() => showModel(item)}
-                    >
-                      More
-                    </Link>
+                    {provided.placeholder}
                   </div>
-                  <hr className="border-secondary" />
-                </div>
-              ))
-            ) : (
-              <p className="text-center text-muted py-5">
-                {!isLoading && <p>Please add page contents...</p>}
-              </p>
-            )}
+                )}
+              </Droppable>
+            </DragDropContext>
           </div>
         </TestimonialsListPageStyled>
         {paginationData?.total_count ? (
