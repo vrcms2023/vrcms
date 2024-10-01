@@ -250,8 +250,8 @@ const TestimonialsList = () => {
           )}
         </div>
         <div className="row">
-          <div className="col-md-6 fs-3 mt-4 mt-md-0">
-            <Title title="Testimonials" cssClass="fs-1 pageTitle" />
+          <div className="col-md-6 d-flex align-items-center">
+            <Title title="Testimonials" cssClass="fw-medium pageTitle" />
           </div>
 
           <div className="col-md-6">
