@@ -346,7 +346,15 @@ const TestimonialsList = () => {
                                         editHandler("editSection", true, item)
                                       }
                                     />
-                                    <Link
+                                    <EditIcon
+                                      icon={"fa-trash-o"}
+                                      iconCss={"text-danger fs-4"}
+                                      cssClasses={""}
+                                      editHandler={() =>
+                                        deleteAboutSection(item)
+                                      }
+                                    />
+                                    {/* <Link
                                       className="deleteSection"
                                       onClick={() => deleteAboutSection(item)}
                                     >
@@ -354,7 +362,7 @@ const TestimonialsList = () => {
                                         className="fa fa-trash-o text-danger fs-4"
                                         aria-hidden="true"
                                       ></i>
-                                    </Link>
+                                    </Link> */}
                                   </>
                                 )}
                                 <div className="col-12 col-lg-10 p-3 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column">
