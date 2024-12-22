@@ -121,6 +121,42 @@ const JobPost = ({
               />
 
               <InputField
+                label="Package"
+                fieldName="package"
+                register={register}
+              />
+
+              <InputField
+                label="Skills"
+                fieldName="skills"
+                register={register}
+              />
+
+              <InputField
+                label="No of Application"
+                fieldName="no_of_application"
+                register={register}
+              />
+
+              <InputField
+                label="Employment Type"
+                fieldName="employment_Type"
+                register={register}
+              />
+
+              <InputField
+                label="Mode of work"
+                fieldName="mode_of_work"
+                register={register}
+              />
+
+              <InputField
+                label="About company"
+                fieldName="about_company"
+                register={register}
+              />
+
+              <InputField
                 label="ContactEmail"
                 fieldName="contactEmail"
                 type="email"

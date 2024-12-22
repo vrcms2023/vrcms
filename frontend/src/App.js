@@ -213,7 +213,7 @@ function App() {
               <Route exact path="/profile/careers" element={<Careers />} />
               <Route
                 exact
-                path="/profile/career-details/:id/"
+                path="/career-details/:id/"
                 element={<CareerDetails />}
               />
               <Route exact path="/profile/team" element={<Team />} />
