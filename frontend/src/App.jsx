@@ -193,95 +193,62 @@ function App() {
                   element={<UserPagePermission />}
                 />
                 <Route
-                  path="/admin/adminPagesConfigurtion"
+                  path="/admin/adminPagesConfiguration"
                   element={<PagesConfiguration />}
                 />
               </Route>
 
-              <Route exact path="*" element={<PageNotFound />} />
-              <Route exact path="/" element={<Home />} />
-              <Route exact path="/home" element={<Home />} />
-              <Route exact path="/hpr-home" element={<HPRHome />} />
-              <Route exact path="/about" element={<About />} />
-              <Route exact path="/contact" element={<Contact />} />
-              <Route exact path="/products" element={<Products />} />
-              <Route exact path="/categories/:id" element={<Products />} />
-              <Route exact path="/products/:id/" element={<ProductDetails />} />
-              <Route exact path="/services" element={<Services />} />
-              <Route exact path="/services/:uid/" element={<Services />} />
-              <Route exact path="/clients/clients" element={<ClientsList />} />
-              <Route exact path="/profile/careers" element={<Careers />} />
+              <Route path="*" element={<PageNotFound />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/hpr-home" element={<HPRHome />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/categories/:id" element={<Products />} />
+              <Route path="/products/:id" element={<ProductDetails />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/services/:uid" element={<Services />} />
+              <Route path="/clients/clients" element={<ClientsList />} />
+              <Route path="/profile/careers" element={<Careers />} />
+              <Route path="/career-details/:id" element={<CareerDetails />} />
+              <Route path="/profile/team" element={<Team />} />
+              <Route path="/projects/projects" element={<Projects />} />
+              <Route path="/project-details" element={<ProjectTabs />} />
               <Route
-                exact
-                path="/career-details/:id/"
-                element={<CareerDetails />}
-              />
-              <Route exact path="/profile/team" element={<Team />} />
-              <Route exact path="/projects/projects" element={<Projects />} />
-              <Route exact path="/project-details" element={<ProjectTabs />} />
-              <Route
-                exact
                 path="/projects/projectgallery"
                 element={<ProjectsGallery />}
               />
+              <Route path="/gallery/imagegallery" element={<ImagesGallery />} />
+              <Route path="/gallery/videogallery" element={<VideosGallery />} />
+              <Route path="/clients/casestudies" element={<CaseStudies />} />
               <Route
-                exact
-                path="/gallery/imagegallery"
-                element={<ImagesGallery />}
-              />
-              <Route
-                exact
-                path="/gallery/videogallery"
-                element={<VideosGallery />}
-              />
-              <Route
-                exact
-                path="/clients/casestudies"
-                element={<CaseStudies />}
-              />
-              <Route
-                exact
-                path="/clients/casestudies-details/:id/"
+                path="/clients/casestudies-details/:id"
                 element={<CaseStudiesDetails />}
               />
-              <Route exact path="/profile/news" element={<NewsAndUpdates />} />
+              <Route path="/profile/news" element={<NewsAndUpdates />} />
               <Route
-                exact
                 path="/profile/testimonials"
                 element={<TestimonialsList />}
               />
-              <Route exact path="/login" element={<Login />} />
-              <Route exact path="/register" element={<Registration />} />
-
-              <Route exact path="/reset_password" element={<ResetPassword />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Registration />} />
+              <Route path="/reset_password" element={<ResetPassword />} />
               <Route
-                exact
                 path="/password/reset/:uid/:token"
                 element={<ResetPasswordConfirmation />}
               />
+              <Route path="/activate/:uid/:token" element={<Activation />} />
               <Route
-                exact
-                path="/activate/:uid/:token"
-                element={<Activation />}
-              />
-              <Route
-                exact
                 path="/resend_activation"
                 element={<ResendActivationEmail />}
               />
-
+              <Route path="/unauthorized" element={<UnauthorizedPage />} />
+              <Route path="/authForm" element={<AuthForm />} />
+              <Route path="/addproject" element={<AddProject />} />
+              <Route path="/editproject/:id" element={<AddProject />} />
+              <Route path="/adminNews" element={<AdminNews />} />
               <Route
-                exact
-                path="/unauthorized"
-                element={<UnauthorizedPage />}
-              />
-              <Route exact path="/authForm" element={<AuthForm />} />
-              <Route exact path="/addproject" element={<AddProject />} />
-              <Route exact path="/editproject/:id" element={<AddProject />} />
-              <Route exact path="/adminNews" element={<AdminNews />} />
-
-              <Route
-                exact
                 path="/profile/testimonial"
                 element={<AdminTestimonial />}
               />
