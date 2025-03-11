@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { fieldValidation, removeAllCookies } from "../../util/validationUtil";
-import { removeCookie, setCookie } from "../../util/cookieUtil";
+import { fieldValidation } from "../../util/validationUtil";
 import {
   InputField,
   InputFields,
@@ -40,54 +39,53 @@ const ContactForm = ({ categoryId }) => {
 
   return (
     <>
-    <small>SEND US EMAIL</small>
-    <Title title="Contact Feel free to write" cssClass="formTitle fs-4 fw-bold mb-3" />
-    <form
-      className="my-0 mx-auto contactForm"
-      onSubmit={handleSubmit(onFormSubmit)}
-    >
-      <InputFields
-        label="Name"
-        fieldName="firstName"
-        register={register}
-        validationObject={fieldValidation.firstName}
-        error={errors?.firstName?.message}
+      <small>SEND US EMAIL</small>
+      <Title
+        title="Contact Feel free to write"
+        cssClass="formTitle fs-4 fw-bold mb-3"
       />
-      <InputField
-        label="Email"
-        fieldName="email"
-        register={register}
-        validationObject={fieldValidation.email}
-        error={errors?.email?.message}
-      />
-      <InputField
-        label="Phone"
-        fieldName="phoneNumber"
-        register={register}
-        validationObject={fieldValidation.phoneNumber}
-        error={errors?.phoneNumber?.message}
-      />
-      <TextAreaField
-        label="Message"
-        fieldName="description"
-        register={register}
-        validationObject={fieldValidation.description}
-        error={errors?.description?.message}
-      />
+      <form
+        className="my-0 mx-auto contactForm"
+        onSubmit={handleSubmit(onFormSubmit)}
+      >
+        <InputFields
+          label="Name"
+          fieldName="firstName"
+          register={register}
+          validationObject={fieldValidation.firstName}
+          error={errors?.firstName?.message}
+        />
+        <InputField
+          label="Email"
+          fieldName="email"
+          register={register}
+          validationObject={fieldValidation.email}
+          error={errors?.email?.message}
+        />
+        <InputField
+          label="Phone"
+          fieldName="phoneNumber"
+          register={register}
+          validationObject={fieldValidation.phoneNumber}
+          error={errors?.phoneNumber?.message}
+        />
+        <TextAreaField
+          label="Message"
+          fieldName="description"
+          register={register}
+          validationObject={fieldValidation.description}
+          error={errors?.description?.message}
+        />
 
-      <div className="mb-3 row">
-        <div className="col-sm-12 mt-2">
-          <button
-            type="submit"
-            className="btn btn-primary"
-          >
-            Send Request
-          </button>
+        <div className="mb-3 row">
+          <div className="col-sm-12 mt-2">
+            <button type="submit" className="btn btn-primary">
+              Send Request
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
     </>
-    
   );
 };
 
