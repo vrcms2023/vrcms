@@ -74,7 +74,7 @@ const ABriefAbout = ({
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("whoweare", true)} />
         )}
-        {bannerData.banner_title ? (
+        {bannerData?.banner_title ? (
           <Title title={bannerData.banner_title} cssClass={cssClass} />
         ) : (
           ""

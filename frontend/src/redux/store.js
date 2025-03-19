@@ -9,6 +9,7 @@ import addressSlice from "./address/addressSlice";
 import productsSlice from "./products/productsSlice";
 import categorySlice from "./products/categorySlice";
 import { authApi } from "./auth/authService";
+import themeReducer from "./themes/themeSlice";
 
 const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ const store = configureStore({
     addressList: addressSlice,
     productList: productsSlice,
     categoryList: categorySlice,
+    selectedTheme: themeReducer,
     [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -8,6 +8,7 @@ import { createRoot } from "react-dom/client";
 
 import reportWebVitals from "./reportWebVitals";
 import store from "./redux/store";
+import { ThemeContextProvider } from "./themes/ThemeContext";
 
 const root = createRoot(document.getElementById("root"));
 
@@ -15,7 +16,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <CookiesProvider>
-        <App />
+        <ThemeContextProvider>
+          <App />
+        </ThemeContextProvider>
       </CookiesProvider>
     </Provider>
   </React.StrictMode>
