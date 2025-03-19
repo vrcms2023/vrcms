@@ -112,7 +112,9 @@ const MenuForm = ({
       const getSelectedParentObject = _.filter(menuList, (item) => {
         return item.id === data.page_parent_ID;
       })[0];
-      data["page_url"] = getSelectedParentObject.page_url + data["page_url"];
+      data["page_url"] =
+        getSelectedParentObject.page_url +
+        data["page_url"].replace(/^\/admin/, "");
       data["page_position"] = getMenuPosition(getSelectedParentObject);
     } else {
       data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;

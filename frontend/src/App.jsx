@@ -94,6 +94,7 @@ const ResendActivationEmail = lazy(
 );
 const Dashboard = lazy(() => import("./Frontend_Admin/Pages/Login/Dashboard"));
 const UserAdmin = lazy(() => import("./Frontend_Admin/Pages/Auth/UserAdmin"));
+const Themes = lazy(() => import("./Frontend_Admin/Pages/Auth/Themes"));
 const UnauthorizedPage = lazy(
   () => import("./Frontend_Admin/Pages/Login/UnauthorizedPage")
 );
@@ -172,7 +173,7 @@ function App() {
         {isLoading ? <LoadingSpinner /> : ""}
         <TopStrip />
         <Header />
-        <ThemeSwitcher />
+
         <Suspense fallback={<SkeletonPage />}>
           <Routes>
             <Route element={<ProtectedRoute />}>
@@ -186,6 +187,7 @@ function App() {
 
             <Route element={<AdminProtectedRoute />}>
               <Route path="/admin/userAdmin" element={<UserAdmin />} />
+              <Route path="/admin/theme" element={<Themes />} />
               <Route
                 path="/admin/userPermission"
                 element={<UserPagePermission />}
