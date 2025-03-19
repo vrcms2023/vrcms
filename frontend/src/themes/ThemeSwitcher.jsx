@@ -6,9 +6,9 @@ import styled from "styled-components";
 const Select = styled.select`
   padding: 8px;
   font-size: 16px;
-  border: 1px solid ${(props) => props.theme.textColor};
-  background: ${(props) => props.theme.lightgray};
-  color: $ ${(props) => props.theme.textColor};
+  border: 1px solid ${({ theme }) => theme.secondaryColor};
+  background: ${({ theme }) => theme.white};
+  color: ${({ theme }) => theme.teamTextColor};
   border-radius: 5px;
   cursor: pointer;
 `;
@@ -20,13 +20,11 @@ const ThemeSwitcher = () => {
     <Select value={themeName} onChange={(e) => setTheme(e.target.value)}>
       {themeNames.map((theme) => (
         <option key={theme} value={theme}>
-          {theme.charAt(0).toUpperCase() + theme.slice(1)}
+          {theme}
         </option>
       ))}
     </Select>
   );
-
-  //   return <button onClick={toggleTheme}>Toggle Theme</button>;
 };
 
 export default ThemeSwitcher;

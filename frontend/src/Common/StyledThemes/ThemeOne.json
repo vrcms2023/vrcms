@@ -26,7 +26,7 @@
   "graye6": "#e6e6e6",
 
   "yellow": "#ffff00",
-  
+
   "lightgray": "#e3e3e3",
   "verylightgray": "#f3f3f3",
   "error": "#f23838",
@@ -99,7 +99,7 @@
   "pageTitleColor": "#222222",
 
   "aboutPageBgColor": "",
-  "aboutPageTitleColor": "",
+  "aboutPageTitleColor": "#000000",
   "aboutPageTextColor": "",
 
   "btnPrimary": "#007CB9",
@@ -132,5 +132,4 @@
 
   "iconColor": "#666666",
   "iconHoverColor": ""
- 
 }
