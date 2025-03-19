@@ -1,0 +1,135 @@
+{
+  "name": "VRCMS Theme One",
+  "fontFamily": "Poppins, 'Fira Sans', sans-serif, Arial, verdana",
+  "background": "#ffffff",
+  "bodyBgImage": "",
+
+  "textColor": "#444444",
+
+  "white": "#ffffff",
+  "black": "#000000",
+
+  "gray111": "#1111111",
+  "gray222": "#222222",
+  "gray333": "#333333",
+  "gray444": "#444444",
+  "gray555": "#555555",
+  "gray666": "#666666",
+  "gray777": "#777777",
+  "gray888": "#888888",
+  "gray999": "#999999",
+  "grayaaa": "#aaaaaa",
+  "graybbb": "#bbbbbb",
+  "grayccc": "#cccccc",
+  "grayddd": "#dddddd",
+  "grayeee": "#eeeeee",
+  "graye6": "#e6e6e6",
+
+  "yellow": "#ffff00",
+
+  "lightgray": "#e3e3e3",
+  "verylightgray": "#f3f3f3",
+  "error": "#f23838",
+  "transparent": "transparent",
+
+  "primaryColor": "#005689",
+  "primaryHoverColor": "#007CB9",
+
+  "secondaryColor": "#007CB9",
+  "secondaryHoverColor": "#005689",
+
+  "teritoryColor": "#D5EEFF",
+  "teritoryHoverColor": "#2A5CA0",
+
+  "navbarBg": "#222222",
+  "navbarTextColor": "#ffffff",
+  "navbarLinkColor": "#ffffff",
+  "navbarLinkBgColor": "#748E31",
+  "navbarLinkActiveColor": "#aaaaaa",
+  "navbarLinkHoverColor": "#aaaaaa",
+
+  "navbarChildLinkBgColor": "#222222",
+  "navbarChildLinkColor": "#ffffff",
+  "navbarChildLinkHoverColor": "#222222",
+
+  "carouselSlideTitleColor": "#ffffff",
+  "carouselSlideCaptionColor": "#ffffff",
+
+  "ABriefBg": "#f3f3f3",
+  "ABriefTextColor": "#222222",
+  "ABriefTitleBorderColor": "#27AAE1",
+
+  "ABriefAboutBg": "#ffffff",
+  "ABriefAboutTextColor": "#222222",
+  "ABriefAboutTitleBorderColor": "#27AAE1",
+
+  "testimonialsBg": "#F3F3F3",
+  "testimonialsHeadingColor": "#DDFF86",
+  "testimonialsTextColor": "#000000",
+  "testimonialsLinkColor": "#888888",
+  "testimonialsLinkHoverColor": "#000000",
+
+  "teamBg": "#ffffff",
+  "teamTitleColor": "#000000",
+  "teamTextColor": "#444444",
+  "teamLinkColor": "#27AAE1",
+  "teamHoverColor": "#ffffff",
+  "teamIconColor": "#000000",
+
+  "briefIntroBg": "#eeeeee",
+  "briefIntroTitleColor": "#000000",
+  "briefIntroTextColor": "#3F3F3F",
+
+  "newsCardBg": "#ffffff",
+  "newsCardTextColor": "#000000",
+  "newsCardTitleColor": "#17427f",
+  "newsCardLinkColor": "#17427f",
+  "newsCardLinkHoverColor": "#3cd9d2",
+
+  "pageBannerTextColor": "#ffffff",
+  "pageBannerTitleColor": "#ffffff",
+  "pageBannerSubTitleColor": "#ffffff",
+
+  "footerBgColor": "#e6e6e6",
+  "footerTextColor": "#222222",
+  "footerTitleColor": "#222222",
+  "footerLinkColor": "#111111",
+  "footerLinkHoverColor": "#005689",
+
+  "pageTitleColor": "#222222",
+
+  "aboutPageBgColor": "",
+  "aboutPageTitleColor": "",
+  "aboutPageTextColor": "",
+
+  "btnPrimary": "#007CB9",
+  "btnPrimaryHover": "#005689",
+  "btnPrimaryTextColor": "#ffffff",
+  "btnPrimaryTextHoverColor": "#ffffff",
+  "btnPrimaryBorderColor": "#c4165f",
+  "btnPrimaryBorderHoverColor": "#c4165f",
+
+  "btnSecondry": "#cccccc",
+  "btnSecondryHover": "#cccccc",
+  "btnSecondryTextColor": "#000000",
+  "btnSecondryTextHoverColor": "#000000",
+  "btnSecondryBorderColor": "#aaaaaa",
+  "btnSecondryBorderHoverColor": "#aaaaaa",
+
+  "btnOutline": "#ffffff",
+  "btnOutlineHover": "#ffffff",
+  "btnOutlineTextColor": "#555555",
+  "btnOutlineTextHoverColor": "#111111",
+  "btnOutlineBorderColor": "#999999",
+  "btnOutlineBorderHoverColor": "#f3f3f3",
+
+  "btnLinkTextColor": "#007CB9",
+  "btnLinkTextHoverColor": "#005689",
+
+  "inputBg": "#ffffff",
+  "inputBorder": "#888888",
+  "inputCurve": "",
+
+  "iconColor": "#666666",
+  "iconHoverColor": ""
+}
