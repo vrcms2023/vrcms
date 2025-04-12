@@ -130,28 +130,32 @@ export const getMenuObject = (data) => {
 
 export const HideFooterForAdmin = () => {
   const pathList = [
-    "/login",
-    "/register",
-    "/unauthorized",
-    "/activate",
-    "/reset_password",
-    "/authForm",
-    "/resend_activation",
-    "/password",
-    "/adminNews",
-    "/main",
-    "/dashboard",
-    "/editproject",
+    "/admin/login",
+    "/admin/register",
+    "/admin/unauthorized",
+    "/admin/activate",
+    "/admin/reset_password",
+    "/admin/authForm",
+    "/admin/resend_activation",
+    "/admin/password",
+    "/admin/adminNews",
+    "/admin/main",
+    "/admin/dashboard",
+    "/admin/testimonial",
+    "/admin/contactuslist",
+    "/admin/useradmin",
+    "/admin/userpermission",
+    "/admin/theme",
+    "/admin/adminpagesconfiguration",
     "/addproject",
-    "/testimonial",
-    "/contactUSList",
-    "/userAdmin",
-    "/userPermission",
   ];
-  let isHideMenu =
-    pathList.indexOf(window.location.pathname) >= 0 ? true : false;
-
-  return isHideMenu;
+  const path = window.location.pathname;
+  const match = path.match(/^\/editproject(?:\/([a-zA-Z0-9-]+))?$/);
+  if (match) {
+    return true;
+  } else {
+    return pathList.indexOf(path) >= 0 ? true : false;
+  }
 };
 
 export const reorder = (list, startIndex, endIndex) => {
