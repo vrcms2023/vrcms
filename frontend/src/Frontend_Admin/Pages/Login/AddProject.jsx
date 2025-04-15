@@ -383,9 +383,9 @@ const AddProject = () => {
           <div className="d-flex gap-1 justify-content-center align-items-center">
             <Button
               type=""
-              cssClass="btn btn-secondary"
+              cssClass="btn btn-primary"
               label="Dashboard"
-              handlerChange={() => navigate("/dashboard")}
+              handlerChange={() => navigate("/admin/dashboard")}
             />
             {/* <Button
               type=""
@@ -456,7 +456,7 @@ const AddProject = () => {
                     label="Cancel"
                     cssClass="btn btn-outline mt-2 me-2 w-100"
                     handlerChange={() => {
-                      navigate("/dashboard");
+                      navigate("/admin/dashboard");
                     }}
                   />
                   <Button
@@ -723,6 +723,7 @@ const AddProject = () => {
                         saveState={setSaveState}
                         buttonLable="Upload Plan"
                         maxFiles={1}
+                        scrollEnable={true}
                       />
                       <CatageoryImgC
                         title={`${readOnlyTitle} Thumbnail`}
@@ -756,6 +757,7 @@ const AddProject = () => {
                       showDescription={false}
                       saveState={setSaveState}
                       buttonLable="Upload PDF"
+                      scrollEnable={true}
                     />
                     <CatageoryImgC
                       title={`${readOnlyTitle} PDF's`}
@@ -782,6 +784,7 @@ const AddProject = () => {
                       showDescription={false}
                       saveState={setSaveState}
                       buttonLable="Upload Plan"
+                      scrollEnable={true}
                     />
                     <CatageoryImgC
                       title={`${readOnlyTitle} Plans`}
@@ -808,6 +811,7 @@ const AddProject = () => {
                       showDescription={false}
                       saveState={setSaveState}
                       buttonLable="Upload Availability"
+                      scrollEnable={true}
                     />
                     <CatageoryImgC
                       title={`${readOnlyTitle} Availibility`}
@@ -835,6 +839,7 @@ const AddProject = () => {
                       showDescription={false}
                       saveState={setSaveState}
                       buttonLable="Upload Price Details"
+                      scrollEnable={true}
                     />
                     <CatageoryImgC
                       title={`${readOnlyTitle} Price`}
@@ -922,6 +927,7 @@ const AddProject = () => {
                     descriptionTitle="Image Description"
                     saveState={setSaveState}
                     showDescription={false}
+                    scrollEnable={true}
                   />
                   <CatageoryImgC
                     title={`${readOnlyTitle} Image Gallery`}
@@ -941,7 +947,7 @@ const AddProject = () => {
                 type="submit"
                 cssClass="btn btn btn-secondary"
                 label="Cancel"
-                handlerChange={() => navigate("/dashboard")}
+                handlerChange={() => navigate("/admin/dashboard")}
               />
               {/* <Button
                 type="submit"

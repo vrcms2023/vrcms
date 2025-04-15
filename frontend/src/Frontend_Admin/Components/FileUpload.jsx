@@ -455,7 +455,7 @@ const FileUpload = ({
             })}
           </div>
         </div>
-        <div className="row fixed-bottom bg-white">
+        <div className="row">
           <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-2 my-3 px-5">
             {!editImage?.id ? (
               <button

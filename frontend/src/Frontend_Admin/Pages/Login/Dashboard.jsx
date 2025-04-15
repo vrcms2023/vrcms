@@ -169,7 +169,10 @@ const Dashboard = () => {
         </div> */}
       <div className="row px-3 px-md-5 mb-3">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
-          <Title title="Dashboard" cssClass="text-center blue-500 fs-4" />
+          <Title
+            title="Projects Dashboard"
+            cssClass="text-center blue-500 fs-4"
+          />
           <div className="d-flex gap-1 justify-content-between align-items-center">
             <Button
               type=""
@@ -191,18 +194,18 @@ const Dashboard = () => {
       {/* <hr /> */}
 
       <div className="row px-3 px-md-5 py-4">
-        <Title
+        {/* <Title
           title={"Published projects"}
           cssClass="text-center fw-bolder mb-2 fs-5 text-uppercase green-900"
         />
-        <hr className="border-dark" />
+        <hr className="border-dark" /> */}
         {publishProjecstStatus ? (
           <Projects
             project={pubishProject}
             handleProjectDelete={handleProjectDelete}
           />
         ) : (
-          "Add new Project and publish "
+          <p className="text-center">Add new Project and publish</p>
         )}
       </div>
 

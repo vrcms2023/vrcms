@@ -195,7 +195,7 @@ const UserAdmin = () => {
             </>
           )}
 
-          <Link to="/userPermission" className="btn btn-outline ">
+          <Link to="/admin/userPermission" className="btn btn-outline ">
             Go for Page Permissions
           </Link>
         </div>
