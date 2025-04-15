@@ -169,14 +169,6 @@ const Dashboard = () => {
               label="Add New Project"
               handlerChange={() => navigate("/addproject")}
             />
-            {/* <Button type="" cssClass="btn btn-success" label="User Admin" handlerChange={() => navigate("/userAdmin")} /> */}
-            {/* <Button type="submit" cssClass="btn btn-success" label="Application Pages" handlerChange={() => navigate("/applicationPages")} /> */}
-            {/* <Button
-              type=""
-              cssClass="btn btn-secondary"
-              label="Back"
-              handlerChange={() => navigate("/main")}
-            /> */}
           </div>
         </div>
       </div>

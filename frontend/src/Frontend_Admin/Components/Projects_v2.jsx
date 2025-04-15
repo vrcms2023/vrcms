@@ -166,47 +166,6 @@ export const Projects = ({
           handleProjectreStore={handleProjectreStore}
         />
       </div>
-
-      {/* {project?.future?.length > 0 ? (
-        <div className="col-md-6 col-lg-4">
-          <ProjectItem
-            title={project.future[0].projectCategoryName}
-            cssClass="text-success"
-            projects={project.future}
-            handleProjectDelete={handleProjectDelete}
-          />
-        </div>
-      ) : (
-        <div className="col-md-6 col-lg-4">
-          <Title
-            title={"Upcoming Projects"}
-            cssClass="text-start fw-normal pt-3 mb-3 fs-6 text-dark"
-          />
-          <div className="fw-bold d-flex justify-content-center align-items-center">
-            No project are available
-          </div>
-        </div>
-      )} */}
-      {/* {project?.completed?.length > 0 ? (
-        <div className="col-md-6 col-lg-4">
-          <ProjectItem
-            title={project.completed[0].projectCategoryName}
-            cssClass="text-success"
-            projects={project.completed}
-            handleProjectDelete={handleProjectDelete}
-          />
-        </div>
-      ) : (
-        <div className="col-md-6 col-lg-4">
-          <Title
-            title={"Completed Projects"}
-            cssClass="text-start fw-normal pt-3 mb-3 fs-6 text-dark"
-          />
-          <div className="fw-bold d-flex justify-content-center align-items-center">
-            No project are available
-          </div>
-        </div>
-      )} */}
     </>
   );
 };
