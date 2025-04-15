@@ -2,7 +2,12 @@ import React from "react";
 import Title from "../../Common/Title";
 import { Link } from "react-router-dom";
 
-const ProjectItem = ({ projects, itemCSSClass }) => {
+const ProjectItem = ({
+  projects,
+  itemCSSClass,
+  handleProjectDelete,
+  handleProjectreStore,
+}) => {
   return (
     <>
       {projects.length > 0 ? (
@@ -24,7 +29,14 @@ const ProjectItem = ({ projects, itemCSSClass }) => {
             </td>
 
             <td className="align-middle">
-              {project.publish && <span className="published">P</span>}
+              {project.isActive && (
+                <span
+                  className={`${project.publish ? "text-success " : "disabled"} fw-bold p-3`}
+                >
+                  P
+                </span>
+              )}
+
               {project.isActive ? (
                 <>
                   <Link to={`/editproject/${project.id}`}>
@@ -48,7 +60,7 @@ const ProjectItem = ({ projects, itemCSSClass }) => {
               ) : (
                 <Link
                   to=""
-                  onClick={() => handleProjectDelete(project, project.id)}
+                  onClick={() => handleProjectreStore(project, project.id)}
                 >
                   <i
                     className="fa fa-undo fs-5 fw-bormal text-warning"
@@ -73,7 +85,13 @@ const ProjectItem = ({ projects, itemCSSClass }) => {
   );
 };
 
-const ProjectList = ({ title, cssClass, projects, handleProjectDelete }) => {
+const ProjectList = ({
+  title,
+  cssClass,
+  projects,
+  handleProjectDelete,
+  handleProjectreStore,
+}) => {
   return (
     <>
       <Title
@@ -106,18 +124,24 @@ const ProjectList = ({ title, cssClass, projects, handleProjectDelete }) => {
             <ProjectItem
               projects={projects?.publishedProject}
               itemCSSClass={"published"}
+              handleProjectDelete={handleProjectDelete}
+              handleProjectreStore={handleProjectreStore}
             />
           )}
           {projects?.liveProject?.length > 0 && (
             <ProjectItem
               projects={projects?.liveProject}
               itemCSSClass={"unpublished"}
+              handleProjectDelete={handleProjectDelete}
+              handleProjectreStore={handleProjectreStore}
             />
           )}
           {projects?.archiveProject?.length > 0 && (
             <ProjectItem
               projects={projects?.archiveProject}
               itemCSSClass={"deleted"}
+              handleProjectDelete={handleProjectDelete}
+              handleProjectreStore={handleProjectreStore}
             />
           )}
         </tbody>
@@ -126,7 +150,11 @@ const ProjectList = ({ title, cssClass, projects, handleProjectDelete }) => {
   );
 };
 
-export const Projects = ({ project, handleProjectDelete }) => {
+export const Projects = ({
+  project,
+  handleProjectDelete,
+  handleProjectreStore,
+}) => {
   return (
     <>
       <div className="col-md-6 col-lg-4">
@@ -135,6 +163,7 @@ export const Projects = ({ project, handleProjectDelete }) => {
           cssClass="text-success"
           projects={project}
           handleProjectDelete={handleProjectDelete}
+          handleProjectreStore={handleProjectreStore}
         />
       </div>
 

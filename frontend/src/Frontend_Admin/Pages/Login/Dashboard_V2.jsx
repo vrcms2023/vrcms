@@ -15,18 +15,12 @@ import { getDashBoardProjects } from "../../../redux/project/projectActions";
 const Dashboard = () => {
   const navigate = useNavigate();
   const { projects } = useSelector((state) => state.dashBoardProjects);
-  const [liveProjects, setLiveProject] = useState([]);
-  const [archiveProject, setArchiveProject] = useState([]);
-  const [pubishProject, setpubishProject] = useState([]);
   const [ongoingProject, setOngoingProject] = useState([]);
   const [completedProject, setCompletedProject] = useState([]);
   const [upcomingProject, setUpcomingProject] = useState([]);
-  const [publishProjecstStatus, setPublishProjectsStatus] = useState(false);
-  const [liveProjectsStatus, setliveProjectsStatus] = useState(false);
-  const [archiveProjectsStatus, setArchiveProjectStatus] = useState(false);
+
   const dispatch = useDispatch();
 
-  // console.log("archiveProject", archiveProject)
   /**
    * Get Dash borad projects
    */
@@ -36,32 +30,16 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (projects && projects?.projectList?.length > 0) {
-      let projectsByCategory = getCategoryPorjectList(projects?.projectList);
-
-      setOngoingProject(formatData(projectsByCategory.ongoing));
-      setUpcomingProject(formatData(projectsByCategory.future));
-      setCompletedProject(formatData(projectsByCategory.completed));
+      updateProjects(projects?.projectList);
     }
   }, [projects]);
 
   const updateProjects = (projects) => {
-    const finalObj = formatData(projects);
-    setLiveProject(finalObj.liveProject);
-    setArchiveProject(finalObj.archiveProject);
-    setpubishProject(finalObj.publishedProject);
-    GetProjectsListStatus(finalObj.liveProject, setliveProjectsStatus);
-    GetProjectsListStatus(finalObj.publishedProject, setPublishProjectsStatus);
-    GetProjectsListStatus(finalObj.archiveProject, setArchiveProjectStatus);
-  };
+    let projectsByCategory = getCategoryPorjectList(projects);
 
-  const GetProjectsListStatus = (list, setObjectState) => {
-    setObjectState(
-      list?.completed?.length > 0 ||
-        list?.future?.length > 0 ||
-        list?.ongoing?.length > 0
-        ? true
-        : false
-    );
+    setOngoingProject(formatData(projectsByCategory.ongoing));
+    setUpcomingProject(formatData(projectsByCategory.future));
+    setCompletedProject(formatData(projectsByCategory.completed));
   };
 
   /**
@@ -73,9 +51,6 @@ const Dashboard = () => {
     let liveProject = notPublished.filter((res) => res.isActive);
     let archiveProject = notPublished.filter((res) => !res.isActive);
 
-    // liveProject = getCategoryPorjectList(liveProject);
-    // publishedProject = getCategoryPorjectList(publishedProject);
-    // archiveProject = getCategoryPorjectList(archiveProject);
     const listAvailable =
       publishedProject.length > 0 ||
       liveProject.length > 0 ||
@@ -212,18 +187,21 @@ const Dashboard = () => {
           <Projects
             project={ongoingProject}
             handleProjectDelete={handleProjectDelete}
+            handleProjectreStore={reStoreProject}
           />
         )}
         {upcomingProject.listAvailable && (
           <Projects
             project={upcomingProject}
             handleProjectDelete={handleProjectDelete}
+            handleProjectreStore={reStoreProject}
           />
         )}
         {completedProject.listAvailable && (
           <Projects
             project={completedProject}
-            handleProjectDelete={reStoreProject}
+            handleProjectDelete={handleProjectDelete}
+            handleProjectreStore={reStoreProject}
           />
         )}
       </div>
