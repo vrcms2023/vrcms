@@ -92,7 +92,12 @@ const Activation = lazy(() => import("./Frontend_Admin/Pages/Auth/Activation"));
 const ResendActivationEmail = lazy(
   () => import("./Frontend_Admin/Pages/Auth/ResendActivationEmail")
 );
-const Dashboard = lazy(() => import("./Frontend_Admin/Pages/Login/Dashboard"));
+// const Dashboard = lazy(
+//   () => import("./Frontend_Admin/Pages/Login/Dashboard_V1")
+// );
+const Dashboard = lazy(
+  () => import("./Frontend_Admin/Pages/Login/Dashboard_V2")
+);
 const UserAdmin = lazy(() => import("./Frontend_Admin/Pages/Auth/UserAdmin"));
 const Themes = lazy(() => import("./Frontend_Admin/Pages/Auth/Themes"));
 const UnauthorizedPage = lazy(
