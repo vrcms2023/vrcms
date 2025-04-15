@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Title from "../../../Common/Title";
 import Button from "../../../Common/Button";
 import DeleteDialog from "../../../Common/DeleteDialog";
-import Projects from "../../Components/Projects";
+import Projects from "../../Components/Projects_v2";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -18,6 +18,9 @@ const Dashboard = () => {
   const [liveProjects, setLiveProject] = useState([]);
   const [archiveProject, setArchiveProject] = useState([]);
   const [pubishProject, setpubishProject] = useState([]);
+  const [ongoingProject, setOngoingProject] = useState([]);
+  const [completedProject, setCompletedProject] = useState([]);
+  const [upcomingProject, setUpcomingProject] = useState([]);
   const [publishProjecstStatus, setPublishProjectsStatus] = useState(false);
   const [liveProjectsStatus, setliveProjectsStatus] = useState(false);
   const [archiveProjectsStatus, setArchiveProjectStatus] = useState(false);
@@ -33,7 +36,11 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (projects && projects?.projectList?.length > 0) {
-      updateProjects(projects.projectList);
+      let projectsByCategory = getCategoryPorjectList(projects?.projectList);
+
+      setOngoingProject(formatData(projectsByCategory.ongoing));
+      setUpcomingProject(formatData(projectsByCategory.future));
+      setCompletedProject(formatData(projectsByCategory.completed));
     }
   }, [projects]);
 
@@ -66,11 +73,18 @@ const Dashboard = () => {
     let liveProject = notPublished.filter((res) => res.isActive);
     let archiveProject = notPublished.filter((res) => !res.isActive);
 
-    liveProject = getCategoryPorjectList(liveProject);
-    publishedProject = getCategoryPorjectList(publishedProject);
-    archiveProject = getCategoryPorjectList(archiveProject);
-
+    // liveProject = getCategoryPorjectList(liveProject);
+    // publishedProject = getCategoryPorjectList(publishedProject);
+    // archiveProject = getCategoryPorjectList(archiveProject);
+    const listAvailable =
+      publishedProject.length > 0 ||
+      liveProject.length > 0 ||
+      archiveProject.length > 0
+        ? true
+        : false;
     return {
+      projectCategoryName: data[0].projectCategoryName,
+      listAvailable: listAvailable,
       liveProject,
       archiveProject,
       publishedProject,
@@ -170,7 +184,7 @@ const Dashboard = () => {
       <div className="row px-3 px-md-5 mb-3">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
           <Title
-            title="Projects Dashboard"
+            title="Projects Dashboard v2"
             cssClass="text-center blue-500 fs-4"
           />
           <div className="d-flex gap-1 justify-content-between align-items-center">
@@ -194,53 +208,25 @@ const Dashboard = () => {
       {/* <hr /> */}
 
       <div className="row px-3 px-md-5 py-4">
-        {/* <Title
-          title={"Published projects"}
-          cssClass="text-center fw-bolder mb-2 fs-5 text-uppercase green-900"
-        />
-        <hr className="border-dark" /> */}
-        {publishProjecstStatus ? (
+        {ongoingProject.listAvailable && (
           <Projects
-            project={pubishProject}
+            project={ongoingProject}
             handleProjectDelete={handleProjectDelete}
           />
-        ) : (
-          <p className="text-center">Add new Project and publish</p>
         )}
-      </div>
-
-      {/* Saved / Ready to publish */}
-      {liveProjectsStatus ? (
-        <div className="row p-5 pt-0">
-          <Title
-            title={"Saved / Ready to publish"}
-            cssClass="text-center fw-bolder pt-4 text-uppercase  mb-2 fs-5 green-900"
-          />
-          <hr className="border-dark" />
+        {upcomingProject.listAvailable && (
           <Projects
-            project={liveProjects}
+            project={upcomingProject}
             handleProjectDelete={handleProjectDelete}
           />
-        </div>
-      ) : (
-        ""
-      )}
-
-      {archiveProjectsStatus ? (
-        <div className="row p-5 py-3 bg-gray-light">
-          <Title
-            title={"Archive projects"}
-            cssClass="text-center fw-bolder pt-4 text-uppercase  mb-2 fs-4 gray-900"
-          />
-          <hr className="border-dark" />
+        )}
+        {completedProject.listAvailable && (
           <Projects
-            project={archiveProject}
+            project={completedProject}
             handleProjectDelete={reStoreProject}
           />
-        </div>
-      ) : (
-        ""
-      )}
+        )}
+      </div>
     </div>
   );
 };
