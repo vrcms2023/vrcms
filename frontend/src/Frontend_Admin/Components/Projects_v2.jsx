@@ -96,7 +96,7 @@ const ProjectList = ({
     <>
       <Title
         title={title}
-        cssClass="text-start fw-normal pt-3 mb-3 fs-6 text-dark"
+        cssClass="text-center fw-normal pt-3 mb-3 text-dark"
       />
       <table className={`table table-hover border projects`}>
         <thead>

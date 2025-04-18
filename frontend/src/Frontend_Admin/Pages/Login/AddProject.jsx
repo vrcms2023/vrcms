@@ -17,6 +17,8 @@ import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
 import CSRFToken from "../../../Frontend_Views/Components/CRSFToken";
 
+import "./AddProject.css";
+
 const AddProject = () => {
   const navigate = useNavigate();
 
@@ -28,6 +30,10 @@ const AddProject = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [newProject, setNewProject] = useState({});
   const [readOnlyTitle, setreadOnlyTitle] = useState("");
+
+  const [selected, setSelected] = useState('');
+
+
   const about = {
     aboutstitle: null,
     aboutussubtitle: null,
@@ -89,6 +95,7 @@ const AddProject = () => {
    */
   const handleChange = (e) => {
     setErrorMessage("");
+    setSelected(e.target.value);
     const value = e.target.value.toLowerCase();
     const obj = defaultProjectType.filter((obj) => {
       return obj.projectValue === value;
@@ -372,18 +379,18 @@ const AddProject = () => {
   };
 
   return (
-    <div className="container-fluid pt-5">
+    <div className="container-fluid pt-5"> 
       <CSRFToken />
       <div className="row px-3 px-lg-5">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
           <Title
             title={`${id ? "Edit Project" : "Add Project"}`}
-            cssClass="text-center blue-500 fs-4 mb-3 mb-md-0"
+            cssClass="text-center blue-500 fs-5 mb-3 mb-md-0"
           />
           <div className="d-flex gap-1 justify-content-center align-items-center">
             <Button
               type=""
-              cssClass="btn btn-primary"
+              cssClass="btn btn-outline"
               label="Dashboard"
               handlerChange={() => navigate("/admin/dashboard")}
             />
@@ -396,19 +403,21 @@ const AddProject = () => {
           </div>
         </div>
       </div>
-      <hr />
+      {/* <hr /> */}
 
       {/* <Alert mesg="Project Added Successfully" cssClass="alert alert-success text-center m-auto fs-5 w-50 "/> */}
 
       <>
-        {errorMessage ? <Error>{errorMessage}</Error> : ""}
+        {errorMessage ? <div className="mt-5 pt-5"><Error>{errorMessage}</Error></div> : ""}
         {!id && !show ? (
-          <div className="py-2">
+          <div className="pt-5 mt-5 select-project-type">
             <select
-              className="form-select shadow-lg border border-2 border-success w-75 m-auto d-block"
+              // className="form-select border p-3 px-4 m-auto d-block rounded-0"
               aria-label="Default select example"
               id="projectStatus"
               onChange={(e) => handleChange(e)}
+              className={`custom-select form-select border p-3 px-4 m-auto d-block rounded-0 ${selected ? 'active' : ''}`}
+
             >
               <option>Select Project Type</option>
               {defaultProjectType?.length
@@ -424,7 +433,7 @@ const AddProject = () => {
                   })
                 : ""}
             </select>
-            <hr />
+            {/* <hr /> */}
           </div>
         ) : (
           ""
@@ -433,7 +442,7 @@ const AddProject = () => {
 
       {projectType.length > 0 && !show ? (
         <div className="row" id="projectTitle">
-          <div className="col-md-4 offset-md-4 my-5 ">
+          <div className="mt-4 p-0">
             <div className="">
               {/* <label htmlFor="projectName" className="form-label text-center d-block fs-5 mb-3 fw-normal">Add project name</label> */}
               <div className="">
@@ -444,24 +453,24 @@ const AddProject = () => {
                 )}
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control p-4 px-0 text-center border rounded-0"
                   name="projectName"
                   value={projectName}
                   onChange={titleInputHandleChange}
                   id="projectName"
-                  placeholder="Add project name"
+                  placeholder="Your input please..."
                 />
-                <div className="d-flex">
+                <div className="d-flex justify-content-center mt-4">
                   <Button
                     label="Cancel"
-                    cssClass="btn btn-outline mt-2 me-2 w-100"
+                    cssClass="btn btn-outline me-2"
                     handlerChange={() => {
                       navigate("/admin/dashboard");
                     }}
                   />
                   <Button
                     label="Save"
-                    cssClass="btn btn-primary mt-2 ms-2 w-100"
+                    cssClass="btn btn-primary ms-2"
                     handlerChange={addNewProject}
                   />
                 </div>

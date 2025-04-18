@@ -1,0 +1,21 @@
+.select-project-type, #projectTitle {
+    width: 680px;
+    margin: 0 auto;
+}
+
+.select-project-type {
+    display: flex;
+    align-items: center;
+}
+
+.custom-select {
+    border: 2px solid #ccc !important;
+    padding: 8px;
+    color: #aaa !important;
+    transition: all 0.3s ease;
+  }
+  
+  .custom-select.active {
+    border-color: #a5e7f6 !important;
+    color: #000 !important;
+  }
