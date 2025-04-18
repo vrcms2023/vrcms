@@ -29,7 +29,8 @@ body {
 }
 
 .btn {
-  border-radius: 0.375rem !important;
+  // border-radius: 0.375rem !important;
+  border-radius: 0 !important;
   transition: all .35s;
   padding: .6rem 1.2rem !important;
 
@@ -117,7 +118,6 @@ body {
 
 // .ABriefAbout h3::before, .ABriefAbout .title::before { border-color: ${({ theme}) => theme.ABriefAboutTitleBorderColor}; }
 
-
 .homeServices {
     color:${({ theme }) => theme.secondaryColor}; 
     h2 {
@@ -202,7 +202,6 @@ body {
 .pageTitle {
   color: ${({ theme }) => theme.pageTitleColor};
 }
-
 
 
 .newsModel {
@@ -311,11 +310,19 @@ body {
       margin-top: 12rem;
     }
 
+    label {
+      font-weight: 500 !important;
+      font-size: 14px !important;
+    }
+
     input,
     textarea, select {
       background-color: ${({theme}) => theme.inputBg};
       border: 1px solid ${({theme}) => theme.inputBorder} !important;
-      padding: 12px 10px;
+      padding: 10px !important;
+      border-radius: 0px !important;
+      color: ${({theme}) => theme.gray444} !important;
+      font-size: 14px !important;
     }
     input[type="checkbox"], input[type="radio"] {
       padding: 0;
@@ -325,7 +332,4 @@ body {
     .scrollTop {
       background-color: ${({theme}) => theme.secondaryColor};
     }
-
-   
-    
 `;
