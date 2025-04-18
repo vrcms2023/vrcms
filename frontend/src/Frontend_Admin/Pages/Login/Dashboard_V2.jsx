@@ -12,6 +12,8 @@ import { confirmAlert } from "react-confirm-alert";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getDashBoardProjects } from "../../../redux/project/projectActions";
 
+import "./Dashboard.css";
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const { projects } = useSelector((state) => state.dashBoardProjects);
@@ -152,21 +154,21 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container-fluid pt-5">
+    <div className="container-fluid pt-4 pt-md-5 pojects-dashboard">
       {/* <div className='text-end'>
             <badge className="bg-light text-dark shadow rounded p-1">{userName ? (`You are logged as - ${userName}`):""}</badge>
         </div> */}
-      <div className="row px-3 px-md-5 mb-3">
+      <div className="row px-2 px-lg-5 mb-md-3 pb-3 border-bottom ">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
           <Title
             title="Projects Dashboard v2"
-            cssClass="text-center blue-500 fs-4"
+            cssClass="text-center blue-500 fs-5 mb-2 mb-md-0"
           />
           <div className="d-flex gap-1 justify-content-between align-items-center">
             <Button
               type=""
-              cssClass="btn btn-primary"
-              label="Add New Project"
+              cssClass="btn btn-outline"
+              label="Add Project"
               handlerChange={() => navigate("/addproject")}
             />
           </div>
@@ -174,7 +176,7 @@ const Dashboard = () => {
       </div>
       {/* <hr /> */}
 
-      <div className="row px-3 px-md-5 py-4">
+      <div className="row px-2 px-lg-5 py-2 py-md-4">
         {ongoingProject.listAvailable && (
           <Projects
             project={ongoingProject}

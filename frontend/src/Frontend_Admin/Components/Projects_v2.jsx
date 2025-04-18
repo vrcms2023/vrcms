@@ -13,7 +13,7 @@ const ProjectItem = ({
       {projects.length > 0 ? (
         projects.map((project) => (
           <tr key={project.id} className={itemCSSClass}>
-            <td className="align-middle">{project.projectTitle} </td>
+            <td className={`${!project.isActive ? "text-decoration-line-through " : ""} align-middle`}>{project.projectTitle} </td>
             <td className="align-middle">
               <span
                 className={`badge fw-normal ${
@@ -28,10 +28,10 @@ const ProjectItem = ({
               </span>
             </td>
 
-            <td className="align-middle">
+            <td className="align-middle text-center">
               {project.isActive && (
                 <span
-                  className={`${project.publish ? "text-success " : "disabled"} fw-bold p-3`}
+                  className={`${project.publish ? "text-success " : "text-black-50"} fw-bold  fs-5`}
                 >
                   P
                 </span>
@@ -41,7 +41,7 @@ const ProjectItem = ({
                 <>
                   <Link to={`/editproject/${project.id}`}>
                     <i
-                      className="fa fa-pencil-square-o fs-4 text-muted me-4"
+                      className="fa fa-pencil fs-5 text-muted mx-4"
                       aria-hidden="true"
                       title="Edit"
                     ></i>
@@ -51,7 +51,7 @@ const ProjectItem = ({
                     onClick={() => handleProjectDelete(project, project.id)}
                   >
                     <i
-                      className="fa fa-trash-o fs-4 text-danger"
+                      className="fa fa-trash-o fs-5 text-danger"
                       aria-hidden="true"
                       title="Delete"
                     ></i>
@@ -98,7 +98,7 @@ const ProjectList = ({
         title={title}
         cssClass="text-start fw-normal pt-3 mb-3 fs-6 text-dark"
       />
-      <table className={`table table-hover border `}>
+      <table className={`table table-hover border projects`}>
         <thead>
           <tr className="">
             <th scope="col" className="py-2 bg-light fw-normal text-dark">
@@ -123,7 +123,7 @@ const ProjectList = ({
           {projects?.publishedProject?.length > 0 && (
             <ProjectItem
               projects={projects?.publishedProject}
-              itemCSSClass={"published"}
+              itemCSSClass={"projectPublished"}
               handleProjectDelete={handleProjectDelete}
               handleProjectreStore={handleProjectreStore}
             />
@@ -131,7 +131,7 @@ const ProjectList = ({
           {projects?.liveProject?.length > 0 && (
             <ProjectItem
               projects={projects?.liveProject}
-              itemCSSClass={"unpublished"}
+              itemCSSClass={"projectUnpublished"}
               handleProjectDelete={handleProjectDelete}
               handleProjectreStore={handleProjectreStore}
             />
@@ -139,7 +139,7 @@ const ProjectList = ({
           {projects?.archiveProject?.length > 0 && (
             <ProjectItem
               projects={projects?.archiveProject}
-              itemCSSClass={"deleted"}
+              itemCSSClass={"projectCompleted"}
               handleProjectDelete={handleProjectDelete}
               handleProjectreStore={handleProjectreStore}
             />
@@ -157,7 +157,7 @@ export const Projects = ({
 }) => {
   return (
     <>
-      <div className="col-md-6 col-lg-4">
+      <div className="col-lg-4">
         <ProjectList
           title={project?.projectCategoryName}
           cssClass="text-success"

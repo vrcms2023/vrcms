@@ -1,0 +1,33 @@
+table.projects td {
+    color: #444;
+    cursor: default;
+}
+
+table.projects th {
+    font-weight: 500 !important;
+    padding-top: 12px  !important;
+    padding-bottom: 12px  !important;
+    background-color: #d7d7d7 !important;
+}
+
+table.projects thead th:last-child {
+    text-align: center;
+}
+
+.projectUnpublished td  {
+    color: rgba(174, 174, 174, 0.468) !important;
+    background-color: rgb(240, 240, 240) !important;
+}
+
+.projectUnpublished td .badge {
+    background-color: rgb(219, 219, 219) !important;
+}
+.projectUnpublished .text-black-50 {
+    opacity: .2;
+}
+
+@media(max-width: 1300px) {
+    table.projects th:nth-child(2), table.projects td:nth-child(2) {
+        display: none
+    }
+}
