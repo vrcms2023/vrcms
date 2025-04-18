@@ -158,7 +158,7 @@ const Dashboard = () => {
       {/* <div className='text-end'>
             <badge className="bg-light text-dark shadow rounded p-1">{userName ? (`You are logged as - ${userName}`):""}</badge>
         </div> */}
-      <div className="row px-2 px-lg-5 mb-md-3 pb-3 border-bottom ">
+      <div className="row px-2 px-lg-5 mb-md-3 pb-3 ">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
           <Title
             title="Projects Dashboard v2"
