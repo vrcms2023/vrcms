@@ -487,20 +487,21 @@ const AddProject = () => {
 
       {show ? (
         <>
-          <div className="row bg-light px-3 px-lg-5 mt-3 shadow-lg">
-            <div className="d-flex justify-content-between align-items-center">
+          <div className="row px-3 mt-3">
+            {/* <div className="d-flex justify-content-center align-items-center"> */}
+            <div className="">
               {readOnlyTitle && (
-                <h3 className="my-4 text-success fs-4">
-                  {readOnlyTitle}{" "}
+                <h3 className="my-4 text-success fs-5 text-center border-top border-bottom py-3">
+                  {readOnlyTitle} <br />
                   <span
-                    className="badge bg-warning text-dark"
-                    style={{ fontSize: ".7rem" }}
+                    className="badge bg-warning text-dark px-4 py-2 mt-2"
+                    style={{ fontSize: ".8rem", fontWeight: "500" }}
                   >
                     {projectStatus.toUpperCase()}
                   </span>
                 </h3>
               )}
-              <div className="d-flex justify-content-center align-items-center gap-1">
+              {/* <div className="d-flex justify-content-center align-items-center gap-1">
                 <Button
                   type="submit"
                   disabled={saveState}
@@ -523,18 +524,42 @@ const AddProject = () => {
                     handlerChange={publishHandler}
                   />
                 )}
-              </div>
+              </div> */}
             </div>
 
-            <div className="col-md-3 bg-light pb-3">
+            <div className="col-md-2 pb-3 project-page-tab-links">
+            <div className="d-flex justify-content-end">
+            <Button
+                    type="submit"
+                    cssClass="btn btn-sm btn-outline me-1"
+                    label={"Schudule Publish"}
+                    handlerChange={publishHandler}
+                  />
+            {projectPublish ? (
+                  <Button
+                    type="submit"
+                    cssClass="btn btn-sm btn-outline"
+                    label={"UNPUBLISH"}
+                    handlerChange={publishHandler}
+                  />
+                ) : (
+                  <Button
+                    type="submit"
+                    cssClass="btn btn-sm btn-success"
+                    label={"PUBLISH"}
+                    handlerChange={publishHandler}
+                  />
+                )}
+            </div>
+                
               <div
-                className="nav flex-column nav-pills "
+                className="nav flex-column nav-pills mt-4"
                 id="v-pills-tab"
                 role="tablist"
                 aria-orientation="vertical"
               >
                 <button
-                  className="nav-link active mb-3"
+                  className="nav-link active"
                   id="v-pills-home-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#v-pills-home"
@@ -546,7 +571,7 @@ const AddProject = () => {
                   Info
                 </button>
                 <button
-                  className="nav-link mb-3"
+                  className="nav-link"
                   id="v-pills-profile-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#v-pills-profile"
@@ -558,7 +583,7 @@ const AddProject = () => {
                   Pdfs / Plan / Map / Cost / Availability
                 </button>
                 <button
-                  className="nav-link mb-3"
+                  className="nav-link"
                   id="v-pills-messages-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#v-pills-messages"
@@ -570,7 +595,7 @@ const AddProject = () => {
                   Specifications
                 </button>
                 <button
-                  className="nav-link mb-3"
+                  className="nav-link"
                   id="v-pills-settings-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#v-pills-settings"
@@ -583,7 +608,7 @@ const AddProject = () => {
                 </button>
 
                 <button
-                  className="nav-link mb-3"
+                  className="nav-link"
                   id="v-pills-settings-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#v-pills-gallery"
@@ -599,7 +624,7 @@ const AddProject = () => {
                 <button className="nav-link mb-3" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-availability" type="button" role="tab" aria-controls="v-pills-availability" aria-selected="false">Availability</button> */}
               </div>
             </div>
-            <div className="col-md-9 shadow-lg px-3 py-4 p-md-5 mb-5">
+            <div className="col-md-10 px-4 my-5">
               <div className="tab-content" id="v-pills-tabContent">
                 <div
                   className="tab-pane fade show active"
@@ -607,7 +632,7 @@ const AddProject = () => {
                   role="tabpanel"
                   aria-labelledby="v-pills-home-tab"
                 >
-                  <div className="">
+                  <div className="w-50 m-auto">
                     <div className="mb-3">
                       <label htmlFor="projectName" className="form-label  ">
                         Project Name
@@ -949,6 +974,7 @@ const AddProject = () => {
                 </div>
               </div>
             </div>
+
           </div>
           <div className="row">
             <div className="col-lg-12 py-4 d-flex gap-1 justify-content-center align-items-center">

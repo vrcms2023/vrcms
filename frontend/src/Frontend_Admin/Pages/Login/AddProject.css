@@ -19,3 +19,7 @@
     border-color: #a5e7f6 !important;
     color: #000 !important;
   }
+
+.linksproject-page-tab-links btn.nav-link {
+    border-radius: 0px !important;
+}
