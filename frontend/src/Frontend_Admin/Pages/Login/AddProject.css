@@ -1,6 +1,10 @@
 .select-project-type, #projectTitle {
     width: 680px;
     margin: 0 auto;
+
+    @media (max-width: 440px) {
+        width: 100%;
+    }
 }
 
 .select-project-type {
@@ -22,4 +26,34 @@
 
 .linksproject-page-tab-links btn.nav-link {
     border-radius: 0px !important;
+}
+
+
+.projectDetails .tab-pane {
+    @media (max-width: 768px) {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    @media (min-width: 769px) and (max-width: 992px) {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    @media (min-width: 1024px) {
+        width: 60%;
+        margin: 0 auto;
+    }
+}
+
+.collateralUpload {
+    .heightCtrl {
+        height: auto; 
+    }
+
+    .form-label {
+        padding-bottom: 2px;
+        border-bottom: 1px solid #ececec;
+        display: block;
+    }
 }

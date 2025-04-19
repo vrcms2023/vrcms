@@ -85,24 +85,23 @@ const Specifications = ({
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center">
-        <Title title={title} cssClass="fs-5 fw-bold" />
+        <Title title={title} cssClass="" />
         {specifications.length > 0 && (
           <Button
             type="submit"
-            cssClass="btn float-end btn-success mb-2"
+            cssClass="btn float-end btn-outline mb-2"
             label="ADD"
             handlerChange={handleClick}
           />
         )}
       </div>
-      <hr />
       <div className="">
         <table className="table m-0">
           <tbody>
             {specifications?.length > 0 ? (
               specifications.map((val, i) => (
                 <tr key={i}>
-                  <td className="border-bottom  py-5 bg-transparent">
+                  <td className=" py-4 bg-transparent">
                     <input
                       type="text"
                       className="form-control mb-2"
@@ -121,9 +120,9 @@ const Specifications = ({
                       onChange={(e) => handleChange(e, i)}
                     ></textarea>
                   </td>
-                  <td className="align-middle text-center border-bottom bg-transparent">
+                  <td className="align-top py-4 text-left bg-transparent">
                     <i
-                      className="fa fa-trash-o fs-3 text-danger"
+                      className="fa fa-trash-o fs-4 text-muted"
                       aria-hidden="true"
                       onClick={() => handleDelete(i)}
                       style={{ cursor: "pointer" }}
@@ -137,13 +136,13 @@ const Specifications = ({
                   <div className="d-flex justify-content-center align-items-center flex-column">
                     <Button
                       type="submit"
-                      cssClass="btn btn-success mb-2"
-                      label="ADD"
+                      cssClass="btn btn-outline mb-2"
+                      label="Add A Specification"
                       handlerChange={handleClick}
                     />
-                    <p className="text-center text-warning fs-4 m-0">
+                    {/* <p className="text-center text-warning fs-4 m-0">
                       "Click on button to add specifications"
-                    </p>
+                    </p> */}
                   </div>
                 </td>
               </tr>

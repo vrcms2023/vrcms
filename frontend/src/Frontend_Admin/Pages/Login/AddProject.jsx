@@ -379,7 +379,7 @@ const AddProject = () => {
   };
 
   return (
-    <div className="container-fluid pt-5"> 
+    <div className="container-fluid pt-4"> 
       <CSRFToken />
       <div className="row px-3 px-lg-5">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
@@ -491,11 +491,11 @@ const AddProject = () => {
             {/* <div className="d-flex justify-content-center align-items-center"> */}
             <div className="">
               {readOnlyTitle && (
-                <h3 className="my-4 text-success fs-5 text-center border-top border-bottom py-3">
-                  {readOnlyTitle} <br />
+                <h3 className="my-4 fs-5 text-center border-bottom pt-0 pb-3 py-md-3">
+                  {readOnlyTitle}
                   <span
-                    className="badge bg-warning text-dark px-4 py-2 mt-2"
-                    style={{ fontSize: ".8rem", fontWeight: "500" }}
+                    className="badge bg-warning text-dark px-2 ms-2"
+                    style={{ fontSize: ".7rem", fontWeight: "500" }}
                   >
                     {projectStatus.toUpperCase()}
                   </span>
@@ -527,25 +527,26 @@ const AddProject = () => {
               </div> */}
             </div>
 
-            <div className="col-md-2 pb-3 project-page-tab-links">
-            <div className="d-flex justify-content-end">
+            <div className="col-md-4 col-lg-2 pb-3 project-page-tab-links">
+            <div className="d-flex justify-content-end p-0">
             <Button
                     type="submit"
                     cssClass="btn btn-sm btn-outline me-1"
-                    label={"Schudule Publish"}
+                    label={"PUBLISH"}
+                    icon={"fa-calendar"}
                     handlerChange={publishHandler}
                   />
             {projectPublish ? (
                   <Button
                     type="submit"
-                    cssClass="btn btn-sm btn-outline"
-                    label={"UNPUBLISH"}
+                    cssClass="btn btn-sm btn-success text-white"
+                    label={"UN PUBLISH"}
                     handlerChange={publishHandler}
                   />
                 ) : (
                   <Button
                     type="submit"
-                    cssClass="btn btn-sm btn-success"
+                    cssClass="btn btn-sm btn-outline"
                     label={"PUBLISH"}
                     handlerChange={publishHandler}
                   />
@@ -624,15 +625,15 @@ const AddProject = () => {
                 <button className="nav-link mb-3" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-availability" type="button" role="tab" aria-controls="v-pills-availability" aria-selected="false">Availability</button> */}
               </div>
             </div>
-            <div className="col-md-10 px-4 my-5">
+            <div className="col-md-8 col-lg-10 px-4  projectDetails">
               <div className="tab-content" id="v-pills-tabContent">
                 <div
-                  className="tab-pane fade show active"
+                  className="tab-pane fade show active projectInfo"
                   id="v-pills-home"
                   role="tabpanel"
                   aria-labelledby="v-pills-home-tab"
                 >
-                  <div className="w-50 m-auto">
+                  <div className="">
                     <div className="mb-3">
                       <label htmlFor="projectName" className="form-label  ">
                         Project Name
@@ -773,12 +774,12 @@ const AddProject = () => {
 
                 {/* DOCUMENTS */}
                 <div
-                  className="tab-pane fade"
+                  className="tab-pane fade collateralUpload"
                   id="v-pills-profile"
                   role="tabpanel"
                   aria-labelledby="v-pills-profile-tab"
                 >
-                  <div className="mb-3">
+                  <div className="mb-4">
                     <label className="form-label">Add PDF's (Upload PDF)</label>
                     <FileUpload
                       project={newProject}
@@ -803,7 +804,7 @@ const AddProject = () => {
                     />
                   </div>
 
-                  <div className="mb-3">
+                  <div className="mb-4">
                     <label className="form-label">
                       Add Plan (Upload image)
                     </label>
@@ -830,7 +831,7 @@ const AddProject = () => {
                     />
                   </div>
 
-                  <div className="mb-3">
+                  <div className="mb-4">
                     <label className="form-label">
                       Add Availability (Upload image / PDF)
                     </label>
@@ -886,7 +887,7 @@ const AddProject = () => {
                   </div>
 
                   {/* Add GOOGLE MAP  */}
-                  <div className="mb-3">
+                  <div className="mb-4">
                     <label className="form-label">
                       Add Google Map (Embed a map - source url){" "}
                     </label>
@@ -933,7 +934,7 @@ const AddProject = () => {
                   role="tabpanel"
                   aria-labelledby="v-pills-gallery-tab"
                 >
-                  <div className="mb-3">
+                  <div className="mb-4">
                     <label htmlFor="imageDescription" className="form-label  ">
                       Recent project status description
                     </label>

@@ -33,6 +33,7 @@ body {
   border-radius: 0 !important;
   transition: all .35s;
   padding: .6rem 1.2rem !important;
+  font-weight: normal !important;
 
   // &:hover svg { transform: rotate(-45deg);}
   &:hover {
@@ -42,9 +43,9 @@ body {
     transform: translateX(10px);
   }
 
-  @media (max-width: 480px) {
-    width: 100%;
-  }
+  // @media (max-width: 480px) {
+  //   width: 100%;
+  // }
 }
 .btn-primary {
   background-color:${({ theme }) => theme.btnPrimary}; 
@@ -310,10 +311,10 @@ body {
       margin-top: 12rem;
     }
 
-    label {
-      font-weight: 500 !important;
-      font-size: 14px !important;
-    }
+    // label {
+    //   font-weight: 500 !important;
+    //   font-size: 14px !important;
+    // }
 
     input,
     textarea, select {

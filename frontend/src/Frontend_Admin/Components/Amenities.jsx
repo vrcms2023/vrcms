@@ -52,9 +52,9 @@ export const Amenities = ({ title, value, amenities, setAmenities, name }) => {
     setAmenities(onchangeVal);
   };
   return (
-    <>
-      <Title title={title} cssClass="fs-5 fw-bold" />
-      <div className="border border-3 mb-4 shadow-lg">
+    <div className="animities">
+      <Title title={title} cssClass="mb-2" />
+      <div className="mb-4">
         {/* <label htmlFor="addImages" className="form-label  ">Add Image's</label> */}
         <textarea
           className="form-control"
@@ -65,7 +65,7 @@ export const Amenities = ({ title, value, amenities, setAmenities, name }) => {
           rows="3"
         ></textarea>
       </div>
-    </>
+    </div>
   );
 };
 
