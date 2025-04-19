@@ -3,7 +3,6 @@
 }
 
 table.projects td {
-    color: #444;
     cursor: default;
 }
 
@@ -20,14 +19,14 @@ table.projects thead th:last-child {
     text-align: center;
 }
 
-.projectUnpublished td  {
-    color: rgba(174, 174, 174, 0.468) !important;
-    background-color: rgb(240, 240, 240) !important;
+.projectPublished  {
+    color: #34A372 !important;
 }
 
-.projectUnpublished td .badge {
-    background-color: rgb(219, 219, 219) !important;
+.projectUnpublished  {
+    color: rgb(195 195 195) !important;
 }
+
 .projectUnpublished .text-black-50 {
     opacity: .2;
 }
@@ -36,4 +35,9 @@ table.projects thead th:last-child {
     table.projects th:nth-child(2), table.projects td:nth-child(2) {
         display: none
     }
+}
+
+.projectDeleted {
+    color: #A21B3F !important;
+    text-decoration: line-through;
 }

@@ -13,25 +13,26 @@ const ProjectItem = ({
       {projects.length > 0 ? (
         projects.map((project) => (
           <tr key={project.id} className={itemCSSClass}>
-            <td className={`${!project.isActive ? "text-decoration-line-through " : ""} align-middle`}>{project.projectTitle} </td>
+            <td className={`${itemCSSClass} align-middle`}>{project.projectTitle} </td>
             <td className="align-middle">
               <span
                 className={`badge fw-normal ${
-                  parseInt(project.percentValue) === 0
+                  parseInt(project.percentValue) >= 0 && parseInt(project.percentValue) < 50
                     ? "bg-info"
                     : parseInt(project.percentValue) === 100
                       ? "bg-success"
                       : "bg-warning"
                 }`}
               >
-                {project?.percentValue ? project?.percentValue : 0} %
+                {/* {project?.percentValue ? project?.percentValue : 0} % */}
+                {project?.percentValue} %
               </span>
             </td>
 
             <td className="align-middle text-center">
               {project.isActive && (
                 <span
-                  className={`${project.publish ? "text-success " : "text-black-50"} fw-bold  fs-5`}
+                  className={`${project.publish ? "text-success " : "text-black-50"} fw-bold `}
                 >
                   P
                 </span>
@@ -41,7 +42,7 @@ const ProjectItem = ({
                 <>
                   <Link to={`/editproject/${project.id}`}>
                     <i
-                      className="fa fa-pencil fs-5 text-muted mx-4"
+                      className="fa fa-pencil text-muted mx-4"
                       aria-hidden="true"
                       title="Edit"
                     ></i>
@@ -51,7 +52,7 @@ const ProjectItem = ({
                     onClick={() => handleProjectDelete(project, project.id)}
                   >
                     <i
-                      className="fa fa-trash-o fs-5 text-danger"
+                      className="fa fa-trash-o  text-muted"
                       aria-hidden="true"
                       title="Delete"
                     ></i>
@@ -63,7 +64,7 @@ const ProjectItem = ({
                   onClick={() => handleProjectreStore(project, project.id)}
                 >
                   <i
-                    className="fa fa-undo fs-5 fw-bormal text-warning"
+                    className="fa fa-undo  fw-bormal text-muted"
                     aria-hidden="true"
                     title="Revert"
                   ></i>
@@ -139,7 +140,7 @@ const ProjectList = ({
           {projects?.archiveProject?.length > 0 && (
             <ProjectItem
               projects={projects?.archiveProject}
-              itemCSSClass={"projectCompleted"}
+              itemCSSClass={"projectDeleted"}
               handleProjectDelete={handleProjectDelete}
               handleProjectreStore={handleProjectreStore}
             />

@@ -154,11 +154,11 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container-fluid pt-4 pt-md-5 pojects-dashboard">
+    <div className="container-fluid p-4  pojects-dashboard">
       {/* <div className='text-end'>
             <badge className="bg-light text-dark shadow rounded p-1">{userName ? (`You are logged as - ${userName}`):""}</badge>
         </div> */}
-      <div className="row px-2 px-lg-5 mb-md-3 pb-3 ">
+      <div className="row px-2 pb-4 px-lg-5 border-bottom">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
           <Title
             title="Projects Dashboard v2"
@@ -176,7 +176,7 @@ const Dashboard = () => {
       </div>
       {/* <hr /> */}
 
-      <div className="row px-2 px-lg-5 py-2 py-md-4">
+      <div className="row p-2 p-md-5 ">
         {ongoingProject.listAvailable && (
           <Projects
             project={ongoingProject}
