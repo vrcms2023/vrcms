@@ -30,14 +30,15 @@ body {
 
 .btn {
   // border-radius: 0.375rem !important;
-  border-radius: 0 !important;
-  transition: all .35s;
-  padding: .6rem 1.2rem !important;
+  
+  // transition: all .35s;
+  // padding: .6rem 1.2rem !important;
   font-weight: normal !important;
+  border-radius: 0 !important;
 
   // &:hover svg { transform: rotate(-45deg);}
   &:hover {
-    letter-spacing: .1rem;
+    // letter-spacing: .1rem;
   }
   &:hover svg { 
     transform: translateX(10px);

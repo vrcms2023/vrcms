@@ -1,6 +1,6 @@
-.pojects-dashboard .btn-outline {
+/* .pojects-dashboard .btn-outline {
     border: 1px solid #f4f4f4 !important; 
-}
+} */
 
 table.projects td {
     cursor: default;
@@ -40,4 +40,12 @@ table.projects thead th:last-child {
 .projectDeleted {
     color: #A21B3F !important;
     text-decoration: line-through;
+}
+
+/* Filter Styles */
+
+.dashboardFilters {
+    width: 200px;
+    margin: auto;
+    border-bottom: 1px solid #ddd;
 }
