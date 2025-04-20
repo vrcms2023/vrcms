@@ -90,10 +90,13 @@ const UserAdmin = () => {
   };
 
   return (
-    <div className="container-fluid pt-5">
+    <div className="container-fluid pt-5 userAdmin">
       <div className="row px-3 px-lg-5">
-        <div className="text-end d-flex justify-content-between">
-          <Title title={"User's"} cssClass="fs-1 pageTitle" />
+        <div className="d-flex justify-content-between align-items-center border-bottom pb-3">
+          <Title title={"User's"} cssClass="fs-5 pageTitle " />
+          <Link to="/admin/userPermission" className="btn btn-outline ">
+            Go for Page Permissions
+          </Link>
           {/* <Search
               setObject={userDetails}
               clientSearchURL={""}
@@ -104,9 +107,9 @@ const UserAdmin = () => {
         </div>
       </div>
 
-      <div className="row px-3 px-lg-5 py-4 table-responsive">
+      <div className="row p-5 table-responsive userAdminLlist">
         {isSuperAdmin ? (
-          <table className="table table-striped table-hover">
+          <table className="table">
             <thead>
               <tr>
                 <th>Name</th>
@@ -120,10 +123,10 @@ const UserAdmin = () => {
             <tbody>
               {userDetails?.map((user) => (
                 <tr key={user.id}>
-                  <td className={`${user.is_admin ? "text-danger" : ""}`}>
+                  <td className={`${user.is_admin ? "" : ""}`}>
                     {user.userName}
                   </td>
-                  <td className={`${user.is_admin ? "text-danger" : ""}`}>
+                  <td className={`${user.is_admin ? "" : ""}`}>
                     {user.email}
                   </td>
                   <td className={`${user.is_admin ? "text-danger" : ""}`}>
@@ -195,9 +198,9 @@ const UserAdmin = () => {
             </>
           )}
 
-          <Link to="/admin/userPermission" className="btn btn-outline ">
+          {/* <Link to="/admin/userPermission" className="btn btn-outline ">
             Go for Page Permissions
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

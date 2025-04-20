@@ -17,8 +17,16 @@ ul, li {
 
 a {text-decoration: none}
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: Poppins;
+h1, h2, h3, h4, h5, h6, th {
+    // font-family: Poppins;
+    font-family: Amarante;
+}
+
+th {
+  font-weight: normal
+}
+td {
+  font-size: 15px;
 }
 
 body {
@@ -33,6 +41,7 @@ body {
   
   // transition: all .35s;
   // padding: .6rem 1.2rem !important;
+  font-family: Amarante;
   font-weight: normal !important;
   border-radius: 0 !important;
 
