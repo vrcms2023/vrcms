@@ -175,7 +175,16 @@ const Dashboard = () => {
         </div>
       </div>
       {/* <hr /> */}
-
+      
+      <div className="d-flex justify-content-center dashboardFilters align-items-center px-4 mt-4">
+        <i class="fa fa-filter" aria-hidden="true"></i> 
+        <select class="form-select form-select-sm border-0 fs-5 text-secondary" aria-label=".form-select-sm example">
+          <option selected >Filters</option>
+          <option value="1">Published</option>
+          <option value="2">Not Published</option>
+          <option value="3">Deleted</option>
+        </select>
+      </div>
       <div className="row p-2 p-md-5 ">
         {ongoingProject.listAvailable && (
           <Projects

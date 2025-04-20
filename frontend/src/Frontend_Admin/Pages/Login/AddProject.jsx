@@ -540,7 +540,7 @@ const AddProject = () => {
                   <Button
                     type="submit"
                     cssClass="btn btn-sm btn-success text-white"
-                    label={"UN PUBLISH"}
+                    label={"PUBLISHED"}
                     handlerChange={publishHandler}
                   />
                 ) : (
