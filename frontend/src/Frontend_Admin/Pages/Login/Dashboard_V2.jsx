@@ -48,10 +48,8 @@ const Dashboard = () => {
    * Format dashboard data
    */
   const formatData = (data) => {
-    let publishedProject = data.filter((res) => res.publish);
-    let notPublished = data.filter((res) => !res.publish);
-    let liveProject = notPublished.filter((res) => res.isActive);
-    let archiveProject = notPublished.filter((res) => !res.isActive);
+    const { publishedProject, liveProject, archiveProject } =
+      getProjectsByCategory(data);
 
     const listAvailable =
       publishedProject.length > 0 ||
@@ -65,6 +63,18 @@ const Dashboard = () => {
       liveProject,
       archiveProject,
       publishedProject,
+    };
+  };
+
+  const getProjectsByCategory = (data) => {
+    let publishedProject = data.filter((res) => res.publish);
+    let notPublished = data.filter((res) => !res.publish);
+    let liveProject = notPublished.filter((res) => res.isActive);
+    let archiveProject = notPublished.filter((res) => !res.isActive);
+    return {
+      publishedProject,
+      liveProject,
+      archiveProject,
     };
   };
 
@@ -153,6 +163,32 @@ const Dashboard = () => {
     });
   };
 
+  const filters = [
+    {
+      id: 1,
+      label: "Published",
+      value: "publishedProject",
+    },
+    {
+      id: 2,
+      label: "Not Published",
+      value: "liveProject",
+    },
+    {
+      id: 3,
+      label: "Deleted",
+      value: "archiveProject",
+    },
+  ];
+  const projectFilter = async (value) => {
+    const { publishedProject, liveProject, archiveProject } =
+      getProjectsByCategory(projects?.projectList);
+    if (value === "publishedProject") updateProjects(publishedProject);
+    else if (value === "liveProject") updateProjects(liveProject);
+    else if (value === "archiveProject") updateProjects(archiveProject);
+    else updateProjects(projects?.projectList);
+  };
+
   return (
     <div className="container-fluid p-4  pojects-dashboard">
       {/* <div className='text-end'>
@@ -175,14 +211,21 @@ const Dashboard = () => {
         </div>
       </div>
       {/* <hr /> */}
-      
+
       <div className="d-flex justify-content-center dashboardFilters align-items-center px-4 mt-4">
-        <i class="fa fa-filter" aria-hidden="true"></i> 
-        <select class="form-select form-select-sm border-0 fs-5 text-secondary" aria-label=".form-select-sm example">
-          <option selected >Filters</option>
-          <option value="1">Published</option>
-          <option value="2">Not Published</option>
-          <option value="3">Deleted</option>
+        <i className="fa fa-filter" aria-hidden="true"></i>
+        <select
+          className="form-select form-select-sm border-0 fs-5 text-secondary"
+          aria-label=".form-select-sm example"
+          onChange={(e) => projectFilter(e.target.value)}
+        >
+          <option selected>Filters</option>
+          {filters?.length > 0 &&
+            filters.map((item) => (
+              <option value={item.value} key={item.id}>
+                {item.label}
+              </option>
+            ))}
         </select>
       </div>
       <div className="row p-2 p-md-5 ">
