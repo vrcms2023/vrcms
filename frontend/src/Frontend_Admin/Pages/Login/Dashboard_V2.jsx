@@ -223,7 +223,7 @@ const Dashboard = () => {
       <div className="d-flex justify-content-center dashboardFilters align-items-center px-4 mt-4">
         <i className="fa fa-filter" aria-hidden="true"></i>
         <select
-          className="form-select form-select-sm border-0 fs-5 text-secondary"
+          className="form-select form-select-sm border-0 text-secondary"
           aria-label=".form-select-sm example"
           onChange={(e) => projectFilter(e.target.value)}
         >
