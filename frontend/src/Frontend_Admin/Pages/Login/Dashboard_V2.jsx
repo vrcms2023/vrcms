@@ -39,9 +39,17 @@ const Dashboard = () => {
   const updateProjects = (projects) => {
     let projectsByCategory = getCategoryPorjectList(projects);
 
-    setOngoingProject(formatData(projectsByCategory.ongoing));
-    setUpcomingProject(formatData(projectsByCategory.future));
-    setCompletedProject(formatData(projectsByCategory.completed));
+    setOngoingProject(
+      formatData(projectsByCategory.ongoing ? projectsByCategory.ongoing : [])
+    );
+    setUpcomingProject(
+      formatData(projectsByCategory.future ? projectsByCategory.future : [])
+    );
+    setCompletedProject(
+      formatData(
+        projectsByCategory.completed ? projectsByCategory.completed : []
+      )
+    );
   };
 
   /**
@@ -58,7 +66,7 @@ const Dashboard = () => {
         ? true
         : false;
     return {
-      projectCategoryName: data[0].projectCategoryName,
+      projectCategoryName: data[0]?.projectCategoryName,
       listAvailable: listAvailable,
       liveProject,
       archiveProject,
@@ -215,11 +223,11 @@ const Dashboard = () => {
       <div className="d-flex justify-content-center dashboardFilters align-items-center px-4 mt-4">
         <i className="fa fa-filter" aria-hidden="true"></i>
         <select
-          className="form-select form-select-sm border-0 text-secondary"
+          className="form-select form-select-sm border-0 fs-5 text-secondary"
           aria-label=".form-select-sm example"
           onChange={(e) => projectFilter(e.target.value)}
         >
-          <option selected>Filters</option>
+          <option defaultValue>Filters</option>
           {filters?.length > 0 &&
             filters.map((item) => (
               <option value={item.value} key={item.id}>
