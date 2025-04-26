@@ -13,11 +13,14 @@ const ProjectItem = ({
       {projects.length > 0 ? (
         projects.map((project) => (
           <tr key={project.id} className={itemCSSClass}>
-            <td className={`${itemCSSClass} align-middle`}>{project.projectTitle} </td>
+            <td className={`${itemCSSClass} align-middle`}>
+              {project.projectTitle}{" "}
+            </td>
             <td className="align-middle">
               <span
                 className={`badge fw-normal ${
-                  parseInt(project.percentValue) >= 0 && parseInt(project.percentValue) < 50
+                  parseInt(project.percentValue) >= 0 &&
+                  parseInt(project.percentValue) < 50
                     ? "bg-info"
                     : parseInt(project.percentValue) === 100
                       ? "bg-success"

@@ -39,9 +39,17 @@ const Dashboard = () => {
   const updateProjects = (projects) => {
     let projectsByCategory = getCategoryPorjectList(projects);
 
-    setOngoingProject(formatData(projectsByCategory.ongoing));
-    setUpcomingProject(formatData(projectsByCategory.future));
-    setCompletedProject(formatData(projectsByCategory.completed));
+    setOngoingProject(
+      formatData(projectsByCategory.ongoing ? projectsByCategory.ongoing : [])
+    );
+    setUpcomingProject(
+      formatData(projectsByCategory.future ? projectsByCategory.future : [])
+    );
+    setCompletedProject(
+      formatData(
+        projectsByCategory.completed ? projectsByCategory.completed : []
+      )
+    );
   };
 
   /**
@@ -58,7 +66,7 @@ const Dashboard = () => {
         ? true
         : false;
     return {
-      projectCategoryName: data[0].projectCategoryName,
+      projectCategoryName: data[0]?.projectCategoryName,
       listAvailable: listAvailable,
       liveProject,
       archiveProject,
@@ -219,7 +227,7 @@ const Dashboard = () => {
           aria-label=".form-select-sm example"
           onChange={(e) => projectFilter(e.target.value)}
         >
-          <option selected>Filters</option>
+          <option defaultValue>Filters</option>
           {filters?.length > 0 &&
             filters.map((item) => (
               <option value={item.value} key={item.id}>
