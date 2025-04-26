@@ -612,7 +612,7 @@ const Home = () => {
 
                 <Ancher
                   AncherLabel="View more news articles"
-                  Ancherpath="/news"
+                  Ancherpath="/profile/news"
                   AncherClass="btn btn-outline d-flex justify-content-center align-items-center "
                   AnchersvgColor="#17427C"
                 />

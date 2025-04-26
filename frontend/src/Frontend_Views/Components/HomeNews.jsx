@@ -74,7 +74,11 @@ const HomeNews = ({
           //setPageloadResults(true);
           //const _list = sortByFieldName(response.data.results, "news_position");
           //const data = pagetype === "home" ? _list.slice(0, 4) : _list;
-          setResponseData(response.data);
+          if (pagetype === "home") {
+            setNews(response?.data);
+          } else {
+            setResponseData(response?.data);
+          }
         }
       } catch (error) {
         console.log("unable to access ulr because of server is down");
