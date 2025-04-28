@@ -210,19 +210,22 @@ const AddService = ({
   };
 
   return (
-    <div className="pb-5 border border-1 border-secondary">
+    <div className="pb-3 border border-0">
       <Title title="Create New Service Page" cssClass="p-3 fs-6 text-dark" />
-      <hr className="m-0 mb-3" />
+      <hr className="m-0 mb-5" />
       {/* <h3 className={`text-center ${selectedServiceProject && selectedServiceProject.publish ? 'border border-success' : ''} `}>Add New Service </h3> */}
 
       <div className="container">
         {/* <div className={`container bg-light p-5 border shadow-lg ${selectedServiceProject && selectedServiceProject.publish ? 'border border-success' : ''}`}> */}
         <div className="row">
           {error ? <Error>{error}</Error> : ""}
-          <div className="col-md-12 pb-4 d-flex flex-column justify-content-center align-items-center text-center addPageForm">
+          <div className="col-md-6 pb-2 pb-md-0 
+          d-flex flex-column justify-content-start align-items-center 
+          text-center 
+          addPageForm">
             <input
               type="text"
-              className="form-control py-2"
+              className="form-control py-4 text-center"
               name="services_page_title"
               id=""
               value={serviceName}
@@ -249,16 +252,16 @@ const AddService = ({
             </div>
           </div>
 
-          <div className="col-md-12 servicePageLinks">
+          <div className="col-md-6 servicePageLinks">
             {/* <Title title="Pages" cssClass="fs-6 fw-bold text-center border-bottom pb-2 mb-2 " /> */}
             <ul>
               {serviceList &&
                 serviceList.map((item) => (
                   <li
-                    className={`d-flex justify-content-between p-2
+                    className={`d-flex justify-content-between align-items-center p-1 px-3
               ${
                 item.id === selectedServiceProject?.id
-                  ? "border border-2 border-success rounded shadow-lg"
+                  ? "border border-1 border-muted shadow-md"
                   : ""
               }`}
                     key={item.id}
@@ -266,7 +269,7 @@ const AddService = ({
                     <div className="w-50">
                       <Link
                         onClick={(event) => onClickSelectedService(item)}
-                        className="fw-bold text-dark pageTitle"
+                        className="text-dark pageTitle"
                       >
                         {item.services_page_title}{" "}
                       </Link>
@@ -276,40 +279,40 @@ const AddService = ({
                     <div className="w-50 text-end">
                       <Link
                         onClick={() => publishService(item)}
-                        className={`p-1 px-2 rounded ${
-                          item.publish
-                            ? "bg-success text-white"
-                            : "bg-secondary text-light"
-                        }`}
+                        // className={`p-1 px-2 rounded ${
+                        //   item.publish
+                        //     ? "bg-success text-white"
+                        //     : "bg-secondary text-light"
+                        // }`}
                         title={
                           item.publish ? "Page Published" : "Page Not Published"
                         }
                       >
-                        <small>
                           {item.publish ? (
-                            <i
-                              className="fa fa-thumbs-up fs-5"
-                              aria-hidden="true"
-                            ></i>
+                            <span className="text-success fs-5 fw-bold">P</span>
+                            // <i
+                            //   className="fa fa-thumbs-up fs-5"
+                            //   aria-hidden="true"
+                            // ></i>
                           ) : (
-                            <i
-                              className="fa fa-thumbs-down"
-                              aria-hidden="true"
-                            ></i>
+                            <span className="fs-5 fw-bold notPublished">P</span>
+                            // <i
+                            //   className="fa fa-thumbs-down"
+                            //   aria-hidden="true"
+                            // ></i>
                           )}
-                        </small>
                       </Link>
                       <Link onClick={() => EditService(item)}>
                         {" "}
                         <i
-                          className="fa fa-pencil text-warning fs-4 mx-3"
+                          className="fa fa-pencil text-warning fs-5 mx-3"
                           aria-hidden="true"
                         ></i>
                       </Link>
                       <Link onClick={() => deleteService(item)}>
                         {" "}
                         <i
-                          className="fa fa-trash-o text-danger fs-4"
+                          className="fa fa-trash-o text-danger fs-5"
                           aria-hidden="true"
                         ></i>
                       </Link>

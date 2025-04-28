@@ -232,8 +232,8 @@ const Services = () => {
         <div
           className={
             isAdmin && hasPermission
-              ? "container-fluid my-md-5 py-md-4 servicesPage"
-              : "container my-md-5 py-md-4 servicesPage"
+              ? "container-fluid my-md-3 servicesPage"
+              : "container my-md-3 servicesPage"
           }
           id="servicesPage"
         >
@@ -242,18 +242,18 @@ const Services = () => {
               className={isAdmin && hasPermission ? "col-md-12" : "col-md-12"}
             >
               {isAdmin && hasPermission && selectedServiceProject?.id && (
-                <div className="d-flex justify-content-end align-items-center mb-3">
+                <div className="d-flex justify-content-center align-items-center my-4">
                   <span className="mx-2 text-dark">
                     {" "}
                     Add new section in
-                    <span className="badge bg-warning text-dark fs-6 mx-1">
+                    <span className="text-dark fw-bold mx-1">
                       {selectedServiceProject.services_page_title}
                     </span>
                     page
                   </span>
                   <button
                     type="submit"
-                    className="btn btn-primary px-3"
+                    className="btn btn-outline px-3"
                     onClick={() => editHandler("addSection", true)}
                     // style={{ position: "absolute", right: "60px" }}
                   >

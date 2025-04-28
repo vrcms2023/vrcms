@@ -43,8 +43,19 @@ export const ServicesStyled = styled.div`
       
       
       .servicePageLinks {
+
+        // width: 600px; 
+        // margin: 0 auto;
+        height: 120px;
+        overflow-y: scroll;
+}
+        
         li {
             cursor: pointer;
+
+            span.notPublished {
+              color: #ccc !important;
+            }
           }
 
         .pageTitle {
@@ -58,6 +69,8 @@ export const ServicesStyled = styled.div`
       
       .addPageForm {
         // background-color: ${({ theme }) => theme.teritoryColor};
+        // width: 600px; 
+        // margin: 0 auto;
       }
 
       .servicePageLinks {
