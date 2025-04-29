@@ -31,7 +31,8 @@ const Model = ({ obj, closeModel, flag }) => {
           </div>
           <div className="modal-body">
             <div className="text-center">
-            <img src={obj.path} alt="Testimonial" className="img-fluid" />
+              {obj.path ?  <img src={obj.path} alt="Testimonial" className="img-fluid" /> : ""}
+            {/* <img src={obj.path} alt="Testimonial" className="img-fluid" /> */}
             </div>
             <div
               className="p-3"

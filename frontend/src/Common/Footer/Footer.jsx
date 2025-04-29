@@ -383,7 +383,7 @@ const Footer = () => {
                   {/* <small>&copy; {fullYear} - All rights reserved</small> */}
                   {/* <span className="d-inline-block  d-none d-md-block">|</span> */}
                   <Link
-                    to=""
+                    to="#"
                     className="text-decoration-underline"
                     onClick={() => showModel("TC")}
                   >
@@ -391,7 +391,7 @@ const Footer = () => {
                   </Link>{" "}
                   <span className="d-inline-block d-none d-md-block">|</span>
                   <Link
-                    to=""
+                    to="#"
                     className="text-decoration-underline"
                     onClick={() => showModel("PP")}
                   >
@@ -436,7 +436,7 @@ const Footer = () => {
             termsAndConditionData={termsAndPolicyData}
             editHandler={editHandler}
             popupTitle="Terms and Policy"
-            componentType="Terms and Polacy"
+            componentType="termsPolacy"
           />
         </div>
       )}
@@ -449,7 +449,7 @@ const Footer = () => {
           />
         </div>
       )}
-      {show && <ModelBg />}
+      {modelShow && <ModelBg closeModel={closeModel} />}
     </FooterStyled>
   );
 };

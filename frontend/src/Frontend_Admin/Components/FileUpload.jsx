@@ -349,9 +349,12 @@ const FileUpload = ({
           className={`px-4 ${scrollEnable ? "heightCtrl" : "fullHeightCtrl"}`}
         >
           <div className="mb-2 row">
-            <label className="col-sm-12 col-form-label">
-              <Title title={title} cssClass="requiredField" />
-            </label>
+            {title && (
+              <label className="col-sm-12 col-form-label">
+                <Title title={title} cssClass="requiredField" />
+              </label>
+            )}
+
             <div
               className={`${editImage?.id && editImage.path ? "col-6 col-md-6 pe-0" : "col-12"}`}
             >
