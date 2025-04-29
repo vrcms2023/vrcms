@@ -139,7 +139,7 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
                       className=" p-2"
                     >
                       <i
-                        className="fa fa-pencil text-warning cursor-pointer fs-5"
+                        className="fa fa-pencil text-warning cursor-pointer fs-6"
                         aria-hidden="true"
                       ></i>
                     </Link>
@@ -154,7 +154,7 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
                       className=" p-2"
                     >
                       <i
-                        className="fa fa-trash-o fs-5 text-danger"
+                        className="fa fa-trash-o fs-6 text-danger"
                         aria-hidden="true"
                       ></i>
                     </Link>
@@ -165,19 +165,19 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
                       to={`/career-details/${item.id}/`}
                       className="text-secondary"
                     >
-                      <i className="fa fa-expand" aria-hidden="true"></i>
+                      <i className="fa fa-expand fs-6" aria-hidden="true"></i>
                     </Link>
                   </div>
 
                   <div className="">
                     <Link to="" onClick={() => publishCareer(item)}>
                       {item.publish ? (
-                        <small className="bg-success p-1 text-white px-2 rounded">
-                          Published
+                        <small className="text-success fw-bold rounded">
+                          P
                         </small>
                       ) : (
-                        <small className="bg-secondary p-1 text-white px-2 rounded">
-                          Un Pub'd
+                        <small className="text-muted fw-bold px-1 rounded">
+                          P
                         </small>
                       )}
                     </Link>
