@@ -460,7 +460,7 @@ const FileUpload = ({
             {!editImage?.id ? (
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-sm btn-secondary"
                 onClick={clearField}
               >
                 Clear
@@ -468,16 +468,16 @@ const FileUpload = ({
             ) : (
               ""
             )}
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-sm btn-primary">
               {editImage?.id ? "Update" : "Save"}
             </button>
 
-            <Button
+            {/* <Button
               type="submit"
               cssClass="btn btn-outline"
               label={"Close"}
               handlerChange={closeHandler}
-            />
+            /> */}
           </div>
         </div>
 
