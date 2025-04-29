@@ -36,7 +36,8 @@ const JobBriefDetails = ({ jobDetails }) => {
             {jobDetails.openings ? jobDetails.openings : 0}
           </div>
         </div>
-        <a
+
+        {/* <a
           className="btn btn-outline mt-3 mt-lg-0"
           href={`mailto:${
             jobDetails.contactEmail
@@ -45,7 +46,7 @@ const JobBriefDetails = ({ jobDetails }) => {
           }`}
         >
           Contact US
-        </a>
+        </a> */}
       </div>
     </div>
   );

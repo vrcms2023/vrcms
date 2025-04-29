@@ -11,7 +11,7 @@ export const CareersPageStyled = styled.div`
 
   .jobPost {
     border: 2px solid ${({ theme }) => theme.white};
-    background-color: ${({ theme }) => theme.primaryColor};
+    // background-color: ${({ theme }) => theme.primaryColor};
     border-bottom: 4px solid ${({ theme }) => theme.secondaryColor};
 
     &:hover {
@@ -51,8 +51,8 @@ export const CareersPageStyled = styled.div`
       text-align: center;
     }
 
-    background: ${({ theme }) => theme.secondaryColor};
-    border: 1px solid ${({ theme }) => theme.white};
+    // background: ${({ theme }) => theme.secondaryColor};
+    border: 1px solid ${({ theme }) => theme.primaryColor};
 
     ul {
       list-style: none;
@@ -82,8 +82,13 @@ export const CareersPageStyled = styled.div`
   }
 
   .jobDescription {
-    background-color: ${({ theme }) => theme.primaryColor};
+    // background-color: ${({ theme }) => theme.primaryColor};
     // border: 1px solid ${({ theme }) => theme.white};
+
+    p {
+      font-size: .9rem
+    }
+    
 
     ul {
       margin-left: 25px;
