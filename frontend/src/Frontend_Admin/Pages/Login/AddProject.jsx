@@ -491,7 +491,7 @@ const AddProject = () => {
             {/* <div className="d-flex justify-content-center align-items-center"> */}
             <div className="">
               {readOnlyTitle && (
-                <h3 className="my-4 fs-5 text-center border-bottom pt-0 pb-3 py-md-3">
+                <h3 className="mb-4 fs-5 text-center border-bottom pt-0 pb-3 py-md-3">
                   {readOnlyTitle}
                   <span
                     className="badge bg-warning text-dark px-2 ms-2"
@@ -977,7 +977,7 @@ const AddProject = () => {
             </div>
 
           </div>
-          <div className="row">
+          <div className="row border-top botder-1">
             <div className="col-lg-12 py-4 d-flex gap-1 justify-content-center align-items-center">
               <Button
                 type="submit"
