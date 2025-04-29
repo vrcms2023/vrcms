@@ -7,6 +7,7 @@ import Specifications from "../../Components/Specifications";
 import { Amenities, AmenitiesList } from "../../Components/Amenities";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 import CatageoryImgC from "../../../Common/CatageoryImgC";
 import { axiosServiceApi } from "../../../util/axiosUtil";
@@ -18,6 +19,8 @@ import DeleteDialog from "../../../Common/DeleteDialog";
 import CSRFToken from "../../../Frontend_Views/Components/CRSFToken";
 
 import "./AddProject.css";
+import FileUploadModel from "../../../Common/fileUploadModel";
+import ModelBg from "../../../Common/ModelBg";
 
 const AddProject = () => {
   const navigate = useNavigate();
@@ -31,8 +34,12 @@ const AddProject = () => {
   const [newProject, setNewProject] = useState({});
   const [readOnlyTitle, setreadOnlyTitle] = useState("");
 
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState("");
 
+  const [obj, setObj] = useState({});
+  const [showModel, setShowModel] = useState(false);
+  const [showModelBg, setShowModelBg] = useState(false);
+  const [fileuploadType, setfFileuploadType] = useState("");
 
   const about = {
     aboutstitle: null,
@@ -378,8 +385,18 @@ const AddProject = () => {
     });
   };
 
+  const handleModel = (type) => {
+    setfFileuploadType(type);
+    setShowModel(true);
+    setShowModelBg(true);
+  };
+
+  const closeModel = () => {
+    setShowModel(false);
+    setShowModelBg(false);
+  };
   return (
-    <div className="container-fluid pt-4"> 
+    <div className="container-fluid pt-4">
       <CSRFToken />
       <div className="row px-3 px-lg-5">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
@@ -408,7 +425,13 @@ const AddProject = () => {
       {/* <Alert mesg="Project Added Successfully" cssClass="alert alert-success text-center m-auto fs-5 w-50 "/> */}
 
       <>
-        {errorMessage ? <div className="mt-5 pt-5"><Error>{errorMessage}</Error></div> : ""}
+        {errorMessage ? (
+          <div className="mt-5 pt-5">
+            <Error>{errorMessage}</Error>
+          </div>
+        ) : (
+          ""
+        )}
         {!id && !show ? (
           <div className="pt-5 mt-5 select-project-type">
             <select
@@ -416,8 +439,7 @@ const AddProject = () => {
               aria-label="Default select example"
               id="projectStatus"
               onChange={(e) => handleChange(e)}
-              className={`custom-select form-select border p-3 px-4 m-auto d-block rounded-0 ${selected ? 'active' : ''}`}
-
+              className={`custom-select form-select border p-3 px-4 m-auto d-block rounded-0 ${selected ? "active" : ""}`}
             >
               <option>Select Project Type</option>
               {defaultProjectType?.length
@@ -528,15 +550,15 @@ const AddProject = () => {
             </div>
 
             <div className="col-md-4 col-lg-2 pb-3 project-page-tab-links">
-            <div className="d-flex justify-content-end p-0">
-            <Button
-                    type="submit"
-                    cssClass="btn btn-sm btn-outline me-1"
-                    label={"PUBLISH"}
-                    icon={"fa-calendar"}
-                    handlerChange={publishHandler}
-                  />
-            {projectPublish ? (
+              <div className="d-flex justify-content-end p-0">
+                <Button
+                  type="submit"
+                  cssClass="btn btn-sm btn-outline me-1"
+                  label={"PUBLISH"}
+                  icon={"fa-calendar"}
+                  handlerChange={publishHandler}
+                />
+                {projectPublish ? (
                   <Button
                     type="submit"
                     cssClass="btn btn-sm btn-success text-white"
@@ -551,8 +573,8 @@ const AddProject = () => {
                     handlerChange={publishHandler}
                   />
                 )}
-            </div>
-                
+              </div>
+
               <div
                 className="nav flex-column nav-pills mt-4"
                 id="v-pills-tab"
@@ -743,23 +765,34 @@ const AddProject = () => {
                       ></textarea>
                     </div>
                     <div className="mb-3">
-                      <label className="form-label">
-                        Project Home Thumbnail
-                      </label>
-                      <FileUpload
-                        project={newProject}
-                        updated_By={userName}
-                        category="thumbnail"
-                        gallerysetState={setThumbnailObject}
-                        galleryState={thumbnailObject}
-                        validTypes="image/png,image/jpeg"
-                        descriptionTitle="Plan Description"
-                        showDescription={false}
-                        saveState={setSaveState}
-                        buttonLable="Upload Plan"
-                        maxFiles={1}
-                        scrollEnable={true}
-                      />
+                      <div className="mb-3">
+                        <Link
+                          className="moreLink"
+                          onClick={() => handleModel("thumbnail")}
+                        >
+                          Click here to upload Project Home Thumbnail
+                        </Link>
+                      </div>
+
+                      {showModel && fileuploadType === "thumbnail" && (
+                        <FileUploadModel
+                          ModelTitle="Project Home Thumbnail"
+                          closeModel={closeModel}
+                          project={newProject}
+                          updated_By={userName}
+                          category="thumbnail"
+                          gallerysetState={setThumbnailObject}
+                          galleryState={thumbnailObject}
+                          validTypes="image/png,image/jpeg"
+                          descriptionTitle="Plan Description"
+                          showDescription={false}
+                          saveState={setSaveState}
+                          buttonLable="Upload Plan"
+                          maxFiles={1}
+                          scrollEnable={true}
+                        />
+                      )}
+
                       <CatageoryImgC
                         title={`${readOnlyTitle} Thumbnail`}
                         catategoryImgs={thumbnailObject}
@@ -780,20 +813,33 @@ const AddProject = () => {
                   aria-labelledby="v-pills-profile-tab"
                 >
                   <div className="mb-4">
-                    <label className="form-label">Add PDF's (Upload PDF)</label>
-                    <FileUpload
-                      project={newProject}
-                      updated_by={userName}
-                      category="PDF"
-                      gallerysetState={setPdfObject}
-                      galleryState={pdfObject}
-                      validTypes="application/pdf"
-                      descriptionTitle="PDF Description"
-                      showDescription={false}
-                      saveState={setSaveState}
-                      buttonLable="Upload PDF"
-                      scrollEnable={true}
-                    />
+                    <div className="mb-3">
+                      <Link
+                        className="moreLink"
+                        onClick={() => handleModel("PDF")}
+                      >
+                        Click here to upload Add PDF's (Upload PDF)
+                      </Link>
+                    </div>
+
+                    {showModel && fileuploadType === "PDF" && (
+                      <FileUploadModel
+                        ModelTitle="Add PDF's (Upload PDF)"
+                        closeModel={closeModel}
+                        project={newProject}
+                        updated_By={userName}
+                        category="PDF"
+                        gallerysetState={setPdfObject}
+                        galleryState={pdfObject}
+                        validTypes="application/pdf"
+                        descriptionTitle="PDF Description"
+                        showDescription={false}
+                        saveState={setSaveState}
+                        buttonLable="Upload PDF"
+                        maxFiles={1}
+                        scrollEnable={true}
+                      />
+                    )}
                     <CatageoryImgC
                       title={`${readOnlyTitle} PDF's`}
                       catategoryImgs={pdfObject}
@@ -805,22 +851,33 @@ const AddProject = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label className="form-label">
-                      Add Plan (Upload image)
-                    </label>
-                    <FileUpload
-                      project={newProject}
-                      updated_by={userName}
-                      category="Plans"
-                      gallerysetState={setPlanObject}
-                      galleryState={planObject}
-                      validTypes="image/png,image/jpeg,application/pdf"
-                      descriptionTitle="Plan Description"
-                      showDescription={false}
-                      saveState={setSaveState}
-                      buttonLable="Upload Plan"
-                      scrollEnable={true}
-                    />
+                    <div className="mb-3">
+                      <Link
+                        className="moreLink"
+                        onClick={() => handleModel("Plans")}
+                      >
+                        Click here to upload Add Plan (Upload image)
+                      </Link>
+                    </div>
+
+                    {showModel && fileuploadType === "Plans" && (
+                      <FileUploadModel
+                        ModelTitle=" Add Plan (Upload image)"
+                        closeModel={closeModel}
+                        project={newProject}
+                        updated_By={userName}
+                        category="Plans"
+                        gallerysetState={setPlanObject}
+                        galleryState={planObject}
+                        validTypes="image/png,image/jpeg,application/pdf"
+                        descriptionTitle="Plan Description"
+                        showDescription={false}
+                        saveState={setSaveState}
+                        buttonLable="Upload Plan"
+                        maxFiles={1}
+                        scrollEnable={true}
+                      />
+                    )}
                     <CatageoryImgC
                       title={`${readOnlyTitle} Plans`}
                       catategoryImgs={planObject}
@@ -832,22 +889,35 @@ const AddProject = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label className="form-label">
-                      Add Availability (Upload image / PDF)
-                    </label>
-                    <FileUpload
-                      project={newProject}
-                      updated_by={userName}
-                      category="availability"
-                      gallerysetState={setAvailabileObject}
-                      galleryState={availabileObject}
-                      validTypes="image/png,image/jpeg,application/pdf"
-                      descriptionTitle="Available Description"
-                      showDescription={false}
-                      saveState={setSaveState}
-                      buttonLable="Upload Availability"
-                      scrollEnable={true}
-                    />
+                    <div className="mb-3">
+                      <Link
+                        className="moreLink"
+                        onClick={() => handleModel("availability")}
+                      >
+                        Click here to upload Add Availability (Upload image /
+                        PDF)
+                      </Link>
+                    </div>
+
+                    {showModel && fileuploadType === "availability" && (
+                      <FileUploadModel
+                        ModelTitle="Add Availability (Upload image / PDF)"
+                        closeModel={closeModel}
+                        project={newProject}
+                        updated_By={userName}
+                        category="availability"
+                        gallerysetState={setAvailabileObject}
+                        galleryState={availabileObject}
+                        validTypes="image/png,image/jpeg,application/pdf"
+                        descriptionTitle="Available Description"
+                        showDescription={false}
+                        saveState={setSaveState}
+                        buttonLable="Upload Availability"
+                        maxFiles={1}
+                        scrollEnable={true}
+                      />
+                    )}
+
                     <CatageoryImgC
                       title={`${readOnlyTitle} Availibility`}
                       catategoryImgs={availabileObject}
@@ -859,23 +929,34 @@ const AddProject = () => {
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label">
-                      Add Price (Upload image / PDF)
-                    </label>
-                    <FileUpload
-                      title=""
-                      project={newProject}
-                      updated_by={userName}
-                      category="price"
-                      gallerysetState={setPriceObject}
-                      galleryState={priceObject}
-                      validTypes="image/png,image/jpeg,application/pdf"
-                      descriptionTitle="Price Description"
-                      showDescription={false}
-                      saveState={setSaveState}
-                      buttonLable="Upload Price Details"
-                      scrollEnable={true}
-                    />
+                    <div className="mb-3">
+                      <Link
+                        className="moreLink"
+                        onClick={() => handleModel("price")}
+                      >
+                        Click here to upload Add Price (Upload image / PDF)
+                      </Link>
+                    </div>
+
+                    {showModel && fileuploadType === "price" && (
+                      <FileUploadModel
+                        ModelTitle="Add Availability (Upload image / PDF)"
+                        closeModel={closeModel}
+                        project={newProject}
+                        updated_By={userName}
+                        category="price"
+                        gallerysetState={setPriceObject}
+                        galleryState={priceObject}
+                        validTypes="image/png,image/jpeg,application/pdf"
+                        descriptionTitle="Price Description"
+                        showDescription={false}
+                        saveState={setSaveState}
+                        buttonLable="Upload Price Details"
+                        maxFiles={1}
+                        scrollEnable={true}
+                      />
+                    )}
+
                     <CatageoryImgC
                       title={`${readOnlyTitle} Price`}
                       catategoryImgs={priceObject}
@@ -975,7 +1056,6 @@ const AddProject = () => {
                 </div>
               </div>
             </div>
-
           </div>
           <div className="row border-top botder-1">
             <div className="col-lg-12 py-4 d-flex gap-1 justify-content-center align-items-center">
@@ -1003,6 +1083,8 @@ const AddProject = () => {
       ) : (
         ""
       )}
+
+      {showModelBg && <ModelBg />}
     </div>
   );
 };
