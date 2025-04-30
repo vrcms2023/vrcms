@@ -346,7 +346,7 @@ const FileUpload = ({
     <>
       <form className="" onSubmit={handleSubmit(uploadFile)}>
         <div
-          className={`px-4 ${scrollEnable ? "heightCtrl" : "fullHeightCtrl"}`}
+          className={`px-0 ${scrollEnable ? "heightCtrl" : "fullHeightCtrl"}`}
         >
           <div className="mb-2 row">
             {title && (

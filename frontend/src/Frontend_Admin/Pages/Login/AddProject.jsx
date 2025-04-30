@@ -550,7 +550,7 @@ const AddProject = () => {
             </div>
 
             <div className="col-md-4 col-lg-2 pb-3 project-page-tab-links">
-              <div className="d-flex justify-content-end p-0">
+              <div className="d-flex justify-content-end p-0 project-sublish-status">
                 <Button
                   type="submit"
                   cssClass="btn btn-sm btn-outline me-1"
@@ -576,7 +576,7 @@ const AddProject = () => {
               </div>
 
               <div
-                className="nav flex-column nav-pills mt-4"
+                className="nav flex-column nav-pills mt-4 project-pills"
                 id="v-pills-tab"
                 role="tablist"
                 aria-orientation="vertical"
@@ -767,16 +767,17 @@ const AddProject = () => {
                     <div className="mb-3">
                       <div className="mb-3">
                         <Link
-                          className="moreLink"
+                          className="moreLink text-decoration-underline"
                           onClick={() => handleModel("thumbnail")}
                         >
-                          Click here to upload Project Home Thumbnail
+                          {/* Click here to upload Project Home Thumbnail */}
+                          Upload Images<i class="fa fa-upload ms-2 fs-5 text-primary" aria-hidden="true"></i>
                         </Link>
                       </div>
 
                       {showModel && fileuploadType === "thumbnail" && (
                         <FileUploadModel
-                          ModelTitle="Project Home Thumbnail"
+                          ModelTitle="Upload Image"
                           closeModel={closeModel}
                           project={newProject}
                           updated_By={userName}
@@ -799,8 +800,11 @@ const AddProject = () => {
                         catategoryImgState={setThumbnailObject}
                         project={newProject}
                         category="thumbnail"
-                        cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
+                        cssClass="thumb75 shadow-lg border border-0 border-warning rounded"
                       />
+                      <div className="">
+                        <small className="text-warning">Click on the image to delete</small>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -813,12 +817,12 @@ const AddProject = () => {
                   aria-labelledby="v-pills-profile-tab"
                 >
                   <div className="mb-4">
-                    <div className="mb-3">
+                    <div className="mb-3 border p-3 text-center">
                       <Link
-                        className="moreLink"
+                        className="moreLink text-decoration-underline"
                         onClick={() => handleModel("PDF")}
                       >
-                        Click here to upload Add PDF's (Upload PDF)
+                        Upload <strong>PDF's</strong> <i class="fa fa-upload" aria-hidden="true"></i>
                       </Link>
                     </div>
 
@@ -851,12 +855,12 @@ const AddProject = () => {
                   </div>
 
                   <div className="mb-4">
-                    <div className="mb-3">
+                    <div className="mb-3 border p-3 text-center">
                       <Link
-                        className="moreLink"
+                        className="moreLink text-decoration-underline"
                         onClick={() => handleModel("Plans")}
                       >
-                        Click here to upload Add Plan (Upload image)
+                        Upload Plan <strong>Image</strong> <i class="fa fa-upload" aria-hidden="true"></i>
                       </Link>
                     </div>
 
@@ -889,13 +893,13 @@ const AddProject = () => {
                   </div>
 
                   <div className="mb-4">
-                    <div className="mb-3">
+                    <div className="mb-3 border p-3 text-center ">
                       <Link
-                        className="moreLink"
+                        className="moreLink text-decoration-underline"
                         onClick={() => handleModel("availability")}
                       >
-                        Click here to upload Add Availability (Upload image /
-                        PDF)
+                        {/* Click here to upload Add Availability (Upload image / PDF) */}
+                        Upload Availability <strong>Image's / PDF's</strong><i class="fa fa-upload ms-2" aria-hidden="true"></i>
                       </Link>
                     </div>
 
@@ -929,12 +933,13 @@ const AddProject = () => {
                   </div>
 
                   <div className="mb-3">
-                    <div className="mb-3">
+                    <div className="mb-3 border p-3 text-center">
                       <Link
-                        className="moreLink"
+                        className="moreLink text-decoration-underline"
                         onClick={() => handleModel("price")}
                       >
-                        Click here to upload Add Price (Upload image / PDF)
+                        {/* Click here to upload Add Price (Upload image / PDF) */}
+                        Upload Pricing <strong>Image's / PDF's</strong><i class="fa fa-upload ms-2" aria-hidden="true"></i>
                       </Link>
                     </div>
 
@@ -968,9 +973,9 @@ const AddProject = () => {
                   </div>
 
                   {/* Add GOOGLE MAP  */}
-                  <div className="mb-4">
+                  <div className="mb-4 text-center">
                     <label className="form-label">
-                      Add Google Map (Embed a map - source url){" "}
+                      Add Google Map <i class="fa fa-map" aria-hidden="true"></i> <small className="d-block">(Embed a map - source url) </small>
                     </label>
                     <Amenities
                       title=""
@@ -978,6 +983,7 @@ const AddProject = () => {
                       amenities={amenities}
                       setAmenities={setAmenities}
                       name="googleMap"
+                      rows="5"
                     />
                   </div>
                 </div>
@@ -1010,7 +1016,7 @@ const AddProject = () => {
                 </div>
 
                 <div
-                  className="tab-pane fade"
+                  className="tab-pane fade project-image-gallery"
                   id="v-pills-gallery"
                   role="tabpanel"
                   aria-labelledby="v-pills-gallery-tab"
@@ -1020,7 +1026,7 @@ const AddProject = () => {
                       Recent project status description
                     </label>
                     <textarea
-                      rows={4}
+                      rows={5}
                       cols={40}
                       className="form-control"
                       name="imageDescription"
@@ -1051,8 +1057,9 @@ const AddProject = () => {
                     catategoryImgState={setImgGallery}
                     project={newProject}
                     category="images"
-                    cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
+                    cssClass="thumb75 shadow-lg border border-1 rounded"
                   />
+                  <div><small class="text-warning">Click on the image to delete</small></div>
                 </div>
               </div>
             </div>
