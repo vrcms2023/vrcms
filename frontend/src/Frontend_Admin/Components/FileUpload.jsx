@@ -346,7 +346,7 @@ const FileUpload = ({
     <>
       <form className="" onSubmit={handleSubmit(uploadFile)}>
         <div
-          className={`px-4 ${scrollEnable ? "heightCtrl" : "fullHeightCtrl"}`}
+          className={`px-0 ${scrollEnable ? "heightCtrl" : "fullHeightCtrl"}`}
         >
           <div className="mb-2 row">
             {title && (
@@ -463,7 +463,7 @@ const FileUpload = ({
             {!editImage?.id ? (
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-sm btn-secondary"
                 onClick={clearField}
               >
                 Clear
@@ -471,16 +471,16 @@ const FileUpload = ({
             ) : (
               ""
             )}
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-sm btn-primary">
               {editImage?.id ? "Update" : "Save"}
             </button>
 
-            <Button
+            {/* <Button
               type="submit"
               cssClass="btn btn-outline"
               label={"Close"}
               handlerChange={closeHandler}
-            />
+            /> */}
           </div>
         </div>
 

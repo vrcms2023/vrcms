@@ -52,8 +52,25 @@
     }
 
     .form-label {
-        padding-bottom: 2px;
-        border-bottom: 1px solid #ececec;
+        padding-bottom: 0px;
+        margin-top: 48px;
+        /* border-bottom: 1px solid #ececec; */
         display: block;
     }
+}
+
+.project-sublish-status, .project-pills {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 100px;
+    z-index: 1010;
+}
+
+.project-pills {
+    top: 154px;
+    z-index: 1011;
+}
+
+.projectInfo .modal-dialog .heightCtrl, .project-image-gallery .heightCtrl {
+    height: auto 
 }

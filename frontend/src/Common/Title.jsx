@@ -10,14 +10,14 @@ const Title = ({
   
   return (
     <>
-      <h3 className={`${cssClass}`}>
+      <h5 className={`${cssClass}`}>
         {title}
         {subTitle ? (
           <span className={`${subTitleClassess}`}> / {subTitle}</span>
         ) : (
           ""
         )}
-      </h3>
+      </h5>
     </>
   );
 };

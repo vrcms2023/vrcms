@@ -32,6 +32,7 @@ export const AmenitiesList = ({ project, amenities, setAmenities }) => {
         amenities={amenities}
         setAmenities={setAmenities}
         name="feature"
+        rows="5"
       />
       <Amenities
         title="Add Amenities (Press Enter after every amenitie)"
@@ -39,12 +40,13 @@ export const AmenitiesList = ({ project, amenities, setAmenities }) => {
         amenities={amenities}
         setAmenities={setAmenities}
         name="amenitie"
+        rows="5"
       />
     </>
   );
 };
 
-export const Amenities = ({ title, value, amenities, setAmenities, name }) => {
+export const Amenities = ({ title, value, amenities, setAmenities, name, rows }) => {
   const handleChange = (e, i) => {
     const { name, value } = e.target;
     const onchangeVal = { ...amenities };
@@ -62,7 +64,7 @@ export const Amenities = ({ title, value, amenities, setAmenities, name }) => {
           value={value ? value : ""}
           onChange={(e) => handleChange(e)}
           id="amenitiesDescription"
-          rows="3"
+          rows={rows}
         ></textarea>
       </div>
     </div>
