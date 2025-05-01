@@ -1,27 +1,31 @@
 .dcarousel {
   position: fixed !important;
-  top: 15vh;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 1000px;
-  height: 560px;
+  /* top: 15vh; */
+  top: 24px;
+  left: 24px;
+  right: 24px;
+  bottom: 0px;
+  width: 90%;
+  height: 100%;
+  /* width: 1000px; */
+  /* height: 560px; */
   overflow: hidden;
   margin: 0 auto;
   z-index: 99999;
   /* border: 5px solid #ffffff; */
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 
 .dcarousel .carousel-item {
-  background-color: #e1e1e1;
+  background-color: rgba(0,0,0, .6);
 }
 
 .dcarousel .carousel-item img {
   object-fit: cover;
-  /* width: auto;
+  /* width: auto; 
   height: 600px; */
-  width: 1000px;
+  width: auto;
+  height: 92vh;
   margin: 0 auto;
 }
 
@@ -29,9 +33,9 @@
 
 .dcarousel .closeCarousel {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  color: #000;
+  top: 24px;
+  right: 24px;
+  color: rgba(255, 255, 255, .5);;
   cursor: pointer;
   z-index: 99;
   /* background: #fff; */
