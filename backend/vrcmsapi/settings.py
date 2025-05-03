@@ -78,7 +78,8 @@ INSTALLED_APPS = [
     'pagePermissions',
     'debug_toolbar',
     'products',
-    'app_themes'
+    'app_themes',
+    'showHideComponents'
 ]
 
 MIDDLEWARE = [
