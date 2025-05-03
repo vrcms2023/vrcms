@@ -271,16 +271,6 @@ const About = () => {
                       ""
                     )}
                     {/* <p>{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</p> */}
-                    {item.aboutus_sub_title ? (
-                      <Title
-                        title={item.aboutus_sub_title}
-                        cssClass=""
-                        mainTitleClassess="fs-5 text-secondary mb-2"
-                        subTitleClassess=""
-                      />
-                    ) : (
-                      ""
-                    )}
 
                     <div
                       dangerouslySetInnerHTML={{
