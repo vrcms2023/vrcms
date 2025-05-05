@@ -204,7 +204,6 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  /** Start Visibility ON / OFF logic  */
   useEffect(() => {
     const getshowHideList = async () => {
       try {
@@ -301,8 +300,8 @@ const Home = () => {
 
         {/* LEON Pharma Products  */}
         {isAdmin && hasPermission && (
-          <div className="container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices">
-            <div className="row">
+          <div className="randomServices bg-secondary text-white p-1 px-2 mb-1">
+            <div className="d-flex justify-content-between align-items-center">
               Product highlight
               <ShowHideIcon
                 editHandler={() => showHideHandler("productHilight")}
@@ -417,76 +416,83 @@ const Home = () => {
           </ProductHilightsStyled>
         )}
 
-        {isAdmin && hasPermission && (
-          <div
-            className={`container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices mt-5 ${!showHideCompList?.briefintro?.visibility ? "bg-secondary text-muted p-3" : ""}`}
-          >
-            <div className="row">
-              {!showHideCompList?.briefintro?.visibility &&
-                "A Brief introduction visibility false "}
-
-              <ShowHideIcon
-                editHandler={() => showHideHandler("briefintro")}
-                hideIcon={showHideCompList?.briefintro?.visibility}
-              />
-            </div>
-          </div>
-        )}
-        {/* INTRODUCTION COMPONENT */}
-
-        {showHideCompList?.briefintro?.visibility && (
-          <div>
-            <div className="container">
-              <div className="row">
-                {/* <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              pageType="Home"
-              /> 
-            */}
-                <div className="breiftopMargin">
-                  {isAdmin && hasPermission && (
-                    <EditIcon
-                      editHandler={() => editHandler("briefIntro", true)}
-                    />
-                  )}
-
-                  <BriefIntroFrontend
-                    introState={componentEdit.briefIntro}
-                    linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-                    linkLabel="Read More"
-                    moreLink=""
-                    introTitleCss="fs-3 fw-bold text-center mb-4"
-                    introSubTitleCss="fw-medium text-muted text-center"
-                    introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
-                    detailsContainerCss="col-md-12 py-3"
-                    anchorContainer="d-flex justify-content-center align-items-center mt-4"
-                    anchersvgColor="#17427C"
-                    pageType={pageType}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {componentEdit.briefIntro && (
-              <div className={`adminEditTestmonial selected `}>
-                <BriefIntroAdmin
-                  editHandler={editHandler}
-                  componentType="briefIntro"
-                  popupTitle="Brief Intro Banner"
-                  pageType="Home"
+        {/* Introduction component with ON/OF  */}
+        <div
+          className={
+            showHideCompList?.briefintro?.visibility ? "border border-info" : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <div className="randomServices bg-info text-white p-1 px-2 mb-1">
+              <div className="d-flex justify-content-between align-items-center">
+                {/* A Brief introduction */}
+                <span className="fs-5">
+                  {!showHideCompList?.briefintro?.visibility
+                    ? "TOGGLE - A Brief Introduction Component"
+                    : ""}{" "}
+                </span>
+                <ShowHideIcon
+                  editHandler={() => showHideHandler("briefintro")}
+                  hideIcon={showHideCompList?.briefintro?.visibility}
                 />
               </div>
-            )}
-          </div>
-        )}
+            </div>
+          )}
+
+          {/* INTRODUCTION COMPONENT */}
+          {showHideCompList?.briefintro?.visibility && (
+            <div>
+              <div className="container">
+                <div className="row">
+                  {/* <BriefIntroFrontend
+                introState={componentEdit.briefIntro}
+                pageType="Home"
+                /> 
+              */}
+                  <div className="breiftopMargin">
+                    {isAdmin && hasPermission && (
+                      <EditIcon
+                        editHandler={() => editHandler("briefIntro", true)}
+                      />
+                    )}
+
+                    <BriefIntroFrontend
+                      introState={componentEdit.briefIntro}
+                      linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                      linkLabel="Read More"
+                      moreLink=""
+                      introTitleCss="fs-3 fw-bold text-center mb-4"
+                      introSubTitleCss="fw-medium text-muted text-center"
+                      introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
+                      detailsContainerCss="col-md-12 py-3"
+                      anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                      anchersvgColor="#17427C"
+                      pageType={pageType}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {componentEdit.briefIntro && (
+                <div className={`adminEditTestmonial selected `}>
+                  <BriefIntroAdmin
+                    editHandler={editHandler}
+                    componentType="briefIntro"
+                    popupTitle="Brief Intro Banner"
+                    pageType="Home"
+                  />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
         {/* END OF INTRODUCTION COMPONENT ============================== */}
 
         {/* Random Hilights */}
 
         {isAdmin && hasPermission && (
-          <div className="container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices">
-            <div className="row">
-              {" "}
+          <div className="randomServices bg-secondary text-white p-1 px-2 mb-1">
+            <div className="d-flex justify-content-between align-items-center">
               Service
               <ShowHideIcon
                 editHandler={() => showHideHandler("services")}
@@ -543,11 +549,9 @@ const Home = () => {
 
         {/* PRODUCTS CATEGORIES */}
         {isAdmin && hasPermission && (
-          <div className="container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices">
-            <div className="row">
-              {" "}
-              Products, visibility ={" "}
-              {"" + showHideCompList?.products?.visibility}
+          <div className="randomServices bg-secondary text-white p-1 px-2 mb-1">
+            <div className="d-flex justify-content-between align-items-center">
+              Products, visibility = {showHideCompList?.products?.visibility}
               <ShowHideIcon
                 editHandler={() => showHideHandler("products")}
                 hideIcon={showHideCompList?.products?.visibility}

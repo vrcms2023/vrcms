@@ -4,15 +4,20 @@ import "./AdminEditIcon.css";
 const ShowHideIcon = ({
   editHandler,
   hideIcon = false,
-  iconShow = "fa-eye",
-  iconHide = "fa-eye-slash",
-  iconCss = "text-warning cursor-pointer fs-3",
-  cssClasses = "position-absolute",
+  // iconShow = "fa-eye",
+  // iconHide = "fa-eye-slash",
+  iconShow = "fa-toggle-on",
+  iconHide = "fa-toggle-off",
+  iconCss,
+  // iconCss = "text-info cursor-pointer fs-3",
+  cssClasses = "",
 }) => {
+  const appliedIconCss = iconCss ?? `${hideIcon ? 'text-success' : 'text-muted'} cursor-pointer fs-3`;
   return (
-    <span className={`${cssClasses} editIcon`}>
+    <span className={`${cssClasses} d-block p-1 rounded-2 d-flex justify-content-between align-items-center`}>
+     <span>{hideIcon ? "ON" : "OFF" }</span>
       <i
-        className={`fa ${hideIcon ? iconShow : iconHide} ${iconCss}`}
+        className={`ms-2 fa ${hideIcon ? iconShow : iconHide} ${appliedIconCss}`}
         aria-hidden="true"
         onClick={editHandler}
       ></i>
