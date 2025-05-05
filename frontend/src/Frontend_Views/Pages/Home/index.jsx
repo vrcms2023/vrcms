@@ -204,6 +204,7 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  /** Start Visibility ON / OFF logic  */
   useEffect(() => {
     const getshowHideList = async () => {
       try {
@@ -240,6 +241,7 @@ const Home = () => {
     }
   };
 
+  /** End Visibility ON / OFF logic  */
   return (
     <>
       <div className="container-fluid">
@@ -303,13 +305,13 @@ const Home = () => {
             <div className="row">
               Product highlight
               <ShowHideIcon
-                editHandler={() => showHideHandler("producgHilight")}
-                hideIcon={showHideCompList?.producgHilight?.visibility}
+                editHandler={() => showHideHandler("productHilight")}
+                hideIcon={showHideCompList?.productHilight?.visibility}
               />
             </div>
           </div>
         )}
-        {showHideCompList?.producgHilight?.visibility && (
+        {showHideCompList?.productHilight?.visibility && (
           <ProductHilightsStyled>
             <div className="container position-relative d-none d-md-block">
               <div className="row rounded-3 overflow-hidden position-absolute hiligntsContainer">
@@ -416,9 +418,13 @@ const Home = () => {
         )}
 
         {isAdmin && hasPermission && (
-          <div className="container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices">
+          <div
+            className={`container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices mt-5 ${!showHideCompList?.briefintro?.visibility ? "bg-secondary text-muted p-3" : ""}`}
+          >
             <div className="row">
-              A Brief introduction
+              {!showHideCompList?.briefintro?.visibility &&
+                "A Brief introduction visibility false "}
+
               <ShowHideIcon
                 editHandler={() => showHideHandler("briefintro")}
                 hideIcon={showHideCompList?.briefintro?.visibility}
@@ -540,7 +546,8 @@ const Home = () => {
           <div className="container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices">
             <div className="row">
               {" "}
-              Products, visibility = {showHideCompList?.products?.visibility}
+              Products, visibility ={" "}
+              {"" + showHideCompList?.products?.visibility}
               <ShowHideIcon
                 editHandler={() => showHideHandler("products")}
                 hideIcon={showHideCompList?.products?.visibility}
