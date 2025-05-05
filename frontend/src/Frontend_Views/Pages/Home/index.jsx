@@ -304,13 +304,13 @@ const Home = () => {
             <div className="d-flex justify-content-between align-items-center">
               Product highlight
               <ShowHideIcon
-                editHandler={() => showHideHandler("productHilight")}
-                hideIcon={showHideCompList?.productHilight?.visibility}
+                editHandler={() => showHideHandler("producthilight")}
+                hideIcon={showHideCompList?.producthilight?.visibility}
               />
             </div>
           </div>
         )}
-        {showHideCompList?.productHilight?.visibility && (
+        {showHideCompList?.producthilight?.visibility && (
           <ProductHilightsStyled>
             <div className="container position-relative d-none d-md-block">
               <div className="row rounded-3 overflow-hidden position-absolute hiligntsContainer">
