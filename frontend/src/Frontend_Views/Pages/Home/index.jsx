@@ -204,7 +204,6 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
 
-
   useEffect(() => {
     const getshowHideList = async () => {
       try {
@@ -241,6 +240,7 @@ const Home = () => {
     }
   };
 
+  /** End Visibility ON / OFF logic  */
   return (
     <>
       <div className="container-fluid">
@@ -275,7 +275,9 @@ const Home = () => {
         {/* CAROUSEL COMPONENT  */}
         <div className="row">
           <div className="col-md-12 p-0 carousel">
-            {isAdmin && hasPermission && <EditIcon editHandler={editHandler} />}
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("carousel", true)} />
+            )}
             <Carousel carouselState={componentEdit.carousel} />
           </div>
         </div>
@@ -299,151 +301,178 @@ const Home = () => {
         )}
 
         {/* LEON Pharma Products  */}
-        <div className={showHideCompList?.producthilight?.visibility ? "border border-info mb-2" : ""}>
-        {isAdmin && hasPermission && (
-         <div
-         className={`randomServices text-white p-1 px-2 mb-1 ${
-           showHideCompList?.producthilight?.visibility ? " bg-info" : " bg-secondary"
-          }`} >
-            <div className="d-flex justify-content-between align-items-center">
-            <span
+        <div
+          className={
+            showHideCompList?.producthilight?.visibility
+              ? "border border-info mb-2"
+              : ""
+          }
+          style={
+            showHideCompList?.producthilight?.visibility
+              ? { height: "160px" }
+              : {}
+          }
+        >
+          {isAdmin && hasPermission && (
+            <div
+              className={`randomServices text-white p-1 px-2 mb-1 ${
+                showHideCompList?.producthilight?.visibility
+                  ? " bg-info"
+                  : " bg-secondary"
+              }`}
+            >
+              <div className="d-flex justify-content-between align-items-center">
+                <span
                   className={`${
-                    showHideCompList?.producthilight?.visibility ? "text-white" : "text-muted"
+                    showHideCompList?.producthilight?.visibility
+                      ? "text-white"
+                      : "text-muted"
                   }`}
                 >
-                   Product highlight
-                   </span>
-              
-              <ShowHideIcon
-                editHandler={() => showHideHandler("producthilight")}
-                hideIcon={showHideCompList?.producthilight?.visibility}
-              />
-            </div>
-          </div>
-        )}
-        {showHideCompList?.producthilight?.visibility && (
-          <ProductHilightsStyled>
-            <div className="container position-relative d-none d-md-block">
-              <div className="row rounded-3 overflow-hidden position-absolute hiligntsContainer">
-                <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
-                  <div className="position-relative">
-                    {isAdmin && hasPermission && (
-                      <EditIcon
-                        editHandler={() =>
-                          editHandler(productComp.product_development, true)
-                        }
-                      />
-                    )}
+                  Product highlight
+                </span>
 
-                    <SimpleTitleDescComponent
-                      formgetURL={`/carousel/clientHomeIntro/${productComp.product_development}/`}
-                      componentEdit={componentEdit.product_development}
-                      setFormValues={setProductDevelopment}
-                      formvalues={productDevelopment}
-                    />
-                    {componentEdit.product_development && (
-                      <div className={`adminEditTestmonial selected `}>
-                        <DynamicForm
-                          editHandler={editHandler}
-                          componentType={productComp.product_development}
-                          componentTitle="Product Development component"
-                          formPostURL={`/carousel/createHomeIntro/`}
-                          formUpdateURL={`/carousel/updateHomeIntro/`}
-                          editObject={productDevelopment}
-                          dynamicFormFields={getTitleAndDescriptionFields(
-                            productComp.product_development
-                          )}
+                <ShowHideIcon
+                  editHandler={() => showHideHandler("producthilight")}
+                  hideIcon={showHideCompList?.producthilight?.visibility}
+                />
+              </div>
+            </div>
+          )}
+          {showHideCompList?.producthilight?.visibility && (
+            <ProductHilightsStyled>
+              <div className="container position-relative d-none d-md-block">
+                <div className="row rounded-3 overflow-hidden position-absolute hiligntsContainer">
+                  <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
+                    <div className="position-relative">
+                      {isAdmin && hasPermission && (
+                        <EditIcon
+                          editHandler={() =>
+                            editHandler(productComp.product_development, true)
+                          }
                         />
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
-                  <div className="position-relative">
-                    {isAdmin && hasPermission && (
-                      <EditIcon
-                        editHandler={() =>
-                          editHandler(productComp.product_distribution, true)
-                        }
+                      )}
+
+                      <SimpleTitleDescComponent
+                        formgetURL={`/carousel/clientHomeIntro/${productComp.product_development}/`}
+                        componentEdit={componentEdit.product_development}
+                        setFormValues={setProductDevelopment}
+                        formvalues={productDevelopment}
                       />
-                    )}
-                    <SimpleTitleDescComponent
-                      formgetURL={`/carousel/clientHomeIntro/${productComp.product_distribution}/`}
-                      componentEdit={componentEdit.product_distribution}
-                      setFormValues={setProductDistribution}
-                      formvalues={productDistribution}
-                    />
-                    {componentEdit.product_distribution && (
-                      <div className={`adminEditTestmonial selected `}>
-                        <DynamicForm
-                          editHandler={editHandler}
-                          componentType={productComp.product_distribution}
-                          componentTitle="Product Distribution component"
-                          formPostURL={`/carousel/createHomeIntro/`}
-                          formUpdateURL={`/carousel/updateHomeIntro/`}
-                          editObject={productDistribution}
-                          dynamicFormFields={getTitleAndDescriptionFields(
-                            productComp.product_distribution
-                          )}
-                        />
-                      </div>
-                    )}
+                      {componentEdit.product_development && (
+                        <div className={`adminEditTestmonial selected `}>
+                          <DynamicForm
+                            editHandler={editHandler}
+                            componentType={productComp.product_development}
+                            componentTitle="Product Development component"
+                            formPostURL={`/carousel/createHomeIntro/`}
+                            formUpdateURL={`/carousel/updateHomeIntro/`}
+                            editObject={productDevelopment}
+                            dynamicFormFields={getTitleAndDescriptionFields(
+                              productComp.product_development
+                            )}
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
-                  <div className="position-relative">
-                    {isAdmin && hasPermission && (
-                      <EditIcon
-                        editHandler={() =>
-                          editHandler(productComp.product_registration, true)
-                        }
-                      />
-                    )}
-                    <SimpleTitleDescComponent
-                      formgetURL={`/carousel/clientHomeIntro/${productComp.product_registration}/`}
-                      componentEdit={componentEdit.product_registration}
-                      setFormValues={setProductRegistration}
-                      formvalues={productRegistration}
-                    />
-                    {componentEdit.product_registration && (
-                      <div className={`adminEditTestmonial selected `}>
-                        <DynamicForm
-                          editHandler={editHandler}
-                          componentType={productComp.product_registration}
-                          componentTitle="Product Distribution component"
-                          formPostURL={`/carousel/createHomeIntro/`}
-                          formUpdateURL={`/carousel/updateHomeIntro/`}
-                          editObject={productRegistration}
-                          dynamicFormFields={getTitleAndDescriptionFields(
-                            productComp.product_registration
-                          )}
+                  <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
+                    <div className="position-relative">
+                      {isAdmin && hasPermission && (
+                        <EditIcon
+                          editHandler={() =>
+                            editHandler(productComp.product_distribution, true)
+                          }
                         />
-                      </div>
-                    )}
+                      )}
+                      <SimpleTitleDescComponent
+                        formgetURL={`/carousel/clientHomeIntro/${productComp.product_distribution}/`}
+                        componentEdit={componentEdit.product_distribution}
+                        setFormValues={setProductDistribution}
+                        formvalues={productDistribution}
+                      />
+                      {componentEdit.product_distribution && (
+                        <div className={`adminEditTestmonial selected `}>
+                          <DynamicForm
+                            editHandler={editHandler}
+                            componentType={productComp.product_distribution}
+                            componentTitle="Product Distribution component"
+                            formPostURL={`/carousel/createHomeIntro/`}
+                            formUpdateURL={`/carousel/updateHomeIntro/`}
+                            editObject={productDistribution}
+                            dynamicFormFields={getTitleAndDescriptionFields(
+                              productComp.product_distribution
+                            )}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="col-sm-4 p-4 p-lg-5 py-lg-4 ">
+                    <div className="position-relative">
+                      {isAdmin && hasPermission && (
+                        <EditIcon
+                          editHandler={() =>
+                            editHandler(productComp.product_registration, true)
+                          }
+                        />
+                      )}
+                      <SimpleTitleDescComponent
+                        formgetURL={`/carousel/clientHomeIntro/${productComp.product_registration}/`}
+                        componentEdit={componentEdit.product_registration}
+                        setFormValues={setProductRegistration}
+                        formvalues={productRegistration}
+                      />
+                      {componentEdit.product_registration && (
+                        <div className={`adminEditTestmonial selected `}>
+                          <DynamicForm
+                            editHandler={editHandler}
+                            componentType={productComp.product_registration}
+                            componentTitle="Product Distribution component"
+                            formPostURL={`/carousel/createHomeIntro/`}
+                            formUpdateURL={`/carousel/updateHomeIntro/`}
+                            editObject={productRegistration}
+                            dynamicFormFields={getTitleAndDescriptionFields(
+                              productComp.product_registration
+                            )}
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </ProductHilightsStyled>
-        )}
+            </ProductHilightsStyled>
+          )}
         </div>
 
         {/* Introduction component with ON/OF  */}
-        <div className={showHideCompList?.briefintro?.visibility ? "border border-info mb-2" : ""}>
+        <div
+          className={
+            showHideCompList?.briefintro?.visibility
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
           {isAdmin && hasPermission && (
-           <div
-           className={`randomServices text-white p-1 px-2 mb-1 ${
-             showHideCompList?.briefintro?.visibility ? " bg-info" : " bg-secondary"
-            }`} >
+            <div
+              className={`randomServices text-white p-1 px-2 mb-1 ${
+                showHideCompList?.briefintro?.visibility
+                  ? " bg-info"
+                  : " bg-secondary"
+              }`}
+            >
               <div className="d-flex justify-content-between align-items-center">
-              {/* A Brief introduction */}
+                {/* A Brief introduction */}
                 <span
                   className={`${
-                    showHideCompList?.briefintro?.visibility ? "text-white" : "text-muted"
+                    showHideCompList?.briefintro?.visibility
+                      ? "text-white"
+                      : "text-muted"
                   }`}
                 >
-                   A Brief Introduction Component
-                   </span>
+                  A Brief Introduction Component
+                </span>
                 <ShowHideIcon
                   editHandler={() => showHideHandler("briefintro")}
                   hideIcon={showHideCompList?.briefintro?.visibility}
@@ -452,7 +481,7 @@ const Home = () => {
             </div>
           )}
 
-        {/* INTRODUCTION COMPONENT */}
+          {/* INTRODUCTION COMPONENT */}
           {showHideCompList?.briefintro?.visibility && (
             <div>
               <div className="container">
@@ -501,207 +530,237 @@ const Home = () => {
         </div>
         {/* END OF INTRODUCTION COMPONENT ============================== */}
 
-
         {/* Random Hilights */}
-        <div className={showHideCompList?.services?.visibility ? "border border-info mb-2" : ""}>
-        {isAdmin && hasPermission && (
-          <div
-          className={`randomServices text-white p-1 px-2 mb-1 ${
-            showHideCompList?.services?.visibility ? " bg-info" : " bg-secondary"
-           }`} >
-
+        <div
+          className={
+            showHideCompList?.services?.visibility
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <div
+              className={`randomServices text-white p-1 px-2 mb-1 ${
+                showHideCompList?.services?.visibility
+                  ? " bg-info"
+                  : " bg-secondary"
+              }`}
+            >
               <div className="d-flex justify-content-between align-items-center">
-              <span
+                <span
                   className={`${
-                    showHideCompList?.services?.visibility ? "text-white" : "text-muted"
+                    showHideCompList?.services?.visibility
+                      ? "text-white"
+                      : "text-muted"
                   }`}
                 >
-                   Service
-                   </span>
-              
-              <ShowHideIcon
-                editHandler={() => showHideHandler("services")}
-                hideIcon={showHideCompList?.services?.visibility}
-              />
-            </div>
-          </div>
-        )}
-        {showHideCompList?.services?.visibility && (
-          <ABriefIntroStyled>
-            <h1 className="fs-1 fw-bold text-center text-uppercase">
-              Services
-            </h1>
-            <div className="container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices">
-              <div className="row">
-                <ABriefAbout
-                  col1="col-md-6 ps-sm-0"
-                  col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-                  cssClass="fs-3 mb-3 fw-bolder title"
-                  imageClass="w-100 object-fit-cover imgStylingLeft shadow"
-                  dimensions={imageDimensionsJson("whoweare")}
-                  pageType={"productPortfolio"}
-                  componentFlip={false}
-                />
-              </div>
+                  Service
+                </span>
 
-              <div className="row d-flex flex-row-reverse my-3 my-md-5">
-                <ABriefAbout
-                  col1="col-md-6 pe-sm-0"
-                  col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-                  cssClass="fs-3 mb-3 fw-bolder title"
-                  imageClass="w-100 object-fit-cover imgStylingRight shadow imgStyling"
-                  dimensions={imageDimensionsJson("whoweare")}
-                  pageType={"promoting"}
-                  componentFlip={false}
-                />
-              </div>
-              <div className="row">
-                <ABriefAbout
-                  col1="col-md-6 ps-sm-0"
-                  col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
-                  cssClass="fs-3 mb-3 fw-bolder title"
-                  imageClass="w-100 object-fit-cover imgStylingLeft shadow"
-                  dimensions={imageDimensionsJson("whoweare")}
-                  pageType={"whatwedo"}
-                  componentFlip={false}
+                <ShowHideIcon
+                  editHandler={() => showHideHandler("services")}
+                  hideIcon={showHideCompList?.services?.visibility}
                 />
               </div>
             </div>
-          </ABriefIntroStyled>
-        )}
+          )}
+          {showHideCompList?.services?.visibility && (
+            <ABriefIntroStyled>
+              <h1 className="fs-1 fw-bold text-center text-uppercase">
+                Services
+              </h1>
+              <div className="container-lg mx-0 mx-md-0 px-md-0 mx-lg-auto randomServices">
+                <div className="row">
+                  <ABriefAbout
+                    col1="col-md-6 ps-sm-0"
+                    col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                    cssClass="fs-3 mb-3 fw-bolder title"
+                    imageClass="w-100 object-fit-cover imgStylingLeft shadow"
+                    dimensions={imageDimensionsJson("whoweare")}
+                    pageType={"productPortfolio"}
+                    componentFlip={false}
+                  />
+                </div>
+
+                <div className="row d-flex flex-row-reverse my-3 my-md-5">
+                  <ABriefAbout
+                    col1="col-md-6 pe-sm-0"
+                    col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                    cssClass="fs-3 mb-3 fw-bolder title"
+                    imageClass="w-100 object-fit-cover imgStylingRight shadow imgStyling"
+                    dimensions={imageDimensionsJson("whoweare")}
+                    pageType={"promoting"}
+                    componentFlip={false}
+                  />
+                </div>
+                <div className="row">
+                  <ABriefAbout
+                    col1="col-md-6 ps-sm-0"
+                    col2="col-md-6 p-4 p-md-5 d-flex justify-content-center align-items-start flex-column"
+                    cssClass="fs-3 mb-3 fw-bolder title"
+                    imageClass="w-100 object-fit-cover imgStylingLeft shadow"
+                    dimensions={imageDimensionsJson("whoweare")}
+                    pageType={"whatwedo"}
+                    componentFlip={false}
+                  />
+                </div>
+              </div>
+            </ABriefIntroStyled>
+          )}
         </div>
         {/* END OF Random Hilights ============================ */}
 
         {/* PRODUCTS CATEGORIES */}
-        <div className={showHideCompList?.products?.visibility ? "border border-info mb-2" : ""}>
-        {isAdmin && hasPermission && (
-          <div
-          className={`randomServices text-white p-1 px-2 mb-1 ${
-            showHideCompList?.products?.visibility ? " bg-info" : " bg-secondary"
-           }`} >
+        <div
+          className={
+            showHideCompList?.products?.visibility
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <div
+              className={`randomServices text-white p-1 px-2 mb-1 ${
+                showHideCompList?.products?.visibility
+                  ? " bg-info"
+                  : " bg-secondary"
+              }`}
+            >
               <div className="d-flex justify-content-between align-items-center">
-              {/* Products, visibility = {showHideCompList?.products?.visibility} */}
-              <span
+                {/* Products, visibility = {showHideCompList?.products?.visibility} */}
+                <span
                   className={`${
-                    showHideCompList?.products?.visibility ? "text-white" : "text-muted"
+                    showHideCompList?.products?.visibility
+                      ? "text-white"
+                      : "text-muted"
                   }`}
                 >
-                   Products
-                   </span>
-              <ShowHideIcon
-                editHandler={() => showHideHandler("products")}
-                hideIcon={showHideCompList?.products?.visibility}
-              />
-            </div>
-          </div>
-        )}
-        {showHideCompList?.products?.visibility && (
-          <div className="container">
-            <Title
-              title="Products"
-              cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
-            />
-            <div className="row">
-              {homeCategoriesList.map(
-                (category) =>
-                  category?.products?.length > 0 && (
-                    <div key={category.id}>
-                      <Product
-                        item={category.products[0]}
-                        categoryId={category.id}
-                      />
-                      {/* {category.category_name} */}
-                    </div>
-                  )
-              )}
-            </div>
-          </div>
-        )}
-        </div>
-        {/* END OF PRODUCTS CATEGORIES ============================== */}
-
-
-         {/* TESTIMONIAL COMPONENT */}
-         <div className={showHideCompList?.testimonis?.visibility ? "border border-info mb-2" : ""}>
-         {isAdmin && hasPermission && (
-          <div
-          className={`randomServices text-white p-1 px-2 mb-1 ${
-            showHideCompList?.testimonis?.visibility ? " bg-info" : " bg-secondary"
-           }`} >
-              <div className="d-flex justify-content-between align-items-center">
-              {/* Products, visibility = {showHideCompList?.products?.visibility} */}
-              <span
-                  className={`${
-                    showHideCompList?.testimonis?.visibility ? "text-white" : "text-muted"
-                  }`}
-                >
-                   Testimonials
-                   </span>
-              <ShowHideIcon
-                editHandler={() => showHideHandler("testimonis")}
-                hideIcon={showHideCompList?.testimonis?.visibility}
-              />
-            </div>
-          </div>
-        )}
-
-        {showHideCompList?.testimonis?.visibility && (
-         <TestimonialCarouselPageStyled>
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-md-12">
-                <Title
-                  title="Testimonials"
-                  cssClass="fs-1 fw-bold text-center my-5 text-uppercase"
+                  Products
+                </span>
+                <ShowHideIcon
+                  editHandler={() => showHideHandler("products")}
+                  hideIcon={showHideCompList?.products?.visibility}
                 />
               </div>
             </div>
-            <div className="row">
-              <div className="col-md-12 testimonials text-center">
-                {isAdmin && hasPermission && (
-                  <EditIcon
-                    editHandler={() => editHandler("testmonial", true)}
-                  />
-                )}
-
-                {testimonis.length < 1 ? (
-                  (testimonis.length, "No Testimonials Found")
-                ) : testimonis.length === 1 ? (
-                  <h4>Please add 2 or more testimonials.</h4>
-                ) : testimonis.length > 1 ? (
-                  <Testimonials testimonis={testimonis} />
-                ) : (
-                  ""
+          )}
+          {showHideCompList?.products?.visibility && (
+            <div className="container">
+              <Title
+                title="Products"
+                cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
+              />
+              <div className="row">
+                {homeCategoriesList.map(
+                  (category) =>
+                    category?.products?.length > 0 && (
+                      <div key={category.id}>
+                        <Product
+                          item={category.products[0]}
+                          categoryId={category.id}
+                        />
+                        {/* {category.category_name} */}
+                      </div>
+                    )
                 )}
               </div>
-              {componentEdit.testmonial && (
-                <div className={`adminEditTestmonial selected `}>
-                  <AdminBanner
-                    editHandler={editHandler}
-                    componentType="testmonial"
-                    popupTitle={`Testmonial Banner`}
-                    getImageListURL="testimonials/clientTestimonials/"
-                    deleteImageURL="testimonials/updateTestimonials/"
-                    imagePostURL="testimonials/createTestimonials/"
-                    imageUpdateURL="testimonials/updateTestimonials/"
-                    imageIndexURL="testimonials/updateTestimonialsindex/"
-                    imageLabel="Add your Image"
-                    titleTitle="Testmonial Name"
-                    descriptionTitle="Testimonial Writeup "
-                    showDescription={false}
-                    showExtraFormFields={getTestimonialsFields("testmonial")}
-                    dimensions={imageDimensionsJson("testimonial")}
-                  />
-                </div>
-              )}
             </div>
-          </div>
-        </TestimonialCarouselPageStyled>
-        )}
+          )}
+        </div>
+        {/* END OF PRODUCTS CATEGORIES ============================== */}
+
+        {/* TESTIMONIAL COMPONENT */}
+        <div
+          className={
+            showHideCompList?.testimonis?.visibility
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <div
+              className={`randomServices text-white p-1 px-2 mb-1 ${
+                showHideCompList?.testimonis?.visibility
+                  ? " bg-info"
+                  : " bg-secondary"
+              }`}
+            >
+              <div className="d-flex justify-content-between align-items-center">
+                {/* Products, visibility = {showHideCompList?.products?.visibility} */}
+                <span
+                  className={`${
+                    showHideCompList?.testimonis?.visibility
+                      ? "text-white"
+                      : "text-muted"
+                  }`}
+                >
+                  Testimonials
+                </span>
+                <ShowHideIcon
+                  editHandler={() => showHideHandler("testimonis")}
+                  hideIcon={showHideCompList?.testimonis?.visibility}
+                />
+              </div>
+            </div>
+          )}
+
+          {showHideCompList?.testimonis?.visibility && (
+            <TestimonialCarouselPageStyled>
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-md-12">
+                    <Title
+                      title="Testimonials"
+                      cssClass="fs-1 fw-bold text-center my-5 text-uppercase"
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12 testimonials text-center">
+                    {isAdmin && hasPermission && (
+                      <EditIcon
+                        editHandler={() => editHandler("testmonial", true)}
+                      />
+                    )}
+
+                    {testimonis.length < 1 ? (
+                      (testimonis.length, "No Testimonials Found")
+                    ) : testimonis.length === 1 ? (
+                      <h4>Please add 2 or more testimonials.</h4>
+                    ) : testimonis.length > 1 ? (
+                      <Testimonials testimonis={testimonis} />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  {componentEdit.testmonial && (
+                    <div className={`adminEditTestmonial selected `}>
+                      <AdminBanner
+                        editHandler={editHandler}
+                        componentType="testmonial"
+                        popupTitle={`Testmonial Banner`}
+                        getImageListURL="testimonials/clientTestimonials/"
+                        deleteImageURL="testimonials/updateTestimonials/"
+                        imagePostURL="testimonials/createTestimonials/"
+                        imageUpdateURL="testimonials/updateTestimonials/"
+                        imageIndexURL="testimonials/updateTestimonialsindex/"
+                        imageLabel="Add your Image"
+                        titleTitle="Testmonial Name"
+                        descriptionTitle="Testimonial Writeup "
+                        showDescription={false}
+                        showExtraFormFields={getTestimonialsFields(
+                          "testmonial"
+                        )}
+                        dimensions={imageDimensionsJson("testimonial")}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </TestimonialCarouselPageStyled>
+          )}
         </div>
         {/* END OF TESTIMONIAL COMPONENT ============================= */}
-
-
 
         {/* Random Home Services 
         <RandomHomeServicesStyled>
@@ -768,8 +827,6 @@ const Home = () => {
           </div>
         </RandomHomeServicesStyled>
         */}
-
-       
 
         {/* HOME NEWS */}
         <div className="row py-5 homeNews">
