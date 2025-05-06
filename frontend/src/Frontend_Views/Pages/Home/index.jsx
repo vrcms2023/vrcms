@@ -307,6 +307,11 @@ const Home = () => {
               ? "border border-info mb-2"
               : ""
           }
+          style={
+            showHideCompList?.producthilight?.visibility
+              ? { height: "160px" }
+              : {}
+          }
         >
           {isAdmin && hasPermission && (
             <div
