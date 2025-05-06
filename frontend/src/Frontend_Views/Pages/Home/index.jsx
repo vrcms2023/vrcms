@@ -299,18 +299,29 @@ const Home = () => {
         )}
 
         {/* LEON Pharma Products  */}
+        <div className={showHideCompList?.producthilight?.visibility ? "border border-info mb-2" : ""}>
         {isAdmin && hasPermission && (
-          <div className="randomServices bg-secondary text-white p-1 px-2 mb-1">
+         <div
+         className={`randomServices text-white p-1 px-2 mb-1 ${
+           showHideCompList?.producthilight?.visibility ? " bg-info" : " bg-secondary"
+          }`} >
             <div className="d-flex justify-content-between align-items-center">
-              Product highlight
+            <span
+                  className={`${
+                    showHideCompList?.producthilight?.visibility ? "text-white" : "text-muted"
+                  }`}
+                >
+                   Product highlight
+                   </span>
+              
               <ShowHideIcon
-                editHandler={() => showHideHandler("producgHilight")}
-                hideIcon={showHideCompList?.producgHilight?.visibility}
+                editHandler={() => showHideHandler("producthilight")}
+                hideIcon={showHideCompList?.producthilight?.visibility}
               />
             </div>
           </div>
         )}
-        {showHideCompList?.producgHilight?.visibility && (
+        {showHideCompList?.producthilight?.visibility && (
           <ProductHilightsStyled>
             <div className="container position-relative d-none d-md-block">
               <div className="row rounded-3 overflow-hidden position-absolute hiligntsContainer">
@@ -415,14 +426,24 @@ const Home = () => {
             </div>
           </ProductHilightsStyled>
         )}
+        </div>
 
         {/* Introduction component with ON/OF  */}
-        <div className={showHideCompList?.briefintro?.visibility ? "border border-info" : ""}>
+        <div className={showHideCompList?.briefintro?.visibility ? "border border-info mb-2" : ""}>
           {isAdmin && hasPermission && (
-            <div className="randomServices bg-info text-white p-1 px-2 mb-1">
+           <div
+           className={`randomServices text-white p-1 px-2 mb-1 ${
+             showHideCompList?.briefintro?.visibility ? " bg-info" : " bg-secondary"
+            }`} >
               <div className="d-flex justify-content-between align-items-center">
               {/* A Brief introduction */}
-                <span className="fs-5">{!showHideCompList?.briefintro?.visibility ? "TOGGLE - A Brief Introduction Component" : ""} </span>
+                <span
+                  className={`${
+                    showHideCompList?.briefintro?.visibility ? "text-white" : "text-muted"
+                  }`}
+                >
+                   A Brief Introduction Component
+                   </span>
                 <ShowHideIcon
                   editHandler={() => showHideHandler("briefintro")}
                   hideIcon={showHideCompList?.briefintro?.visibility}
@@ -482,11 +503,22 @@ const Home = () => {
 
 
         {/* Random Hilights */}
-
+        <div className={showHideCompList?.services?.visibility ? "border border-info mb-2" : ""}>
         {isAdmin && hasPermission && (
-          <div className="randomServices bg-secondary text-white p-1 px-2 mb-1">
+          <div
+          className={`randomServices text-white p-1 px-2 mb-1 ${
+            showHideCompList?.services?.visibility ? " bg-info" : " bg-secondary"
+           }`} >
+
               <div className="d-flex justify-content-between align-items-center">
-              Service
+              <span
+                  className={`${
+                    showHideCompList?.services?.visibility ? "text-white" : "text-muted"
+                  }`}
+                >
+                   Service
+                   </span>
+              
               <ShowHideIcon
                 editHandler={() => showHideHandler("services")}
                 hideIcon={showHideCompList?.services?.visibility}
@@ -537,14 +569,25 @@ const Home = () => {
             </div>
           </ABriefIntroStyled>
         )}
-
+        </div>
         {/* END OF Random Hilights ============================ */}
 
         {/* PRODUCTS CATEGORIES */}
+        <div className={showHideCompList?.products?.visibility ? "border border-info mb-2" : ""}>
         {isAdmin && hasPermission && (
-          <div className="randomServices bg-secondary text-white p-1 px-2 mb-1">
+          <div
+          className={`randomServices text-white p-1 px-2 mb-1 ${
+            showHideCompList?.products?.visibility ? " bg-info" : " bg-secondary"
+           }`} >
               <div className="d-flex justify-content-between align-items-center">
-              Products, visibility = {showHideCompList?.products?.visibility}
+              {/* Products, visibility = {showHideCompList?.products?.visibility} */}
+              <span
+                  className={`${
+                    showHideCompList?.products?.visibility ? "text-white" : "text-muted"
+                  }`}
+                >
+                   Products
+                   </span>
               <ShowHideIcon
                 editHandler={() => showHideHandler("products")}
                 hideIcon={showHideCompList?.products?.visibility}
@@ -574,7 +617,91 @@ const Home = () => {
             </div>
           </div>
         )}
+        </div>
         {/* END OF PRODUCTS CATEGORIES ============================== */}
+
+
+         {/* TESTIMONIAL COMPONENT */}
+         <div className={showHideCompList?.testimonis?.visibility ? "border border-info mb-2" : ""}>
+         {isAdmin && hasPermission && (
+          <div
+          className={`randomServices text-white p-1 px-2 mb-1 ${
+            showHideCompList?.testimonis?.visibility ? " bg-info" : " bg-secondary"
+           }`} >
+              <div className="d-flex justify-content-between align-items-center">
+              {/* Products, visibility = {showHideCompList?.products?.visibility} */}
+              <span
+                  className={`${
+                    showHideCompList?.testimonis?.visibility ? "text-white" : "text-muted"
+                  }`}
+                >
+                   Testimonials
+                   </span>
+              <ShowHideIcon
+                editHandler={() => showHideHandler("testimonis")}
+                hideIcon={showHideCompList?.testimonis?.visibility}
+              />
+            </div>
+          </div>
+        )}
+
+        {showHideCompList?.testimonis?.visibility && (
+         <TestimonialCarouselPageStyled>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-12">
+                <Title
+                  title="Testimonials"
+                  cssClass="fs-1 fw-bold text-center my-5 text-uppercase"
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12 testimonials text-center">
+                {isAdmin && hasPermission && (
+                  <EditIcon
+                    editHandler={() => editHandler("testmonial", true)}
+                  />
+                )}
+
+                {testimonis.length < 1 ? (
+                  (testimonis.length, "No Testimonials Found")
+                ) : testimonis.length === 1 ? (
+                  <h4>Please add 2 or more testimonials.</h4>
+                ) : testimonis.length > 1 ? (
+                  <Testimonials testimonis={testimonis} />
+                ) : (
+                  ""
+                )}
+              </div>
+              {componentEdit.testmonial && (
+                <div className={`adminEditTestmonial selected `}>
+                  <AdminBanner
+                    editHandler={editHandler}
+                    componentType="testmonial"
+                    popupTitle={`Testmonial Banner`}
+                    getImageListURL="testimonials/clientTestimonials/"
+                    deleteImageURL="testimonials/updateTestimonials/"
+                    imagePostURL="testimonials/createTestimonials/"
+                    imageUpdateURL="testimonials/updateTestimonials/"
+                    imageIndexURL="testimonials/updateTestimonialsindex/"
+                    imageLabel="Add your Image"
+                    titleTitle="Testmonial Name"
+                    descriptionTitle="Testimonial Writeup "
+                    showDescription={false}
+                    showExtraFormFields={getTestimonialsFields("testmonial")}
+                    dimensions={imageDimensionsJson("testimonial")}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        </TestimonialCarouselPageStyled>
+        )}
+        </div>
+        {/* END OF TESTIMONIAL COMPONENT ============================= */}
+
+
 
         {/* Random Home Services 
         <RandomHomeServicesStyled>
@@ -642,60 +769,7 @@ const Home = () => {
         </RandomHomeServicesStyled>
         */}
 
-        {/* TESTIMONIAL COMPONENT */}
-        <TestimonialCarouselPageStyled>
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-md-12">
-                <Title
-                  title="Testimonials"
-                  cssClass="fs-1 fw-bold text-center my-5 text-uppercase"
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12 testimonials text-center">
-                {isAdmin && hasPermission && (
-                  <EditIcon
-                    editHandler={() => editHandler("testmonial", true)}
-                  />
-                )}
-
-                {testimonis.length < 1 ? (
-                  (testimonis.length, "No Testimonials Found")
-                ) : testimonis.length === 1 ? (
-                  <h4>Please add 2 or more testimonials.</h4>
-                ) : testimonis.length > 1 ? (
-                  <Testimonials testimonis={testimonis} />
-                ) : (
-                  ""
-                )}
-              </div>
-              {componentEdit.testmonial && (
-                <div className={`adminEditTestmonial selected `}>
-                  <AdminBanner
-                    editHandler={editHandler}
-                    componentType="testmonial"
-                    popupTitle={`Testmonial Banner`}
-                    getImageListURL="testimonials/clientTestimonials/"
-                    deleteImageURL="testimonials/updateTestimonials/"
-                    imagePostURL="testimonials/createTestimonials/"
-                    imageUpdateURL="testimonials/updateTestimonials/"
-                    imageIndexURL="testimonials/updateTestimonialsindex/"
-                    imageLabel="Add your Image"
-                    titleTitle="Testmonial Name"
-                    descriptionTitle="Testimonial Writeup "
-                    showDescription={false}
-                    showExtraFormFields={getTestimonialsFields("testmonial")}
-                    dimensions={imageDimensionsJson("testimonial")}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </TestimonialCarouselPageStyled>
-
-        {/* END OF TESTIMONIAL COMPONENT ============================= */}
+       
 
         {/* HOME NEWS */}
         <div className="row py-5 homeNews">

@@ -12,12 +12,12 @@ const ShowHideIcon = ({
   // iconCss = "text-info cursor-pointer fs-3",
   cssClasses = "",
 }) => {
-  const appliedIconCss = iconCss ?? `${hideIcon ? 'text-success' : 'text-muted'} cursor-pointer fs-3`;
+  const appliedIconCss = iconCss ?? `${hideIcon ? 'text-white' : 'text-muted'} cursor-pointer fs-3`;
   return (
     <span className={`${cssClasses} d-block p-1 rounded-2 d-flex justify-content-between align-items-center`}>
-     <span>{hideIcon ? "ON" : "OFF" }</span>
+     <span className={hideIcon ? "" : "text-muted" }>{hideIcon ? "ON" : "OFF" }</span>
       <i
-        className={`ms-2 fa ${hideIcon ? iconShow : iconHide} ${appliedIconCss}`}
+        className={`mx-2 fa ${hideIcon ? iconShow : iconHide} ${appliedIconCss}`}
         aria-hidden="true"
         onClick={editHandler}
       ></i>
