@@ -3,11 +3,14 @@ import { getCookie } from "./cookieUtil";
 import { axiosServiceApi } from "./axiosUtil";
 
 export const getShowHideComponentsListByPage = async (type) => {
+  const pageType = type?.toLowerCase();
   try {
     let response = await axiosServiceApi.get(
-      `/showHideComponents/getbyPageType/?pageType=${type?.toLowerCase()}`
+      `/showHideComponents/getbyPageType/?pageType=${pageType}`
     );
-    return response.data;
+    const data = [];
+    data[pageType] = response.data;
+    return data;
   } catch (error) {
     return error;
   }

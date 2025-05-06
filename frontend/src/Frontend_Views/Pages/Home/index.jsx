@@ -275,7 +275,9 @@ const Home = () => {
         {/* CAROUSEL COMPONENT  */}
         <div className="row">
           <div className="col-md-12 p-0 carousel">
-            {isAdmin && hasPermission && <EditIcon editHandler={editHandler} />}
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("carousel", true)} />
+            )}
             <Carousel carouselState={componentEdit.carousel} />
           </div>
         </div>
