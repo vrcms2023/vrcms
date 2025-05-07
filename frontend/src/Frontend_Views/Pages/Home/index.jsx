@@ -71,10 +71,16 @@ import DynamicForm from "../../../Frontend_Admin/Components/forms/DynamicForm";
 import ShowHideIcon from "../../../Common/AdminShowHideIcon";
 import {
   createShowHideComponent,
-  getObjectsByKey,
   getShowHideComponentsListByPage,
   updateShowHideComponent,
-} from "../../../util/showHideComponentUtil";
+} from "../../../redux/showHideComponent/showHideActions";
+import { use } from "react";
+// import {
+//   createShowHideComponent,
+//   getObjectsByKey,
+//   getShowHideComponentsListByPage,
+//   updateShowHideComponent,
+// } from "../../../util/showHideComponentUtil";
 
 const Home = () => {
   const editComponentObj = {
@@ -204,39 +210,32 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const { error, success, showHideCompPageList } = useSelector(
+    (state) => state.showHide
+  );
+
   useEffect(() => {
-    const getshowHideList = async () => {
-      try {
-        const response = await getShowHideComponentsListByPage("home");
+    if (showHideCompPageList && showHideCompPageList[pageType]) {
+      setShowHideCompList(showHideCompPageList[[pageType]]);
+    }
+  }, [showHideCompPageList]);
 
-        setShowHideCompList(
-          response?.length > 0 ? getObjectsByKey(response) : []
-        );
-      } catch (error) {
-        console.log("unable to access ulr because of server is down");
-      }
-    };
-
-    getshowHideList();
-  }, []);
+  useEffect(() => {
+    dispatch(getShowHideComponentsListByPage(pageType));
+  }, [pageType]);
 
   const showHideHandler = async (name) => {
     const selectedItem = showHideCompList[name];
     let response;
     if (selectedItem) {
-      response = await updateShowHideComponent(selectedItem?.id);
-      setShowHideCompList((prevObject) => ({
-        ...prevObject,
-        [name]: response,
-      }));
+      const id = selectedItem?.id;
+      dispatch(updateShowHideComponent({ id, showHideCompPageList }));
     } else {
-      const data = {
+      const newData = {
         componentName: name.toLowerCase(),
         pageType: pageType,
       };
-      response = await createShowHideComponent(data);
-      showHideCompList[name] = response;
-      setShowHideCompList(showHideCompList);
+      dispatch(createShowHideComponent({ newData, showHideCompPageList }));
     }
   };
 

@@ -1,23 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getShowHideComponentsListByPage } from "./showHideActions";
-import { sortByCreatedDate } from "../../util/dataFormatUtil";
+import {
+  getShowHideComponentsListByPage,
+  createShowHideComponent,
+  updateShowHideComponent,
+  deleteShowHideComponent,
+} from "./showHideActions";
 const initialState = {
   loading: false,
-  showHideCompList: [],
+  showHideCompPageList: {},
   error: null,
   success: false,
 };
 
-const serviceSlice = createSlice({
+const showHidePageloadingSlice = createSlice({
   name: "showHideComponentList",
   initialState,
   reducers: {
-    setShowHideComponents: (state, { payload }) => {
-      state.showHideCompList = payload;
-    },
+    // setShowHideComponents: (state, { payload }) => {
+    //   state.showHideCompPageList = payload;
+    // },
   },
   extraReducers: (builder) => {
-    // Client projects
+    //Loading all components list
     builder.addCase(getShowHideComponentsListByPage.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -26,7 +30,7 @@ const serviceSlice = createSlice({
       getShowHideComponentsListByPage.fulfilled,
       (state, action) => {
         state.loading = false;
-        state.serviceMenu = sortByCreatedDate(action?.payload?.services);
+        state.showHideCompPageList = action?.payload;
       }
     );
     builder.addCase(
@@ -36,9 +40,49 @@ const serviceSlice = createSlice({
         state.error = action.payload;
       }
     );
+
+    // create new show hide component details
+    builder.addCase(createShowHideComponent.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(createShowHideComponent.fulfilled, (state, action) => {
+      state.loading = false;
+      state.showHideCompPageList = action?.payload;
+    });
+    builder.addCase(createShowHideComponent.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // update show hide component
+    builder.addCase(updateShowHideComponent.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(updateShowHideComponent.fulfilled, (state, action) => {
+      state.loading = false;
+      state.showHideCompPageList = action?.payload;
+    });
+    builder.addCase(updateShowHideComponent.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // Delete show hide component
+    builder.addCase(deleteShowHideComponent.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteShowHideComponent.fulfilled, (state, action) => {
+      state.loading = false;
+      state.showHideCompPageList = action?.payload;
+    });
+    builder.addCase(deleteShowHideComponent.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
   },
 });
 
-export const { setServiceMenuValues } = serviceSlice.actions;
-
-export default serviceSlice.reducer;
+export default showHidePageloadingSlice.reducer;
