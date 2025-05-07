@@ -10,7 +10,7 @@ from django.http import Http404
 # Create your views here.
 
 class ShowHideComponentsByPageTypeView(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     serializer_class = ShowHideComponentsSerializer
     
     def get_queryset(self):

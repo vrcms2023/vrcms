@@ -1,48 +1,54 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosServiceApi } from "../../util/axiosUtil";
-import { getCookie, setCookie } from "../../util/cookieUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
+import { getObjectsByKey } from "../../util/showHideComponentUtil";
 
+// Get all component by page type
 export const getShowHideComponentsListByPage = createAsyncThunk(
   "showHide/list",
-  async ({ type }, { rejectWithValue }) => {
+  async (type, { rejectWithValue }) => {
+    const pageType = type?.toLowerCase();
     try {
-      // configure header's Content-Type as JSON
-      const { data } = await axiosServiceApi.post(
-        `/showHideComponents/getbyPageType/?pageType=${type?.toLowerCase()}`
+      const { data } = await axiosClientServiceApi.get(
+        `/showHideComponents/getbyPageType/?pageType=${pageType}`
       );
-
-      return response.data;
-    } catch (error) {
-      // return custom error message from API if any
-      return rejectWithValue(error);
-    }
-  }
-);
-
-export const registerUser = createAsyncThunk(
-  "auth/register",
-  async ({ userName, email, password, re_password }, { rejectWithValue }) => {
-    try {
-      await axiosServiceApi.post(`/user/auth/users/`, {
-        userName,
-        email,
-        password,
-        re_password,
-      });
+      if (data.length > 0) {
+        const pageData = [];
+        pageData[pageType] = getObjectsByKey(data);
+        return pageData;
+      } else {
+        return {};
+      }
     } catch (error) {
       return rejectWithValue(error);
     }
   }
 );
 
-export const getUser = createAsyncThunk(
-  "auth/getUser",
-  async (_, { rejectWithValue }) => {
+// Create new show hide component
+export const createShowHideComponent = createAsyncThunk(
+  "showHide/createcomponent",
+  async ({ newData, showHideCompPageList }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosServiceApi.get(`/user/auth/users/me/`);
-      localStorage.setItem("userName", data.userName);
+      const { data } = await axiosServiceApi.post(
+        `/showHideComponents/getorcreate/`,
+        newData
+      );
+      return updateObjects(data, showHideCompPageList);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
-      return data;
+// update show hide component
+export const updateShowHideComponent = createAsyncThunk(
+  "showHide/updatecomponent",
+  async ({ id, showHideCompPageList }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosServiceApi.patch(
+        `/showHideComponents/toggleVisibility/${id}/`
+      );
+      return updateObjects(data, showHideCompPageList);
     } catch (error) {
       // return custom error message from API if any
       if (error?.response?.data) {
@@ -55,57 +61,15 @@ export const getUser = createAsyncThunk(
   }
 );
 
-export const getRefreshToken = createAsyncThunk(
+// Delete show hide component
+export const deleteShowHideComponent = createAsyncThunk(
   "auth/getRefreshToken",
-  async (_, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosServiceApi.get(`/user/auth/jwt/refresh/`);
-      return data;
-    } catch (error) {
-      // return custom error message from API if any
-      if (error?.response?.data) {
-        const key = Object.keys(error.response.data);
-        return rejectWithValue(error.response.data[key][0]);
-      } else {
-        return rejectWithValue(error.message);
-      }
-    }
-  }
-);
-
-export const getSelectedUserPermissions = createAsyncThunk(
-  "auth/getSelectedUserPermissions",
   async (id, { rejectWithValue }) => {
     try {
-      const { data } = await axiosServiceApi.get(
-        `/pagePermission/updatePermissions/${id}/`
+      const { data } = await axiosServiceApi.delete(
+        `/showHideComponents/deleteinstance/${id}/`
       );
-
       return data;
-    } catch (error) {
-      // return custom error message from API if any
-      if (error?.response?.data) {
-        const key = Object.keys(error.response.data);
-        return rejectWithValue(error.response.data[key][0]);
-      } else {
-        return rejectWithValue(error);
-      }
-    }
-  }
-);
-
-export const getMenu = createAsyncThunk(
-  "auth/getMenus",
-  async (_, { rejectWithValue }) => {
-    try {
-      let data = {};
-      if (getCookie("access")) {
-        data = await axiosServiceApi.get("/pageMenu/createPageMenu/");
-      } else {
-        data = await axiosServiceApi.get(`/pageMenu/getPageMenu/`);
-      }
-
-      return data.data;
     } catch (error) {
       // return custom error message from API if any
       if (error?.response?.data) {
@@ -117,3 +81,15 @@ export const getMenu = createAsyncThunk(
     }
   }
 );
+
+const updateObjects = (data, showHideCompPageList) => {
+  if (data) {
+    const { pageType, componentName } = data;
+    if (!showHideCompPageList[pageType]) {
+      showHideCompPageList = [];
+      showHideCompPageList[pageType] = {};
+    }
+    showHideCompPageList[pageType][componentName] = data;
+    return showHideCompPageList;
+  }
+};

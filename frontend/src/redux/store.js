@@ -10,6 +10,7 @@ import productsSlice from "./products/productsSlice";
 import categorySlice from "./products/categorySlice";
 import { authApi } from "./auth/authService";
 import themeReducer from "./themes/themeSlice";
+import showHideComponentReducer from "./showHideComponent/showHideSlice";
 
 const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ const store = configureStore({
     productList: productsSlice,
     categoryList: categorySlice,
     selectedTheme: themeReducer,
+    showHide: showHideComponentReducer,
     [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
