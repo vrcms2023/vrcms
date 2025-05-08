@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import ScrollToTop from "react-scroll-to-top";
 
 // Components
 import Title from "../../../Common/Title";
@@ -13,13 +11,8 @@ import ModelBg from "../../../Common/ModelBg";
 import AdminBanner from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm-List";
 import BriefIntroAdmin from "../../../Frontend_Admin/Components/BriefIntro/";
 import EditIcon from "../../../Common/AdminEditIcon";
-import ABrief from "../../Components/ABrief";
 import ABriefAbout from "../../Components/ABriefAbout";
 import HomeNews from "../../Components/HomeNews";
-import HomeServices from "../../Components/HomeServices";
-import ServiceOfferedComponent from "../../Components/ServiceOfferedComponent";
-import Features from "../../Components/Features";
-import { HomeClientItem } from "../../Components/HomeClientItem";
 
 // Common Compoenents
 import Banner from "../../../Common/Banner";
@@ -37,32 +30,19 @@ import {
 } from "../../../util/commonUtil";
 import {
   getCarouselFields,
-  getFormDynamicFields,
   getTestimonialsFields,
   getTitleAndDescriptionFields,
-  getserviceOfferedFields,
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
-
-import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
-
-// // import Img1 from '../../../Images/future.png';
-// import randomImg1 from '../../../Images/randomService1.png'
-// import randomImg2 from '../../../Images/randomService2.png'
-// import randomImg3 from '../../../Images/randomService3.png'
 
 // Styles
 import "./Home.css";
 
 // Images
-import imgOngoing from "../../../Images/carousel1.jpg";
-import imgCompleted from "../../../Images/carousel2.jpg";
-import imgFuture from "../../../Images/carousel3.jpg";
-import ProductsList from "../Products/ProductsList";
+
 import { ProductHilightsStyled } from "../../../Common/StyledComponents/Styled-Products-Hilights";
 import { TestimonialCarouselPageStyled } from "../../../Common/StyledComponents/Styled-TestimonialCarousel";
 import { RandomHomeServicesStyled } from "../../../Common/StyledComponents/Random-HomeServices";
-import Button from "../../../Common/Button";
 import { ABriefIntroStyled } from "../../../Common/StyledComponents/Styled-ABriefAbout";
 import { getAllCategories } from "../../../redux/products/categoryActions";
 import Product from "../Products/Product";
@@ -74,13 +54,6 @@ import {
   getShowHideComponentsListByPage,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
-import { use } from "react";
-// import {
-//   createShowHideComponent,
-//   getObjectsByKey,
-//   getShowHideComponentsListByPage,
-//   updateShowHideComponent,
-// } from "../../../util/showHideComponentUtil";
 
 const Home = () => {
   const editComponentObj = {
@@ -226,7 +199,6 @@ const Home = () => {
 
   const showHideHandler = async (name) => {
     const selectedItem = showHideCompList[name];
-    let response;
     if (selectedItem) {
       const id = selectedItem?.id;
       dispatch(updateShowHideComponent({ id, showHideCompPageList }));
