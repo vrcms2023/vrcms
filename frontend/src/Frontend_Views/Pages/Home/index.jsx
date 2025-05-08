@@ -244,8 +244,44 @@ const Home = () => {
     <>
       <div className="container-fluid">
         {/* BANNER COMPONENT  */}
-        {/* <div className="row">
+        <div
+          className={
+            showHideCompList?.banner?.visibility
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <div
+              className={`randomServices text-white p-1 px-2 mb-1 ${
+                showHideCompList?.banner?.visibility
+                  ? " bg-info"
+                  : " bg-secondary"
+              }`}
+            >
+              <div className="d-flex justify-content-between align-items-center">
+                <span
+                  className={`${
+                    showHideCompList?.banner?.visibility
+                      ? "text-white"
+                      : "text-muted"
+                  }`}
+                >
+                  Only Banner
+                </span>
+                <ShowHideIcon
+                  editHandler={() => showHideHandler("banner")}
+                  hideIcon={showHideCompList?.banner?.visibility}
+                />
+              </div>
+            </div>
+          )}
+
+          {showHideCompList?.banner?.visibility && (
+            <>
+         <div className="row">
           <div className="col-md-12 p-0 position-relative homePage">
+            
             {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("banner", true)} />
             )}
@@ -269,9 +305,50 @@ const Home = () => {
           </div>
         ) : (
           ""
-        )} */}
+        )} 
+</>
+      )} 
+        </div>
 
-        {/* CAROUSEL COMPONENT  */}
+
+
+
+{/* ================================CAROUSEL COMPONENT ============================== */}
+        <div
+          className={
+            showHideCompList?.carousel?.visibility
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <div
+              className={`randomServices text-white p-1 px-2 mb-1 ${
+                showHideCompList?.carousel?.visibility
+                  ? " bg-info"
+                  : " bg-secondary"
+              }`}
+            >
+              <div className="d-flex justify-content-between align-items-center">
+                {/* A Brief introduction */}
+                <span
+                  className={`${
+                    showHideCompList?.carousel?.visibility
+                      ? "text-white"
+                      : "text-muted"
+                  }`}
+                >
+                  Carousel
+                </span>
+                <ShowHideIcon
+                  editHandler={() => showHideHandler("carousel")}
+                  hideIcon={showHideCompList?.carousel?.visibility}
+                />
+              </div>
+            </div>
+          )}
+      {showHideCompList?.carousel?.visibility && (
+        <>
         <div className="row">
           <div className="col-md-12 p-0 carousel">
             {isAdmin && hasPermission && (
@@ -280,6 +357,7 @@ const Home = () => {
             <Carousel carouselState={componentEdit.carousel} />
           </div>
         </div>
+
         {componentEdit.carousel && (
           <div className={`adminEditTestmonial selected `}>
             <AdminBanner
@@ -298,6 +376,10 @@ const Home = () => {
             />
           </div>
         )}
+      </>
+      )}
+      </div>
+
 
         {/* LEON Pharma Products  */}
         <div
@@ -444,6 +526,8 @@ const Home = () => {
             </ProductHilightsStyled>
           )}
         </div>
+
+        
 
         {/* Introduction component with ON/OF  */}
         <div
@@ -828,6 +912,40 @@ const Home = () => {
         */}
 
         {/* HOME NEWS */}
+        <div
+          className={
+            showHideCompList?.news?.visibility
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <div
+              className={`randomServices text-white p-1 px-2 mb-1 ${
+                showHideCompList?.news?.visibility
+                  ? " bg-info"
+                  : " bg-secondary"
+              }`}
+            >
+              <div className="d-flex justify-content-between align-items-center">
+                {/* Products, visibility = {showHideCompList?.products?.visibility} */}
+                <span
+                  className={`${
+                    showHideCompList?.news?.visibility
+                      ? "text-white"
+                      : "text-muted"
+                  }`}
+                >
+                  News
+                </span>
+                <ShowHideIcon
+                  editHandler={() => showHideHandler("news")}
+                  hideIcon={showHideCompList?.news?.visibility}
+                />
+              </div>
+            </div>
+          )}
+        {showHideCompList?.news?.visibility && (
         <div className="row py-5 homeNews">
           <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="container">
@@ -871,6 +989,8 @@ const Home = () => {
               </div>
             </div>
           </div>
+        </div>
+        )}
         </div>
 
         {/* END OF HOME NEWS */}
