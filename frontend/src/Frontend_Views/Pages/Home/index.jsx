@@ -30,6 +30,7 @@ import {
 } from "../../../util/commonUtil";
 import {
   getCarouselFields,
+  getFormDynamicFields,
   getTestimonialsFields,
   getTitleAndDescriptionFields,
   imageDimensionsJson,
@@ -54,6 +55,7 @@ import {
   getShowHideComponentsListByPage,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
+import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 
 const Home = () => {
   const editComponentObj = {
@@ -251,41 +253,39 @@ const Home = () => {
 
           {showHideCompList?.banner?.visibility && (
             <>
-         <div className="row">
-          <div className="col-md-12 p-0 position-relative homePage">
-            
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("banner", true)} />
-            )}
-            <Banner
-              getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-              bannerState={componentEdit.banner}
-            />
-          </div>
+              <div className="row">
+                <div className="col-md-12 p-0 position-relative homePage">
+                  {isAdmin && hasPermission && (
+                    <EditIcon editHandler={() => editHandler("banner", true)} />
+                  )}
+                  <Banner
+                    getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+                    bannerState={componentEdit.banner}
+                  />
+                </div>
+              </div>
+              {componentEdit.banner ? (
+                <div className="adminEditTestmonial">
+                  <ImageInputsForm
+                    editHandler={editHandler}
+                    componentType="banner"
+                    pageType={`${pageType}-banner`}
+                    imageLabel="Banner Image"
+                    showDescription={false}
+                    showExtraFormFields={getFormDynamicFields(
+                      `${pageType}-banner`
+                    )}
+                    dimensions={imageDimensionsJson("banner")}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
+            </>
+          )}
         </div>
-        {componentEdit.banner ? (
-          <div className="adminEditTestmonial">
-            <ImageInputsForm
-              editHandler={editHandler}
-              componentType="banner"
-              pageType={`${pageType}-banner`}
-              imageLabel="Banner Image"
-              showDescription={false}
-              showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-              dimensions={imageDimensionsJson("banner")}
-            />
-          </div>
-        ) : (
-          ""
-        )} 
-</>
-      )} 
-        </div>
 
-
-
-
-{/* ================================CAROUSEL COMPONENT ============================== */}
+        {/* ================================CAROUSEL COMPONENT ============================== */}
         <div
           className={
             showHideCompList?.carousel?.visibility
@@ -319,39 +319,40 @@ const Home = () => {
               </div>
             </div>
           )}
-      {showHideCompList?.carousel?.visibility && (
-        <>
-        <div className="row">
-          <div className="col-md-12 p-0 carousel">
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("carousel", true)} />
-            )}
-            <Carousel carouselState={componentEdit.carousel} />
-          </div>
+          {showHideCompList?.carousel?.visibility && (
+            <>
+              <div className="row">
+                <div className="col-md-12 p-0 carousel">
+                  {isAdmin && hasPermission && (
+                    <EditIcon
+                      editHandler={() => editHandler("carousel", true)}
+                    />
+                  )}
+                  <Carousel carouselState={componentEdit.carousel} />
+                </div>
+              </div>
+
+              {componentEdit.carousel && (
+                <div className={`adminEditTestmonial selected `}>
+                  <AdminBanner
+                    editHandler={editHandler}
+                    componentType="carousel"
+                    popupTitle="Carousel Banner"
+                    getImageListURL="carousel/createCarousel/"
+                    deleteImageURL="carousel/updateCarousel/"
+                    imagePostURL="carousel/createCarousel/"
+                    imageUpdateURL="carousel/updateCarousel/"
+                    imageIndexURL="carousel/updateCarouselindex/"
+                    imageLabel="Add Carousel Image"
+                    showDescription={false}
+                    showExtraFormFields={getCarouselFields("carousel")}
+                    dimensions={imageDimensionsJson("carousel")}
+                  />
+                </div>
+              )}
+            </>
+          )}
         </div>
-
-        {componentEdit.carousel && (
-          <div className={`adminEditTestmonial selected `}>
-            <AdminBanner
-              editHandler={editHandler}
-              componentType="carousel"
-              popupTitle="Carousel Banner"
-              getImageListURL="carousel/createCarousel/"
-              deleteImageURL="carousel/updateCarousel/"
-              imagePostURL="carousel/createCarousel/"
-              imageUpdateURL="carousel/updateCarousel/"
-              imageIndexURL="carousel/updateCarouselindex/"
-              imageLabel="Add Carousel Image"
-              showDescription={false}
-              showExtraFormFields={getCarouselFields("carousel")}
-              dimensions={imageDimensionsJson("carousel")}
-            />
-          </div>
-        )}
-      </>
-      )}
-      </div>
-
 
         {/* LEON Pharma Products  */}
         <div
@@ -498,8 +499,6 @@ const Home = () => {
             </ProductHilightsStyled>
           )}
         </div>
-
-        
 
         {/* Introduction component with ON/OF  */}
         <div
@@ -886,9 +885,7 @@ const Home = () => {
         {/* HOME NEWS */}
         <div
           className={
-            showHideCompList?.news?.visibility
-              ? "border border-info mb-2"
-              : ""
+            showHideCompList?.news?.visibility ? "border border-info mb-2" : ""
           }
         >
           {isAdmin && hasPermission && (
@@ -917,22 +914,22 @@ const Home = () => {
               </div>
             </div>
           )}
-        {showHideCompList?.news?.visibility && (
-        <div className="row py-5 homeNews">
-          <div className="col-md-12 d-flex justify-content-center align-items-center">
-            <div className="container">
-              <Title
-                title="News"
-                cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
-              />
-              <HomeNews
-                news={news}
-                setNews={setResponseData}
-                pagetype={pageType}
-              />
+          {showHideCompList?.news?.visibility && (
+            <div className="row py-5 homeNews">
+              <div className="col-md-12 d-flex justify-content-center align-items-center">
+                <div className="container">
+                  <Title
+                    title="News"
+                    cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
+                  />
+                  <HomeNews
+                    news={news}
+                    setNews={setResponseData}
+                    pagetype={pageType}
+                  />
 
-              <div className="d-flex justify-content-center align-items-center mt-4">
-                {/* <Ancher
+                  <div className="d-flex justify-content-center align-items-center mt-4">
+                    {/* <Ancher
                   AncherLabel="Read more"
                   Ancherpath="/news"
                   AncherClass="btn btn-primary d-flex justify-content-center align-items-center "
@@ -945,24 +942,24 @@ const Home = () => {
                   AnchersvgColor="#17427C"
                 /> */}
 
-                <Ancher
-                  AncherLabel="View more news articles"
-                  Ancherpath="/profile/news"
-                  AncherClass="btn btn-outline d-flex justify-content-center align-items-center "
-                  AnchersvgColor="#17427C"
-                />
+                    <Ancher
+                      AncherLabel="View more news articles"
+                      Ancherpath="/profile/news"
+                      AncherClass="btn btn-outline d-flex justify-content-center align-items-center "
+                      AnchersvgColor="#17427C"
+                    />
 
-                {/* <Ancher
+                    {/* <Ancher
                   AncherLabel="Read more"
                   Ancherpath="/news"
                   AncherClass="btn moreLink d-flex justify-content-center align-items-center "
                   AnchersvgColor="#17427C"
                 /> */}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        )}
+          )}
         </div>
 
         {/* END OF HOME NEWS */}
