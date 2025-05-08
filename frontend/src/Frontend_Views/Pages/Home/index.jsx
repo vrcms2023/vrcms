@@ -313,7 +313,7 @@ const Home = () => {
 
 
 
-{/* ================================CAROUSEL COMPONENT ============================== */}
+{/* ==== CAROUSEL COMPONENT ======================================================================================================= */}
         <div
           className={
             showHideCompList?.carousel?.visibility
@@ -613,7 +613,7 @@ const Home = () => {
         </div>
         {/* END OF INTRODUCTION COMPONENT ============================== */}
 
-        {/* Random Hilights */}
+{/* === Random Hilights ================================================================================================================*/}
         <div
           className={
             showHideCompList?.services?.visibility
@@ -693,7 +693,7 @@ const Home = () => {
         </div>
         {/* END OF Random Hilights ============================ */}
 
-        {/* PRODUCTS CATEGORIES */}
+ {/* ==== PRODUCTS CATEGORIES ===================================================================================================== */}
         <div
           className={
             showHideCompList?.products?.visibility
@@ -752,7 +752,7 @@ const Home = () => {
         </div>
         {/* END OF PRODUCTS CATEGORIES ============================== */}
 
-        {/* TESTIMONIAL COMPONENT */}
+{/* ==== TESTIMONIAL COMPONENT ====================================================================================================*/}
         <div
           className={
             showHideCompList?.testimonis?.visibility
@@ -845,7 +845,7 @@ const Home = () => {
         </div>
         {/* END OF TESTIMONIAL COMPONENT ============================= */}
 
-        {/* Random Home Services 
+{/* ==== Random Home Services =================================================================================================*/ }
         <RandomHomeServicesStyled>
           <div className="container py-5 randomServices">
             <div className="row">
@@ -909,7 +909,7 @@ const Home = () => {
             </div>
           </div>
         </RandomHomeServicesStyled>
-        */}
+        
 
         {/* HOME NEWS */}
         <div
@@ -995,64 +995,42 @@ const Home = () => {
 
         {/* END OF HOME NEWS */}
 
-        {/* HOME List of Services DEVELOPED FOR LEOMTECH  */}
-        {/* <div className="container py-5 homeServices">
+{/* ======================= HOME List of Services DEVELOPED FOR LEOMTECH ======================= */}
+
+        <div className="container py-5 homeServices">
           <h2 className="mb-5">What We Do</h2>
           <HomeServices />
         </div>
-        */}
+       
 
-        {/* FEATURES SPECICALLY DEVELOPED FOR RISHISYSTEMS */}
-        {/* <Features /> */}
+{/* ==== FEATURES SPECICALLY DEVELOPED FOR RISHISYSTEMS ========================================================================== */}
 
-        {/* HOME WHY CHOOSE RISHSYSTEMS */}
-        {/* <div className="row ABriefAbout mb-5">
+        <Features /> 
+
+{/* ===== HOME WHY CHOOSE RISHSYSTEMS ============================================================================================ */}
+
+         <div className="row ABriefAbout mb-5">
           <ABriefAbout
             cssClass="mb-2 fw-bold title text-black"
             dimensions={imageDimensionsJson("whoweare")}
           />
-        </div> */}
+        </div> 
 
-        {/*  HOME Services SPECICALLY DEVELOPED FOR RISHISYSTEMS */}
-        {/* <div className="row">
+{/* ==== HOME Services SPECICALLY DEVELOPED FOR RISHISYSTEMS ==================================================================== */}
+
+        <div className="row">
           <div className="col-md-12 ABrief">
             <ABrief
               cssClass="fw-bold title"
               dimensions={imageDimensionsJson("homeCareers")}
             />
           </div>
-        </div> */}
+        </div> 
 
-        {/* BANNER COMPONENT  */}
-        {/* <div className="row">
-          <div className="col-md-12 p-0 position-relative homePage">
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("banner", true)} />
-            )}
-            <Banner
-              getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-              bannerState={componentEdit.banner}
-            />
-          </div>
-        </div>
-        {componentEdit.banner ? (
-          <div className="adminEditTestmonial">
-            <ImageInputsForm
-              editHandler={editHandler}
-              componentType="banner"
-              pageType={`${pageType}-banner`}
-              imageLabel="Banner Image"
-              showDescription={false}
-              showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-              dimensions={imageDimensionsJson("banner")}
-            />
-          </div>
-        ) : (
-          ""
-        )} */}
 
-        {/* HOME Careers */}
-        {/* <div className="row homeCareers py-5">
+{/* ==== HOME Careers ========================================================================================================== */}
+
+        <div className="row homeCareers py-5">
           <div className="col-lg-6"></div>
           <div className="col-md-12 col-lg-6 pe-lg-5">
             <BriefIntroFrontend
@@ -1071,15 +1049,16 @@ const Home = () => {
               />
             </div>
           </div>
-        </div> */}
+        </div> 
       </div>
 
       {/* <hr /> */}
       {/* <Title title="SAP DESIGN STUDIO" cssClass="text-center fs-1" /> */}
 
-      {/* IMAGE GALLERY SPECIFICALLY DESIGNED FOR SAP DESIGN STUDIO */}
+{/* ==== IMAGE GALLERY SPECIFICALLY DESIGNED FOR SAP DESIGN STUDIO =============================================================== */}
+
       {/* It will be work only one carosel in the page */}
-      {/* <ImageGalleryStyled>
+       <ImageGalleryStyled>
           <div className="text-center mb-5" style={{ marginTop: "100px" }}>
             <span
               className="fs-1 px-4 py-2"
@@ -1107,14 +1086,14 @@ const Home = () => {
               View All
             </Link>
           </div>
-        </ImageGalleryStyled> */}
+        </ImageGalleryStyled> 
 
-      {/* SAP DESIGN STUDIO */}
+{/* == SAP DESIGN STUDIO ========================================================================================================== */}
 
       {/* SERVICES OFFERED COMPONENT -
         DEVELOPED FOR SPECIFICALLY SAP DESIGNS */}
 
-      {/* <div className="text-center mb-5" style={{ marginTop: "100px" }}>
+      <div className="text-center mb-5" style={{ marginTop: "100px" }}>
           <span
             className="fs-1 px-4 py-2"
             style={{ borderBottom: "1px solid #444444" }}
@@ -1153,10 +1132,10 @@ const Home = () => {
               dimensions={imageDimensionsJson("carousel")}
             />
           </div>
-        )} */}
+        )} 
 
-      {/* CLIENTS - COMPONENTS DEVELOPER IN SAP DESIGNS */}
-      {/* <HomeClientsStyled>
+{/* === CLIENTS - COMPONENTS DEVELOPER IN SAP DESIGNS  ===========================================================================  */}
+       <HomeClientsStyled>
           <div className="text-center mb-5" style={{ marginTop: "100px" }}>
             <span
               className="fs-1 px-4 py-2"
@@ -1177,14 +1156,14 @@ const Home = () => {
               View All
             </Link>
           </div>
-        </HomeClientsStyled> */}
+        </HomeClientsStyled> 
 
       {/* END OF SAP DESIGN STUDIO COMPONENTS */}
 
-      {/* HPR INFRA */}
+{/* === HPR INFRA ================================================================================================================= */}
 
       {/* Project Cards */}
-      {/* <hr />
+      {/* <hr /> */}
       <Title title="HPR INFRA" cssClass="text-center fs-1" />
       <div className="row my-5 homeProjectsBg">
         <div className="col-md-12 d-flex justify-content-center align-items-center">
@@ -1312,7 +1291,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </div> */}
+      </div> 
 
       {/* END OF HPR INFRA COMPONENTS */}
 
