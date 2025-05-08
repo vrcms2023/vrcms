@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { Link } from "react-router-dom";
 // Components
 import Title from "../../../Common/Title";
 import Ancher from "../../../Common/Ancher";
@@ -11,12 +11,16 @@ import ModelBg from "../../../Common/ModelBg";
 import AdminBanner from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm-List";
 import BriefIntroAdmin from "../../../Frontend_Admin/Components/BriefIntro/";
 import EditIcon from "../../../Common/AdminEditIcon";
+import ABrief from "../../Components/ABrief";
 import ABriefAbout from "../../Components/ABriefAbout";
 import HomeNews from "../../Components/HomeNews";
 
 // Common Compoenents
 import Banner from "../../../Common/Banner";
 import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
+import HomeServices from "../../Components/HomeServices";
+import ServiceOfferedComponent from "../../Components/ServiceOfferedComponent";
+import Features from "../../Components/Features";
 import { ImageGalleryStyled } from "../../../Common/StyledComponents/Styled-ImageGallery";
 import { HomeClientsStyled } from "../../../Common/StyledComponents/Styled-HomeClients";
 
@@ -40,7 +44,9 @@ import {
 import "./Home.css";
 
 // Images
-
+import imgOngoing from "../../../Images/carousel1.jpg";
+import imgCompleted from "../../../Images/carousel2.jpg";
+import imgFuture from "../../../Images/carousel3.jpg";
 import { ProductHilightsStyled } from "../../../Common/StyledComponents/Styled-Products-Hilights";
 import { TestimonialCarouselPageStyled } from "../../../Common/StyledComponents/Styled-TestimonialCarousel";
 import { RandomHomeServicesStyled } from "../../../Common/StyledComponents/Random-HomeServices";
@@ -285,10 +291,7 @@ const Home = () => {
           )}
         </div>
 
-
-
-
-{/* ==== CAROUSEL COMPONENT ======================================================================================================= */}
+        {/* ==== CAROUSEL COMPONENT ======================================================================================================= */}
         <div
           className={
             showHideCompList?.carousel?.visibility
@@ -587,7 +590,7 @@ const Home = () => {
         </div>
         {/* END OF INTRODUCTION COMPONENT ============================== */}
 
-{/* === Random Hilights ================================================================================================================*/}
+        {/* === Random Hilights ================================================================================================================*/}
         <div
           className={
             showHideCompList?.services?.visibility
@@ -667,7 +670,7 @@ const Home = () => {
         </div>
         {/* END OF Random Hilights ============================ */}
 
- {/* ==== PRODUCTS CATEGORIES ===================================================================================================== */}
+        {/* ==== PRODUCTS CATEGORIES ===================================================================================================== */}
         <div
           className={
             showHideCompList?.products?.visibility
@@ -726,7 +729,7 @@ const Home = () => {
         </div>
         {/* END OF PRODUCTS CATEGORIES ============================== */}
 
-{/* ==== TESTIMONIAL COMPONENT ====================================================================================================*/}
+        {/* ==== TESTIMONIAL COMPONENT ====================================================================================================*/}
         <div
           className={
             showHideCompList?.testimonis?.visibility
@@ -819,7 +822,7 @@ const Home = () => {
         </div>
         {/* END OF TESTIMONIAL COMPONENT ============================= */}
 
-{/* ==== Random Home Services =================================================================================================*/ }
+        {/* ==== Random Home Services =================================================================================================*/}
         <RandomHomeServicesStyled>
           <div className="container py-5 randomServices">
             <div className="row">
@@ -883,7 +886,6 @@ const Home = () => {
             </div>
           </div>
         </RandomHomeServicesStyled>
-        
 
         {/* HOME NEWS */}
         <div
@@ -967,28 +969,27 @@ const Home = () => {
 
         {/* END OF HOME NEWS */}
 
-{/* ======================= HOME List of Services DEVELOPED FOR LEOMTECH ======================= */}
+        {/* ======================= HOME List of Services DEVELOPED FOR LEOMTECH ======================= */}
 
         <div className="container py-5 homeServices">
           <h2 className="mb-5">What We Do</h2>
           <HomeServices />
         </div>
-       
 
-{/* ==== FEATURES SPECICALLY DEVELOPED FOR RISHISYSTEMS ========================================================================== */}
+        {/* ==== FEATURES SPECICALLY DEVELOPED FOR RISHISYSTEMS ========================================================================== */}
 
-        <Features /> 
+        <Features />
 
-{/* ===== HOME WHY CHOOSE RISHSYSTEMS ============================================================================================ */}
+        {/* ===== HOME WHY CHOOSE RISHSYSTEMS ============================================================================================ */}
 
-         <div className="row ABriefAbout mb-5">
+        <div className="row ABriefAbout mb-5">
           <ABriefAbout
             cssClass="mb-2 fw-bold title text-black"
             dimensions={imageDimensionsJson("whoweare")}
           />
-        </div> 
+        </div>
 
-{/* ==== HOME Services SPECICALLY DEVELOPED FOR RISHISYSTEMS ==================================================================== */}
+        {/* ==== HOME Services SPECICALLY DEVELOPED FOR RISHISYSTEMS ==================================================================== */}
 
         <div className="row">
           <div className="col-md-12 ABrief">
@@ -997,10 +998,9 @@ const Home = () => {
               dimensions={imageDimensionsJson("homeCareers")}
             />
           </div>
-        </div> 
+        </div>
 
-
-{/* ==== HOME Careers ========================================================================================================== */}
+        {/* ==== HOME Careers ========================================================================================================== */}
 
         <div className="row homeCareers py-5">
           <div className="col-lg-6"></div>
@@ -1008,9 +1008,9 @@ const Home = () => {
             <BriefIntroFrontend
               introState={componentEdit.briefIntro}
               pageType="careers"
-              introTitleCss = "fs-3 fw-medium text-md-center"
-              introSubTitleCss = "fw-medium text-muted text-md-center"
-              introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
+              introTitleCss="fs-3 fw-medium text-md-center"
+              introSubTitleCss="fw-medium text-muted text-md-center"
+              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
             />
             <div className="bg-white px-5 pb-4 d-flex justify-content-center align-items-center">
               <Ancher
@@ -1021,118 +1021,116 @@ const Home = () => {
               />
             </div>
           </div>
-        </div> 
+        </div>
       </div>
 
       {/* <hr /> */}
       {/* <Title title="SAP DESIGN STUDIO" cssClass="text-center fs-1" /> */}
 
-{/* ==== IMAGE GALLERY SPECIFICALLY DESIGNED FOR SAP DESIGN STUDIO =============================================================== */}
+      {/* ==== IMAGE GALLERY SPECIFICALLY DESIGNED FOR SAP DESIGN STUDIO =============================================================== */}
 
       {/* It will be work only one carosel in the page */}
-       <ImageGalleryStyled>
-          <div className="text-center mb-5" style={{ marginTop: "100px" }}>
-            <span
-              className="fs-1 px-4 py-2"
-              style={{ borderBottom: "1px solid #444444" }}
-            >
-              View Gallery
-            </span>
-          </div>
-          <div className="row ">
-            <div className="col-md-10 offset-md-1 homeGalleryCarousel">
-              <div className="container">
-                <div className="row">
-                  <div className="col-md-10 offset-md-1">
-                    <Carousel carouselState={componentEdit.carousel} />
-                  </div>
+      <ImageGalleryStyled>
+        <div className="text-center mb-5" style={{ marginTop: "100px" }}>
+          <span
+            className="fs-1 px-4 py-2"
+            style={{ borderBottom: "1px solid #444444" }}
+          >
+            View Gallery
+          </span>
+        </div>
+        <div className="row ">
+          <div className="col-md-10 offset-md-1 homeGalleryCarousel">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-10 offset-md-1">
+                  <Carousel carouselState={componentEdit.carousel} />
                 </div>
               </div>
             </div>
           </div>
-          <div
-            className="text-center py-4 position-relative "
-            style={{ marginTop: "200px" }}
-          >
-            <Link to="/imageGallery" className="btn btn-outline">
-              View All
-            </Link>
-          </div>
-        </ImageGalleryStyled> 
+        </div>
+        <div
+          className="text-center py-4 position-relative "
+          style={{ marginTop: "200px" }}
+        >
+          <Link to="/imageGallery" className="btn btn-outline">
+            View All
+          </Link>
+        </div>
+      </ImageGalleryStyled>
 
-{/* == SAP DESIGN STUDIO ========================================================================================================== */}
+      {/* == SAP DESIGN STUDIO ========================================================================================================== */}
 
       {/* SERVICES OFFERED COMPONENT -
         DEVELOPED FOR SPECIFICALLY SAP DESIGNS */}
 
       <div className="text-center mb-5" style={{ marginTop: "100px" }}>
+        <span
+          className="fs-1 px-4 py-2"
+          style={{ borderBottom: "1px solid #444444" }}
+        >
+          Services Offered
+        </span>
+      </div>
+      <div className="row">
+        <div className="col-md-12 carousel">
+          {isAdmin && hasPermission && (
+            <EditIcon editHandler={() => editHandler("serviceOffered", true)} />
+          )}
+
+          <ServiceOfferedComponent
+            getBannerAPIURL={`carousel/clientCarouselbyCategory/${serviceOffered}/`}
+            componentEdit={componentEdit}
+          />
+        </div>
+      </div>
+
+      {componentEdit.serviceOffered && (
+        <div className="adminEditTestmonial">
+          <AdminBanner
+            editHandler={editHandler}
+            componentType="serviceOffered"
+            getImageListURL={`carousel/getCarousel/${serviceOffered}/`}
+            deleteImageURL="carousel/updateCarousel/"
+            imagePostURL="carousel/createCarousel/"
+            imageUpdateURL="carousel/updateCarousel/"
+            imageIndexURL="carousel/updateCarouselindex/"
+            imageLabel="Add Images"
+            showDescription={false}
+            showExtraFormFields={getserviceOfferedFields(serviceOffered)}
+            dimensions={imageDimensionsJson("carousel")}
+          />
+        </div>
+      )}
+
+      {/* === CLIENTS - COMPONENTS DEVELOPER IN SAP DESIGNS  ===========================================================================  */}
+      <HomeClientsStyled>
+        <div className="text-center mb-5" style={{ marginTop: "100px" }}>
           <span
             className="fs-1 px-4 py-2"
             style={{ borderBottom: "1px solid #444444" }}
           >
-            Services Offered
+            Clients
           </span>
         </div>
-        <div className="row">
-          <div className="col-md-12 carousel">
-            {isAdmin && hasPermission && (
-              <EditIcon
-                editHandler={() => editHandler("serviceOffered", true)}
-              />
-            )}
-
-            <ServiceOfferedComponent
-              getBannerAPIURL={`carousel/clientCarouselbyCategory/${serviceOffered}/`}
-              componentEdit={componentEdit}
-            />
+        <div className="clients-image-slider">
+          <div className="image-slider-track">
+            {clientsList.map((client) => {
+              return <HomeClientItem client={client} key={client.id} />;
+            })}
           </div>
         </div>
-
-        {componentEdit.serviceOffered && (
-          <div className="adminEditTestmonial">
-            <AdminBanner
-              editHandler={editHandler}
-              componentType="serviceOffered"
-              getImageListURL={`carousel/getCarousel/${serviceOffered}/`}
-              deleteImageURL="carousel/updateCarousel/"
-              imagePostURL="carousel/createCarousel/"
-              imageUpdateURL="carousel/updateCarousel/"
-              imageIndexURL="carousel/updateCarouselindex/"
-              imageLabel="Add Images"
-              showDescription={false}
-              showExtraFormFields={getserviceOfferedFields(serviceOffered)}
-              dimensions={imageDimensionsJson("carousel")}
-            />
-          </div>
-        )} 
-
-{/* === CLIENTS - COMPONENTS DEVELOPER IN SAP DESIGNS  ===========================================================================  */}
-       <HomeClientsStyled>
-          <div className="text-center mb-5" style={{ marginTop: "100px" }}>
-            <span
-              className="fs-1 px-4 py-2"
-              style={{ borderBottom: "1px solid #444444" }}
-            >
-              Clients
-            </span>
-          </div>
-          <div className="clients-image-slider">
-            <div className="image-slider-track">
-              {clientsList.map((client) => {
-                return <HomeClientItem client={client} key={client.id} />;
-              })}
-            </div>
-          </div>
-          <div className="text-center py-4 position-relative viewAllBtn">
-            <Link to="/clients" className="btn btn-outline">
-              View All
-            </Link>
-          </div>
-        </HomeClientsStyled> 
+        <div className="text-center py-4 position-relative viewAllBtn">
+          <Link to="/clients" className="btn btn-outline">
+            View All
+          </Link>
+        </div>
+      </HomeClientsStyled>
 
       {/* END OF SAP DESIGN STUDIO COMPONENTS */}
 
-{/* === HPR INFRA ================================================================================================================= */}
+      {/* === HPR INFRA ================================================================================================================= */}
 
       {/* Project Cards */}
       {/* <hr /> */}
@@ -1263,7 +1261,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </div> 
+      </div>
 
       {/* END OF HPR INFRA COMPONENTS */}
 
