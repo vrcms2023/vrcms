@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import ScrollToTop from "react-scroll-to-top";
 
 // Components
 import Title from "../../../Common/Title";
@@ -13,13 +11,8 @@ import ModelBg from "../../../Common/ModelBg";
 import AdminBanner from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm-List";
 import BriefIntroAdmin from "../../../Frontend_Admin/Components/BriefIntro/";
 import EditIcon from "../../../Common/AdminEditIcon";
-import ABrief from "../../Components/ABrief";
 import ABriefAbout from "../../Components/ABriefAbout";
 import HomeNews from "../../Components/HomeNews";
-import HomeServices from "../../Components/HomeServices";
-import ServiceOfferedComponent from "../../Components/ServiceOfferedComponent";
-import Features from "../../Components/Features";
-import { HomeClientItem } from "../../Components/HomeClientItem";
 
 // Common Compoenents
 import Banner from "../../../Common/Banner";
@@ -40,29 +33,17 @@ import {
   getFormDynamicFields,
   getTestimonialsFields,
   getTitleAndDescriptionFields,
-  getserviceOfferedFields,
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
-
-import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
-
-// // import Img1 from '../../../Images/future.png';
-// import randomImg1 from '../../../Images/randomService1.png'
-// import randomImg2 from '../../../Images/randomService2.png'
-// import randomImg3 from '../../../Images/randomService3.png'
 
 // Styles
 import "./Home.css";
 
 // Images
-import imgOngoing from "../../../Images/carousel1.jpg";
-import imgCompleted from "../../../Images/carousel2.jpg";
-import imgFuture from "../../../Images/carousel3.jpg";
-import ProductsList from "../Products/ProductsList";
+
 import { ProductHilightsStyled } from "../../../Common/StyledComponents/Styled-Products-Hilights";
 import { TestimonialCarouselPageStyled } from "../../../Common/StyledComponents/Styled-TestimonialCarousel";
 import { RandomHomeServicesStyled } from "../../../Common/StyledComponents/Random-HomeServices";
-import Button from "../../../Common/Button";
 import { ABriefIntroStyled } from "../../../Common/StyledComponents/Styled-ABriefAbout";
 import { getAllCategories } from "../../../redux/products/categoryActions";
 import Product from "../Products/Product";
@@ -74,13 +55,7 @@ import {
   getShowHideComponentsListByPage,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
-import { use } from "react";
-// import {
-//   createShowHideComponent,
-//   getObjectsByKey,
-//   getShowHideComponentsListByPage,
-//   updateShowHideComponent,
-// } from "../../../util/showHideComponentUtil";
+import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 
 const Home = () => {
   const editComponentObj = {
@@ -226,7 +201,6 @@ const Home = () => {
 
   const showHideHandler = async (name) => {
     const selectedItem = showHideCompList[name];
-    let response;
     if (selectedItem) {
       const id = selectedItem?.id;
       dispatch(updateShowHideComponent({ id, showHideCompPageList }));
@@ -279,35 +253,36 @@ const Home = () => {
 
           {showHideCompList?.banner?.visibility && (
             <>
-         <div className="row">
-          <div className="col-md-12 p-0 position-relative homePage">
-            
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("banner", true)} />
-            )}
-            <Banner
-              getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-              bannerState={componentEdit.banner}
-            />
-          </div>
-        </div>
-        {componentEdit.banner ? (
-          <div className="adminEditTestmonial">
-            <ImageInputsForm
-              editHandler={editHandler}
-              componentType="banner"
-              pageType={`${pageType}-banner`}
-              imageLabel="Banner Image"
-              showDescription={false}
-              showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-              dimensions={imageDimensionsJson("banner")}
-            />
-          </div>
-        ) : (
-          ""
-        )} 
-</>
-      )} 
+              <div className="row">
+                <div className="col-md-12 p-0 position-relative homePage">
+                  {isAdmin && hasPermission && (
+                    <EditIcon editHandler={() => editHandler("banner", true)} />
+                  )}
+                  <Banner
+                    getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+                    bannerState={componentEdit.banner}
+                  />
+                </div>
+              </div>
+              {componentEdit.banner ? (
+                <div className="adminEditTestmonial">
+                  <ImageInputsForm
+                    editHandler={editHandler}
+                    componentType="banner"
+                    pageType={`${pageType}-banner`}
+                    imageLabel="Banner Image"
+                    showDescription={false}
+                    showExtraFormFields={getFormDynamicFields(
+                      `${pageType}-banner`
+                    )}
+                    dimensions={imageDimensionsJson("banner")}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
+            </>
+          )}
         </div>
 
 
@@ -347,39 +322,40 @@ const Home = () => {
               </div>
             </div>
           )}
-      {showHideCompList?.carousel?.visibility && (
-        <>
-        <div className="row">
-          <div className="col-md-12 p-0 carousel">
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("carousel", true)} />
-            )}
-            <Carousel carouselState={componentEdit.carousel} />
-          </div>
+          {showHideCompList?.carousel?.visibility && (
+            <>
+              <div className="row">
+                <div className="col-md-12 p-0 carousel">
+                  {isAdmin && hasPermission && (
+                    <EditIcon
+                      editHandler={() => editHandler("carousel", true)}
+                    />
+                  )}
+                  <Carousel carouselState={componentEdit.carousel} />
+                </div>
+              </div>
+
+              {componentEdit.carousel && (
+                <div className={`adminEditTestmonial selected `}>
+                  <AdminBanner
+                    editHandler={editHandler}
+                    componentType="carousel"
+                    popupTitle="Carousel Banner"
+                    getImageListURL="carousel/createCarousel/"
+                    deleteImageURL="carousel/updateCarousel/"
+                    imagePostURL="carousel/createCarousel/"
+                    imageUpdateURL="carousel/updateCarousel/"
+                    imageIndexURL="carousel/updateCarouselindex/"
+                    imageLabel="Add Carousel Image"
+                    showDescription={false}
+                    showExtraFormFields={getCarouselFields("carousel")}
+                    dimensions={imageDimensionsJson("carousel")}
+                  />
+                </div>
+              )}
+            </>
+          )}
         </div>
-
-        {componentEdit.carousel && (
-          <div className={`adminEditTestmonial selected `}>
-            <AdminBanner
-              editHandler={editHandler}
-              componentType="carousel"
-              popupTitle="Carousel Banner"
-              getImageListURL="carousel/createCarousel/"
-              deleteImageURL="carousel/updateCarousel/"
-              imagePostURL="carousel/createCarousel/"
-              imageUpdateURL="carousel/updateCarousel/"
-              imageIndexURL="carousel/updateCarouselindex/"
-              imageLabel="Add Carousel Image"
-              showDescription={false}
-              showExtraFormFields={getCarouselFields("carousel")}
-              dimensions={imageDimensionsJson("carousel")}
-            />
-          </div>
-        )}
-      </>
-      )}
-      </div>
-
 
         {/* LEON Pharma Products  */}
         <div
@@ -526,8 +502,6 @@ const Home = () => {
             </ProductHilightsStyled>
           )}
         </div>
-
-        
 
         {/* Introduction component with ON/OF  */}
         <div
@@ -914,9 +888,7 @@ const Home = () => {
         {/* HOME NEWS */}
         <div
           className={
-            showHideCompList?.news?.visibility
-              ? "border border-info mb-2"
-              : ""
+            showHideCompList?.news?.visibility ? "border border-info mb-2" : ""
           }
         >
           {isAdmin && hasPermission && (
@@ -945,22 +917,22 @@ const Home = () => {
               </div>
             </div>
           )}
-        {showHideCompList?.news?.visibility && (
-        <div className="row py-5 homeNews">
-          <div className="col-md-12 d-flex justify-content-center align-items-center">
-            <div className="container">
-              <Title
-                title="News"
-                cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
-              />
-              <HomeNews
-                news={news}
-                setNews={setResponseData}
-                pagetype={pageType}
-              />
+          {showHideCompList?.news?.visibility && (
+            <div className="row py-5 homeNews">
+              <div className="col-md-12 d-flex justify-content-center align-items-center">
+                <div className="container">
+                  <Title
+                    title="News"
+                    cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
+                  />
+                  <HomeNews
+                    news={news}
+                    setNews={setResponseData}
+                    pagetype={pageType}
+                  />
 
-              <div className="d-flex justify-content-center align-items-center mt-4">
-                {/* <Ancher
+                  <div className="d-flex justify-content-center align-items-center mt-4">
+                    {/* <Ancher
                   AncherLabel="Read more"
                   Ancherpath="/news"
                   AncherClass="btn btn-primary d-flex justify-content-center align-items-center "
@@ -973,24 +945,24 @@ const Home = () => {
                   AnchersvgColor="#17427C"
                 /> */}
 
-                <Ancher
-                  AncherLabel="View more news articles"
-                  Ancherpath="/profile/news"
-                  AncherClass="btn btn-outline d-flex justify-content-center align-items-center "
-                  AnchersvgColor="#17427C"
-                />
+                    <Ancher
+                      AncherLabel="View more news articles"
+                      Ancherpath="/profile/news"
+                      AncherClass="btn btn-outline d-flex justify-content-center align-items-center "
+                      AnchersvgColor="#17427C"
+                    />
 
-                {/* <Ancher
+                    {/* <Ancher
                   AncherLabel="Read more"
                   Ancherpath="/news"
                   AncherClass="btn moreLink d-flex justify-content-center align-items-center "
                   AnchersvgColor="#17427C"
                 /> */}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        )}
+          )}
         </div>
 
         {/* END OF HOME NEWS */}
