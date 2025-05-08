@@ -199,7 +199,6 @@ const Home = () => {
 
   const showHideHandler = async (name) => {
     const selectedItem = showHideCompList[name];
-    let response;
     if (selectedItem) {
       const id = selectedItem?.id;
       dispatch(updateShowHideComponent({ id, showHideCompPageList }));
