@@ -35,6 +35,7 @@ import {
 import {
   getCarouselFields,
   getFormDynamicFields,
+  getserviceOfferedFields,
   getTestimonialsFields,
   getTitleAndDescriptionFields,
   imageDimensionsJson,
@@ -271,7 +272,7 @@ const Home = () => {
                 </div>
               </div>
               {componentEdit.banner ? (
-                <div className="adminEditTestmonial">
+                <div className="adminEditTestmonial selected">
                   <ImageInputsForm
                     editHandler={editHandler}
                     componentType="banner"
@@ -1087,7 +1088,7 @@ const Home = () => {
       </div>
 
       {componentEdit.serviceOffered && (
-        <div className="adminEditTestmonial">
+        <div className="adminEditTestmonial selected">
           <AdminBanner
             editHandler={editHandler}
             componentType="serviceOffered"
@@ -1266,7 +1267,7 @@ const Home = () => {
       {/* END OF HPR INFRA COMPONENTS */}
 
       {componentEdit.projects ? (
-        <div className="adminEditTestmonial">
+        <div className="adminEditTestmonial selected">
           <AdminBanner editHandler={editHandler} componentType="projects" />
         </div>
       ) : (
