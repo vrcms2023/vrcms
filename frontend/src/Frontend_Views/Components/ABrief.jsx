@@ -164,7 +164,7 @@ const ABrief = ({ title, cssClass, linkClass, moreLink, dimensions }) => {
         </div>
       </div>
       {componentEdit.homecareers ? (
-        <div className="adminEditTestmonial">
+        <div className="adminEditTestmonial selected">
           <ImageInputsForm
             editHandler={editHandler}
             componentType="homecareers"
