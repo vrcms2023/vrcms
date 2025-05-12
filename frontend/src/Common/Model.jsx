@@ -36,28 +36,12 @@ const Model = ({ obj, closeModel, flag }) => {
           </div>
           <div className="modal-body">
             <div className="text-center">
-              {obj.path ? (
+              {obj.path && (
                 <img src={obj.path} alt="Testimonial" className="img-fluid" />
-              ) : (
-                ""
               )}
-              {/* <img src={obj.path} alt="Testimonial" className="img-fluid" /> */}
             </div>
             <RichTextView data={obj.data || obj.testimonial_description} />
           </div>
-
-          {/* {obj && (
-                <div className="p-4">
-                   dangerouslySetInnerHTML={{
-                        __html: (obj.data),
-                      }}
-                  </div>
-              )} */}
-
-          {/* <div className="modal-footer text-center">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={closeModel}>Close</button>
-                <button type="button" className="btn btn-primary">Save changes</button>
-            </div> */}
         </div>
       </div>
     </div>
