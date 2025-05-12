@@ -19,7 +19,6 @@ import { GlobalStyles } from "./Common/StyledComponents/GlobalStyles";
 
 // CSS
 import "./App.css";
-import "react-toastify/dist/ReactToastify.min.css";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import Advertisement from "./Common/Advertisement/Advertisement";
 import ScrollToTop from "react-scroll-to-top";

@@ -18,6 +18,8 @@ const RichTextEditor = ({ RichEditorState, initialText }) => {
       ],
       ["link"],
       ["clean"],
+      [{ font: [] }],
+      [{ align: [] }],
     ],
   };
 
