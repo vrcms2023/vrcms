@@ -1,4 +1,5 @@
 import React from "react";
+import RichTextView from "./RichTextView";
 
 const Model = ({ obj, closeModel, flag }) => {
   // console.log(obj)
@@ -16,7 +17,11 @@ const Model = ({ obj, closeModel, flag }) => {
   //   ) : null;
 
   return (
-    <div className="modal d-block modal-lg" tabIndex="-1" style={{position: "absolute", zIndex: 9999}}>
+    <div
+      className="modal d-block modal-lg"
+      tabIndex="-1"
+      style={{ position: "absolute", zIndex: 9999 }}
+    >
       <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
         <div className="modal-content">
           <div className="modal-header">
@@ -31,16 +36,14 @@ const Model = ({ obj, closeModel, flag }) => {
           </div>
           <div className="modal-body">
             <div className="text-center">
-              {obj.path ?  <img src={obj.path} alt="Testimonial" className="img-fluid" /> : ""}
-            {/* <img src={obj.path} alt="Testimonial" className="img-fluid" /> */}
+              {obj.path ? (
+                <img src={obj.path} alt="Testimonial" className="img-fluid" />
+              ) : (
+                ""
+              )}
+              {/* <img src={obj.path} alt="Testimonial" className="img-fluid" /> */}
             </div>
-            <div
-              className="p-3"
-              dangerouslySetInnerHTML={{
-                // __html: obj && obj.data,
-                __html: obj.data || obj.testimonial_description,
-              }}
-            ></div>
+            <RichTextView data={obj.data || obj.testimonial_description} />
           </div>
 
           {/* {obj && (
