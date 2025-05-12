@@ -1,42 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { EditorState, ContentState, convertFromHTML } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { convertToHTML } from "draft-convert";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
 const RichTextEditor = ({ RichEditorState, initialText }) => {
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createWithContent(
-      ContentState.createFromBlockArray(convertFromHTML(initialText)),
-    ),
-  );
+  const [editorState, setEditorState] = useState(initialText);
 
-  useEffect(() => {
-    let html = convertToHTML(editorState.getCurrentContent());
-    RichEditorState(html);
-  }, [editorState]);
+  const toolbar = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ color: [] }, { background: [] }],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link"],
+      ["clean"],
+    ],
+  };
+
+  const onEditorStateChange = (newEditorState) => {
+    setEditorState(newEditorState);
+    RichEditorState(newEditorState);
+  };
 
   return (
-    <Editor
-      wrapperClassName="wrapper-class"
-      editorClassName="editor-class"
-      toolbarClassName="toolbar-class"
-      toolbar={{
-        options: [
-          "inline",
-          "blockType",
-          "fontSize",
-          "fontFamily",
-          "list",
-          "textAlign",
-          "colorPicker",
-          "link",
-          "remove",
-          "history",
-        ],
-      }}
-      editorState={editorState}
-      onEditorStateChange={setEditorState}
+    <ReactQuill
+      theme="snow"
+      value={editorState}
+      onChange={onEditorStateChange}
+      modules={toolbar}
     />
   );
 };
