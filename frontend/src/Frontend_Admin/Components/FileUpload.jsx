@@ -221,10 +221,6 @@ const FileUpload = ({
 
       formData.append("id", editImage.id);
       formData = setFormData(formData, data);
-      for (var pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
-
       const response = await axiosFileUploadServiceApi.patch(
         `${imageUpdateURL}${editImage.id}/`,
         formData
