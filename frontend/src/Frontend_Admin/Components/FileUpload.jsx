@@ -221,6 +221,9 @@ const FileUpload = ({
 
       formData.append("id", editImage.id);
       formData = setFormData(formData, data);
+      for (var pair of formData.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
 
       const response = await axiosFileUploadServiceApi.patch(
         `${imageUpdateURL}${editImage.id}/`,
@@ -244,6 +247,8 @@ const FileUpload = ({
       setError("Please add an image ");
       return true;
     }
+    data = getFormDataonSubmit();
+
     if (files.length > 0) {
       files.forEach((element, index) => {
         let formData = new FormData();
@@ -256,6 +261,7 @@ const FileUpload = ({
       let formData = new FormData();
       formData.append("path", "");
       formData = setFormData(formData, data);
+
       arrURL.push(axiosFileUploadServiceApi.post(imagePostURL, formData));
     }
 
@@ -267,6 +273,18 @@ const FileUpload = ({
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const getFormDataonSubmit = () => {
+    const adminActionForm = document.getElementById("adminActionForm");
+    const getFormData = new FormData(adminActionForm);
+    const data = {};
+    for (const pair of getFormData.entries()) {
+      if (pair[0] !== "path") {
+        data[pair[0]] = pair[1];
+      }
+    }
+    return data;
   };
 
   /**
@@ -344,7 +362,11 @@ const FileUpload = ({
 
   return (
     <>
-      <form className="" onSubmit={handleSubmit(uploadFile)}>
+      <form
+        className=""
+        onSubmit={handleSubmit(uploadFile)}
+        id="adminActionForm"
+      >
         <div
           className={`px-0 ${scrollEnable ? "heightCtrl" : "fullHeightCtrl"}`}
         >

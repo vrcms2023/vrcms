@@ -128,7 +128,7 @@ export const InputFields = ({
           <input
             {...register(fieldName)}
             type={type}
-            value={value}
+            defaultValue={value}
             className="form-control p-2"
           />
         </div>
