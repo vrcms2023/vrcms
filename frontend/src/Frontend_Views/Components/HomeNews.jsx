@@ -30,6 +30,7 @@ import {
   updateArrIndex,
 } from "../../util/commonUtil";
 import moment from "moment";
+import RichTextView from "../../Common/RichTextView";
 
 const HomeNews = ({
   addNewsState,
@@ -266,10 +267,11 @@ const HomeNews = ({
                 />
               </div>
               {obj.news_description ? (
-                <div
-                  dangerouslySetInnerHTML={{ __html: obj.news_description }}
-                ></div>
+                <RichTextView data={obj.news_description} className={""} />
               ) : (
+                // <div
+                //   dangerouslySetInnerHTML={{ __html: obj.news_description }}
+                // ></div>
                 "update new description"
               )}
             </div>
@@ -356,13 +358,17 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                           className={`card-text  ${isAdmin ? "mb-0" : "mb-2"}`}
                         >
                           {item.news_description ? (
-                            <div
+                            <RichTextView
+                              data={item?.news_description}
                               className={`lineClamp ${isAdmin ? "lc1" : "lc2"}`}
-                              dangerouslySetInnerHTML={{
-                                __html: item.news_description,
-                              }}
-                            ></div>
+                            />
                           ) : (
+                            // <div
+                            //   className={`lineClamp ${isAdmin ? "lc1" : "lc2"}`}
+                            //   dangerouslySetInnerHTML={{
+                            //     __html: item.news_description,
+                            //   }}
+                            // ></div>
                             "update new description"
                           )}
                         </div>

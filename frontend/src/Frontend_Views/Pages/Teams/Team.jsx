@@ -35,6 +35,7 @@ import CustomPagination from "../../../Common/CustomPagination";
 import { removeActiveClass } from "../../../util/ulrUtil";
 import { TeamStyled } from "../../../Common/StyledComponents/Styled-Team";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import RichTextView from "../../../Common/RichTextView";
 
 const Team = () => {
   const editComponentObj = {
@@ -397,12 +398,16 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
                 <Title title={item.team_member_name} cssClass="fs-4 title " />
               )}
               {item.team_member_about_us && (
-                <div
-                  className="strengths my-3"
-                  dangerouslySetInnerHTML={{
-                    __html: item.team_member_about_us,
-                  }}
+                <RichTextView
+                  data={item.team_member_about_us}
+                  className={"strengths my-3"}
                 />
+                // <div
+                //   className="strengths my-3"
+                //   dangerouslySetInnerHTML={{
+                //     __html: item.team_member_about_us,
+                //   }}
+                // />
               )}
 
               {item.team_member_email && (

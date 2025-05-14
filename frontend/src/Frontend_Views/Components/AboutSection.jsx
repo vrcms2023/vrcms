@@ -6,6 +6,7 @@ import { getBaseURL } from "../../util/ulrUtil";
 
 import { getImagePath } from "../../util/commonUtil";
 import Title from "../../Common/Title";
+import RichTextView from "../../Common/RichTextView";
 
 const AboutSection = ({ getBannerAPIURL, bannerState }) => {
   const [bannerdata, setBannerData] = useState([]);
@@ -41,12 +42,12 @@ const AboutSection = ({ getBannerAPIURL, bannerState }) => {
           }
           cssClass="text-dark fs-4 fw-bold"
         />
-        <div
-          dangerouslySetInnerHTML={{
-            __html: bannerdata?.banner_descripiton
+        <RichTextView
+          data={
+            bannerdata?.banner_descripiton
               ? bannerdata.banner_descripiton
-              : "<p>Please update Section</p>",
-          }}
+              : "<p>Please update Section</p>"
+          }
         />
       </div>
       <div className="col-12 col-md-6 d-none d-md-block p-5 text-center">

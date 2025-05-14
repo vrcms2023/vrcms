@@ -31,6 +31,7 @@ import {
 
 // CSS
 import { AboutPageStyled } from "../../../Common/StyledComponents/Styled-AboutPage";
+import RichTextView from "../../../Common/RichTextView";
 
 const About = () => {
   const editComponentObj = {
@@ -271,12 +272,15 @@ const About = () => {
                       ""
                     )}
                     {/* <p>{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</p> */}
-
-                    <div
+                    <RichTextView
+                      data={item?.aboutus_description}
+                      className={""}
+                    />
+                    {/* <div
                       dangerouslySetInnerHTML={{
                         __html: item.aboutus_description,
                       }}
-                    />
+                    /> */}
                   </div>
 
                   <div className="col-lg-5 p-1 p-lg-5 pe-lg-0 d-flex justify-content-center align-items-start flex-column rightColumn">

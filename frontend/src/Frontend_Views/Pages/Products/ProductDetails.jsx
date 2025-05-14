@@ -71,7 +71,10 @@ const ProductDetails = () => {
                 to="/products"
                 className="btn btn-primary d-inline-flex justify-content-center align-items-center m-auto"
               >
-                <i className="fa fa-angle-left fs-5 me-2" aria-hidden="true"></i>{" "}
+                <i
+                  className="fa fa-angle-left fs-5 me-2"
+                  aria-hidden="true"
+                ></i>{" "}
                 Back{" "}
               </Link>
             </div>
@@ -88,24 +91,30 @@ const ProductDetails = () => {
                   title={selectedProduct?.product_name}
                   cssClass="fs-4 fw-medium mt-1 mt-md-4"
                 />
-                <div
+                <RichTextView
+                  data={selectedProduct?.description}
+                  className={"mt-2"}
+                />
+                {/* <div
                   className="mt-2"
                   dangerouslySetInnerHTML={{
                     __html: selectedProduct?.description,
                   }}
-                ></div>
+                ></div> */}
               </div>
             </div>
-            {products?.results.length <= 1 ? "" : <div className="col-lg-2 my-5 allProducts rightPositioned d-none d-lg-block position-fixed rounded shadow-lg">
-              {products?.results?.map(
-                (item) =>
-                  item.id !== id && (
-                    <Product item={item} key={item.id} pathName={pathName} />
-                  )
-              )}
-            </div>
-            }
-            
+            {products?.results.length <= 1 ? (
+              ""
+            ) : (
+              <div className="col-lg-2 my-5 allProducts rightPositioned d-none d-lg-block position-fixed rounded shadow-lg">
+                {products?.results?.map(
+                  (item) =>
+                    item.id !== id && (
+                      <Product item={item} key={item.id} pathName={pathName} />
+                    )
+                )}
+              </div>
+            )}
           </div>
 
           <div className="row my-0 my-md-5 allProducts bottomPositioned d-lg-none">

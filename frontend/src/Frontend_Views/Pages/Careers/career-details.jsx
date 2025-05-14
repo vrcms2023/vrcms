@@ -27,6 +27,7 @@ import { CareersPageStyled } from "../../../Common/StyledComponents/Styled-Caree
 import ApplyForm from "./ApplyForm";
 import CareersFilter from "../../Components/CareersSearch/CareersFilter";
 import { CareerFilterStyled } from "../../../Common/StyledComponents/Styled-CareerFilter";
+import RichTextView from "../../../Common/RichTextView";
 
 const Careers = () => {
   const editComponentObj = {
@@ -148,12 +149,11 @@ const Careers = () => {
             <div className="col-md-9 px-3">
               <JobBriefDetails jobDetails={posts} />
               <div className="jobDescription p-4">
-                {posts.description ? (
-                  <div
-                    dangerouslySetInnerHTML={{ __html: posts.description }}
-                  />
-                ) : (
-                  ""
+                {posts.description && (
+                  <RichTextView data={posts.description} className={""} />
+                  // <div
+                  //   dangerouslySetInnerHTML={{ __html: posts.description }}
+                  // />
                 )}
 
                 {/* <div className="mt-3">
