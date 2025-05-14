@@ -39,6 +39,7 @@ import SkeletonImage from "../../../Common/Skeltons/SkeletonImage";
 import { TestimonialsListPageStyled } from "../../../Common/StyledComponents/Styled-TestimonialsList";
 
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import RichTextView from "../../../Common/RichTextView";
 
 const TestimonialsList = () => {
   const editComponentObj = {
@@ -374,12 +375,15 @@ const TestimonialsList = () => {
                                   ) : (
                                     ""
                                   )}
-
-                                  <div
+                                  <RichTextView
+                                    data={item?.testimonial_description}
+                                    className=""
+                                  />
+                                  {/* <div
                                     dangerouslySetInnerHTML={{
                                       __html: item.testimonial_description,
                                     }}
-                                  />
+                                  /> */}
                                 </div>
 
                                 <div className="col-lg-2 d-none d-lg-block h-100">

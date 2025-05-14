@@ -29,6 +29,7 @@ import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
 import { CaseStudiesPageStyled } from "../../../Common/StyledComponents/Styled-Casestudies";
 import { useSelector } from "react-redux";
 import SkeletonImage from "../../../Common/Skeltons/SkeletonImage";
+import RichTextView from "../../../Common/RichTextView";
 
 const CaseStudies = () => {
   const editComponentObj = {
@@ -290,12 +291,15 @@ const CaseStudies = () => {
                     ) : (
                       ""
                     )}
-
-                    <div
+                    <RichTextView
+                      data={item.case_studies_description}
+                      className={""}
+                    />
+                    {/* <div
                       dangerouslySetInnerHTML={{
                         __html: item.case_studies_description,
                       }}
-                    />
+                    /> */}
 
                     <div>
                       <Ancher

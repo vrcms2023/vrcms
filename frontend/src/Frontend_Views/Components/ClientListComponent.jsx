@@ -14,6 +14,7 @@ import {
 import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { axiosServiceApi } from "../../util/axiosUtil";
+import RichTextView from "../../Common/RichTextView";
 
 export const ClientListComponent = ({
   clientsList,
@@ -154,15 +155,20 @@ const Client = ({ item, index, editHandler, deleteAboutSection }) => {
                     cssClass="fs-5 mb-2 text-center"
                   />
                 )}
-
-                <div
+                <RichTextView
+                  data={item.client_description}
+                  className={`details ${
+                    isAdmin ? "" : "overlay fa fa-map-marker"
+                  }`}
+                />
+                {/* <div
                   className={`details ${
                     isAdmin ? "" : "overlay fa fa-map-marker"
                   }`}
                   dangerouslySetInnerHTML={{
                     __html: item.client_description,
                   }}
-                />
+                /> */}
               </div>
             </div>
           </div>

@@ -126,10 +126,9 @@ const CaseStudiesDetails = () => {
                   alt={selectedCaseStudieDetails.case_studies_title}
                   className="pull-left border border-4 shadow-lg rounded-circle m-4"
                 />
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: selectedCaseStudieDetails.case_studies_description,
-                  }}
+                <RichTextView
+                  data={selectedCaseStudieDetails.case_studies_description}
+                  className={""}
                 />
               </p>
             </div>

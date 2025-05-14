@@ -17,6 +17,7 @@ import { getFirstShortDescription } from "../../util/dataFormatUtil";
 import { showPosteddate } from "../../util/commonUtil";
 
 import SkeletonNews from "../../Common/Skeltons/SkeltonNews";
+import RichTextView from "../../Common/RichTextView";
 // Styles
 
 const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
@@ -230,11 +231,15 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
               <div className="">
                 <Title title="Job Description" cssClass="fw-bold fs-6" />
                 <div className="m-0">
-                  <div
+                  <RichTextView
+                    data={getFirstShortDescription(item?.description)}
+                    className={""}
+                  />
+                  {/* <div
                     dangerouslySetInnerHTML={{
                       __html: getFirstShortDescription(item?.description),
                     }}
-                  />
+                  /> */}
                 </div>
               </div>
 

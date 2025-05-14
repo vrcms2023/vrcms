@@ -18,6 +18,7 @@ import {
   sortByCreatedDate,
 } from "../../util/dataFormatUtil";
 import { getImagePath } from "../../util/commonUtil";
+import RichTextView from "../../Common/RichTextView";
 
 const HomeServices = ({ title }) => {
   const editComponentObj = {
@@ -76,13 +77,15 @@ const HomeServices = ({ title }) => {
                 title={item.feature_title}
                 cssClass="fw-bold serviceTitle"
               />
-              {item.feature_description ? (
-                <div
-                  className="description"
-                  dangerouslySetInnerHTML={{ __html: item.feature_description }}
+              {item.feature_description && (
+                <RichTextView
+                  data={item.feature_description}
+                  className={"description"}
                 />
-              ) : (
-                ""
+                // <div
+                //   className="description"
+                //   dangerouslySetInnerHTML={{ __html: item.feature_description }}
+                // />
               )}
               <Link
                 to={`/services/${item.serviceID}/`}
