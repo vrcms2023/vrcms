@@ -33,6 +33,8 @@ import { getCookie } from "../../../util/cookieUtil";
 // CSS Imports
 import { ServicesStyled } from "../../../Common/StyledComponents/Styled-Services";
 
+import RichTextView from "../../../Common/RichTextView";
+
 const Services = () => {
   const editComponentObj = {
     addSection: false,
@@ -346,11 +348,13 @@ const Services = () => {
                       }
                       cssClass="fs-5 text-secondary mb-2"
                     />
+                    <RichTextView data={item.feature_description} />
+                    {/*                  
                     <div
                       dangerouslySetInnerHTML={{
                         __html: item.feature_description,
                       }}
-                    />
+                    /> */}
                   </div>
                   <div className="col-md-4">
                     <img src={getImagePath(item.path)} alt="" />
