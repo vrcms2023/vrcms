@@ -35,6 +35,7 @@ const authSlice = createSlice({
       state.refresh = null;
       state.error = false;
       state.success = false;
+      state.menuList = [];
       state.isAuthenticated = false;
       removeAllCookies();
       localStorage.clear();
@@ -49,6 +50,10 @@ const authSlice = createSlice({
     updatedPermisisons: (state) => {
       state.error = false;
       state.permissions = ["ALL"];
+    },
+    updatedMenulist: (state, { payload }) => {
+      state.error = false;
+      state.menuList = payload;
     },
   },
   extraReducers: (builder) => {
@@ -146,7 +151,12 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setCredentials, updatedState, updatedPermisisons } =
-  authSlice.actions;
+export const {
+  logout,
+  setCredentials,
+  updatedState,
+  updatedPermisisons,
+  updatedMenulist,
+} = authSlice.actions;
 
 export default authSlice.reducer;

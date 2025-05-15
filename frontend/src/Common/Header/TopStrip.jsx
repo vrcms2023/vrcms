@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 // Components
 import Title from "../Title";
 import { getCookie, removeAllCookies } from "../../util/cookieUtil";
-import { logout } from "../../redux/auth/authSlice";
+import { logout, updatedMenulist } from "../../redux/auth/authSlice";
 import { useAdminLoginStatus } from "../customhook/useAdminLoginStatus";
 
 // Stylesheet
@@ -27,10 +27,10 @@ const TopStrip = () => {
 
   function logOutHandler() {
     removeAllCookies();
+    dispatch(updatedMenulist([]));
     dispatch(logout());
     toast.success("Logout successfully");
-    navigate("/login");
-    window.location.reload();
+    window.location.href = "/login";
   }
   return (
     <TopStripStyled>
