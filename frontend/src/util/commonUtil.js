@@ -97,6 +97,36 @@ export const sortByFieldName = (array, fieldName) => {
   });
 };
 
+export const getServiceMainMenu = (data) => {
+  return _.filter(data, (item) => {
+    return item.page_label.toLowerCase() === "services";
+  });
+};
+
+export const getPublishedSericeMenu = (menuList, publishedMenuList) => {
+  let clonedMenu = JSON.parse(JSON.stringify(menuList));
+  let mainServiceMenu = getServiceMainMenu(clonedMenu);
+  const childMenu = mainServiceMenu[0]?.childMenu;
+  let selectedMenu = [];
+  childMenu.forEach((item) => {
+    publishedMenuList.forEach((publishedMenu) => {
+      if (
+        item.page_label.toLowerCase() ===
+        publishedMenu.services_page_title.toLowerCase()
+      ) {
+        selectedMenu.push(item);
+      }
+    });
+  });
+
+  _.map(clonedMenu, (item) => {
+    if (item.page_label.toLowerCase() === "services") {
+      item["childMenu"] = selectedMenu;
+    }
+  });
+  return clonedMenu;
+};
+
 export const getMenuObject = (data) => {
   const parentMenu = _.filter(data, (item) => {
     return item.is_Parent;

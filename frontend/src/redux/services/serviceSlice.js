@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getServiceValues } from "./serviceActions";
-import { sortByCreatedDate } from "../../util/dataFormatUtil";
+import {
+  sortByCreatedDate,
+  sortCreatedDateByDesc,
+} from "../../util/dataFormatUtil";
 const initialState = {
   loading: false,
   serviceMenu: [],
@@ -24,7 +27,7 @@ const serviceSlice = createSlice({
     });
     builder.addCase(getServiceValues.fulfilled, (state, action) => {
       state.loading = false;
-      state.serviceMenu = sortByCreatedDate(action?.payload?.services);
+      state.serviceMenu = sortCreatedDateByDesc(action?.payload?.services);
     });
     builder.addCase(getServiceValues.rejected, (state, action) => {
       state.loading = false;

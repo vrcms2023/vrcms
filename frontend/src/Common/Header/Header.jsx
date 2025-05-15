@@ -19,6 +19,8 @@ import {
   getUser,
 } from "../../redux/auth/authActions";
 import {
+  getPublishedSericeMenu,
+  getServiceMainMenu,
   storeServiceMenuValueinCookie,
   urlStringFormat,
 } from "../../util/commonUtil";
@@ -28,6 +30,7 @@ import { isAppAccess } from "../../util/permissions";
 
 import Logo from "../../Images/logo.png";
 import LogoForm from "../../Frontend_Admin/Components/forms/Logo";
+import { updatedMenulist } from "../../redux/auth/authSlice";
 
 const Header = () => {
   const editComponentObj = {
@@ -77,12 +80,19 @@ const Header = () => {
     setShow(!show);
     document.body.style.overflow = "hidden";
   };
-
+  let servicMenuUpdateStatus = true;
   useEffect(() => {
     if (serviceMenu.length === 0 && onPageLoadServiceAction.current) {
       onPageLoadServiceAction.current = false;
       dispatch(getServiceValues());
-    } else {
+    } else if (
+      menuList.length > 0 &&
+      serviceMenu.length > 0 &&
+      servicMenuUpdateStatus
+    ) {
+      const updateMainMenu = getPublishedSericeMenu(menuList, serviceMenu);
+      dispatch(updatedMenulist(updateMainMenu));
+      servicMenuUpdateStatus = false;
       setServiceMenuList(serviceMenu);
       if (!getCookie("pageLoadServiceName") && serviceMenu.length > 0) {
         storeServiceMenuValueinCookie(serviceMenu[0]);
