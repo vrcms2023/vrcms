@@ -63,7 +63,7 @@ export const ServicesStyled = styled.div`
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            height: 20px;
+            // height: 20px;
           }
       }
       

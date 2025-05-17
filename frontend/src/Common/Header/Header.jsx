@@ -74,31 +74,29 @@ const Header = () => {
   const [serviceMenuList, setServiceMenuList] = useState([]);
   const [counter, setCounter] = useState(0);
   const [showAddMenuMessage, setshowAddMenuMessage] = useState(false);
-
+  const menuUpdateInitialized = useRef(true);
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setShow(!show);
     document.body.style.overflow = "hidden";
   };
-  let servicMenuUpdateStatus = true;
+
   useEffect(() => {
-    if (serviceMenu.length === 0 && onPageLoadServiceAction.current) {
-      onPageLoadServiceAction.current = false;
-      dispatch(getServiceValues());
-    } else if (
+    if (
+      serviceMenu.length === 0 &&
       menuList.length > 0 &&
-      serviceMenu.length > 0 &&
-      servicMenuUpdateStatus
+      onPageLoadServiceAction.current
     ) {
-      const updateMainMenu = getPublishedSericeMenu(menuList, serviceMenu);
-      dispatch(updatedMenulist(updateMainMenu));
-      servicMenuUpdateStatus = false;
+      onPageLoadServiceAction.current = false;
+      menuUpdateInitialized.current = true;
+      dispatch(getServiceValues());
+    } else if (serviceMenu.length > 0) {
       setServiceMenuList(serviceMenu);
       if (!getCookie("pageLoadServiceName") && serviceMenu.length > 0) {
         storeServiceMenuValueinCookie(serviceMenu[0]);
       }
     }
-  }, [serviceMenu, dispatch]);
+  }, [serviceMenu, dispatch, menuList]);
 
   useEffect(() => {
     if (isAppAccess(userInfo)) {
@@ -108,12 +106,26 @@ const Header = () => {
       dispatch(getUser());
     }
     if (menuList.length === 0 && counter < 3) {
+      menuUpdateInitialized.current = true;
       dispatch(getMenu());
       setCounter(counter + 1);
     } else if (menuList.length === 0 && counter >= 3) {
       setshowAddMenuMessage(true);
     }
   }, [userInfo, dispatch, menuList]);
+
+  useEffect(() => {
+    if (
+      menuList.length > 0 &&
+      serviceMenuList.length > 0 &&
+      !isAdmin &&
+      menuUpdateInitialized.current
+    ) {
+      menuUpdateInitialized.current = false;
+      const updateMainMenu = getPublishedSericeMenu(menuList, serviceMenuList);
+      dispatch(updatedMenulist(updateMainMenu));
+    }
+  }, [serviceMenuList, menuList, isAdmin]);
 
   useEffect(() => {
     setTimeout(() => {

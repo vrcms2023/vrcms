@@ -33,6 +33,7 @@ const AddService = ({
   const [editServiceObject, setEditServiceObject] = useState("");
   const [userName, setUserName] = useState("");
   const onPageLoadAction = useRef(true);
+  const [editState, setEditState] = useState(false);
   const { serviceMenu, serviceerror } = useSelector(
     (state) => state.serviceMenu
   );
@@ -48,7 +49,7 @@ const AddService = ({
   const onClickSelectedService = (item) => {
     storeServiceMenuValueinCookie(item);
     setSelectedServiceProject(item);
-    window.scroll(0, 700);
+    //window.scroll(0, 700);
     // document.getElementById('servicesPage').scrollTo(0,100);
   };
 
@@ -190,11 +191,13 @@ const AddService = ({
   const EditService = (item) => {
     setServiceName(item.services_page_title);
     setEditServiceObject(item);
+    setEditState(true);
   };
 
   const CancelServiceNameChange = () => {
     setServiceName("");
     setEditServiceObject({});
+    setEditState(false);
   };
 
   const createChildMenu = async (serviceResponse, isEdit, oldTilte) => {
@@ -219,13 +222,15 @@ const AddService = ({
         {/* <div className={`container bg-light p-5 border shadow-lg ${selectedServiceProject && selectedServiceProject.publish ? 'border border-success' : ''}`}> */}
         <div className="row">
           {error ? <Error>{error}</Error> : ""}
-          <div className="col-md-6 pb-2 pb-md-0 
+          <div
+            className="col-md-6 pb-2 pb-md-0 
           d-flex flex-column justify-content-start align-items-center 
           text-center 
-          addPageForm">
+          addPageForm"
+          >
             <input
               type="text"
-              className="form-control py-4 text-center"
+              className={`form-control py-4 text-center fs-4  ${editState ? "border border-warning text-warning" : ""}`}
               name="services_page_title"
               id=""
               value={serviceName}
@@ -259,9 +264,10 @@ const AddService = ({
                 serviceList.map((item) => (
                   <li
                     className={`d-flex justify-content-between align-items-center p-1 px-3
+                     ${editState && item.id === editServiceObject?.id ? "border border-warning" : ""} 
               ${
                 item.id === selectedServiceProject?.id
-                  ? "border border-1 border-muted shadow-md"
+                  ? "border border-1 border-info shadow-md"
                   : ""
               }`}
                     key={item.id}
@@ -288,19 +294,19 @@ const AddService = ({
                           item.publish ? "Page Published" : "Page Not Published"
                         }
                       >
-                          {item.publish ? (
-                            <span className="text-success fs-5 fw-bold">P</span>
-                            // <i
-                            //   className="fa fa-thumbs-up fs-5"
-                            //   aria-hidden="true"
-                            // ></i>
-                          ) : (
-                            <span className="fs-5 fw-bold notPublished">P</span>
-                            // <i
-                            //   className="fa fa-thumbs-down"
-                            //   aria-hidden="true"
-                            // ></i>
-                          )}
+                        {item.publish ? (
+                          <span className="text-success fs-5 fw-bold">P</span>
+                        ) : (
+                          // <i
+                          //   className="fa fa-thumbs-up fs-5"
+                          //   aria-hidden="true"
+                          // ></i>
+                          <span className="fs-5 fw-bold notPublished">P</span>
+                          // <i
+                          //   className="fa fa-thumbs-down"
+                          //   aria-hidden="true"
+                          // ></i>
+                        )}
                       </Link>
                       <Link onClick={() => EditService(item)}>
                         {" "}
