@@ -235,10 +235,10 @@ export const ClientMenu = ({ serviceMenuList }) => {
     }
   };
 
-  const ChildMenuContent = ({ menu }) => {
+  const ChildMenuContent = ({ menu, className }) => {
     return (
       <li
-        className={`nav-item ${menu.childMenu ? "dropdown" : ""}`}
+        className={`nav-item ${className}-${menu.page_label.replaceAll(" ", "-")} ${menu.childMenu ? "dropdown" : ""}`}
         key={menu.id}
       >
         <NavLink
@@ -265,11 +265,15 @@ export const ClientMenu = ({ serviceMenuList }) => {
         </NavLink>
         {menu.childMenu?.length > 0 && (
           <ul
-            className="dropdown-menu"
-            aria-labelledby={`${menu.page_label}navbarDropdown`}
+            className={`dropdown-menu child-${menu.page_label}`}
+            aria-labelledby={`${menu.page_label}-navbarDropdown`}
           >
             {menu.childMenu.map((childMenu) => (
-              <ChildMenuContent menu={childMenu} key={childMenu.id} />
+              <ChildMenuContent
+                menu={childMenu}
+                key={childMenu.id}
+                className="child"
+              />
             ))}
           </ul>
         )}
@@ -280,7 +284,7 @@ export const ClientMenu = ({ serviceMenuList }) => {
   return (
     <ul className="navbar-nav ms-auto mb-2 mb-lg-0 menu">
       {menuList?.map((menu) => (
-        <ChildMenuContent menu={menu} key={menu.id} />
+        <ChildMenuContent menu={menu} key={menu.id} className="parent" />
       ))}
     </ul>
   );
