@@ -6,6 +6,8 @@ import Search from "../../../Common/Search";
 import CustomPagination from "../../../Common/CustomPagination";
 import { paginationDataFormat } from "../../../util/commonUtil";
 import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
+import Button from "../../../Common/Button";
+import Ancher from "../../../Common/Ancher";
 
 const ContactUSAdmin = () => {
   const [userDetails, setUserDetails] = useState([]);
@@ -43,16 +45,13 @@ const ContactUSAdmin = () => {
   };
 
   return (
-    <div className="container-fluid pt-5">
-      <div className="row mb-4">
-        <div className="col-md-6">&nbsp;</div>
-        <div className="col-md-6"></div>
-      </div>
-      <div className="row px-3 px-lg-5">
-        <div className="col-md-6">
+    <div className="container-fluid pt-5 contactsList">
+      
+      <div className="row px-2 px-lg-5">
+        <div className="col-md-2">
           <Title title={"Contact list"} cssClass="fs-1 pageTitle" />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-8">
           <Search
             setObject={setResponseData}
             clientSearchURL={"/contactus/searchContacts/"}
@@ -64,26 +63,33 @@ const ContactUSAdmin = () => {
             searchQuery={searchQuery}
           />
         </div>
+        <div className="col-md-2 p-0">
+          <Button label={"Contacts"} cssClass="btn btn-outline float-end" icon="fa-download"/>
+        </div>
       </div>
 
       <div className="row px-3 px-lg-5 py-4 table-responsive">
         {userDetails?.length > 0 ? (
-          <table className="table table-striped table-hover">
+          <table className="table table-striped table-hover contacts">
             <thead>
               <tr>
-                <th>FirstName</th>
-                <th>Email</th>
-                <th>phoneNumber</th>
-                <th>description</th>
+                <th class="align-middle">FirstName</th>
+                <th class="align-middle">Email</th>
+                <th class="align-middle">phoneNumber</th>
+                <th class="align-middle">description</th>
+                <th className="text-end align-middle">Send Request</th>
               </tr>
             </thead>
             <tbody>
               {userDetails?.map((user) => (
                 <tr key={user.id}>
-                  <td>{user.firstName}</td>
-                  <td>{user.email}</td>
-                  <td>{user.phoneNumber}</td>
-                  <td>{user.description} </td>
+                  <td class="align-middle">{user.firstName}</td>
+                  <td class="align-middle">{user.email}</td>
+                  <td class="align-middle">{user.phoneNumber}</td>
+                  <td class="align-middle">{user.description} </td>
+                  <td class="align-middle">
+                    <Ancher AncherClass="btn btn-outline px-3 float-end" AncherLabel="Send Request " icon="fa-paper-plane"/>
+                  </td>
                 </tr>
               ))}
             </tbody>
