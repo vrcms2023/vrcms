@@ -306,7 +306,7 @@ const Home = () => {
                 <AdminBanner
                   editHandler={editHandler}
                   componentType="carousel"
-                  popupTitle="Carousel Banner"
+                  popupTitle="Carousel Banners"
                   getImageListURL="carousel/createCarousel/"
                   deleteImageURL="carousel/updateCarousel/"
                   imagePostURL="carousel/createCarousel/"

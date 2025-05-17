@@ -157,10 +157,10 @@ const AdminBanner = ({
 
       <hr className="m-0" />
 
-      <div className="container mt-4">
-        <NoteComponent note="Use drag option to shuffle the addresses" />
+      <div className="container mt-2">
+        <NoteComponent note="Drag to shuffle banners" />
 
-        <div className="row mt-3 d-flex flex-row-reverse">
+        <div className="row mt-2 d-flex flex-row-reverse">
           {carousel?.length > 0 ? (
             <div className="heightCtrl imglist">
               <div className="container">
@@ -253,7 +253,7 @@ const AdminCarouselItem = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="row mb-4 p-2 slideItem" key={index}>
+          <div className="row mb-2 p-2 slideItem" key={index}>
             <div className="col-2 col-md-2">
               <i
                 className="fa fa-picture-o fs-2 d-lg-none"
@@ -278,7 +278,7 @@ const AdminCarouselItem = ({
             <div className="col-4 col-md-2 d-flex justify-content-around align-items-center flex-md-row gap-3">
               <Link onClick={(event) => handleCarouselEdit(event, item)}>
                 <i
-                  className="fa fa-pencil fs-4 text-warning"
+                  className="fa fa-pencil fs-5 text-warning"
                   aria-hidden="true"
                 ></i>
               </Link>
@@ -288,7 +288,7 @@ const AdminCarouselItem = ({
                 }
               >
                 <i
-                  className="fa fa-trash fs-4 text-danger"
+                  className="fa fa-trash fs-5 text-danger"
                   aria-hidden="true"
                 ></i>
               </Link>
