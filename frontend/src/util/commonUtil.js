@@ -174,7 +174,7 @@ export const getMenuObject = (data) => {
   });
   _.map(sortParentMenu, (item) => {
     if (item.page_label.toLowerCase() === "services") {
-      const newChildlist = [addServiceMneu, ...item.childMenu];
+      const newChildlist = [...item.childMenu, addServiceMneu];
       item["childMenu"] = newChildlist;
     }
   });
