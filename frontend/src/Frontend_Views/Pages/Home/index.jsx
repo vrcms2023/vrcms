@@ -228,7 +228,9 @@ const Home = () => {
       {/* BANNER COMPONENT  */}
       <div
         className={
-          showHideCompList?.banner?.visibility ? "border border-info mb-2" : ""
+          showHideCompList?.banner?.visibility && isAdmin && hasPermission
+            ? "border border-info mb-2"
+            : ""
         }
       >
         {isAdmin && hasPermission && (
@@ -277,7 +279,7 @@ const Home = () => {
       {/* ==== CAROUSEL COMPONENT ======================================================================================================= */}
       <div
         className={
-          showHideCompList?.carousel?.visibility
+          showHideCompList?.carousel?.visibility && isAdmin && hasPermission
             ? "border border-info mb-2"
             : ""
         }
@@ -326,7 +328,9 @@ const Home = () => {
       {/* LEON Pharma Products  */}
       <div
         className={
-          showHideCompList?.producthilight?.visibility
+          showHideCompList?.producthilight?.visibility &&
+          isAdmin &&
+          hasPermission
             ? "border border-info mb-2"
             : ""
         }
@@ -454,7 +458,7 @@ const Home = () => {
       {/* Introduction component with ON/OF  */}
       <div
         className={
-          showHideCompList?.briefintro?.visibility
+          showHideCompList?.briefintro?.visibility && isAdmin && hasPermission
             ? "border border-info mb-2"
             : ""
         }
@@ -520,7 +524,7 @@ const Home = () => {
       {/* === Random Hilights ================================================================================================================*/}
       <div
         className={
-          showHideCompList?.services?.visibility
+          showHideCompList?.services?.visibility && isAdmin && hasPermission
             ? "border border-info mb-2"
             : ""
         }
@@ -582,7 +586,7 @@ const Home = () => {
       {/* ==== PRODUCTS CATEGORIES ===================================================================================================== */}
       <div
         className={
-          showHideCompList?.homeproducts?.visibility
+          showHideCompList?.homeproducts?.visibility && isAdmin && hasPermission
             ? "border border-info mb-2"
             : ""
         }
@@ -623,7 +627,7 @@ const Home = () => {
       {/* ==== TESTIMONIAL COMPONENT ====================================================================================================*/}
       <div
         className={
-          showHideCompList?.testimonis?.visibility
+          showHideCompList?.testimonis?.visibility && isAdmin && hasPermission
             ? "border border-info mb-2"
             : ""
         }
@@ -696,7 +700,7 @@ const Home = () => {
       {/* ==== Random Home Services =================================================================================================*/}
       <div
         className={
-          showHideCompList?.productslist?.visibility
+          showHideCompList?.productslist?.visibility && isAdmin && hasPermission
             ? "border border-info mb-2"
             : ""
         }
@@ -778,7 +782,9 @@ const Home = () => {
       {/* HOME NEWS */}
       <div
         className={
-          showHideCompList?.news?.visibility ? "border border-info mb-2" : ""
+          showHideCompList?.news?.visibility && isAdmin && hasPermission
+            ? "border border-info mb-2"
+            : ""
         }
       >
         {isAdmin && hasPermission && (
@@ -842,7 +848,9 @@ const Home = () => {
       {/* ======================= HOME List of Services DEVELOPED FOR LEOMTECH ======================= */}
       <div
         className={
-          showHideCompList?.news?.visibility ? "border border-info mb-2" : ""
+          showHideCompList?.news?.visibility && isAdmin && hasPermission
+            ? "border border-info mb-2"
+            : ""
         }
       >
         {isAdmin && hasPermission && (
@@ -863,7 +871,7 @@ const Home = () => {
       {/* ==== FEATURES SPECICALLY DEVELOPED FOR RISHISYSTEMS ========================================================================== */}
       <div
         className={
-          showHideCompList?.features?.visibility
+          showHideCompList?.features?.visibility && isAdmin && hasPermission
             ? "border border-info mb-2"
             : ""
         }
@@ -882,7 +890,9 @@ const Home = () => {
       {/* ===== HOME WHY CHOOSE RISHSYSTEMS ============================================================================================ */}
       <div
         className={
-          showHideCompList?.news?.visibility ? "border border-info mb-2" : ""
+          showHideCompList?.news?.visibility && isAdmin && hasPermission
+            ? "border border-info mb-2"
+            : ""
         }
       >
         {isAdmin && hasPermission && (
@@ -906,7 +916,9 @@ const Home = () => {
 
       <div
         className={
-          showHideCompList?.homeservicedetails?.visibility
+          showHideCompList?.homeservicedetails?.visibility &&
+          isAdmin &&
+          hasPermission
             ? "border border-info mb-2"
             : ""
         }
@@ -933,7 +945,7 @@ const Home = () => {
       {/* ==== HOME Careers ========================================================================================================== */}
       <div
         className={
-          showHideCompList?.homecareers?.visibility
+          showHideCompList?.homecareers?.visibility && isAdmin && hasPermission
             ? "border border-info mb-2"
             : ""
         }
@@ -978,7 +990,9 @@ const Home = () => {
       {/* It will be work only one carosel in the page */}
       <div
         className={
-          showHideCompList?.gallery?.visibility ? "border border-info mb-2" : ""
+          showHideCompList?.gallery?.visibility && isAdmin && hasPermission
+            ? "border border-info mb-2"
+            : ""
         }
       >
         {isAdmin && hasPermission && (
@@ -1028,7 +1042,9 @@ const Home = () => {
         DEVELOPED FOR SPECIFICALLY SAP DESIGNS */}
       <div
         className={
-          showHideCompList?.servicesoffered?.visibility
+          showHideCompList?.servicesoffered?.visibility &&
+          isAdmin &&
+          hasPermission
             ? "border border-info mb-2"
             : ""
         }
@@ -1090,7 +1106,7 @@ const Home = () => {
       {/* === CLIENTS - COMPONENTS DEVELOPER IN SAP DESIGNS  ===========================================================================  */}
       <div
         className={
-          showHideCompList?.homeclient?.visibility
+          showHideCompList?.homeclient?.visibility && isAdmin && hasPermission
             ? "border border-info mb-2"
             : ""
         }
@@ -1137,7 +1153,7 @@ const Home = () => {
       {/* <hr /> */}
       <div
         className={
-          showHideCompList?.hprinfra?.visibility
+          showHideCompList?.hprinfra?.visibility && isAdmin && hasPermission
             ? "border border-info mb-2"
             : ""
         }

@@ -27,7 +27,6 @@ const TopStrip = () => {
 
   function logOutHandler() {
     removeAllCookies();
-    dispatch(updatedMenulist([]));
     dispatch(logout());
     toast.success("Logout successfully");
     window.location.href = "/login";

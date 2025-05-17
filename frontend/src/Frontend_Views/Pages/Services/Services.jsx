@@ -56,9 +56,9 @@ const Services = () => {
   const pageLoadServiceID = getCookie("pageLoadServiceID");
   const pageLoadServiceName = getCookie("pageLoadServiceName");
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   useEffect(() => {
     const id = document.getElementById("ServicesnavbarDropdown");
@@ -106,7 +106,7 @@ const Services = () => {
         `/services/getSelectedClientService/${id}/`
       );
       setSelectedServiceList(sortByCreatedDate(response.data.servicesFeatures));
-      window.scrollTo(0, 0);
+      //window.scrollTo(0, 0);
       if (window.history.replaceState && isAdmin) {
         const url = `${getReactHostDetils()}/services/${pageLoadServiceName}/`;
         window.history.pushState({}, null, url);
@@ -244,7 +244,7 @@ const Services = () => {
               className={isAdmin && hasPermission ? "col-md-12" : "col-md-12"}
             >
               {isAdmin && hasPermission && selectedServiceProject?.id && (
-                <div className="d-flex justify-content-center align-items-center my-4">
+                <div className="d-flex justify-content-center align-items-center my-4 p-2 border border-info">
                   <span className="mx-2 text-dark">
                     {" "}
                     Add new section in

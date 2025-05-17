@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./auth/authSlice";
 import projectReducer from "./project/projectSlice";
 import clientProjectReducer from "./project/clientProjectSlice";
@@ -12,21 +12,30 @@ import { authApi } from "./auth/authService";
 import themeReducer from "./themes/themeSlice";
 import showHideComponentReducer from "./showHideComponent/showHideSlice";
 
+const combinedReducer = combineReducers({
+  dashBoardProjects: projectReducer,
+  clientProjects: clientProjectReducer,
+  loader: loadingReducer,
+  auth: authReducer,
+  footerData: footerReducer,
+  serviceMenu: serviceReducer,
+  addressList: addressSlice,
+  productList: productsSlice,
+  categoryList: categorySlice,
+  selectedTheme: themeReducer,
+  showHide: showHideComponentReducer,
+  [authApi.reducerPath]: authApi.reducer,
+});
+
+const rootReducer = (state, action) => {
+  if (action.type === "auth/logout") {
+    return combinedReducer(undefined, action);
+  }
+  return combinedReducer(state, action);
+};
+
 const store = configureStore({
-  reducer: {
-    dashBoardProjects: projectReducer,
-    clientProjects: clientProjectReducer,
-    loader: loadingReducer,
-    auth: authReducer,
-    footerData: footerReducer,
-    serviceMenu: serviceReducer,
-    addressList: addressSlice,
-    productList: productsSlice,
-    categoryList: categorySlice,
-    selectedTheme: themeReducer,
-    showHide: showHideComponentReducer,
-    [authApi.reducerPath]: authApi.reducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authApi.middleware),
 });
