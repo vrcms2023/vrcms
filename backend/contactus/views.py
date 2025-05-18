@@ -188,13 +188,6 @@ class SendEnquierytoCustomer(generics.CreateAPIView):
     """
     send request to customer
     """
-
-    def get_object(self, pk):
-        try:
-            return ContactUS.objects.get(pk=pk)
-        except ContactUS.DoesNotExist:
-            raise Http404
-
     
     def post(self, request, format=None):
         serializer = ContactUSSerializer(data=request.data)
