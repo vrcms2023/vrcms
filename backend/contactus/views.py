@@ -142,16 +142,19 @@ class ExportToExcel(APIView):
         # Create Excel workbook and worksheet
         wb = Workbook()
         ws = wb.active
+        ws.append(['firstName', 'email', 'phoneNumber', 'description'])  # Add headers
         ws.title = "Contact us list"
 
         # Write headers
-        headers = [field.name for field in ContactUS._meta.fields]
-        ws.append(headers)
+        for item in queryset:
+            ws.append([
+                item.firstName,
+                item.email,
+                item.phoneNumber,
+                item.description
+            ])
 
-        # Write data rows
-        for item in serializer.data:
-            row = [str(item[field]) for field in headers]
-            ws.append(row)
+  
 
          # Save to BytesIO buffer
         buffer = BytesIO()
@@ -165,7 +168,7 @@ class ExportToExcel(APIView):
         )
 
         
-        filename = f"data_export_{datetime.now().strftime("%Y%m%d_%H%M%S")}.xlsx"
+        filename = f"contact_list_export_{datetime.now().strftime("%Y%m%d_%H%M%S")}.xlsx"
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
         
         # Save workbook to response
