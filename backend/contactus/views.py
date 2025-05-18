@@ -130,6 +130,9 @@ class ContacListSearchAPIView(ListAPIView):
         return Response({"contactus": serializer.data}, status=status.HTTP_200_OK)
     
 class ExportToExcel(APIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = ContactUSSerializer
+    pagination_class = CustomPagination
 
     def get(self, request):
         # Get data from database
