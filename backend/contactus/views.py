@@ -16,6 +16,11 @@ from django.http import Http404
 from django.db.models import Q
 from common.CustomPagination import CustomPagination
 from common.utility import get_custom_paginated_data
+from rest_framework.views import APIView
+from django.http import HttpResponse
+from openpyxl import Workbook
+from datetime import datetime
+from io import BytesIO
 # import magic
 
 # Create your views here.
@@ -124,3 +129,44 @@ class ContacListSearchAPIView(ListAPIView):
         serializer = ContactUSSerializer(snippet, many=True)
         return Response({"contactus": serializer.data}, status=status.HTTP_200_OK)
     
+class ExportToExcel(APIView):
+
+    def get(self, request):
+        # Get data from database
+        queryset = ContactUS.objects.all()
+        serializer = ContactUSSerializer(queryset, many=True)
+        
+        # Create Excel workbook and worksheet
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Contact us list"
+
+        # Write headers
+        headers = [field.name for field in ContactUS._meta.fields]
+        ws.append(headers)
+
+        # Write data rows
+        for item in serializer.data:
+            row = [str(item[field]) for field in headers]
+            ws.append(row)
+
+         # Save to BytesIO buffer
+        buffer = BytesIO()
+        wb.save(buffer)
+        buffer.seek(0)
+
+        # Create HTTP response
+        response = HttpResponse(
+            buffer.getvalue(),
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+
+        
+        filename = f"data_export_{datetime.now().strftime("%Y%m%d_%H%M%S")}.xlsx"
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        
+        # Save workbook to response
+        wb.close()
+        buffer.close()
+        
+        return response
