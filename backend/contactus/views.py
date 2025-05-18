@@ -176,3 +176,44 @@ class ExportToExcel(APIView):
         buffer.close()
         
         return response
+    
+
+     
+class SendEnquierytoCustomer(generics.CreateAPIView):
+    permission_classes = (permissions.AllowAny,)
+    queryset = ContactUS.objects.all()
+    serializer_class = ContactUSSerializer
+    pagination_class = CustomPagination
+
+    """
+    send request to customer
+    """
+
+    def get_object(self, pk):
+        try:
+            return ContactUS.objects.get(pk=pk)
+        except ContactUS.DoesNotExist:
+            raise Http404
+
+    
+    def post(self, request, format=None):
+        serializer = ContactUSSerializer(data=request.data)
+
+        if serializer.is_valid():
+            client_ctx = {
+                'user': serializer.data["firstName"],
+                'appName': "VRCMS"
+            }
+            client_message = get_template('customer-requestForm.html').render(client_ctx)
+            client_msg = EmailMessage(
+                    settings.EMAIL_REQUEST_MESSAGE,
+                    client_message,
+                    settings.EMAIL_HOST_USER,
+                    [serializer.data["email"]]
+            )
+
+            client_msg.content_subtype ="html"# Main content is now text/html
+            client_msg.send()
+               
+            return Response(status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -70,6 +70,29 @@ const ContactUSAdmin = () => {
     }
   };
 
+  const sendRequest = async (user) => {
+    const data = {
+      firstName: user.firstName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      description: user.description,
+    };
+    try {
+      const response = await axiosServiceApi.post(
+        `/contactus/sendRequesttoClient/`,
+        {
+          ...data,
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success(`Request is sent successfully`);
+      }
+    } catch (error) {
+      console.log("unable to save the career form");
+    }
+  };
+
   return (
     <div className="container-fluid pt-5 contactsList">
       <div className="row px-2 px-lg-5">
@@ -118,11 +141,19 @@ const ContactUSAdmin = () => {
                   <td class="align-middle">{user.phoneNumber}</td>
                   <td class="align-middle">{user.description} </td>
                   <td class="align-middle">
-                    <Ancher
+                    <Button
+                      label={"Send Request"}
+                      handlerChange={() => {
+                        sendRequest(user);
+                      }}
+                      cssClass="btn btn-outline px-3 float-end"
+                      icon="fa-paper-plane"
+                    />
+                    {/* <Ancher
                       AncherClass="btn btn-outline px-3 float-end"
                       AncherLabel="Send Request "
                       icon="fa-paper-plane"
-                    />
+                    /> */}
                   </td>
                 </tr>
               ))}
