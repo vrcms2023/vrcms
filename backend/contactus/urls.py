@@ -4,5 +4,6 @@ from .views import *
 
 urlpatterns = [
     path('', ContactUSAPIView.as_view(), name="create_get_Conatactus"),
-    path('searchContacts/<query>/', ContacListSearchAPIView.as_view(), name="get_contact_search_result")
+    path('searchContacts/<query>/', ContacListSearchAPIView.as_view(), name="get_contact_search_result"),
+    path('exportExcel/', ExportToExcel.as_view(), name='export-excel'),
 ]

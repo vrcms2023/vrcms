@@ -266,6 +266,9 @@ DJOSER = {
     },
 }
 
+CORS_EXPOSE_HEADERS = ['Content-Disposition']  # ← Critical for React access
+
+CORS_ALLOW_CREDENTIALS = True  # If using cookies/auth
 
 CORS_ORIGIN_ALLOW_ALL  = True
 

@@ -8,6 +8,7 @@ import { paginationDataFormat } from "../../../util/commonUtil";
 import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
 import Button from "../../../Common/Button";
 import Ancher from "../../../Common/Ancher";
+import { getBaseURL } from "../../../util/ulrUtil";
 
 const ContactUSAdmin = () => {
   const [userDetails, setUserDetails] = useState([]);
@@ -15,7 +16,7 @@ const ContactUSAdmin = () => {
   const [pageLoadResult, setPageloadResults] = useState(false);
   const [searchQuery, setSearchquery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-
+  const baseURL = getBaseURL();
   /**
    * get User details
    */
@@ -44,9 +45,33 @@ const ContactUSAdmin = () => {
     setCurrentPage(1);
   };
 
+  const downloadExcelfile = async () => {
+    try {
+      const response = await axiosServiceApi.get(`/contactus/exportExcel/`, {
+        responseType: "blob",
+        withCredentials: true,
+      });
+      const filename = response.headers["content-disposition"]
+        .split("filename=")[1]
+        .replace(/"/g, "");
+      console.log("filename", filename);
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Download error:", error);
+    }
+  };
+
   return (
     <div className="container-fluid pt-5 contactsList">
-      
       <div className="row px-2 px-lg-5">
         <div className="col-md-2">
           <Title title={"Contact list"} cssClass="fs-1 pageTitle" />
@@ -64,7 +89,12 @@ const ContactUSAdmin = () => {
           />
         </div>
         <div className="col-md-2 p-0">
-          <Button label={"Contacts"} cssClass="btn btn-outline float-end" icon="fa-download"/>
+          <Button
+            label={"Contacts"}
+            handlerChange={downloadExcelfile}
+            cssClass="btn btn-outline float-end"
+            icon="fa-download"
+          />
         </div>
       </div>
 
@@ -88,7 +118,11 @@ const ContactUSAdmin = () => {
                   <td class="align-middle">{user.phoneNumber}</td>
                   <td class="align-middle">{user.description} </td>
                   <td class="align-middle">
-                    <Ancher AncherClass="btn btn-outline px-3 float-end" AncherLabel="Send Request " icon="fa-paper-plane"/>
+                    <Ancher
+                      AncherClass="btn btn-outline px-3 float-end"
+                      AncherLabel="Send Request "
+                      icon="fa-paper-plane"
+                    />
                   </td>
                 </tr>
               ))}
