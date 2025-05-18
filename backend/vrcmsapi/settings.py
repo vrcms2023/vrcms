@@ -155,6 +155,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
 EMAIL_THANK_YOU_MESSAGE="Thank you contact VRCMS"
+EMAIL_REQUEST_MESSAGE="Exciting New Features & Updates in VRCMS Enhance Your Experience!"
 
 # env properties not workign need check later
 # EMAIL_HOST = 'smtp.gmail.com'
