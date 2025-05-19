@@ -549,15 +549,9 @@ const AddProject = () => {
               </div> */}
             </div>
 
-            <div className="col-md-4 col-lg-2 pb-3 project-page-tab-links">
-              <div className="d-flex justify-content-end p-0 project-sublish-status">
-                <Button
-                  type="submit"
-                  cssClass="btn btn-sm btn-outline me-1"
-                  label={"PUBLISH"}
-                  icon={"fa-calendar"}
-                  handlerChange={publishHandler}
-                />
+            <div className="col-md-4 col-lg-2 pb-2 project-page-tab-links">
+              <div className="d-flex justify-content-end flex-column gap-2 p-0 project-sublish-status">
+               
                 {projectPublish ? (
                   <Button
                     type="submit"
@@ -573,10 +567,18 @@ const AddProject = () => {
                     handlerChange={publishHandler}
                   />
                 )}
+
+                 <Button
+                  type="submit"
+                  cssClass="btn btn-sm btn-outline me-1"
+                  label={"PUBLISH"}
+                  icon={"fa-calendar"}
+                  handlerChange={publishHandler}
+                />
               </div>
 
               <div
-                className="nav flex-column nav-pills mt-4 project-pills"
+                className="nav flex-column nav-pills mt-3 project-pills"
                 id="v-pills-tab"
                 role="tablist"
                 aria-orientation="vertical"
@@ -803,7 +805,7 @@ const AddProject = () => {
                         cssClass="thumb75 shadow-lg border border-0 border-warning rounded"
                       />
                       <div className="">
-                        <small className="text-warning">Click on the image to delete</small>
+                        <small className="text-info">Click on the image to delete</small>
                       </div>
                     </div>
                   </div>
@@ -850,7 +852,7 @@ const AddProject = () => {
                       catategoryImgState={setPdfObject}
                       project={newProject}
                       category="PDF"
-                      cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
+                      cssClass="thumb75 mb-5 shadow-lg"
                     />
                   </div>
 
@@ -888,8 +890,9 @@ const AddProject = () => {
                       catategoryImgState={setPlanObject}
                       project={newProject}
                       category="Plans"
-                      cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
+                      cssClass="thumb75 mb-2 shadow-lg rounded-2"
                     />
+                    <small className="text-info">Click on the image to delete</small>
                   </div>
 
                   <div className="mb-4">
