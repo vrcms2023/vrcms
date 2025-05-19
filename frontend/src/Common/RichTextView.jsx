@@ -1,4 +1,5 @@
 import React from "react";
+import "./RichTextView.css"
 
 const RichTextView = ({ data, className = "" }) => {
   return (
