@@ -1,9 +1,13 @@
 import React from "react";
-import UserContactForm from "../Frontend_Views/Components/UserContactForm";
+import SendRequestForm from "./SendRequestForm";
 
-const ContactModel = ({ closeModel }) => {
+const ContactsendRequstModel = ({ closeModel, selectedUser }) => {
   return (
-    <div className="modal d-block modal-lg" tabIndex="-1">
+    <div
+      className="modal d-block modal-lg"
+      tabIndex="-1"
+      style={{ position: "absolute", zIndex: 9999 }}
+    >
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
@@ -18,11 +22,14 @@ const ContactModel = ({ closeModel }) => {
           </div>
           <div className="modal-body px-4 py-3">
             {/* User Contact Form */}
-            <UserContactForm closeModel={closeModel} />
+            <SendRequestForm
+              closeModel={closeModel}
+              selectedUser={selectedUser}
+            />
           </div>
         </div>
       </div>
     </div>
   );
 };
-export default ContactModel;
+export default ContactsendRequstModel;
