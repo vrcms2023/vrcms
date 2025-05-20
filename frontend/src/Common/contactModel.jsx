@@ -1,7 +1,7 @@
 import React from "react";
 import UserContactForm from "../Frontend_Views/Components/UserContactForm";
 
-const ContactModel = ({ closeModel }) => {
+const ContactModel = ({ closeModel, downloadPDF }) => {
   return (
     <div className="modal d-block modal-lg" tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered">
@@ -18,7 +18,10 @@ const ContactModel = ({ closeModel }) => {
           </div>
           <div className="modal-body px-4 py-3">
             {/* User Contact Form */}
-            <UserContactForm closeModel={closeModel} />
+            <UserContactForm
+              closeModel={closeModel}
+              downloadPDF={downloadPDF}
+            />
           </div>
         </div>
       </div>
