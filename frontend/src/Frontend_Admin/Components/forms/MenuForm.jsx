@@ -104,7 +104,7 @@ const MenuForm = ({
       return true;
     }
 
-    if (!data.is_Parent) {
+    if (!data?.is_Parent) {
       if (parseInt(data?.page_parent_ID) === 0) {
         setError("Please select parent menu");
         return true;
@@ -113,7 +113,7 @@ const MenuForm = ({
         return item.id === data.page_parent_ID;
       })[0];
       data["page_url"] =
-        getSelectedParentObject.page_url +
+        getSelectedParentObject?.page_url +
         data["page_url"].replace(/^\/admin/, "");
       data["page_position"] = getMenuPosition(getSelectedParentObject);
     } else {

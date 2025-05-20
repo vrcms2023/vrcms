@@ -10,12 +10,18 @@ import Button from "../../../Common/Button";
 import Ancher from "../../../Common/Ancher";
 import { getBaseURL } from "../../../util/ulrUtil";
 
+import Model from "../../../Common/Model";
+import ModelBg from "../../../Common/ModelBg";
+import ContactsendRequstModel from "../../Components/contactsendRequstModel";
+
 const ContactUSAdmin = () => {
   const [userDetails, setUserDetails] = useState([]);
   const [paginationData, setPaginationData] = useState({});
   const [pageLoadResult, setPageloadResults] = useState(false);
   const [searchQuery, setSearchquery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [modelShow, setModelShow] = useState(false);
+  const [selectedUser, setSelectedUser] = useState("");
   const baseURL = getBaseURL();
   /**
    * get User details
@@ -93,6 +99,16 @@ const ContactUSAdmin = () => {
     }
   };
 
+  const showModel = (user) => {
+    setModelShow(!modelShow);
+    setSelectedUser(user);
+  };
+
+  const closeModel = () => {
+    setModelShow(!modelShow);
+    setSelectedUser("");
+  };
+
   return (
     <div className="container-fluid pt-5 contactsList">
       <div className="row px-2 px-lg-5">
@@ -144,7 +160,8 @@ const ContactUSAdmin = () => {
                     <Button
                       label={"Send Request"}
                       handlerChange={() => {
-                        sendRequest(user);
+                        //sendRequest(user);
+                        showModel(user);
                       }}
                       cssClass="btn btn-outline px-3 float-end"
                       icon="fa-paper-plane"
@@ -183,6 +200,13 @@ const ContactUSAdmin = () => {
           ""
         )}
       </div>
+      {modelShow && (
+        <ContactsendRequstModel
+          closeModel={closeModel}
+          selectedUser={selectedUser}
+        />
+      )}
+      {modelShow && <ModelBg closeModel={closeModel} />}
     </div>
   );
 };

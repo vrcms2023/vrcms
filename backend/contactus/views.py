@@ -1,5 +1,6 @@
 
 import os
+from xmlrpc.client import Boolean
 
 from products.serializers import CategorySerializer
 from products.models import Category
@@ -21,6 +22,8 @@ from django.http import HttpResponse
 from openpyxl import Workbook
 from datetime import datetime
 from io import BytesIO
+import qrcode
+import json
 # import magic
 
 # Create your views here.
@@ -190,12 +193,17 @@ class SendEnquierytoCustomer(generics.CreateAPIView):
     """
     
     def post(self, request, format=None):
+        appName = request.data["appName"]
+        selectedDefaultMessage = Boolean(request.data["selectedDefaultMessage"])
         serializer = ContactUSSerializer(data=request.data)
+        print("selectedDefaultMessage",selectedDefaultMessage)
 
         if serializer.is_valid():
             client_ctx = {
                 'user': serializer.data["firstName"],
-                'appName': "VRCMS"
+                'appName': appName,
+                "description":serializer.data["description"],
+                "selectedDefaultMessage":selectedDefaultMessage
             }
             client_message = get_template('customer-requestForm.html').render(client_ctx)
             client_msg = EmailMessage(
@@ -210,3 +218,56 @@ class SendEnquierytoCustomer(generics.CreateAPIView):
                
             return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class GenerateQRCodeView(APIView):
+        # def post(self, request):
+        #     data = request.data
+        #     if not data:
+        #         return Response({"error": "JSON data is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        #     try:
+        #         # Convert dict to JSON string
+        #         json_string = json.dumps(data)
+
+        #         # Generate QR code
+        #         qr = qrcode.QRCode(version=1, box_size=10, border=5)
+        #         qr.add_data(json_string)
+        #         qr.make(fit=True)
+
+        #         img = qr.make_image(fill_color="black", back_color="white")
+
+        #         buffer = BytesIO()
+        #         img.save(buffer, format="PNG")
+        #         buffer.seek(0)
+
+        #         return HttpResponse(buffer, content_type="image/png")
+
+        #     except Exception as e:
+        #         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def post(self, request):
+        image_url = request.data.get("image_url")
+
+        if not image_url:
+            return Response({"error": "image_url is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Validate URL (optional: you can add regex or use URLValidator)
+        if not image_url.startswith("http://") and not image_url.startswith("https://"):
+            return Response({"error": "Invalid image URL"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            qr = qrcode.QRCode(version=1, box_size=10, border=5)
+            qr.add_data(image_url)
+            qr.make(fit=True)
+
+            img = qr.make_image(fill_color="black", back_color="white")
+
+            buffer = BytesIO()
+            img.save(buffer, format="PNG")
+            buffer.seek(0)
+
+            return HttpResponse(buffer, content_type="image/png")
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
