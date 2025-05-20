@@ -59,14 +59,6 @@ const SendRequestForm = ({ closeModel, selectedUser }) => {
             cssClass={`alert text-white w-75 mt-3 p-2 text-center bg-success`}
           />
         )}
-        <div>
-          <ShowHideToggle
-            showhideStatus={defaultMessage}
-            title={"Default message"}
-            componentName={"Default"}
-            showHideHandler={showHideHandler}
-          />
-        </div>
 
         <form className="contactForm container-fluid" onSubmit={onFormSubmit}>
           <div className="mb-3 row">
@@ -86,6 +78,15 @@ const SendRequestForm = ({ closeModel, selectedUser }) => {
               Email
             </label>
             <div className="col-sm-10">{selectedUser.email}</div>
+          </div>
+
+          <div className="mb-3 row">
+            <ShowHideToggle
+              showhideStatus={defaultMessage}
+              title={"Default message"}
+              componentName={"Default"}
+              showHideHandler={showHideHandler}
+            />
           </div>
           {!defaultMessage ? (
             <div className="mb-3 row">
