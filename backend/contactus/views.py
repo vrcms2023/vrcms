@@ -22,7 +22,7 @@ from django.http import HttpResponse
 from openpyxl import Workbook
 from datetime import datetime
 from io import BytesIO
-import qrcode
+# import qrcode
 import json
 # import magic
 
@@ -220,7 +220,7 @@ class SendEnquierytoCustomer(generics.CreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-class GenerateQRCodeView(APIView):
+# class GenerateQRCodeView(APIView):
         # def post(self, request):
         #     data = request.data
         #     if not data:
@@ -246,28 +246,28 @@ class GenerateQRCodeView(APIView):
         #     except Exception as e:
         #         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def post(self, request):
-        image_url = request.data.get("image_url")
+    # def post(self, request):
+    #     image_url = request.data.get("image_url")
 
-        if not image_url:
-            return Response({"error": "image_url is required"}, status=status.HTTP_400_BAD_REQUEST)
+    #     if not image_url:
+    #         return Response({"error": "image_url is required"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Validate URL (optional: you can add regex or use URLValidator)
-        if not image_url.startswith("http://") and not image_url.startswith("https://"):
-            return Response({"error": "Invalid image URL"}, status=status.HTTP_400_BAD_REQUEST)
+    #     # Validate URL (optional: you can add regex or use URLValidator)
+    #     if not image_url.startswith("http://") and not image_url.startswith("https://"):
+    #         return Response({"error": "Invalid image URL"}, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            qr = qrcode.QRCode(version=1, box_size=10, border=5)
-            qr.add_data(image_url)
-            qr.make(fit=True)
+    #     try:
+    #         qr = qrcode.QRCode(version=1, box_size=10, border=5)
+    #         qr.add_data(image_url)
+    #         qr.make(fit=True)
 
-            img = qr.make_image(fill_color="black", back_color="white")
+    #         img = qr.make_image(fill_color="black", back_color="white")
 
-            buffer = BytesIO()
-            img.save(buffer, format="PNG")
-            buffer.seek(0)
+    #         buffer = BytesIO()
+    #         img.save(buffer, format="PNG")
+    #         buffer.seek(0)
 
-            return HttpResponse(buffer, content_type="image/png")
+    #         return HttpResponse(buffer, content_type="image/png")
 
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    #     except Exception as e:
+    #         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

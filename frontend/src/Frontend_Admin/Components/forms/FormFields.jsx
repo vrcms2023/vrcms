@@ -91,7 +91,7 @@ export const InputFields = ({
             />
             <label
               htmlFor=""
-              className="form-check-label ms-2 col-form-label text-start text-md-end text-capitalize"
+              className="form-check-label ms-2 pt-0 col-form-label text-start text-md-end text-capitalize"
             >
               {label}
             </label>

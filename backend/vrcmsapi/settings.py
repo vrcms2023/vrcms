@@ -79,7 +79,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'products',
     'app_themes',
-    'showHideComponents'
+    'showHideComponents',
+    'advertisement'
 ]
 
 MIDDLEWARE = [

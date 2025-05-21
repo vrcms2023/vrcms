@@ -69,6 +69,7 @@ const Header = () => {
     "authForm",
     "resend_activation",
     "password",
+    "settings",
   ];
   const isHideBurgetIcon = hideHandBurgerIcon(burgetHide);
   const [serviceMenuList, setServiceMenuList] = useState([]);

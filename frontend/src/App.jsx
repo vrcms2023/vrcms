@@ -120,6 +120,10 @@ const AdminTestimonial = lazy(
   () => import("./Frontend_Admin/Pages/Login/AdminTestimonial")
 );
 
+const AdminSettings = lazy(
+  () => import("./Frontend_Admin/Pages/Auth/AdminSettings")
+);
+
 function App() {
   const { isLoading } = useSelector((state) => state.loader);
 
@@ -200,6 +204,7 @@ function App() {
                 path="/admin/adminPagesConfiguration"
                 element={<PagesConfiguration />}
               />
+              <Route path="/admin/settings" element={<AdminSettings />} />
             </Route>
 
             <Route path="*" element={<PageNotFound />} />

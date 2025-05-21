@@ -121,3 +121,12 @@ def exclude_fields(self, fields_to_exclude=None):
     if isinstance(fields_to_exclude, list):
       for f in fields_to_exclude:
           f in self.fields.fields and self.fields.fields.pop(f) or next()
+
+
+def get_advertisement_From_request_Object(request):
+        requestObj = get_image_data_from_request(request)
+        requestObj['title'] = request.data["title"]
+        requestObj['advertisement_description'] = request.data["advertisement_description"]
+        requestObj['phonen_number'] = request.data["phonen_number"]
+        requestObj['showAndHide'] = request.data["showAndHide"]
+        return requestObj

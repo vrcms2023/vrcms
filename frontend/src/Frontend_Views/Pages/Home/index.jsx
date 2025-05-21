@@ -205,6 +205,10 @@ const Home = () => {
   }, [showHideCompPageList]);
 
   useEffect(() => {
+    dispatch(getShowHideComponentsListByPage("settings"));
+  }, []);
+
+  useEffect(() => {
     dispatch(getShowHideComponentsListByPage(pageType));
   }, [pageType]);
 
