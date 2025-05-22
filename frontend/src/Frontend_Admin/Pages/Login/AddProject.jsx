@@ -551,7 +551,6 @@ const AddProject = () => {
 
             <div className="col-md-4 col-lg-2 pb-2 project-page-tab-links">
               <div className="d-flex justify-content-end flex-column gap-2 p-0 project-sublish-status">
-               
                 {projectPublish ? (
                   <Button
                     type="submit"
@@ -568,7 +567,7 @@ const AddProject = () => {
                   />
                 )}
 
-                 <Button
+                <Button
                   type="submit"
                   cssClass="btn btn-sm btn-outline me-1"
                   label={"PUBLISH"}
@@ -606,6 +605,18 @@ const AddProject = () => {
                   aria-selected="false"
                 >
                   Pdfs / Plan / Map / Cost / Availability
+                </button>
+                <button
+                  className="nav-link"
+                  id="v-pills-googlemap-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-googlemap"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pill-googlemap"
+                  aria-selected="false"
+                >
+                  Google Map
                 </button>
                 <button
                   className="nav-link"
@@ -773,7 +784,11 @@ const AddProject = () => {
                           onClick={() => handleModel("thumbnail")}
                         >
                           {/* Click here to upload Project Home Thumbnail */}
-                          Upload Images<i class="fa fa-upload ms-2 fs-5 text-primary" aria-hidden="true"></i>
+                          Upload Images
+                          <i
+                            class="fa fa-upload ms-2 fs-5 text-primary"
+                            aria-hidden="true"
+                          ></i>
                         </Link>
                       </div>
 
@@ -805,7 +820,9 @@ const AddProject = () => {
                         cssClass="thumb75 shadow-lg border border-0 border-warning rounded"
                       />
                       <div className="">
-                        <small className="text-info">Click on the image to delete</small>
+                        <small className="text-info">
+                          Click on the image to delete
+                        </small>
                       </div>
                     </div>
                   </div>
@@ -824,7 +841,8 @@ const AddProject = () => {
                         className="moreLink text-decoration-underline"
                         onClick={() => handleModel("PDF")}
                       >
-                        Upload <strong>PDF's</strong> <i class="fa fa-upload" aria-hidden="true"></i>
+                        Upload <strong>PDF's</strong>{" "}
+                        <i class="fa fa-upload" aria-hidden="true"></i>
                       </Link>
                     </div>
 
@@ -862,7 +880,8 @@ const AddProject = () => {
                         className="moreLink text-decoration-underline"
                         onClick={() => handleModel("Plans")}
                       >
-                        Upload Plan <strong>Image</strong> <i class="fa fa-upload" aria-hidden="true"></i>
+                        Upload Plan <strong>Image</strong>{" "}
+                        <i class="fa fa-upload" aria-hidden="true"></i>
                       </Link>
                     </div>
 
@@ -892,7 +911,9 @@ const AddProject = () => {
                       category="Plans"
                       cssClass="thumb75 mb-2 shadow-lg rounded-2"
                     />
-                    <small className="text-info">Click on the image to delete</small>
+                    <small className="text-info">
+                      Click on the image to delete
+                    </small>
                   </div>
 
                   <div className="mb-4">
@@ -902,7 +923,8 @@ const AddProject = () => {
                         onClick={() => handleModel("availability")}
                       >
                         {/* Click here to upload Add Availability (Upload image / PDF) */}
-                        Upload Availability <strong>Image's / PDF's</strong><i class="fa fa-upload ms-2" aria-hidden="true"></i>
+                        Upload Availability <strong>Image's / PDF's</strong>
+                        <i class="fa fa-upload ms-2" aria-hidden="true"></i>
                       </Link>
                     </div>
 
@@ -942,7 +964,8 @@ const AddProject = () => {
                         onClick={() => handleModel("price")}
                       >
                         {/* Click here to upload Add Price (Upload image / PDF) */}
-                        Upload Pricing <strong>Image's / PDF's</strong><i class="fa fa-upload ms-2" aria-hidden="true"></i>
+                        Upload Pricing <strong>Image's / PDF's</strong>
+                        <i class="fa fa-upload ms-2" aria-hidden="true"></i>
                       </Link>
                     </div>
 
@@ -974,11 +997,21 @@ const AddProject = () => {
                       cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
                     />
                   </div>
-
-                  {/* Add GOOGLE MAP  */}
+                </div>
+                {/* Add GOOGLE MAP  */}
+                <div
+                  className="tab-pane fade"
+                  id="v-pills-googlemap"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-googlemap-tab"
+                >
                   <div className="mb-4 text-center">
                     <label className="form-label">
-                      Add Google Map <i class="fa fa-map" aria-hidden="true"></i> <small className="d-block">(Embed a map - source url) </small>
+                      Add Google Map{" "}
+                      <i class="fa fa-map" aria-hidden="true"></i>{" "}
+                      <small className="d-block">
+                        (Embed a map - source url){" "}
+                      </small>
                     </label>
                     <Amenities
                       title=""
@@ -990,6 +1023,7 @@ const AddProject = () => {
                     />
                   </div>
                 </div>
+
                 <div
                   className="tab-pane fade"
                   id="v-pills-messages"
@@ -1062,7 +1096,11 @@ const AddProject = () => {
                     category="images"
                     cssClass="thumb75 shadow-lg border border-1 rounded"
                   />
-                  <div><small class="text-warning">Click on the image to delete</small></div>
+                  <div>
+                    <small class="text-warning">
+                      Click on the image to delete
+                    </small>
+                  </div>
                 </div>
               </div>
             </div>

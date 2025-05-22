@@ -4,7 +4,11 @@ import { axiosServiceApi } from "../../../util/axiosUtil";
 import { toast } from "react-toastify";
 import Search from "../../../Common/Search";
 import CustomPagination from "../../../Common/CustomPagination";
-import { paginationDataFormat } from "../../../util/commonUtil";
+import {
+  getDateAndTimeValue,
+  getTodayDate,
+  paginationDataFormat,
+} from "../../../util/commonUtil";
 import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
 import Button from "../../../Common/Button";
 import Ancher from "../../../Common/Ancher";
@@ -23,6 +27,7 @@ const ContactUSAdmin = () => {
   const [modelShow, setModelShow] = useState(false);
   const [selectedUser, setSelectedUser] = useState("");
   const baseURL = getBaseURL();
+
   /**
    * get User details
    */
@@ -146,6 +151,7 @@ const ContactUSAdmin = () => {
                 <th class="align-middle">Email</th>
                 <th class="align-middle">phoneNumber</th>
                 <th class="align-middle">description</th>
+                <th class="align-middle">Date | Time</th>
                 <th className="text-end align-middle">Send Request</th>
               </tr>
             </thead>
@@ -156,6 +162,14 @@ const ContactUSAdmin = () => {
                   <td class="align-middle">{user.email}</td>
                   <td class="align-middle">{user.phoneNumber}</td>
                   <td class="align-middle">{user.description} </td>
+                  <td class="align-middle">
+                    {getDateAndTimeValue(user.created_at)}
+                    {getTodayDate(user.created_at) && (
+                      <span className="badge bg-warning text-dark px-2 ms-2">
+                        NEW
+                      </span>
+                    )}
+                  </td>
                   <td class="align-middle">
                     <Button
                       label={"Send Request"}

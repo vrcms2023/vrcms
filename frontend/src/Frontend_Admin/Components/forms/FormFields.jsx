@@ -27,6 +27,7 @@ export const InputFields = ({
               {...register(fieldName, validationObject)}
               value={value}
               type={type}
+              id={rest?.id}
               onChange={onChange}
               className="form-control p-2"
             />
