@@ -27,6 +27,22 @@ export const getDateValue = (dt) => {
   return moment(dt).format("DD-MM-YYYY");
 };
 
+export const getDateAndTimeValue = (dt) => {
+  return moment(dt).format("DD-MM-YYYY | h:mm");
+};
+
+export const getTodayDate = (dt) => {
+  const todayDate = moment().startOf("day");
+  const createdDate = moment(dt);
+  const diff = createdDate.diff(todayDate, "day");
+
+  if (diff === 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 export const getImagePath = (path) => {
   if (!path) return null;
   const baseURL = getBaseURL();

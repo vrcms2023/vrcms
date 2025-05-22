@@ -217,6 +217,7 @@ function App() {
                 element={<PagesConfiguration />}
               />
               <Route path="/admin/settings" element={<AdminSettings />} />
+              <Route path="/editproject/:id" element={<AddProject />} />
             </Route>
 
             <Route path="*" element={<PageNotFound />} />
@@ -267,7 +268,7 @@ function App() {
             <Route path="/unauthorized" element={<UnauthorizedPage />} />
             <Route path="/authForm" element={<AuthForm />} />
             <Route path="/addproject" element={<AddProject />} />
-            <Route path="/editproject/:id" element={<AddProject />} />
+
             <Route path="/adminNews" element={<AdminNews />} />
             <Route path="/profile/testimonial" element={<AdminTestimonial />} />
           </Routes>
