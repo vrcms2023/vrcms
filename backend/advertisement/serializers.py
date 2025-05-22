@@ -11,3 +11,11 @@ class AdvertisementSerializer(serializers.ModelSerializer):
 
    def remove_fields(self, fields_to_exclude=None):
       return exclude_fields(self, fields_to_exclude)
+
+
+class AdvertisementSizeSerializer(serializers.ModelSerializer):
+   class Meta:
+      model = AdvertisementSize
+      fields = '__all__'
+
+

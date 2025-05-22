@@ -34,12 +34,12 @@ class ShowHideComponentsGetOrCreateView(APIView):
 
     def post(self, request, *args, **kwargs):
         serializer = ShowHideComponentsSerializer(data=request.data, context={'request': request})
-        print("serializer",serializer)
+      
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         validated_data = serializer.validated_data
-        print("validated_data",validated_data)
+       
         user = request.user if request.user.is_authenticated else None
         
         try:
@@ -60,7 +60,7 @@ class ShowHideComponentsGetOrCreateView(APIView):
                 )
                 created = True;
             
-            print("component",component)
+           
             # Serialize the response
             response_serializer = ShowHideComponentsSerializer(component)
             

@@ -3,5 +3,6 @@ from .models import *
 
 # Register your models here.
 @admin.register(AdvertisementList)
-class AddBannerIntro(admin.ModelAdmin):
+class AdvertisementList(admin.ModelAdmin):
     list_display =("title","advertisement_description","showAndHide")
+

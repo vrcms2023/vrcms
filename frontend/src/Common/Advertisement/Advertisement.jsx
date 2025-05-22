@@ -7,6 +7,7 @@ import { CarouselItem } from "../../Frontend_Views/Components/CarouselItem";
 
 const Advertisement = ({ setFlashAdd }) => {
   const [advertisementList, setAdvertisementList] = useState([]);
+  const [advertisementSize, setAdvertisementSize] = useState([]);
   const getAdvertisementList = async () => {
     try {
       const response = await axiosClientServiceApi.get(
@@ -20,8 +21,22 @@ const Advertisement = ({ setFlashAdd }) => {
       toast.error("Unable to load contactus details");
     }
   };
+
+  const getAdvertisementSize = async () => {
+    try {
+      const response = await axiosClientServiceApi.get(
+        `/advertisement/getclientAdvSize/`
+      );
+      if (response?.status === 200 && response.data.length > 0) {
+        setAdvertisementSize(response.data[0].size);
+      }
+    } catch (error) {
+      toast.error("Unable to load contactus details");
+    }
+  };
   useEffect(() => {
     getAdvertisementList();
+    getAdvertisementSize();
   }, []);
 
   return (
@@ -29,7 +44,7 @@ const Advertisement = ({ setFlashAdd }) => {
       <span className="text-white fs-2" onClick={() => setFlashAdd(false)}>
         x
       </span>
-      <div className="imgContainer slide-top">
+      <div className={`imgContainer slide-top ${advertisementSize}`}>
         {advertisementList.length == 1 && (
           <div>
             {advertisementList[0].title && (
