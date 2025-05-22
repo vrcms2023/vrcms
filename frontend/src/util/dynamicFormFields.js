@@ -487,6 +487,47 @@ export const getTitleAndDescriptionFields = (pageType) => {
   };
 };
 
+export const getAdvertisementFormDynamicFields = (advertisement) => {
+  return {
+    showAndHide: {
+      label: "Show / Off",
+      readonly: true,
+      type: "hidden",
+      value: advertisement?.showAndHide ? advertisement?.showAndHide : false,
+      fieldName: "showAndHide",
+    },
+    title: {
+      label: "Advertisement Title",
+      type: "text",
+      fieldName: "title",
+      validationObject: { required: "Please enter Title" },
+    },
+    advertisement_description: {
+      label: "Advertisement Description",
+      type: "textarea",
+      fieldName: "advertisement_description",
+    },
+    phonen_number: {
+      label: "Phone Number",
+      type: "text",
+      fieldName: "phonen_number",
+    },
+    category: {
+      label: "category",
+      readonly: true,
+      type: "hidden",
+      value: "",
+      fieldName: "category",
+    },
+
+    alternitivetext: {
+      label: "alternitivetext",
+      type: "text",
+      fieldName: "alternitivetext",
+    },
+  };
+};
+
 export const imageDimensionsJson = (component) => {
   const imgDimension = {
     carousel: {
@@ -530,6 +571,10 @@ export const imageDimensionsJson = (component) => {
       h: "800px",
     },
     product: {
+      w: "300px",
+      h: "200px",
+    },
+    advertisement: {
       w: "300px",
       h: "200px",
     },

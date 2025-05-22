@@ -59,6 +59,7 @@ import DynamicForm from "../../../Frontend_Admin/Components/forms/DynamicForm";
 import ShowHideIcon from "../../../Common/AdminShowHideIcon";
 import {
   createShowHideComponent,
+  getAllShowHideComponentsList,
   getShowHideComponentsListByPage,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
@@ -201,12 +202,22 @@ const Home = () => {
   useEffect(() => {
     if (showHideCompPageList && showHideCompPageList[pageType]) {
       setShowHideCompList(showHideCompPageList[[pageType]]);
+    } else if (showHideCompPageList) {
+      setShowHideCompList(showHideCompPageList);
     }
   }, [showHideCompPageList]);
 
   useEffect(() => {
-    dispatch(getShowHideComponentsListByPage(pageType));
-  }, [pageType]);
+    if (!isAdmin) {
+      dispatch(getAllShowHideComponentsList());
+    }
+  }, [isAdmin]);
+
+  useEffect(() => {
+    if (isAdmin) {
+      dispatch(getShowHideComponentsListByPage(pageType));
+    }
+  }, [pageType, isAdmin]);
 
   const showHideHandler = async (name) => {
     const selectedItem = showHideCompList[name];

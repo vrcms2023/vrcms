@@ -4,6 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('getbyPageType/', ShowHideComponentsByPageTypeView.as_view(),name='components-by-page-type'),
+    path('getAllShowHide/', GetAllShowHideComponentsView.as_view(),name='get-all-components'),
     path('getorcreate/', ShowHideComponentsGetOrCreateView.as_view(), name="components-get-or-create"),
     path('toggleVisibility/<pk>/', ShowHideComponentsGetOrCreateView.as_view(), name='toggle-component-visibility'),
     path('deleteinstance/<pk>/', DeleteShowHideComponnet.as_view(), name='delete-component'),

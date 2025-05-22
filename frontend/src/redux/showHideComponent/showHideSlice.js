@@ -4,6 +4,7 @@ import {
   createShowHideComponent,
   updateShowHideComponent,
   deleteShowHideComponent,
+  getAllShowHideComponentsList,
 } from "./showHideActions";
 const initialState = {
   loading: false,
@@ -40,6 +41,19 @@ const showHidePageloadingSlice = createSlice({
         state.error = action.payload;
       }
     );
+
+    builder.addCase(getAllShowHideComponentsList.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getAllShowHideComponentsList.fulfilled, (state, action) => {
+      state.loading = false;
+      state.showHideCompPageList = action?.payload;
+    });
+    builder.addCase(getAllShowHideComponentsList.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
 
     // create new show hide component details
     builder.addCase(createShowHideComponent.pending, (state) => {

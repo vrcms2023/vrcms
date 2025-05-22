@@ -3,12 +3,32 @@ import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
 import { getObjectsByKey } from "../../util/showHideComponentUtil";
 
 // Get all component by page type
-export const getShowHideComponentsListByPage = createAsyncThunk(
+export const getAllShowHideComponentsList = createAsyncThunk(
   "showHide/list",
+  async (rejectWithValue) => {
+    try {
+      const { data } = await axiosClientServiceApi.get(
+        `/showHideComponents/getAllShowHide/`
+      );
+      if (data.length > 0) {
+        const pageData = getObjectsByKey(data);
+        return pageData;
+      } else {
+        return {};
+      }
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+// Get all component by page type
+export const getShowHideComponentsListByPage = createAsyncThunk(
+  "showHide/pageList",
   async (type, { rejectWithValue }) => {
     const pageType = type?.toLowerCase();
     try {
-      const { data } = await axiosClientServiceApi.get(
+      const { data } = await axiosServiceApi.get(
         `/showHideComponents/getbyPageType/?pageType=${pageType}`
       );
       if (data.length > 0) {
