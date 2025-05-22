@@ -173,6 +173,21 @@ export const StyledMenu = styled.menu`
         @media (max-width: 992px) {
           margin: 0
         }
+
+        li.child-Add-New-Service {
+          background: ${({ theme }) => theme.navbarLinkHoverColor};
+          
+          a {
+            color: ${({ theme }) => theme.gray333} !important;
+            font-weight: 600;
+
+            &::before {
+              content: "+";
+              font-size: 20px;
+              margin-right: 6px;
+            }
+          }
+        }
       }
 
       @keyframes growDown {
