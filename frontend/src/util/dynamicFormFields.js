@@ -336,6 +336,13 @@ export const getTeamMemberFields = (position) => {
 
 export const getImageGalleryFields = (category) => {
   return {
+    image_WebURL: {
+      label: "Image URL",
+      type: "text",
+      id: "image_WebURL",
+      fieldName: "image_WebURL",
+      onchange: "handleImageURLChange",
+    },
     image_title: {
       label: "Image Title",
       type: "text",

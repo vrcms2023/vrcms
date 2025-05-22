@@ -10,4 +10,5 @@ class imageAndVideoGallery(ImageModel):
     Downloads  =        models.CharField(max_length=100, null=True, blank=True)
     location =          models.CharField(max_length=500, null=True, blank=True)
     imageDimension =    models.CharField(max_length=200, null=True, blank=True)
-    position =     models.IntegerField(null=True, blank=True, default=0)
+    position =          models.IntegerField(null=True, blank=True, default=0)
+    image_WebURL =          models.CharField(max_length=200, null=True, blank=True)

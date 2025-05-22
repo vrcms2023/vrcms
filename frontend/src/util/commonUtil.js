@@ -295,3 +295,26 @@ export const genereateCategoryProducts = (data, categories) => {
   });
   return results;
 };
+
+export const getImageFileFromUrl = async (imageUrl) => {
+  try {
+    const response = await fetch(imageUrl);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const blob = await response.blob();
+    const file = new File([blob], getFileNameFromUrl(imageUrl), {
+      type: blob.type,
+    });
+    return file;
+  } catch (error) {
+    console.error("Error fetching image:", error);
+    return null;
+  }
+};
+
+function getFileNameFromUrl(url) {
+  return url.substring(url.lastIndexOf("/") + 1);
+}

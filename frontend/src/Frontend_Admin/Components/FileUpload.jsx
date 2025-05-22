@@ -18,7 +18,7 @@ import {
   TextAreaField,
   RichTextInputEditor,
 } from "./forms/FormFields";
-import { getImagePath } from "../../util/commonUtil";
+import { getImageFileFromUrl, getImagePath } from "../../util/commonUtil";
 
 // CSS
 import "filepond/dist/filepond.min.css";
@@ -232,6 +232,23 @@ const FileUpload = ({
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const getImageWebURL = () => {
+    return document.getElementById("image_WebURL");
+  };
+
+  useEffect(() => {
+    const image_WebURL = getImageWebURL();
+    if (image_WebURL) {
+      image_WebURL.onchange = handleImageUpload;
+    }
+  }, []);
+
+  const handleImageUpload = async () => {
+    const imageURL = getImageWebURL().value;
+    const tempFile = await getImageFileFromUrl(imageURL);
+    setFiles([tempFile]);
   };
 
   /**
