@@ -1,7 +1,7 @@
 from pyexpat import model
 from django.db import models
 import uuid
-from common.BaseModel import ImageModel
+from common.BaseModel import ImageModel,BaseModel
 
 
 # Create your models here.
@@ -11,3 +11,6 @@ class AdvertisementList(ImageModel):
         advertisement_description =   models.CharField(max_length=100, null=True, blank=True )
         phonen_number = models.CharField(max_length=100, null=True, blank=True )
         showAndHide =   models.BooleanField(default=False)
+
+class AdvertisementSize(BaseModel):
+        size =   models.CharField(max_length=100, null=True, blank=True )

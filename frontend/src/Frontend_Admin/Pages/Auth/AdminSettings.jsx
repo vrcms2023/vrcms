@@ -22,6 +22,7 @@ import {
   getAdvertisementFormDynamicFields,
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
+import RadioButtonGroup from "../../Components/RadioButtonGroup";
 
 const AdminSettings = () => {
   const pageType = "settings";
@@ -35,9 +36,16 @@ const AdminSettings = () => {
   const [show, setShow] = useState(false);
   const [compTtile, setComptitle] = useState("Add Product");
 
-  const [modelShow, setModelShow] = useState(false);
+  const [advSize, setadvSize] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
 
   const dispatch = useDispatch();
+
+  const radioOptions = [
+    { label: "Small", value: "small" },
+    { label: "Medium", value: "medium" },
+    { label: "Big", value: "big" },
+  ];
 
   const { error, success, showHideCompPageList } = useSelector(
     (state) => state.showHide
@@ -84,6 +92,54 @@ const AdminSettings = () => {
   };
   useEffect(() => {
     getAdvertisementList();
+  }, []);
+
+  const getAdvertisementSize = async () => {
+    try {
+      const response = await axiosServiceApi.get(
+        `/advertisement/createAdvSize/`
+      );
+      if (response?.status === 200 && response?.data.length > 0) {
+        setadvSize(response.data[0]);
+        setSelectedOption(response.data[0].size);
+      }
+    } catch (error) {
+      toast.error("Unable to load contactus details");
+    }
+  };
+
+  const updateAdvertisementSize = async (value) => {
+    try {
+      let response = "";
+      if (advSize?.id) {
+        response = await axiosServiceApi.patch(
+          `/advertisement/updateAdvSize/${advSize?.id}/`,
+          {
+            size: value,
+          }
+        );
+      } else {
+        response = await axiosServiceApi.post(`/advertisement/createAdvSize/`, {
+          size: value,
+        });
+      }
+
+      if (response?.status === 200 || response?.status === 201) {
+        setadvSize(response?.data);
+        setSelectedOption(response.data.size);
+      }
+    } catch (error) {
+      toast.error("Unable to load contactus details");
+    }
+  };
+  const handleOptionChange = (value) => {
+    if (value !== advSize?.size) {
+      updateAdvertisementSize(value);
+    }
+  };
+
+  useEffect(() => {
+    getAdvertisementSize();
   }, []);
 
   const advertisementShowHideHandler = async (advertisement) => {
@@ -155,8 +211,16 @@ const AdminSettings = () => {
   return (
     <div className="container-fluid pt-5 contactsList">
       <div className="row px-2 px-lg-5">
-        <div className="col-md-10">
+        <div className="col-md-8">
           <Title title={"Advertisement list"} cssClass="fs-1 pageTitle" />
+        </div>
+
+        <div className="col-md-2">
+          <RadioButtonGroup
+            options={radioOptions}
+            onChange={handleOptionChange}
+            defaultOption={selectedOption}
+          />
         </div>
         <div className="col-md-1">
           <Button
@@ -181,23 +245,23 @@ const AdminSettings = () => {
           <table className="table table-striped table-hover contacts">
             <thead>
               <tr>
-                <th class="align-middle">Title</th>
-                <th class="align-middle">Description</th>
+                <th className="align-middle">Title</th>
+                <th className="align-middle">Description</th>
 
-                <th class="align-middle">Show or Hide</th>
-                <th class="align-middle">Image</th>
+                <th className="align-middle">Show or Hide</th>
+                <th className="align-middle">Image</th>
                 <th className="align-middle">Action</th>
               </tr>
             </thead>
             <tbody>
               {advertisementList?.map((advertisement) => (
                 <tr key={advertisement.id}>
-                  <td class="align-middle">{advertisement.title}</td>
-                  <td class="align-middle">
+                  <td className="align-middle">{advertisement.title}</td>
+                  <td className="align-middle">
                     {advertisement.advertisement_description}
                   </td>
 
-                  <td class="align-middle">
+                  <td className="align-middle">
                     <ShowHideToggle
                       showhideStatus={advertisement.showAndHide}
                       title={""}
@@ -208,7 +272,7 @@ const AdminSettings = () => {
                     />
                     {advertisement.showAndHide}
                   </td>
-                  <td class="align-middle">
+                  <td className="align-middle">
                     <img
                       src={
                         advertisement.path
@@ -219,7 +283,7 @@ const AdminSettings = () => {
                       className="thumb75 d-lg-block "
                     />
                   </td>
-                  <td class="align-middle">
+                  <td className="align-middle">
                     <Link
                       to=""
                       onClick={() =>
