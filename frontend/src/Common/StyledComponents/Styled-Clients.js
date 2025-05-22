@@ -18,9 +18,9 @@ export const ClientStyled = styled.div`
     }
 
     &.overlayContainer {
-      background: ${({theme}) => theme.primaryColor};
-      border: 1px solid ${({theme}) => theme.secondaryColor};
-      border-radius: 10px;
+      //background: ${({theme}) => theme.primaryColor};
+      border: 1px solid ${({theme}) => theme.gray999};
+      border-radius: 2px;
       position: relative;
       // width: 50%;
       // max-width: 300px;

@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { axiosServiceApi } from "../../util/axiosUtil";
 import ShowHideToggle from "../../Common/ShowHideToggle";
 
+import "./SendRequestFormStyles.css";
+
 const SendRequestForm = ({ closeModel, selectedUser }) => {
   const formObject = {
     description: "",
@@ -83,40 +85,39 @@ const SendRequestForm = ({ closeModel, selectedUser }) => {
           <div className="mb-3 row">
             <ShowHideToggle
               showhideStatus={defaultMessage}
-              title={"Default message"}
+              title={"Default response"}
               componentName={"Default"}
               showHideHandler={showHideHandler}
             />
           </div>
           {!defaultMessage ? (
             <div className="mb-3 row">
-              <label
+              {/* <label
                 htmlFor="exampleFormMesg"
                 className="col-sm-2 col-form-label"
               >
                 Message
-              </label>
-              <div className="col-sm-10">
+              </label> */}
+              <div className="col-sm-12">
                 <textarea
                   className="form-control"
                   value={formData.description}
                   onChange={handleChange}
                   name="description"
                   id="exampleFormMesg"
-                  rows="3"
+                  rows="4"
                 ></textarea>
               </div>
             </div>
           ) : (
             <div className="mb-3 row">
               <div className="col-sm-12 text-left">
-                We are sending default messate <br />
+                We are sending default message <br />
               </div>
             </div>
           )}
           <div className="mb-3 row">
-            <div className="col-sm-2"></div>
-            <div className="col-sm-10">
+            <div className="col-sm-12">
               <button
                 type="submit"
                 className="btn btn-primary w-100 text-uppercase py-2"
