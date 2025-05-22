@@ -69,3 +69,15 @@ class UpdateAdvertisement(APIView):
         snippet = self.get_object(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+
+class GetAllClientAdvertisementView(generics.ListAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = AdvertisementSerializer
+    
+    def get(self, request, format=None):
+        snippets = AdvertisementList.objects.filter(showAndHide=True)
+        serializer = AdvertisementSerializer(snippets, many=True)
+       
+        return Response(serializer.data, status=status.HTTP_200_OK)

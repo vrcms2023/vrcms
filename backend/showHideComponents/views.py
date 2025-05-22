@@ -18,7 +18,15 @@ class ShowHideComponentsByPageTypeView(generics.ListAPIView):
         if not page_type:
             return ShowHideComponents.objects.none()
         return ShowHideComponents.objects.filter(pageType=page_type)
-
+    
+class GetAllShowHideComponentsView(generics.ListAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = ShowHideComponentsSerializer
+    
+    def get(self, request, format=None):
+        snippets = ShowHideComponents.objects.all()
+        serializer = ShowHideComponentsSerializer(snippets, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class ShowHideComponentsGetOrCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]

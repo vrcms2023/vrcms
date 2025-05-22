@@ -1,20 +1,108 @@
-import React from 'react'
-import { AdvertiseComponentStyled } from '../StyledComponents/Adv-Styles'
+import React, { useEffect, useState } from "react";
+import { AdvertiseComponentStyled } from "../StyledComponents/Adv-Styles";
+import { axiosClientServiceApi } from "../../util/axiosUtil";
+import { sortCreatedDateByDesc } from "../../util/dataFormatUtil";
+import { getDummyImage, getImagePath } from "../../util/commonUtil";
+import { CarouselItem } from "../../Frontend_Views/Components/CarouselItem";
 
+const Advertisement = ({ setFlashAdd }) => {
+  const [advertisementList, setAdvertisementList] = useState([]);
+  const getAdvertisementList = async () => {
+    try {
+      const response = await axiosClientServiceApi.get(
+        `/advertisement/clientAdvertisement/`
+      );
+      if (response?.status === 200) {
+        const sortbyCreateData = sortCreatedDateByDesc(response?.data);
+        setAdvertisementList(sortbyCreateData);
+      }
+    } catch (error) {
+      toast.error("Unable to load contactus details");
+    }
+  };
+  useEffect(() => {
+    getAdvertisementList();
+  }, []);
 
-const Advertisement = ({setFlashAdd}) => {
   return (
     <AdvertiseComponentStyled>
-      <span className="text-white fs-2" onClick={() => setFlashAdd(false)}>x</span>
-        <div className="imgContainer slide-top">   
-          <h1 className="text-black text-center p-4 bg-warning m-0">Advertisement</h1> 
-          <img src="https://images.unsplash.com/photo-1553096442-8fe2118fb927?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className="w-100" />
-          <div className="text-center bg-warning p-2 text-black fw-bold fs-5">
-            Contact +91 96767 39333
-          </div>
-          </div>
-      </AdvertiseComponentStyled>
-  )
-}
+      <span className="text-white fs-2" onClick={() => setFlashAdd(false)}>
+        x
+      </span>
+      <div className="imgContainer slide-top">
+        {advertisementList.length == 1 && (
+          <div>
+            {advertisementList[0].title && (
+              <h1 className="text-black text-center p-4 bg-warning m-0">
+                {advertisementList[0].title}
+              </h1>
+            )}
 
-export default Advertisement
+            <img
+              src={
+                advertisementList[0]?.path
+                  ? getImagePath(advertisementList[0].path)
+                  : getDummyImage()
+              }
+              alt={advertisementList[0].alternitivetext}
+              className="w-100"
+            />
+            {advertisementList[0].advertisement_description && (
+              <div className="text-center bg-warning p-2 text-black fw-bold fs-5">
+                {advertisementList[0].advertisement_description}
+              </div>
+            )}
+            {advertisementList[0].phonen_number && (
+              <div className="text-center bg-warning p-2 text-black fw-bold fs-5">
+                {advertisementList[0].phonen_number}
+              </div>
+            )}
+          </div>
+        )}
+        {advertisementList.length > 1 && (
+          <div
+            id="carouselExampleIndicators"
+            className="homeCarousel carousel slide"
+            data-bs-ride="carousel"
+          >
+            <div className="carousel-inner">
+              {advertisementList?.map((item, index) => (
+                <CarouselItem key={index} item={item} index={index} />
+              ))}
+            </div>
+            {advertisementList.length > 1 && (
+              <>
+                <button
+                  className="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    className="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="visually-hidden">Previous</span>
+                </button>
+                <button
+                  className="carousel-control-next"
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide="next"
+                >
+                  <span
+                    className="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="visually-hidden">Next</span>
+                </button>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    </AdvertiseComponentStyled>
+  );
+};
+
+export default Advertisement;

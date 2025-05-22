@@ -4,21 +4,11 @@ import { Link } from "react-router-dom";
 import Title from "../../../Common/Title";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { toast } from "react-toastify";
-import Search from "../../../Common/Search";
-import CustomPagination from "../../../Common/CustomPagination";
-import {
-  getDummyImage,
-  getImagePath,
-  paginationDataFormat,
-} from "../../../util/commonUtil";
+
+import { getDummyImage, getImagePath } from "../../../util/commonUtil";
 import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
 import Button from "../../../Common/Button";
-import Ancher from "../../../Common/Ancher";
-import { getBaseURL } from "../../../util/ulrUtil";
 
-import Model from "../../../Common/Model";
-import ModelBg from "../../../Common/ModelBg";
-import ContactsendRequstModel from "../../Components/contactsendRequstModel";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 import {
   createShowHideComponent,
@@ -30,7 +20,6 @@ import { confirmAlert } from "react-confirm-alert";
 import SingleImageUlploadWithForm from "../../Components/forms/SingleImageUlploadWithForm";
 import {
   getAdvertisementFormDynamicFields,
-  getProductFormDynamicFields,
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
 
@@ -46,14 +35,7 @@ const AdminSettings = () => {
   const [show, setShow] = useState(false);
   const [compTtile, setComptitle] = useState("Add Product");
 
-  const [userDetails, setUserDetails] = useState([]);
-  const [paginationData, setPaginationData] = useState({});
-  const [pageLoadResult, setPageloadResults] = useState(false);
-  const [searchQuery, setSearchquery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
   const [modelShow, setModelShow] = useState(false);
-  const [selectedUser, setSelectedUser] = useState("");
-  const baseURL = getBaseURL();
 
   const dispatch = useDispatch();
 
@@ -103,11 +85,6 @@ const AdminSettings = () => {
   useEffect(() => {
     getAdvertisementList();
   }, []);
-
-  const closeModel = () => {
-    setModelShow(!modelShow);
-    setSelectedUser("");
-  };
 
   const advertisementShowHideHandler = async (advertisement) => {
     advertisement.showAndHide = !advertisement.showAndHide;
@@ -178,23 +155,23 @@ const AdminSettings = () => {
   return (
     <div className="container-fluid pt-5 contactsList">
       <div className="row px-2 px-lg-5">
-        <div className="col-md-6">
+        <div className="col-md-10">
           <Title title={"Advertisement list"} cssClass="fs-1 pageTitle" />
         </div>
-        <div className="col-md-3">
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.advertisement?.visibility}
-            title={" ON / OFF"}
-            componentName={"advertisement"}
-            showHideHandler={showHideHandler}
-          />
-        </div>
-        <div className="col-md-3">
+        <div className="col-md-1">
           <Button
             type=""
             cssClass="btn btn-outline"
-            label="Add Advertisement"
+            label="Add"
             handlerChange={() => addNewAdvertisement("advertisement", true)}
+          />
+        </div>
+        <div className="col-md-1">
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.advertisement?.visibility}
+            title={""}
+            componentName={"advertisement"}
+            showHideHandler={showHideHandler}
           />
         </div>
       </div>

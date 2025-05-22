@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import _ from "lodash";
 
 // Components
 import LoadingSpinner from "./Common/LoadingSpinner";
@@ -23,6 +24,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import Advertisement from "./Common/Advertisement/Advertisement";
 import ScrollToTop from "react-scroll-to-top";
 import ThemeSwitcher from "./themes/ThemeSwitcher";
+import { getCookie } from "./util/cookieUtil";
 
 // Lazy Loading
 
@@ -129,6 +131,20 @@ function App() {
 
   const isHideMenu = HideFooterForAdmin();
   const [flashAdd, setFlashAdd] = useState(false);
+  const { userInfo, permissions } = useSelector((state) => state.auth);
+
+  const { error, success, showHideCompPageList } = useSelector(
+    (state) => state.showHide
+  );
+
+  useEffect(() => {
+    const isAdmin = Boolean(getCookie("is_admin"));
+    if (Object.keys(showHideCompPageList).length > 0) {
+      if (showHideCompPageList?.advertisement?.visibility && !isAdmin) {
+        setFlashAdd(true);
+      }
+    }
+  }, [showHideCompPageList]);
 
   // useEffect(() => {
   //   document.addEventListener("contextmenu", handleContextMenu);
@@ -140,10 +156,6 @@ function App() {
   //   e.preventDefault();
   //   toast.error("Right Click is diabled");
   // };
-
-  useEffect(() => {
-    setFlashAdd(false);
-  }, []);
 
   // Google Language Translator
 
