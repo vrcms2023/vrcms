@@ -1,0 +1,30 @@
+.contactsList, table.contacts {
+
+        .bg-info, .bg-secondary {
+            background: none !important;
+        }
+
+        .bg-info {
+            /* border-left: 5px solid rgba(13, 202, 240, 1); */
+        }
+        .bg-info, .bg-info span {
+            color: rgba(68, 68, 68, 1) !important;
+        }
+        .bg-info i {
+            color: #0dcaf0 !important;
+        }
+
+
+        .bg-secondary {
+            /* border-left: 5px solid rgba(68, 68, 68, .2) !important; */
+        }
+
+        .bg-secondary span {
+            color: rgba(68, 68, 68, .2) !important;
+        }
+
+        .bg-secondary i {
+            color: rgba(68, 68, 68, .8) !important;
+        }
+
+}
