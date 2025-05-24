@@ -143,23 +143,6 @@ export const getPublishedSericeMenu = (menuList, publishedMenuList) => {
   return clonedMenu;
 };
 
-const addServiceMneu = {
-  id: "67c7e334-6008-4690-96e6-e7cac347db6363",
-  created_by: "vara",
-  updated_by: "Rama",
-  created_at: "2020-05-18T09:54:45.814106Z",
-  updated_at: "2025-03-19T14:59:30.179898Z",
-  page_label: "Add New Service",
-  page_url: "/services",
-  page_isActive: true,
-  is_Parent: false,
-  page_parent_ID: "6f4a6c83-14fe-425b-9e59-76faded9363d",
-  page_position: 0,
-  is_Admin_menu: true,
-  is_Client_menu: true,
-  is_Maintainer_menu: true,
-};
-
 export const getMenuObject = (data) => {
   const parentMenu = _.filter(data, (item) => {
     return item.is_Parent;
@@ -188,12 +171,7 @@ export const getMenuObject = (data) => {
       }
     });
   });
-  _.map(sortParentMenu, (item) => {
-    if (item.page_label.toLowerCase() === "services") {
-      const newChildlist = [...item.childMenu, addServiceMneu];
-      item["childMenu"] = newChildlist;
-    }
-  });
+
   return sortParentMenu;
 };
 
@@ -318,3 +296,31 @@ export const getImageFileFromUrl = async (imageUrl) => {
 function getFileNameFromUrl(url) {
   return url.substring(url.lastIndexOf("/") + 1);
 }
+
+export const getParentObject = (rawData, id) => {
+  let parentMenuObject = {};
+
+  const dragObject = getFilterObjectByID(rawData, id)[0];
+
+  if (dragObject.page_parent_ID) {
+    parentMenuObject = getFilterObjectByID(
+      rawData,
+      dragObject.page_parent_ID
+    )[0];
+  }
+  return parentMenuObject;
+};
+
+export const getFilterObjectByID = (list, id) => {
+  return list.filter((item) => {
+    return item.id === id;
+  });
+};
+
+export const isNotEmptyObject = (_object) => {
+  if (Object.keys(_object).length > 0) {
+    return true;
+  } else {
+    return false;
+  }
+};

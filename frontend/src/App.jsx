@@ -6,7 +6,7 @@ import _ from "lodash";
 
 // Components
 import LoadingSpinner from "./Common/LoadingSpinner";
-import { HideFooterForAdmin } from "./util/commonUtil";
+import { HideFooterForAdmin, isNotEmptyObject } from "./util/commonUtil";
 import SkeletonPage from "./Common/Skeltons/SkeletonPage";
 import Footer from "./Common/Footer/Footer";
 import Header from "./Common/Header/Header";
@@ -139,7 +139,7 @@ function App() {
 
   useEffect(() => {
     const isAdmin = Boolean(getCookie("is_admin"));
-    if (Object.keys(showHideCompPageList).length > 0) {
+    if (isNotEmptyObject(showHideCompPageList)) {
       if (showHideCompPageList?.advertisement?.visibility && !isAdmin) {
         setFlashAdd(true);
       }
