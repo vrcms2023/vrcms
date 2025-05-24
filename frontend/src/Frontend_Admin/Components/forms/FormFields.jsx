@@ -209,7 +209,7 @@ export const SelectField = ({
       </label>
       <div className="col-sm-12">
         <select
-          defaultValue={rest?.value ? rest?.value : "Choose"}
+          defaultValue={rest?.value}
           className="custom-select custom-select-lg form-control p-2"
           {...register(fieldName)}
         >
