@@ -13,6 +13,8 @@ import {
   getItemStyle,
   getListStyle,
   getMenuObject,
+  getParentObject,
+  isNotEmptyObject,
   reorder,
   updateArrIndex,
 } from "../../../util/commonUtil";
@@ -25,6 +27,7 @@ const PagesConfiguration = () => {
   const editComponentObj = {
     menu: false,
   };
+  const [rawData, setRawData] = useState([]);
   const [pagesDetails, setPagesDetails] = useState([]);
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [show, setShow] = useState(false);
@@ -47,6 +50,7 @@ const PagesConfiguration = () => {
     try {
       const response = await axiosServiceApi.get(`/pageMenu/createPageMenu/`);
       if (response?.status === 200 && response?.data?.PageDetails?.length > 0) {
+        setRawData(response.data.PageDetails);
         const result = getMenuObject(response.data.PageDetails);
         setPagesDetails(result);
       } else {
@@ -271,11 +275,29 @@ const PagesConfiguration = () => {
 
   const Treeview = ({ treeData }) => {
     const parentOnDragEnd = async (result) => {
-      const { source, destination } = result;
+      const { source, destination, draggableId } = result;
       if (!destination) return true;
 
-      const _items = reorder(pagesDetails, source.index, destination.index);
-      const _parentObjects = updateArrIndex(_items, "page_position");
+      let _parentObjects = [];
+      const _parentMenu = getParentObject(rawData, draggableId);
+      if (isNotEmptyObject(_parentMenu)) {
+        let _childmenu = reorder(
+          _parentMenu.childMenu,
+          source.index,
+          destination.index
+        );
+
+        _parentObjects = Array.from(pagesDetails);
+        _parentObjects.map((item) => {
+          if (item.id === _parentMenu.id) {
+            item.childMenu = _childmenu;
+          }
+        });
+      } else {
+        const _items = reorder(pagesDetails, source.index, destination.index);
+        _parentObjects = updateArrIndex(_items, "page_position");
+      }
+
       const _finalObject = [];
       _parentObjects.forEach((element) => {
         _finalObject.push(element);
