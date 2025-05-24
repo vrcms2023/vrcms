@@ -44,9 +44,9 @@ const AdminSettings = () => {
   const dispatch = useDispatch();
 
   const radioOptions = [
-    { label: "Small", value: "small" },
-    { label: "Medium", value: "medium" },
-    { label: "Big", value: "big" },
+    { label: "small", value: "small" },
+    { label: "medium", value: "medium" },
+    { label: "large", value: "large" },
   ];
 
   const { error, success, showHideCompPageList } = useSelector(

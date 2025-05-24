@@ -41,17 +41,28 @@ const Advertisement = ({ setFlashAdd }) => {
 
   return (
     <AdvertiseComponentStyled>
-      <span className="text-white fs-2" onClick={() => setFlashAdd(false)}>
-        x
-      </span>
+     
       <div className={`imgContainer slide-top ${advertisementSize}`}>
+        <span className="close" onClick={() => setFlashAdd(false)}>x</span>
         {advertisementList.length == 1 && (
           <div>
-            {advertisementList[0].title && (
-              <h1 className="text-black text-center p-4 bg-warning m-0">
-                {advertisementList[0].title}
-              </h1>
-            )}
+            <div className="advertismentInfo">
+              {advertisementList[0].title && (
+                <h3 className="p-2 px-0 m-0 fs-4 title">
+                  {advertisementList[0].title}
+                </h3>
+              )}
+              {advertisementList[0].advertisement_description && (
+                <p className="description">
+                  {advertisementList[0].advertisement_description}
+                </p>
+              )}
+              {advertisementList[0].phonen_number && (
+                <p className="phoneNumber">
+                  {advertisementList[0].phonen_number}
+                </p>
+              )}
+            </div>
 
             <img
               src={
@@ -62,16 +73,7 @@ const Advertisement = ({ setFlashAdd }) => {
               alt={advertisementList[0].alternitivetext}
               className="w-100"
             />
-            {advertisementList[0].advertisement_description && (
-              <div className="text-center bg-warning p-2 text-black fw-bold fs-5">
-                {advertisementList[0].advertisement_description}
-              </div>
-            )}
-            {advertisementList[0].phonen_number && (
-              <div className="text-center bg-warning p-2 text-black fw-bold fs-5">
-                {advertisementList[0].phonen_number}
-              </div>
-            )}
+            
           </div>
         )}
         {advertisementList.length > 1 && (
