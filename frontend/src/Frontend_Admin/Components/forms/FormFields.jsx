@@ -209,13 +209,16 @@ export const SelectField = ({
       </label>
       <div className="col-sm-12">
         <select
-          defaultValue={"Choose..."}
+          defaultValue={rest?.value ? rest?.value : "Choose"}
           className="custom-select custom-select-lg form-control p-2"
           {...register(fieldName)}
         >
-          <option value="0">Choose...</option>
           {options.map((option, index) => (
-            <option key={index} value={option.value}>
+            <option
+              key={index}
+              value={option.value}
+              selected={option.value === rest?.value}
+            >
               {option.label}
             </option>
           ))}
@@ -270,7 +273,7 @@ export const CheckboxField = ({
         />
         <label
           className="form-check-label col-form-label text-start text-md-end text-capitalize"
-          for="flexCheckDefault"
+          htmlFor="flexCheckDefault"
         >
           {label}
         </label>

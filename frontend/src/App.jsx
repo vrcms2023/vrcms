@@ -230,6 +230,7 @@ function App() {
             <Route path="/categories/:id" element={<Products />} />
             <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/services/services" element={<Services />} />
             <Route path="/services/:uid" element={<Services />} />
             <Route path="/clients/clients" element={<ClientsList />} />
             <Route path="/profile/careers" element={<Careers />} />

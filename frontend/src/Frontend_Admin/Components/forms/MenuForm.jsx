@@ -74,25 +74,27 @@ const MenuForm = ({
         menuOptinList.push(option);
       });
       setOptionMenuList(menuOptinList);
-      updateMenuIndexValues(menuOptinList);
+      //updateMenuIndexValues(menuOptinList);
     }
   }, [menuList]);
+  /**
+   * menu index values
+   */
+  // useEffect(() => {
+  //   reset(editMenu);
+  //   if (editMenu?.id) {
+  //     updatedSelectedMenuIndex();
+  //   }
+  // }, [editMenu]);
 
-  useEffect(() => {
-    reset(editMenu);
-    if (editMenu?.id) {
-      updatedSelectedMenuIndex();
-    }
-  }, [editMenu]);
-
-  const updatedSelectedMenuIndex = () => {
-    let option = {
-      label: editMenu?.page_position,
-      value: editMenu?.page_position,
-    };
-    const menuData = [option].concat(menuIndexValues);
-    setMenuIndexValues(menuData);
-  };
+  // const updatedSelectedMenuIndex = () => {
+  //   let option = {
+  //     label: editMenu?.page_position,
+  //     value: editMenu?.page_position,
+  //   };
+  //   const menuData = [option].concat(menuIndexValues);
+  //   setMenuIndexValues(menuData);
+  // };
 
   const saveMenu = async (data) => {
     if (!data?.page_label) {
@@ -112,10 +114,11 @@ const MenuForm = ({
       const getSelectedParentObject = _.filter(menuList, (item) => {
         return item.id === data.page_parent_ID;
       })[0];
-      data["page_url"] =
-        getSelectedParentObject?.page_url +
-        data["page_url"].replace(/^\/admin/, "");
-      data["page_position"] = getMenuPosition(getSelectedParentObject);
+      const _url = data["page_url"].split("/");
+      if (_url.length > 0) {
+        data["page_url"] =
+          getSelectedParentObject?.page_url + "/" + _url[_url.length - 1];
+      }
     } else {
       data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
     }
@@ -214,6 +217,7 @@ const MenuForm = ({
                   fieldName="page_parent_ID"
                   register={register}
                   options={optionMenulist}
+                  value={editMenu?.page_parent_ID}
                 />
               )}
               {/* {isParentVal ? (
