@@ -9,6 +9,7 @@ import Error from "../../Components/Error";
 
 // CSS Styles
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
+import SEO from "../../../Common/SEO";
 
 const ResendActivationEmail = () => {
   const { register, handleSubmit } = useForm();
@@ -45,6 +46,10 @@ const ResendActivationEmail = () => {
   return (
     <LoginStyled>
       <div className="login">
+        <SEO
+          title={"EZI Press Resend activation email Page "}
+          description={"EZI Press - Custom CMS"}
+        />
         <div className="bg-white d-flex justify-content-center align-items-center flex-column">
           <div className="container">
             <div className="d-flex flex-column justify-content-center align-items-center">

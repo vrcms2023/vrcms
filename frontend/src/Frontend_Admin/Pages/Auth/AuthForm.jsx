@@ -4,11 +4,16 @@ import Registration from "./Registration";
 
 // CSS Styles
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
+import SEO from "../../../Common/SEO";
 
 const AuthForm = () => {
   return (
     <LoginStyled>
       <div className="container-fluid">
+        <SEO
+          title={"EZI Press Auth Page "}
+          description={"EZI Press - Custom CMS"}
+        />
         <div className="row authForm d-flex justify-contnet-center align-items-center">
           <div className="col-12 col-md-6">
             <Login />

@@ -8,6 +8,7 @@ import Error from "../../Components/Error";
 
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
 import Ancher from "../../../Common/Ancher";
+import SEO from "../../../Common/SEO";
 
 const ResetPassword = () => {
   const { register, handleSubmit } = useForm();
@@ -19,7 +20,7 @@ const ResetPassword = () => {
     try {
       const data = await axiosClientServiceApi.post(
         `/user/auth/users/reset_password/`,
-        body,
+        body
       );
       if (data.status === 204) {
         setSuccess(true);
@@ -45,58 +46,57 @@ const ResetPassword = () => {
   return (
     <LoginStyled>
       <div className="login mt-5">
-            <div className="d-flex flex-column justify-content-center align-items-center">
-              <form
-                onSubmit={handleSubmit(resetPassword)}
-                className="shadow-lg"
-              >
-                
-                <Title
-                  title="Reset Password"
-                  cssClass="text-center text-dark mb-4 fw-medium fs-4"
+        <SEO
+          title={"EZI Press ResetPassword Page "}
+          description={"EZI Press - Custom CMS"}
+        />
+        <div className="d-flex flex-column justify-content-center align-items-center">
+          <form onSubmit={handleSubmit(resetPassword)} className="shadow-lg">
+            <Title
+              title="Reset Password"
+              cssClass="text-center text-dark mb-4 fw-medium fs-4"
+            />
+            {success ? (
+              <div>Email sent to your resgister email id please check</div>
+            ) : (
+              <>
+                <input
+                  type="text"
+                  {...register("email")}
+                  name="email"
+                  onChange={inputHandler}
+                  className="form-control bg-light"
+                  id="userName"
+                  aria-describedby="emailHelp"
                 />
-                {success ? (
-                  <div>Email sent to your resgister email id please check</div>
+                {serverError ? (
+                  <p className="fw-medium">
+                    {serverError && <Error>{serverError}</Error>}
+                  </p>
                 ) : (
-                  <>
-                    <input
-                      type="text"
-                      {...register("email")}
-                      name="email"
-                      onChange={inputHandler}
-                      className="form-control bg-light"
-                      id="userName"
-                      aria-describedby="emailHelp"
-                    />
-                    {serverError ? (
-                      <p className="fw-medium">
-                        {serverError && <Error>{serverError}</Error>}
-                      </p>
-                    ) : (
-                      ""
-                    )}
-
-                    <div className="d-flex justify-content-center gap-2 mt-4">
-                      
-                      <Ancher 
-                        Ancherpath="/login"
-                        AncherClass="btn btn-outline  w-auto"
-                        handleModel=""
-                        AncherLabel="Cancel"
-                        icon=""
-                        // icon="fa-arrow-right"
-                        iconCss="fs-4"
-                      />
-                      <Button
-                        type="submit"
-                        cssClass="btn btn-lg btn-primary"
-                        handlerChange={loginHandler}
-                        label="Reset"
-                      />
-                    </div>
-                  </>
+                  ""
                 )}
-              </form>
+
+                <div className="d-flex justify-content-center gap-2 mt-4">
+                  <Ancher
+                    Ancherpath="/login"
+                    AncherClass="btn btn-outline  w-auto"
+                    handleModel=""
+                    AncherLabel="Cancel"
+                    icon=""
+                    // icon="fa-arrow-right"
+                    iconCss="fs-4"
+                  />
+                  <Button
+                    type="submit"
+                    cssClass="btn btn-lg btn-primary"
+                    handlerChange={loginHandler}
+                    label="Reset"
+                  />
+                </div>
+              </>
+            )}
+          </form>
         </div>
       </div>
     </LoginStyled>

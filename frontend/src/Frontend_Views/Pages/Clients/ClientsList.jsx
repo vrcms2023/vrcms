@@ -30,6 +30,7 @@ import { ClientListComponent } from "../../Components/ClientListComponent";
 import NoteComponent from "../../../Common/NoteComponent";
 import EditIcon from "../../../Common/AdminEditIcon";
 import Banner from "../../../Common/Banner";
+import SEO from "../../../Common/SEO";
 
 const ClientsList = () => {
   const editComponentObj = {
@@ -129,6 +130,7 @@ const ClientsList = () => {
 
   return (
     <>
+      <SEO title={"Client list Page"} description={"Client list page"} />
       {/* Page Banner Component */}
       <div className="position-relative">
         {isAdmin && hasPermission && (

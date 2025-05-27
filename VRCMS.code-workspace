@@ -2,6 +2,9 @@
   "folders": [
     {
       "path": "."
+    },
+    {
+      "path": "../../NextJS_tut/my-app"
     }
   ]
 }

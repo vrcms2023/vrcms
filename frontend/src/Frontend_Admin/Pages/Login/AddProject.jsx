@@ -21,6 +21,7 @@ import CSRFToken from "../../../Frontend_Views/Components/CRSFToken";
 import "./AddProject.css";
 import FileUploadModel from "../../../Common/fileUploadModel";
 import ModelBg from "../../../Common/ModelBg";
+import SEO from "../../../Common/SEO";
 
 const AddProject = () => {
   const navigate = useNavigate();
@@ -398,6 +399,10 @@ const AddProject = () => {
   return (
     <div className="container-fluid pt-4">
       <CSRFToken />
+      <SEO
+        title={"EZI Press Add Project Page "}
+        description={"EZI Press - Custom CMS"}
+      />
       <div className="row px-3 px-lg-5">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
           <Title

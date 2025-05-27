@@ -25,6 +25,7 @@ import {
 import RadioButtonGroup from "../../Components/RadioButtonGroup";
 
 import "./adminSettingStyles.css";
+import SEO from "../../../Common/SEO";
 
 const AdminSettings = () => {
   const pageType = "settings";
@@ -212,6 +213,10 @@ const AdminSettings = () => {
 
   return (
     <div className="container-fluid pt-5 contactsList">
+      <SEO
+        title={"EZI Press Admin Settings Page "}
+        description={"EZI Press - Custom CMS"}
+      />
       <div className="row px-2 px-lg-5">
         <div className="col-sm-12 col-md-7">
           <Title title={"Advertisements"} cssClass="fs-1 pageTitle" />
@@ -249,9 +254,18 @@ const AdminSettings = () => {
               <tr>
                 <th className="align-middle">Title</th>
                 <th className="align-middle">Description</th>
-                <th className="align-middle" style={{width: "100px"}}>Image</th>
-                <th className="align-middle" style={{width: "100px"}}>Show or Hide</th>
-                <th className="align-middle text-end" style={{width: "100px"}}>Action</th>
+                <th className="align-middle" style={{ width: "100px" }}>
+                  Image
+                </th>
+                <th className="align-middle" style={{ width: "100px" }}>
+                  Show or Hide
+                </th>
+                <th
+                  className="align-middle text-end"
+                  style={{ width: "100px" }}
+                >
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -269,7 +283,12 @@ const AdminSettings = () => {
                           : getDummyImage()
                       }
                       alt={advertisement.alternitivetext}
-                      className="thumb75 d-lg-block rounded-1" style={{width: "60px", height: "60px", objectFit: "cover"}}
+                      className="thumb75 d-lg-block rounded-1"
+                      style={{
+                        width: "60px",
+                        height: "60px",
+                        objectFit: "cover",
+                      }}
                     />
                   </td>
                   <td className="align-middle">

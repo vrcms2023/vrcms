@@ -14,6 +14,8 @@ import {
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
 import { getImagePath } from "../../../util/commonUtil";
+import SEO from "../../../Common/SEO";
+import RichTextView from "../../../Common/RichTextView";
 
 const CaseStudiesDetails = () => {
   const editComponentObj = {
@@ -61,6 +63,10 @@ const CaseStudiesDetails = () => {
     <CaseStudiesPageStyled>
       {/* Page Banner Component */}
       <div className="position-relative">
+        <SEO
+          title={selectedCaseStudieDetails?.case_studies_title}
+          description={selectedCaseStudieDetails?.case_studies_description}
+        />
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("banner", true)} />
         )}
@@ -114,7 +120,7 @@ const CaseStudiesDetails = () => {
             <Ancher
               AncherLabel="Back"
               AncherClass="btn btn-secondary d-flex gap-2 justify-content-center align-items-center float-end fw-bold"
-              Ancherpath={`/casestudies/`}
+              Ancherpath={`/clients/casestudies/`}
               AnchersvgColor=""
             />
           </div>

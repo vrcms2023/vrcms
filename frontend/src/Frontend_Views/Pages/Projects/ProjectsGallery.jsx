@@ -6,6 +6,7 @@ import { getClientProjects } from "../../../redux/project/clientProjectActions";
 
 import ProjectGalleryView from "./ProjectGalleryView";
 import { removeActiveClass } from "../../../util/ulrUtil";
+import SEO from "../../../Common/SEO";
 
 const ProjectsGallery = () => {
   const [all, setAll] = useState([]);
@@ -81,6 +82,10 @@ const ProjectsGallery = () => {
 
   return (
     <>
+      <SEO
+        title={"EZI Press Image gallery Details Page "}
+        description={"EZI Press - Custom CMS"}
+      />
       <div className="py-5 mt-5">
         <div className="text-center pb-2 mt-5 galleryTab">
           {/* <Button

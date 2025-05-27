@@ -36,6 +36,7 @@ import { removeActiveClass } from "../../../util/ulrUtil";
 import { TeamStyled } from "../../../Common/StyledComponents/Styled-Team";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import RichTextView from "../../../Common/RichTextView";
+import SEO from "../../../Common/SEO";
 
 const Team = () => {
   const editComponentObj = {
@@ -158,6 +159,10 @@ const Team = () => {
 
   return (
     <>
+      <SEO
+        title={"EZI Press Team Details Page "}
+        description={"EZI Press - Custom CMS"}
+      />
       <div className="position-relative">
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("banner", true)} />

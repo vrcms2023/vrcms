@@ -7,6 +7,7 @@ import Title from "../../../Common/Title";
 import Error from "../../Components/Error";
 import { useParams } from "react-router-dom";
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
+import SEO from "../../../Common/SEO";
 
 const ResetPasswordConfirmation = () => {
   const { register, handleSubmit } = useForm();
@@ -53,6 +54,10 @@ const ResetPasswordConfirmation = () => {
   return (
     <LoginStyled>
       <div className="login">
+        <SEO
+          title={"EZI Press Reset password confirmation Page "}
+          description={"EZI Press - Custom CMS"}
+        />
         <div className="bg-white d-flex justify-content-center align-items-center flex-column">
           <div className="container">
             <div className="d-flex flex-column justify-content-center align-items-center">

@@ -246,7 +246,7 @@ function App() {
             <Route path="/gallery/videogallery" element={<VideosGallery />} />
             <Route path="/clients/casestudies" element={<CaseStudies />} />
             <Route
-              path="/clients/casestudies-details/:id"
+              path="/clients/casestudies-details/:id/"
               element={<CaseStudiesDetails />}
             />
             <Route path="/profile/news" element={<NewsAndUpdates />} />

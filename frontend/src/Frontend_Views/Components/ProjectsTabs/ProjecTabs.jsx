@@ -12,6 +12,7 @@ import Location from "./Location";
 import Cost from "./Cost";
 import Button from "../../../Common/Button";
 import ProjectGalleryView from "../../Pages/Projects/ProjectGalleryView";
+import SEO from "../../../Common/SEO";
 
 const ProjectTabs = () => {
   const location = useLocation();
@@ -143,6 +144,10 @@ const ProjectTabs = () => {
 
   return (
     <div className="container mt-5 pt-5">
+      <SEO
+        title={"EZI Press Projecttabs Details Page "}
+        description={"EZI Press - Custom CMS"}
+      />
       <div className="row p-0 pt-4 projectTabs">
         <div className="col-md-12">
           <div className="text-end">

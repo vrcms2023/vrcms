@@ -22,6 +22,7 @@ import { showContentPerRole } from "../../../util/permissions";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { getMenu } from "../../../redux/auth/authActions";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
+import SEO from "../../../Common/SEO";
 
 const PagesConfiguration = () => {
   const editComponentObj = {
@@ -355,6 +356,10 @@ const PagesConfiguration = () => {
 
   return (
     <div className="container-fluid pt-5">
+      <SEO
+        title={"EZI Press Page configuration Page "}
+        description={"EZI Press - Custom CMS"}
+      />
       <div className="position-relative">
         <div className="text-end">
           <Link

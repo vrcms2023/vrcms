@@ -14,6 +14,7 @@ import { getCookie } from "../../../util/cookieUtil";
 import Error from "../../Components/Error";
 import { sortByDate } from "../../../util/dataFormatUtil";
 import { getBaseURL } from "../../../util/ulrUtil";
+import SEO from "../../../Common/SEO";
 
 export const AdminNews = () => {
   const navigate = useNavigate();
@@ -187,6 +188,10 @@ export const AdminNews = () => {
 
   return (
     <div className="container-fluid pt-5" style={{ marginTop: "100px" }}>
+      <SEO
+        title={"EZI Press Admin news Page "}
+        description={"EZI Press - Custom CMS"}
+      />
       <div className="row px-3">
         <div className="text-end d-flex justify-content-between">
           <Title

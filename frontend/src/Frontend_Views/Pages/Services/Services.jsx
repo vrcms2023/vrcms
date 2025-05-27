@@ -34,6 +34,7 @@ import { getCookie } from "../../../util/cookieUtil";
 import { ServicesStyled } from "../../../Common/StyledComponents/Styled-Services";
 
 import RichTextView from "../../../Common/RichTextView";
+import SEO from "../../../Common/SEO";
 
 const Services = () => {
   const editComponentObj = {
@@ -167,6 +168,10 @@ const Services = () => {
   // console.log(selectedServiceProject)
   return (
     <>
+      <SEO
+        title={"EZI Press Services Page "}
+        description={"EZI Press - Custom CMS"}
+      />
       {/* Page Banner Component */}
       <div className="position-relative">
         {isAdmin && hasPermission && (

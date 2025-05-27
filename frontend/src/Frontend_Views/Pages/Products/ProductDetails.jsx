@@ -63,6 +63,10 @@ const ProductDetails = () => {
 
   return (
     <>
+      <SEO
+        title={`${selectedProduct?.product_name} Page`}
+        description={selectedProduct?.description}
+      />
       <ProductItemStyled>
         <div className="container productDetails">
           <div className="row">

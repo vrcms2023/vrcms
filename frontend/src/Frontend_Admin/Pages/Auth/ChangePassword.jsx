@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/auth/authSlice";
 import { toast } from "react-toastify";
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
+import SEO from "../../../Common/SEO";
 
 const ChangePassword = () => {
   const { register, handleSubmit } = useForm();
@@ -56,6 +57,10 @@ const ChangePassword = () => {
   return (
     <LoginStyled>
       <div className="login">
+        <SEO
+          title={"EZI Press Change password Page "}
+          description={"EZI Press - Custom CMS"}
+        />
         <div className="bg-white d-flex justify-content-center align-items-center flex-column">
           <div className="container">
             {/* <div className="row mt-4">

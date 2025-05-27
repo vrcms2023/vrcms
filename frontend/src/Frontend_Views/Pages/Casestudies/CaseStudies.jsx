@@ -29,6 +29,8 @@ import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
 import { CaseStudiesPageStyled } from "../../../Common/StyledComponents/Styled-Casestudies";
 import { useSelector } from "react-redux";
 import SkeletonImage from "../../../Common/Skeltons/SkeletonImage";
+
+import SEO from "../../../Common/SEO";
 import RichTextView from "../../../Common/RichTextView";
 
 const CaseStudies = () => {
@@ -128,6 +130,10 @@ const CaseStudies = () => {
 
   return (
     <>
+      <SEO
+        title={"EZI Press Case studies Details Page "}
+        description={"EZI Press - Custom CMS"}
+      />
       {/* Page Banner Component */}
       <div className="position-relative">
         {isAdmin && hasPermission && (
@@ -305,7 +311,7 @@ const CaseStudies = () => {
                       <Ancher
                         AncherLabel="More"
                         AncherClass="btn btn-outline d-flex gap-2 justify-content-center align-items-center"
-                        Ancherpath={`/casestudies-details/${item.id}/`}
+                        Ancherpath={`/clients/casestudies-details/${item.id}/`}
                         AnchersvgColor="#17427C"
                       />
                     </div>

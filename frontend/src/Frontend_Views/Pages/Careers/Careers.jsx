@@ -29,6 +29,7 @@ import JobPostFrom from "../../../Frontend_Admin/Components/forms/JobpostForm";
 import { CareersPageStyled } from "../../../Common/StyledComponents/Styled-CareersPage";
 import CareersFilter from "../../Components/CareersSearch/CareersFilter";
 import { CareerFilterStyled } from "../../../Common/StyledComponents/Styled-CareerFilter";
+import SEO from "../../../Common/SEO";
 
 const Careers = () => {
   const editComponentObj = {
@@ -75,6 +76,10 @@ const Careers = () => {
 
   return (
     <>
+      <SEO
+        title={"EZI Press Careers Page "}
+        description={"EZI Press - Custom CMS"}
+      />
       {/* Page Banner Component */}
       <div className="position-relative careersPage">
         {isAdmin && hasPermission && (

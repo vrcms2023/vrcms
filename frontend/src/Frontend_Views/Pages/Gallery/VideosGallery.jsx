@@ -10,6 +10,7 @@ import ModelBg from "../../../Common/ModelBg";
 import DynamicCarousel from "../../Components/DynamicCarousel";
 import { getImagePath } from "../../../util/commonUtil";
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
+import SEO from "../../../Common/SEO";
 
 const VideosGallery = () => {
   const editComponentObj = {
@@ -66,6 +67,10 @@ const VideosGallery = () => {
 
   return (
     <div className="container-fluid">
+      <SEO
+        title={"EZI Press Video gallery Details Page "}
+        description={"EZI Press - Custom CMS"}
+      />
       <div className="row">
         <div className="col-md-12 py-5">
           {isAdmin && hasPermission && (

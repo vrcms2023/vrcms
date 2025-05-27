@@ -28,6 +28,7 @@ import ApplyForm from "./ApplyForm";
 import CareersFilter from "../../Components/CareersSearch/CareersFilter";
 import { CareerFilterStyled } from "../../../Common/StyledComponents/Styled-CareerFilter";
 import RichTextView from "../../../Common/RichTextView";
+import SEO from "../../../Common/SEO";
 
 const Careers = () => {
   const editComponentObj = {
@@ -81,6 +82,11 @@ const Careers = () => {
 
   return (
     <>
+      <SEO
+        title={"EZI Press Careers Details Page "}
+        description={"EZI Press - Custom CMS"}
+      />
+
       {/* Page Banner Component */}
 
       <div className="position-relative">
@@ -127,7 +133,7 @@ const Careers = () => {
           </div>
           <div className="col-4 col-md-2">
             <Link
-              to="/careers"
+              to="/profile/careers"
               className="btn btn-outline m-auto w-auto d-flex justify-content-center align-items-center gap-2"
             >
               <i className="fa fa-chevron-left" aria-hidden="true"></i>
