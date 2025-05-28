@@ -262,14 +262,14 @@ export const CheckboxField = ({
 }) => {
   return (
     <div className="mb-2 row">
-      <div className="form-check">
+      <div className="form-check d-flex align-items-center">
         <input
           name={fieldName}
           type="checkbox"
           {...register(fieldName, validationObject)}
           onChange={rest.onChange}
           checked={rest.isChecked}
-          className="form-check-input mr-4"
+          className="form-check-input mx-1"
         />
         <label
           className="form-check-label col-form-label text-start text-md-end text-capitalize"
