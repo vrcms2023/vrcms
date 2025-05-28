@@ -55,6 +55,14 @@ const AddProject = () => {
     feature: null,
     googleMap: null,
   };
+  const seo = {
+    seo_title: null,
+    seo_description: null,
+    seo_link: null,
+    seo_author: null,
+    seo_keywords: null,
+  };
+  const [seofields, setSeofields] = useState(seo);
   const [specifications, setSpecifications] = useState([specificationKeys]);
   const [amenities, setAmenities] = useState(amenitieKeys);
   const [pdfObject, setPdfObject] = useState([]);
@@ -128,6 +136,10 @@ const AddProject = () => {
     setAboutUs({ ...aboutUs, [e.target.name]: e.target.value });
   };
 
+  const changeSeoHandler = (e) => {
+    setSeofields({ ...seofields, [e.target.name]: e.target.value });
+  };
+
   /**
    * project status object
    */
@@ -150,6 +162,16 @@ const AddProject = () => {
       aboutussubtitle: aboutUs.aboutussubtitle,
       description: aboutUs.description,
       imageDescription: aboutUs.imageDescription,
+    };
+  };
+
+  const getSEOStatus = () => {
+    return {
+      seo_title: seofields.seo_title,
+      seo_author: seofields.seo_author,
+      seo_description: seofields.seo_description,
+      seo_keywords: seofields.seo_keywords,
+      seo_link: seofields.seo_link,
     };
   };
 
@@ -224,6 +246,14 @@ const AddProject = () => {
           imageDescription: project.imageDescription,
         };
         setAboutUs(aboutus);
+        const seolist = {
+          seo_title: project.seo_title,
+          seo_author: project.seo_author,
+          seo_description: project.seo_description,
+          seo_keywords: project.seo_keywords,
+          seo_link: project.seo_link,
+        };
+        setSeofields(seolist);
         setPercentValue(
           project.percentValue ? JSON.parse(project.percentValue) : null
         );
@@ -245,6 +275,7 @@ const AddProject = () => {
       ...newProject,
       ...getProjectStatus(),
       ...getAboutUsStatus(),
+      ...getSEOStatus(),
       projectTitle: projectName,
       updated_by: userName,
       percentValue: percentValue,
@@ -654,6 +685,19 @@ const AddProject = () => {
                   aria-selected="false"
                 >
                   Image Gallery
+                </button>
+
+                <button
+                  className="nav-link"
+                  id="v-pills-settings-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-seo"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pills-seo"
+                  aria-selected="false"
+                >
+                  SEO
                 </button>
 
                 {/* <button className="nav-link mb-3" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-cost" type="button" role="tab" aria-controls="v-pills-cost" aria-selected="false">Cost</button>
@@ -1100,6 +1144,101 @@ const AddProject = () => {
                     <small class="text-warning">
                       Click on the image to delete
                     </small>
+                  </div>
+                </div>
+
+                <div
+                  className="tab-pane fade show  projectInfo"
+                  id="v-pills-seo"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-seo-tab"
+                >
+                  <div className="">
+                    <div className="mb-3">
+                      <label htmlFor="projectName" className="form-label  ">
+                        SEO Title
+                      </label>
+                      <input
+                        type="text"
+                        name="seo_title"
+                        className="form-control"
+                        value={seofields.seo_title ? seofields.seo_title : ""}
+                        onChange={changeSeoHandler}
+                        id="seoTitle"
+                        placeholder="SEO Title"
+                      />
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className="mb-3">
+                      <label htmlFor="projectName" className="form-label  ">
+                        SEO Link
+                      </label>
+                      <input
+                        type="text"
+                        name="seo_link"
+                        className="form-control"
+                        value={seofields.seo_link ? seofields.seo_link : ""}
+                        onChange={changeSeoHandler}
+                        id="seoLink"
+                        placeholder="SEO Link"
+                      />
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className="mb-3">
+                      <label htmlFor="projectName" className="form-label  ">
+                        SEO Author
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="seo_author"
+                        value={seofields.seo_author ? seofields.seo_author : ""}
+                        onChange={changeSeoHandler}
+                        id="seoAuthor"
+                        placeholder="SEO Author"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="">
+                    <div className="mb-3">
+                      <label htmlFor="projectName" className="form-label  ">
+                        SEO Keywords
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="seo_keywords"
+                        value={
+                          seofields.seo_keywords ? seofields.seo_keywords : ""
+                        }
+                        onChange={changeSeoHandler}
+                        id="seokeywords"
+                        placeholder="SEO Keywords"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="">
+                    <div className="mb-3">
+                      <label htmlFor="projectName" className="form-label  ">
+                        SEO Description
+                      </label>
+                      <textarea
+                        className="form-control"
+                        name="seo_description"
+                        value={
+                          seofields.seo_description
+                            ? seofields.seo_description
+                            : ""
+                        }
+                        onChange={changeSeoHandler}
+                        id="seoDescription"
+                        rows="3"
+                      ></textarea>
+                    </div>
                   </div>
                 </div>
               </div>

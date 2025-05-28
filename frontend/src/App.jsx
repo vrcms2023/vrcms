@@ -25,6 +25,7 @@ import Advertisement from "./Common/Advertisement/Advertisement";
 import ScrollToTop from "react-scroll-to-top";
 import ThemeSwitcher from "./themes/ThemeSwitcher";
 import { getCookie } from "./util/cookieUtil";
+import SEO from "./Common/SEO";
 
 // Lazy Loading
 
@@ -182,6 +183,7 @@ function App() {
 
   return (
     <>
+      <SEO />
       {/* Google Language Translator */}
       {/* <div id="google_translate_element"></div> */}
       {/* End of Google Language Translator */}
