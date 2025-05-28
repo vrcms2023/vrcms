@@ -9,19 +9,22 @@ import { createRoot } from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import store from "./redux/store";
 import { ThemeContextProvider } from "./themes/ThemeContext";
+import { HelmetProvider } from "react-helmet-async";
 
 const root = createRoot(document.getElementById("root"));
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <CookiesProvider>
-        <ThemeContextProvider>
-          <App />
-        </ThemeContextProvider>
-      </CookiesProvider>
-    </Provider>
-  </React.StrictMode>
+  <HelmetProvider>
+    <React.StrictMode>
+      <Provider store={store}>
+        <CookiesProvider>
+          <ThemeContextProvider>
+            <App />
+          </ThemeContextProvider>
+        </CookiesProvider>
+      </Provider>
+    </React.StrictMode>
+  </HelmetProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
