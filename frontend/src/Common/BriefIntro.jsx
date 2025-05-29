@@ -7,19 +7,20 @@ import { axiosClientServiceApi } from "../util/axiosUtil";
 import { BriefIntroStyled } from "./StyledComponents/Styled-BriefIntro";
 import Ancher from "./Ancher";
 
-const BriefIntroFrontend = ({ 
-pageType, 
-introState, 
-linkCss, 
-linkLabel, 
-moreLink, 
-introTitleCss = "", 
-introSubTitleCss = "", 
-introDecTitleCss = "", 
-detailsContainerCss, 
-anchorContainer, 
-anchersvgColor, 
-showLink }) => {
+const BriefIntroFrontend = ({
+  pageType,
+  introState,
+  linkCss,
+  linkLabel,
+  moreLink,
+  introTitleCss = "",
+  introSubTitleCss = "",
+  introDecTitleCss = "",
+  detailsContainerCss,
+  anchorContainer,
+  anchersvgColor,
+  showLink,
+}) => {
   const [introValue, setIntroValues] = useState([]);
 
   useEffect(() => {
@@ -42,34 +43,23 @@ showLink }) => {
 
   return (
     <div className="container">
-      
-        <BriefIntroStyled>
+      <BriefIntroStyled>
         <div className="row ">
-            <div className={`${detailsContainerCss} briefIntro`}>
-              {introValue?.intro_title === "" ? (
-                ""
-              ) : (
-                <Title
-                  title={introValue?.intro_title}
-                  cssClass={introTitleCss}
-                />
-              )}
-              {introValue?.subTitle === "" ? (
-                ""
-              ) : (
-                <Title
-                  title={introValue?.subTitle}
-                  cssClass={introSubTitleCss}
-                />
-              )}
-              <p className={introDecTitleCss}>
-                {introValue?.intro_desc
-                  ? introValue?.intro_desc
-                  : "Please Update Brief Intro"}
-              </p>
-              
-              {showLink && (
-                <div className={anchorContainer}>
+          <div className={`${detailsContainerCss} briefIntro`}>
+            {introValue?.intro_title !== "" && (
+              <Title title={introValue?.intro_title} cssClass={introTitleCss} />
+            )}
+            {introValue?.subTitle !== "" && (
+              <Title title={introValue?.subTitle} cssClass={introSubTitleCss} />
+            )}
+            <p className={introDecTitleCss}>
+              {introValue?.intro_desc
+                ? introValue?.intro_desc
+                : "Please Update Brief Intro"}
+            </p>
+
+            {showLink && (
+              <div className={anchorContainer}>
                 <Ancher
                   AncherLabel={linkLabel}
                   Ancherpath={moreLink}
@@ -77,11 +67,10 @@ showLink }) => {
                   AnchersvgColor={anchersvgColor}
                 />
               </div>
-              )}
-              
-            </div>
+            )}
           </div>
-        </BriefIntroStyled>
+        </div>
+      </BriefIntroStyled>
     </div>
   );
 };

@@ -48,6 +48,10 @@ const MenuForm = ({
     generateOptionLength(15)
   );
 
+  const [isParentHasChilds, setIsParentHasChilds] = useState(
+    editMenu?.childMenu?.length > 0 ? true : false
+  );
+
   const updateMenuIndexValues = (menuOptinList) => {
     menuOptinList.forEach((item) => {
       var i = 0;
@@ -106,27 +110,28 @@ const MenuForm = ({
       return true;
     }
 
-    if (!data?.is_Parent) {
-      if (parseInt(data?.page_parent_ID) === 0) {
-        setError("Please select parent menu");
-        return true;
+    if (!data?.id) {
+      if (!data?.is_Parent) {
+        if (parseInt(data?.page_parent_ID) === 0) {
+          setError("Please select parent menu");
+          return true;
+        }
+        const getSelectedParentObject = _.filter(menuList, (item) => {
+          return item.id === data.page_parent_ID;
+        })[0];
+        const _url = data["page_url"].split("/");
+        if (_url.length > 0) {
+          data["page_url"] =
+            getSelectedParentObject?.page_url + "/" + _url[_url.length - 1];
+        }
+      } else {
+        data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
       }
-      const getSelectedParentObject = _.filter(menuList, (item) => {
-        return item.id === data.page_parent_ID;
-      })[0];
-      const _url = data["page_url"].split("/");
-      if (_url.length > 0) {
-        data["page_url"] =
-          getSelectedParentObject?.page_url + "/" + _url[_url.length - 1];
-      }
-    } else {
-      data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
-    }
-    if (data?.id) {
-      data["updated_by"] = getCookie("userName");
-    } else {
       data["created_by"] = getCookie("userName");
+    } else {
+      data["updated_by"] = getCookie("userName");
     }
+
     data["page_isActive"] = true;
     data["is_Admin_menu"] = true;
 
@@ -230,7 +235,50 @@ const MenuForm = ({
               ) : (
                 ""
               )} */}
-
+              {!isParentHasChilds && (
+                <>
+                  <InputFields
+                    key={2}
+                    label={"SEO Title"}
+                    type={"text"}
+                    fieldName={"seo_title"}
+                    register={register}
+                    onChange={onChangeHanlder}
+                  />
+                  <InputFields
+                    key={3}
+                    label={"SEO Link"}
+                    type={"text"}
+                    fieldName={"seo_link"}
+                    register={register}
+                    onChange={onChangeHanlder}
+                  />
+                  <InputFields
+                    key={4}
+                    label={"SEO Author"}
+                    type={"text"}
+                    fieldName={"seo_author"}
+                    register={register}
+                    onChange={onChangeHanlder}
+                  />
+                  <InputFields
+                    key={5}
+                    label={"SEO Keywords"}
+                    type={"text"}
+                    fieldName={"seo_keywords"}
+                    register={register}
+                    onChange={onChangeHanlder}
+                  />
+                  <InputFields
+                    key={6}
+                    label={"SEO Description"}
+                    type={"textarea"}
+                    fieldName={"seo_description"}
+                    register={register}
+                    onChange={onChangeHanlder}
+                  />
+                </>
+              )}
               <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-1 gap-md-3 mt-5">
                 <button className="btn btn-secondary mx-3">save</button>
                 <Button

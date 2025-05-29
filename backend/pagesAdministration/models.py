@@ -12,3 +12,8 @@ class PageDetails(BaseModel):
     is_Admin_menu =     models.BooleanField(default=False)
     is_Client_menu =    models.BooleanField(default=True)
     is_Maintainer_menu =    models.BooleanField(default=False)
+    seo_title =         models.CharField(blank=True, max_length=200, null=True)
+    seo_description =   models.CharField(blank=True, max_length=500, null=True)
+    seo_link =          models.CharField(blank=True, max_length=200, null=True)
+    seo_author =        models.CharField(blank=True, max_length=200, null=True)
+    seo_keywords =      models.CharField(blank=True, max_length=200, null=True)  

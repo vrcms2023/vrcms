@@ -327,9 +327,9 @@ const CaseStudies = () => {
                 </div>
               ))
             ) : (
-              <p className="text-center text-muted py-5">
+              <div className="text-center text-muted py-5">
                 {!isLoading && <p>Please add page contents...</p>}
-              </p>
+              </div>
             )}
           </div>
         </CaseStudiesPageStyled>

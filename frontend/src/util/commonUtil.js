@@ -318,7 +318,7 @@ export const getFilterObjectByID = (list, id) => {
 };
 
 export const isNotEmptyObject = (_object) => {
-  if (Object.keys(_object).length > 0) {
+  if (Object?.keys(_object).length > 0) {
     return true;
   } else {
     return false;

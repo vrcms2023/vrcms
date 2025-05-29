@@ -29,6 +29,7 @@ import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import { getImagePath } from "../../../util/commonUtil";
 import Product from "./Product";
 import { getProductsByCategory } from "../../../redux/products/productsActions";
+import RichTextView from "../../../Common/RichTextView";
 
 const ProductDetails = () => {
   const location = useLocation();
