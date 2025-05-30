@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import { Helmet } from "react-helmet-async";
-
-const SEO = ({ title, description }) => {
-  return (
-    <Helmet>
-      <title>{title ? title : "EZI Press - Custom CMS"}</title>
-      <meta
-        name="description"
-        content={description ? description : "EZI Press - Custom CMS"}
-      />
-    </Helmet>
-=======
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
@@ -95,7 +82,6 @@ const SEO = () => {
         />
       </Helmet>
     </>
->>>>>>> 61c085425b2c959715d4d1d0f28dc5d33887daa1
   );
 };
 

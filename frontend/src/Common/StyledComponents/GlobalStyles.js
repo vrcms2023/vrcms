@@ -83,7 +83,7 @@ body {
 }
 
 .btn-outline {
-  background-color:${({ theme }) => theme.btnOutline}; 
+  // background-color:${({ theme }) => theme.btnOutline}; 
   color:${({ theme }) => theme.btnOutlineTextColor};
   border: 1px solid ${({ theme }) => theme.btnOutlineBorderColor} !important; 
   font-weight: 600;
@@ -338,6 +338,12 @@ body {
     input[type="checkbox"], input[type="radio"] {
       padding: 0;
       margin: 0;
+      border-radius:3px !important;
+      background-color: ${({theme}) => theme.white};
+    }
+
+    input:checked[type=checkbox] {
+      background-color: ${({theme}) => theme.primaryColor};
     }
 
     .scrollTop {

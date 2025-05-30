@@ -170,9 +170,10 @@ const MenuForm = ({
   return (
     <>
       <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
+      <hr className="my-2"/>
       <div className="container">
         <div className="row py-0 pb-md-5">
-          <div className="col-md-8 offset-md-2 mb-5 mb-md-0">
+          <div className="col-md-12 mb-5 mb-md-0">
             {error && (
               <div className="fw-bold">{error && <Error>{error}</Error>}</div>
             )}
@@ -193,9 +194,10 @@ const MenuForm = ({
                 register={register}
                 onChange={onChangeHanlder}
               />
-              <br />
+
+              <div className={!isParentHasChilds ? "d-flex" : ""}>
               <CheckboxField
-                label="is Parent Menu"
+                label="Parent"
                 fieldName={"is_Parent"}
                 register={register}
                 onChange={isParentHandler}
@@ -203,19 +205,20 @@ const MenuForm = ({
               />
 
               <CheckboxField
-                label="is Maintainer Menu"
+                label="Maintainer"
                 fieldName={"is_Maintainer_menu"}
                 register={register}
                 onChange={isMaintainerHandler}
                 isChecked={isMaintainerMenuActive}
               />
               <CheckboxField
-                label="is Client Menu"
+                label="Client"
                 fieldName={"is_Client_menu"}
                 register={register}
                 onChange={isClientMenuHandler}
                 isChecked={isClientMenuActive}
               />
+              </div>
               {!isParentVal && (
                 <SelectField
                   label="Parent Menu list"
@@ -237,9 +240,16 @@ const MenuForm = ({
               )} */}
               {!isParentHasChilds && (
                 <>
+                <hr className="mt-4"/>
+                <h5 className="mt-4">SEO</h5>
+                </>
+              )}
+              {!isParentHasChilds && (
+              <div className="p-4 py-1 pb-3" style={{backgroundColor: "rgba(255, 255, 255, .4)"}}>
+                
                   <InputFields
                     key={2}
-                    label={"SEO Title"}
+                    label={"Title"}
                     type={"text"}
                     fieldName={"seo_title"}
                     register={register}
@@ -247,7 +257,7 @@ const MenuForm = ({
                   />
                   <InputFields
                     key={3}
-                    label={"SEO Link"}
+                    label={"Link"}
                     type={"text"}
                     fieldName={"seo_link"}
                     register={register}
@@ -255,7 +265,7 @@ const MenuForm = ({
                   />
                   <InputFields
                     key={4}
-                    label={"SEO Author"}
+                    label={"Author"}
                     type={"text"}
                     fieldName={"seo_author"}
                     register={register}
@@ -263,30 +273,30 @@ const MenuForm = ({
                   />
                   <InputFields
                     key={5}
-                    label={"SEO Keywords"}
-                    type={"text"}
+                    label={"Keywords"}
+                    type={"textarea"}
                     fieldName={"seo_keywords"}
                     register={register}
                     onChange={onChangeHanlder}
                   />
                   <InputFields
                     key={6}
-                    label={"SEO Description"}
+                    label={"Description"}
                     type={"textarea"}
                     fieldName={"seo_description"}
                     register={register}
                     onChange={onChangeHanlder}
                   />
-                </>
+               </div>
               )}
-              <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-1 gap-md-3 mt-5">
-                <button className="btn btn-secondary mx-3">save</button>
+              <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-1 mt-3">
                 <Button
                   type="submit"
-                  cssClass="btn border"
+                  cssClass="btn btn-outline"
                   label={"Close"}
                   handlerChange={closeHandler}
                 />
+                <button className="btn btn-primary mx-3">Save</button>
               </div>
             </form>
           </div>

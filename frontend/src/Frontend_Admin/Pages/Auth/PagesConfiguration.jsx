@@ -250,7 +250,7 @@ const PagesConfiguration = () => {
                     onClick={() => handleUserDelete(node)}
                   >
                     <i
-                      className="fa fa-trash-o fs-4 text-danger"
+                      className="fa fa-trash-o fs-5 text-danger"
                       aria-hidden="true"
                       title="Delete"
                     ></i>
@@ -361,15 +361,6 @@ const PagesConfiguration = () => {
         description={"EZI Press - Custom CMS"}
       />
       <div className="position-relative">
-        <div className="text-end">
-          <Link
-            className="btn btn-primary"
-            onClick={() => editHandler("menu", true)}
-          >
-            Add <i className="fa fa-plus mx-2" aria-hidden="true"></i>
-          </Link>
-          {/* <EditIcon editHandler={() => editHandler("menu", true)} /> */}
-        </div>
         {componentEdit.menu && (
           <div className={`adminEditTestmonial selected `}>
             <MenuForm
@@ -384,7 +375,17 @@ const PagesConfiguration = () => {
       </div>
       <div className="row px-3 px-lg-5">
         <div className="text-end d-flex justify-content-between">
-          <Title title={"Menu Administration"} cssClass="fs-1 pageTitle" />
+          <Title title={"Menu / SEO"} cssClass="fs-2 pageTitle" />
+
+          <div className="text-end">
+          <Link
+            className="btn btn-primary"
+            onClick={() => editHandler("menu", true)}
+          >
+            Add <i className="fa fa-plus mx-2" aria-hidden="true"></i>
+          </Link>
+          {/* <EditIcon editHandler={() => editHandler("menu", true)} /> */}
+        </div>
         </div>
       </div>
 
