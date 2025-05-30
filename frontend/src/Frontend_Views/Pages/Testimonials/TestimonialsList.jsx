@@ -40,7 +40,6 @@ import { TestimonialsListPageStyled } from "../../../Common/StyledComponents/Sty
 
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import RichTextView from "../../../Common/RichTextView";
-import SEO from "../../../Common/SEO";
 
 const TestimonialsList = () => {
   const editComponentObj = {
@@ -175,10 +174,6 @@ const TestimonialsList = () => {
 
   return (
     <>
-      <SEO
-        title={"EZI Press Testimonials Page "}
-        description={"EZI Press - Custom CMS"}
-      />
       {/* Page Banner Component */}
       <div className="position-relative">
         {isAdmin && hasPermission && (

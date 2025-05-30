@@ -12,7 +12,6 @@ import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import { ImageGalleryStyled } from "../../../Common/StyledComponents/Styled-ImageGallery";
 import ImageGalleryComponent from "../../Components/ImageGalleryComponent";
 import CustomPagination from "../../../Common/CustomPagination";
-import SEO from "../../../Common/SEO";
 
 const ImagesGallery = () => {
   const editComponentObj = {
@@ -76,10 +75,6 @@ const ImagesGallery = () => {
 
   return (
     <>
-      <SEO
-        title={"EZI Press Image gallery Details Page "}
-        description={"EZI Press - Custom CMS"}
-      />
       <ImageGalleryStyled>
         <div className="container">
           <div className="row">

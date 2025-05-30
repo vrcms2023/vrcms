@@ -4,7 +4,6 @@ import Title from "../../../Common/Title";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/auth/authSlice";
 import { removeAllCookies } from "../../../util/cookieUtil";
-import SEO from "../../../Common/SEO";
 
 const UnauthorizedPage = () => {
   const dispatch = useDispatch();
@@ -29,10 +28,6 @@ const UnauthorizedPage = () => {
       className="d-flex flex-column justify-content-center align-items-center"
       style={{ marginTop: "200px" }}
     >
-      <SEO
-        title={"EZI Press No Permission Page "}
-        description={"EZI Press - Custom CMS"}
-      />
       <Title title="Unauthorized" cssClass="text-dark fs-5 mb-4" />
       <div className="mt-3">
         <span> Hi {userName},</span>

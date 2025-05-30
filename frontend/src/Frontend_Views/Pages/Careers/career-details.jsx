@@ -28,7 +28,6 @@ import ApplyForm from "./ApplyForm";
 import CareersFilter from "../../Components/CareersSearch/CareersFilter";
 import { CareerFilterStyled } from "../../../Common/StyledComponents/Styled-CareerFilter";
 import RichTextView from "../../../Common/RichTextView";
-import SEO from "../../../Common/SEO";
 
 const Careers = () => {
   const editComponentObj = {
@@ -82,10 +81,6 @@ const Careers = () => {
 
   return (
     <>
-      <SEO
-        title={"EZI Press Careers Details Page "}
-        description={"EZI Press - Custom CMS"}
-      />
 
       {/* Page Banner Component */}
 

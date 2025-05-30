@@ -29,7 +29,6 @@ import {
   sortByFieldName,
 } from "../../../util/commonUtil";
 import NoteComponent from "../../../Common/NoteComponent";
-import SEO from "../../../Common/SEO";
 
 const NewsAndUpdates = () => {
   const editComponentObj = {
@@ -92,10 +91,6 @@ const NewsAndUpdates = () => {
   };
   return (
     <>
-      <SEO
-        title={"EZI Press New Page "}
-        description={"EZI Press - Custom CMS"}
-      />
       {/* Page Banner Component */}
       <div className="position-relative">
         {isAdmin && hasPermission && (

@@ -1,15 +1,10 @@
 import React from "react";
 import ThemeSwitcher from "../../../themes/ThemeSwitcher";
 import Title from "../../../Common/Title";
-import SEO from "../../../Common/SEO";
 
 const Themes = () => {
   return (
     <div className="container-fluid pt-5">
-      <SEO
-        title={"EZI Press Theme Page "}
-        description={"EZI Press - Custom CMS"}
-      />
       <div className="row px-3 px-lg-5">
         <div className="text-end d-flex justify-content-between">
           <Title title={"Change Themes"} cssClass="fs-1 pageTitle" />

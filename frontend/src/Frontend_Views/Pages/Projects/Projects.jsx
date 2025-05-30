@@ -16,7 +16,6 @@ import "./Projects.css";
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import { removeActiveClass } from "../../../util/ulrUtil";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
-import SEO from "../../../Common/SEO";
 
 const Projects = () => {
   const editComponentObj = {
@@ -64,10 +63,6 @@ const Projects = () => {
   };
   return (
     <>
-      <SEO
-        title={"EZI Press Project Details Page "}
-        description={"EZI Press - Custom CMS"}
-      />
       <div className="headerBottomMargin">
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("banner", true)} />

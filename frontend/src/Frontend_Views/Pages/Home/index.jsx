@@ -66,7 +66,6 @@ import {
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import { HomeClientItem } from "../../Components/HomeClientItem";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
-import SEO from "../../../Common/SEO";
 
 const Home = () => {
   const editComponentObj = {
@@ -237,10 +236,6 @@ const Home = () => {
   /** End Visibility ON / OFF logic  */
   return (
     <div className="container-fluid">
-      <SEO
-        title={"EZI Press HomePage - Custom CMS"}
-        description={"EZI Press - Custom CMS"}
-      />
       {/* BANNER COMPONENT  */}
       <div
         className={

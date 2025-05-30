@@ -116,10 +116,6 @@ const ContactUSAdmin = () => {
 
   return (
     <div className="container-fluid pt-5 contactsList">
-      <SEO
-        title={"EZI Press Contact US Page "}
-        description={"EZI Press - Custom CMS"}
-      />
       <div className="row px-2 px-lg-5">
         <div className="col-md-2">
           <Title title={"Contact list"} cssClass="fs-1 pageTitle" />

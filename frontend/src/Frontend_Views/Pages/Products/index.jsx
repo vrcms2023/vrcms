@@ -47,7 +47,6 @@ import CustomPagination from "../../../Common/CustomPagination";
 import { useLocation, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import DynamicFormwithFileUplod from "../../../Frontend_Admin/Components/forms/DynamicFormwithFileUplod";
-import SEO from "../../../Common/SEO";
 
 const ProductsPage = () => {
   const { id } = useParams();
@@ -173,10 +172,6 @@ const ProductsPage = () => {
 
   return (
     <>
-      <SEO
-        title={"EZI Press Product Page "}
-        description={"EZI Press - Custom CMS"}
-      />
       {isAdmin && hasPermission && (
         <div className="container py-4">
           <div className="row ">

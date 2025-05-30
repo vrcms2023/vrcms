@@ -7,7 +7,6 @@ import Error from "../../Components/Error";
 // CSS Styles
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
 import LoadingSpinner from "../../../Common/LoadingSpinner";
-import SEO from "../../../Common/SEO";
 
 const Activation = () => {
   const [verified, setVerified] = useState(false);
@@ -50,10 +49,6 @@ const Activation = () => {
   return (
     <LoginStyled>
       <div className="login">
-        <SEO
-          title={"EZI Press Activation Page "}
-          description={"EZI Press - Custom CMS"}
-        />
         {isLoading && <LoadingSpinner />}
         <div className="bg-white d-flex justify-content-center align-items-center flex-column">
           <div className="container">

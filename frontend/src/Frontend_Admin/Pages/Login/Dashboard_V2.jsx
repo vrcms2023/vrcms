@@ -13,7 +13,6 @@ import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getDashBoardProjects } from "../../../redux/project/projectActions";
 
 import "./Dashboard.css";
-import SEO from "../../../Common/SEO";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -200,10 +199,6 @@ const Dashboard = () => {
 
   return (
     <div className="container-fluid p-4  pojects-dashboard">
-      <SEO
-        title={"EZI Press Project dashBoard Page "}
-        description={"EZI Press - Custom CMS"}
-      />
       {/* <div className='text-end'>
             <badge className="bg-light text-dark shadow rounded p-1">{userName ? (`You are logged as - ${userName}`):""}</badge>
         </div> */}

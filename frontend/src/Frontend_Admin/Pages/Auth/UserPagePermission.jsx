@@ -9,7 +9,6 @@ import { getMenuObject } from "../../../util/commonUtil";
 import Button from "../../../Common/Button";
 import Error from "../../Components/Error";
 import { isAppAccess } from "../../../util/permissions";
-import SEO from "../../../Common/SEO";
 
 const UserPagePermission = () => {
   const [userDetails, setUserDetails] = useState([]);
@@ -246,10 +245,6 @@ const UserPagePermission = () => {
 
   return (
     <div className="container-fluid pt-5">
-      <SEO
-        title={"EZI Press User page permission Page "}
-        description={"EZI Press - Custom CMS"}
-      />
       <div className="row px-3 px-lg-5">
         <div className="text-end d-flex justify-content-between align-items-center">
           <Title title={"User's page Permission"} cssClass="fs-1 pageTitle" />

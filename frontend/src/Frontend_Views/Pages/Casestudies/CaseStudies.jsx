@@ -30,7 +30,6 @@ import { CaseStudiesPageStyled } from "../../../Common/StyledComponents/Styled-C
 import { useSelector } from "react-redux";
 import SkeletonImage from "../../../Common/Skeltons/SkeletonImage";
 
-import SEO from "../../../Common/SEO";
 import RichTextView from "../../../Common/RichTextView";
 
 const CaseStudies = () => {
@@ -130,10 +129,6 @@ const CaseStudies = () => {
 
   return (
     <>
-      <SEO
-        title={"EZI Press Case studies Details Page "}
-        description={"EZI Press - Custom CMS"}
-      />
       {/* Page Banner Component */}
       <div className="position-relative">
         {isAdmin && hasPermission && (

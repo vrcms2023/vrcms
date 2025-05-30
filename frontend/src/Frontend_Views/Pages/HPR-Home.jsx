@@ -13,7 +13,6 @@ import { axiosClientServiceApi } from "../../util/axiosUtil";
 
 import { removeActiveClass } from "../../util/ulrUtil";
 import Testimonials from "../Components/Testimonials";
-import SEO from "../../Common/SEO";
 
 const Home = () => {
   const [testimonis, setTestmonis] = useState([]);
@@ -40,10 +39,7 @@ const Home = () => {
 
   return (
     <div className="container-fluid">
-      <SEO
-        title={"EZI Press HPR home Page "}
-        description={"EZI Press - Custom CMS"}
-      />
+
       <div className="row">
         <div className="col-md-12 p-0">
           <Banner />

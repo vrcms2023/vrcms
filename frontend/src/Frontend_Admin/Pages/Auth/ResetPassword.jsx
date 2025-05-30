@@ -8,7 +8,6 @@ import Error from "../../Components/Error";
 
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
 import Ancher from "../../../Common/Ancher";
-import SEO from "../../../Common/SEO";
 
 const ResetPassword = () => {
   const { register, handleSubmit } = useForm();
@@ -46,10 +45,6 @@ const ResetPassword = () => {
   return (
     <LoginStyled>
       <div className="login mt-5">
-        <SEO
-          title={"EZI Press ResetPassword Page "}
-          description={"EZI Press - Custom CMS"}
-        />
         <div className="d-flex flex-column justify-content-center align-items-center">
           <form onSubmit={handleSubmit(resetPassword)} className="shadow-lg">
             <Title

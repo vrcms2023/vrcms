@@ -32,7 +32,6 @@ import {
 // CSS
 import { AboutPageStyled } from "../../../Common/StyledComponents/Styled-AboutPage";
 import RichTextView from "../../../Common/RichTextView";
-import SEO from "../../../Common/SEO";
 
 const About = () => {
   const editComponentObj = {
@@ -119,10 +118,7 @@ const About = () => {
 
   return (
     <>
-      <SEO
-        title={"EZI Press About Page "}
-        description={"EZI Press - Custom CMS"}
-      />
+
       {/* Page Banner Component */}
       <div className="position-relative">
         {isAdmin && hasPermission && (

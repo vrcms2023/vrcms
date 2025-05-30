@@ -13,7 +13,6 @@ import CSRFToken from "../../../Frontend_Views/Components/CRSFToken";
 
 // CSS Styles
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
-import SEO from "../../../Common/SEO";
 
 const Registration = () => {
   const [customError, setCustomError] = useState(null);
@@ -67,10 +66,6 @@ const Registration = () => {
   return (
     <LoginStyled>
       <div className="login">
-        <SEO
-          title={"EZI Press Registration Page "}
-          description={"EZI Press - Custom CMS"}
-        />
         <div className="text-center pt-4">
           <button className="btn btn-secondary" onClick={() => navigate("/")}>
             Back to HPR Infra website

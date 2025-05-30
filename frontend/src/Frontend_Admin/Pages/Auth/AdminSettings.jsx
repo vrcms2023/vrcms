@@ -25,7 +25,6 @@ import {
 import RadioButtonGroup from "../../Components/RadioButtonGroup";
 
 import "./adminSettingStyles.css";
-import SEO from "../../../Common/SEO";
 
 const AdminSettings = () => {
   const pageType = "settings";
@@ -213,10 +212,6 @@ const AdminSettings = () => {
 
   return (
     <div className="container-fluid pt-5 contactsList">
-      <SEO
-        title={"EZI Press Admin Settings Page "}
-        description={"EZI Press - Custom CMS"}
-      />
       <div className="row px-2 px-lg-5">
         <div className="col-sm-12 col-md-7">
           <Title title={"Advertisements"} cssClass="fs-1 pageTitle" />

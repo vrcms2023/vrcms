@@ -37,7 +37,6 @@ import {
 import { fieldValidation } from "../../../util/validationUtil";
 import Title from "../../../Common/Title";
 import ContactForm from "../../../Common/Forms/ContactForm";
-import SEO from "../../../Common/SEO";
 
 const Contact = () => {
   const editComponentObj = {
@@ -138,10 +137,6 @@ const Contact = () => {
     <ContactPageStyled>
       {/* Page Banner Component */}
       <div className="position-relative">
-        <SEO
-          title={"EZI Press Contactus Page "}
-          description={"EZI Press - Custom CMS"}
-        />
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("banner", true)} />
         )}
