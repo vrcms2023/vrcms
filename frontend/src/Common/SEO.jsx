@@ -13,66 +13,83 @@ const SEO = ({ title, description }) => {
 =======
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
+import { getClientProjects } from "../redux/project/clientProjectActions";
+import { getCookie } from "../util/cookieUtil";
 
-const SEO = ({ seoObject }) => {
+const SEO = () => {
   const { menuRawList } = useSelector((state) => state.auth);
+  const { clientProjects } = useSelector((state) => state.clientProjects);
+  const dispatch = useDispatch();
   const pathname = window?.location?.pathname;
-  const [menuItem, setMenuItem] = useState([]);
+  const [seoObject, setSeoObject] = useState([]);
+  const projectid = getCookie("projectid");
 
   useEffect(() => {
     if (menuRawList.length > 0 && pathname !== "/project-details") {
-      let menu = _.filter(menuRawList, (item) => {
+      let seoMenu = _.filter(menuRawList, (item) => {
         return item.page_url.toLowerCase() === pathname.toLowerCase();
       })[0];
-      if (menu) {
-        setMenuItem(menu);
+      if (seoMenu) {
+        setSeoObject(seoMenu);
       }
     }
-    if (pathname === "/project-details" && seoObject) {
-      setMenuItem(seoObject);
-    }
-  }, [pathname, menuRawList, seoObject]);
+  }, [pathname, menuRawList]);
 
   useEffect(() => {
-    console.log("menuItem?.seo_title", menuItem?.seo_title);
-  }, [menuItem]);
+    if (clientProjects.length === 0) {
+      dispatch(getClientProjects());
+    }
+  }, [dispatch, clientProjects]);
+
+  useEffect(() => {
+    if (clientProjects?.projectList?.length > 0) {
+      const seoProject = _.filter(clientProjects?.projectList, (item) => {
+        return item.id === projectid;
+      })[0];
+      setSeoObject(seoProject);
+    }
+  }, [clientProjects, projectid]);
+
+  useEffect(() => {
+    console.log("seoObject?.seo_title", seoObject?.seo_title);
+  }, [seoObject]);
   return (
     <>
       <Helmet>
         <title>
-          {menuItem?.seo_title
-            ? menuItem?.seo_title
+          {seoObject?.seo_title
+            ? seoObject?.seo_title
             : "EZI defautl - Custom CMS"}
         </title>
         <meta
           name="description"
           content={
-            menuItem?.seo_description
-              ? menuItem?.seo_description
+            seoObject?.seo_description
+              ? seoObject?.seo_description
               : "EZI Press - Custom CMS"
           }
         />
         <meta
           name="link"
           content={
-            menuItem?.seo_link ? menuItem?.seo_link : "EZI Press - Custom CMS"
+            seoObject?.seo_link ? seoObject?.seo_link : "EZI Press - Custom CMS"
           }
         />
         <meta
           name="keywords"
           content={
-            menuItem?.seo_keywords
-              ? menuItem?.seo_keywords
+            seoObject?.seo_keywords
+              ? seoObject?.seo_keywords
               : "EZI Press - Custom CMS"
           }
         />
         <meta
           name="author"
           content={
-            menuItem?.seo_author
-              ? menuItem?.seo_author
+            seoObject?.seo_author
+              ? seoObject?.seo_author
               : "EZI Press - Custom CMS"
           }
         />

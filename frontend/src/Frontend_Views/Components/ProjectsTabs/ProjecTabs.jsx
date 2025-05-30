@@ -12,8 +12,7 @@ import Location from "./Location";
 import Cost from "./Cost";
 import Button from "../../../Common/Button";
 import ProjectGalleryView from "../../Pages/Projects/ProjectGalleryView";
-import SEO from "../../../Common/SEO";
-import { Helmet } from "react-helmet-async";
+import { removeCookie, setCookie } from "../../../util/cookieUtil";
 
 const ProjectTabs = () => {
   const location = useLocation();
@@ -38,9 +37,10 @@ const ProjectTabs = () => {
 
   const [avlPdfs, setAvlPdfs] = useState([]);
   const [avlImgs, setAvlImgs] = useState([]);
-  const [seofields, setSeofields] = useState({});
 
   useEffect(() => {
+    removeCookie("projectid");
+    setCookie("projectid", projectid);
     getProjects(projectid);
   }, [projectid]);
 
@@ -71,15 +71,6 @@ const ProjectTabs = () => {
         filtersImgPdfs(projectData, "avl");
         filtersImgPdfs(projectData, "thumbnail");
         setSpecifications(projectData?.specificationData);
-        const seolist = {
-          seo_title: project.seo_title,
-          seo_author: project.seo_author,
-          seo_description: project.seo_description,
-          seo_keywords: project.seo_keywords,
-          seo_link: project.seo_link,
-        };
-
-        setSeofields(seolist);
       }
     } catch (error) {
       console.log("unable to access ulr because of server is down");
@@ -155,10 +146,6 @@ const ProjectTabs = () => {
 
   return (
     <>
-      <SEO seoObject={seofields} />
-      {/* <Helmet>
-        <title>{seofields?.seo_title}</title>
-      </Helmet> */}
       <div className="container mt-5 pt-5">
         <div className="row p-0 pt-4 projectTabs">
           <div className="col-md-12">
