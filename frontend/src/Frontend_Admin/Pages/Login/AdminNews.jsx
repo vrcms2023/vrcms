@@ -187,6 +187,7 @@ export const AdminNews = () => {
 
   return (
     <div className="container-fluid pt-5" style={{ marginTop: "100px" }}>
+
       <div className="row px-3">
         <div className="text-end d-flex justify-content-between">
           <Title

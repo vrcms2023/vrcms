@@ -45,6 +45,7 @@ const ResendActivationEmail = () => {
   return (
     <LoginStyled>
       <div className="login">
+
         <div className="bg-white d-flex justify-content-center align-items-center flex-column">
           <div className="container">
             <div className="d-flex flex-column justify-content-center align-items-center">

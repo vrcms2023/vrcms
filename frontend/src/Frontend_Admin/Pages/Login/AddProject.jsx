@@ -429,6 +429,7 @@ const AddProject = () => {
   return (
     <div className="container-fluid pt-4">
       <CSRFToken />
+
       <div className="row px-3 px-lg-5">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
           <Title
@@ -598,13 +599,13 @@ const AddProject = () => {
                   />
                 )}
 
-                <Button
+                {/* <Button
                   type="submit"
                   cssClass="btn btn-sm btn-outline me-1"
                   label={"PUBLISH"}
                   icon={"fa-calendar"}
                   handlerChange={publishHandler}
-                />
+                /> */}
               </div>
 
               <div
@@ -637,18 +638,7 @@ const AddProject = () => {
                 >
                   Pdfs / Plan / Map / Cost / Availability
                 </button>
-                <button
-                  className="nav-link"
-                  id="v-pills-googlemap-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#v-pills-googlemap"
-                  type="button"
-                  role="tab"
-                  aria-controls="v-pill-googlemap"
-                  aria-selected="false"
-                >
-                  Google Map
-                </button>
+                
                 <button
                   className="nav-link"
                   id="v-pills-messages-tab"
@@ -698,6 +688,18 @@ const AddProject = () => {
                   aria-selected="false"
                 >
                   SEO
+                </button>
+                <button
+                  className="nav-link"
+                  id="v-pills-googlemap-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-googlemap"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pill-googlemap"
+                  aria-selected="false"
+                >
+                  Google Map
                 </button>
 
                 {/* <button className="nav-link mb-3" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-cost" type="button" role="tab" aria-controls="v-pills-cost" aria-selected="false">Cost</button>
@@ -1155,8 +1157,8 @@ const AddProject = () => {
                 >
                   <div className="">
                     <div className="mb-3">
-                      <label htmlFor="projectName" className="form-label  ">
-                        SEO Title
+                      <label htmlFor="projectName" className="form-label mb-1">
+                        <small>Title</small>
                       </label>
                       <input
                         type="text"
@@ -1171,8 +1173,8 @@ const AddProject = () => {
                   </div>
                   <div className="">
                     <div className="mb-3">
-                      <label htmlFor="projectName" className="form-label  ">
-                        SEO Link
+                      <label htmlFor="projectName" className="form-label mb-1">
+                        <small>Link</small>
                       </label>
                       <input
                         type="text"
@@ -1187,8 +1189,8 @@ const AddProject = () => {
                   </div>
                   <div className="">
                     <div className="mb-3">
-                      <label htmlFor="projectName" className="form-label  ">
-                        SEO Author
+                      <label htmlFor="projectName" className="form-label mb-1">
+                        <small>Author</small>
                       </label>
                       <input
                         type="text"
@@ -1204,10 +1206,10 @@ const AddProject = () => {
 
                   <div className="">
                     <div className="mb-3">
-                      <label htmlFor="projectName" className="form-label  ">
-                        SEO Keywords
+                      <label htmlFor="projectName" className="form-label mb-1">
+                        <small>Keywords</small>
                       </label>
-                      <input
+                      {/* <input
                         type="text"
                         className="form-control"
                         name="seo_keywords"
@@ -1217,14 +1219,25 @@ const AddProject = () => {
                         onChange={changeSeoHandler}
                         id="seokeywords"
                         placeholder="SEO Keywords"
-                      />
+                      /> */}
+
+                      <textarea
+                        className="form-control"
+                        name="seo_keywords"
+                        value={
+                          seofields.seo_keywords ? seofields.seo_keywords : ""
+                        }
+                        onChange={changeSeoHandler}
+                        id="seokeywords"
+                        rows="3"
+                      ></textarea>
                     </div>
                   </div>
 
                   <div className="">
                     <div className="mb-3">
-                      <label htmlFor="projectName" className="form-label  ">
-                        SEO Description
+                      <label htmlFor="projectName" className="form-label mb-1">
+                        <small>Description</small>
                       </label>
                       <textarea
                         className="form-control"

@@ -91,6 +91,7 @@ const UserAdmin = () => {
 
   return (
     <div className="container-fluid pt-5 userAdmin">
+
       <div className="row px-3 px-lg-5">
         <div className="d-flex justify-content-between align-items-center border-bottom pb-3">
           <Title title={"User's"} cssClass="fs-5 pageTitle " />
@@ -126,9 +127,7 @@ const UserAdmin = () => {
                   <td className={`${user.is_admin ? "" : ""}`}>
                     {user.userName}
                   </td>
-                  <td className={`${user.is_admin ? "" : ""}`}>
-                    {user.email}
-                  </td>
+                  <td className={`${user.is_admin ? "" : ""}`}>{user.email}</td>
                   <td className={`${user.is_admin ? "text-danger" : ""}`}>
                     {user.is_admin ? "Super Admin" : "Maintainer"}
                   </td>

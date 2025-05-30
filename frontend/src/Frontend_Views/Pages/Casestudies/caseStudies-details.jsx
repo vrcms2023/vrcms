@@ -15,6 +15,8 @@ import {
 } from "../../../util/dynamicFormFields";
 import { getImagePath } from "../../../util/commonUtil";
 
+import RichTextView from "../../../Common/RichTextView";
+
 const CaseStudiesDetails = () => {
   const editComponentObj = {
     banner: false,
@@ -114,7 +116,7 @@ const CaseStudiesDetails = () => {
             <Ancher
               AncherLabel="Back"
               AncherClass="btn btn-secondary d-flex gap-2 justify-content-center align-items-center float-end fw-bold"
-              Ancherpath={`/casestudies/`}
+              Ancherpath={`/clients/casestudies/`}
               AnchersvgColor=""
             />
           </div>

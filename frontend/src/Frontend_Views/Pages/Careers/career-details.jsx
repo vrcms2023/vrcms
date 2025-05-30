@@ -81,6 +81,7 @@ const Careers = () => {
 
   return (
     <>
+
       {/* Page Banner Component */}
 
       <div className="position-relative">
@@ -127,7 +128,7 @@ const Careers = () => {
           </div>
           <div className="col-4 col-md-2">
             <Link
-              to="/careers"
+              to="/profile/careers"
               className="btn btn-outline m-auto w-auto d-flex justify-content-center align-items-center gap-2"
             >
               <i className="fa fa-chevron-left" aria-hidden="true"></i>

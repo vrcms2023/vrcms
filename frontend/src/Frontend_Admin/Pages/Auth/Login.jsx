@@ -88,21 +88,22 @@ const Login = () => {
   return (
     <LoginStyled>
       <div className="text-center">
+
         {/* <button
           className="btn btn-secondary mt-4"
           onClick={() => navigate("/")}
         >
           Back to Home
         </button> */}
-        <Ancher 
-            Ancherpath="/"
-            AncherClass="btn btn-outline mt-5 w-auto"
-            handleModel=""
-            AncherLabel=""
-            icon="fa-home"
-            // icon="fa-arrow-right"
-            iconCss="fs-4"
-          />
+        <Ancher
+          Ancherpath="/"
+          AncherClass="btn btn-outline mt-5 w-auto"
+          handleModel=""
+          AncherLabel=""
+          icon="fa-home"
+          // icon="fa-arrow-right"
+          iconCss="fs-4"
+        />
       </div>
       <div className="login">
         <div className="d-flex justify-content-center align-items-center flex-column">

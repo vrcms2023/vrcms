@@ -15,12 +15,12 @@ export const InputFields = ({
   switch (type) {
     case "text":
       return (
-        <div className="mb-2 row">
+        <div className="mb-1 row">
           <label
             htmlFor=""
-            className="col-sm-12 col-form-label text-capitalize"
+            className="col-sm-12 col-form-label text-capitalize text-start"
           >
-            {label}
+            <small className="">{label}</small>
           </label>
           <div className="col-sm-12">
             <input
@@ -42,7 +42,7 @@ export const InputFields = ({
             htmlFor=""
             className="col-sm-12 col-form-label text-capitalize"
           >
-            {label}
+            <small>{label}</small>
           </label>
           <div className="col-sm-12">
             <select
@@ -64,7 +64,7 @@ export const InputFields = ({
       return (
         <div className="mb-2 row">
           <label htmlFor="" className="col-sm-12 col-form-label">
-            {label}
+            <small>{label}</small>
           </label>
           <div className="col-sm-12">
             <textarea
@@ -94,7 +94,7 @@ export const InputFields = ({
               htmlFor=""
               className="form-check-label ms-2 pt-0 col-form-label text-start text-md-end text-capitalize"
             >
-              {label}
+              <small>{label}</small>
             </label>
             <span className="error">{error}</span>
           </div>
@@ -107,7 +107,7 @@ export const InputFields = ({
             htmlFor=""
             className="col-sm-12 col-form-label text-capitalize"
           >
-            {label}
+            <small>{label}</small>
           </label>
           <div className="col-sm-12">
             <input
@@ -146,10 +146,10 @@ export const RichTextInputEditor = ({ label, editorSetState, initialText }) => {
         htmlFor=""
         className="col-sm-3 col-form-label text-start text-md-end text-capitalize"
       >
-        {label}
+        <small>{label}</small>
       </label> */}
       <div className="col-sm-12">
-        <p className="fs-6 pt-3 py-md-0">{label}</p>
+        <p className="fs-6 pt-3 py-md-0"><small>{label}</small></p>
         <RichTextEditor
           initialText={initialText ? initialText : ""}
           RichEditorState={editorSetState}
@@ -177,7 +177,7 @@ export const InputField = ({
           cssClass ? cssClass : ""
         }`}
       >
-        {label} {isRequired && <span className="error">*</span>}
+        <small>{label}</small> {isRequired && <span className="error">*</span>}
       </label>
       <div className="col-sm-12">
         <input
@@ -205,7 +205,7 @@ export const SelectField = ({
         htmlFor=""
         className="col-sm-12 col-form-label text-start text-capitalize"
       >
-        {label}
+       <small>{label}</small>
       </label>
       <div className="col-sm-12">
         <select
@@ -238,7 +238,7 @@ export const TextAreaField = ({
   return (
     <div className="mb-2 row">
       <label htmlFor="" className="col-sm-12 col-form-label text-start">
-        {label}
+        <small>{label}</small>
       </label>
       <div className="col-sm-12">
         <textarea
@@ -262,20 +262,20 @@ export const CheckboxField = ({
 }) => {
   return (
     <div className="mb-2 row">
-      <div className="form-check">
+      <div className="form-check d-flex align-items-center">
         <input
           name={fieldName}
           type="checkbox"
           {...register(fieldName, validationObject)}
           onChange={rest.onChange}
           checked={rest.isChecked}
-          className="form-check-input mr-4"
+          className="form-check-input mx-1 rounded-1"
         />
         <label
           className="form-check-label col-form-label text-start text-md-end text-capitalize"
           htmlFor="flexCheckDefault"
         >
-          {label}
+          <small>{label}</small>
         </label>
       </div>
 

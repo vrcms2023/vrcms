@@ -29,6 +29,7 @@ import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
 import { CaseStudiesPageStyled } from "../../../Common/StyledComponents/Styled-Casestudies";
 import { useSelector } from "react-redux";
 import SkeletonImage from "../../../Common/Skeltons/SkeletonImage";
+
 import RichTextView from "../../../Common/RichTextView";
 
 const CaseStudies = () => {
@@ -305,7 +306,7 @@ const CaseStudies = () => {
                       <Ancher
                         AncherLabel="More"
                         AncherClass="btn btn-outline d-flex gap-2 justify-content-center align-items-center"
-                        Ancherpath={`/casestudies-details/${item.id}/`}
+                        Ancherpath={`/clients/casestudies-details/${item.id}/`}
                         AnchersvgColor="#17427C"
                       />
                     </div>

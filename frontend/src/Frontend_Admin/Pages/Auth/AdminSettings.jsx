@@ -249,9 +249,18 @@ const AdminSettings = () => {
               <tr>
                 <th className="align-middle">Title</th>
                 <th className="align-middle">Description</th>
-                <th className="align-middle" style={{width: "100px"}}>Image</th>
-                <th className="align-middle" style={{width: "100px"}}>Show or Hide</th>
-                <th className="align-middle text-end" style={{width: "100px"}}>Action</th>
+                <th className="align-middle" style={{ width: "100px" }}>
+                  Image
+                </th>
+                <th className="align-middle" style={{ width: "100px" }}>
+                  Show or Hide
+                </th>
+                <th
+                  className="align-middle text-end"
+                  style={{ width: "100px" }}
+                >
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -269,7 +278,12 @@ const AdminSettings = () => {
                           : getDummyImage()
                       }
                       alt={advertisement.alternitivetext}
-                      className="thumb75 d-lg-block rounded-1" style={{width: "60px", height: "60px", objectFit: "cover"}}
+                      className="thumb75 d-lg-block rounded-1"
+                      style={{
+                        width: "60px",
+                        height: "60px",
+                        objectFit: "cover",
+                      }}
                     />
                   </td>
                   <td className="align-middle">

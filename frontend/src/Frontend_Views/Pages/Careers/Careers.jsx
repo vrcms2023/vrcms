@@ -75,6 +75,7 @@ const Careers = () => {
 
   return (
     <>
+
       {/* Page Banner Component */}
       <div className="position-relative careersPage">
         {isAdmin && hasPermission && (
