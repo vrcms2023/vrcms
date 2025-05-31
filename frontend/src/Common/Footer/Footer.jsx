@@ -17,12 +17,14 @@ import ModelBg from "../ModelBg";
 
 // Images
 import EditIcon from "../AdminEditIcon";
-import Logo from "../../Images/logo.png";
+// import Logo from "../../Images/logo.png";
+import svgLogo from "../../Images/logo.svg";
 
 // Styles
 import { FooterStyled } from "../StyledComponents/Styled-Footer";
 import Ancher from "../Ancher";
 import Title from "../Title";
+import Button from "../Button";
 
 const Footer = () => {
   const editComponentObj = {
@@ -48,6 +50,9 @@ const Footer = () => {
   const [counter, setCounter] = useState(0);
   const date = new Date();
   const fullYear = date.getFullYear();
+
+  // console.log(footerData)
+  // console.log(addressList, "addressList")
 
   useEffect(() => {
     if (!componentEdit.address || (footerData?.length === 0 && counter < 3)) {
@@ -116,17 +121,31 @@ const Footer = () => {
 
   return (
     <FooterStyled>
-      <footer className="text-center pt-5">
+      <footer className="pt-5">
         <div className="container footerDetails">
-          <div className="logo text-center text-md-start">
+          {/* <div className="logo text-center text-md-start">
             <img src={Logo} alt="SAP Design Studio" className="footerLogo" />
+          </div> */}
+          {/* <hr className="d-block d-md-none my-4" /> */}
+          <div className="row">
+            <div className="col-md-4 col-lg-3 d-flex align-items-center">
+                <img
+                  src={svgLogo}
+                  width="90%"
+                  alt="ICONS ENGINEERING WITH EXCELLENCE"
+                  className="footerLogo"
+                /> 
+            </div>
+            <div className="col-md-8 col-lg-9 d-flex align-items-center">
+                <p className="description m-0 text-center text-md-start p-4 pb-0 p-md-0">ICONS has Integrated Management System in accordance to ISO , focused mainly on continuous improvement and learning based on the successes and failures that occur during our day-to-day activities. This system is a fundamental element in the innovation process and encompasses the entire value chain.</p>
+            </div>
           </div>
-          <hr className="d-block d-md-none my-4" />
-          <div className="row py-4 py-md-4">
-            <div className="col-md-3 text-center text-md-start">
-              {/* <Title title="Company" /> */}
+          <hr className="my-4" />
+          <div className="row py-md-4">
+            <div className="col-md-4 text-center text-md-start">
+              <Title title="Company" />
 
-              <ul className="">
+              <ul className="row ps-2">
                 {menuList?.map((menu) => {
                   return <ChildMenuContent menu={menu} key={menu.id} />;
                 })}
@@ -200,7 +219,7 @@ const Footer = () => {
             </div> */}
 
             <div
-              className={`col-md-4 col-lg-3 text-center text-md-start reachUs ${
+              className={`col-md-4 col-lg-4 text-center text-md-start reachUs ${
                 isAdmin ? "" : ""
               }`}
             >
@@ -214,10 +233,10 @@ const Footer = () => {
                     iconCss="ms-2 m-auto"
                   />
                 )} */}
-              {/* <Title title="Reach Us"  /> */}
+              <Title title="Reach Us"  />
               {address.phonen_number ? (
                 <p className="m-0 pb-2">
-                  <i className="fa fa-phone fs-5 me-2" aria-hidden="true"></i>
+                  {/* <i className="fa fa-phone fs-5 me-2" aria-hidden="true"></i> */}
                   {address?.phonen_number}
                 </p>
               ) : (
@@ -225,7 +244,7 @@ const Footer = () => {
               )}
               {address.phonen_number_2 ? (
                 <p className="m-0 pb-2">
-                  <i className="fa fa-phone fs-5 me-2" aria-hidden="true"></i>
+                  {/* <i className="fa fa-phone fs-5 me-2" aria-hidden="true"></i> */}
                   {address?.phonen_number_2}
                 </p>
               ) : (
@@ -233,10 +252,10 @@ const Footer = () => {
               )}
               {address.phonen_number_3 ? (
                 <p className="m-0 pb-2">
-                  <i
+                  {/* <i
                     className="fa fa-whatsapp fs-5 me-2"
                     aria-hidden="true"
-                  ></i>
+                  ></i> */}
                   {address?.phonen_number_3}
                 </p>
               ) : (
@@ -246,10 +265,10 @@ const Footer = () => {
               {address.emailid ? (
                 <>
                   <p className="m-0 pb-2">
-                    <i
+                    {/* <i
                       className="fa fa-paper-plane fs-5 me-2"
                       aria-hidden="true"
-                    ></i>
+                    ></i> */}
                     <Link to={`mailto: ${address?.emailid}`}>
                       {address?.emailid}
                     </Link>
@@ -261,10 +280,10 @@ const Footer = () => {
               {address.emailid_2 ? (
                 <>
                   <p className="m-0 pb-3 ">
-                    <i
+                    {/* <i
                       className="fa fa-paper-plane fs-5 me-2"
                       aria-hidden="true"
-                    ></i>
+                    ></i> */}
                     <Link to={`mailto: ${address?.emailid_2}`}>
                       {address?.emailid_2}
                     </Link>
@@ -276,10 +295,10 @@ const Footer = () => {
               {address.emailid_3 ? (
                 <>
                   <p className="m-0 ">
-                    <i
+                    {/* <i
                       className="fa fa-envelope fs-5 me-2"
                       aria-hidden="true"
-                    ></i>
+                    ></i> */}
                     <Link to={`mailto: ${address?.emailid_3}`}>
                       {address?.emailid_3}
                     </Link>
@@ -288,22 +307,50 @@ const Footer = () => {
               ) : (
                 ""
               )}
+            
+              <div className="d-flex flex-column justify-content-center align-items-center text-center justify-content-md-start align-items-md-start text-md-start mt-4">
+                <Title title="Downloads"  />
+                <Button label="Download Brochure" cssClass="btn btn-primary" />
+              </div>
             </div>
-            <hr className="d-block d-md-none mt-3 mb-4" />
+            <hr className="d-block d-md-none my-4" />
             {
               <div
-                className={`col-md-5 col-lg-6 pb-md-0 socialMedia d-flex flex-column align-items-center justify-content-md-center justify-content-lg-end align-items-md-end ${
-                  isAdmin ? "border border-warning mb-3 position-relative" : ""
-                }`}
+              // align-items-center justify-content-md-center justify-content-lg-end align-items-md-end align-items-end justify-content-md-end
+              // ${ isAdmin ? "border border-warning mb-3 position-relative" : "" }
+                className={`col-md-4 col-lg-4 pb-md-0 socialMedia d-flex flex-column gap-5 gap-md-0 align-items-center align-items-md-start justify-content-between pb-4 pb-md-0`}
               >
-                {/*                 
-                <Title title="Social Media" />
-                <img
+                <div className="FooterAddress">
+                <Title title="We Are At" />
+                {/* <img
                   src={Logo}
                   alt="SAP Design Studio"
                   className="footerLogo"
-                /> */}
-                <div className="socialLinks">
+                />  */}
+               
+               <p className="m-0 ">
+                  {address?.company_name}
+                </p>
+                <p className="m-0 ">
+                  {address?.address_dr_no}
+                </p>
+                <p className="m-0 ">
+                  {address?.city}
+                </p>
+                
+                <p className="m-0 ">
+                  {address?.street}
+                </p>
+                <p className="m-0 ">
+                  {address?.state}
+                </p>
+                <p className="m-0 ">
+                  {address?.postcode}
+                </p>
+                </div>
+
+                <div className={`socialLinks ${
+                  isAdmin ? "border border-warning mb-3 position-relative p-3" : "" }`}>
                   {isAdmin && (
                     <EditIcon
                       editHandler={() => editHandler("address", true)}
@@ -362,10 +409,10 @@ const Footer = () => {
                     </Link>
                   )}
                 </div>
-                <small className="mt-3 fw-medium text-center text-md-end copyRight">
+                {/* <small className="mt-3 fw-medium text-center text-md-end copyRight">
                   {" "}
-                  {fullYear} Copyright Leon Pharma Corp. All rights reserved.
-                </small>
+                  {fullYear} 2025 Copyright ICONS Engineering. All rights reserved.
+                </small> */}
               </div>
             }
           </div>
@@ -378,10 +425,11 @@ const Footer = () => {
 
           <div className="container">
             <div className="row">
-              <div className="d-flex flex-column flex-md-row justify-content-center gap-3">
-                <div className="d-flex justify-content-center align-items-center flex-column flex-md-row gap-2">
-                  {/* <small>&copy; {fullYear} - All rights reserved</small> */}
+              <div className="">
+                <div className="d-flex flex-column flex-md-row justify-content-between align-items-center  gap-2">
+                  &copy; {fullYear} - All rights reserved
                   {/* <span className="d-inline-block  d-none d-md-block">|</span> */}
+                  <div className="d-flex gap-2">
                   <Link
                     to="#"
                     className="text-decoration-underline"
@@ -399,14 +447,17 @@ const Footer = () => {
                   </Link>
                 </div>
 
-                <span className="d-block mt-2 ">
+                
+
+                </div>
+                {/* <span className="d-block mt-2 ">
                   Designed & developed by{" "}
                   <a href="http://www.varadesigns.com" className="dby">
                     <small className="p-1 fw-bold d-inline-block">
                       VARA-DESIGNS
                     </small>
                   </a>
-                </span>
+                </span> */}
               </div>
             </div>
           </div>
@@ -457,7 +508,7 @@ export default Footer;
 
 const ChildMenuContent = ({ menu }) => {
   return (
-    <li className="">
+    <li className="col-6">
       <Link to={menu?.page_url}>{menu?.page_label}</Link>
     </li>
   );

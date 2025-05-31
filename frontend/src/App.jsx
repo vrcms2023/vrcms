@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import _ from "lodash";
+import { ThemeProvider } from 'styled-components';
 
 // Components
 import LoadingSpinner from "./Common/LoadingSpinner";
@@ -142,7 +143,7 @@ function App() {
     const isAdmin = Boolean(getCookie("is_admin"));
     if (isNotEmptyObject(showHideCompPageList)) {
       if (showHideCompPageList?.advertisement?.visibility && !isAdmin) {
-        setFlashAdd(true);
+        setFlashAdd(false);
       }
     }
   }, [showHideCompPageList]);
@@ -190,96 +191,97 @@ function App() {
 
       {flashAdd && <Advertisement setFlashAdd={setFlashAdd} />}
 
-      <GlobalStyles />
-      <BrowserRouter>
-        {isLoading ? <LoadingSpinner /> : ""}
-        <TopStrip />
-        <Header />
+      <ThemeProvider theme={ThemeOne}>
+        <GlobalStyles />
+        <BrowserRouter>
+          {isLoading ? <LoadingSpinner /> : ""}
+          <TopStrip />
+          <Header />
 
-        <Suspense fallback={<SkeletonPage />}>
-          <Routes>
-            <Route element={<ProtectedRoute />}>
+          <Suspense fallback={<SkeletonPage />}>
+            <Routes>
+              <Route element={<ProtectedRoute />}>
+                <Route
+                  path="/admin/change_password"
+                  element={<ChangePassword />}
+                />
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route path="/admin/contactUSList" element={<ContactUSAdmin />} />
+              </Route>
+
+              <Route element={<AdminProtectedRoute />}>
+                <Route path="/admin/userAdmin" element={<UserAdmin />} />
+                <Route path="/admin/theme" element={<Themes />} />
+                <Route
+                  path="/admin/userPermission"
+                  element={<UserPagePermission />}
+                />
+                <Route
+                  path="/admin/adminPagesConfiguration"
+                  element={<PagesConfiguration />}
+                />
+                <Route path="/admin/settings" element={<AdminSettings />} />
+                <Route path="/editproject/:id" element={<AddProject />} />
+              </Route>
+
+              <Route path="*" element={<PageNotFound />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/hpr-home" element={<HPRHome />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/categories/:id" element={<Products />} />
+              <Route path="/products/:id" element={<ProductDetails />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/services/services" element={<Services />} />
+              <Route path="/services/:uid" element={<Services />} />
+              <Route path="/clients/clients" element={<ClientsList />} />
+              <Route path="/profile/careers" element={<Careers />} />
+              <Route path="/career-details/:id" element={<CareerDetails />} />
+              <Route path="/profile/team" element={<Team />} />
+              <Route path="/projects/projects" element={<Projects />} />
+              <Route path="/project-details" element={<ProjectTabs />} />
               <Route
-                path="/admin/change_password"
-                element={<ChangePassword />}
+                path="/projects/projectgallery"
+                element={<ProjectsGallery />}
               />
-              <Route path="/admin/dashboard" element={<Dashboard />} />
-              <Route path="/admin/contactUSList" element={<ContactUSAdmin />} />
-            </Route>
-
-            <Route element={<AdminProtectedRoute />}>
-              <Route path="/admin/userAdmin" element={<UserAdmin />} />
-              <Route path="/admin/theme" element={<Themes />} />
+              <Route path="/gallery/imagegallery" element={<ImagesGallery />} />
+              <Route path="/gallery/videogallery" element={<VideosGallery />} />
+              <Route path="/clients/casestudies" element={<CaseStudies />} />
               <Route
-                path="/admin/userPermission"
-                element={<UserPagePermission />}
+                path="/clients/casestudies-details/:id/"
+                element={<CaseStudiesDetails />}
               />
+              <Route path="/profile/news" element={<NewsAndUpdates />} />
               <Route
-                path="/admin/adminPagesConfiguration"
-                element={<PagesConfiguration />}
+                path="/profile/testimonials"
+                element={<TestimonialsList />}
               />
-              <Route path="/admin/settings" element={<AdminSettings />} />
-              <Route path="/editproject/:id" element={<AddProject />} />
-            </Route>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Registration />} />
+              <Route path="/reset_password" element={<ResetPassword />} />
+              <Route
+                path="/password/reset/:uid/:token"
+                element={<ResetPasswordConfirmation />}
+              />
+              <Route path="/activate/:uid/:token" element={<Activation />} />
+              <Route
+                path="/resend_activation"
+                element={<ResendActivationEmail />}
+              />
+              <Route path="/unauthorized" element={<UnauthorizedPage />} />
+              <Route path="/authForm" element={<AuthForm />} />
+              <Route path="/addproject" element={<AddProject />} />
 
-            <Route path="*" element={<PageNotFound />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/hpr-home" element={<HPRHome />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/categories/:id" element={<Products />} />
-            <Route path="/products/:id" element={<ProductDetails />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/services" element={<Services />} />
-            <Route path="/services/:uid" element={<Services />} />
-            <Route path="/clients/clients" element={<ClientsList />} />
-            <Route path="/profile/careers" element={<Careers />} />
-            <Route path="/career-details/:id" element={<CareerDetails />} />
-            <Route path="/profile/team" element={<Team />} />
-            <Route path="/projects/projects" element={<Projects />} />
-            <Route path="/project-details" element={<ProjectTabs />} />
-            <Route
-              path="/projects/projectgallery"
-              element={<ProjectsGallery />}
-            />
-            <Route path="/gallery/imagegallery" element={<ImagesGallery />} />
-            <Route path="/gallery/videogallery" element={<VideosGallery />} />
-            <Route path="/clients/casestudies" element={<CaseStudies />} />
-            <Route
-              path="/clients/casestudies-details/:id/"
-              element={<CaseStudiesDetails />}
-            />
-            <Route path="/profile/news" element={<NewsAndUpdates />} />
-            <Route
-              path="/profile/testimonials"
-              element={<TestimonialsList />}
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Registration />} />
-            <Route path="/reset_password" element={<ResetPassword />} />
-            <Route
-              path="/password/reset/:uid/:token"
-              element={<ResetPasswordConfirmation />}
-            />
-            <Route path="/activate/:uid/:token" element={<Activation />} />
-            <Route
-              path="/resend_activation"
-              element={<ResendActivationEmail />}
-            />
-            <Route path="/unauthorized" element={<UnauthorizedPage />} />
-            <Route path="/authForm" element={<AuthForm />} />
-            <Route path="/addproject" element={<AddProject />} />
+              <Route path="/adminNews" element={<AdminNews />} />
+              <Route path="/profile/testimonial" element={<AdminTestimonial />} />
+            </Routes>
+          </Suspense>
 
-            <Route path="/adminNews" element={<AdminNews />} />
-            <Route path="/profile/testimonial" element={<AdminTestimonial />} />
-          </Routes>
-        </Suspense>
-
-        {!isHideMenu && <Footer />}
-      </BrowserRouter>
-
+          {!isHideMenu && <Footer />}
+        </BrowserRouter>
+      </ThemeProvider>
       <ToastContainer autoClose={2000} theme="colored" />
       <ScrollToTop
         smooth
