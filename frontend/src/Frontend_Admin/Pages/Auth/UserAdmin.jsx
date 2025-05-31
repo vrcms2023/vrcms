@@ -91,7 +91,6 @@ const UserAdmin = () => {
 
   return (
     <div className="container-fluid pt-5 userAdmin">
-
       <div className="row px-3 px-lg-5">
         <div className="d-flex justify-content-between align-items-center border-bottom pb-3">
           <Title title={"User's"} cssClass="fs-5 pageTitle " />
@@ -182,10 +181,10 @@ const UserAdmin = () => {
             After activating the user account, granting page permissions is also
             required to access the application.
           </p> */}
-          {showMesg && (
+          {/* {showMesg && (
             <>
               <p className="text-black bg-warning p-2 fs-4">
-                {/* After activating the admin account, <br />  */}
+               
                 you'll need to grant permission to access the app's pages
               </p>
               <p className="text-center">

@@ -24,7 +24,7 @@ export function removeActiveClass() {
   });
 }
 
-export function hideHandBurgerIcon(pathList) {
+export function isPathExit(pathList) {
   return pathList.indexOf(window.location.pathname) >= 0 ? true : false;
 }
 

@@ -427,6 +427,31 @@ export const getProductFormDynamicFields = (selectedCategory) => {
       type: "richText",
       fieldName: "description",
     },
+    seo_title: {
+      label: "SEO Title",
+      type: "text",
+      fieldName: "seo_title",
+    },
+    seo_link: {
+      label: "SEO Link",
+      type: "text",
+      fieldName: "seo_link",
+    },
+    seo_author: {
+      label: "SEO Author",
+      type: "text",
+      fieldName: "seo_author",
+    },
+    seo_keywords: {
+      label: "SEO keywords",
+      type: "textarea",
+      fieldName: "seo_keywords",
+    },
+    seo_description: {
+      label: "SEO Description",
+      type: "textarea",
+      fieldName: "seo_description",
+    },
     category_id: {
       label: "category_id",
       readonly: true,

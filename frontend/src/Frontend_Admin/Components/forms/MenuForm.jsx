@@ -13,6 +13,7 @@ import { getCookie } from "../../../util/cookieUtil";
 import { getMenu } from "../../../redux/auth/authActions";
 import { useDispatch } from "react-redux";
 import { getMenuPosition, updatedMenu } from "../../../util/menuUtil";
+import SEOForm from "./SEOForm";
 
 const MenuForm = ({
   editHandler,
@@ -170,7 +171,7 @@ const MenuForm = ({
   return (
     <>
       <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
-      <hr className="my-2"/>
+      <hr className="my-2" />
       <div className="container">
         <div className="row py-0 pb-md-5">
           <div className="col-md-12 mb-5 mb-md-0">
@@ -196,28 +197,28 @@ const MenuForm = ({
               />
 
               <div className={!isParentHasChilds ? "d-flex" : ""}>
-              <CheckboxField
-                label="Parent"
-                fieldName={"is_Parent"}
-                register={register}
-                onChange={isParentHandler}
-                isChecked={isParentVal}
-              />
+                <CheckboxField
+                  label="Parent"
+                  fieldName={"is_Parent"}
+                  register={register}
+                  onChange={isParentHandler}
+                  isChecked={isParentVal}
+                />
 
-              <CheckboxField
-                label="Maintainer"
-                fieldName={"is_Maintainer_menu"}
-                register={register}
-                onChange={isMaintainerHandler}
-                isChecked={isMaintainerMenuActive}
-              />
-              <CheckboxField
-                label="Client"
-                fieldName={"is_Client_menu"}
-                register={register}
-                onChange={isClientMenuHandler}
-                isChecked={isClientMenuActive}
-              />
+                <CheckboxField
+                  label="Maintainer"
+                  fieldName={"is_Maintainer_menu"}
+                  register={register}
+                  onChange={isMaintainerHandler}
+                  isChecked={isMaintainerMenuActive}
+                />
+                <CheckboxField
+                  label="Client"
+                  fieldName={"is_Client_menu"}
+                  register={register}
+                  onChange={isClientMenuHandler}
+                  isChecked={isClientMenuActive}
+                />
               </div>
               {!isParentVal && (
                 <SelectField
@@ -240,54 +241,20 @@ const MenuForm = ({
               )} */}
               {!isParentHasChilds && (
                 <>
-                <hr className="mt-4"/>
-                <h5 className="mt-4">SEO</h5>
+                  <hr className="mt-4" />
+                  <h5 className="mt-4">SEO</h5>
                 </>
               )}
               {!isParentHasChilds && (
-              <div className="p-4 py-1 pb-3" style={{backgroundColor: "rgba(255, 255, 255, .4)"}}>
-                
-                  <InputFields
-                    key={2}
-                    label={"Title"}
-                    type={"text"}
-                    fieldName={"seo_title"}
+                <div
+                  className="p-4 py-1 pb-3 seoform"
+                  style={{ backgroundColor: "rgba(255, 255, 255, .4)" }}
+                >
+                  <SEOForm
                     register={register}
-                    onChange={onChangeHanlder}
+                    onChangeHanlder={onChangeHanlder}
                   />
-                  <InputFields
-                    key={3}
-                    label={"Link"}
-                    type={"text"}
-                    fieldName={"seo_link"}
-                    register={register}
-                    onChange={onChangeHanlder}
-                  />
-                  <InputFields
-                    key={4}
-                    label={"Author"}
-                    type={"text"}
-                    fieldName={"seo_author"}
-                    register={register}
-                    onChange={onChangeHanlder}
-                  />
-                  <InputFields
-                    key={5}
-                    label={"Keywords"}
-                    type={"textarea"}
-                    fieldName={"seo_keywords"}
-                    register={register}
-                    onChange={onChangeHanlder}
-                  />
-                  <InputFields
-                    key={6}
-                    label={"Description"}
-                    type={"textarea"}
-                    fieldName={"seo_description"}
-                    register={register}
-                    onChange={onChangeHanlder}
-                  />
-               </div>
+                </div>
               )}
               <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-1 mt-3">
                 <Button

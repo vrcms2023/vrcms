@@ -32,6 +32,11 @@ class Product(ImageModel):
     product_name =      models.CharField(max_length=100, null=True)
     description =       models.CharField(max_length=10000, null=True)
     price =             models.IntegerField(default=0)
+    seo_title =         models.CharField(blank=True, max_length=200, null=True)
+    seo_description =   models.CharField(blank=True, max_length=500, null=True)
+    seo_link =          models.CharField(blank=True, max_length=200, null=True)
+    seo_author =        models.CharField(blank=True, max_length=200, null=True)
+    seo_keywords =      models.CharField(blank=True, max_length=200, null=True)  
 
     def __str__(self):
         return self.product_name

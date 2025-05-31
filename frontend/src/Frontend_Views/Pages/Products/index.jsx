@@ -353,6 +353,7 @@ const ProductsPage = () => {
               editHandler={editHandler}
               componentType="product"
               popupTitle="Product"
+              category={selectedProduct?.category_name}
               componentTitle={compTtile}
               selectedItem={selectedProduct}
               setSelectedItemState={setSelectedProduct}
