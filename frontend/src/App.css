@@ -7,8 +7,8 @@ button.nav-link {
 }
 
 button.nav-link.active {
-  background-color: #e6e6e6 !important;
-  color: #000 !important;
+  background-color: #007CB9 !important;
+  color: #fff !important;
 }
 
 /* .footerTop {

@@ -1,11 +1,19 @@
 import styled from "styled-components";
 
 export const StyledMenu = styled.menu`
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 99999;
-  margin-left: auto;
+  // position: -webkit-sticky;
+  // position: sticky;
+  // top: 0;
+  // left: 0;
+  // z-index: 99999;
+  // margin-left: auto;
+
+    position: sticky;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    padding: 0;
+    z-index: 99999;
 
   // .navbar-brand {
   //   img {

@@ -11,16 +11,36 @@ export const FooterStyled = styled.div`
     background: ${({ theme }) => theme.footerBgColor};
     color: ${({ theme }) => theme.black};
     border-top: 1px solid ${({ theme }) => theme.grayccc};
+    font-size: .8rem;
 
-  .footerDetails {
+    hr {
+      border-color: ${({ theme }) => theme.white};
+    }
 
-    .logo img { width: 150px; }
+    h5 {
+      font-weight: 500;
+      font-style: normal;
+    }
+
     a {
       color: ${({ theme }) => theme.footerLinkColor};
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: rgba(109, 47, 155, .3) !important;
       &:hover {
         color: ${({ theme }) => theme.footerLinkHoverColor};
+        text-decoration-color: rgba(109, 47, 155, 1) !important;
       }
     }
+
+  .footerDetails {
+    .logo img { width: 150px; }
+    // a {
+    //   color: ${({ theme }) => theme.footerLinkColor};
+    //   &:hover {
+    //     color: ${({ theme }) => theme.footerLinkHoverColor};
+    //   }
+    // }
   
     ul {
       list-style: none;
@@ -32,13 +52,21 @@ export const FooterStyled = styled.div`
           padding-bottom: 0;
         }
   
-        a {
-          color: ${({ theme }) => theme.footerLinkColor};
-          &:hover {
-            color: ${({ theme }) => theme.footerLinkHoverColor};
-          }
-        }
+        // a {
+        //   color: ${({ theme }) => theme.footerLinkColor};
+        //   &:hover {
+        //     color: ${({ theme }) => theme.footerLinkHoverColor};
+        //   }
+        // }
       }
+    }
+
+    p {
+      color: ${({ theme }) => theme.footerTextColor};
+    }
+
+    p.description {
+      color: ${({ theme }) => theme.gray444};
     }
   
     .mainTitle {
@@ -65,9 +93,10 @@ export const FooterStyled = styled.div`
 
     
     i {
-      font-size: 2rem;
+      font-size: 1.5rem;
       margin: 0 8px 0;
-      color: ${({ theme }) => theme.footerLinkColor};
+      // color: ${({ theme }) => theme.footerLinkColor};
+      color: ${({ theme }) => theme.footerLinkHoverColor};
 
       &:hover {
         color: ${({ theme }) => theme.footerLinkHoverColor};
@@ -84,7 +113,7 @@ export const FooterStyled = styled.div`
       .socialLinks {
     
         .editIcon  {
-          top: 65px;
+          top: -48px;
           right: 0px;
     
           @media(max-width: 768px) {
@@ -118,7 +147,6 @@ export const FooterStyled = styled.div`
 
       .copyRight {
         color: ${({ theme }) => theme.gray888};
-        
       }
       
 
@@ -130,12 +158,12 @@ export const FooterStyled = styled.div`
 
   .footerCopyRights {
     border-top: 1px solid ${({ theme }) => theme.grayccc};
-    background-color: ${({ theme }) => theme.grayeee};
-    font-size: 0.85rem !important;
-    color: ${({ theme }) => theme.footerLinkColor};
+    background-color: ${({ theme }) => theme.grayddd};
+    font-size: 0.8rem !important;
+    color: ${({ theme }) => theme.footerTitleColor};
 
     a {
-      color: ${({ theme }) => theme.footerLinkColor};
+      color: ${({ theme }) => theme.footerTitleColor};
       font-size: 0.8rem !important;
       &:hover {
         color: ${({ theme }) => theme.footerLinkHoverColor};
@@ -144,12 +172,12 @@ export const FooterStyled = styled.div`
 
     .dby,
     .dby a {
-      font-size: 0.85rem;
-      color: ${({ theme }) => theme.footerLinkColor};
+      font-size: 0.8rem;
+      // color: ${({ theme }) => theme.footerLinkColor};
 
-      &:hover {
-        color: ${({ theme }) => theme.footerLinkHoverColor};
-      }
+      // &:hover {
+      //   color: ${({ theme }) => theme.footerLinkHoverColor};
+      // }
     }
   }
 `;

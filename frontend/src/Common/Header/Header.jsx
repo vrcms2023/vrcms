@@ -28,7 +28,8 @@ import {
 import { getServiceValues } from "../../redux/services/serviceActions";
 import { isAppAccess } from "../../util/permissions";
 
-import Logo from "../../Images/logo.png";
+// import Logo from "../../Images/logo.png";
+import headersvgLogo from "../../Images/headerLogo.svg";
 import LogoForm from "../../Frontend_Admin/Components/forms/Logo";
 import { updatedMenulist } from "../../redux/auth/authSlice";
 
@@ -189,7 +190,8 @@ const Header = () => {
       >
         <div className="container">
           <Link to={isHideMenu ? "#" : "/"} className="navbar-brand logo">
-            <img src={Logo} alt="" />
+            {/* <img src={Logo} alt="" /> */}
+            <img src={headersvgLogo} alt="" />
           </Link>
 
           {!isHideBurgetIcon && !showAddMenuMessage && (
