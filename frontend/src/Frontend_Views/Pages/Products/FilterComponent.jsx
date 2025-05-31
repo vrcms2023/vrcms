@@ -11,14 +11,16 @@ const FilterComponent = ({
   setSearchquery,
   searchQuery,
   searchBy,
-  hideSearchBy
+  hideSearchBy,
 }) => {
   if (category.length === 0) return;
   const changeCategory = (event) => {
     const item = _.filter(category, (item) => {
       return item.id === event.target.value;
     })[0];
-    setSelectedCategory(item);
+    if (item) {
+      setSelectedCategory(item);
+    }
   };
   return (
     <div className="container position-relative ">

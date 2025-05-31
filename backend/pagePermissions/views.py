@@ -66,8 +66,3 @@ class UpdateUserPermissions(APIView):
 
 
 
-
-""" 
-Client Service View
-"""
-   
