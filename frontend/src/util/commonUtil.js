@@ -112,15 +112,42 @@ export const sortByFieldName = (array, fieldName) => {
     return o[fieldName];
   });
 };
+export const getselectedUserMenu = (permisions, menuList) => {
+  const _userMenu = [];
+  let clonedMenu = getClonedObject(menuList);
+  let parentIDs = _.filter(permisions, (item) => {
+    if (item.parentid) return item;
+  });
+  parentIDs = _.uniqBy(parentIDs, "parentid");
+  permisions.forEach((permission) => {
+    clonedMenu.map((menu, index) => {
+      if (permission.name === menu.page_url) {
+        _userMenu.push(menu);
+      }
+    });
+  });
+  parentIDs.forEach((parent) => {
+    clonedMenu.map((menu, index) => {
+      if (parent.parentid === menu.id) {
+        _userMenu.push(menu);
+      }
+    });
+  });
 
+  return _userMenu;
+};
 export const getServiceMainMenu = (data) => {
   return _.filter(data, (item) => {
     return item.page_label.toLowerCase() === "services";
   });
 };
 
+export const getClonedObject = (list) => {
+  return JSON.parse(JSON.stringify(list));
+};
+
 export const getPublishedSericeMenu = (menuList, publishedMenuList) => {
-  let clonedMenu = JSON.parse(JSON.stringify(menuList));
+  let clonedMenu = getClonedObject(menuList);
   let mainServiceMenu = getServiceMainMenu(clonedMenu);
   const childMenu = mainServiceMenu[0]?.childMenu;
   let selectedMenu = [];
@@ -144,13 +171,14 @@ export const getPublishedSericeMenu = (menuList, publishedMenuList) => {
 };
 
 export const getMenuObject = (data) => {
-  const parentMenu = _.filter(data, (item) => {
+  let clonedMenu = getClonedObject(data);
+  const parentMenu = _.filter(clonedMenu, (item) => {
     return item.is_Parent;
   });
   const sortParentMenu = _.sortBy(parentMenu, (item) => {
     return item.page_position;
   });
-  const childList = _.filter(data, (item) => {
+  const childList = _.filter(clonedMenu, (item) => {
     return !item.is_Parent;
   });
 

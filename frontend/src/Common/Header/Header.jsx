@@ -19,7 +19,10 @@ import {
   getUser,
 } from "../../redux/auth/authActions";
 import {
+  getClonedObject,
+  getMenuObject,
   getPublishedSericeMenu,
+  getselectedUserMenu,
   getServiceMainMenu,
   storeServiceMenuValueinCookie,
   urlStringFormat,
@@ -31,7 +34,11 @@ import { isAppAccess } from "../../util/permissions";
 // import Logo from "../../Images/logo.png";
 import headersvgLogo from "../../Images/headerLogo.svg";
 import LogoForm from "../../Frontend_Admin/Components/forms/Logo";
-import { updatedMenulist } from "../../redux/auth/authSlice";
+import {
+  updatedMenulist,
+  updatedMenuloadedStatus,
+} from "../../redux/auth/authSlice";
+import { use } from "react";
 
 const Header = () => {
   const editComponentObj = {
@@ -41,7 +48,8 @@ const Header = () => {
   const { isAdmin } = useAdminLoginStatus();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [show, setShow] = useState(false);
-  const { userInfo, menuList } = useSelector((state) => state.auth);
+  const { userInfo, menuList, menuRawList, permissions, menuloadedStatus } =
+    useSelector((state) => state.auth);
   const { serviceMenu } = useSelector((state) => state.serviceMenu);
   const dispatch = useDispatch();
   const onPageLoadServiceAction = useRef(true);
@@ -77,28 +85,12 @@ const Header = () => {
   const [counter, setCounter] = useState(0);
   const [showAddMenuMessage, setshowAddMenuMessage] = useState(false);
   const menuUpdateInitialized = useRef(true);
+  const [isServiceMenuAvailable, setIsServiceMenuAvailable] = useState(false);
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setShow(!show);
     document.body.style.overflow = "hidden";
   };
-
-  useEffect(() => {
-    if (
-      serviceMenu.length === 0 &&
-      menuList.length > 0 &&
-      onPageLoadServiceAction.current
-    ) {
-      onPageLoadServiceAction.current = false;
-      menuUpdateInitialized.current = true;
-      dispatch(getServiceValues());
-    } else if (serviceMenu.length > 0) {
-      setServiceMenuList(serviceMenu);
-      if (!getCookie("pageLoadServiceName") && serviceMenu.length > 0) {
-        storeServiceMenuValueinCookie(serviceMenu[0]);
-      }
-    }
-  }, [serviceMenu, dispatch, menuList]);
 
   useEffect(() => {
     if (isAppAccess(userInfo)) {
@@ -107,14 +99,67 @@ const Header = () => {
     if (!userInfo && getCookie("access")) {
       dispatch(getUser());
     }
-    if (menuList.length === 0 && counter < 3) {
+    if (menuRawList.length === 0 && counter < 3) {
       menuUpdateInitialized.current = true;
       dispatch(getMenu());
       setCounter(counter + 1);
-    } else if (menuList.length === 0 && counter >= 3) {
+    } else if (menuRawList.length === 0 && counter >= 3) {
       setshowAddMenuMessage(true);
     }
-  }, [userInfo, dispatch, menuList]);
+  }, [userInfo, dispatch, menuRawList]);
+
+  useEffect(() => {
+    if (
+      permissions?.length > 0 &&
+      menuRawList?.length > 0 &&
+      menuloadedStatus
+    ) {
+      let _customMenulist = getClonedObject(menuRawList);
+      if (permissions[0]?.name.toLowerCase() !== "all") {
+        _customMenulist = getselectedUserMenu(permissions, menuRawList);
+        let mainServiceMenu = getServiceMainMenu(_customMenulist);
+        if (mainServiceMenu?.length > 0) {
+          setIsServiceMenuAvailable(true);
+        }
+      } else {
+        setIsServiceMenuAvailable(true);
+      }
+      const menuObject = getMenuObject(_customMenulist);
+      dispatch(updatedMenulist(menuObject));
+      dispatch(updatedMenuloadedStatus());
+    }
+  }, [permissions, menuRawList, menuloadedStatus]);
+
+  useEffect(() => {
+    if (menuRawList?.length > 0 && menuloadedStatus) {
+      let _customMenulist = getClonedObject(menuRawList);
+      let mainServiceMenu = getServiceMainMenu(_customMenulist);
+      if (mainServiceMenu?.length > 0) {
+        setIsServiceMenuAvailable(true);
+      }
+    }
+  }, [menuRawList, menuloadedStatus]);
+
+  useEffect(() => {
+    if (
+      serviceMenu.length === 0 &&
+      menuList.length > 0 &&
+      onPageLoadServiceAction.current &&
+      isServiceMenuAvailable
+    ) {
+      onPageLoadServiceAction.current = false;
+      dispatch(getServiceValues());
+    }
+  }, [serviceMenu, dispatch, menuList, isServiceMenuAvailable]);
+
+  useEffect(() => {
+    if (serviceMenu.length > 0) {
+      setServiceMenuList(serviceMenu);
+      if (!getCookie("pageLoadServiceName") && serviceMenu.length > 0) {
+        storeServiceMenuValueinCookie(serviceMenu[0]);
+      }
+    }
+  }, [serviceMenu]);
 
   useEffect(() => {
     if (

@@ -9,6 +9,7 @@ import { getMenuObject } from "../../../util/commonUtil";
 import Button from "../../../Common/Button";
 import Error from "../../Components/Error";
 import { isAppAccess } from "../../../util/permissions";
+import _ from "lodash";
 
 const UserPagePermission = () => {
   const [userDetails, setUserDetails] = useState([]);
@@ -72,6 +73,7 @@ const UserPagePermission = () => {
     const listOfObj = menuList.map((item) => ({
       id: item.id,
       name: item.page_url ? item.page_url : item.page_label,
+      parentid: item.page_parent_ID,
     }));
     setIsMenuCheck(listOfObj);
     if (isCheckAll) {
@@ -96,8 +98,11 @@ const UserPagePermission = () => {
 
   const handleClick = (e) => {
     const { id, name, checked } = e.target;
+    const parentid = e.target.dataset.parentid;
+
     setIsCheckAll(false);
-    setIsMenuCheck([...isMenuCheck, { id, name }]);
+    setIsMenuCheck([...isMenuCheck, { id, name, parentid }]);
+
     if (!checked) {
       setIsMenuCheck(isMenuCheck.filter((item) => item.id !== id));
     }
@@ -219,7 +224,8 @@ const UserPagePermission = () => {
                   type="checkbox"
                   name={menu.page_url}
                   id={menu.id}
-                  handleClick={handleClick}
+                  data-parentID={menu.page_parent_ID}
+                  onChange={handleClick}
                   isChecked={isObjectChecked(isMenuCheck, menu.id)}
                   disabled={false}
                 />
@@ -342,7 +348,15 @@ const UserPagePermission = () => {
   );
 };
 
-const Checkbox = ({ id, type, name, handleClick, isChecked, disabled }) => {
+const Checkbox = ({
+  id,
+  type,
+  name,
+  handleClick,
+  isChecked,
+  disabled,
+  ...rest
+}) => {
   return (
     <input
       id={id}
@@ -351,6 +365,7 @@ const Checkbox = ({ id, type, name, handleClick, isChecked, disabled }) => {
       onChange={handleClick}
       checked={isChecked}
       disabled={disabled}
+      {...rest}
       className="form-check-input border border-secondary"
     />
   );

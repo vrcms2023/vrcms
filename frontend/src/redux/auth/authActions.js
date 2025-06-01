@@ -93,9 +93,17 @@ export const getSelectedUserPermissions = createAsyncThunk(
         `/pagePermission/updatePermissions/${id}/`
       );
 
-      return data;
+      return data?.userPermissions?.user_permission_list;
     } catch (error) {
       // return custom error message from API if any
+      if (error === "Not Found") {
+        return [
+          {
+            id: "67c7e654-6008-4690-96e6-e7cac347db23232",
+            name: "all",
+          },
+        ];
+      }
       if (error?.response?.data) {
         const key = Object.keys(error.response.data);
         return rejectWithValue(error.response.data[key][0]);
