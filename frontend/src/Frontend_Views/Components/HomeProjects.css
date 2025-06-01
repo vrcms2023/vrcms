@@ -1,0 +1,33 @@
+
+.title-border {
+    border-width: 1px;
+    border-style: solid;
+    opacity: 1;
+}
+
+.ongoing {
+    border-color: #27C400;
+}
+
+.completed {
+    border-color: #FF9D00;
+}
+
+.future {
+    border-color: #6D2F9B;
+}
+
+.card-body img {
+    height: 160px;
+    object-fit: cover;
+    object-position: top;
+}
+
+.card-body h5 {
+    font-weight: 600;
+    font-style: normal;
+    color: #222;
+    text-align: center;
+    letter-spacing: .05rem;
+}
+

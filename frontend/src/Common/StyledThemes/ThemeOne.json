@@ -1,6 +1,6 @@
 {
   "name": "VRCMS Theme One",
-  "fontFamily": "Poppins, 'Fira Sans', sans-serif, Arial, verdana",
+  "fontFamily": "Roboto, Poppins, 'Fira Sans', sans-serif, Arial, verdana",
   "background": "#ffffff",
   "bodyBgImage": "",
 
@@ -102,8 +102,8 @@
   "aboutPageTitleColor": "",
   "aboutPageTextColor": "",
 
-  "btnPrimary": "#007CB9",
-  "btnPrimaryHover": "#005689",
+  "btnPrimary": "#6D2F9B",
+  "btnPrimaryHover": "#222222",
   "btnPrimaryTextColor": "#ffffff",
   "btnPrimaryTextHoverColor": "#ffffff",
   "btnPrimaryBorderColor": "#c4165f",
