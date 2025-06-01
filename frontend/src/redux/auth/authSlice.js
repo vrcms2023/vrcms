@@ -22,6 +22,7 @@ const initialState = {
   permissions: [],
   menuList: [],
   menuRawList: [],
+  menuloadedStatus: false,
 };
 
 const authSlice = createSlice({
@@ -50,11 +51,20 @@ const authSlice = createSlice({
     },
     updatedPermisisons: (state) => {
       state.error = false;
-      state.permissions = ["ALL"];
+      state.permissions = [
+        {
+          id: "67c7e654-6008-4690-96e6-e7cac347db23232",
+          name: "all",
+        },
+      ];
     },
     updatedMenulist: (state, { payload }) => {
       state.error = false;
       state.menuList = payload;
+    },
+    updatedMenuloadedStatus: (state) => {
+      state.error = false;
+      state.menuloadedStatus = false;
     },
   },
   extraReducers: (builder) => {
@@ -126,7 +136,7 @@ const authSlice = createSlice({
     });
     builder.addCase(getSelectedUserPermissions.fulfilled, (state, action) => {
       state.loading = false;
-      state.permissions = action.payload?.userPermissions?.user_permission_list;
+      state.permissions = action.payload;
     });
     builder.addCase(getSelectedUserPermissions.rejected, (state, action) => {
       state.loading = false;
@@ -142,9 +152,10 @@ const authSlice = createSlice({
       state.loading = false;
       state.menuRawList = action?.payload?.PageDetails;
       state.menuList =
-        action.payload?.PageDetails?.length > 0
+        action.payload?.PageDetails.length > 0
           ? getMenuObject(action.payload?.PageDetails)
           : [];
+      state.menuloadedStatus = true;
     });
     builder.addCase(getMenu.rejected, (state, action) => {
       state.loading = false;
@@ -159,6 +170,7 @@ export const {
   updatedState,
   updatedPermisisons,
   updatedMenulist,
+  updatedMenuloadedStatus,
 } = authSlice.actions;
 
 export default authSlice.reducer;
