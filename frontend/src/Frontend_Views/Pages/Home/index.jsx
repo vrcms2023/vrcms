@@ -1214,7 +1214,7 @@ const Home = () => {
                     detailsContainerCss="col-md-12 py-3"
                     anchorContainer="d-flex justify-content-center align-items-center mt-4"
                     anchersvgColor="#17427C"
-                    pageType={pageType}
+                    pageType={"projectsBrief"}
                   />
                 </div>
               </div>
@@ -1226,7 +1226,7 @@ const Home = () => {
                   editHandler={editHandler}
                   componentType="projectsBrief"
                   popupTitle="Brief Intro Banner"
-                  pageType="Home"
+                  pageType="projectsBrief"
                 />
               </div>
             )}
@@ -1272,7 +1272,7 @@ const Home = () => {
                     detailsContainerCss="col-md-12 py-3"
                     anchorContainer="d-flex justify-content-center align-items-center mt-4"
                     anchersvgColor="#17427C"
-                    pageType={pageType}
+                    pageType={"iconsHelightsBrief"}
                   />
                 </div>
               </div>
@@ -1284,7 +1284,7 @@ const Home = () => {
                   editHandler={editHandler}
                   componentType="iconsHelightsBrief"
                   popupTitle="Brief Intro Banner"
-                  pageType="Home"
+                  pageType="iconsHelightsBrief"
                 />
               </div>
             )}
