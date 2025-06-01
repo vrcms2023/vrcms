@@ -16,7 +16,7 @@ const HomeProjects = () => {
   return (
     <div>
         <Title title="PROJECTS" cssClass="text-center fs-1" />
-        <div className="row my-3 my-md-5 homeProjectsBg">
+        <div className="row my-3 homeProjectsBg">
             <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="container">
                 <div className="row">
