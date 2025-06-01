@@ -73,10 +73,12 @@ const Home = () => {
     carousel: false,
     briefIntro: false,
     projects: false,
+    projectsBrief: false,
     testmonial: false,
     serviceOffered: false,
     product_development: false,
     product_distribution: false,
+    iconsHelightsBrief: false,
   };
 
   const productComp = {
@@ -236,6 +238,7 @@ const Home = () => {
 
   /** End Visibility ON / OFF logic  */
   return (
+    <>
     <div className="container-fluid">
       {/* BANNER COMPONENT  */}
       <div
@@ -791,6 +794,8 @@ const Home = () => {
           </RandomHomeServicesStyled>
         )}
       </div>
+
+  
       {/* HOME NEWS */}
       <div
         className={
@@ -1161,8 +1166,7 @@ const Home = () => {
 
       {/* === HPR INFRA ================================================================================================================= */}
 
-      {/* Project Cards */}
-      {/* <hr /> */}
+      {/* Projects + brief intro  */}
       <div
         className={
           showHideCompList?.hprinfra?.visibility && isAdmin && hasPermission
@@ -1173,7 +1177,7 @@ const Home = () => {
         {isAdmin && hasPermission && (
           <ShowHideToggle
             showhideStatus={showHideCompList?.hprinfra?.visibility}
-            title={"HPR INFRA"}
+            title={"Projects"}
             componentName={"hprinfra"}
             showHideHandler={showHideHandler}
           />
@@ -1181,6 +1185,52 @@ const Home = () => {
         {showHideCompList?.hprinfra?.visibility && (
           <HomeProjects />
         )}
+
+        {/* Projects Brief COMPONENT */}
+
+          <div className="homeProjectsInfo">
+            <div className="container">
+              <div className="row">
+                {/* <BriefIntroFrontend
+                introState={componentEdit.projectsBrief}
+                pageType="Home"
+                /> 
+              */}
+                <div className="breiftopMargin">
+                  {isAdmin && hasPermission && (
+                    <EditIcon
+                      editHandler={() => editHandler("projectsBrief", true)}
+                    />
+                  )}
+
+                  <BriefIntroFrontend
+                    introState={componentEdit.projectsBrief}
+                    linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                    linkLabel="Read More"
+                    moreLink=""
+                    introTitleCss="fs-3 fw-bold text-center mb-4"
+                    introSubTitleCss="fw-medium text-muted text-center"
+                    introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
+                    detailsContainerCss="col-md-12 py-3"
+                    anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                    anchersvgColor="#17427C"
+                    pageType={pageType}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {componentEdit.projectsBrief && (
+              <div className={`adminEditTestmonial selected `}>
+                <BriefIntroAdmin
+                  editHandler={editHandler}
+                  componentType="projectsBrief"
+                  popupTitle="Brief Intro Banner"
+                  pageType="Home"
+                />
+              </div>
+            )}
+          </div>
       </div>
 
       {/* END OF HPR INFRA COMPONENTS */}
@@ -1194,6 +1244,62 @@ const Home = () => {
       {show && <ModelBg />}
       {/* {showEditPop && <ModelBg />} */}
     </div>
+
+    {/* ICONS HEILIGHT ================================= */}
+            <div className="homeIconsheilights">
+            <div className="container">
+              <div className="row">
+                {/* <BriefIntroFrontend
+                introState={componentEdit.iconsHelightsBrief}
+                pageType="Home"
+                /> 
+              */}
+                <div className="breiftopMargin">
+                  {isAdmin && hasPermission && (
+                    <EditIcon
+                      editHandler={() => editHandler("iconsHelightsBrief", true)}
+                    />
+                  )}
+
+                  <BriefIntroFrontend
+                    introState={componentEdit.iconsHelightsBrief}
+                    linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                    linkLabel="Read More"
+                    moreLink=""
+                    introTitleCss="fs-3 fw-bold text-center mb-4"
+                    introSubTitleCss="fw-medium text-muted text-center"
+                    introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
+                    detailsContainerCss="col-md-12 py-3"
+                    anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                    anchersvgColor="#17427C"
+                    pageType={pageType}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {componentEdit.projectsBrief && (
+              <div className={`adminEditTestmonial selected `}>
+                <BriefIntroAdmin
+                  editHandler={editHandler}
+                  componentType="iconsHelightsBrief"
+                  popupTitle="Brief Intro Banner"
+                  pageType="Home"
+                />
+              </div>
+            )}
+          </div>
+      {/* END OF ICONS HEILIGHT ========================= */}
+
+      {/* ICONS ALL SERVICES ============================ */}
+          <div className="homeIconsAllServices">
+            <div>
+              <h3>SERVICES</h3>
+              <p>ICONS can offer a full range of services, from engineering to support services and management.</p>
+            </div>
+          </div>
+      {/* END OF ICONS ALL SERVICES */}
+    </>
   );
 };
 

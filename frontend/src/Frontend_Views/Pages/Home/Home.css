@@ -108,3 +108,28 @@
 .breiftopMargin {
   margin-top: 30px;
 }
+
+.homeProjectsInfo .breiftopMargin {
+  margin-top: 0px !important;
+}
+
+.homeProjectsInfo .breiftopMargin > .container > div {
+  padding-top: 0px !important;
+}
+
+.homeIconsheilights {
+  background-color: #FF9D00;
+  color: #fff;
+  padding: 48px 0;
+}
+
+.homeIconsheilights p {
+  color: #fff
+}
+
+.homeIconsAllServices {
+  padding: 48px 0;
+  background-color: #6D2F9B;
+  color: white;
+  text-align: center;
+}
