@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import ModalBg from "../../Common/ModelBg";
 // import EditIcon from "../AdminEditIcon";
-import { hideHandBurgerIcon } from "../../util/ulrUtil";
+import { isPathExit } from "../../util/ulrUtil";
 import { useAdminLoginStatus } from "../customhook/useAdminLoginStatus";
 
 // Styled Components
@@ -59,7 +59,7 @@ const Header = () => {
     // "/testimonial",
     // "/userAdmin",
   ];
-  const isHideMenu = hideHandBurgerIcon(pathList);
+  const isHideMenu = isPathExit(pathList);
 
   const burgetHide = [
     "/login",
@@ -72,7 +72,7 @@ const Header = () => {
     "password",
     "settings",
   ];
-  const isHideBurgetIcon = hideHandBurgerIcon(burgetHide);
+  const isHideBurgetIcon = isPathExit(burgetHide);
   const [serviceMenuList, setServiceMenuList] = useState([]);
   const [counter, setCounter] = useState(0);
   const [showAddMenuMessage, setshowAddMenuMessage] = useState(false);

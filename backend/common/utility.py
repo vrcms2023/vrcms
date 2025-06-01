@@ -115,6 +115,11 @@ def get_product_data_From_request_Object(request):
         requestObj['is_available'] = request.data["is_available"]
         requestObj['price'] = request.data["price"]
         requestObj['product_name'] = request.data["product_name"]
+        requestObj['seo_title'] = request.data["seo_title"]
+        requestObj['seo_author'] = request.data["seo_author"]
+        requestObj['seo_description'] = request.data["seo_description"]
+        requestObj['seo_keywords'] = request.data["seo_keywords"]
+        requestObj['seo_link'] = request.data["seo_link"]
         return requestObj
 
 def exclude_fields(self, fields_to_exclude=None):
