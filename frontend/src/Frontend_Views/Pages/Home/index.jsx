@@ -66,6 +66,7 @@ import {
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import { HomeClientItem } from "../../Components/HomeClientItem";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
+import HomeProjects from "../../Components/HomeProjects";
 
 const Home = () => {
   const editComponentObj = {
@@ -1178,138 +1179,7 @@ const Home = () => {
           />
         )}
         {showHideCompList?.hprinfra?.visibility && (
-          <>
-            <Title title="HPR INFRA" cssClass="text-center fs-1" />
-            <div className="row my-5 homeProjectsBg">
-              <div className="col-md-12 d-flex justify-content-center align-items-center">
-                <div className="container">
-                  <div className="row">
-                    <div className="col-md-4">
-                      <div className="card">
-                        <img
-                          src={imgOngoing}
-                          className="card-img-top"
-                          alt="Ongoing Projects"
-                        />
-                        <div className="card-body">
-                          <Title title="Ongoing Projects" cssClass="blue-900" />
-                          <p className="card-text mb-4">
-                            At HPR Infra, innovation meets excellence as we
-                            craft spaces that reflect our commitment to quality
-                            and contemporary design. With projects seamlessly
-                            blending into the city's dynamic landscape, each
-                            development is a testament to our dedication to
-                            creating not just structures, but vibrant
-                            communities. Join us on this journey towards the
-                            future of real estate, where HPR Infra is shaping
-                            the skyline and your dreams. Discover ongoing
-                            excellence with us!
-                          </p>
-                          <Link to="/projects">
-                            Continue{" "}
-                            <svg
-                              width="15"
-                              height="8"
-                              viewBox="0 0 15 8"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M14.3536 4.35355C14.5488 4.15829 14.5488 3.84171 14.3536 3.64645L11.1716 0.464466C10.9763 0.269204 10.6597 0.269204 10.4645 0.464466C10.2692 0.659728 10.2692 0.976311 10.4645 1.17157L13.2929 4L10.4645 6.82843C10.2692 7.02369 10.2692 7.34027 10.4645 7.53553C10.6597 7.7308 10.9763 7.7308 11.1716 7.53553L14.3536 4.35355ZM0 4.5H14V3.5H0V4.5Z"
-                                fill="#165D3D"
-                              />
-                            </svg>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-md-4 my-3 my-md-0">
-                      <div className="card cardGreenBg">
-                        <img
-                          src={imgFuture}
-                          className="card-img-top"
-                          alt="Completed Projects"
-                        />
-                        <div className="card-body">
-                          <Title
-                            title="Completed Projects"
-                            cssClass="text-white blue-900"
-                          />
-                          <p className="card-text mb-5">
-                            Step into the legacy of excellence as we proudly
-                            showcase our successfully completed projects that
-                            stand as testaments to our commitment to quality and
-                            innovation in Hyderabad. From meticulously designed
-                            open plot layouts to signature apartment
-                            constructions, each completed endeavour reflects the
-                            essence of HPR Infra's dedication to crafting not
-                            just structures, but thriving communities.
-                          </p>
-                          <br />
-                          <Link to="/projects">
-                            Continue{" "}
-                            <svg
-                              width="15"
-                              height="8"
-                              viewBox="0 0 15 8"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M14.3536 4.35355C14.5488 4.15829 14.5488 3.84171 14.3536 3.64645L11.1716 0.464466C10.9763 0.269204 10.6597 0.269204 10.4645 0.464466C10.2692 0.659728 10.2692 0.976311 10.4645 1.17157L13.2929 4L10.4645 6.82843C10.2692 7.02369 10.2692 7.34027 10.4645 7.53553C10.6597 7.7308 10.9763 7.7308 11.1716 7.53553L14.3536 4.35355ZM0 4.5H14V3.5H0V4.5Z"
-                                fill="#165D3D"
-                              />
-                            </svg>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-md-4">
-                      <div className="card">
-                        <img
-                          src={imgCompleted}
-                          className="card-img-top"
-                          alt="Future Projects"
-                        />
-                        <div className="card-body">
-                          <Title title="Future Projects" cssClass="blue-900" />
-                          <p className="card-text mb-4">
-                            Welcome to HPR Infra, a beacon of innovation in
-                            Hyderabad's real estate landscape. With a legacy of
-                            completing multiple open plot layouts, we now set
-                            our sights on the future. Our upcoming projects
-                            redefine modern living, blending innovation and
-                            sustainability for a dynamic urban experience. Join
-                            us as we shape not just structures but vibrant
-                            communities that echo the aspirations of generations
-                            to come. Explore the future of living with HPR Infra
-                            – where innovation meets your dreams.
-                          </p>
-                          <Link to="/projects" className="">
-                            Continue{" "}
-                            <svg
-                              width="15"
-                              height="8"
-                              viewBox="0 0 15 8"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M14.3536 4.35355C14.5488 4.15829 14.5488 3.84171 14.3536 3.64645L11.1716 0.464466C10.9763 0.269204 10.6597 0.269204 10.4645 0.464466C10.2692 0.659728 10.2692 0.976311 10.4645 1.17157L13.2929 4L10.4645 6.82843C10.2692 7.02369 10.2692 7.34027 10.4645 7.53553C10.6597 7.7308 10.9763 7.7308 11.1716 7.53553L14.3536 4.35355ZM0 4.5H14V3.5H0V4.5Z"
-                                fill="#165D3D"
-                              />
-                            </svg>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
+          <HomeProjects />
         )}
       </div>
 

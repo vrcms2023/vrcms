@@ -15,7 +15,17 @@ ul, li {
     // list-style: none;
 }
 
-a {text-decoration: none}
+a {
+  font-size: .8rem;
+  color: ${({ theme }) => theme.gray222};
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(109, 47, 155, .3) !important;
+  &:hover {
+    color: ${({ theme }) => theme.footerLinkHoverColor};
+    text-decoration-color: rgba(109, 47, 155, 1) !important;
+  }
+}
 
 h1, h2, h3, h4, h5, h6, th {
     // font-family: Poppins;
@@ -41,9 +51,10 @@ body {
   
   // transition: all .35s;
   // padding: .6rem 1.2rem !important;
-  font-family: Amarante;
+  // font-family: Amarante;
+  font-family: "Barlow", sans-serif;
   font-weight: normal !important;
-  border-radius: 0 !important;
+  border-radius: 4px !important;
 
   // &:hover svg { transform: rotate(-45deg);}
   &:hover {
