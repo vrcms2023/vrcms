@@ -13,13 +13,15 @@ export const ThemeContext = createContext();
 export const ThemeContextProvider = ({ children }) => {
   const storedTheme = localStorage.getItem("app-theme") || "VRCMS";
   const [themeName, setThemeName] = useState(storedTheme);
+  const [counter, setCounter] = useState(0);
 
   const { theme } = useSelector((state) => state.selectedTheme);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (theme.length == 0) {
+    if (theme.length == 0 && counter < 3) {
       dispatch(getTheme());
+      setCounter(counter + 1);
     }
   }, [theme, dispatch]);
 

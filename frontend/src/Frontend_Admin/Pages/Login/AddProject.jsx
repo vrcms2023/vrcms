@@ -91,7 +91,8 @@ const AddProject = () => {
    */
   useEffect(() => {
     const getPorjectCategory = async () => {
-      const response = await axiosServiceApi.get(`/project/categorylist/`);
+      //const response = await axiosServiceApi.get(`/project/categorylist/`);
+      const response = await axiosServiceApi.get(`/project/createCategory/`);
       if (response?.status === 200) {
         setDefaultProjectType(response.data);
       } else {
@@ -111,9 +112,9 @@ const AddProject = () => {
   const handleChange = (e) => {
     setErrorMessage("");
     setSelected(e.target.value);
-    const value = e.target.value.toLowerCase();
+    const value = e.target.value;
     const obj = defaultProjectType.filter((obj) => {
-      return obj.projectValue === value;
+      return obj.id === value;
     });
     if (obj.length > 0) {
       setProjectType(obj);
@@ -477,11 +478,8 @@ const AddProject = () => {
               {defaultProjectType?.length
                 ? defaultProjectType?.map((option, index) => {
                     return (
-                      <option
-                        key={option.idprojectcategories}
-                        value={option.projectValue}
-                      >
-                        {option.projectLabel}
+                      <option key={option.id} value={option.id}>
+                        {option.category_Label}
                       </option>
                     );
                   })
@@ -638,7 +636,7 @@ const AddProject = () => {
                 >
                   Pdfs / Plan / Map / Cost / Availability
                 </button>
-                
+
                 <button
                   className="nav-link"
                   id="v-pills-messages-tab"
@@ -743,11 +741,8 @@ const AddProject = () => {
                         {defaultProjectType?.length
                           ? defaultProjectType?.map((option, index) => {
                               return (
-                                <option
-                                  key={option.idprojectcategories}
-                                  value={option.projectValue}
-                                >
-                                  {option.projectLabel}
+                                <option key={option.id} value={option.id}>
+                                  {option.category_Label}
                                 </option>
                               );
                             })
