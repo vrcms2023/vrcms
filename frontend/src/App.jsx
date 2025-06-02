@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import _ from "lodash";
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from "styled-components";
 
 // Components
 import LoadingSpinner from "./Common/LoadingSpinner";
@@ -110,6 +110,9 @@ const AuthForm = lazy(() => import("./Frontend_Admin/Pages/Auth/AuthForm"));
 const AddProject = lazy(
   () => import("./Frontend_Admin/Pages/Login/AddProject")
 );
+const ProjectCategory = lazy(
+  () => import("./Frontend_Admin/Pages/Login/ProjectCategory")
+);
 const AdminNews = lazy(() => import("./Frontend_Admin/Pages/Login/AdminNews"));
 const ContactUSAdmin = lazy(
   () => import("./Frontend_Admin/Pages/Auth/ContactUSAdmin")
@@ -206,7 +209,10 @@ function App() {
                   element={<ChangePassword />}
                 />
                 <Route path="/admin/dashboard" element={<Dashboard />} />
-                <Route path="/admin/contactUSList" element={<ContactUSAdmin />} />
+                <Route
+                  path="/admin/contactUSList"
+                  element={<ContactUSAdmin />}
+                />
               </Route>
 
               <Route element={<AdminProtectedRoute />}>
@@ -273,9 +279,13 @@ function App() {
               <Route path="/unauthorized" element={<UnauthorizedPage />} />
               <Route path="/authForm" element={<AuthForm />} />
               <Route path="/addproject" element={<AddProject />} />
+              <Route path="/admin/addCategory" element={<ProjectCategory />} />
 
               <Route path="/adminNews" element={<AdminNews />} />
-              <Route path="/profile/testimonial" element={<AdminTestimonial />} />
+              <Route
+                path="/profile/testimonial"
+                element={<AdminTestimonial />}
+              />
             </Routes>
           </Suspense>
 

@@ -135,3 +135,12 @@ def get_advertisement_From_request_Object(request):
         requestObj['phonen_number'] = request.data["phonen_number"]
         requestObj['showAndHide'] = request.data["showAndHide"]
         return requestObj
+
+
+def get_Category_From_request_Object(request):
+        requestObj = get_image_data_from_request(request)
+        requestObj['category_Label'] = request.data["category_Label"]
+        requestObj['category_Value'] = request.data["category_Value"]
+        requestObj['category_description'] = request.data["category_description"]
+        requestObj['readMore_link'] = request.data["readMore_link"]
+        return requestObj

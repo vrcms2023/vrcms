@@ -560,6 +560,32 @@ export const getAdvertisementFormDynamicFields = (advertisement) => {
   };
 };
 
+export const getProjectCategoryFormDynamicFields = (editCategory) => {
+  return {
+    category_Label: {
+      label: "Category Title",
+      type: "text",
+      fieldName: "category_Label",
+      validationObject: { required: "Please enter Category Title" },
+    },
+    category_Value: {
+      label: "category_Value",
+      type: "text",
+      fieldName: "category_Value",
+    },
+    category_description: {
+      label: "Category Description",
+      type: "textarea",
+      fieldName: "category_description",
+    },
+    readMore_link: {
+      label: "Read More link",
+      type: "text",
+      fieldName: "readMore_link",
+    },
+  };
+};
+
 export const imageDimensionsJson = (component) => {
   const imgDimension = {
     carousel: {

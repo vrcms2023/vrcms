@@ -224,6 +224,7 @@ export const HideFooterForAdmin = () => {
     "/admin/adminpagesconfiguration",
     "/addproject",
     "/admin/settings",
+    "/admin/addCategory",
   ];
   const path = window.location.pathname;
   const match = path.match(/^\/editproject(?:\/([a-zA-Z0-9-]+))?$/);
