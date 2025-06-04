@@ -1,4 +1,4 @@
-/* .card {
+/* .card {homeIconsAllServices
   border-radius: 0px !important;
   overflow: hidden;
   border: 0px !important;
@@ -132,4 +132,8 @@
   background-color: #6D2F9B;
   color: white;
   text-align: center;
+}
+
+.homeService {
+  position: relative;
 }
