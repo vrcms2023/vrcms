@@ -242,7 +242,7 @@ const Home = () => {
     }
   };
 
-  const homeServices = [1, 2, 3, 4, 5, 6]
+  const homeServices = [1, 2, 3, 4, 5, 6];
 
   /** End Visibility ON / OFF logic  */
   return (
@@ -1262,12 +1262,11 @@ const Home = () => {
         {/* {showEditPop && <ModelBg />} */}
       </div>
 
-
-    {/* ICONS HEILIGHT ================================= */}
-          <div className="homeIconsheilights">
-            <div className="container">
-              <div className="row">
-                {/* <BriefIntroFrontend
+      {/* ICONS HEILIGHT ================================= */}
+      <div className="homeIconsheilights">
+        <div className="container">
+          <div className="row">
+            {/* <BriefIntroFrontend
 
                 introState={componentEdit.iconsHelightsBrief}
                 pageType="Home"
@@ -1280,105 +1279,102 @@ const Home = () => {
                 />
               )}
 
-                  <BriefIntroFrontend
-                    introState={componentEdit.iconsHelightsBrief}
-                    linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-                    linkLabel="Read More"
-                    moreLink=""
-                    introTitleCss="fs-3 fw-bold text-center mb-4"
-                    introSubTitleCss="fw-medium text-muted text-center"
-                    introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
-                    detailsContainerCss="col-md-12 py-3"
-                    anchorContainer="d-flex justify-content-center align-items-center mt-4"
-                    anchersvgColor="#17427C"
-                    pageType={"iconsHelightsBrief"}
+              <BriefIntroFrontend
+                introState={componentEdit.iconsHelightsBrief}
+                linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                linkLabel="Read More"
+                moreLink=""
+                introTitleCss="fs-3 fw-bold text-center mb-4"
+                introSubTitleCss="fw-medium text-muted text-center"
+                introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
+                detailsContainerCss="col-md-12 py-3"
+                anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                anchersvgColor="#17427C"
+                pageType={"iconsHelightsBrief"}
+              />
+
+              {componentEdit.iconsHelightsBrief && (
+                <div className={`adminEditTestmonial selected `}>
+                  <BriefIntroAdmin
+                    editHandler={editHandler}
+                    componentType="iconsHelightsBrief"
+                    popupTitle="Brief Intro Banner"
+                    pageType="iconsHelightsBrief"
                   />
                 </div>
-              </div>
-
+              )}
             </div>
           </div>
         </div>
-
-
-            {componentEdit.iconsHelightsBrief && (
-              <div className={`adminEditTestmonial selected `}>
-                <BriefIntroAdmin
-                  editHandler={editHandler}
-                  componentType="iconsHelightsBrief"
-                  popupTitle="Brief Intro Banner"
-                  pageType="iconsHelightsBrief"
-                />
-              </div>
-            )}
-          </div>
-        )}
       </div>
       {/* END OF ICONS HEILIGHT ========================= */}
 
       {/* ICONS ALL SERVICES ============================ */}
 
-          <div className="homeIconsAllServices">
-            <div>
-              <h3>SERVICES</h3>
-              <p>ICONS can offer a full range of services, from engineering to support services and management.</p>
-            </div>
-            <div className="container homeServices">
-              <div className="row">
-                <div className="row">
-                  {
-                    homeServices.map((service, i) => {
-                      const dynamicKey = `homeService${i}`;
-                      const serviceData = componentEdit[dynamicKey];
-                      return (
-                        <div className="col-md-4" key={i}>
-                          <div>{`service${i}`}</div>
-                          <div className="homeService">
-                            <div className="container">
-                              <div className="row">
-                                <div className="breiftopMargin">
-                                  {isAdmin && hasPermission && (
-                                    <EditIcon
-                                      editHandler={() => editHandler(dynamicKey, true)}
-                                    />
-                                  )}
-
-                                  <BriefIntroFrontend
-                                    introState={serviceData}
-                                    linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-                                    linkLabel="Read More"
-                                    moreLink=""
-                                    introTitleCss="fs-3 fw-bold text-center mb-4"
-                                    introSubTitleCss="fw-medium text-muted text-center"
-                                    introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
-                                    detailsContainerCss="col-md-12 py-3"
-                                    anchorContainer="d-flex justify-content-center align-items-center mt-4"
-                                    anchersvgColor="#17427C"
-                                    pageType={dynamicKey}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-
-                            {componentEdit.dynamicKey && (
-                              <div className="adminEditTestmonial selected">
-                                <BriefIntroAdmin
-                                  editHandler={editHandler}
-                                  componentType={dynamicKey}
-                                  popupTitle="Brief Intro Banner"
-                                  pageType={dynamicKey}
-                                />
-                              </div>
+      <div className="homeIconsAllServices">
+        <div>
+          <h3>SERVICES</h3>
+          <p>
+            ICONS can offer a full range of services, from engineering to
+            support services and management.
+          </p>
+        </div>
+        <div className="container homeServices">
+          <div className="row">
+            <div className="row">
+              {homeServices.map((service, i) => {
+                const dynamicKey = `homeService${i}`;
+                const serviceData = componentEdit[dynamicKey];
+                return (
+                  <div className="col-md-4" key={i}>
+                    <div>{`service${i}`}</div>
+                    <div className="homeService">
+                      <div className="container">
+                        <div className="row">
+                          <div className="breiftopMargin">
+                            {isAdmin && hasPermission && (
+                              <EditIcon
+                                editHandler={() =>
+                                  editHandler(dynamicKey, true)
+                                }
+                              />
                             )}
+
+                            <BriefIntroFrontend
+                              introState={serviceData}
+                              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                              linkLabel="Read More"
+                              moreLink=""
+                              introTitleCss="fs-3 fw-bold text-center mb-4"
+                              introSubTitleCss="fw-medium text-muted text-center"
+                              introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
+                              detailsContainerCss="col-md-12 py-3"
+                              anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                              anchersvgColor="#17427C"
+                              pageType={dynamicKey}
+                            />
                           </div>
                         </div>
-                      );
-                    })
-                  }
-                </div>
-              </div>
+                      </div>
+
+                      {componentEdit.dynamicKey && (
+                        <div className="adminEditTestmonial selected">
+                          <BriefIntroAdmin
+                            editHandler={editHandler}
+                            componentType={dynamicKey}
+                            popupTitle="Brief Intro Banner"
+                            pageType={dynamicKey}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
+        </div>
+      </div>
       {/* END OF ICONS ALL SERVICES */}
     </>
   );
