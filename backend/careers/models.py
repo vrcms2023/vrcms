@@ -1,4 +1,3 @@
-from turtle import mode
 from django.db import models
 import uuid
 from common.BaseModel import BaseModel

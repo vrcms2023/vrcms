@@ -4,6 +4,7 @@ import { axiosClientServiceApi } from "../../util/axiosUtil";
 import { sortCreatedDateByDesc } from "../../util/dataFormatUtil";
 import { getDummyImage, getImagePath } from "../../util/commonUtil";
 import { CarouselItem } from "../../Frontend_Views/Components/CarouselItem";
+import { toast } from "react-toastify";
 
 const Advertisement = ({ setFlashAdd }) => {
   const [advertisementList, setAdvertisementList] = useState([]);
@@ -41,9 +42,10 @@ const Advertisement = ({ setFlashAdd }) => {
 
   return (
     <AdvertiseComponentStyled>
-     
       <div className={`imgContainer slide-top ${advertisementSize}`}>
-        <span className="close" onClick={() => setFlashAdd(false)}>x</span>
+        <span className="close" onClick={() => setFlashAdd(false)}>
+          x
+        </span>
         {advertisementList.length == 1 && (
           <div>
             <div className="advertismentInfo">
@@ -73,7 +75,6 @@ const Advertisement = ({ setFlashAdd }) => {
               alt={advertisementList[0].alternitivetext}
               className="w-100"
             />
-            
           </div>
         )}
         {advertisementList.length > 1 && (
