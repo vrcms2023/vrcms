@@ -1,7 +1,6 @@
 import { getCookie } from "./cookieUtil";
 
 export function getBaseURL() {
-  console.log("URL == ", process.env.REACT_APP_SERVER_URL);
   return process.env.NODE_ENV === "production"
     ? process.env.REACT_APP_SERVER_URL
     : "http://127.0.0.1:8000";

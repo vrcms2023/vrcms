@@ -4,7 +4,7 @@ import { resolve } from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/static/",
+  base: process.env.NODE_ENV === "production" ? "/static/" : "/",
   plugins: [react()],
   server: {
     port: 3000,
