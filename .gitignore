@@ -36,8 +36,8 @@ dist
 dist-ssr
 *.local
 .env
-/static/
-/staticfiles/
+backend/static/
+backend/staticfiles/
 
 # Editor directories and files
 .vscode/*

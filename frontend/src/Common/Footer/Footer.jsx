@@ -55,7 +55,7 @@ const Footer = () => {
   // console.log(addressList, "addressList")
 
   useEffect(() => {
-    if (!componentEdit.address || (footerData?.length === 0 && counter < 3)) {
+    if (!componentEdit?.address || (footerData?.length === 0 && counter < 3)) {
       dispatch(getFooterValues());
       setCounter(counter + 1);
     }
@@ -129,15 +129,21 @@ const Footer = () => {
           {/* <hr className="d-block d-md-none my-4" /> */}
           <div className="row">
             <div className="col-md-4 col-lg-3 d-flex align-items-center">
-                <img
-                  src={svgLogo}
-                  width="90%"
-                  alt="ICONS ENGINEERING WITH EXCELLENCE"
-                  className="footerLogo"
-                /> 
+              <img
+                src={svgLogo}
+                width="90%"
+                alt="ICONS ENGINEERING WITH EXCELLENCE"
+                className="footerLogo"
+              />
             </div>
             <div className="col-md-8 col-lg-9 d-flex align-items-center">
-                <p className="description m-0 text-center text-md-start p-4 pb-0 p-md-0">ICONS has Integrated Management System in accordance to ISO , focused mainly on continuous improvement and learning based on the successes and failures that occur during our day-to-day activities. This system is a fundamental element in the innovation process and encompasses the entire value chain.</p>
+              <p className="description m-0 text-center text-md-start p-4 pb-0 p-md-0">
+                ICONS has Integrated Management System in accordance to ISO ,
+                focused mainly on continuous improvement and learning based on
+                the successes and failures that occur during our day-to-day
+                activities. This system is a fundamental element in the
+                innovation process and encompasses the entire value chain.
+              </p>
             </div>
           </div>
           <hr className="my-4" />
@@ -233,7 +239,7 @@ const Footer = () => {
                     iconCss="ms-2 m-auto"
                   />
                 )} */}
-              <Title title="Reach Us"  />
+              <Title title="Reach Us" />
               {address.phonen_number ? (
                 <p className="m-0 pb-2">
                   {/* <i className="fa fa-phone fs-5 me-2" aria-hidden="true"></i> */}
@@ -307,50 +313,43 @@ const Footer = () => {
               ) : (
                 ""
               )}
-            
+
               <div className="d-flex flex-column justify-content-center align-items-center text-center justify-content-md-start align-items-md-start text-md-start mt-4">
-                <Title title="Downloads"  />
+                <Title title="Downloads" />
                 <Button label="Download Brochure" cssClass="btn btn-primary" />
               </div>
             </div>
             <hr className="d-block d-md-none my-4" />
             {
               <div
-              // align-items-center justify-content-md-center justify-content-lg-end align-items-md-end align-items-end justify-content-md-end
-              // ${ isAdmin ? "border border-warning mb-3 position-relative" : "" }
+                // align-items-center justify-content-md-center justify-content-lg-end align-items-md-end align-items-end justify-content-md-end
+                // ${ isAdmin ? "border border-warning mb-3 position-relative" : "" }
                 className={`col-md-4 col-lg-4 pb-md-0 socialMedia d-flex flex-column gap-5 gap-md-0 align-items-center align-items-md-start justify-content-between pb-4 pb-md-0`}
               >
                 <div className="FooterAddress">
-                <Title title="We Are At" />
-                {/* <img
+                  <Title title="We Are At" />
+                  {/* <img
                   src={Logo}
                   alt="SAP Design Studio"
                   className="footerLogo"
                 />  */}
-               
-               <p className="m-0 ">
-                  {address?.company_name}
-                </p>
-                <p className="m-0 ">
-                  {address?.address_dr_no}
-                </p>
-                <p className="m-0 ">
-                  {address?.city}
-                </p>
-                
-                <p className="m-0 ">
-                  {address?.street}
-                </p>
-                <p className="m-0 ">
-                  {address?.state}
-                </p>
-                <p className="m-0 ">
-                  {address?.postcode}
-                </p>
+
+                  <p className="m-0 ">{address?.company_name}</p>
+                  <p className="m-0 ">{address?.address_dr_no}</p>
+                  <p className="m-0 ">{address?.city}</p>
+
+                  <p className="m-0 ">{address?.street}</p>
+                  <p className="m-0 ">{address?.state}</p>
+                  <p className="m-0 ">{address?.postcode}</p>
                 </div>
 
-                <div className={`socialLinks ${
-                  isAdmin ? "border border-warning mb-3 position-relative p-3" : "" }`}>
+                <div
+                  className={`socialLinks ${
+                    isAdmin
+                      ? "border border-warning mb-3 position-relative p-3"
+                      : ""
+                  }`}
+                >
                   {isAdmin && (
                     <EditIcon
                       editHandler={() => editHandler("address", true)}
@@ -430,25 +429,22 @@ const Footer = () => {
                   &copy; {fullYear} - All rights reserved
                   {/* <span className="d-inline-block  d-none d-md-block">|</span> */}
                   <div className="d-flex gap-2">
-                  <Link
-                    to="#"
-                    className="text-decoration-underline"
-                    onClick={() => showModel("TC")}
-                  >
-                    Terms & Conditions
-                  </Link>{" "}
-                  <span className="d-inline-block d-none d-md-block">|</span>
-                  <Link
-                    to="#"
-                    className="text-decoration-underline"
-                    onClick={() => showModel("PP")}
-                  >
-                    Privacy Policy
-                  </Link>
-                </div>
-
-                
-
+                    <Link
+                      to="#"
+                      className="text-decoration-underline"
+                      onClick={() => showModel("TC")}
+                    >
+                      Terms & Conditions
+                    </Link>{" "}
+                    <span className="d-inline-block d-none d-md-block">|</span>
+                    <Link
+                      to="#"
+                      className="text-decoration-underline"
+                      onClick={() => showModel("PP")}
+                    >
+                      Privacy Policy
+                    </Link>
+                  </div>
                 </div>
                 {/* <span className="d-block mt-2 ">
                   Designed & developed by{" "}

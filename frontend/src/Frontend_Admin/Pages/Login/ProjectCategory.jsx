@@ -11,6 +11,8 @@ import {
   getProjectCategoryFormDynamicFields,
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
+import { toast } from "react-toastify";
+import { confirmAlert } from "react-confirm-alert";
 
 const ProjectCategory = () => {
   const navigate = useNavigate();
@@ -59,7 +61,7 @@ const ProjectCategory = () => {
       );
       if (response.status === 204) {
         toast.success(`${title} Advertisement is delete successfully `);
-        getAdvertisementList();
+        getPorjectCategory();
       }
     };
 

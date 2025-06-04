@@ -99,11 +99,11 @@ const Header = () => {
     if (!userInfo && getCookie("access")) {
       dispatch(getUser());
     }
-    if (menuRawList.length === 0 && counter < 3) {
+    if (menuRawList?.length === 0 && counter < 3) {
       menuUpdateInitialized.current = true;
       dispatch(getMenu());
       setCounter(counter + 1);
-    } else if (menuRawList.length === 0 && counter >= 3) {
+    } else if (menuRawList?.length === 0 && counter >= 3) {
       setshowAddMenuMessage(true);
     }
   }, [userInfo, dispatch, menuRawList]);

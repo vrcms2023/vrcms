@@ -19,7 +19,7 @@ export const ThemeContextProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (theme.length == 0 && counter < 3) {
+    if (theme?.length == 0 && counter < 3) {
       dispatch(getTheme());
       setCounter(counter + 1);
     }
@@ -31,7 +31,7 @@ export const ThemeContextProvider = ({ children }) => {
       setTheme(theme);
     }
     // Save user's theme choice
-  }, [themeName, theme.length > 0]);
+  }, [themeName, theme?.length > 0]);
 
   const setTheme = (newTheme) => {
     if (themeNames.includes(newTheme)) {

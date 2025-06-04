@@ -152,7 +152,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.menuRawList = action?.payload?.PageDetails;
       state.menuList =
-        action.payload?.PageDetails.length > 0
+        action.payload?.PageDetails?.length > 0
           ? getMenuObject(action.payload?.PageDetails)
           : [];
       state.menuloadedStatus = true;
