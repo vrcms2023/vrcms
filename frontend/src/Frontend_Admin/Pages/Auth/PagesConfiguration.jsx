@@ -279,7 +279,7 @@ const PagesConfiguration = () => {
       if (!destination) return true;
 
       let _parentObjects = [];
-      const _parentMenu = getParentObject(rawData, draggableId);
+      const _parentMenu = getParentObject(rawData, draggableId, pagesDetails);
       if (isNotEmptyObject(_parentMenu)) {
         let _childmenu = reorder(
           _parentMenu.childMenu,
@@ -373,14 +373,14 @@ const PagesConfiguration = () => {
           <Title title={"Menu / SEO"} cssClass="fs-2 pageTitle" />
 
           <div className="text-end">
-          <Link
-            className="btn btn-primary"
-            onClick={() => editHandler("menu", true)}
-          >
-            Add <i className="fa fa-plus mx-2" aria-hidden="true"></i>
-          </Link>
-          {/* <EditIcon editHandler={() => editHandler("menu", true)} /> */}
-        </div>
+            <Link
+              className="btn btn-primary"
+              onClick={() => editHandler("menu", true)}
+            >
+              Add <i className="fa fa-plus mx-2" aria-hidden="true"></i>
+            </Link>
+            {/* <EditIcon editHandler={() => editHandler("menu", true)} /> */}
+          </div>
         </div>
       </div>
 

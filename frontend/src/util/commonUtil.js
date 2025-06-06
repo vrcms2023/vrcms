@@ -326,14 +326,14 @@ function getFileNameFromUrl(url) {
   return url.substring(url.lastIndexOf("/") + 1);
 }
 
-export const getParentObject = (rawData, id) => {
+export const getParentObject = (rawData, id, formatedMenu) => {
   let parentMenuObject = {};
 
   const dragObject = getFilterObjectByID(rawData, id)[0];
 
   if (dragObject.page_parent_ID) {
     parentMenuObject = getFilterObjectByID(
-      rawData,
+      formatedMenu,
       dragObject.page_parent_ID
     )[0];
   }
