@@ -188,8 +188,6 @@ const AddProject = () => {
       const response = await axiosServiceApi.post(`/project/addProject/`, {
         ...getProjectStatus(),
         projectTitle: projectName,
-        created_by: userName,
-        updated_by: userName,
         userID: getCookie("userId"),
         status: projectType[0].projectLabel,
         isActive: true,
@@ -289,7 +287,6 @@ const AddProject = () => {
 
     const amenitiesData = {
       projectID: newProject.id,
-      updated_by: userName,
       amenitie: amenities.amenitie,
       feature: amenities.feature,
       googleMap: amenities.googleMap,
