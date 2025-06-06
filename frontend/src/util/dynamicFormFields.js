@@ -560,6 +560,29 @@ export const getAdvertisementFormDynamicFields = (advertisement) => {
   };
 };
 
+export const getBrochuresFormDynamicFields = (brochures) => {
+  return {
+    brochures_name: {
+      label: "Broucher Title",
+      type: "text",
+      fieldName: "brochures_name",
+    },
+    brochures_downloadName: {
+      label: "Brochures DownloadName",
+      type: "text",
+      fieldName: "brochures_downloadName",
+    },
+
+    category: {
+      label: "category",
+      readonly: true,
+      type: "hidden",
+      value: "",
+      fieldName: "category",
+    },
+  };
+};
+
 export const getProjectCategoryFormDynamicFields = (editCategory) => {
   return {
     category_Label: {

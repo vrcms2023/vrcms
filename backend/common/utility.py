@@ -144,3 +144,10 @@ def get_Category_From_request_Object(request):
         requestObj['category_description'] = request.data["category_description"]
         requestObj['readMore_link'] = request.data["readMore_link"]
         return requestObj
+
+
+def get_brochures_From_request_Object(request):
+        requestObj = get_image_data_from_request(request)
+        requestObj['brochures_name'] = request.data["brochures_name"]
+        requestObj['brochures_downloadName'] = request.data["brochures_downloadName"]
+        return requestObj

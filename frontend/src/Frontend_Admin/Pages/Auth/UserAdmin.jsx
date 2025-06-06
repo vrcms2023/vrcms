@@ -94,7 +94,7 @@ const UserAdmin = () => {
       <div className="row px-3 px-lg-5">
         <div className="d-flex justify-content-between align-items-center border-bottom pb-3">
           <Title title={"User's"} cssClass="fs-5 pageTitle " />
-          <Link to="/admin/userPermission" className="btn btn-outline ">
+          <Link to="/appAdmin/userPermission" className="btn btn-outline ">
             Go for Page Permissions
           </Link>
           {/* <Search
@@ -196,7 +196,7 @@ const UserAdmin = () => {
             </>
           )}
 
-          {/* <Link to="/admin/userPermission" className="btn btn-outline ">
+          {/* <Link to="/appAdmin/userPermission" className="btn btn-outline ">
             Go for Page Permissions
           </Link> */}
         </div>
