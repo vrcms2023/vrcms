@@ -99,7 +99,7 @@ const ProjectCategory = () => {
               type=""
               cssClass="btn btn-outline"
               label="Dashboard"
-              handlerChange={() => navigate("/admin/dashboard")}
+              handlerChange={() => navigate("/appAdmin/dashboard")}
             />
           </div>
         </div>

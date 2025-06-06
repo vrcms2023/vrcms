@@ -205,28 +205,28 @@ function App() {
             <Routes>
               <Route element={<ProtectedRoute />}>
                 <Route
-                  path="/admin/change_password"
+                  path="/appAdmin/change_password"
                   element={<ChangePassword />}
                 />
-                <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route path="/appAdmin/dashboard" element={<Dashboard />} />
                 <Route
-                  path="/admin/contactUSList"
+                  path="/appAdmin/contactUSList"
                   element={<ContactUSAdmin />}
                 />
               </Route>
 
               <Route element={<AdminProtectedRoute />}>
-                <Route path="/admin/userAdmin" element={<UserAdmin />} />
-                <Route path="/admin/theme" element={<Themes />} />
+                <Route path="/appAdmin/userAdmin" element={<UserAdmin />} />
+                <Route path="/appAdmin/theme" element={<Themes />} />
                 <Route
-                  path="/admin/userPermission"
+                  path="/appAdmin/userPermission"
                   element={<UserPagePermission />}
                 />
                 <Route
-                  path="/admin/adminPagesConfiguration"
+                  path="/appAdmin/adminPagesConfiguration"
                   element={<PagesConfiguration />}
                 />
-                <Route path="/admin/settings" element={<AdminSettings />} />
+                <Route path="/appAdmin/settings" element={<AdminSettings />} />
                 <Route path="/editproject/:id" element={<AddProject />} />
               </Route>
 
@@ -279,7 +279,10 @@ function App() {
               <Route path="/unauthorized" element={<UnauthorizedPage />} />
               <Route path="/authForm" element={<AuthForm />} />
               <Route path="/addproject" element={<AddProject />} />
-              <Route path="/admin/addCategory" element={<ProjectCategory />} />
+              <Route
+                path="/appAdmin/addCategory"
+                element={<ProjectCategory />}
+              />
 
               <Route path="/adminNews" element={<AdminNews />} />
               <Route

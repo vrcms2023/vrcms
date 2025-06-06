@@ -254,7 +254,10 @@ const Header = () => {
           )}
           {showAddMenuMessage && (
             <div className="w-75 text-end">
-              <Link to="/adminPagesConfiguration" className="btn btn-outline ">
+              <Link
+                to="/appAdmin/adminPagesConfiguration"
+                className="btn btn-outline "
+              >
                 Go for Menu Creation
               </Link>
             </div>

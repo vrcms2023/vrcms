@@ -364,6 +364,14 @@ const FileUpload = ({
     setFiles(files);
   };
 
+  const downloadPDF = (url) => {
+    window.open(
+      url,
+      "_blank",
+      "location=yes,height=800,width=600 ,scrollbars=yes,status=yes"
+    );
+  };
+
   const closePopupWindow = () => {
     if (closeHandler && typeof closeHandler === "function") {
       // setTimeout(() =>{
@@ -414,20 +422,36 @@ const FileUpload = ({
             </div>
             {editImage?.id && editImage.path && (
               <div className="col-6">
-                <img
-                  src={getImagePath(editImage.path, editImage.contentType)}
-                  alt={editImage?.alternitivetext}
-                  className=""
-                  style={{
-                    width: "100%",
-                    height: "74px",
-                    objectFit: "cover",
-                    objectPosition: "center",
-                    borderRadius: "6px",
-                  }}
-                />
+                <div style={{ marginTop: "30px" }}>
+                  <b>File name -</b>{" "}
+                  <a
+                    href="#!"
+                    onClick={() => downloadPDF(`${baseURL}${editImage.path}`)}
+                    className="mx-1 text-dark"
+                  >
+                    {editImage.originalname}
+                  </a>
+                </div>
               </div>
             )}
+            {editImage?.id &&
+              editImage.path &&
+              editImage.contentType !== ".pdf" && (
+                <div className="col-6">
+                  <img
+                    src={getImagePath(editImage.path, editImage.contentType)}
+                    alt={editImage?.alternitivetext}
+                    className=""
+                    style={{
+                      width: "100%",
+                      height: "74px",
+                      objectFit: "cover",
+                      objectPosition: "center",
+                      borderRadius: "6px",
+                    }}
+                  />
+                </div>
+              )}
             {dimensions && (
               <div className="col-12">
                 <small className="" style={{ fontSize: ".75rem" }}>

@@ -442,7 +442,7 @@ const AddProject = () => {
               type=""
               cssClass="btn btn-outline"
               label="Dashboard"
-              handlerChange={() => navigate("/admin/dashboard")}
+              handlerChange={() => navigate("/appAdmin/dashboard")}
             />
             {/* <Button
               type=""
@@ -517,7 +517,7 @@ const AddProject = () => {
                     label="Cancel"
                     cssClass="btn btn-outline me-2"
                     handlerChange={() => {
-                      navigate("/admin/dashboard");
+                      navigate("/appAdmin/dashboard");
                     }}
                   />
                   <Button
@@ -1258,7 +1258,7 @@ const AddProject = () => {
                 type="submit"
                 cssClass="btn btn btn-secondary"
                 label="Cancel"
-                handlerChange={() => navigate("/admin/dashboard")}
+                handlerChange={() => navigate("/appAdmin/dashboard")}
               />
               {/* <Button
                 type="submit"

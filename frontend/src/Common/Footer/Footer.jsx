@@ -25,6 +25,7 @@ import { FooterStyled } from "../StyledComponents/Styled-Footer";
 import Ancher from "../Ancher";
 import Title from "../Title";
 import Button from "../Button";
+import DownloadBrochures from "../../Frontend_Views/Components/DownloadBrochures";
 
 const Footer = () => {
   const editComponentObj = {
@@ -316,7 +317,11 @@ const Footer = () => {
 
               <div className="d-flex flex-column justify-content-center align-items-center text-center justify-content-md-start align-items-md-start text-md-start mt-4">
                 <Title title="Downloads" />
-                <Button label="Download Brochure" cssClass="btn btn-primary" />
+                {/* <Button label="Download Brochure" cssClass="btn btn-primary" /> */}
+
+                <div>
+                  <DownloadBrochures />
+                </div>
               </div>
             </div>
             <hr className="d-block d-md-none my-4" />

@@ -1339,20 +1339,21 @@ const Home = () => {
                                 }
                               />
                             )}
-
-                            <BriefIntroFrontend
-                              introState={serviceData}
-                              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-                              linkLabel="Read More"
-                              moreLink=""
-                              introTitleCss="fs-3 fw-bold text-center mb-4"
-                              introSubTitleCss="fw-medium text-muted text-center"
-                              introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
-                              detailsContainerCss="col-md-12 py-3"
-                              anchorContainer="d-flex justify-content-center align-items-center mt-4"
-                              anchersvgColor="#17427C"
-                              pageType={dynamicKey}
-                            />
+                            {componentEdit[dynamicKey] && (
+                              <BriefIntroFrontend
+                                introState={serviceData}
+                                linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                                linkLabel="Read More"
+                                moreLink=""
+                                introTitleCss="fs-3 fw-bold text-center mb-4"
+                                introSubTitleCss="fw-medium text-muted text-center"
+                                introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
+                                detailsContainerCss="col-md-12 py-3"
+                                anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                                anchersvgColor="#17427C"
+                                pageType={dynamicKey}
+                              />
+                            )}
                           </div>
                         </div>
                       </div>

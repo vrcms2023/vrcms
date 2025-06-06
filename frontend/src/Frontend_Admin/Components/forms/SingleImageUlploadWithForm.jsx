@@ -21,6 +21,7 @@ export const SingleImageUlploadWithForm = ({
   showDescription = true,
   dimensions,
   scrollEnable,
+  validTypes = "image/png,image/jpeg",
 }) => {
   const projectID = "a62d7759-a e6b-4e49-a129-1ee208c6789d";
   const [userName, setUserName] = useState("");
@@ -63,7 +64,7 @@ export const SingleImageUlploadWithForm = ({
                   gallerysetState={setImgGallery}
                   maxFiles={1}
                   galleryState={imgGallery}
-                  validTypes="image/png,image/jpeg"
+                  validTypes={validTypes}
                   descriptionTitle="Caption"
                   titleTitle="Title"
                   alternitivetextTitle="SEO title"

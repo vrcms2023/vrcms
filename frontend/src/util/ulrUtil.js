@@ -7,7 +7,7 @@ export function getBaseURL() {
 }
 
 // export function getBaseURL() {
-//   return "http://demo.vitsols.com";
+//   return "https://demo.vitsols.com";
 // }
 
 export function removeActiveClass() {
