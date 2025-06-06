@@ -103,6 +103,14 @@ const ProjectCategory = () => {
             />
           </div>
         </div>
+        <div className="text-right">
+          Project category should be
+          <ul>
+            <li>Upcoming </li>
+            <li>Ongoing </li>
+            <li>Completed </li>
+          </ul>
+        </div>
       </div>
 
       <div className="row px-3 px-lg-5 py-4 table-responsive border-top">

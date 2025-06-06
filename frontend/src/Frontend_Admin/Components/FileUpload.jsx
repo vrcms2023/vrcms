@@ -420,20 +420,22 @@ const FileUpload = ({
                 />
               </div>
             </div>
-            {editImage?.id && editImage.path && (
-              <div className="col-6">
-                <div style={{ marginTop: "30px" }}>
-                  <b>File name -</b>{" "}
-                  <a
-                    href="#!"
-                    onClick={() => downloadPDF(`${baseURL}${editImage.path}`)}
-                    className="mx-1 text-dark"
-                  >
-                    {editImage.originalname}
-                  </a>
+            {editImage?.id &&
+              editImage.path &&
+              editImage.contentType === ".pdf" && (
+                <div className="col-6">
+                  <div style={{ marginTop: "30px" }}>
+                    <b>File name -</b>{" "}
+                    <a
+                      href="#!"
+                      onClick={() => downloadPDF(`${baseURL}${editImage.path}`)}
+                      className="mx-1 text-dark"
+                    >
+                      {editImage.originalname}
+                    </a>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             {editImage?.id &&
               editImage.path &&
               editImage.contentType !== ".pdf" && (

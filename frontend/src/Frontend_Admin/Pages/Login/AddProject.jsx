@@ -147,9 +147,9 @@ const AddProject = () => {
 
   const getProjectStatus = () => {
     return {
-      projectCategoryID: projectType[0].idprojectcategories,
-      projectCategoryName: projectType[0].projectLabel,
-      projectCategoryValue: projectType[0].projectValue,
+      projectCategoryID: projectType[0].id,
+      projectCategoryName: projectType[0]?.category_Label,
+      projectCategoryValue: projectType[0]?.category_Value,
     };
   };
 
