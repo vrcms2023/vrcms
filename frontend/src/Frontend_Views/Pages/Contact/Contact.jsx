@@ -124,7 +124,7 @@ const Contact = () => {
       const response = await axiosClientServiceApi.get(
         `footer/getGoogleMapURL/`
       );
-      if (response?.data?.mapURL) {
+      if (response?.data?.mapURL?.length > 0) {
         const data = response.data.mapURL[0];
         setMapValues(data);
       }

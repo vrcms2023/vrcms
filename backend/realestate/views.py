@@ -102,7 +102,10 @@ Add Project View
 class addProjectAPIView(APIView):
 
     def post(self, request, format=None):
-        serializer = ProjectsSerializer(data=request.data)
+        user = request.user
+        requestObj = request.data
+        requestObj['created_by'] = user.userName
+        serializer = ProjectsSerializer(data=requestObj)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -126,7 +129,10 @@ class editUpdateProjectAPIView(APIView):
     
     def put(self, request, pk, format=None):
         snippet = self.get_object(pk)
-        serializer = ProjectsSerializer(snippet, data=request.data)
+        user = request.user
+        requestObj = request.data
+        requestObj['updated_by'] = user.userName
+        serializer = ProjectsSerializer(snippet, data=requestObj)
         if serializer.is_valid():
             serializer.save()
             return Response({"project" : serializer.data}, status=status.HTTP_200_OK)

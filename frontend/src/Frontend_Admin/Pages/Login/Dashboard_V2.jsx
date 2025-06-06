@@ -43,7 +43,7 @@ const Dashboard = () => {
       formatData(projectsByCategory.ongoing ? projectsByCategory.ongoing : [])
     );
     setUpcomingProject(
-      formatData(projectsByCategory.future ? projectsByCategory.future : [])
+      formatData(projectsByCategory.upcoming ? projectsByCategory.upcoming : [])
     );
     setCompletedProject(
       formatData(
@@ -227,22 +227,24 @@ const Dashboard = () => {
       </div>
       {/* <hr /> */}
 
-      <div className="d-flex justify-content-center dashboardFilters align-items-center px-4 mt-4">
-        <i className="fa fa-filter" aria-hidden="true"></i>
-        <select
-          className="form-select form-select-sm border-0 text-secondary"
-          aria-label=".form-select-sm example"
-          onChange={(e) => projectFilter(e.target.value)}
-        >
-          <option defaultValue>Filters</option>
-          {filters?.length > 0 &&
-            filters.map((item) => (
-              <option value={item.value} key={item.id}>
-                {item.label}
-              </option>
-            ))}
-        </select>
-      </div>
+      {projects?.projectList?.length > 0 && (
+        <div className="d-flex justify-content-center dashboardFilters align-items-center px-4 mt-4">
+          <i className="fa fa-filter" aria-hidden="true"></i>
+          <select
+            className="form-select form-select-sm border-0 text-secondary"
+            aria-label=".form-select-sm example"
+            onChange={(e) => projectFilter(e.target.value)}
+          >
+            <option defaultValue>Filters</option>
+            {filters?.length > 0 &&
+              filters.map((item) => (
+                <option value={item.value} key={item.id}>
+                  {item.label}
+                </option>
+              ))}
+          </select>
+        </div>
+      )}
       <div className="row p-2 p-md-5 ">
         {ongoingProject.listAvailable && (
           <Projects

@@ -591,11 +591,6 @@ export const getProjectCategoryFormDynamicFields = (editCategory) => {
       fieldName: "category_Label",
       validationObject: { required: "Please enter Category Title" },
     },
-    category_Value: {
-      label: "category_Value",
-      type: "text",
-      fieldName: "category_Value",
-    },
     category_description: {
       label: "Category Description",
       type: "textarea",
