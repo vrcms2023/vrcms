@@ -203,7 +203,7 @@ const UploadBrochures = () => {
                 imagePostURL="/contactus/createBrochures/"
                 imageUpdateURL="/contactus/updateBrochures/"
                 imageDeleteURL="/contactus/updateBrochures/"
-                imageLabel="Brochures Image"
+                imageLabel="PDF's upload"
                 validTypes="application/pdf"
                 showDescription={false}
                 showExtraFormFields={getBrochuresFormDynamicFields(

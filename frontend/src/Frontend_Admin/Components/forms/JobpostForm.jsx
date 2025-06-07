@@ -7,8 +7,12 @@ import { getUserName } from "../../../util/ulrUtil";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { toast } from "react-toastify";
 import moment from "moment";
-import { generateOptionLength } from "../../../util/commonUtil";
+import {
+  generateExperienceOptions,
+  generateOptionLength,
+} from "../../../util/commonUtil";
 import Button from "../../../Common/Button";
+import { fieldValidation } from "../../../util/validationUtil";
 
 const JobPost = ({
   editHandler,
@@ -20,7 +24,12 @@ const JobPost = ({
   const [editorState, setEditorState] = useState("");
 
   const [userName, setUserName] = useState(getUserName());
-  const { register, reset, handleSubmit } = useForm({
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: useMemo(() => {
       return editPost;
     }, [editPost]),
@@ -82,6 +91,9 @@ const JobPost = ({
                 fieldName="job_title"
                 register={register}
                 cssClass="requiredField"
+                validationObject={fieldValidation.job_title}
+                error={errors?.job_title?.message}
+                isRequired={true}
               />
               <InputField
                 label="Company name"
@@ -133,15 +145,16 @@ const JobPost = ({
               />
 
               <InputField
-                label="No of Application"
+                label="No of Vacancies"
                 fieldName="no_of_application"
                 register={register}
               />
 
-              <InputField
+              <SelectField
                 label="Employment Type"
                 fieldName="employment_Type"
                 register={register}
+                options={generateExperienceOptions()}
               />
 
               <InputField
@@ -154,6 +167,8 @@ const JobPost = ({
                 label="About company"
                 fieldName="about_company"
                 register={register}
+                validationObject={fieldValidation.about_company}
+                error={errors?.about_company?.message}
               />
 
               <InputField
@@ -214,12 +229,12 @@ const JobPost = ({
                   )}
 
                   <button className="btn btn-primary">Save</button>
-                  <Button
+                  {/* <Button
                     type="submit"
                     cssClass="btn btn-more"
                     label={"Close"}
                     handlerChange={closeHandler}
-                  />
+                  /> */}
                 </div>
               </div>
             </form>

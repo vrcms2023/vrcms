@@ -110,6 +110,7 @@ const Home = () => {
   const [productRegistration, setProductRegistration] = useState("");
 
   const [showHideCompList, setShowHideCompList] = useState([]);
+  const { serviceMenu } = useSelector((state) => state.serviceMenu);
 
   const dispatch = useDispatch();
 

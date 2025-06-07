@@ -49,6 +49,7 @@ const NewsAndUpdates = () => {
   const [pageLoadResult, setPageloadResults] = useState(false);
   const [searchQuery, setSearchquery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [editNews, setEditNews] = useState(false);
 
   useEffect(() => {
     removeActiveClass();
@@ -150,6 +151,8 @@ const NewsAndUpdates = () => {
               setPageloadResults={setPageloadResults}
               setSearchquery={setSearchquery}
               searchQuery={searchQuery}
+              addStateChanges={componentEdit.addNews}
+              editStateChanges={editNews}
             />
           </div>
         </div>
@@ -183,6 +186,8 @@ const NewsAndUpdates = () => {
             setResponseData={setResponseData}
             setPageloadResults={setPageloadResults}
             pagetype={pageType}
+            searchQuery={searchQuery}
+            setNewsEditState={setEditNews}
           />
           <div>
             {paginationData?.total_count ? (

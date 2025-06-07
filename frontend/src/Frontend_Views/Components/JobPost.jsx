@@ -20,7 +20,13 @@ import SkeletonNews from "../../Common/Skeltons/SkeltonNews";
 import RichTextView from "../../Common/RichTextView";
 // Styles
 
-const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
+const JobPost = ({
+  addJobs,
+  posts,
+  setPosts,
+  setPageloadResults,
+  setEditState,
+}) => {
   const editComponentObj = {
     job: false,
   };
@@ -36,6 +42,7 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
     setEditPosts(item);
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setShow(!show);
+    setEditState(!value);
     document.body.style.overflow = "hidden";
   };
 
@@ -299,18 +306,18 @@ const JobPost = ({ addJobs, posts, setPosts, setPageloadResults }) => {
         <div className="text-center py-5">
           {!isAdmin && (
             <p className="text-center fs-4">
-              At present there are not news items are available.
+              Currently, there are no career opportunities available.
             </p>
           )}
           {isAdmin && hasPermission && (
             <>
               <p className="text-center fs-4">
-                There are no news items found. Please create news items.
+                No career opportunities found. Please create some careers.
               </p>
-              <Link to="/login" className="btn btn-primary fs-5 w-25">
+              {/* <Link to="/login" className="btn btn-primary fs-5 w-25">
                 Login to Add Careers{" "}
                 <i className="fa fa-plus mx-2" aria-hidden="true"></i>{" "}
-              </Link>
+              </Link> */}
             </>
           )}
         </div>

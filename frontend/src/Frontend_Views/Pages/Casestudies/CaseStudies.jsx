@@ -86,7 +86,10 @@ const CaseStudies = () => {
         console.log("unable to access ulr because of server is down");
       }
     };
-    if (!componentEdit.addSection || !componentEdit.editSection) {
+    if (
+      (!componentEdit.addSection || !componentEdit.editSection) &&
+      !searchQuery
+    ) {
       getCAseStutiesvalues();
     }
   }, [componentEdit.addSection, componentEdit.editSection]);
@@ -214,6 +217,8 @@ const CaseStudies = () => {
               setPageloadResults={setPageloadResults}
               setSearchquery={setSearchquery}
               searchQuery={searchQuery}
+              addStateChanges={componentEdit.addSection}
+              editStateChanges={!componentEdit.editSection}
             />
           </div>
         </div>
@@ -227,10 +232,10 @@ const CaseStudies = () => {
               componentType={`${
                 componentEdit.editSection ? "editSection" : "addSection"
               }`}
-              imageGetURL="caseStudies/createCaseStudies/"
-              imagePostURL="caseStudies/createCaseStudies/"
-              imageUpdateURL="caseStudies/updateCaseStudies/"
-              imageDeleteURL="caseStudies/updateCaseStudies/"
+              imageGetURL="/caseStudies/createCaseStudies/"
+              imagePostURL="/caseStudies/createCaseStudies/"
+              imageUpdateURL="/caseStudies/updateCaseStudies/"
+              imageDeleteURL="/caseStudies/updateCaseStudies/"
               imageLabel="Image"
               showDescription={false}
               showExtraFormFields={getCaseStudiesFields()}

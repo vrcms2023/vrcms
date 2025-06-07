@@ -94,7 +94,10 @@ const Team = () => {
         console.log("unable to access ulr because of server is down");
       }
     };
-    if (!componentEdit.addSection || !componentEdit.editSection) {
+    if (
+      (!componentEdit.addSection || !componentEdit.editSection) &&
+      !searchQuery
+    ) {
       getTeamMemberDetails();
     }
   }, [componentEdit.addSection, componentEdit.editSection]);
@@ -250,6 +253,8 @@ const Team = () => {
               setPageloadResults={setPageloadResults}
               setSearchquery={setSearchquery}
               searchQuery={searchQuery}
+              addStateChanges={componentEdit.addSection}
+              editStateChanges={!componentEdit.editSection}
             />
           </div>
         </div>

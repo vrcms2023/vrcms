@@ -69,7 +69,7 @@ export const ClientListComponent = ({
                   // style={getListStyle(snapshot.isDraggingOver)}
                   {...provided.droppableProps}
                 >
-                  {clientsList.length > 0 ? (
+                  {clientsList?.length > 0 ? (
                     clientsList.map((item, index) => (
                       <Client
                         item={item}

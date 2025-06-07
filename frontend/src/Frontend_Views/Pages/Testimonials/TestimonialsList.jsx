@@ -85,7 +85,10 @@ const TestimonialsList = () => {
         console.log("unable to access ulr because of server is down");
       }
     };
-    if (!componentEdit.addSection || !componentEdit.editSection) {
+    if (
+      (!componentEdit.addSection || !componentEdit.editSection) &&
+      !searchQuery
+    ) {
       getCAseStutiesvalues();
     }
   }, [componentEdit.addSection, componentEdit.editSection]);
@@ -265,6 +268,8 @@ const TestimonialsList = () => {
               setPageloadResults={setPageloadResults}
               setSearchquery={setSearchquery}
               searchQuery={searchQuery}
+              addStateChanges={componentEdit.addSection}
+              editStateChanges={!componentEdit.editSection}
             />
           </div>
         </div>
