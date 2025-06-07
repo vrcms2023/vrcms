@@ -147,9 +147,15 @@ const AddProject = () => {
 
   const getProjectStatus = () => {
     return {
-      projectCategoryID: projectType[0].id,
-      projectCategoryName: projectType[0]?.category_Label,
-      projectCategoryValue: projectType[0]?.category_Value,
+      projectCategoryID: projectType[0].id
+        ? projectType[0].id
+        : projectType[0].idprojectcategories,
+      projectCategoryName: projectType[0]?.category_Label
+        ? projectType[0]?.category_Label
+        : projectType[0]?.projectLabel,
+      projectCategoryValue: projectType[0]?.category_Value
+        ? projectType[0]?.category_Value
+        : projectType[0]?.projectValue,
     };
   };
 
@@ -728,7 +734,6 @@ const AddProject = () => {
                         Status
                       </label>
                       <select
-                        value={projectType[0]?.projectValue}
                         className="form-select mb-3 w-100"
                         aria-label="Default select example"
                         id="projectStatus"
@@ -738,7 +743,14 @@ const AddProject = () => {
                         {defaultProjectType?.length
                           ? defaultProjectType?.map((option, index) => {
                               return (
-                                <option key={option.id} value={option.id}>
+                                <option
+                                  key={option.id}
+                                  value={option.id}
+                                  selected={
+                                    option.category_Value ===
+                                    projectType[0]?.projectValue
+                                  }
+                                >
                                   {option.category_Label}
                                 </option>
                               );

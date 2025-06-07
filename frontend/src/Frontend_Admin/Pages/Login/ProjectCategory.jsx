@@ -53,14 +53,14 @@ const ProjectCategory = () => {
     getPorjectCategory();
   };
 
-  const handleAdvertisementDelete = (category) => {
-    const title = category.projectLabel;
+  const handleCategoryDelete = (category) => {
+    const title = category.category_Label;
     const deleteMenuItemByID = async () => {
       const response = await axiosServiceApi.delete(
         `/project/updateCategory/${category.id}/`
       );
       if (response.status === 204) {
-        toast.success(`${title} Advertisement is delete successfully `);
+        toast.success(`${title} category is delete successfully `);
         getPorjectCategory();
       }
     };
@@ -71,7 +71,7 @@ const ProjectCategory = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteMenuItemByID}
-            message={`you want to delete the ${title} Advertisement`}
+            message={`you want to delete the ${title} category`}
           />
         );
       },
@@ -107,8 +107,10 @@ const ProjectCategory = () => {
           {/* Project category should be */}
           <h4 className="text-center">Category Types</h4>
           <ul className="d-flex justify-content-center align-items-center gap-3 mb-3 list-unstyled">
-            <li className="border-success  p-1 px-3">Ongoing </li> <span className="text-muted">|</span>
-            <li className="border-warning  p-1 px-3">Future </li> <span className="text-muted">|</span>
+            <li className="border-success  p-1 px-3">Ongoing </li>{" "}
+            <span className="text-muted">|</span>
+            <li className="border-warning  p-1 px-3">Future </li>{" "}
+            <span className="text-muted">|</span>
             <li className="border-primary  p-1 px-3">Completed </li>
           </ul>
         </div>
@@ -122,10 +124,10 @@ const ProjectCategory = () => {
                 <tr>
                   <th className="align-middle fw-bold text-muted">Title</th>
                   <th className="align-middle fw-bold  text-muted">Value</th>
-                  <th className="align-middle fw-bold  text-muted">Description</th>
                   <th className="align-middle fw-bold  text-muted">
-                    Image
+                    Description
                   </th>
+                  <th className="align-middle fw-bold  text-muted">Image</th>
                   <th
                     className="align-middle text-end fw-bold text-muted"
                     style={{ width: "100px " }}
@@ -138,17 +140,17 @@ const ProjectCategory = () => {
                 {ProjectCategoryType?.map((category) => (
                   <tr key={category.id} className="bg-success">
                     <td className="align-middle">{category.category_Label}</td>
-                    <td className={
-                        `align-middle ${
-                          category.category_Value === "ongoing"
-                            ? "text-success fw-bold"
-                            : category.category_Value === "future"
-                              ? "text-warning"
-                              : "text-primary"
-                        }`
-                      }>
-                        {category.category_Label}
-                      </td>
+                    <td
+                      className={`align-middle ${
+                        category.category_Value === "ongoing"
+                          ? "text-success fw-bold"
+                          : category.category_Value === "upcoming"
+                            ? "text-warning fw-bold"
+                            : "text-primary fw-bold"
+                      }`}
+                    >
+                      {category.category_Label}
+                    </td>
                     <td className="align-middle">
                       {category?.category_description}
                     </td>
@@ -183,8 +185,8 @@ const ProjectCategory = () => {
 
                       <Link
                         to=""
-                        className=" ms-2 ms-md-4"
-                        onClick={() => handleAdvertisementDelete(category)}
+                        className=" ms-4"
+                        onClick={() => handleCategoryDelete(category)}
                       >
                         <i
                           className="fa fa-trash-o fs-4 text-danger"
