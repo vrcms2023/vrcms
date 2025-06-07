@@ -53,14 +53,14 @@ const ProjectCategory = () => {
     getPorjectCategory();
   };
 
-  const handleAdvertisementDelete = (category) => {
-    const title = category.projectLabel;
+  const handleCategoryDelete = (category) => {
+    const title = category.category_Label;
     const deleteMenuItemByID = async () => {
       const response = await axiosServiceApi.delete(
         `/project/updateCategory/${category.id}/`
       );
       if (response.status === 204) {
-        toast.success(`${title} Advertisement is delete successfully `);
+        toast.success(`${title} category is delete successfully `);
         getPorjectCategory();
       }
     };
@@ -71,7 +71,7 @@ const ProjectCategory = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteMenuItemByID}
-            message={`you want to delete the ${title} Advertisement`}
+            message={`you want to delete the ${title} category`}
           />
         );
       },
@@ -172,7 +172,7 @@ const ProjectCategory = () => {
                     <Link
                       to=""
                       className=" ms-4"
-                      onClick={() => handleAdvertisementDelete(category)}
+                      onClick={() => handleCategoryDelete(category)}
                     >
                       <i
                         className="fa fa-trash-o fs-4 text-danger"
