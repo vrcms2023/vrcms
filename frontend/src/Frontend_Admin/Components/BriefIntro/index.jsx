@@ -177,14 +177,11 @@ export const BriefIntroAdmin = ({
             </div>
 
             {/* More Link if client required. */}
-            {/* <div className="mb-3 row">
-              <label
-                htmlFor=""
-                className="col-sm-3 col-form-label text-start text-md-end"
-              >
+            <div className="mb-3 row">
+              <label htmlFor="" className="col-sm-12 col-form-label">
                 Morelink
               </label>
-              <div className="col-sm-9">
+              <div className="col-sm-12">
                 <input
                   name="intro_morelink"
                   value={
@@ -193,11 +190,11 @@ export const BriefIntroAdmin = ({
                       : ""
                   }
                   type="text"
-                  onChange={changeHandler}
                   className="form-control p-2"
+                  onChange={changeHandler}
                 />
               </div>
-            </div> */}
+            </div>
 
             <div className="d-flex justify-content-center flex-column flex-sm-row align-items-center gap-3 mt-4">
               {/* <Button

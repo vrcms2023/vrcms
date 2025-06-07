@@ -16,6 +16,48 @@ export const generateOptionLength = (values) => {
   return optionList;
 };
 
+export const generateExperienceOptions = () => {
+  let optionList = [
+    {
+      id: 1000,
+      label: "Select",
+      value: "",
+    },
+    {
+      id: 1001,
+      label: "Full-Time",
+      value: "fulltime",
+    },
+    {
+      id: 1002,
+      label: "Part-Time",
+      value: "parttime",
+    },
+    {
+      id: 1003,
+      label: "Temporary",
+      value: "temporary",
+    },
+    {
+      id: 1004,
+      label: "Contract",
+      value: "contract",
+    },
+    {
+      id: 1005,
+      label: "Seasonal",
+      value: "seasonal",
+    },
+    {
+      id: 1006,
+      label: "Leased",
+      value: "leased",
+    },
+  ];
+
+  return optionList;
+};
+
 export const showPosteddate = (dt) => {
   if (!dt) return 0;
   const postD = moment(moment(dt).format("YYYY-MM-DD"));

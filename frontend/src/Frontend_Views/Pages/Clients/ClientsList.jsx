@@ -63,7 +63,10 @@ const ClientsList = () => {
   };
 
   useEffect(() => {
-    if (!componentEdit.addSection || !componentEdit.editSection) {
+    if (
+      (!componentEdit.addSection || !componentEdit.editSection) &&
+      !searchQuery
+    ) {
       getClinetDetails();
     }
   }, [componentEdit.addSection, componentEdit.editSection]);
@@ -212,6 +215,8 @@ const ClientsList = () => {
               setPageloadResults={setPageloadResults}
               setSearchquery={setSearchquery}
               searchQuery={searchQuery}
+              addStateChanges={componentEdit.addSection}
+              editStateChanges={!componentEdit.editSection}
             />
           </div>
         </div>

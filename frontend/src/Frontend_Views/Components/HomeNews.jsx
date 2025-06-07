@@ -38,6 +38,8 @@ const HomeNews = ({
   setNews,
   setResponseData,
   pagetype,
+  searchQuery,
+  setNewsEditState,
 }) => {
   const location = useLocation();
   const editComponentObj = {
@@ -59,6 +61,7 @@ const HomeNews = ({
     setEditNews(item);
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setShow(!show);
+    setNewsEditState(!value);
     document.body.style.overflow = "hidden";
   };
 
@@ -85,10 +88,10 @@ const HomeNews = ({
         console.log("unable to access ulr because of server is down");
       }
     };
-    if (componentEdit.news || !addNewsState) {
+    if ((componentEdit.news || !addNewsState) && !searchQuery) {
       getNews();
     }
-  }, [componentEdit.news, addNewsState, pagetype]);
+  }, [componentEdit.news, addNewsState, pagetype, searchQuery]);
 
   /**
    *

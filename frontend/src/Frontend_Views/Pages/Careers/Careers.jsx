@@ -50,6 +50,7 @@ const Careers = () => {
   const [pageLoadResult, setPageloadResults] = useState(false);
   const [searchQuery, setSearchquery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [editNews, setEditNews] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -75,7 +76,6 @@ const Careers = () => {
 
   return (
     <>
-
       {/* Page Banner Component */}
       <div className="position-relative careersPage">
         {isAdmin && hasPermission && (
@@ -102,7 +102,7 @@ const Careers = () => {
       )}
 
       {/* Introduction */}
-      {/* {isAdmin && hasPermission && (
+      {isAdmin && hasPermission && (
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
       )}
 
@@ -112,9 +112,9 @@ const Careers = () => {
         linkLabel="Read More"
         moreLink=""
         showLink={false}
-        introTitleCss = "fs-3 fw-medium text-md-center"
-        introSubTitleCss = "fw-medium text-muted text-md-center"
-        introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
+        introTitleCss="fs-3 fw-medium text-md-center"
+        introSubTitleCss="fw-medium text-muted text-md-center"
+        introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
         detailsContainerCss="col-md-10 offset-md-1"
         anchorContainer="d-flex justify-content-start align-items-start mt-4"
         anchersvgColor="#17427C"
@@ -122,7 +122,7 @@ const Careers = () => {
       />
 
       {componentEdit.briefIntro ? (
-        <div className="adminEditTestmonial">
+        <div className={`adminEditTestmonial selected `}>
           <AdminBriefIntro
             editHandler={editHandler}
             componentType="briefIntro"
@@ -131,7 +131,7 @@ const Careers = () => {
         </div>
       ) : (
         ""
-      )} */}
+      )}
 
       <CareerFilterStyled>
         <div className="container p-5 py-3 careersFilter">
@@ -180,6 +180,8 @@ const Careers = () => {
                   setPageloadResults={setPageloadResults}
                   setSearchquery={setSearchquery}
                   searchQuery={searchQuery}
+                  addStateChanges={componentEdit.addjob}
+                  editStateChanges={editNews}
                 />
               </div>
             </div>
@@ -190,6 +192,7 @@ const Careers = () => {
                 posts={posts}
                 setPosts={setResponseData}
                 setPageloadResults={setPageloadResults}
+                setEditState={setEditNews}
               />
             </div>
           </CareersPageStyled>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // Components
 import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
@@ -17,11 +17,16 @@ const Search = ({
   setImageGallery,
   hideSearchBy,
   searchBy = " Search ",
+  addStateChanges,
+  editStateChanges,
 }) => {
   const userCookie = getCookie("access");
 
   const onChangeInputHandler = (event) => {
     setSearchquery(event.target.value);
+    if (!event.target.value) {
+      searchResults();
+    }
   };
 
   const handleKeyDown = (event) => {
@@ -55,6 +60,18 @@ const Search = ({
       console.log("Unable to get the  data");
     }
   };
+
+  useEffect(() => {
+    if (!addStateChanges && searchQuery) {
+      searchResults();
+    }
+  }, [addStateChanges]);
+
+  useEffect(() => {
+    if (editStateChanges && searchQuery) {
+      searchResults();
+    }
+  }, [editStateChanges]);
 
   return (
     <div className="d-flex justify-conent-start align-items-start flex-column">

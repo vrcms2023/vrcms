@@ -63,4 +63,13 @@ export const fieldValidation = {
   company_name: {
     required: "Please enter Company",
   },
+  about_company: {
+    maxLength: {
+      value: 100,
+      message: "Max 100 Characters only",
+    },
+  },
+  job_title: {
+    required: "Please enter Job Title",
+  },
 };
