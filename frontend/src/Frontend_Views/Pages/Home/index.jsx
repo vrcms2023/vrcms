@@ -68,6 +68,7 @@ import { HomeClientItem } from "../../Components/HomeClientItem";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 import HomeProjects from "../../Components/HomeProjects";
 import HomeProjectCarousel from "../../Components/HomeProjectCarousel";
+import HomeDynamicServices from "../../Components/HomeDynamicServices";
 
 const Home = () => {
   const editComponentObj = {
@@ -1352,59 +1353,19 @@ const Home = () => {
             support services and management.
           </p>
         </div>
-        <div className="container homeServices">
+        <div className="container homeDynamciServices">
           <div className="row">
             <div className="row">
-              {homeServices.map((service, i) => {
-                const dynamicKey = `homeService${i}`;
-                const serviceData = componentEdit[dynamicKey];
-                return (
-                  <div className="col-md-4" key={i}>
-                    <div>{`service${i}`}</div>
-                    <div className="homeService">
-                      <div className="container">
-                        <div className="row">
-                          <div className="breiftopMargin">
-                            {isAdmin && hasPermission && (
-                              <EditIcon
-                                editHandler={() =>
-                                  editHandler(dynamicKey, true)
-                                }
-                              />
-                            )}
-                            {componentEdit[dynamicKey] && (
-                              <BriefIntroFrontend
-                                introState={serviceData}
-                                linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-                                linkLabel="Read More"
-                                moreLink=""
-                                introTitleCss="fs-3 fw-bold text-center mb-4"
-                                introSubTitleCss="fw-medium text-muted text-center"
-                                introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
-                                detailsContainerCss="col-md-12 py-3"
-                                anchorContainer="d-flex justify-content-center align-items-center mt-4"
-                                anchersvgColor="#17427C"
-                                pageType={dynamicKey}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      {componentEdit[dynamicKey] && (
-                        <div className="adminEditTestmonial selected">
-                          <BriefIntroAdmin
-                            editHandler={editHandler}
-                            componentType={dynamicKey}
-                            popupTitle="Brief Intro Banner"
-                            pageType={dynamicKey}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
+              {homeServices.map((service, i) => (
+                <div className="col-md-4" key={i}>
+                  <HomeDynamicServices
+                    key={i}
+                    editHandler={editHandler}
+                    objectstatus={componentEdit[`homeService${i}`]}
+                    pageType={`homeService${i}`}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>
