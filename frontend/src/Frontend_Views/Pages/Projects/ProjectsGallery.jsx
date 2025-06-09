@@ -6,12 +6,13 @@ import { getClientProjects } from "../../../redux/project/clientProjectActions";
 
 import ProjectGalleryView from "./ProjectGalleryView";
 import { removeActiveClass } from "../../../util/ulrUtil";
+import { getProjectwithImageMap } from "../../../util/commonUtil";
 
 const ProjectsGallery = () => {
   const [all, setAll] = useState([]);
   const [ongoing, setOngoing] = useState([]);
   const [completed, setCompleted] = useState([]);
-  const [future, setFuture] = useState([]);
+  const [upcoming, setUpcoming] = useState([]);
   const [btnActiveWord, setBtnActiveWord] = useState("ongoing");
   const { clientProjects } = useSelector((state) => state.clientProjects);
 
@@ -23,8 +24,8 @@ const ProjectsGallery = () => {
       if (projectList?.completed?.length > 0) {
         setCompleted(projectList.completed);
       }
-      if (projectList?.future?.length > 0) {
-        setFuture(projectList?.future);
+      if (projectList?.upcoming?.length > 0) {
+        setUpcoming(projectList?.upcoming);
       }
       if (projectList?.ongoing?.length > 0) {
         setOngoing(projectList?.ongoing);
@@ -43,19 +44,9 @@ const ProjectsGallery = () => {
     removeActiveClass();
   }, []);
   const formatData = (data) => {
-    const project = data.projectList;
-    const images = data.imageList;
     const projList = [];
 
-    const list = project.reduce((acc, val, ind) => {
-      const imgs = [];
-      images.forEach((el, i) => {
-        if (el.projectID === val.id) {
-          imgs.push(el);
-        }
-      });
-      return acc.concat({ ...val, imgs });
-    }, []);
+    const list = getProjectwithImageMap(data);
 
     list.map((proj) => {
       if (!projList[proj.projectCategoryValue]) {
@@ -72,7 +63,7 @@ const ProjectsGallery = () => {
     setBtnActiveWord(word);
     if (word === "ongoing") setAll(ongoing);
     if (word === "completed") setAll(completed);
-    if (word === "future") setAll(future);
+    if (word === "upcoming") setAll(upcoming);
   };
 
   useEffect(() => {
@@ -110,9 +101,9 @@ const ProjectsGallery = () => {
           <Button
             type=""
             cssClass={`loadMore me-2 ${
-              btnActiveWord === "future" ? "active" : ""
+              btnActiveWord === "upcoming" ? "active" : ""
             }`}
-            label="Future Projects"
+            label="Upcoming Projects"
             handlerChange={thumbHandler}
           />
         </div>

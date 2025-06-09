@@ -395,3 +395,19 @@ export const isNotEmptyObject = (_object) => {
     return false;
   }
 };
+
+export const getProjectwithImageMap = (data) => {
+  const project = data.projectList;
+  const images = data.imageList;
+  const projList = [];
+  const list = project.reduce((acc, val, ind) => {
+    const imgs = [];
+    images.forEach((el, i) => {
+      if (el.projectID === val.id) {
+        imgs.push(el);
+      }
+    });
+    return acc.concat({ ...val, imgs });
+  }, []);
+  return list;
+};

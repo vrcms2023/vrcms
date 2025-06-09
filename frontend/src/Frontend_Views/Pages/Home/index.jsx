@@ -67,6 +67,7 @@ import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIn
 import { HomeClientItem } from "../../Components/HomeClientItem";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 import HomeProjects from "../../Components/HomeProjects";
+import HomeProjectCarousel from "../../Components/HomeProjectCarousel";
 
 const Home = () => {
   const editComponentObj = {
@@ -629,12 +630,13 @@ const Home = () => {
           )}
           {showHideCompList?.homeproducts?.visibility && (
             <div className="container">
-              <Title
+              {/* <Title
                 title="Products"
                 cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
-              />
+              /> */}
               <div className="row">
-                {homeCategoriesList.map(
+                <HomeProjectCarousel />
+                {/* {homeCategoriesList.map(
                   (category) =>
                     category?.products?.length > 0 && (
                       <div key={category.id}>
@@ -642,10 +644,10 @@ const Home = () => {
                           item={category.products[0]}
                           categoryId={category.id}
                         />
-                        {/* {category.category_name} */}
+                      
                       </div>
                     )
-                )}
+                )} */}
               </div>
             </div>
           )}
@@ -1359,7 +1361,7 @@ const Home = () => {
                         </div>
                       </div>
 
-                      {componentEdit.dynamicKey && (
+                      {componentEdit[dynamicKey] && (
                         <div className="adminEditTestmonial selected">
                           <BriefIntroAdmin
                             editHandler={editHandler}
