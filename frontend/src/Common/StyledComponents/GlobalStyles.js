@@ -44,6 +44,7 @@ body {
     background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.textColor};
     font-size: 16px;
+    line-height: 1.6;
 }
 
 .btn {

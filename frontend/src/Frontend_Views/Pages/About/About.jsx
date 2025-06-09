@@ -148,7 +148,7 @@ const About = () => {
         </div>
       )}
 
-      {/* Brief Introduction */}
+      {/* Brief Introduction 
       {isAdmin && hasPermission && (
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
       )}
@@ -176,9 +176,10 @@ const About = () => {
           />
         </div>
       )}
+        */}
 
       <AboutPageStyled>
-        <div className="container-fluid container-lg my-md-5 ">
+        <div className="container-fluid container-lg ">
           <div className="row my-3 d-flex align-items-center">
             {/* <div className="col-md-6 fs-3 mt-4 mt-md-0">
               <Title title="About Us" cssClass="fs-1 pageTitle" />
@@ -228,7 +229,7 @@ const About = () => {
                   key={item.id}
                   className={`row ${
                     isAdmin
-                      ? "border border-warning mb-3 position-relative"
+                      ? "border border-warning mb-4 position-relative"
                       : ""
                   } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
                 >
@@ -250,12 +251,12 @@ const About = () => {
                       </Link>
                     </>
                   )}
-                  <div className="col-12 col-lg-7 p-4 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column leftColumn">
+                  <div className="col-12 col-lg-7 p-4 py-0 p-md-4 d-flex justify-content-center align-items-start flex-column leftColumn">
                     {item.aboutus_title ? (
                       <Title
                         title={item.aboutus_title}
                         cssClass=""
-                        mainTitleClassess="fs-2 mb-2 fw-medium title"
+                        mainTitleClassess="fs-3 mb-2 title"
                         subTitleClassess=""
                       />
                     ) : (
@@ -266,7 +267,7 @@ const About = () => {
                       <Title
                         title={item.aboutus_sub_title}
                         cssClass=""
-                        mainTitleClassess="fs-5 text-secondary mb-2"
+                        mainTitleClassess="fs-6 text-secondary mb-2 subTitle"
                         subTitleClassess=""
                       />
                     ) : (
@@ -284,7 +285,7 @@ const About = () => {
                     /> */}
                   </div>
 
-                  <div className="col-lg-5 p-1 p-lg-5 pe-lg-0 d-flex justify-content-center align-items-start flex-column rightColumn">
+                  <div className="col-lg-5 p-4 p-md-0 d-flex justify-content-center align-items-start flex-column rightColumn">
                     {/* <Title
                           title={"OUR WORK LOCATIONS"}
                           cssClass="fs-5 my-5 title"
@@ -292,7 +293,7 @@ const About = () => {
                     <img
                       src={getImagePath(item.path)}
                       alt=""
-                      className="w-75 h-75 object-fit-cover shadow m-auto"
+                      className="w-75 object-fit-cover shadow m-auto"
                     />
                   </div>
                 </div>

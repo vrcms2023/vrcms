@@ -3,8 +3,16 @@ import styled from "styled-components";
 export const AboutPageStyled = styled.div`
   .title {
     color: ${({ theme }) => theme.aboutPageTitleColor};
+    font-weight: 600 !important;
+  }
+
+  .subTitle {
+
   }
   .aboutPage {
+
+    padding-bottom: 24px;
+
     .row {
       border-bottom: 2px solid ${({ theme }) => theme.white};
 
@@ -13,6 +21,18 @@ export const AboutPageStyled = styled.div`
       }
     }
     
+    .quill {
+      background: none;
+    }
+    .ql-editor {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    p {
+      line-height: 1.6;
+      margin-bottom: 12px
+    }
       
     }
     
@@ -25,7 +45,7 @@ export const AboutPageStyled = styled.div`
       img {
         position: relative;
         transition: opacity 0.5s ease, transform 0.5s ease, border-radius 0.5s ease;
-        border-radius: 2%;
+        border-radius: 8px;
         
       
         &:hover {
@@ -40,25 +60,26 @@ export const AboutPageStyled = styled.div`
             border-radius: inherit;
           }
       
-          transform: scale(1.1) rotate(-0deg);
-          border-radius: 5%; /* Change the border-radius to 50% for a circle */
+          // transform: scale(1.1) rotate(-0deg);
+          // border-radius: 5%; /* Change the border-radius to 50% for a circle */
         }
       }
-
-      
-      
-      
     }
 
-    ul {
+    ul, ol {
       padding: 0;
-      margin: 25px 0;
+      margin: 0px 0 24px;
       list-style: none;
 
       li {
+        // background-color: ${({ theme }) => theme.verylightgray};
         border-bottom: 1px solid ${({ theme }) => theme.lightgray};
         padding: 10px;
-        // background-color: ${({ theme }) => theme.verylightgray};
+
+        @media(max-width: 768px) {
+          padding: 10px 0;
+        }
+        
       }
 
       li:first-child {
@@ -83,6 +104,15 @@ export const AboutPageStyled = styled.div`
       
       .flipCSS {
         flex-direction: row-reverse;
+        background: #fbfbfb;
+        padding: 24px 10px;
+        margin-top: 32px;
+        margin-bottom: 32px;
+
+        @media (max-width: 768px) {
+          padding: 0;
+          margin: 0px;
+
+        }
       }
-  }
 `;

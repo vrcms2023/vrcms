@@ -10,7 +10,7 @@ const Title = ({
   
   return (
     <>
-      <h5 className={`${cssClass}`}>
+      <h5 className={`${cssClass} ${mainTitleClassess}`}>
         {title}
         {subTitle ? (
           <span className={`${subTitleClassess}`}> / {subTitle}</span>
