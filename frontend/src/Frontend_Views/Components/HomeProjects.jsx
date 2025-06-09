@@ -35,8 +35,8 @@ const HomeProjects = () => {
         <div className="col-md-12 d-flex justify-content-center align-items-center">
           <div className="container">
             <div className="row">
-              {ProjectCategoryType?.map((item) => (
-                <div className="col-md-4">
+              {ProjectCategoryType?.map((item, index) => (
+                <div className="col-md-4" key={index}>
                   <div className="card border-0">
                     <div className="card-body">
                       <Title title={item.category_Label} cssClass="" />

@@ -52,28 +52,23 @@ const Banner = ({
               : ""
           }
         >
-          {bannerdata.banner_title === "" ? (
-            ""
-          ) : (
-            <Title title={bannerdata.banner_title} 
-            cssClass={bannerTitleCss} 
+          {bannerdata.banner_title !== "" && (
+            <Title
+              title={bannerdata.banner_title}
+              cssClass={bannerTitleCss}
               // cssClass=""
               mainTitleClassess="fs-1 fw-bold text-white "
               subTitleClassess=""
             />
           )}
-          {bannerdata.banner_subTitle === "" ? (
-            ""
-          ) : (
+          {bannerdata.banner_subTitle !== "" && (
             <Title
               title={bannerdata.banner_subTitle}
-              cssClass={bannerSubTitleCss} 
+              cssClass={bannerSubTitleCss}
               mainTitleClassess="fs-6 mb-2 fw-medium text-white "
             />
           )}
-          {bannerdata.banner_descripiton === "" ? (
-            ""
-          ) : (
+          {bannerdata.banner_descripiton !== "" && (
             <small className={bannerDescriptionCss}>
               {bannerdata.banner_descripiton}
             </small>

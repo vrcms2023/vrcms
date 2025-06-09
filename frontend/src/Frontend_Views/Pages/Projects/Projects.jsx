@@ -43,7 +43,7 @@ const Projects = () => {
     if (clientProjects?.projectList?.length > 0) {
       const projectList = dataFormatedByCatergoryName(clientProjects);
       setCompleted(projectList.completed);
-      setFuture(projectList.future);
+      setFuture(projectList.upcoming);
       setOngoing(projectList.ongoing);
     }
   }, [clientProjects]);
@@ -63,7 +63,7 @@ const Projects = () => {
   };
   return (
     <>
-      <div className="headerBottomMargin">
+      <div className="position-relative">
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("banner", true)} />
         )}
@@ -71,21 +71,21 @@ const Projects = () => {
           getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
           bannerState={componentEdit.banner}
         />
-        {componentEdit.banner && (
-          <div className={`adminEditTestmonial selected `}>
-            <ImageInputsForm
-              editHandler={editHandler}
-              componentType="banner"
-              popupTitle="Projects Banner"
-              pageType={`${pageType}-banner`}
-              imageLabel="Project Banner Image"
-              showDescription={false}
-              showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-              dimensions={imageDimensionsJson("banner")}
-            />
-          </div>
-        )}
       </div>
+      {componentEdit.banner && (
+        <div className={`adminEditTestmonial selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="banner"
+            popupTitle="Projects Banner"
+            pageType={`${pageType}-banner`}
+            imageLabel="Project Banner Image"
+            showDescription={false}
+            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+            dimensions={imageDimensionsJson("banner")}
+          />
+        </div>
+      )}
 
       {/* Introduction */}
       {isAdmin && hasPermission && (
@@ -104,26 +104,6 @@ const Projects = () => {
         introSubTitleCss="fw-medium text-muted text-md-center"
         introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
       />
-
-      {ongoing?.length > 0 ? (
-        <ProjectItem projectList={ongoing} projectType={ongoing} />
-      ) : (
-        ""
-      )}
-
-      {/* Completed Projects */}
-      {completed?.length > 0 ? (
-        <ProjectItem projectList={completed} projectType={completed} />
-      ) : (
-        ""
-      )}
-
-      {/* future Projects */}
-      {future?.length > 0 ? (
-        <ProjectItem projectList={future} projectType={future} />
-      ) : (
-        ""
-      )}
       {componentEdit.briefIntro && (
         <div className={`adminEditTestmonial selected `}>
           <AdminBriefIntro
@@ -134,6 +114,21 @@ const Projects = () => {
           />
         </div>
       )}
+      <div className="container-fluid container-lg ">
+        {ongoing?.length > 0 && (
+          <ProjectItem projectList={ongoing} projectType={ongoing} />
+        )}
+
+        {/* Completed Projects */}
+        {completed?.length > 0 && (
+          <ProjectItem projectList={completed} projectType={completed} />
+        )}
+
+        {/* future Projects */}
+        {future?.length > 0 && (
+          <ProjectItem projectList={future} projectType={future} />
+        )}
+      </div>
 
       {show && <ModelBg />}
     </>
