@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const AboutPageStyled = styled.div`
   .title {
-    color: ${({ theme }) => theme.aboutPageTitleColor};
+    color: ${({ theme }) => theme.textColor};
     font-weight: 600 !important;
   }
 

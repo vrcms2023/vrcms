@@ -41,8 +41,8 @@ const ContactForm = ({ categoryId }) => {
     <>
       <small>SEND US EMAIL</small>
       <Title
-        title="Contact Feel free to write"
-        cssClass="formTitle fs-4 fw-bold mb-3"
+        title="Feel free to write"
+        cssClass="fs-4 mb-3 formTitle"
       />
       <form
         className="my-0 mx-auto contactForm"

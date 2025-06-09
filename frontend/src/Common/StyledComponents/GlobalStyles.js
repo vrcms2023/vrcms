@@ -16,7 +16,6 @@ ul, li {
 }
 
 a {
-  font-size: .8rem;
   color: ${({ theme }) => theme.gray222};
   text-decoration: underline;
   text-underline-offset: 4px;

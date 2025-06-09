@@ -81,19 +81,19 @@ const GoogleMap = ({ editHandler, componentType, mapValues, popupTitle }) => {
               value={google_map_url}
               onChange={onChangeHandler}
             ></textarea>
-            <small className="mt-3 mb-2 fw-bold d-inline-block">
+            <small className="mt-3 mb-2 d-inline-block">
               Example : 
-              Copy the script from your google map script like the hilighed as below referenced. ( from https:)
+              Please copy the 'src' URL from Google’s iframe in the <strong>‘Embed a map’</strong> section, as shown in the highlighted example below.
               {/* Copy the google "Embed a map" script like below  */}
             </small>
-            <code className="d-block">
+            <code className="d-block mt-4">
               &lt;iframe className="googlemap"
               src="<strong className="bg-info">https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15226.413145928846!2d78.441906!3d17.430816!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x80e4d67809745a48!2sHPR+INFRA+PROJECTS!5e0!3m2!1sen!2sin!4v1442574301202</strong>"
               height="450" width="100%" &gt; &;t;/iframe&gt;
             </code>
           </div>
 
-          <div className="row mt-3">
+          <div className="row mt-5">
             <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-2">
               <button onClick={saveGoogleMapUrl} className="btn btn-primary">
                 Save

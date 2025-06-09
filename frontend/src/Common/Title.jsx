@@ -4,7 +4,7 @@ const Title = ({
   title = "",
   subTitle = "", 
   cssClass,
-  mainTitleClassess="text-center fs-4",
+  mainTitleClassess="text-start fs-4",
   subTitleClassess=""
 }) => {
   
