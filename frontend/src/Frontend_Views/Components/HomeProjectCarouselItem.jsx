@@ -5,18 +5,18 @@ export const HomeProjectCarouselItem = ({ item, index }) => {
   return (
     <div
       className={`carousel-item ${index === 0 ? "active" : ""}`}
-      key={item.id}
+      key={item.index}
     >
-      <div class="container">
-        <div class="row align-items-start">
-          <div class="col">
+      <div className="container">
+        <div className="row align-items-start">
+          <div className="col">
             <img
               src={getImagePath(item.path)}
               alt={item.altText}
               className="d-block w-100"
             />
           </div>
-          <div class="col">
+          <div className="col">
             <div className="">
               {item.projectTitle && (
                 <h1 className="fw-bold">{item.projectTitle}</h1>

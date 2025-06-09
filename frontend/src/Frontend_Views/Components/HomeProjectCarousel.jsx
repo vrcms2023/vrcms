@@ -52,10 +52,24 @@ const HomeProjectCarousel = ({ carouselState }) => {
 
   return (
     <div
-      id="carouselExampleIndicators"
+      id="carouselExampleDark"
       className="homeCarousel carousel slide"
       data-bs-ride="carousel"
     >
+      <div className="carousel-indicators">
+        {carousel.length > 0 &&
+          carousel?.map((item, index) => (
+            <button
+              key={index}
+              type="button"
+              data-bs-target="#carouselExampleDark"
+              data-bs-slide-to={index}
+              className={`${index === 0 ? "active" : ""}`}
+              aria-current="true"
+              aria-label={`Slide ${index} `}
+            ></button>
+          ))}
+      </div>
       <div className="carousel-inner">
         {isLoading ? <SkeletonImage /> : ""}
 
@@ -75,7 +89,7 @@ const HomeProjectCarousel = ({ carouselState }) => {
           <button
             className="carousel-control-prev"
             type="button"
-            data-bs-target="#carouselExampleIndicators"
+            data-bs-target="#carouselExampleDark"
             data-bs-slide="prev"
           >
             <span
@@ -87,7 +101,7 @@ const HomeProjectCarousel = ({ carouselState }) => {
           <button
             className="carousel-control-next"
             type="button"
-            data-bs-target="#carouselExampleIndicators"
+            data-bs-target="#carouselExampleDark"
             data-bs-slide="next"
           >
             <span
