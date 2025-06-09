@@ -1353,7 +1353,7 @@ const Home = () => {
             support services and management.
           </p>
         </div>
-        <div className="container homeServices">
+        <div className="container homeDynamciServices">
           <div className="row">
             <div className="row">
               {homeServices.map((service, i) => (
