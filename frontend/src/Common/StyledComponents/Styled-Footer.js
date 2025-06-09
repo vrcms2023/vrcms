@@ -23,14 +23,7 @@ export const FooterStyled = styled.div`
     }
 
     a {
-      color: ${({ theme }) => theme.footerLinkColor};
-      text-decoration: underline;
-      text-underline-offset: 4px;
-      text-decoration-color: rgba(109, 47, 155, .3) !important;
-      &:hover {
-        color: ${({ theme }) => theme.footerLinkHoverColor};
-        text-decoration-color: rgba(109, 47, 155, 1) !important;
-      }
+      font-size: .8rem
     }
 
   .footerDetails {

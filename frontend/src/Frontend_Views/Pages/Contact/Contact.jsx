@@ -37,6 +37,7 @@ import {
 import { fieldValidation } from "../../../util/validationUtil";
 import Title from "../../../Common/Title";
 import ContactForm from "../../../Common/Forms/ContactForm";
+import { Link } from "react-router-dom";
 
 const Contact = () => {
   const editComponentObj = {
@@ -184,7 +185,7 @@ const Contact = () => {
 
       <div className="container-fluid">
         <div className="row">
-          <div className="contactPage position-relative col-md-12 text-white blueBg-500 p-3 p-md-5">
+          <div className="contactPage position-relative col-md-12 text-white blueBg-500 p-0 p-md-3 p-md-5">
             {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("address", true)} />
             )}
@@ -200,7 +201,7 @@ const Contact = () => {
             )}
 
             <div className="container">
-              <div className="row">
+              <div className="row flipCSS">
                 <>
                   {/* <div
                     className={`my-4 my-nd-0 ${addressList.length === 1 ? "col-md-8 text-center" : addressList.length === 2 ? "col-md-6" : addressList.length === 3 ? "col-md-4" : "col-md-3"}`}
@@ -214,10 +215,10 @@ const Contact = () => {
                         >
                           <Title
                             title={item.location_title}
-                            cssClass="mb-2 fs-4 text-black"
+                            cssClass="mb-2 title"
                           />
                           <div className="mb-2 contactAddress" key={index}>
-                            <p className="m-0 fw-medium">{item.company_name}</p>
+                            <p className="m-0 fs-4 fw-medium">{item.company_name}</p>
                             <p className="m-0">{item.address_dr_no}</p>
                             <p className="m-0">{item.street} </p>
                             <p className="m-0">{item.location} </p>
@@ -266,7 +267,10 @@ const Contact = () => {
                                     className="fa fa-envelope-o fs-4 me-2"
                                     aria-hidden="true"
                                   ></i>{" "}
-                                  {item.emailid_2}{" "}
+                                  {/* <a href="">{item.emailid_2}</a> */}
+                                  <Link to={`mailto: ${item.emailid_2 && item.emailid_2}`}>
+                                    ${item.emailid_2 && item.emailid_2}
+                                  </Link>
                                 </>
                               )}
                             </p>
@@ -277,7 +281,9 @@ const Contact = () => {
                                     className="fa fa-envelope-o fs-4 me-2"
                                     aria-hidden="true"
                                   ></i>{" "}
-                                  {item.emailid_3}{" "}
+                                  <Link to={`mailto: ${item.emailid_3 && item.emailid_3}`}>
+                                    ${item.emailid_3 && item.emailid_3}
+                                  </Link>
                                 </>
                               )}
                             </p>
@@ -287,7 +293,7 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  <div className="col-md-12 col-lg-4 p-5 px-4 py-3  mb-md-5 quickContact">
+                  <div className="col-md-12 col-lg-4 p-1 px-3 p-md-5 mb-md-5 quickContact">
                     {success && (
                       <Alert
                         mesg={"Thank you for contact us"}
