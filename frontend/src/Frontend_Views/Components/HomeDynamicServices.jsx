@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import Title from "../../Common/Title";
 
 // Styles
-import "./HomeServices.css";
 
 import { useAdminLoginStatus } from "../../Common/customhook/useAdminLoginStatus";
 import ServiceForm from "../../Frontend_Admin/Components/forms/ImgTitleIntoForm-List";
@@ -43,16 +42,17 @@ const HomeDynamicServices = ({ editHandler, objectstatus, pageType }) => {
 
             <BriefIntroFrontend
               introState={objectstatus}
-              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-              linkLabel="Read More"
+              linkCss="text-white"
+              linkLabel="In detail..."
               moreLink=""
-              introTitleCss="fs-3 fw-bold text-center mb-4"
+              introTitleCss="fs-4 mb-4 lineClamp lc2"
               introSubTitleCss="fw-medium text-muted text-center"
-              introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
+              introDecTitleCss="text-white text-start lineClamp lc5"
               detailsContainerCss="col-md-12 py-3"
-              anchorContainer="d-flex justify-content-center align-items-center mt-4"
-              anchersvgColor="#17427C"
+              anchorContainer="d-flex justify-content-start mt-4"
+              anchersvgColor="#fff"
               pageType={pageType}
+              showLink="true"
             />
 
             {objectstatus && (

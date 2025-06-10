@@ -105,10 +105,6 @@
 
 /*  End of Eight Blocks */
 
-.breiftopMargin {
-  margin-top: 30px;
-}
-
 .homeProjectsInfo .breiftopMargin {
   margin-top: 0px !important;
 }
@@ -127,13 +123,81 @@
   color: #fff
 }
 
-.homeIconsAllServices {
-  padding: 48px 0;
+.homeDynamciServicesIntro {
+  padding: 0 0 48px;
   background-color: #6D2F9B;
   color: white;
   text-align: center;
+  background-image: url('../../../Images/IconHomeServicesBgImage.png');
+
+  .breiftopMargin {
+    border-bottom: 1px solid rgba(255, 255, 255, .1)
+  }
 }
 
-.homeService {
-  position: relative;
+.homeDynamciServices {
+  padding: 24px 0;
+  .homeService {
+    position: relative;
+  }
+
+  .homeService a {
+    text-decoration-color: rgba(255, 255, 255, .2) !important;
+
+    &:hover {
+      text-decoration-color: rgba(255, 255, 255, 1) !important;
+    }
+  }
+
+  .homeService .breiftopMargin {
+    min-height: 320px;
+    border-bottom: 1px solid rgba(255, 255, 255, .2)
+  }
+
+  .homeService .breiftopMargin .container > div {
+    padding: 10px 0 !important;
+  }
+
+  .homeService .briefIntro h5 {
+    text-align: left;
+  }
+
+  .homeService .briefIntro p {
+    color: rgba(255, 255, 255, .7) !important;
+  }
+
+  .row .col-md-4 {
+    background-repeat: no-repeat;
+    background-position: right 15px bottom 5px;
+
+    @media(max-width: 768px) {
+      background-position: right 32px bottom 5px;
+    }
+  }
+
+  .row .col-md-4:nth-child(1) {
+    background-image: url('../../../Images/studies.png');
+  }
+
+  .row .col-md-4:nth-child(2) {
+    background-image: url('../../../Images/engineering.png');
+  }
+
+  .row .col-md-4:nth-child(3) {
+    background-image: url('../../../Images/calculator.png');
+  }
+
+  .row .col-md-4:nth-child(4) {
+    background-image: url('../../../Images/management.png');
+  }
+
+  .row .col-md-4:nth-child(5) {
+    background-image: url('../../../Images/engineer.png');
+  }
+
+  .row .col-md-4:nth-child(6) {
+    background-image: url('../../../Images/engineering-services.png');
+  }
 }
+
+

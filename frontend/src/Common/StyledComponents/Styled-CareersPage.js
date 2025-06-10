@@ -2,7 +2,13 @@ import styled from "styled-components";
 
 export const CareersPageStyled = styled.div`
   .jobTitle {
-    color: ${({ theme }) => theme.secondaryColor};
+    color: ${({ theme }) => theme.textColor};
+    font-weight: 600;
+  }
+
+  .subTitle {
+    font-size: 1.2em !important;
+    fonw-weight: 500;
   }
 
   .title {
@@ -10,16 +16,16 @@ export const CareersPageStyled = styled.div`
   }
 
   .jobPost {
-    border: 2px solid ${({ theme }) => theme.white};
+    border: 1px solid ${({ theme }) => theme.grayddd};
     // background-color: ${({ theme }) => theme.primaryColor};
-    border-bottom: 4px solid ${({ theme }) => theme.secondaryColor};
+    border-bottom: 4px solid ${({ theme }) => theme.clientColor};
 
     &:hover {
       border-bottom: 4px solid ${({ theme }) => theme.teritoryColor};
     }
 
     .fa-map-marker {
-      color: ${({ theme }) => theme.secondaryColor};
+      color: ${({ theme }) => theme.clientColor};
     }
 
     .fa-expand {
@@ -46,7 +52,7 @@ export const CareersPageStyled = styled.div`
     }
 
     .title {
-      color: ${({ theme }) => theme.primaryColor};
+      color: ${({ theme }) => theme.textColor};
       border-bottom: 1px solid ${({ theme }) => theme.white};
       text-align: center;
     }

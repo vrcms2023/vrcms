@@ -87,6 +87,7 @@ const Home = () => {
     homeService3: false,
     homeService4: false,
     homeService5: false,
+    homeDynamciServices: false,
   };
 
   const productComp = {
@@ -1345,19 +1346,45 @@ const Home = () => {
 
       {/* ICONS ALL SERVICES ============================ */}
 
-      <div className="homeIconsAllServices">
+      <div className="homeDynamciServicesIntro">
         <div>
-          <h3>SERVICES</h3>
-          <p>
-            ICONS can offer a full range of services, from engineering to
-            support services and management.
-          </p>
+          <div className="breiftopMargin">
+              {isAdmin && hasPermission && (
+                <EditIcon
+                  editHandler={() => editHandler("homeDynamciServicesBrief", true)}
+                />
+              )}
+
+              <BriefIntroFrontend
+                introState={componentEdit.homeDynamciServicesBrief}
+                linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                linkLabel="Read More"
+                moreLink=""
+                introTitleCss="text-center mb-4"
+                introSubTitleCss="fw-medium text-muted text-center"
+                introDecTitleCss="fs-6 fw-normal mx-4 text-center text-white"
+                detailsContainerCss="col-md-12 py-3"
+                anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                anchersvgColor="#17427C"
+                pageType={"homeDynamciServicesBrief"}
+              />
+
+              {componentEdit.homeDynamciServicesBrief && (
+                <div className={`adminEditTestmonial selected `}>
+                  <BriefIntroAdmin
+                    editHandler={editHandler}
+                    componentType="homeDynamciServicesBrief"
+                    popupTitle="Brief Intro Banner"
+                    pageType="homeDynamciServicesBrief"
+                  />
+                </div>
+              )}
+            </div>
         </div>
         <div className="container homeDynamciServices">
           <div className="row">
-            <div className="row">
               {homeServices.map((service, i) => (
-                <div className="col-md-4" key={i}>
+                <div className="col-sm-6 col-md-4" key={i}>
                   <HomeDynamicServices
                     key={i}
                     editHandler={editHandler}
@@ -1366,7 +1393,6 @@ const Home = () => {
                   />
                 </div>
               ))}
-            </div>
           </div>
         </div>
       </div>
