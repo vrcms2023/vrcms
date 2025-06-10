@@ -1,10 +1,12 @@
 import React from "react";
 
+import './Title.css'
+
 const Title = ({ 
   title = "",
   subTitle = "", 
   cssClass,
-  mainTitleClassess="text-start fs-4",
+  mainTitleClassess="",
   subTitleClassess=""
 }) => {
   

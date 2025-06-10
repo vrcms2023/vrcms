@@ -1,3 +1,4 @@
+
 .homeServices .row.service:nth-child(odd) {
   flex-direction: row-reverse;
 }
@@ -6,8 +7,7 @@
   object-fit: cover;
 }
 
-.homeServices h2 {
-  font-weight: bold;
+.homeServices .briefIntro h5 {
   font-size: 2.5rem;
   padding-left: 15px;
   border: 0px;
