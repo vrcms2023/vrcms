@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { FilePond, registerPlugin } from "react-filepond";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
@@ -24,6 +24,7 @@ import { getImageFileFromUrl, getImagePath } from "../../util/commonUtil";
 import "filepond/dist/filepond.min.css";
 import "./componentsCommonStyes.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import { toast } from "react-toastify";
 
 registerPlugin(
   FilePondPluginFileValidateType,
@@ -66,6 +67,7 @@ const FileUpload = ({
   const baseURL = getBaseURL();
 
   const [error, setError] = useState("");
+  const timeoutRef = useRef(null);
 
   const {
     register,
@@ -84,6 +86,17 @@ const FileUpload = ({
       reset({});
     }
   }, [editImage]);
+
+  useEffect(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      if (error) {
+        setError("");
+      }
+    }, 3000);
+  }, [error]);
 
   useEffect(() => {
     setError("");
@@ -230,6 +243,17 @@ const FileUpload = ({
         closePopupWindow();
       }
     } catch (error) {
+      let errorMessage = "";
+      if (error.length > 0) {
+        errorMessage = error[0];
+      } else {
+        errorMessage = error[0];
+      }
+      toast.error(errorMessage, {
+        position: "top-left",
+      });
+      setError(error);
+      window.scrollTo(0, 0);
       console.log(error);
     }
   };
@@ -284,6 +308,17 @@ const FileUpload = ({
         closePopupWindow();
       });
     } catch (error) {
+      let errorMessage = "";
+      if (error.length > 0) {
+        errorMessage = error[0];
+      } else {
+        errorMessage = error[0];
+      }
+      toast.error(errorMessage, {
+        position: "top-left",
+      });
+      setError(error);
+      window.scrollTo(0, 0);
       console.log(error);
     }
   };
@@ -401,7 +436,6 @@ const FileUpload = ({
             <div
               className={`${editImage?.id && editImage.path ? "col-6 col-md-6 pe-0" : "col-12"}`}
             >
-              {error ? <Error>{error}</Error> : ""}
               <div className="mb-0">
                 <FilePond
                   labelIdle='Drag & Drop your files or <span className="filepond--label-action">Browse</span>'
@@ -419,6 +453,7 @@ const FileUpload = ({
                   instantUpload={false}
                 />
               </div>
+              {error ? <Error>{error}</Error> : ""}
             </div>
             {editImage?.id &&
               editImage.path &&
