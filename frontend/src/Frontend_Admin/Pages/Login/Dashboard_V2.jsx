@@ -137,6 +137,7 @@ const Dashboard = () => {
             onClose={onClose}
             callback={deleteDashBoardProject}
             projectName={project.projectTitle}
+            message={`deleting the ${project.projectTitle} from the projects?`}
           />
         );
       },
@@ -165,6 +166,38 @@ const Dashboard = () => {
             projectName={project.projectTitle}
             label={"restore"}
             message={`you want to restore ${project.projectTitle} project ?`}
+          />
+        );
+      },
+    });
+  };
+
+  const handleDeleteProjectfromDB = (event, project) => {
+    event.preventDefault();
+    const deleteSelectedNews = async () => {
+      try {
+        const response = await axiosServiceApi.delete(
+          `/project/deleteProject/${project.id}/`
+        );
+        if (response.status !== 204) {
+          setErrorMessage(response.data.message);
+          toast.error("Unable to Delete Porject");
+        }
+        if (response.status === 204) {
+          toast.success(`${project.projectTitle} project deleted`);
+          dispatch(getDashBoardProjects());
+        }
+      } catch (error) {
+        toast.error("Unable to Delete project");
+      }
+    };
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <DeleteDialog
+            onClose={onClose}
+            callback={deleteSelectedNews}
+            message={`deleting the ${project.projectTitle} project?`}
           />
         );
       },
@@ -219,7 +252,7 @@ const Dashboard = () => {
             <Button
               type=""
               cssClass="btn btn-outline"
-              label="Add Project Category"
+              label="Project Category"
               handlerChange={() => navigate("/appAdmin/addCategory")}
             />
           </div>
@@ -227,7 +260,7 @@ const Dashboard = () => {
       </div>
       {/* <hr /> */}
 
-      {projects?.projectList?.length > 0 && (
+      {projects?.projectList?.length > 0 ? (
         <div className="d-flex justify-content-center dashboardFilters align-items-center px-4 mt-4">
           <i className="fa fa-filter" aria-hidden="true"></i>
           <select
@@ -244,6 +277,8 @@ const Dashboard = () => {
               ))}
           </select>
         </div>
+      ) : (
+        "No Projects found"
       )}
       <div className="row p-2 p-md-5 ">
         {ongoingProject.listAvailable && (
@@ -251,6 +286,7 @@ const Dashboard = () => {
             project={ongoingProject}
             handleProjectDelete={handleProjectDelete}
             handleProjectreStore={reStoreProject}
+            handleDeleteProjectfromDB={handleDeleteProjectfromDB}
           />
         )}
         {upcomingProject.listAvailable && (
@@ -258,6 +294,7 @@ const Dashboard = () => {
             project={upcomingProject}
             handleProjectDelete={handleProjectDelete}
             handleProjectreStore={reStoreProject}
+            handleDeleteProjectfromDB={handleDeleteProjectfromDB}
           />
         )}
         {completedProject.listAvailable && (
@@ -265,6 +302,7 @@ const Dashboard = () => {
             project={completedProject}
             handleProjectDelete={handleProjectDelete}
             handleProjectreStore={reStoreProject}
+            handleDeleteProjectfromDB={handleDeleteProjectfromDB}
           />
         )}
       </div>

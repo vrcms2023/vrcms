@@ -411,3 +411,24 @@ export const getProjectwithImageMap = (data) => {
   }, []);
   return list;
 };
+
+export const getUniqueValuesFromarray = (arr1, arr2) => {
+  const set1 = new Set(arr1);
+  const set2 = new Set(arr2);
+  const unique = [];
+
+  for (const item of set1) {
+    if (!set2.has(item)) unique.push(item);
+  }
+  for (const item of set2) {
+    if (!set1.has(item)) unique.push(item);
+  }
+
+  return unique;
+};
+
+export const getFilterObjectLabel = (list, identifier, value) => {
+  return list.filter((item) => {
+    return item[identifier]?.toLowerCase() === value.toLowerCase();
+  })[0];
+};

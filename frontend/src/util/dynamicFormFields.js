@@ -569,11 +569,14 @@ export const getBrochuresFormDynamicFields = (brochures) => {
   };
 };
 
-export const getProjectCategoryFormDynamicFields = (editCategory) => {
+export const getProjectCategoryFormDynamicFields = (editCategory, options) => {
   return {
     category_Label: {
       label: "Category Title",
-      type: "text",
+      type: `${editCategory?.id ? "hidden" : "dropdown"}`,
+      readonly: `${editCategory?.id ? true : false}`,
+      options: options,
+      selectedValue: editCategory?.category_Value,
       fieldName: "category_Label",
       validationObject: { required: "Please enter Category Title" },
     },

@@ -4,7 +4,13 @@ import Title from "../../../Common/Title";
 import Button from "../../../Common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { axiosServiceApi } from "../../../util/axiosUtil";
-import { getDummyImage, getImagePath } from "../../../util/commonUtil";
+import {
+  getDummyImage,
+  getFilterObjectByID,
+  getFilterObjectLabel,
+  getImagePath,
+  getUniqueValuesFromarray,
+} from "../../../util/commonUtil";
 import DeleteDialog from "../../../Common/DeleteDialog";
 import SingleImageUlploadWithForm from "../../Components/forms/SingleImageUlploadWithForm";
 import {
@@ -24,6 +30,28 @@ const ProjectCategory = () => {
   const [show, setShow] = useState(false);
   const [compTtile, setComptitle] = useState("Add Project Categories");
   const [editCategory, setEditCategory] = useState({});
+  const [categoryOptionList, setCategoryOptionList] = useState([
+    {
+      id: 1000,
+      label: "Select",
+      value: "Select",
+    },
+    {
+      id: 1001,
+      label: "Upcoming Projects",
+      value: "upcoming",
+    },
+    {
+      id: 1002,
+      label: "Ongoing Projects",
+      value: "ongoing",
+    },
+    {
+      id: 1003,
+      label: "Completed Projects",
+      value: "completed",
+    },
+  ]);
 
   const getPorjectCategory = async () => {
     //const response = await axiosServiceApi.get(`/project/categorylist/`);
@@ -31,6 +59,7 @@ const ProjectCategory = () => {
 
     if (response?.status === 200) {
       setProjectCategoryType(response.data);
+      getAvailableCategoryList(response.data);
     }
   };
   useEffect(() => {
@@ -78,6 +107,24 @@ const ProjectCategory = () => {
     });
   };
 
+  const getAvailableCategoryList = (data) => {
+    const list = [];
+    categoryOptionList.forEach((element) => {
+      const isoptionExit = getFilterObjectLabel(
+        data,
+        "category_Value",
+        element.value
+      );
+      if (!isoptionExit) {
+        list.push({
+          label: element.label,
+          value: element.value,
+        });
+      }
+    });
+    setCategoryOptionList(list);
+  };
+
   return (
     <div className="container-fluid p-4 pojects-dashboard">
       <div className="row px-2 px-lg-5">
@@ -89,12 +136,15 @@ const ProjectCategory = () => {
           />
 
           <div className="d-flex gap-1 justify-content-between align-items-center">
-            <Button
-              type=""
-              cssClass="btn btn-outline"
-              label="Add"
-              handlerChange={() => addNewCategories("category", true)}
-            />
+            {categoryOptionList.length > 1 && (
+              <Button
+                type=""
+                cssClass="btn btn-outline"
+                label="Add"
+                handlerChange={() => addNewCategories("category", true)}
+              />
+            )}
+
             <Button
               type=""
               cssClass="btn btn-outline"
@@ -219,7 +269,8 @@ const ProjectCategory = () => {
                   imageLabel="Project Image"
                   showDescription={false}
                   showExtraFormFields={getProjectCategoryFormDynamicFields(
-                    editCategory
+                    editCategory,
+                    categoryOptionList
                   )}
                   dimensions={imageDimensionsJson("advertisement")}
                 />

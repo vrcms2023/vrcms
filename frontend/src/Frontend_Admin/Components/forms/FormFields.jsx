@@ -49,10 +49,13 @@ export const InputFields = ({
               className="custom-select custom-select-lg form-control p-2"
               {...register(fieldName, validationObject)}
             >
-              <option selected>Choose...</option>
               {rest.options.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
+                <option
+                  key={index}
+                  value={option.value}
+                  selected={option.value === rest?.selectedValue}
+                >
+                  {option.label}
                 </option>
               ))}
             </select>
@@ -149,7 +152,9 @@ export const RichTextInputEditor = ({ label, editorSetState, initialText }) => {
         <small>{label}</small>
       </label> */}
       <div className="col-sm-12">
-        <p className="fs-6 pt-3 py-md-0"><small>{label}</small></p>
+        <p className="fs-6 pt-3 py-md-0">
+          <small>{label}</small>
+        </p>
         <RichTextEditor
           initialText={initialText ? initialText : ""}
           RichEditorState={editorSetState}
@@ -205,7 +210,7 @@ export const SelectField = ({
         htmlFor=""
         className="col-sm-12 col-form-label text-start text-capitalize"
       >
-       <small>{label}</small>
+        <small>{label}</small>
       </label>
       <div className="col-sm-12">
         <select

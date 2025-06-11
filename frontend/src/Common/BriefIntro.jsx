@@ -22,7 +22,7 @@ const BriefIntroFrontend = ({
   showLink,
 }) => {
   const [introValue, setIntroValues] = useState([]);
-  
+
   useEffect(() => {
     const getBriefIntro = async () => {
       try {
@@ -30,10 +30,8 @@ const BriefIntroFrontend = ({
           `/carousel/clientHomeIntro/${pageType}/`
         );
 
-        console.log("introValue", response)
         if (response?.status === 200) {
           setIntroValues(response.data.intro);
-          
         }
       } catch (error) {
         console.log("unable to access ulr because of server is down");
@@ -65,7 +63,11 @@ const BriefIntroFrontend = ({
               <div className={anchorContainer}>
                 <Ancher
                   AncherLabel={linkLabel}
-                  Ancherpath={introValue?.intro_morelink ? introValue.intro_morelink : moreLink}
+                  Ancherpath={
+                    introValue?.intro_morelink
+                      ? introValue.intro_morelink
+                      : moreLink
+                  }
                   // Ancherpath={moreLink}
                   AncherClass={linkCss}
                   AnchersvgColor={anchersvgColor}

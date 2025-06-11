@@ -7,6 +7,7 @@ const ProjectItem = ({
   itemCSSClass,
   handleProjectDelete,
   handleProjectreStore,
+  handleDeleteProjectfromDB,
 }) => {
   return (
     <>
@@ -62,16 +63,30 @@ const ProjectItem = ({
                   </Link>
                 </>
               ) : (
-                <Link
-                  to=""
-                  onClick={() => handleProjectreStore(project, project.id)}
-                >
-                  <i
-                    className="fa fa-undo  fw-bormal text-muted"
-                    aria-hidden="true"
-                    title="Revert"
-                  ></i>
-                </Link>
+                <>
+                  <Link
+                    to=""
+                    onClick={() => handleProjectreStore(project, project.id)}
+                  >
+                    <i
+                      className="fa fa-undo mx-4  fw-bormal text-muted"
+                      aria-hidden="true"
+                      title="Revert"
+                    ></i>
+                  </Link>
+                  <Link
+                    to=""
+                    onClick={(event) =>
+                      handleDeleteProjectfromDB(event, project)
+                    }
+                  >
+                    <i
+                      className="fa fa-trash-o  text-muted"
+                      aria-hidden="true"
+                      title="Revert"
+                    ></i>
+                  </Link>
+                </>
               )}
             </td>
           </tr>
@@ -95,6 +110,7 @@ const ProjectList = ({
   projects,
   handleProjectDelete,
   handleProjectreStore,
+  handleDeleteProjectfromDB,
 }) => {
   return (
     <>
@@ -130,6 +146,7 @@ const ProjectList = ({
               itemCSSClass={"projectPublished"}
               handleProjectDelete={handleProjectDelete}
               handleProjectreStore={handleProjectreStore}
+              handleDeleteProjectfromDB={handleDeleteProjectfromDB}
             />
           )}
           {projects?.liveProject?.length > 0 && (
@@ -138,6 +155,7 @@ const ProjectList = ({
               itemCSSClass={"projectUnpublished"}
               handleProjectDelete={handleProjectDelete}
               handleProjectreStore={handleProjectreStore}
+              handleDeleteProjectfromDB={handleDeleteProjectfromDB}
             />
           )}
           {projects?.archiveProject?.length > 0 && (
@@ -146,6 +164,7 @@ const ProjectList = ({
               itemCSSClass={"projectDeleted"}
               handleProjectDelete={handleProjectDelete}
               handleProjectreStore={handleProjectreStore}
+              handleDeleteProjectfromDB={handleDeleteProjectfromDB}
             />
           )}
         </tbody>
@@ -158,6 +177,7 @@ export const Projects = ({
   project,
   handleProjectDelete,
   handleProjectreStore,
+  handleDeleteProjectfromDB,
 }) => {
   return (
     <>
@@ -168,6 +188,7 @@ export const Projects = ({
           projects={project}
           handleProjectDelete={handleProjectDelete}
           handleProjectreStore={handleProjectreStore}
+          handleDeleteProjectfromDB={handleDeleteProjectfromDB}
         />
       </div>
     </>

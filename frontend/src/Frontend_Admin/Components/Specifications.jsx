@@ -55,6 +55,7 @@ const Specifications = ({
             onClose={onClose}
             callback={deleteSpecifications}
             projectName={selectedSpecification.title}
+            message={`you want to delete ${selectedSpecification.title} Specification ?`}
           />
         );
       },

@@ -1,8 +1,10 @@
 import React from "react";
 import { getImagePath } from "../../util/commonUtil";
 import Ancher from "../../Common/Ancher";
+import { useNavigate } from "react-router-dom";
 
 export const HomeProjectCarouselItem = ({ item, index }) => {
+  const navigate = useNavigate();
   return (
     <div
       className={`carousel-item ${index === 0 ? "active" : ""}`}
@@ -20,9 +22,7 @@ export const HomeProjectCarouselItem = ({ item, index }) => {
           <div className="col-sm-6 col-md-6 carouselDescription d-flex align-items-center">
             <div className="d-flex flex-column justify-content-start align-items-start gap-2">
               <span>PROJECTS</span>
-              {item.projectTitle && (
-                <h1 className="">{item.projectTitle}</h1>
-              )}
+              {item.projectTitle && <h1 className="">{item.projectTitle}</h1>}
 
               {item.projectDescription ||
                 (item.imageDescription && (
@@ -33,9 +33,32 @@ export const HomeProjectCarouselItem = ({ item, index }) => {
                   </p>
                 ))}
 
-                <div>
-                  <Ancher AncherLabel="More details.."/>
-                </div>
+              <div>
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() =>
+                    navigate("/project-details", {
+                      state: {
+                        selectedPorject: item.projectType,
+                        projectid: item.id,
+                      },
+                    })
+                  }
+                >
+                  more details
+                </button>
+                {/* <Ancher
+                  handleModel={() =>
+                    navigate("/project-details", {
+                      // state: {
+                      //   selectedPorject: item.projectType,
+                      //   projectid: item.id,
+                      // },
+                    })
+                  }
+                  AncherLabel="More project details.."
+                /> */}
+              </div>
             </div>
           </div>
         </div>
