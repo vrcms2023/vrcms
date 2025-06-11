@@ -11,7 +11,7 @@ class ProjectCategory(models.Model):
 class Category(ImageModel):              
         category_Label = models.CharField(max_length=50)
         category_Value = models.CharField(max_length=50, blank=True, null=True)
-        category_description =   models.CharField(blank=True, max_length=500, null=True)
+        category_description =   models.CharField(blank=True, max_length=5000, null=True)
         readMore_link =  models.CharField(blank=True, max_length=100, null=True)
 
 

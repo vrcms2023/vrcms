@@ -10,7 +10,8 @@ urlpatterns = [
 
 
     path('addProject/', addProjectAPIView.as_view(), name="add_Project"),
-    path('editProject/<pk>/', editUpdateProjectAPIView.as_view(), name="add_Project"),
+    path('editProject/<pk>/', editUpdateProjectAPIView.as_view(), name="update_Project"),
+    path('deleteProject/<pk>/', editUpdateProjectAPIView.as_view(), name="delete_Project"),
     path('getDashboardProject/', dashBoardProjectAPIView.as_view(), name="DashBoardProject"),
     path('publishProject/<pk>/', publishProjectAPIView.as_view(), name="publishProject"),
     path('archiveProject/<pk>/', archiveProjectAPIView.as_view(), name="archiveProject"),

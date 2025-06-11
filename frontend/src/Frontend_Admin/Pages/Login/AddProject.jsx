@@ -76,6 +76,7 @@ const AddProject = () => {
   const [projectTitleErrorMessage, setProjectTitleErrorMessage] = useState("");
   const [projectPublish, setProjectPublish] = useState(false);
   const [saveState, setSaveState] = useState(false);
+  const [editCarousel, setEditCarousel] = useState({});
 
   const { id } = useParams();
 
@@ -858,6 +859,7 @@ const AddProject = () => {
                           buttonLable="Upload Plan"
                           maxFiles={1}
                           scrollEnable={true}
+                          setEditCarousel={setEditCarousel}
                         />
                       )}
 
@@ -912,6 +914,7 @@ const AddProject = () => {
                         buttonLable="Upload PDF"
                         maxFiles={1}
                         scrollEnable={true}
+                        setEditCarousel={setEditCarousel}
                       />
                     )}
                     <CatageoryImgC
@@ -951,6 +954,7 @@ const AddProject = () => {
                         buttonLable="Upload Plan"
                         maxFiles={1}
                         scrollEnable={true}
+                        setEditCarousel={setEditCarousel}
                       />
                     )}
                     <CatageoryImgC
@@ -994,6 +998,7 @@ const AddProject = () => {
                         buttonLable="Upload Availability"
                         maxFiles={1}
                         scrollEnable={true}
+                        setEditCarousel={setEditCarousel}
                       />
                     )}
 
@@ -1035,6 +1040,7 @@ const AddProject = () => {
                         buttonLable="Upload Price Details"
                         maxFiles={1}
                         scrollEnable={true}
+                        setEditCarousel={setEditCarousel}
                       />
                     )}
 
@@ -1137,6 +1143,7 @@ const AddProject = () => {
                     saveState={setSaveState}
                     showDescription={false}
                     scrollEnable={true}
+                    setEditCarousel={setEditCarousel}
                   />
                   <CatageoryImgC
                     title={`${readOnlyTitle} Image Gallery`}
