@@ -15,6 +15,7 @@ import SkeletonImage from "../../Common/Skeltons/SkeletonImage";
 import { CarouselItem } from "./CarouselItem";
 import { getClientProjects } from "../../redux/project/clientProjectActions";
 import { HomeProjectCarouselItem } from "./HomeProjectCarouselItem";
+import { dataFormatedByCatergoryName } from "../../util/dataFormatUtil";
 
 const HomeProjectCarousel = ({ carouselState }) => {
   const { clientProjects } = useSelector((state) => state.clientProjects);
@@ -31,21 +32,35 @@ const HomeProjectCarousel = ({ carouselState }) => {
 
   useEffect(() => {
     if (clientProjects?.projectList?.length > 0) {
+      const projectList = dataFormatedByCatergoryName(clientProjects);
+
       const list = getProjectwithImageMap(clientProjects);
       const carouselList = [];
       list.forEach((element) => {
-        element.imgs.forEach((img) => {
-          carouselList.push({
-            id: element.id,
-            projectTitle: element.projectTitle,
-            projectDescription: element.description,
-            altText: img.alternitivetext,
-            path: img.path,
-            imageDescription: img.imageDescription,
-            imageTitle: img.imageTitle,
-          });
+        carouselList.push({
+          id: element.id,
+          projectTitle: element.projectTitle,
+          projectDescription: element.description,
+          altText: element?.imgs[0]?.alternitivetext,
+          path: element?.imgs[0]?.path,
+          imageDescription: element?.imgs[0]?.imageDescription,
+          imageTitle: element?.imgs[0]?.imageTitle,
+          projectType: projectList[element.projectCategoryValue],
         });
       });
+      // list.forEach((element) => {
+      //   element.imgs.forEach((img) => {
+      //     carouselList.push({
+      //       id: element.id,
+      //       projectTitle: element.projectTitle,
+      //       projectDescription: element.description,
+      //       altText: img.alternitivetext,
+      //       path: img.path,
+      //       imageDescription: img.imageDescription,
+      //       imageTitle: img.imageTitle,
+      //     });
+      //   });
+      // });
       setCarousel(carouselList);
     }
   }, [clientProjects]);
@@ -84,7 +99,7 @@ const HomeProjectCarousel = ({ carouselState }) => {
         )}
       </div>
 
-      {carousel.length > 1 ? (
+      {/* {carousel.length > 1 && (
         <>
           <button
             className="carousel-control-prev"
@@ -111,8 +126,34 @@ const HomeProjectCarousel = ({ carouselState }) => {
             <span className="visually-hidden">Next</span>
           </button>
         </>
-      ) : (
-        ""
+      )} */}
+      {carousel.length > 1 && (
+        <>
+          <button
+            className="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleDark"
+            data-bs-slide="prev"
+          >
+            <span
+              className="carousel-control-prev-icon"
+              aria-hidden="true"
+            ></span>
+            <span className="visually-hidden">Previous</span>
+          </button>
+          <button
+            className="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleDark"
+            data-bs-slide="next"
+          >
+            <span
+              className="carousel-control-next-icon"
+              aria-hidden="true"
+            ></span>
+            <span className="visually-hidden">Next</span>
+          </button>
+        </>
       )}
     </div>
   );

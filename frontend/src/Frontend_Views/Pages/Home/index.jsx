@@ -88,6 +88,7 @@ const Home = () => {
     homeService4: false,
     homeService5: false,
     homeDynamciServices: false,
+    homeDynamciServicesBrief: false,
   };
 
   const productComp = {
@@ -1189,38 +1190,32 @@ const Home = () => {
         {/* === HPR INFRA ================================================================================================================= */}
 
         {/* ==== HOME PROJECT CAROUSEL CATEGORIES ===================================================================================================== */}
-              <div
-                className={
-                  showHideCompList?.homeprojectcarousel?.visibility &&
-                  isAdmin &&
-                  hasPermission
-                    ? "border border-info mb-2"
-                    : ""
-                }
-              >
-                {isAdmin && hasPermission && (
-                  <ShowHideToggle
-                    showhideStatus={showHideCompList?.homeprojectcarousel?.visibility}
-                    title={"Home Project Carousel"}
-                    componentName={"homeprojectcarousel"}
-                    showHideHandler={showHideHandler}
-                  />
-                )}
-                {showHideCompList?.homeprojectcarousel?.visibility && (
-                    
-                    <div className="row">
-                      <div class="col-md-12 p-0">
-                      {/* <Title
-                        title="Products"
-                        cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
-                      /> */}
-
-                      <HomeProjectCarousel />
-                      </div>
-                      </div>
-                )}
+        <div
+          className={
+            showHideCompList?.homeprojectcarousel?.visibility &&
+            isAdmin &&
+            hasPermission
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <ShowHideToggle
+              showhideStatus={showHideCompList?.homeprojectcarousel?.visibility}
+              title={"Home Project Carousel"}
+              componentName={"homeprojectcarousel"}
+              showHideHandler={showHideHandler}
+            />
+          )}
+          {showHideCompList?.homeprojectcarousel?.visibility && (
+            <div className="row">
+              <div class="col-md-12 p-0">
+                <HomeProjectCarousel />
               </div>
-        
+            </div>
+          )}
+        </div>
+
         {/* END OF HOME PROJECT CAROUSEL CATEGORIES ============================== */}
 
         {/* Projects + brief intro  */}
@@ -1352,50 +1347,52 @@ const Home = () => {
       <div className="homeDynamciServicesIntro">
         <div>
           <div className="breiftopMargin">
-              {isAdmin && hasPermission && (
-                <EditIcon
-                  editHandler={() => editHandler("homeDynamciServicesBrief", true)}
-                />
-              )}
-
-              <BriefIntroFrontend
-                introState={componentEdit.homeDynamciServicesBrief}
-                linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-                linkLabel="Read More"
-                moreLink=""
-                introTitleCss="text-center mb-4"
-                introSubTitleCss="fw-medium text-muted text-center"
-                introDecTitleCss="fs-6 fw-normal mx-4 text-center text-white"
-                detailsContainerCss="col-md-12 py-3"
-                anchorContainer="d-flex justify-content-center align-items-center mt-4"
-                anchersvgColor="#17427C"
-                pageType={"homeDynamciServicesBrief"}
+            {isAdmin && hasPermission && (
+              <EditIcon
+                editHandler={() =>
+                  editHandler("homeDynamciServicesBrief", true)
+                }
               />
+            )}
 
-              {componentEdit.homeDynamciServicesBrief && (
-                <div className={`adminEditTestmonial selected `}>
-                  <BriefIntroAdmin
-                    editHandler={editHandler}
-                    componentType="homeDynamciServicesBrief"
-                    popupTitle="Brief Intro Banner"
-                    pageType="homeDynamciServicesBrief"
-                  />
-                </div>
-              )}
-            </div>
+            <BriefIntroFrontend
+              introState={componentEdit.homeDynamciServicesBrief}
+              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+              linkLabel="Read More"
+              moreLink=""
+              introTitleCss="text-center mb-4"
+              introSubTitleCss="fw-medium text-muted text-center"
+              introDecTitleCss="fs-6 fw-normal mx-4 text-center text-white"
+              detailsContainerCss="col-md-12 py-3"
+              anchorContainer="d-flex justify-content-center align-items-center mt-4"
+              anchersvgColor="#17427C"
+              pageType={"homeDynamciServicesBrief"}
+            />
+
+            {componentEdit.homeDynamciServicesBrief && (
+              <div className={`adminEditTestmonial selected `}>
+                <BriefIntroAdmin
+                  editHandler={editHandler}
+                  componentType="homeDynamciServicesBrief"
+                  popupTitle="Brief Intro Banner"
+                  pageType="homeDynamciServicesBrief"
+                />
+              </div>
+            )}
+          </div>
         </div>
         <div className="container homeDynamciServices">
           <div className="row">
-              {homeServices.map((service, i) => (
-                <div className="col-sm-6 col-md-4" key={i}>
-                  <HomeDynamicServices
-                    key={i}
-                    editHandler={editHandler}
-                    objectstatus={componentEdit[`homeService${i}`]}
-                    pageType={`homeService${i}`}
-                  />
-                </div>
-              ))}
+            {homeServices.map((service, i) => (
+              <div className="col-sm-6 col-md-4" key={i}>
+                <HomeDynamicServices
+                  key={i}
+                  editHandler={editHandler}
+                  objectstatus={componentEdit[`homeService${i}`]}
+                  pageType={`homeService${i}`}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>

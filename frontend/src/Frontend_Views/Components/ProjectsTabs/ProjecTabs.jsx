@@ -175,7 +175,7 @@ const ProjectTabs = () => {
               >
                 <option value="select">Select Project</option>
                 {projects?.length > 0
-                  ? projects.map((project) => (
+                  ? projects?.map((project) => (
                       <option value={project.id} key={project.id}>
                         {project.projectTitle}
                       </option>

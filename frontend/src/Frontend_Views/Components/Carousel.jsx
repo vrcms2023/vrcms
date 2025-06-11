@@ -80,7 +80,7 @@ const Carousel = ({ carouselState }) => {
         ))} */}
       </div>
 
-      {carousel.length > 1 ? (
+      {carousel.length > 1 && (
         <>
           <button
             className="carousel-control-prev"
@@ -107,8 +107,6 @@ const Carousel = ({ carouselState }) => {
             <span className="visually-hidden">Next</span>
           </button>
         </>
-      ) : (
-        ""
       )}
     </div>
   );
