@@ -201,3 +201,77 @@
 }
 
 
+/* Home Page Projects Carousel CSS */
+
+.homeMultyPurposeCarousel {
+  background-color: rgba(34, 34, 34, .1);
+  position: relative;
+
+  .carousel-indicators {
+    display: none;
+    button {
+      width: 16px;
+    }
+  }
+
+   .carousel-control-prev, .carousel-control-next {
+    top: 24px !important;
+    align-items: start;
+    opacity: .7 !important;
+
+    @media(max-width: 480px) {
+      top: -16px !important;
+    }
+   }
+
+   .carousel-control-prev{
+    left: 88% !important;
+
+    @media(min-width: 421px ) and (max-width: 991px) {
+      left: 78% !important;
+    }
+
+    @media(max-width: 480px) {
+      left: 65% !important;
+    }
+   }
+  
+  .carousel-control-prev-icon, .carousel-control-next-icon {
+    padding: 12px;
+    background-color: #222;
+    border-radius: 4px;
+    display: inline-block;
+    background-size: 60%;
+  }
+
+  .carouselImg, .carouselDescription {
+    height: 500px;
+    
+
+    @media(max-width: 480px) {
+      height: auto;
+    }
+
+    
+  }
+  .carouselImg img {
+   height: 100%;
+   object-fit: cover;
+  }
+
+  .carouselDescription {
+    padding: 0 80px;
+
+    @media(max-width: 820px) {
+      padding: 32px;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #222;
+    }
+    span {
+      color: #6D2F9B;
+    }
+  }
+}

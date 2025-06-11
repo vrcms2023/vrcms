@@ -1189,35 +1189,38 @@ const Home = () => {
         {/* === HPR INFRA ================================================================================================================= */}
 
         {/* ==== HOME PROJECT CAROUSEL CATEGORIES ===================================================================================================== */}
-        <div
-          className={
-            showHideCompList?.homeprojectcarousel?.visibility &&
-            isAdmin &&
-            hasPermission
-              ? "border border-info mb-2"
-              : ""
-          }
-        >
-          {isAdmin && hasPermission && (
-            <ShowHideToggle
-              showhideStatus={showHideCompList?.homeprojectcarousel?.visibility}
-              title={"Home Project Carousel"}
-              componentName={"homeprojectcarousel"}
-              showHideHandler={showHideHandler}
-            />
-          )}
-          {showHideCompList?.homeprojectcarousel?.visibility && (
-            <div className="container">
-              {/* <Title
-                title="Products"
-                cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
-              /> */}
-              <div className="row">
-                <HomeProjectCarousel />
+              <div
+                className={
+                  showHideCompList?.homeprojectcarousel?.visibility &&
+                  isAdmin &&
+                  hasPermission
+                    ? "border border-info mb-2"
+                    : ""
+                }
+              >
+                {isAdmin && hasPermission && (
+                  <ShowHideToggle
+                    showhideStatus={showHideCompList?.homeprojectcarousel?.visibility}
+                    title={"Home Project Carousel"}
+                    componentName={"homeprojectcarousel"}
+                    showHideHandler={showHideHandler}
+                  />
+                )}
+                {showHideCompList?.homeprojectcarousel?.visibility && (
+                    
+                    <div className="row">
+                      <div class="col-md-12 p-0">
+                      {/* <Title
+                        title="Products"
+                        cssClass="fs-1 fw-bold text-center my-5 pt-0 pt-md-5 text-uppercase"
+                      /> */}
+
+                      <HomeProjectCarousel />
+                      </div>
+                      </div>
+                )}
               </div>
-            </div>
-          )}
-        </div>
+        
         {/* END OF HOME PROJECT CAROUSEL CATEGORIES ============================== */}
 
         {/* Projects + brief intro  */}
