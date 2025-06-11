@@ -53,7 +53,7 @@ const HomeProjectCarousel = ({ carouselState }) => {
   return (
     <div
       id="carouselExampleDark"
-      className="homeCarousel carousel slide"
+      className="homeMultyPurposeCarousel carousel slide"
       data-bs-ride="carousel"
     >
       <div className="carousel-indicators">

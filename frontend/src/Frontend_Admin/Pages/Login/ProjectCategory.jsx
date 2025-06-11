@@ -109,7 +109,7 @@ const ProjectCategory = () => {
           <ul className="d-flex justify-content-center align-items-center gap-3 mb-3 list-unstyled">
             <li className="border-success  p-1 px-3">Ongoing </li>{" "}
             <span className="text-muted">|</span>
-            <li className="border-warning  p-1 px-3">Future </li>{" "}
+            <li className="border-warning  p-1 px-3">Upcoming </li>{" "}
             <span className="text-muted">|</span>
             <li className="border-primary  p-1 px-3">Completed </li>
           </ul>
