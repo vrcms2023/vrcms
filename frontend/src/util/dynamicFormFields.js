@@ -573,9 +573,10 @@ export const getProjectCategoryFormDynamicFields = (editCategory, options) => {
   return {
     category_Label: {
       label: "Category Title",
-      type: `${editCategory?.id ? "hidden" : "dropdown"}`,
+      type: `${editCategory?.id ? "text" : "dropdown"}`,
       readonly: `${editCategory?.id ? true : false}`,
       options: options,
+      disabled: `${editCategory?.id ? true : false}`,
       selectedValue: editCategory?.category_Value,
       fieldName: "category_Label",
       validationObject: { required: "Please enter Category Title" },

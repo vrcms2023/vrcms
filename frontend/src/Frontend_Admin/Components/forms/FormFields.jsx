@@ -29,6 +29,7 @@ export const InputFields = ({
               type={type}
               id={rest?.id}
               onChange={onChange}
+              disabled={rest.disabled}
               className="form-control p-2"
             />
             <span className="error">{error}</span>

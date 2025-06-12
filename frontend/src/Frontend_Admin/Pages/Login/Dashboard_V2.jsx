@@ -13,6 +13,7 @@ import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getDashBoardProjects } from "../../../redux/project/projectActions";
 
 import "./Dashboard.css";
+import { getCategoryPorjectList } from "../../../util/commonUtil";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -86,19 +87,6 @@ const Dashboard = () => {
     };
   };
 
-  const getCategoryPorjectList = (data) => {
-    const projList = [];
-
-    data.forEach((proj) => {
-      if (!projList[proj.projectCategoryValue]) {
-        projList[proj.projectCategoryValue] = [];
-      }
-      projList[proj.projectCategoryValue].push(proj);
-    });
-
-    return projList;
-  };
-
   const callService = async (id, data, project, message) => {
     try {
       const response = await axiosServiceApi.patch(
@@ -137,7 +125,7 @@ const Dashboard = () => {
             onClose={onClose}
             callback={deleteDashBoardProject}
             projectName={project.projectTitle}
-            message={`deleting the ${project.projectTitle} from the projects?`}
+            message={`${project.projectTitle}  project will be archive`}
           />
         );
       },
@@ -197,7 +185,7 @@ const Dashboard = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSelectedNews}
-            message={`deleting the ${project.projectTitle} project?`}
+            message={`${project.projectTitle} project will be  deleted permentely `}
           />
         );
       },
