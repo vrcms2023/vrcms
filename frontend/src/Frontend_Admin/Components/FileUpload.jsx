@@ -453,6 +453,10 @@ const FileUpload = ({
                   instantUpload={false}
                 />
               </div>
+              <div className="text-muted">
+                You can upload a maximum of {maxFiles ? maxFiles : 4} images at
+                once.
+              </div>
               {error ? <Error>{error}</Error> : ""}
             </div>
             {editImage?.id &&

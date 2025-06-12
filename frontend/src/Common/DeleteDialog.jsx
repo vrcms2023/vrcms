@@ -9,6 +9,7 @@ const DeleteDialog = ({
   message,
   buttonStyle,
   showConfirmButotns = true,
+  projectName,
 }) => {
   return (
     <div className="popup-overlay d-flex justify-content-center align-items-center flex-column  border-light">

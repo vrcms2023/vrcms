@@ -21,7 +21,7 @@ const Dashboard = () => {
   const [ongoingProject, setOngoingProject] = useState([]);
   const [completedProject, setCompletedProject] = useState([]);
   const [upcomingProject, setUpcomingProject] = useState([]);
-
+  const [ProjectCategoryType, setProjectCategoryType] = useState([]);
   const dispatch = useDispatch();
 
   /**
@@ -218,6 +218,17 @@ const Dashboard = () => {
     else updateProjects(projects?.projectList);
   };
 
+  const getPorjectCategory = async () => {
+    const response = await axiosServiceApi.get(`/project/createCategory/`);
+
+    if (response?.status === 200) {
+      setProjectCategoryType(response.data);
+    }
+  };
+  useEffect(() => {
+    getPorjectCategory();
+  }, []);
+
   return (
     <div className="container-fluid p-4  pojects-dashboard">
       {/* <div className='text-end'>
@@ -230,12 +241,14 @@ const Dashboard = () => {
             cssClass="text-center blue-500 fs-5 mb-2 mb-md-0"
           />
           <div className="d-flex gap-1 justify-content-between align-items-center">
-            <Button
-              type=""
-              cssClass="btn btn-outline"
-              label="Add Project"
-              handlerChange={() => navigate("/addproject")}
-            />
+            {ProjectCategoryType.length > 0 && (
+              <Button
+                type=""
+                cssClass="btn btn-outline"
+                label="Add Project"
+                handlerChange={() => navigate("/addproject")}
+              />
+            )}
 
             <Button
               type=""

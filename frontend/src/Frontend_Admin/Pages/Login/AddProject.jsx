@@ -1162,7 +1162,7 @@ const AddProject = () => {
                     scrollEnable={true}
                     setEditCarousel={setEditCarousel}
                   />
-                  <div>You can upload a maximum of 4 images at once.</div>
+
                   <CatageoryImgC
                     title={`${readOnlyTitle} Image Gallery`}
                     catategoryImgs={imgGallery}

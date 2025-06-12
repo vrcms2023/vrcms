@@ -103,7 +103,7 @@ const ProjectCategory = () => {
     const title = category.category_Label;
     const isProjectsAvailable = projectsList[category.category_Value];
     console.log(isProjectsAvailable);
-    if (isProjectsAvailable.length > 0) {
+    if (isProjectsAvailable?.length > 0) {
       // toast.info={`${title} category has ${isProjectsAvailable.length} projects, cannot delete category`}
       confirmAlert({
         customUI: ({ onClose }) => {
@@ -134,6 +134,7 @@ const ProjectCategory = () => {
         return (
           <DeleteDialog
             onClose={onClose}
+            callback={deleteMenuItemByID}
             message={`you want to delete the ${title} category`}
           />
         );
@@ -206,8 +207,8 @@ const ProjectCategory = () => {
             <table className="table contacts">
               <thead>
                 <tr>
-                  <th className="align-middle fw-bold text-muted">Title</th>
-                  <th className="align-middle fw-bold  text-muted">Value</th>
+                  <th className="align-middle fw-bold text-muted">Category</th>
+                  {/* <th className="align-middle fw-bold  text-muted">Value</th> */}
                   <th className="align-middle fw-bold  text-muted">
                     Description
                   </th>
@@ -223,7 +224,7 @@ const ProjectCategory = () => {
               <tbody>
                 {ProjectCategoryType?.map((category) => (
                   <tr key={category.id} className="bg-success">
-                    <td className="align-middle">{category.category_Label}</td>
+                    {/* <td className="align-middle">{category.category_Label}</td> */}
                     <td
                       className={`align-middle ${
                         category.category_Value === "ongoing"
@@ -233,7 +234,7 @@ const ProjectCategory = () => {
                             : "text-primary fw-bold"
                       }`}
                     >
-                      {category.category_Label}
+                      {category.category_Value}
                     </td>
                     <td className="align-middle">
                       {category?.category_description}
