@@ -432,3 +432,16 @@ export const getFilterObjectLabel = (list, identifier, value) => {
     return item[identifier]?.toLowerCase() === value.toLowerCase();
   })[0];
 };
+
+export const getCategoryPorjectList = (data) => {
+  const projList = [];
+
+  data?.forEach((proj) => {
+    if (!projList[proj.projectCategoryValue]) {
+      projList[proj.projectCategoryValue] = [];
+    }
+    projList[proj.projectCategoryValue].push(proj);
+  });
+
+  return projList;
+};

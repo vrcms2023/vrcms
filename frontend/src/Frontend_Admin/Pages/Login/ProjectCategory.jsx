@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CSRFToken from "../../../Frontend_Views/Components/CRSFToken";
 import Title from "../../../Common/Title";
 import Button from "../../../Common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import {
+  getCategoryPorjectList,
   getDummyImage,
   getFilterObjectByID,
   getFilterObjectLabel,
@@ -19,9 +21,12 @@ import {
 } from "../../../util/dynamicFormFields";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
+import { getDashBoardProjects } from "../../../redux/project/projectActions";
 
 const ProjectCategory = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { projects } = useSelector((state) => state.dashBoardProjects);
   const [ProjectCategoryType, setProjectCategoryType] = useState([]);
   const editComponentObj = {
     category: false,
@@ -30,6 +35,7 @@ const ProjectCategory = () => {
   const [show, setShow] = useState(false);
   const [compTtile, setComptitle] = useState("Add Project Categories");
   const [editCategory, setEditCategory] = useState({});
+  const [projectsList, setProjectsList] = useState([]);
   const [categoryOptionList, setCategoryOptionList] = useState([
     {
       id: 1000,
@@ -66,6 +72,17 @@ const ProjectCategory = () => {
     getPorjectCategory();
   }, []);
 
+  useEffect(() => {
+    dispatch(getDashBoardProjects());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (projects && projects?.projectList?.length > 0) {
+      let projectsByCategory = getCategoryPorjectList(projects.projectList);
+      setProjectsList(projectsByCategory);
+    }
+  }, [projects]);
+
   const addNewCategories = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setComptitle("Add category");
@@ -84,6 +101,24 @@ const ProjectCategory = () => {
 
   const handleCategoryDelete = (category) => {
     const title = category.category_Label;
+    const isProjectsAvailable = projectsList[category.category_Value];
+    console.log(isProjectsAvailable);
+    if (isProjectsAvailable?.length > 0) {
+      // toast.info={`${title} category has ${isProjectsAvailable.length} projects, cannot delete category`}
+      confirmAlert({
+        customUI: ({ onClose }) => {
+          return (
+            <DeleteDialog
+              title={title}
+              showConfirmButotns={false}
+              onClose={onClose}
+              message={`category has ${isProjectsAvailable.length} projects, cannot delete`}
+            />
+          );
+        },
+      });
+      return true;
+    }
     const deleteMenuItemByID = async () => {
       const response = await axiosServiceApi.delete(
         `/project/updateCategory/${category.id}/`
@@ -172,8 +207,8 @@ const ProjectCategory = () => {
             <table className="table contacts">
               <thead>
                 <tr>
-                  <th className="align-middle fw-bold text-muted">Title</th>
-                  <th className="align-middle fw-bold  text-muted">Value</th>
+                  <th className="align-middle fw-bold text-muted">Category</th>
+                  {/* <th className="align-middle fw-bold  text-muted">Value</th> */}
                   <th className="align-middle fw-bold  text-muted">
                     Description
                   </th>
@@ -189,7 +224,7 @@ const ProjectCategory = () => {
               <tbody>
                 {ProjectCategoryType?.map((category) => (
                   <tr key={category.id} className="bg-success">
-                    <td className="align-middle">{category.category_Label}</td>
+                    {/* <td className="align-middle">{category.category_Label}</td> */}
                     <td
                       className={`align-middle ${
                         category.category_Value === "ongoing"
@@ -199,7 +234,7 @@ const ProjectCategory = () => {
                             : "text-primary fw-bold"
                       }`}
                     >
-                      {category.category_Label}
+                      {category.category_Value}
                     </td>
                     <td className="align-middle">
                       {category?.category_description}

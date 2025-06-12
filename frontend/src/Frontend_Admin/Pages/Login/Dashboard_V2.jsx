@@ -13,6 +13,7 @@ import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getDashBoardProjects } from "../../../redux/project/projectActions";
 
 import "./Dashboard.css";
+import { getCategoryPorjectList } from "../../../util/commonUtil";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Dashboard = () => {
   const [ongoingProject, setOngoingProject] = useState([]);
   const [completedProject, setCompletedProject] = useState([]);
   const [upcomingProject, setUpcomingProject] = useState([]);
-
+  const [ProjectCategoryType, setProjectCategoryType] = useState([]);
   const dispatch = useDispatch();
 
   /**
@@ -86,19 +87,6 @@ const Dashboard = () => {
     };
   };
 
-  const getCategoryPorjectList = (data) => {
-    const projList = [];
-
-    data.forEach((proj) => {
-      if (!projList[proj.projectCategoryValue]) {
-        projList[proj.projectCategoryValue] = [];
-      }
-      projList[proj.projectCategoryValue].push(proj);
-    });
-
-    return projList;
-  };
-
   const callService = async (id, data, project, message) => {
     try {
       const response = await axiosServiceApi.patch(
@@ -137,7 +125,7 @@ const Dashboard = () => {
             onClose={onClose}
             callback={deleteDashBoardProject}
             projectName={project.projectTitle}
-            message={`deleting the ${project.projectTitle} from the projects?`}
+            message={`${project.projectTitle}  project will be archive`}
           />
         );
       },
@@ -197,7 +185,7 @@ const Dashboard = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSelectedNews}
-            message={`deleting the ${project.projectTitle} project?`}
+            message={`${project.projectTitle} project will be  deleted permentely `}
           />
         );
       },
@@ -230,6 +218,17 @@ const Dashboard = () => {
     else updateProjects(projects?.projectList);
   };
 
+  const getPorjectCategory = async () => {
+    const response = await axiosServiceApi.get(`/project/createCategory/`);
+
+    if (response?.status === 200) {
+      setProjectCategoryType(response.data);
+    }
+  };
+  useEffect(() => {
+    getPorjectCategory();
+  }, []);
+
   return (
     <div className="container-fluid p-4  pojects-dashboard">
       {/* <div className='text-end'>
@@ -242,12 +241,14 @@ const Dashboard = () => {
             cssClass="text-center blue-500 fs-5 mb-2 mb-md-0"
           />
           <div className="d-flex gap-1 justify-content-between align-items-center">
-            <Button
-              type=""
-              cssClass="btn btn-outline"
-              label="Add Project"
-              handlerChange={() => navigate("/addproject")}
-            />
+            {ProjectCategoryType.length > 0 && (
+              <Button
+                type=""
+                cssClass="btn btn-outline"
+                label="Add Project"
+                handlerChange={() => navigate("/addproject")}
+              />
+            )}
 
             <Button
               type=""
