@@ -360,6 +360,19 @@ const Footer = () => {
                       editHandler={() => editHandler("address", true)}
                     />
                   )}
+
+                  {footerValues.whatsapp_number && (
+                    <Link
+                      to={`https://wa.me/${footerValues.whatsapp_number}?text=Thank you for contact us`}
+                      target="_blank"
+                    >
+                      <i
+                        className="fa fa-brands fa-whatsapp"
+                        aria-hidden="true"
+                      ></i>
+                    </Link>
+                  )}
+
                   {footerValues.facebook_url && (
                     <Link to={footerValues.facebook_url} target="_blank">
                       <i
