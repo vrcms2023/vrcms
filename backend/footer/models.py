@@ -16,6 +16,7 @@ class Address(BaseModel):
         emailid =           models.CharField(max_length=100, null=True, blank=True )
         phonen_number =     models.CharField(max_length=100, null=True, blank=True )
         phonen_number_2 =   models.CharField(max_length=100, null=True, blank=True )
+        whatsapp_number =   models.CharField(max_length=100, null=True, blank=True )
         twitter_url =       models.CharField(max_length=500, null=True, blank=True )
         facebook_url =      models.CharField(max_length=500, null=True, blank=True )
         linkedIn_url =      models.CharField(max_length=500, null=True, blank=True )
