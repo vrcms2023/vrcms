@@ -198,7 +198,7 @@ const Services = () => {
       {/* End Of Page Banner Component */}
 
       <ServicesStyled>
-        {/* Introduction */}
+        {/* Introduction 
         {isAdmin && hasPermission && (
           <EditIcon editHandler={() => editHandler("briefIntro", true)} />
         )}
@@ -218,7 +218,7 @@ const Services = () => {
               pageType={pageType}
             />
           </div>
-        )}
+        )} */}
         {/* End Of Introduction */}
 
         {/* Add Service Page */}
@@ -306,7 +306,7 @@ const Services = () => {
               </div>
               {selectedServiceList.map((item, index) => (
                 <div
-                  className={`row mb-5 ${
+                  className={`row my-5 ${
                     isAdmin
                       ? "border border-warning mb-3 position-relative"
                       : ""
@@ -331,7 +331,7 @@ const Services = () => {
                       </Link>
                     </>
                   )}
-                  <div className="col-md-8 p-5">
+                  <div className="col-md-8 px-5">
                     <Title
                       title={
                         item.feature_title
