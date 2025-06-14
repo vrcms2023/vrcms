@@ -43,7 +43,7 @@ const BriefIntroFrontend = ({
   }, [introState, pageType]);
 
   return (
-    <div className="container">
+    <div className="container-fluid bg-light shadow-sm">
       <BriefIntroStyled>
         <div className="row ">
           <div className={`${detailsContainerCss} briefIntro`}>
@@ -53,11 +53,12 @@ const BriefIntroFrontend = ({
             {introValue?.subTitle !== "" && (
               <Title title={introValue?.subTitle} cssClass={introSubTitleCss} />
             )}
+            {introValue?.intro_desc ? 
             <p className={introDecTitleCss}>
               {introValue?.intro_desc
                 ? introValue?.intro_desc
                 : "Please Update Brief Intro"}
-            </p>
+            </p> : "" }
 
             {showLink && (
               <div className={anchorContainer}>
