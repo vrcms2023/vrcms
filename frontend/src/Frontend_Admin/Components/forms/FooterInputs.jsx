@@ -107,6 +107,11 @@ const FooterAdminFeilds = ({
 
             <div className="col-md-12 mb-md-0">
               <InputField
+                label="WhatsApp"
+                fieldName="whatsapp_number"
+                register={register}
+              />
+              <InputField
                 label="Facebook"
                 fieldName="facebook_url"
                 register={register}
