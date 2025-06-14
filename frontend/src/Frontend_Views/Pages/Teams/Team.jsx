@@ -238,7 +238,7 @@ const Team = () => {
           </div>
         </div>
 
-        <div className="row mb-0 mb-md-4 py-2 py-md-4">
+        <div className="row mb-0 py-2 py-md-4">
           <div className="col-md-6 fs-3 mt-4 mt-md-0">
             <Title title="Our Team" cssClass="fs-1 pageTitle" />
           </div>
@@ -363,14 +363,14 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
     >
       {(provided) => (
         <div
-          className="col-md-6 col-lg-3 px-4 px-md-3"
+          className="col-md-6 col-lg-4 px-4 px-md-3"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
           <div
             key={item.id}
-            className={`mx-md-1 mx-lg-1 memberCard shadow ${
+            className={`mx-md-1 mx-lg-1 memberCard border shadow-sm ${
               isAdmin ? "border border-warning position-relative" : ""
             } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
           >
@@ -390,9 +390,11 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
                 </Link>
               </>
             )}
-            <img src={getImagePath(item.path)} alt="" className="w-100" />
+            <div className="text-center p-3">
+              <img src={getImagePath(item.path)} className="rounded rounded-1 mt-2 " alt="" />
+            </div>
 
-            <div className="my-3 text-start p-2 memberDetails">
+            <div className=" text-start py-2 p-4 memberDetails">
               {item.team_member_designation && (
                 <small className="mb-1 fw-bold">
                   {item.team_member_designation}
@@ -405,7 +407,7 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
               {item.team_member_about_us && (
                 <RichTextView
                   data={item.team_member_about_us}
-                  className={"strengths my-3"}
+                  className={"strengths"}
                 />
                 // <div
                 //   className="strengths my-3"
@@ -416,7 +418,7 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
               )}
 
               {item.team_member_email && (
-                <div className="mb-2">
+                <div className="mt-3">
                   <a href={`mailto:${item.team_member_email}`}>
                     {item.team_member_email}
                   </a>

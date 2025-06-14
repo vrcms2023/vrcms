@@ -3,13 +3,15 @@ import styled from "styled-components";
 export const ServicesStyled = styled.div`
     background-color: ${({ theme }) => theme.white};
 
-    .services ul {
+    .services {
+      ul, ol {
         margin: 40px 25px;
 
         li {
             padding: 15px;
           }
       }
+    }
       
       .services ul 
       
@@ -22,13 +24,13 @@ export const ServicesStyled = styled.div`
       }
       
       .servicesPage {
-        ul {
+        ul, ol {
             margin: 15px 10px;
 
             li {
-                border-bottom: 1px solid color: ${({ theme }) =>
+                border-bottom: 1px solid ${({ theme }) =>
                   theme.lightgray};
-                padding: 7px;
+                padding: 12px 7px;
               }
         }
 
@@ -36,7 +38,7 @@ export const ServicesStyled = styled.div`
             object-fit: cover;
             object-position: center;
             width: 100%;
-            height: 100%;
+            // height: 100%;
         }
       }
       

@@ -162,7 +162,7 @@ const Contact = () => {
       )}
 
       {/* Introduction */}
-      {/* {isAdmin && hasPermission && (
+      {isAdmin && hasPermission && (
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
       )}
 
@@ -172,6 +172,9 @@ const Contact = () => {
         introTitleCss = "fs-3 fw-medium text-md-center"
         introSubTitleCss = "fw-medium text-muted text-md-center"
         introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
+        anchorContainer="text-center my-4"
+        linkLabel= "More.."
+        showLink={"True"}
       />
 {componentEdit.briefIntro && (
         <div className={`adminEditTestmonial selected `}>
@@ -181,7 +184,7 @@ const Contact = () => {
             pageType={pageType}
           />
         </div> )}
-        */}
+       
 
       <div className="container-fluid">
         <div className="row">
