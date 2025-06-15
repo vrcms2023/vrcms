@@ -1363,11 +1363,12 @@ const Home = () => {
               moreLink=""
               introTitleCss="text-center mb-4"
               introSubTitleCss="fw-medium text-muted text-center"
-              introDecTitleCss="fs-6 fw-normal mx-4 text-center text-white"
+              introDecTitleCss="fs-6 fw-normal mx-4 text-center"
               detailsContainerCss="col-md-12 py-3"
               anchorContainer="d-flex justify-content-center align-items-center mt-4"
               anchersvgColor="#17427C"
               pageType={"homeDynamciServicesBrief"}
+              maxHeight="300"
             />
 
             {componentEdit.homeDynamciServicesBrief && (
