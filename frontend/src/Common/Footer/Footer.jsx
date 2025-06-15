@@ -122,12 +122,8 @@ const Footer = () => {
 
   return (
     <FooterStyled>
-      <footer className="pt-5">
-        <div className="container footerDetails">
-          {/* <div className="logo text-center text-md-start">
-            <img src={Logo} alt="SAP Design Studio" className="footerLogo" />
-          </div> */}
-          {/* <hr className="d-block d-md-none my-4" /> */}
+      <div className="container-fluid footerCompanyBrief py-5">
+        <div className="container">
           <div className="row">
             <div className="col-md-4 col-lg-3 d-flex align-items-center">
               <img
@@ -147,8 +143,35 @@ const Footer = () => {
               </p>
             </div>
           </div>
-          <hr className="my-4" />
-          <div className="row py-md-4">
+        </div>
+      </div>
+      <footer className="pt-0">
+        <div className="container footerDetails">
+          {/* <div className="logo text-center text-md-start">
+            <img src={Logo} alt="SAP Design Studio" className="footerLogo" />
+          </div> */}
+          {/* <hr className="d-block d-md-none my-4" /> */}
+          {/* <div className="row">
+            <div className="col-md-4 col-lg-3 d-flex align-items-center">
+              <img
+                src={svgLogo}
+                width="90%"
+                alt="ICONS ENGINEERING WITH EXCELLENCE"
+                className="footerLogo"
+              />
+            </div>
+            <div className="col-md-8 col-lg-9 d-flex align-items-center">
+              <p className="description m-0 text-center text-md-start p-4 pb-0 p-md-0">
+                ICONS has Integrated Management System in accordance to ISO ,
+                focused mainly on continuous improvement and learning based on
+                the successes and failures that occur during our day-to-day
+                activities. This system is a fundamental element in the
+                innovation process and encompasses the entire value chain.
+              </p>
+            </div>
+          </div> */}
+          {/* <hr className="my-4" /> */}
+          <div className="row py-5">
             <div className="col-md-4 text-center text-md-start">
               <Title title="Company" />
 
@@ -315,14 +338,14 @@ const Footer = () => {
                 ""
               )}
 
-              <div className="d-flex flex-column justify-content-center align-items-center text-center justify-content-md-start align-items-md-start text-md-start mt-4">
+              {/* <div className="d-flex flex-column justify-content-center align-items-center text-center justify-content-md-start align-items-md-start text-md-start mt-4">
                 <Title title="Downloads" />
-                {/* <Button label="Download Brochure" cssClass="btn btn-primary" /> */}
+                <Button label="Download Brochure" cssClass="btn btn-primary" />
 
                 <div>
                   <DownloadBrochures />
                 </div>
-              </div>
+              </div> */}
             </div>
             <hr className="d-block d-md-none my-4" />
             {
@@ -339,7 +362,7 @@ const Footer = () => {
                   className="footerLogo"
                 />  */}
 
-                  <p className="m-0 ">{address?.company_name}</p>
+                  <h4 className="mb-3 ">{address?.company_name}</h4>
                   <p className="m-0 ">{address?.address_dr_no}</p>
                   <p className="m-0 ">{address?.city}</p>
 

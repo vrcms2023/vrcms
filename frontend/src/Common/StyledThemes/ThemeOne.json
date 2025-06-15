@@ -25,6 +25,8 @@
   "grayeee": "#eeeeee",
   "graye6": "#e6e6e6",
   "lightWhiteFB": "#fbfbfb",
+  "lightWhiteFD": "#fdfdfd",
+  "lightWhiteF8": "#f8f8f8",
 
   "clientColor": "#6D2F9B",
 
@@ -93,8 +95,8 @@
   "pageBannerTitleColor": "#ffffff",
   "pageBannerSubTitleColor": "#ffffff",
 
-  "footerBgColor": "#999999",
-  "footerTextColor": "#ffffff",
+  "footerBgColor": "#012060",
+  "footerTextColor": "#f8f8f8",
   "footerTitleColor": "#222222",
   "footerLinkColor": "#ffffff",
   "footerLinkHoverColor": "#6D2F9B",
