@@ -43,7 +43,7 @@ const BriefIntroFrontend = ({
   }, [introState, pageType]);
 
   return (
-    <div className="container-fluid bg-light shadow-sm">
+    <div className="container-fluid">
       <BriefIntroStyled>
         <div className="row ">
           <div className={`${detailsContainerCss} briefIntro`}>

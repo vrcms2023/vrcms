@@ -113,14 +113,17 @@
   padding-top: 0px !important;
 }
 
-.homeIconsheilights {
-  background-color: #FF9D00;
+.homeBriefheilights {
+  /* background-color: #FF9D00; */
+  background-image: url('../../../Images/homeBriefHilghtBg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
   color: #fff;
   padding: 48px 0;
 }
 
-.homeIconsheilights p {
-  color: #fff
+.homeBriefheilights p {
+  color: #f8f8f8;
 }
 
 .homeDynamciServicesIntro {

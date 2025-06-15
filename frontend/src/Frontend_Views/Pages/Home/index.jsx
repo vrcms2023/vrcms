@@ -1297,7 +1297,7 @@ const Home = () => {
       </div>
 
       {/* ICONS HEILIGHT ================================= */}
-      <div className="homeIconsheilights">
+      <div className="homeBriefheilights">
         <div className="container">
           <div className="row">
             {/* <BriefIntroFrontend
