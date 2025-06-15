@@ -31,6 +31,7 @@ import {
   getObjectPositionKey,
   sortByFieldName,
   genereateCategoryProducts,
+  isNotEmptyObject,
 } from "../../../util/commonUtil";
 import {
   getCarouselFields,
@@ -216,7 +217,7 @@ const Home = () => {
   useEffect(() => {
     if (showHideCompPageList && showHideCompPageList[pageType]) {
       setShowHideCompList(showHideCompPageList[[pageType]]);
-    } else if (showHideCompPageList) {
+    } else if (isNotEmptyObject(showHideCompPageList)) {
       setShowHideCompList(showHideCompPageList);
     }
   }, [showHideCompPageList]);
