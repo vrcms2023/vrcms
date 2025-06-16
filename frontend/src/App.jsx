@@ -138,18 +138,18 @@ function App() {
   const [flashAdd, setFlashAdd] = useState(false);
   const { userInfo, permissions } = useSelector((state) => state.auth);
 
-  const { error, success, showHideCompPageList } = useSelector(
+  const { error, success, showHideList } = useSelector(
     (state) => state.showHide
   );
 
   useEffect(() => {
     const isAdmin = Boolean(getCookie("is_admin"));
-    if (isNotEmptyObject(showHideCompPageList)) {
-      if (showHideCompPageList?.advertisement?.visibility && !isAdmin) {
+    if (showHideList.length > 0) {
+      if (showHideList?.advertisement?.visibility && !isAdmin) {
         setFlashAdd(false);
       }
     }
-  }, [showHideCompPageList]);
+  }, [showHideList]);
 
   // useEffect(() => {
   //   document.addEventListener("contextmenu", handleContextMenu);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import _ from "lodash";
 // Components
 import Title from "../../../Common/Title";
 import Ancher from "../../../Common/Ancher";
@@ -31,7 +32,6 @@ import {
   getObjectPositionKey,
   sortByFieldName,
   genereateCategoryProducts,
-  isNotEmptyObject,
 } from "../../../util/commonUtil";
 import {
   getCarouselFields,
@@ -57,10 +57,9 @@ import { getAllCategories } from "../../../redux/products/categoryActions";
 import Product from "../Products/Product";
 import { SimpleTitleDescComponent } from "../../../Frontend_Admin/Components/BriefIntro/SimpleTitleDescComponent";
 import DynamicForm from "../../../Frontend_Admin/Components/forms/DynamicForm";
-import ShowHideIcon from "../../../Common/AdminShowHideIcon";
+
 import {
   createShowHideComponent,
-  getAllShowHideComponentsList,
   getShowHideComponentsListByPage,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
@@ -70,6 +69,7 @@ import ShowHideToggle from "../../../Common/ShowHideToggle";
 import HomeProjects from "../../Components/HomeProjects";
 import HomeProjectCarousel from "../../Components/HomeProjectCarousel";
 import HomeDynamicServices from "../../Components/HomeDynamicServices";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 
 const Home = () => {
   const editComponentObj = {
@@ -210,41 +210,34 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { error, success, showHideCompPageList } = useSelector(
+  const { error, success, showHideList } = useSelector(
     (state) => state.showHide
   );
 
   useEffect(() => {
-    if (showHideCompPageList && showHideCompPageList[pageType]) {
-      setShowHideCompList(showHideCompPageList[[pageType]]);
-    } else if (isNotEmptyObject(showHideCompPageList)) {
-      setShowHideCompList(showHideCompPageList);
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
     }
-  }, [showHideCompPageList]);
+  }, [showHideList]);
 
   useEffect(() => {
-    if (!isAdmin) {
-      dispatch(getAllShowHideComponentsList());
-    }
-  }, [isAdmin]);
-
-  useEffect(() => {
-    if (isAdmin) {
+    if (showHideList.length === 0) {
       dispatch(getShowHideComponentsListByPage(pageType));
     }
-  }, [pageType, isAdmin]);
+  }, [showHideList]);
 
-  const showHideHandler = async (name) => {
-    const selectedItem = showHideCompList[name];
-    if (selectedItem) {
-      const id = selectedItem?.id;
-      dispatch(updateShowHideComponent({ id, showHideCompPageList }));
+  const showHideHandler = async (id, compName) => {
+    // const selectedItem = _.filter(showHideList, (item) => {
+    //   return item.id === id;
+    // })[0];
+    if (id) {
+      dispatch(updateShowHideComponent(id));
     } else {
       const newData = {
-        componentName: name.toLowerCase(),
+        componentName: compName.toLowerCase(),
         pageType: pageType,
       };
-      dispatch(createShowHideComponent({ newData, showHideCompPageList }));
+      dispatch(createShowHideComponent(newData));
     }
   };
 
@@ -268,6 +261,7 @@ const Home = () => {
               title={"Only Banner"}
               componentName={"banner"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.banner?.id}
             />
           )}
 
@@ -319,6 +313,7 @@ const Home = () => {
               title={"Carousel"}
               componentName={"carousel"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.carousel?.id}
             />
           )}
           {showHideCompList?.carousel?.visibility && (
@@ -377,6 +372,7 @@ const Home = () => {
               title={"Product highlight"}
               componentName={"producthilight"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.producthilight?.id}
             />
           )}
           {showHideCompList?.producthilight?.visibility && (
@@ -500,6 +496,7 @@ const Home = () => {
               title={"A Brief Introduction Component"}
               componentName={"briefintro"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.briefintro?.id}
             />
           )}
 
@@ -566,6 +563,7 @@ const Home = () => {
               title={"Service"}
               componentName={"services"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.services?.id}
             />
           )}
           {showHideCompList?.services?.visibility && (
@@ -630,6 +628,7 @@ const Home = () => {
               title={"Home Products"}
               componentName={"homeproducts"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.homeproducts?.id}
             />
           )}
           {showHideCompList?.homeproducts?.visibility && (
@@ -670,6 +669,7 @@ const Home = () => {
               title={"Testimonials"}
               componentName={"testimonis"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.testimonis?.id}
             />
           )}
 
@@ -747,6 +747,7 @@ const Home = () => {
               title={"Product Details"}
               componentName={"productslist"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.productslist?.id}
             />
           )}
           {showHideCompList?.productslist?.visibility && (
@@ -830,6 +831,7 @@ const Home = () => {
               title={"News"}
               componentName={"news"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.news?.id}
             />
           )}
           {showHideCompList?.news?.visibility && (
@@ -896,6 +898,7 @@ const Home = () => {
               title={"Home Service"}
               componentName={"homeservices"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.homeservices?.id}
             />
           )}
           {showHideCompList?.homeservices?.visibility && (
@@ -919,6 +922,7 @@ const Home = () => {
               title={"Features"}
               componentName={"features"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.features?.id}
             />
           )}
           {showHideCompList?.features?.visibility && <Features />}
@@ -938,6 +942,7 @@ const Home = () => {
               title={"Who we are"}
               componentName={"whoweare"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.whoweare?.id}
             />
           )}
           {showHideCompList?.whoweare?.visibility && (
@@ -966,6 +971,7 @@ const Home = () => {
               title={"Services Details"}
               componentName={"homeservicedetails"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.homeservicedetails?.id}
             />
           )}
           {showHideCompList?.homeservicedetails?.visibility && (
@@ -995,6 +1001,7 @@ const Home = () => {
               title={"Careers"}
               componentName={"homecareers"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.homecareers?.id}
             />
           )}
           {showHideCompList?.homecareers?.visibility && (
@@ -1040,6 +1047,7 @@ const Home = () => {
               title={"Gallery"}
               componentName={"gallery"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.gallery?.id}
             />
           )}
           {showHideCompList?.gallery?.visibility && (
@@ -1094,6 +1102,7 @@ const Home = () => {
               title={"Services Offered"}
               componentName={"servicesoffered"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.servicesoffered?.id}
             />
           )}
           {showHideCompList?.servicesoffered?.visibility && (
@@ -1158,6 +1167,7 @@ const Home = () => {
               title={"Home Client"}
               componentName={"homeclient"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.homeclient?.id}
             />
           )}
           {showHideCompList?.homeclient?.visibility && (
@@ -1206,6 +1216,7 @@ const Home = () => {
               title={"Home Project Carousel"}
               componentName={"homeprojectcarousel"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.homeprojectcarousel?.id}
             />
           )}
           {showHideCompList?.homeprojectcarousel?.visibility && (
@@ -1233,172 +1244,221 @@ const Home = () => {
               title={"Projects"}
               componentName={"hprinfra"}
               showHideHandler={showHideHandler}
+              id={showHideCompList?.hprinfra?.id}
             />
           )}
           {showHideCompList?.hprinfra?.visibility && <HomeProjects />}
+        </div>
+        {/* Projects Brief COMPONENT */}
+        <div
+          className={
+            showHideCompList?.projectsbrief?.visibility &&
+            isAdmin &&
+            hasPermission
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <ShowHideToggle
+              showhideStatus={showHideCompList?.projectsbrief?.visibility}
+              title={"Projects Brief"}
+              componentName={"projectsbrief"}
+              showHideHandler={showHideHandler}
+              id={showHideCompList?.projectsbrief?.id}
+            />
+          )}
+          {showHideCompList?.projectsbrief?.visibility && (
+            <div className="homeProjectsInfo">
+              <div className="container">
+                <div className="row">
+                  <div className="breiftopMargin">
+                    {isAdmin && hasPermission && (
+                      <EditIcon
+                        editHandler={() => editHandler("projectsBrief", true)}
+                      />
+                    )}
 
-          {/* Projects Brief COMPONENT */}
-
-          <div className="homeProjectsInfo">
-            <div className="container">
-              <div className="row">
-                {/* <BriefIntroFrontend
-                introState={componentEdit.projectsBrief}
-                pageType="Home"
-                /> 
-              */}
-                <div className="breiftopMargin">
-                  {isAdmin && hasPermission && (
-                    <EditIcon
-                      editHandler={() => editHandler("projectsBrief", true)}
+                    <BriefIntroFrontend
+                      introState={componentEdit.projectsBrief}
+                      linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                      linkLabel="Read More"
+                      moreLink=""
+                      introTitleCss="fs-3 fw-bold text-center mb-4"
+                      introSubTitleCss="fw-medium text-muted text-center"
+                      introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
+                      detailsContainerCss="col-md-12 py-3"
+                      anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                      anchersvgColor="#17427C"
+                      pageType={"projectsBrief"}
                     />
-                  )}
-
-                  <BriefIntroFrontend
-                    introState={componentEdit.projectsBrief}
-                    linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-                    linkLabel="Read More"
-                    moreLink=""
-                    introTitleCss="fs-3 fw-bold text-center mb-4"
-                    introSubTitleCss="fw-medium text-muted text-center"
-                    introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
-                    detailsContainerCss="col-md-12 py-3"
-                    anchorContainer="d-flex justify-content-center align-items-center mt-4"
-                    anchersvgColor="#17427C"
-                    pageType={"projectsBrief"}
-                  />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {componentEdit.projectsBrief && (
-              <div className={`adminEditTestmonial selected `}>
-                <BriefIntroAdmin
-                  editHandler={editHandler}
-                  componentType="projectsBrief"
-                  popupTitle="Brief Intro Banner"
-                  pageType="projectsBrief"
-                />
-              </div>
-            )}
-          </div>
+              {componentEdit.projectsBrief && (
+                <div className={`adminEditTestmonial selected `}>
+                  <BriefIntroAdmin
+                    editHandler={editHandler}
+                    componentType="projectsBrief"
+                    popupTitle="Brief Intro Banner"
+                    pageType="projectsBrief"
+                  />
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* END OF HPR INFRA COMPONENTS */}
 
-        {componentEdit.projects && (
-          <div className="adminEditTestmonial selected">
-            <AdminBanner editHandler={editHandler} componentType="projects" />
-          </div>
-        )}
-
-        {show && <ModelBg />}
         {/* {showEditPop && <ModelBg />} */}
-      </div>
 
-      {/* ICONS HEILIGHT ================================= */}
-      <div className="homeBriefheilights">
-        <div className="container">
-          <div className="row">
-            {/* <BriefIntroFrontend
-
-                introState={componentEdit.iconsHelightsBrief}
-                pageType="Home"
-                /> 
-              */}
-            <div className="breiftopMargin">
-              {isAdmin && hasPermission && (
-                <EditIcon
-                  editHandler={() => editHandler("iconsHelightsBrief", true)}
-                />
-              )}
-
-              <BriefIntroFrontend
-                introState={componentEdit.iconsHelightsBrief}
-                linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-                linkLabel="Read More"
-                moreLink=""
-                introTitleCss="fs-3 fw-bold text-center mb-4"
-                introSubTitleCss="fw-medium text-muted text-center"
-                introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
-                detailsContainerCss="col-md-12 py-3"
-                anchorContainer="d-flex justify-content-center align-items-center mt-4"
-                anchersvgColor="#17427C"
-                pageType={"iconsHelightsBrief"}
-              />
-
-              {componentEdit.iconsHelightsBrief && (
-                <div className={`adminEditTestmonial selected `}>
-                  <BriefIntroAdmin
-                    editHandler={editHandler}
-                    componentType="iconsHelightsBrief"
-                    popupTitle="Brief Intro Banner"
-                    pageType="iconsHelightsBrief"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* END OF ICONS HEILIGHT ========================= */}
-
-      {/* ICONS ALL SERVICES ============================ */}
-
-      <div className="homeDynamciServicesIntro">
-        <div>
-          <div className="breiftopMargin">
-            {isAdmin && hasPermission && (
-              <EditIcon
-                editHandler={() =>
-                  editHandler("homeDynamciServicesBrief", true)
-                }
-              />
-            )}
-
-            <BriefIntroFrontend
-              introState={componentEdit.homeDynamciServicesBrief}
-              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-              linkLabel="Read More"
-              moreLink=""
-              introTitleCss="text-center mb-4"
-              introSubTitleCss="fw-medium text-muted text-center"
-              introDecTitleCss="fs-6 fw-normal mx-4 text-center"
-              detailsContainerCss="col-md-12 py-3"
-              anchorContainer="d-flex justify-content-center align-items-center mt-4"
-              anchersvgColor="#17427C"
-              pageType={"homeDynamciServicesBrief"}
-              maxHeight="300"
+        {/* ICONS HEILIGHT ================================= */}
+        <div
+          className={
+            showHideCompList?.iconshelightsbrief?.visibility &&
+            isAdmin &&
+            hasPermission
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <ShowHideToggle
+              showhideStatus={showHideCompList?.iconshelightsbrief?.visibility}
+              title={"Icons Brief"}
+              componentName={"iconshelightsbrief"}
+              showHideHandler={showHideHandler}
+              id={showHideCompList?.iconshelightsbrief?.id}
             />
+          )}
+          {showHideCompList?.iconshelightsbrief?.visibility && (
+            <div className="homeBriefheilights">
+              <div className="container">
+                <div className="row">
+                  <div className="breiftopMargin">
+                    {isAdmin && hasPermission && (
+                      <EditIcon
+                        editHandler={() =>
+                          editHandler("iconsHelightsBrief", true)
+                        }
+                      />
+                    )}
 
-            {componentEdit.homeDynamciServicesBrief && (
-              <div className={`adminEditTestmonial selected `}>
-                <BriefIntroAdmin
-                  editHandler={editHandler}
-                  componentType="homeDynamciServicesBrief"
-                  popupTitle="Brief Intro Banner"
-                  pageType="homeDynamciServicesBrief"
-                />
+                    <BriefIntroFrontend
+                      introState={componentEdit.iconsHelightsBrief}
+                      linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                      linkLabel="Read More"
+                      moreLink=""
+                      introTitleCss="fs-3 fw-bold text-center mb-4"
+                      introSubTitleCss="fw-medium text-muted text-center"
+                      introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
+                      detailsContainerCss="col-md-12 py-3"
+                      anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                      anchersvgColor="#17427C"
+                      pageType={"iconsHelightsBrief"}
+                    />
+
+                    {componentEdit.iconsHelightsBrief && (
+                      <div className={`adminEditTestmonial selected `}>
+                        <BriefIntroAdmin
+                          editHandler={editHandler}
+                          componentType="iconsHelightsBrief"
+                          popupTitle="Brief Intro Banner"
+                          pageType="iconsHelightsBrief"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
-        <div className="container homeDynamciServices">
-          <div className="row">
-            {homeServices.map((service, i) => (
-              <div className="col-sm-6 col-md-4" key={i}>
-                <HomeDynamicServices
-                  key={i}
-                  editHandler={editHandler}
-                  objectstatus={componentEdit[`homeService${i}`]}
-                  pageType={`homeService${i}`}
-                />
+
+        {/* END OF ICONS HEILIGHT ========================= */}
+
+        {/* ICONS ALL SERVICES ============================ */}
+        <div
+          className={
+            showHideCompList?.homedynamciservicesbrief?.visibility &&
+            isAdmin &&
+            hasPermission
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <ShowHideToggle
+              showhideStatus={
+                showHideCompList?.homedynamciservicesbrief?.visibility
+              }
+              title={"Dynamci Services Brief"}
+              componentName={"homedynamciservicesbrief"}
+              showHideHandler={showHideHandler}
+              id={showHideCompList?.homedynamciservicesbrief?.id}
+            />
+          )}
+          {showHideCompList?.homedynamciservicesbrief?.visibility && (
+            <div className="homeDynamciServicesIntro">
+              <div>
+                <div className="breiftopMargin">
+                  {isAdmin && hasPermission && (
+                    <EditIcon
+                      editHandler={() =>
+                        editHandler("homeDynamciServicesBrief", true)
+                      }
+                    />
+                  )}
+
+                  <BriefIntroFrontend
+                    introState={componentEdit.homeDynamciServicesBrief}
+                    linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                    linkLabel="Read More"
+                    moreLink=""
+                    introTitleCss="text-center mb-4"
+                    introSubTitleCss="fw-medium text-muted text-center"
+                    introDecTitleCss="fs-6 fw-normal mx-4 text-center"
+                    detailsContainerCss="col-md-12 py-3"
+                    anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                    anchersvgColor="#17427C"
+                    pageType={"homeDynamciServicesBrief"}
+                    maxHeight="300"
+                  />
+
+                  {componentEdit.homeDynamciServicesBrief && (
+                    <div className={`adminEditTestmonial selected `}>
+                      <BriefIntroAdmin
+                        editHandler={editHandler}
+                        componentType="homeDynamciServicesBrief"
+                        popupTitle="Brief Intro Banner"
+                        pageType="homeDynamciServicesBrief"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
-            ))}
-          </div>
+              <div className="container homeDynamciServices">
+                <div className="row">
+                  {homeServices.map((service, i) => (
+                    <div className="col-sm-6 col-md-4" key={i}>
+                      <HomeDynamicServices
+                        key={i}
+                        editHandler={editHandler}
+                        objectstatus={componentEdit[`homeService${i}`]}
+                        pageType={`homeService${i}`}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
+        {/* END OF ICONS ALL SERVICES */}
+        {show && <ModelBg />}
       </div>
-      {/* END OF ICONS ALL SERVICES */}
     </>
   );
 };

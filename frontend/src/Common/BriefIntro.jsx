@@ -19,7 +19,7 @@ const BriefIntroFrontend = ({
   detailsContainerCss,
   anchorContainer,
   anchersvgColor,
-  showLink,
+  showLink = true,
   maxHeight,
 }) => {
   const [introValue, setIntroValues] = useState([]);
@@ -54,14 +54,17 @@ const BriefIntroFrontend = ({
             {introValue?.subTitle !== "" && (
               <Title title={introValue?.subTitle} cssClass={introSubTitleCss} />
             )}
-            {introValue?.intro_desc ? 
-            <p className={introDecTitleCss}>
-              {introValue?.intro_desc
-                ? introValue?.intro_desc
-                : "Please Update Brief Intro"}
-            </p> : "" }
+            {introValue?.intro_desc ? (
+              <p className={introDecTitleCss}>
+                {introValue?.intro_desc
+                  ? introValue?.intro_desc
+                  : "Please Update Brief Intro"}
+              </p>
+            ) : (
+              ""
+            )}
 
-            {showLink && introValue?.intro_morelink &&(
+            {showLink && introValue?.intro_morelink && (
               <div className={anchorContainer}>
                 <Ancher
                   AncherLabel={linkLabel}
