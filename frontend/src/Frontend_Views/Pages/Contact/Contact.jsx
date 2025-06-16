@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -38,6 +38,13 @@ import { fieldValidation } from "../../../util/validationUtil";
 import Title from "../../../Common/Title";
 import ContactForm from "../../../Common/Forms/ContactForm";
 import { Link } from "react-router-dom";
+import ShowHideToggle from "../../../Common/ShowHideToggle";
+import {
+  createShowHideComponent,
+  getShowHideComponentsListByPage,
+  updateShowHideComponent,
+} from "../../../redux/showHideComponent/showHideActions";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 
 const Contact = () => {
   const editComponentObj = {
@@ -63,8 +70,6 @@ const Contact = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({});
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     removeActiveClass();
@@ -134,6 +139,36 @@ const Contact = () => {
     }
   };
 
+  const [showHideCompList, setShowHideCompList] = useState([]);
+  const showHideCompPageLoad = useRef(true);
+  const dispatch = useDispatch();
+  const { error, showHideList } = useSelector((state) => state.showHide);
+
+  useEffect(() => {
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
+    }
+  }, [showHideList]);
+
+  useEffect(() => {
+    if (showHideList.length === 0 && showHideCompPageLoad.current) {
+      dispatch(getShowHideComponentsListByPage(pageType));
+      showHideCompPageLoad.current = false;
+    }
+  }, [showHideList]);
+
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
+    } else {
+      const newData = {
+        componentName: compName.toLowerCase(),
+        pageType: pageType,
+      };
+      dispatch(createShowHideComponent(newData));
+    }
+  };
+
   return (
     <ContactPageStyled>
       {/* Page Banner Component */}
@@ -161,30 +196,55 @@ const Contact = () => {
         </div>
       )}
 
-      {/* Introduction */}
-      {isAdmin && hasPermission && (
-        <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-      )}
-
-      <BriefIntroFrontend
-        introState={componentEdit.briefIntro}
-        pageType={pageType}
-        introTitleCss = "fs-3 fw-medium text-md-center"
-        introSubTitleCss = "fw-medium text-muted text-md-center"
-        introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
-        anchorContainer="text-center my-4"
-        linkLabel= "More.."
-        showLink={"True"}
-      />
-{componentEdit.briefIntro && (
-        <div className={`adminEditTestmonial selected `}>
-          <AdminBriefIntro
-            editHandler={editHandler}
-            componentType="briefIntro"
-            pageType={pageType}
+      <div
+        className={
+          showHideCompList?.contactbriefintro?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "border border-info mb-2"
+            : ""
+        }
+      >
+        {isAdmin && hasPermission && (
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.contactbriefintro?.visibility}
+            title={"A Brief Introduction Component"}
+            componentName={"contactbriefintro"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.contactbriefintro?.id}
           />
-        </div> )}
-       
+        )}
+
+        {/* INTRODUCTION COMPONENT */}
+        {showHideCompList?.contactbriefintro?.visibility && (
+          <div>
+            {/* Introduction */}
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+            )}
+
+            <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              pageType={pageType}
+              introTitleCss="fs-3 fw-medium text-md-center"
+              introSubTitleCss="fw-medium text-muted text-md-center"
+              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
+              anchorContainer="text-center my-4"
+              linkLabel="More.."
+              showLink={"True"}
+            />
+            {componentEdit.briefIntro && (
+              <div className={`adminEditTestmonial selected `}>
+                <AdminBriefIntro
+                  editHandler={editHandler}
+                  componentType="briefIntro"
+                  pageType={pageType}
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       <div className="container-fluid">
         <div className="row">
@@ -221,7 +281,9 @@ const Contact = () => {
                             cssClass="mb-2 title"
                           />
                           <div className="mb-2 contactAddress" key={index}>
-                            <p className="m-0 fs-4 fw-medium">{item.company_name}</p>
+                            <p className="m-0 fs-4 fw-medium">
+                              {item.company_name}
+                            </p>
                             <p className="m-0">{item.address_dr_no}</p>
                             <p className="m-0">{item.street} </p>
                             <p className="m-0">{item.location} </p>
@@ -271,7 +333,9 @@ const Contact = () => {
                                     aria-hidden="true"
                                   ></i>{" "}
                                   {/* <a href="">{item.emailid_2}</a> */}
-                                  <Link to={`mailto: ${item.emailid_2 && item.emailid_2}`}>
+                                  <Link
+                                    to={`mailto: ${item.emailid_2 && item.emailid_2}`}
+                                  >
                                     ${item.emailid_2 && item.emailid_2}
                                   </Link>
                                 </>
@@ -284,7 +348,9 @@ const Contact = () => {
                                     className="fa fa-envelope-o fs-4 me-2"
                                     aria-hidden="true"
                                   ></i>{" "}
-                                  <Link to={`mailto: ${item.emailid_3 && item.emailid_3}`}>
+                                  <Link
+                                    to={`mailto: ${item.emailid_3 && item.emailid_3}`}
+                                  >
                                     ${item.emailid_3 && item.emailid_3}
                                   </Link>
                                 </>

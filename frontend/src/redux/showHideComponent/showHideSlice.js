@@ -68,10 +68,8 @@ const showHidePageloadingSlice = createSlice({
       );
       if (index !== -1) {
         state.showHideList[index] = action.payload;
-      } else if (state.showHideList.length > 0) {
-        state.showHideList.push(action?.payload);
       } else {
-        state.showHideList = action?.payload;
+        state.showHideList.push(action?.payload);
       }
     });
     builder.addCase(createShowHideComponent.rejected, (state, action) => {
