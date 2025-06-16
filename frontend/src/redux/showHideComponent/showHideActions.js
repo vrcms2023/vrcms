@@ -108,12 +108,3 @@ export const deleteShowHideComponent = createAsyncThunk(
     }
   }
 );
-
-const updateObjects = (data, showHideList) => {
-  if (data) {
-    const { componentName } = data;
-    const list = getClonedObject(showHideList);
-    list[componentName] = data;
-    return list;
-  }
-};
