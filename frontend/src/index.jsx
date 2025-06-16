@@ -2,6 +2,8 @@ import React from "react";
 import "./index.css";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
 import { createRoot } from "react-dom/client";

@@ -914,7 +914,7 @@ const AddProject = () => {
                         showDescription={false}
                         saveState={setSaveState}
                         buttonLable="Upload PDF"
-                        maxFiles={1}
+                        maxFiles={4}
                         scrollEnable={true}
                         setEditCarousel={setEditCarousel}
                       />
@@ -954,7 +954,7 @@ const AddProject = () => {
                         showDescription={false}
                         saveState={setSaveState}
                         buttonLable="Upload Plan"
-                        maxFiles={1}
+                        maxFiles={4}
                         scrollEnable={true}
                         setEditCarousel={setEditCarousel}
                       />
@@ -1000,7 +1000,7 @@ const AddProject = () => {
                         showDescription={false}
                         saveState={setSaveState}
                         buttonLable="Upload Availability"
-                        maxFiles={1}
+                        maxFiles={4}
                         scrollEnable={true}
                         setEditCarousel={setEditCarousel}
                       />
@@ -1042,7 +1042,7 @@ const AddProject = () => {
                         showDescription={false}
                         saveState={setSaveState}
                         buttonLable="Upload Price Details"
-                        maxFiles={1}
+                        maxFiles={4}
                         scrollEnable={true}
                         setEditCarousel={setEditCarousel}
                       />
