@@ -8,17 +8,17 @@ import {
 } from "./showHideActions";
 const initialState = {
   loading: false,
-  showHideCompPageList: {},
+  showHideList: [],
   error: null,
   success: false,
 };
 
 const showHidePageloadingSlice = createSlice({
-  name: "showHideComponentList",
+  name: "showHideList",
   initialState,
   reducers: {
     // setShowHideComponents: (state, { payload }) => {
-    //   state.showHideCompPageList = payload;
+    //   state.showHideList = payload;
     // },
   },
   extraReducers: (builder) => {
@@ -31,7 +31,7 @@ const showHidePageloadingSlice = createSlice({
       getShowHideComponentsListByPage.fulfilled,
       (state, action) => {
         state.loading = false;
-        state.showHideCompPageList = action?.payload;
+        state.showHideList = action?.payload;
       }
     );
     builder.addCase(
@@ -48,7 +48,7 @@ const showHidePageloadingSlice = createSlice({
     });
     builder.addCase(getAllShowHideComponentsList.fulfilled, (state, action) => {
       state.loading = false;
-      state.showHideCompPageList = action?.payload;
+      state.showHideList = action?.payload;
     });
     builder.addCase(getAllShowHideComponentsList.rejected, (state, action) => {
       state.loading = false;
@@ -62,7 +62,17 @@ const showHidePageloadingSlice = createSlice({
     });
     builder.addCase(createShowHideComponent.fulfilled, (state, action) => {
       state.loading = false;
-      state.showHideCompPageList = action?.payload;
+      state.loading = false;
+      const index = state.showHideList.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.showHideList[index] = action.payload;
+      } else if (state.showHideList.length > 0) {
+        state.showHideList.push(action?.payload);
+      } else {
+        state.showHideList = action?.payload;
+      }
     });
     builder.addCase(createShowHideComponent.rejected, (state, action) => {
       state.loading = false;
@@ -76,7 +86,14 @@ const showHidePageloadingSlice = createSlice({
     });
     builder.addCase(updateShowHideComponent.fulfilled, (state, action) => {
       state.loading = false;
-      state.showHideCompPageList = action?.payload;
+      const index = state.showHideList.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.showHideList[index] = action.payload;
+      } else {
+        state.showHideList = action?.payload;
+      }
     });
     builder.addCase(updateShowHideComponent.rejected, (state, action) => {
       state.loading = false;
@@ -90,7 +107,9 @@ const showHidePageloadingSlice = createSlice({
     });
     builder.addCase(deleteShowHideComponent.fulfilled, (state, action) => {
       state.loading = false;
-      state.showHideCompPageList = action?.payload;
+      state.items = state.showHideList.filter(
+        (item) => item.id !== action.payload
+      );
     });
     builder.addCase(deleteShowHideComponent.rejected, (state, action) => {
       state.loading = false;

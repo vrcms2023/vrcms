@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosClientServiceApi, axiosServiceApi } from "../../util/axiosUtil";
 import { getObjectsByKey } from "../../util/showHideComponentUtil";
+import { getClonedObject } from "../../util/commonUtil";
 
 // Get all component by page type
 export const getAllShowHideComponentsList = createAsyncThunk(
@@ -10,12 +11,13 @@ export const getAllShowHideComponentsList = createAsyncThunk(
       const { data } = await axiosClientServiceApi.get(
         `/showHideComponents/getAllShowHide/`
       );
-      if (data.length > 0) {
-        const pageData = getObjectsByKey(data);
-        return pageData;
-      } else {
-        return {};
-      }
+      return data;
+      // if (data.length > 0) {
+      //   const pageData = getObjectsByKey(data);
+      //   return pageData;
+      // } else {
+      //   return {};
+      // }
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -31,13 +33,16 @@ export const getShowHideComponentsListByPage = createAsyncThunk(
       const { data } = await axiosServiceApi.get(
         `/showHideComponents/getbyPageType/?pageType=${pageType}`
       );
-      if (data.length > 0) {
-        const pageData = [];
-        pageData[pageType] = getObjectsByKey(data);
-        return pageData;
-      } else {
-        return {};
-      }
+      return data;
+      // if (data.length > 0) {
+      //   // const pageData = [];
+      //   // pageData[pageType] = getObjectsByKey(data);
+      //   // return pageData;
+      //   const pageData = getObjectsByKey(data);
+      //   return pageData;
+      // } else {
+      //   return {};
+      // }
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -47,13 +52,14 @@ export const getShowHideComponentsListByPage = createAsyncThunk(
 // Create new show hide component
 export const createShowHideComponent = createAsyncThunk(
   "showHide/createcomponent",
-  async ({ newData, showHideCompPageList }, { rejectWithValue }) => {
+  async (newData, { rejectWithValue }) => {
     try {
       const { data } = await axiosServiceApi.post(
         `/showHideComponents/getorcreate/`,
         newData
       );
-      return updateObjects(data, showHideCompPageList);
+      return data;
+      //return updateObjects(data, showHideList);
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -63,12 +69,13 @@ export const createShowHideComponent = createAsyncThunk(
 // update show hide component
 export const updateShowHideComponent = createAsyncThunk(
   "showHide/updatecomponent",
-  async ({ id, showHideCompPageList }, { rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     try {
       const { data } = await axiosServiceApi.patch(
         `/showHideComponents/toggleVisibility/${id}/`
       );
-      return updateObjects(data, showHideCompPageList);
+      return data;
+      //return updateObjects(data, showHideList);
     } catch (error) {
       // return custom error message from API if any
       if (error?.response?.data) {
@@ -89,7 +96,7 @@ export const deleteShowHideComponent = createAsyncThunk(
       const { data } = await axiosServiceApi.delete(
         `/showHideComponents/deleteinstance/${id}/`
       );
-      return data;
+      return id;
     } catch (error) {
       // return custom error message from API if any
       if (error?.response?.data) {
@@ -101,15 +108,3 @@ export const deleteShowHideComponent = createAsyncThunk(
     }
   }
 );
-
-const updateObjects = (data, showHideCompPageList) => {
-  if (data) {
-    const { pageType, componentName } = data;
-    if (!showHideCompPageList[pageType]) {
-      showHideCompPageList = [];
-      showHideCompPageList[pageType] = {};
-    }
-    showHideCompPageList[pageType][componentName] = data;
-    return showHideCompPageList;
-  }
-};

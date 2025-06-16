@@ -6,6 +6,7 @@ const ShowHideToggle = ({
   title,
   componentName,
   showHideHandler,
+  id,
 }) => {
   return (
     <div
@@ -19,7 +20,7 @@ const ShowHideToggle = ({
           {title}
         </span>
         <ShowHideIcon
-          editHandler={() => showHideHandler(componentName)}
+          editHandler={() => showHideHandler(id, componentName)}
           hideIcon={showhideStatus}
         />
       </div>
