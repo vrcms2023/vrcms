@@ -228,9 +228,6 @@ const Home = () => {
   }, [showHideList]);
 
   const showHideHandler = async (id, compName) => {
-    // const selectedItem = _.filter(showHideList, (item) => {
-    //   return item.id === id;
-    // })[0];
     if (id) {
       dispatch(updateShowHideComponent(id));
     } else {
@@ -506,11 +503,6 @@ const Home = () => {
             <div>
               <div className="container">
                 <div className="row">
-                  {/* <BriefIntroFrontend
-                introState={componentEdit.briefIntro}
-                pageType="Home"
-                /> 
-              */}
                   <div className="breiftopMargin">
                     {isAdmin && hasPermission && (
                       <EditIcon
