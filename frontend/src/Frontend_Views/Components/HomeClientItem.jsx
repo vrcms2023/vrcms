@@ -15,31 +15,18 @@ export const HomeClientItem = ({ client }) => {
   };
   return (
     <div
-      className="position-relative"
+      style={{ width: 300 }}
       onMouseEnter={mouseOver}
       onMouseLeave={mouseOut}
     >
-      <div className="slide">
+      <div className="">
         <img
           src={`${baseURL}${client.path}`}
           alt={client.client_title}
           key={client.id}
+          style={{ width: "100px", height: "100px" }}
         />
-        {hover && (
-          <RichTextView
-            data={client?.client_description}
-            className={
-              "position-absolute p-3 w-100 rounded-3 bg-dark text-white clientPopOver"
-            }
-          />
-          // <div
-          //   className="position-absolute p-3 w-100 rounded-3 bg-dark text-white clientPopOver"
-
-          //   dangerouslySetInnerHTML={{
-          //     __html: client?.client_description,
-          //   }}
-          // />
-        )}
+        <RichTextView data={client?.client_description} />
       </div>
     </div>
   );

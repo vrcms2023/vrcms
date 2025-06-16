@@ -70,6 +70,7 @@ import HomeProjects from "../../Components/HomeProjects";
 import HomeProjectCarousel from "../../Components/HomeProjectCarousel";
 import HomeDynamicServices from "../../Components/HomeDynamicServices";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import { HomeClientList } from "../../Components/HomeClientList";
 
 const Home = () => {
   const editComponentObj = {
@@ -1172,26 +1173,7 @@ const Home = () => {
           )}
           {showHideCompList?.homeclient?.visibility && (
             <HomeClientsStyled>
-              <div className="text-center mb-5" style={{ marginTop: "100px" }}>
-                <span
-                  className="fs-1 px-4 py-2"
-                  style={{ borderBottom: "1px solid #444444" }}
-                >
-                  Clients
-                </span>
-              </div>
-              <div className="clients-image-slider">
-                <div className="image-slider-track">
-                  {clientsList.map((client) => {
-                    return <HomeClientItem client={client} key={client.id} />;
-                  })}
-                </div>
-              </div>
-              <div className="text-center py-4 position-relative viewAllBtn">
-                <Link to="/clients/clients" className="btn btn-outline">
-                  View All
-                </Link>
-              </div>
+              <HomeClientList clientsList={clientsList} />
             </HomeClientsStyled>
           )}
         </div>
