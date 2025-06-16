@@ -14,7 +14,7 @@ export const FooterStyled = styled.div`
   // background: linear-gradient(360deg, ${({ theme }) => theme.white} 0%, ${({ theme }) => theme.black} 100%);
   // background: ${({ theme }) => theme.footerBgColor};
     color: ${({ theme }) => theme.white};
-    border-top: 1px solid ${({ theme }) => theme.grayccc};
+    // border-top: 1px solid ${({ theme }) => theme.grayccc};
     font-size: .8rem;
 
     .footerCompanyBrief {
