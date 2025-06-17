@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "../../../Common/AdminEditIcon";
 import Banner from "../../../Common/Banner";
 import BriefIntroFrontend from "../../../Common/BriefIntro";
@@ -27,10 +28,16 @@ import Search from "../../../Common/Search";
 import CustomPagination from "../../../Common/CustomPagination";
 import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
 import { CaseStudiesPageStyled } from "../../../Common/StyledComponents/Styled-Casestudies";
-import { useSelector } from "react-redux";
 import SkeletonImage from "../../../Common/Skeltons/SkeletonImage";
 
 import RichTextView from "../../../Common/RichTextView";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import {
+  createShowHideComponent,
+  getAllShowHideComponentsList,
+  updateShowHideComponent,
+} from "../../../redux/showHideComponent/showHideActions";
+import ShowHideToggle from "../../../Common/ShowHideToggle";
 
 const CaseStudies = () => {
   const editComponentObj = {
@@ -130,6 +137,38 @@ const CaseStudies = () => {
     });
   };
 
+  const [showHideCompList, setShowHideCompList] = useState([]);
+  const showHideCompPageLoad = useRef(true);
+  const dispatch = useDispatch();
+  const { error, success, showHideList } = useSelector(
+    (state) => state.showHide
+  );
+
+  useEffect(() => {
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
+    }
+  }, [showHideList]);
+
+  useEffect(() => {
+    if (showHideList.length === 0 && showHideCompPageLoad.current) {
+      dispatch(getAllShowHideComponentsList());
+      showHideCompPageLoad.current = false;
+    }
+  }, [showHideList]);
+
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
+    } else {
+      const newData = {
+        componentName: compName.toLowerCase(),
+        pageType: pageType,
+      };
+      dispatch(createShowHideComponent(newData));
+    }
+  };
+
   return (
     <>
       {/* Page Banner Component */}
@@ -157,28 +196,53 @@ const CaseStudies = () => {
         </div>
       )}
 
-      {/* Brief Introduction */}
-      {isAdmin && hasPermission && (
-        <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-      )}
-
-      <BriefIntroFrontend
-        introState={componentEdit.briefIntro}
-        pageType={pageType}
-        introTitleCss="fs-3 fw-medium text-md-center"
-        introSubTitleCss="fw-medium text-muted text-md-center"
-        introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-      />
-      {componentEdit.briefIntro && (
-        <div className={`adminEditTestmonial selected `}>
-          <AdminBriefIntro
-            editHandler={editHandler}
-            popupTitle="Case Studies"
-            componentType="briefIntro"
-            pageType={pageType}
+      <div
+        className={
+          showHideCompList?.casestudiesbriefintro?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "border border-info mb-2"
+            : ""
+        }
+      >
+        {isAdmin && hasPermission && (
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.casestudiesbriefintro?.visibility}
+            title={"A Brief Introduction Component"}
+            componentName={"casestudiesbriefintro"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.casestudiesbriefintro?.id}
           />
-        </div>
-      )}
+        )}
+
+        {/* INTRODUCTION COMPONENT */}
+        {showHideCompList?.casestudiesbriefintro?.visibility && (
+          <div>
+            {/* Brief Introduction */}
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+            )}
+
+            <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              pageType={pageType}
+              introTitleCss="fs-3 fw-medium text-md-center"
+              introSubTitleCss="fw-medium text-muted text-md-center"
+              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
+            />
+            {componentEdit.briefIntro && (
+              <div className={`adminEditTestmonial selected `}>
+                <AdminBriefIntro
+                  editHandler={editHandler}
+                  popupTitle="Case Studies"
+                  componentType="briefIntro"
+                  pageType={pageType}
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">

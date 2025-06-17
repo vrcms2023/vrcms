@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
 // Components
 
 import Title from "../../../Common/Title";
@@ -29,6 +29,16 @@ import {
   sortByFieldName,
 } from "../../../util/commonUtil";
 import NoteComponent from "../../../Common/NoteComponent";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import {
+  createShowHideComponent,
+  getAllShowHideComponentsList,
+  getShowHideComponentsListByPage,
+  updateShowHideComponent,
+} from "../../../redux/showHideComponent/showHideActions";
+import BriefIntroFrontend from "../../../Common/BriefIntro";
+import ShowHideToggle from "../../../Common/ShowHideToggle";
+import BriefIntroAdmin from "../../../Frontend_Admin/Components/BriefIntro";
 
 const NewsAndUpdates = () => {
   const editComponentObj = {
@@ -90,6 +100,37 @@ const NewsAndUpdates = () => {
     setShow(!show);
     document.body.style.overflow = "hidden";
   };
+
+  const [showHideCompList, setShowHideCompList] = useState([]);
+  const showHideCompPageLoad = useRef(true);
+  const dispatch = useDispatch();
+  const { error, showHideList } = useSelector((state) => state.showHide);
+
+  useEffect(() => {
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
+    }
+  }, [showHideList]);
+
+  useEffect(() => {
+    if (showHideList.length === 0 && showHideCompPageLoad.current) {
+      dispatch(getAllShowHideComponentsList());
+      showHideCompPageLoad.current = false;
+    }
+  }, [showHideList]);
+
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
+    } else {
+      const newData = {
+        componentName: compName.toLowerCase(),
+        pageType: pageType,
+      };
+      dispatch(createShowHideComponent(newData));
+    }
+  };
+
   return (
     <>
       {/* Page Banner Component */}
@@ -117,6 +158,56 @@ const NewsAndUpdates = () => {
           />
         </div>
       )}
+
+      <div
+        className={
+          showHideCompList?.newsbriefintro?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "border border-info mb-2"
+            : ""
+        }
+      >
+        {isAdmin && hasPermission && (
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.newsbriefintro?.visibility}
+            title={"A Brief Introduction Component"}
+            componentName={"newsbriefintro"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.newsbriefintro?.id}
+          />
+        )}
+
+        {/* INTRODUCTION COMPONENT */}
+        {showHideCompList?.newsbriefintro?.visibility && (
+          <div>
+            {/* Introduction */}
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+            )}
+
+            <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              pageType={pageType}
+              introTitleCss="fs-3 fw-medium text-md-center"
+              introSubTitleCss="fw-medium text-muted text-md-center"
+              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
+              anchorContainer="text-center my-4"
+              linkLabel="More.."
+              showLink={"True"}
+            />
+            {componentEdit.briefIntro && (
+              <div className={`adminEditTestmonial selected `}>
+                <BriefIntroAdmin
+                  editHandler={editHandler}
+                  componentType="briefIntro"
+                  pageType={pageType}
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       <div className="container my-4 newsAndUpdates">
         {isAdmin && hasPermission && (

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import {
   getFormDynamicFields,
@@ -36,6 +37,13 @@ import { removeActiveClass } from "../../../util/ulrUtil";
 import { TeamStyled } from "../../../Common/StyledComponents/Styled-Team";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import RichTextView from "../../../Common/RichTextView";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import {
+  createShowHideComponent,
+  getAllShowHideComponentsList,
+  updateShowHideComponent,
+} from "../../../redux/showHideComponent/showHideActions";
+import ShowHideToggle from "../../../Common/ShowHideToggle";
 
 const Team = () => {
   const editComponentObj = {
@@ -159,6 +167,36 @@ const Team = () => {
     }
   };
 
+  const [showHideCompList, setShowHideCompList] = useState([]);
+  const showHideCompPageLoad = useRef(true);
+  const dispatch = useDispatch();
+  const { error, showHideList } = useSelector((state) => state.showHide);
+
+  useEffect(() => {
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
+    }
+  }, [showHideList]);
+
+  useEffect(() => {
+    if (showHideList.length === 0 && showHideCompPageLoad.current) {
+      dispatch(getAllShowHideComponentsList());
+      showHideCompPageLoad.current = false;
+    }
+  }, [showHideList]);
+
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
+    } else {
+      const newData = {
+        componentName: compName.toLowerCase(),
+        pageType: pageType,
+      };
+      dispatch(createShowHideComponent(newData));
+    }
+  };
+
   return (
     <>
       <div className="position-relative">
@@ -185,40 +223,60 @@ const Team = () => {
         </div>
       )}
 
-      {/* Brief Introduction */}
-      {isAdmin && hasPermission && (
-        <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-      )}
-
-      {/* <BriefIntroFrontend
-        introState={componentEdit.briefIntro}
-        pageType={pageType}
-      /> */}
-
-      <BriefIntroFrontend
-        introState={componentEdit.briefIntro}
-        linkCss="btn btn-outline d-flex justify-content-center align-items-center"
-        linkLabel="Read More"
-        moreLink=""
-        showLink={false}
-        introTitleCss="fs-3 fw-medium text-md-center"
-        introSubTitleCss="fw-medium text-muted text-md-center"
-        introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-        detailsContainerCss="col-md-10 offset-md-1"
-        anchorContainer="d-flex justify-content-start align-items-start mt-4"
-        anchersvgColor="#17427C"
-        pageType={pageType}
-      />
-      {componentEdit.briefIntro && (
-        <div className={`adminEditTestmonial selected `}>
-          <AdminBriefIntro
-            editHandler={editHandler}
-            componentType="briefIntro"
-            popupTitle="Team Brief"
-            pageType={pageType}
+      <div
+        className={
+          showHideCompList?.teambriefintro?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "border border-info mb-2"
+            : ""
+        }
+      >
+        {isAdmin && hasPermission && (
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.teambriefintro?.visibility}
+            title={"A Brief Introduction Component"}
+            componentName={"teambriefintro"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.teambriefintro?.id}
           />
-        </div>
-      )}
+        )}
+
+        {/* INTRODUCTION COMPONENT */}
+        {showHideCompList?.teambriefintro?.visibility && (
+          <div>
+            {/* Brief Introduction */}
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+            )}
+
+            <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              linkCss="btn btn-outline d-flex justify-content-center align-items-center"
+              linkLabel="Read More"
+              moreLink=""
+              showLink={false}
+              introTitleCss="fs-3 fw-medium text-md-center"
+              introSubTitleCss="fw-medium text-muted text-md-center"
+              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
+              detailsContainerCss="col-md-10 offset-md-1"
+              anchorContainer="d-flex justify-content-start align-items-start mt-4"
+              anchersvgColor="#17427C"
+              pageType={pageType}
+            />
+            {componentEdit.briefIntro && (
+              <div className={`adminEditTestmonial selected `}>
+                <AdminBriefIntro
+                  editHandler={editHandler}
+                  componentType="briefIntro"
+                  popupTitle="Team Brief"
+                  pageType={pageType}
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       <div className="container">
         <div className="row">
@@ -391,7 +449,11 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
               </>
             )}
             <div className="text-center p-3">
-              <img src={getImagePath(item.path)} className="rounded rounded-1 mt-2 " alt="" />
+              <img
+                src={getImagePath(item.path)}
+                className="rounded rounded-1 mt-2 "
+                alt=""
+              />
             </div>
 
             <div className=" text-start py-2 p-4 memberDetails">

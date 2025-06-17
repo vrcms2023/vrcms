@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
 // Components
 import BriefIntroFrontend from "../../../Common/BriefIntro";
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
@@ -29,6 +29,14 @@ import JobPostFrom from "../../../Frontend_Admin/Components/forms/JobpostForm";
 import { CareersPageStyled } from "../../../Common/StyledComponents/Styled-CareersPage";
 import CareersFilter from "../../Components/CareersSearch/CareersFilter";
 import { CareerFilterStyled } from "../../../Common/StyledComponents/Styled-CareerFilter";
+import {
+  createShowHideComponent,
+  getAllShowHideComponentsList,
+  getShowHideComponentsListByPage,
+  updateShowHideComponent,
+} from "../../../redux/showHideComponent/showHideActions";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import ShowHideToggle from "../../../Common/ShowHideToggle";
 
 const Careers = () => {
   const editComponentObj = {
@@ -74,6 +82,38 @@ const Careers = () => {
     setCurrentPage(1);
   };
 
+  const [showHideCompList, setShowHideCompList] = useState([]);
+  const showHideCompPageLoad = useRef(true);
+  const dispatch = useDispatch();
+  const { error, success, showHideList } = useSelector(
+    (state) => state.showHide
+  );
+
+  useEffect(() => {
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
+    }
+  }, [showHideList]);
+
+  useEffect(() => {
+    if (showHideList.length === 0 && showHideCompPageLoad.current) {
+      dispatch(getAllShowHideComponentsList());
+      showHideCompPageLoad.current = false;
+    }
+  }, [showHideList]);
+
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
+    } else {
+      const newData = {
+        componentName: compName.toLowerCase(),
+        pageType: pageType,
+      };
+      dispatch(createShowHideComponent(newData));
+    }
+  };
+
   return (
     <>
       {/* Page Banner Component */}
@@ -101,37 +141,60 @@ const Careers = () => {
         </div>
       )}
 
-      {/* Introduction */}
-      {isAdmin && hasPermission && (
-        <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-      )}
-
-      <BriefIntroFrontend
-        introState={componentEdit.briefIntro}
-        linkCss="btn btn-outline d-flex justify-content-center align-items-center"
-        linkLabel="Read More"
-        moreLink=""
-        showLink={false}
-        introTitleCss="fs-3 fw-medium text-md-center"
-        introSubTitleCss="fw-medium text-muted text-md-center"
-        introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-        detailsContainerCss="col-md-10 offset-md-1"
-        anchorContainer="d-flex justify-content-start align-items-start mt-4"
-        anchersvgColor="#17427C"
-        pageType={pageType}
-      />
-
-      {componentEdit.briefIntro ? (
-        <div className={`adminEditTestmonial selected `}>
-          <AdminBriefIntro
-            editHandler={editHandler}
-            componentType="briefIntro"
-            pageType={pageType}
+      <div
+        className={
+          showHideCompList?.careerbriefintro?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "border border-info mb-2"
+            : ""
+        }
+      >
+        {isAdmin && hasPermission && (
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.careerbriefintro?.visibility}
+            title={"A Brief Introduction Component"}
+            componentName={"careerbriefintro"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.careerbriefintro?.id}
           />
-        </div>
-      ) : (
-        ""
-      )}
+        )}
+
+        {/* INTRODUCTION COMPONENT */}
+        {showHideCompList?.careerbriefintro?.visibility && (
+          <div>
+            {/* Introduction */}
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+            )}
+
+            <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              linkCss="btn btn-outline d-flex justify-content-center align-items-center"
+              linkLabel="Read More"
+              moreLink=""
+              showLink={false}
+              introTitleCss="fs-3 fw-medium text-md-center"
+              introSubTitleCss="fw-medium text-muted text-md-center"
+              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
+              detailsContainerCss="col-md-10 offset-md-1"
+              anchorContainer="d-flex justify-content-start align-items-start mt-4"
+              anchersvgColor="#17427C"
+              pageType={pageType}
+            />
+
+            {componentEdit.briefIntro && (
+              <div className={`adminEditTestmonial selected `}>
+                <AdminBriefIntro
+                  editHandler={editHandler}
+                  componentType="briefIntro"
+                  pageType={pageType}
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       <CareerFilterStyled>
         <div className="container p-5 py-3 careersFilter">
