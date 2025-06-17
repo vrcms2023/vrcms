@@ -41,6 +41,7 @@ const AddService = ({
     (state) => state.serviceMenu
   );
   const { menuList } = useSelector((state) => state.auth);
+  const inputRef = useRef(null);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -198,6 +199,9 @@ const AddService = ({
     setServiceName(item?.services_page_title);
     setEditServiceObject(item);
     setEditState(true);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   };
 
   const CancelServiceNameChange = () => {
@@ -242,6 +246,7 @@ const AddService = ({
               value={serviceName}
               placeholder="Add Service Name"
               onChange={onChangeHandler}
+              ref={inputRef}
             />
 
             <div className="d-flex gap-2">
