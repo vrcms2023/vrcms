@@ -31,6 +31,7 @@ export const getSelectedMenuDetails = async (
     data["updated_by"] = _userName;
     data["id"] = _getSelectedChildMenu.id;
     data["page_position"] = _getSelectedChildMenu.page_position;
+    data["page_url"] = _getSelectedChildMenu.page_url;
   } else {
     data["created_by"] = _userName;
     data["page_position"] = getMenuPosition(_getSelectedParentObject);
@@ -62,5 +63,67 @@ export const getMenuPosition = (ParentObject) => {
 export const getMenuParent = (menuList, labelName) => {
   return _.filter(menuList, (item) => {
     return labelName?.toLowerCase().match(item?.page_label?.toLowerCase());
+  })[0];
+};
+
+export const createServiceChildFromMenu = async (
+  selectedServiceMenu,
+  menuData
+) => {
+  let response = "";
+  let data = {
+    services_page_title: menuData.page_label,
+    created_by: getCookie("userName"),
+    pageType: "MenuForm",
+    publish: false,
+  };
+
+  if (selectedServiceMenu?.id) {
+    data["id"] = selectedServiceMenu.id;
+    data["updated_by"] = getCookie("userName");
+    data["publish"] = selectedServiceMenu?.publish ? true : false;
+    response = await axiosServiceApi.put(
+      `/services/updateService/${selectedServiceMenu.id}/`,
+      data
+    );
+  } else {
+    response = await axiosServiceApi.post(`/services/createService/`, data);
+  }
+  return response;
+};
+
+export const deleteServiceItem = async (menuList, item) => {
+  try {
+    const _getSelectedParentObject = getMenuParent(menuList, "Services");
+    const _getSelectedChildMenu = getMenuParent(
+      _getSelectedParentObject.childMenu,
+      item.services_page_title
+    );
+    const response = await axiosServiceApi.delete(
+      `/pageMenu/updatePageMenu/${_getSelectedChildMenu.id}/`
+    );
+    return response;
+  } catch (error) {
+    console.log("unable to delete the service");
+  }
+};
+
+export const deleteServiceMenu = async (item) => {
+  try {
+    const response = await axiosServiceApi.delete(
+      `/services/updateService/${item.id}/`
+    );
+    return response;
+  } catch (error) {
+    console.log("unable to delete the service");
+  }
+};
+
+export const getServiceMenuItem = (serviceMenu, item) => {
+  return _.filter(serviceMenu, (menu) => {
+    return (
+      menu?.services_page_title?.toLowerCase() ===
+      item?.page_label.toLowerCase()
+    );
   })[0];
 };

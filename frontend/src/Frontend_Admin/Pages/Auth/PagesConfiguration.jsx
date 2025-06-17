@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Title from "../../../Common/Title";
 import { axiosServiceApi } from "../../../util/axiosUtil";
@@ -22,6 +22,8 @@ import { showContentPerRole } from "../../../util/permissions";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { getMenu } from "../../../redux/auth/authActions";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
+import { getServiceValues } from "../../../redux/services/serviceActions";
+import { deleteServiceMenu, getServiceMenuItem } from "../../../util/menuUtil";
 
 const PagesConfiguration = () => {
   const editComponentObj = {
@@ -35,12 +37,21 @@ const PagesConfiguration = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { isAdmin, hasPermission } = useAdminLoginStatus();
+  const [selectedServiceMenu, setselectedServiceMenu] = useState([]);
 
   const editHandler = (name, value, item) => {
     setEditMenu(item);
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setShow(!show);
     document.body.style.overflow = "hidden";
+    const selectedService = getServiceMenuItem(serviceMenu, item);
+    if (
+      selectedService &&
+      !item.is_Parent &&
+      item?.page_url.includes("/services/")
+    ) {
+      setselectedServiceMenu(selectedService);
+    }
   };
 
   /**
@@ -69,6 +80,7 @@ const PagesConfiguration = () => {
   const handleUserDelete = (menu) => {
     const id = menu.id;
     const title = menu.page_label;
+    const selectedService = getServiceMenuItem(serviceMenu, menu);
     const deleteMenuItemByID = async () => {
       const response = await axiosServiceApi.delete(
         `/pageMenu/updatePageMenu/${id}/`
@@ -76,6 +88,11 @@ const PagesConfiguration = () => {
       if (response.status === 204) {
         toast.success(`${title} Memu is delete successfully `);
         getAllPagesDetails();
+
+        if (selectedService) {
+          deleteServiceMenu(selectedService);
+          dispatch(getServiceValues());
+        }
         dispatch(getMenu());
       }
     };
@@ -128,6 +145,22 @@ const PagesConfiguration = () => {
       toast.error("Unable to load user details");
     }
   };
+
+  const onPageLoadAction = useRef(true);
+  const [serviceList, setServiceList] = useState([]);
+
+  const { serviceMenu, serviceerror } = useSelector(
+    (state) => state.serviceMenu
+  );
+
+  useEffect(() => {
+    if (serviceMenu?.length === 0 && onPageLoadAction.current) {
+      onPageLoadAction.current = false;
+      dispatch(getServiceValues());
+    } else if (serviceMenu.length > 0) {
+      setServiceList(serviceMenu);
+    }
+  }, [serviceMenu]);
 
   const tableHeader = () => {
     return (
@@ -364,6 +397,7 @@ const PagesConfiguration = () => {
               popupTitle="Menu"
               editMenu={editMenu}
               componentType="menu"
+              selectedServiceMenu={selectedServiceMenu}
             />
           </div>
         )}
