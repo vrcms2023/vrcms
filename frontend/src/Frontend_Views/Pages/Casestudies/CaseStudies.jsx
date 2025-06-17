@@ -34,7 +34,7 @@ import RichTextView from "../../../Common/RichTextView";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 import {
   createShowHideComponent,
-  getShowHideComponentsListByPage,
+  getAllShowHideComponentsList,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
@@ -152,7 +152,7 @@ const CaseStudies = () => {
 
   useEffect(() => {
     if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getShowHideComponentsListByPage(pageType));
+      dispatch(getAllShowHideComponentsList());
       showHideCompPageLoad.current = false;
     }
   }, [showHideList]);

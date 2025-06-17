@@ -33,7 +33,7 @@ import Banner from "../../../Common/Banner";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 import {
   createShowHideComponent,
-  getShowHideComponentsListByPage,
+  getAllShowHideComponentsList,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
@@ -152,7 +152,7 @@ const ClientsList = () => {
 
   useEffect(() => {
     if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getShowHideComponentsListByPage(pageType));
+      dispatch(getAllShowHideComponentsList());
       showHideCompPageLoad.current = false;
     }
   }, [showHideList]);

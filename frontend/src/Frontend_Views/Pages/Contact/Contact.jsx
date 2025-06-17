@@ -41,6 +41,7 @@ import { Link } from "react-router-dom";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 import {
   createShowHideComponent,
+  getAllShowHideComponentsList,
   getShowHideComponentsListByPage,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
@@ -152,7 +153,7 @@ const Contact = () => {
 
   useEffect(() => {
     if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getShowHideComponentsListByPage(pageType));
+      dispatch(getAllShowHideComponentsList());
       showHideCompPageLoad.current = false;
     }
   }, [showHideList]);

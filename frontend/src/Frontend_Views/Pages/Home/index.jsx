@@ -60,6 +60,7 @@ import DynamicForm from "../../../Frontend_Admin/Components/forms/DynamicForm";
 
 import {
   createShowHideComponent,
+  getAllShowHideComponentsList,
   getShowHideComponentsListByPage,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
@@ -223,7 +224,7 @@ const Home = () => {
 
   useEffect(() => {
     if (showHideList.length === 0) {
-      dispatch(getShowHideComponentsListByPage(pageType));
+      dispatch(getAllShowHideComponentsList());
     }
   }, [showHideList]);
 

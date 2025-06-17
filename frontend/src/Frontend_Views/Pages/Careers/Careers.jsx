@@ -31,6 +31,7 @@ import CareersFilter from "../../Components/CareersSearch/CareersFilter";
 import { CareerFilterStyled } from "../../../Common/StyledComponents/Styled-CareerFilter";
 import {
   createShowHideComponent,
+  getAllShowHideComponentsList,
   getShowHideComponentsListByPage,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
@@ -96,7 +97,7 @@ const Careers = () => {
 
   useEffect(() => {
     if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getShowHideComponentsListByPage(pageType));
+      dispatch(getAllShowHideComponentsList());
       showHideCompPageLoad.current = false;
     }
   }, [showHideList]);

@@ -47,6 +47,13 @@ import CustomPagination from "../../../Common/CustomPagination";
 import { useLocation, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import DynamicFormwithFileUplod from "../../../Frontend_Admin/Components/forms/DynamicFormwithFileUplod";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import {
+  createShowHideComponent,
+  getAllShowHideComponentsList,
+  updateShowHideComponent,
+} from "../../../redux/showHideComponent/showHideActions";
+import ShowHideToggle from "../../../Common/ShowHideToggle";
 
 const ProductsPage = () => {
   const { id } = useParams();
@@ -170,6 +177,36 @@ const ProductsPage = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const [showHideCompList, setShowHideCompList] = useState([]);
+  const showHideCompPageLoad = useRef(true);
+
+  const { error, showHideList } = useSelector((state) => state.showHide);
+
+  useEffect(() => {
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
+    }
+  }, [showHideList]);
+
+  useEffect(() => {
+    if (showHideList.length === 0 && showHideCompPageLoad.current) {
+      dispatch(getAllShowHideComponentsList());
+      showHideCompPageLoad.current = false;
+    }
+  }, [showHideList]);
+
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
+    } else {
+      const newData = {
+        componentName: compName.toLowerCase(),
+        pageType: pageType,
+      };
+      dispatch(createShowHideComponent(newData));
+    }
+  };
+
   return (
     <>
       {isAdmin && hasPermission && (
@@ -275,6 +312,56 @@ const ProductsPage = () => {
           hideSearchBy={false}
         />
         <div />
+
+        <div
+          className={
+            showHideCompList?.productsbriefintro?.visibility &&
+            isAdmin &&
+            hasPermission
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <ShowHideToggle
+              showhideStatus={showHideCompList?.productsbriefintro?.visibility}
+              title={"A Brief Introduction Component"}
+              componentName={"productsbriefintro"}
+              showHideHandler={showHideHandler}
+              id={showHideCompList?.productsbriefintro?.id}
+            />
+          )}
+
+          {/* INTRODUCTION COMPONENT */}
+          {showHideCompList?.productsbriefintro?.visibility && (
+            <div>
+              {/* Introduction */}
+              {isAdmin && hasPermission && (
+                <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+              )}
+
+              <BriefIntroFrontend
+                introState={componentEdit.briefIntro}
+                pageType={pageType}
+                introTitleCss="fs-3 fw-medium text-md-center"
+                introSubTitleCss="fw-medium text-muted text-md-center"
+                introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
+                anchorContainer="text-center my-4"
+                linkLabel="More.."
+                showLink={"True"}
+              />
+              {componentEdit.briefIntro && (
+                <div className={`adminEditTestmonial selected `}>
+                  <BriefIntroAdmin
+                    editHandler={editHandler}
+                    componentType="briefIntro"
+                    pageType={pageType}
+                  />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
         <div className="container productsList pt-5">
           <div className="row mb-4">

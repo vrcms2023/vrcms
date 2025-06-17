@@ -37,6 +37,7 @@ import ShowHideToggle from "../../../Common/ShowHideToggle";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 import {
   createShowHideComponent,
+  getAllShowHideComponentsList,
   getShowHideComponentsListByPage,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
@@ -70,7 +71,7 @@ const About = () => {
 
   useEffect(() => {
     if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getShowHideComponentsListByPage(pageType));
+      dispatch(getAllShowHideComponentsList());
       showHideCompPageLoad.current = false;
     }
   }, [showHideList]);

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import EditIcon from "../../../Common/AdminEditIcon";
 import Banner from "../../../Common/Banner";
@@ -40,6 +40,13 @@ import { TestimonialsListPageStyled } from "../../../Common/StyledComponents/Sty
 
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import RichTextView from "../../../Common/RichTextView";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import {
+  createShowHideComponent,
+  getAllShowHideComponentsList,
+  updateShowHideComponent,
+} from "../../../redux/showHideComponent/showHideActions";
+import ShowHideToggle from "../../../Common/ShowHideToggle";
 
 const TestimonialsList = () => {
   const editComponentObj = {
@@ -175,6 +182,36 @@ const TestimonialsList = () => {
     }
   };
 
+  const [showHideCompList, setShowHideCompList] = useState([]);
+  const showHideCompPageLoad = useRef(true);
+  const dispatch = useDispatch();
+  const { error, showHideList } = useSelector((state) => state.showHide);
+
+  useEffect(() => {
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
+    }
+  }, [showHideList]);
+
+  useEffect(() => {
+    if (showHideList.length === 0 && showHideCompPageLoad.current) {
+      dispatch(getAllShowHideComponentsList());
+      showHideCompPageLoad.current = false;
+    }
+  }, [showHideList]);
+
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
+    } else {
+      const newData = {
+        componentName: compName.toLowerCase(),
+        pageType: pageType,
+      };
+      dispatch(createShowHideComponent(newData));
+    }
+  };
+
   return (
     <>
       {/* Page Banner Component */}
@@ -201,38 +238,59 @@ const TestimonialsList = () => {
           />
         </div>
       )}
+      <div
+        className={
+          showHideCompList?.testimonialbriefintro?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "border border-info mb-2"
+            : ""
+        }
+      >
+        {isAdmin && hasPermission && (
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.testimonialbriefintro?.visibility}
+            title={"A Brief Introduction Component"}
+            componentName={"testimonialbriefintro"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.testimonialbriefintro?.id}
+          />
+        )}
 
-      {/* Brief Introduction */}
-      {/* {isAdmin && hasPermission && (
-        <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-      )}
-
+        {/* INTRODUCTION COMPONENT */}
+        {showHideCompList?.testimonialbriefintro?.visibility && (
+          <div>
+            {/* Brief Introduction */}
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+            )}
 
             <BriefIntroFrontend
               introState={componentEdit.briefIntro}
               linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
               linkLabel="Read More"
               moreLink=""
-              introTitleCss = "fs-3 fw-medium text-md-center"
-              introSubTitleCss = "fw-medium text-muted text-md-center"
-              introDecTitleCss = "fs-6 fw-normal w-75 m-auto text-md-center"
+              introTitleCss="fs-3 fw-medium text-md-center"
+              introSubTitleCss="fw-medium text-muted text-md-center"
+              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
               detailsContainerCss="col-md-10 offset-md-1 py-3"
               anchorContainer="d-flex justify-content-center align-items-center mt-4"
               anchersvgColor="#17427C"
               pageType={pageType}
             />
 
-      {componentEdit.briefIntro ? (
-        <div className="adminEditTestmonial">
-          <AdminBriefIntro
-            editHandler={editHandler}
-            componentType="briefIntro"
-            pageType={pageType}
-          />
-        </div>
-      ) : (
-        ""
-      )} */}
+            {componentEdit.briefIntro && (
+              <div className="adminEditTestmonial selected">
+                <AdminBriefIntro
+                  editHandler={editHandler}
+                  componentType="briefIntro"
+                  pageType={pageType}
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
