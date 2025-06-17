@@ -153,11 +153,9 @@ const Header = () => {
   }, [serviceMenu, dispatch, menuList, isServiceMenuAvailable]);
 
   useEffect(() => {
-    if (serviceMenu.length > 0) {
-      setServiceMenuList(serviceMenu);
-      if (!getCookie("pageLoadServiceName") && serviceMenu.length > 0) {
-        storeServiceMenuValueinCookie(serviceMenu[0]);
-      }
+    setServiceMenuList(serviceMenu);
+    if (!getCookie("pageLoadServiceName") && serviceMenu.length > 0) {
+      storeServiceMenuValueinCookie(serviceMenu[0]);
     }
   }, [serviceMenu]);
 

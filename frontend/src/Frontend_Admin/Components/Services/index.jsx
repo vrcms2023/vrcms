@@ -18,7 +18,10 @@ import { sortByCreatedDate } from "../../../util/dataFormatUtil";
 import { storeServiceMenuValueinCookie } from "../../../util/commonUtil";
 
 import { useLocation } from "react-router-dom";
-import { getSelectedMenuDetails } from "../../../util/menuUtil";
+import {
+  deleteServiceItem,
+  getSelectedMenuDetails,
+} from "../../../util/menuUtil";
 import { getMenu } from "../../../redux/auth/authActions";
 import { getServiceValues } from "../../../redux/services/serviceActions";
 
@@ -162,15 +165,18 @@ const AddService = ({
   };
 
   const deleteService = (item) => {
+    CancelServiceNameChange();
     const id = item.id;
     const name = item.services_page_title;
     const deleteImageByID = async () => {
       const response = await axiosServiceApi.delete(
-        `services/updateService/${item.id}/`
+        `/services/updateService/${item.id}/`
       );
       if (response.status === 204) {
-        const list = serviceList.filter((list) => list.id !== id);
-        setServiceList(list);
+        deleteServiceItem(menuList, item);
+
+        dispatch(getServiceValues());
+        dispatch(getMenu());
         toast.success(`${name} is deleted`);
       }
     };
@@ -189,7 +195,7 @@ const AddService = ({
   };
 
   const EditService = (item) => {
-    setServiceName(item.services_page_title);
+    setServiceName(item?.services_page_title);
     setEditServiceObject(item);
     setEditState(true);
   };
