@@ -594,6 +594,42 @@ export const getProjectCategoryFormDynamicFields = (editCategory, options) => {
   };
 };
 
+export const getKeyPointsDynamicFields = (pageType) => {
+  return {
+    banner_title: {
+      label: "Key Point",
+      type: "text",
+      fieldName: "banner_title",
+      validationObject: { required: "Please enter Key Point" },
+    },
+    banner_subTitle: {
+      readonly: true,
+      type: "hidden",
+      value: "KeyPoints",
+      fieldName: "banner_subTitle",
+    },
+    banner_descripiton: {
+      readonly: true,
+      type: "hidden",
+      value: "KeyPointsdescription",
+      fieldName: "banner_descripiton",
+    },
+
+    moreLink: {
+      label: "Link",
+      type: "text",
+      fieldName: "moreLink",
+    },
+    pageType: {
+      label: "News Title",
+      readonly: true,
+      type: "hidden",
+      value: pageType ? pageType : "",
+      fieldName: "pageType",
+    },
+  };
+};
+
 export const imageDimensionsJson = (component) => {
   const imgDimension = {
     carousel: {

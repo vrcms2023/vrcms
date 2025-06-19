@@ -1,0 +1,205 @@
+import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { confirmAlert } from "react-confirm-alert";
+import { useDispatch, useSelector } from "react-redux";
+
+// Components
+import Title from "../../../Common/Title";
+import BriefIntroFrontend from "../../../Common/BriefIntro";
+import EditIcon from "../../../Common/AdminEditIcon";
+import ModelBg from "../../../Common/ModelBg";
+import Banner from "../../../Common/Banner";
+import DeleteDialog from "../../../Common/DeleteDialog";
+import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
+
+import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
+import AdminBriefIntro from "../../../Frontend_Admin/Components/BriefIntro/index";
+
+import { removeActiveClass } from "../../../util/ulrUtil";
+import {
+  getFormDynamicFields,
+  imageDimensionsJson,
+} from "../../../util/dynamicFormFields";
+import { getImagePath } from "../../../util/commonUtil";
+import { sortByUpdatedDate } from "../../../util/dataFormatUtil";
+import {
+  axiosClientServiceApi,
+  axiosServiceApi,
+} from "../../../util/axiosUtil";
+
+// CSS
+import { AboutPageStyled } from "../../../Common/StyledComponents/Styled-AboutPage";
+import RichTextView from "../../../Common/RichTextView";
+import ShowHideToggle from "../../../Common/ShowHideToggle";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import {
+  createShowHideComponent,
+  getAllShowHideComponentsList,
+  updateShowHideComponent,
+} from "../../../redux/showHideComponent/showHideActions";
+import DynamicKeyPoints from "../../Components/DynamicKeyPoints";
+
+const WhyChooseUs = () => {
+  const editComponentObj = {
+    banner: false,
+    briefIntro: false,
+    dynamickeypoints1: false,
+    dynamickeypoints2: false,
+    dynamickeypoints3: false,
+    dynamickeypoints4: false,
+    dynamickeypoints5: false,
+    dynamickeypoints6: false,
+  };
+  const dispatch = useDispatch();
+  const pageType = "whychooseus";
+  const { isAdmin, hasPermission } = useAdminLoginStatus();
+  const [componentEdit, SetComponentEdit] = useState(editComponentObj);
+  const [show, setShow] = useState(false);
+  const [showHideCompList, setShowHideCompList] = useState([]);
+  const showHideCompPageLoad = useRef(true);
+  const keyPointsList = [1, 2, 3, 4, 5, 6];
+
+  const { error, success, showHideList } = useSelector(
+    (state) => state.showHide
+  );
+
+  useEffect(() => {
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
+    }
+  }, [showHideList]);
+
+  useEffect(() => {
+    if (showHideList.length === 0 && showHideCompPageLoad.current) {
+      dispatch(getAllShowHideComponentsList());
+      showHideCompPageLoad.current = false;
+    }
+  }, [showHideList]);
+
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
+    } else {
+      const newData = {
+        componentName: compName.toLowerCase(),
+        pageType: pageType,
+      };
+      dispatch(createShowHideComponent(newData));
+    }
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    removeActiveClass();
+  }, []);
+
+  const editHandler = (name, value, item) => {
+    SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
+    setShow(!show);
+    document.body.style.overflow = "hidden";
+  };
+
+  return (
+    <>
+      {/* Page Banner Component */}
+      <div className="position-relative">
+        {isAdmin && hasPermission && (
+          <EditIcon editHandler={() => editHandler("whychooseus", true)} />
+        )}
+
+        <Banner
+          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+          bannerState={componentEdit.whychooseus}
+        />
+      </div>
+      {componentEdit.whychooseus && (
+        <div className={`adminEditTestmonial selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="whychooseus"
+            popupTitle="Why Choose US"
+            pageType={`${pageType}-banner`}
+            imageLabel="Banner Image"
+            showDescription={false}
+            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
+            dimensions={imageDimensionsJson("banner")}
+          />
+        </div>
+      )}
+      <div
+        className={
+          showHideCompList?.whychooseusbriefintro?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "border border-info mb-2"
+            : ""
+        }
+      >
+        {isAdmin && hasPermission && (
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.whychooseusbriefintro?.visibility}
+            title={"A Brief Introduction Component"}
+            componentName={"whychooseusbriefintro"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.whychooseusbriefintro?.id}
+          />
+        )}
+
+        {/* INTRODUCTION COMPONENT */}
+        {showHideCompList?.whychooseusbriefintro?.visibility && (
+          <div className="breiftopMargin">
+            {/* Brief Introduction  */}
+            {isAdmin && hasPermission && (
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+            )}
+
+            <BriefIntroFrontend
+              introState={componentEdit.briefIntro}
+              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+              linkLabel="Read More"
+              moreLink=""
+              introTitleCss="fs-3 fw-medium text-md-center"
+              introSubTitleCss="fw-medium text-muted text-md-center"
+              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
+              detailsContainerCss="col-md-10 offset-md-1 py-3"
+              anchorContainer="d-flex justify-content-center align-items-center mt-4"
+              anchersvgColor="#17427C"
+              pageType={pageType}
+            />
+            {componentEdit.briefIntro && (
+              <div className={`adminEditTestmonial selected `}>
+                <AdminBriefIntro
+                  editHandler={editHandler}
+                  componentType="briefIntro"
+                  popupTitle="Why Choose us Brief Intro"
+                  pageType={pageType}
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+      <div className="container homeDynamciServices">
+        <div className="row">
+          {keyPointsList.map((i) => (
+            <div className="col-6" key={i}>
+              <DynamicKeyPoints
+                editHandler={editHandler}
+                objectstatus={componentEdit[`dynamickeypoints${i}`]}
+                pageType={`dynamickeypoints${i}`}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {show && <ModelBg />}
+    </>
+  );
+};
+
+export default WhyChooseUs;
