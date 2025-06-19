@@ -114,7 +114,7 @@ const DownloadBrochures = () => {
       {show && (
         <RaqFormModel closeModel={closeModel} downloadPDF={downloadPDF} />
       )}
-      {/* {show && <ModelBg />} */}
+      {show && <ModelBg />}
     </>
   );
 };
