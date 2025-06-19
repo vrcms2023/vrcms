@@ -4,8 +4,8 @@ from xmlrpc.client import Boolean
 
 from products.serializers import CategorySerializer
 from products.models import Category
-from .models import ContactUS, Brochures
-from .serializers import ContactUSSerializer, BrochuresSerializer
+from .models import ContactUS, Brochures, IconsenggRaqForm
+from .serializers import ContactUSSerializer, BrochuresSerializer, IconsenggRaqFormSerializer
 from rest_framework import generics, permissions
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
@@ -73,6 +73,7 @@ class ContactUSAPIView(generics.CreateAPIView):
             
             client_ctx = {
                 'user': serializer.data["firstName"], 
+                "message": settings.EMAIL_CUSTOMER_MESSAGE
             }
             client_message = get_template('customer-mesg.html').render(client_ctx)
             client_msg = EmailMessage(
@@ -356,3 +357,72 @@ class ClientViewBrochures(generics.CreateAPIView):
 
         serializer = BrochuresSerializer(snippets, many=True)
         return Response({"brochures": serializer.data}, status=status.HTTP_200_OK)
+    
+
+
+class IconsenggRaqFormAPIView(generics.CreateAPIView):
+    permission_classes = (permissions.AllowAny,)
+    queryset = IconsenggRaqForm.objects.all()
+    serializer_class = IconsenggRaqFormSerializer
+    pagination_class = CustomPagination
+
+    """
+    List all contact us, or create a new contactus.
+    """
+
+    def get(self, request, format=None):
+        snippets = IconsenggRaqForm.objects.all()
+        results = get_custom_paginated_data(self, snippets)
+        if results is not None:
+            return results
+        
+        serializer = IconsenggRaqFormSerializer(snippets, many=True)
+        return Response({"raqform": serializer.data}, status=status.HTTP_200_OK)
+    
+    def post(self, request, format=None):
+        serializer = IconsenggRaqFormSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()            
+            
+            admin_ctx = {
+                'name': serializer.data["name"],
+                'company':  serializer.data["company"],
+                'email' : serializer.data["email"],
+                'phoneNumber' : serializer.data["phoneNumber"],
+                'cityAddress' : serializer.data["cityAddress"],
+                'stateProvince' : serializer.data["stateProvince"],
+                'natureofProject' : serializer.data["natureofProject"],
+                'country' : serializer.data["country"],
+                'description' : serializer.data["description"],
+                'teams' : serializer.data["teams"],
+                'hangout' : serializer.data["hangout"],
+                'other' : serializer.data["other"],
+            }
+            admin_message = get_template('admin_raq_mesg.html').render(admin_ctx)
+            admin_msg = EmailMessage(
+                    serializer.data["name"] + ' - RAQ Enquiry form' ,
+                    admin_message,
+                    serializer.data["email"],
+                    [settings.EMAIL_HOST_USER]
+            )
+            admin_msg.content_subtype ="html"# Main content is now text/html
+            admin_msg.send()
+            
+            client_ctx = {
+                'user': serializer.data["name"], 
+                "message": settings.EMAIL_CUSTOMER_MESSAGE
+            }
+            client_message = get_template('customer-mesg.html').render(client_ctx)
+            client_msg = EmailMessage(
+                    settings.EMAIL_THANK_YOU_MESSAGE,
+                    client_message,
+                    settings.EMAIL_HOST_USER,
+                    [serializer.data["email"]]
+            )          
+          
+            client_msg.content_subtype ="html"# Main content is now text/html
+            client_msg.send()
+             
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

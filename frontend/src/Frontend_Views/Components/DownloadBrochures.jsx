@@ -3,9 +3,14 @@ import { axiosClientServiceApi } from "../../util/axiosUtil";
 import { sortCreatedDateByDesc } from "../../util/dataFormatUtil";
 import { getBaseURL } from "../../util/ulrUtil";
 import Button from "../../Common/Button";
+import RaqFormModel from "../../Common/RaqFormModel";
+import ModelBg from "../../Common/ModelBg";
 
 const DownloadBrochures = () => {
   const [brochuresList, setBrochuresList] = useState([]);
+  const [show, setShow] = useState(false);
+  const [pathName, setPathName] = useState("");
+  const [fileName, setFileName] = useState("");
   const baseURL = getBaseURL();
 
   const getBrochuresList = async () => {
@@ -28,12 +33,33 @@ const DownloadBrochures = () => {
     getBrochuresList();
   }, []);
 
-  const downloadPDF = (url) => {
-    window.open(
-      url,
-      "_blank",
-      "location=yes,height=800,width=600 ,scrollbars=yes,status=yes"
-    );
+  // const downloadPDF = (url) => {
+  //   window.open(
+  //     url,
+  //     "_blank",
+  //     "location=yes,height=800,width=600 ,scrollbars=yes,status=yes"
+  //   );
+  // };
+
+  const downloadPDF = () => {
+    const link = document.createElement("a");
+    link.download = fileName;
+    link.href = baseURL + pathName;
+    link.target = "_blank";
+    link.click();
+  };
+
+  const checkClientInfoAndDownload = (path, name) => {
+    setPathName(path);
+    setFileName(name);
+    showModel();
+  };
+
+  const showModel = () => {
+    setShow(!show);
+  };
+  const closeModel = () => {
+    setShow(!show);
   };
 
   return (
@@ -43,7 +69,12 @@ const DownloadBrochures = () => {
           label="Dropdown Brochure"
           cssClass="btn btn-primary mb-1"
           handlerChange={() =>
-            downloadPDF(`${baseURL}${brochuresList[0]?.path}`)
+            checkClientInfoAndDownload(
+              brochuresList[0]?.path,
+              brochuresList[0]?.brochures_downloadName
+                ? brochuresList[0]?.brochures_downloadName
+                : brochuresList[0]?.originalname
+            )
           }
         />
       )}
@@ -63,7 +94,14 @@ const DownloadBrochures = () => {
               <li>
                 <a
                   href="#!"
-                  onClick={() => downloadPDF(`${baseURL}${brochures.path}`)}
+                  onClick={() =>
+                    checkClientInfoAndDownload(
+                      brochures.path,
+                      brochures.brochures_downloadName
+                        ? brochures.brochures_downloadName
+                        : brochures.originalname
+                    )
+                  }
                   className="mx-1 text-dark"
                 >
                   {brochures.originalname}
@@ -73,6 +111,10 @@ const DownloadBrochures = () => {
           </ul>
         </div>
       )}
+      {show && (
+        <RaqFormModel closeModel={closeModel} downloadPDF={downloadPDF} />
+      )}
+      {show && <ModelBg />}
     </>
   );
 };

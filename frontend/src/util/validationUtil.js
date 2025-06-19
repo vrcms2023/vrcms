@@ -72,4 +72,10 @@ export const fieldValidation = {
   job_title: {
     required: "Please enter Job Title",
   },
+  name: {
+    required: "Please enter Name.",
+  },
+  country: {
+    required: "Please select Country",
+  },
 };
