@@ -426,3 +426,82 @@ class IconsenggRaqFormAPIView(generics.CreateAPIView):
              
             return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+class IconsenggRaqSearchAPIView(ListAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = IconsenggRaqFormSerializer
+    pagination_class = CustomPagination
+
+    def get_object(self, query):
+        try:
+            return IconsenggRaqForm.objects.filter(
+                Q(name__icontains=query) | Q(email__icontains=query) | Q(phoneNumber__icontains=query)
+            )
+        except IconsenggRaqForm.DoesNotExist:
+            raise Http404
+
+    def get(self, request, query, format=None):
+        snippet = self.get_object(query)
+        results = get_custom_paginated_data(self, snippet)
+        if results is not None:
+            return results
+        
+        serializer = IconsenggRaqFormSerializer(snippet, many=True)
+        return Response({"contactus": serializer.data}, status=status.HTTP_200_OK)
+    
+
+class IconsenggRaqExportToExcel(APIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = IconsenggRaqFormSerializer
+    pagination_class = CustomPagination
+
+    def get(self, request):
+        # Get data from database
+        queryset = IconsenggRaqForm.objects.all()
+        serializer = IconsenggRaqFormSerializer(queryset, many=True)
+        
+        # Create Excel workbook and worksheet
+        wb = Workbook()
+        ws = wb.active
+        ws.append(['name','company', 'email', 'phoneNumber','cityAddress','stateProvince','natureofProject','country','description','teams','hangout','other'])  # Add headers
+        ws.title = "RAQ list"
+
+        # Write headers
+        for item in queryset:
+            ws.append([
+                item.name,
+                item.company,
+                item.email,
+                item.phoneNumber,
+                item.cityAddress,
+                item.stateProvince,
+                item.natureofProject,
+                item.country,
+                item.description,
+                item.teams,
+                item.hangout,
+                item.other,
+            ])
+ 
+         # Save to BytesIO buffer
+        buffer = BytesIO()
+        wb.save(buffer)
+        buffer.seek(0)
+
+        # Create HTTP response
+        response = HttpResponse(
+            buffer.getvalue(),
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+
+        file_time_stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"raq_list_export_{file_time_stamp}.xlsx"
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        
+        # Save workbook to response
+        wb.close()
+        buffer.close()
+        
+        return response
