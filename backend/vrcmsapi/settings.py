@@ -168,6 +168,7 @@ EMAIL_REQUEST_MESSAGE="Exciting New Features & Updates in VRCMS Enhance Your Exp
 # EMAIL_USE_SSL = True
 # EMAIL_USE_TLS = False
 
+EMAIL_CUSTOMER_MESSAGE = "Thanks for contacting VRCMS! This automatic reply is just to let you know that we received your message and we will get back to you with a response as quickly as possible. During business hours, we do our best to reply as quick as we can, usually within a couple of hours."
 
 
 # Password validation

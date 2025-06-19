@@ -338,14 +338,14 @@ const Footer = () => {
                 ""
               )}
 
-              {/* <div className="d-flex flex-column justify-content-center align-items-center text-center justify-content-md-start align-items-md-start text-md-start mt-4">
-                <Title title="Downloads" />
-                <Button label="Download Brochure" cssClass="btn btn-primary" />
+              <div className="d-flex flex-column justify-content-center align-items-center text-center justify-content-md-start align-items-md-start text-md-start mt-4">
+                {/* <Title title="Downloads" />
+                <Button label="Download Brochure" cssClass="btn btn-primary" /> */}
 
                 <div>
                   <DownloadBrochures />
                 </div>
-              </div> */}
+              </div>
             </div>
             <hr className="d-block d-md-none my-4" />
             {
