@@ -134,6 +134,10 @@ const AdminSettings = lazy(
   () => import("./Frontend_Admin/Pages/Auth/AdminSettings")
 );
 
+const RAQAdmininistration = lazy(
+  () => import("./Frontend_Admin/Pages/Auth/RAQAdmininistration")
+);
+
 function App() {
   const { isLoading } = useSelector((state) => state.loader);
 
@@ -228,6 +232,10 @@ function App() {
                 <Route
                   path="/appAdmin/adminPagesConfiguration"
                   element={<PagesConfiguration />}
+                />
+                <Route
+                  path="/appAdmin/raqformAdministration"
+                  element={<RAQAdmininistration />}
                 />
                 <Route path="/appAdmin/settings" element={<AdminSettings />} />
                 <Route path="/editproject/:id" element={<AddProject />} />
