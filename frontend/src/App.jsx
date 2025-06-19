@@ -37,6 +37,9 @@ const PageNotFound = lazy(
 );
 const Home = lazy(() => import("./Frontend_Views/Pages/Home/index"));
 const About = lazy(() => import("./Frontend_Views/Pages/About/About"));
+const WhyChooseUs = lazy(
+  () => import("./Frontend_Views/Pages/whychooseus/whychooseus.jsx")
+);
 const Contact = lazy(() => import("./Frontend_Views/Pages/Contact/Contact"));
 const Services = lazy(() => import("./Frontend_Views/Pages/Services/Services"));
 const Products = lazy(() => import("./Frontend_Views/Pages/Products/index"));
@@ -235,6 +238,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/hpr-home" element={<HPRHome />} />
               <Route path="/about" element={<About />} />
+              <Route path="/whychooseus" element={<WhyChooseUs />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/products" element={<Products />} />
               <Route path="/categories/:id" element={<Products />} />

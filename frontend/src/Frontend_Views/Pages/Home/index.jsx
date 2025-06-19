@@ -277,7 +277,7 @@ const Home = () => {
                   />
                 </div>
               </div>
-              {componentEdit.banner ? (
+              {componentEdit.banner && (
                 <div className="adminEditTestmonial selected">
                   <ImageInputsForm
                     editHandler={editHandler}
@@ -291,8 +291,6 @@ const Home = () => {
                     dimensions={imageDimensionsJson("banner")}
                   />
                 </div>
-              ) : (
-                ""
               )}
             </>
           )}
