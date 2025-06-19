@@ -1,16 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { confirmAlert } from "react-confirm-alert";
+
 import { useDispatch, useSelector } from "react-redux";
 
 // Components
-import Title from "../../../Common/Title";
+
 import BriefIntroFrontend from "../../../Common/BriefIntro";
 import EditIcon from "../../../Common/AdminEditIcon";
 import ModelBg from "../../../Common/ModelBg";
 import Banner from "../../../Common/Banner";
-import DeleteDialog from "../../../Common/DeleteDialog";
+
 import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
 
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
@@ -21,16 +19,9 @@ import {
   getFormDynamicFields,
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
-import { getImagePath } from "../../../util/commonUtil";
-import { sortByUpdatedDate } from "../../../util/dataFormatUtil";
-import {
-  axiosClientServiceApi,
-  axiosServiceApi,
-} from "../../../util/axiosUtil";
 
 // CSS
-import { AboutPageStyled } from "../../../Common/StyledComponents/Styled-AboutPage";
-import RichTextView from "../../../Common/RichTextView";
+
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 import {

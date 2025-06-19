@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 // Component
-import Title from "./Title";
+
 import { axiosClientServiceApi } from "../util/axiosUtil";
 import { getDummyImage, getImagePath } from "../util/commonUtil";
-
 import { PageBannerStyled } from "./StyledComponents/Styled-PageBanner";
-import SkeletonImage from "./Skeltons/SkeletonImage";
 
 // Styles
 
