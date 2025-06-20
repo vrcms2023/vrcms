@@ -72,6 +72,7 @@ import HomeProjectCarousel from "../../Components/HomeProjectCarousel";
 import HomeDynamicServices from "../../Components/HomeDynamicServices";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 import { HomeClientList } from "../../Components/HomeClientList";
+import DownloadBrochures from "../../Components/DownloadBrochures";
 
 const Home = () => {
   const editComponentObj = {
@@ -246,57 +247,12 @@ const Home = () => {
   return (
     <>
       <div className="container-fluid">
-        {/* BANNER COMPONENT  */}
-        <div
-          className={
-            showHideCompList?.banner?.visibility && isAdmin && hasPermission
-              ? "border border-info mb-2"
-              : ""
-          }
-        >
-          {isAdmin && hasPermission && (
-            <ShowHideToggle
-              showhideStatus={showHideCompList?.banner?.visibility}
-              title={"Only Banner"}
-              componentName={"banner"}
-              showHideHandler={showHideHandler}
-              id={showHideCompList?.banner?.id}
-            />
-          )}
-
-          {showHideCompList?.banner?.visibility && (
-            <>
-              <div className="row">
-                <div className="col-md-12 p-0 position-relative homePage">
-                  {isAdmin && hasPermission && (
-                    <EditIcon editHandler={() => editHandler("banner", true)} />
-                  )}
-                  <Banner
-                    getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-                    bannerState={componentEdit.banner}
-                  />
-                </div>
-              </div>
-              {componentEdit.banner && (
-                <div className="adminEditTestmonial selected">
-                  <ImageInputsForm
-                    editHandler={editHandler}
-                    componentType="banner"
-                    pageType={`${pageType}-banner`}
-                    imageLabel="Banner Image"
-                    showDescription={false}
-                    showExtraFormFields={getFormDynamicFields(
-                      `${pageType}-banner`
-                    )}
-                    dimensions={imageDimensionsJson("banner")}
-                  />
-                </div>
-              )}
-            </>
-          )}
+        {/*Download Broucher */}
+        <div>
+          <DownloadBrochures />
         </div>
 
-        {/* ==== CAROUSEL COMPONENT ======================================================================================================= */}
+        {/* ==== CAROUSEL COMPONENT START ======================================================================================================= */}
         <div
           className={
             showHideCompList?.carousel?.visibility && isAdmin && hasPermission
@@ -347,8 +303,321 @@ const Home = () => {
             </>
           )}
         </div>
+        {/* ==== CAROUSEL COMPONENT END ========================================================================================================= */}
 
-        {/* LEON Pharma Products  */}
+        {/* INTRODUCTION COMPONENT START =========================================================================================================== */}
+        <div
+          className={
+            showHideCompList?.briefintro?.visibility && isAdmin && hasPermission
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <ShowHideToggle
+              showhideStatus={showHideCompList?.briefintro?.visibility}
+              title={"A Brief Introduction Component"}
+              componentName={"briefintro"}
+              showHideHandler={showHideHandler}
+              id={showHideCompList?.briefintro?.id}
+            />
+          )}
+
+          {/* INTRODUCTION COMPONENT */}
+          {showHideCompList?.briefintro?.visibility && (
+            <div>
+              <div className="container">
+                <div className="row">
+                  <div className="breiftopMargin">
+                    {isAdmin && hasPermission && (
+                      <EditIcon
+                        editHandler={() => editHandler("briefIntro", true)}
+                      />
+                    )}
+
+                    <BriefIntroFrontend
+                      introState={componentEdit.briefIntro}
+                      linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                      linkLabel="Read More"
+                      moreLink=""
+                      introTitleCss="fs-3 fw-bold text-center mb-4"
+                      introSubTitleCss="fw-medium text-muted text-center"
+                      introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
+                      detailsContainerCss="col-md-12 py-3"
+                      anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                      anchersvgColor="#17427C"
+                      pageType={pageType}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {componentEdit.briefIntro && (
+                <div className={`adminEditTestmonial selected `}>
+                  <BriefIntroAdmin
+                    editHandler={editHandler}
+                    componentType="briefIntro"
+                    popupTitle="Brief Intro Banner"
+                    pageType="Home"
+                  />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        {/* INTRODUCTION COMPONENT END  =========================================================================================================== */}
+
+        {/* ICONS ALL SERVICES ============================ */}
+        <div
+          className={
+            showHideCompList?.homedynamciservicesbrief?.visibility &&
+            isAdmin &&
+            hasPermission
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <ShowHideToggle
+              showhideStatus={
+                showHideCompList?.homedynamciservicesbrief?.visibility
+              }
+              title={"Dynamci Services Brief"}
+              componentName={"homedynamciservicesbrief"}
+              showHideHandler={showHideHandler}
+              id={showHideCompList?.homedynamciservicesbrief?.id}
+            />
+          )}
+          {showHideCompList?.homedynamciservicesbrief?.visibility && (
+            <div className="homeDynamciServicesIntro">
+              <div>
+                <div className="breiftopMargin">
+                  {isAdmin && hasPermission && (
+                    <EditIcon
+                      editHandler={() =>
+                        editHandler("homeDynamciServicesBrief", true)
+                      }
+                    />
+                  )}
+
+                  <BriefIntroFrontend
+                    introState={componentEdit.homeDynamciServicesBrief}
+                    linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                    linkLabel="Read More"
+                    moreLink=""
+                    introTitleCss="text-center mb-4"
+                    introSubTitleCss="fw-medium text-muted text-center"
+                    introDecTitleCss="fs-6 fw-normal mx-4 text-center"
+                    detailsContainerCss="col-md-12 py-3"
+                    anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                    anchersvgColor="#17427C"
+                    pageType={"homeDynamciServicesBrief"}
+                    maxHeight="300"
+                  />
+
+                  {componentEdit.homeDynamciServicesBrief && (
+                    <div className={`adminEditTestmonial selected `}>
+                      <BriefIntroAdmin
+                        editHandler={editHandler}
+                        componentType="homeDynamciServicesBrief"
+                        popupTitle="Brief Intro Banner"
+                        pageType="homeDynamciServicesBrief"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="container homeDynamciServices">
+                <div className="row">
+                  {homeServices.map((service, i) => (
+                    <div className="col-sm-6 col-md-4" key={i}>
+                      <HomeDynamicServices
+                        key={i}
+                        editHandler={editHandler}
+                        objectstatus={componentEdit[`homeService${i}`]}
+                        pageType={`homeService${i}`}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        {/* END OF ICONS ALL SERVICES */}
+
+        {/* ICONS HEILIGHT START ================================= */}
+        <div
+          className={
+            showHideCompList?.iconshelightsbrief?.visibility &&
+            isAdmin &&
+            hasPermission
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <ShowHideToggle
+              showhideStatus={showHideCompList?.iconshelightsbrief?.visibility}
+              title={"Icons Brief"}
+              componentName={"iconshelightsbrief"}
+              showHideHandler={showHideHandler}
+              id={showHideCompList?.iconshelightsbrief?.id}
+            />
+          )}
+          {showHideCompList?.iconshelightsbrief?.visibility && (
+            <div className="homeBriefheilights">
+              <div className="container">
+                <div className="row">
+                  <div className="breiftopMargin">
+                    {isAdmin && hasPermission && (
+                      <EditIcon
+                        editHandler={() =>
+                          editHandler("iconsHelightsBrief", true)
+                        }
+                      />
+                    )}
+
+                    <BriefIntroFrontend
+                      introState={componentEdit.iconsHelightsBrief}
+                      linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
+                      linkLabel="Read More"
+                      moreLink=""
+                      introTitleCss="fs-3 fw-bold text-center mb-4"
+                      introSubTitleCss="fw-medium text-muted text-center"
+                      introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
+                      detailsContainerCss="col-md-12 py-3"
+                      anchorContainer="d-flex justify-content-center align-items-center mt-4"
+                      anchersvgColor="#17427C"
+                      pageType={"iconsHelightsBrief"}
+                    />
+
+                    {componentEdit.iconsHelightsBrief && (
+                      <div className={`adminEditTestmonial selected `}>
+                        <BriefIntroAdmin
+                          editHandler={editHandler}
+                          componentType="iconsHelightsBrief"
+                          popupTitle="Brief Intro Banner"
+                          pageType="iconsHelightsBrief"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        {/* END OF ICONS HEILIGHT ========================= */}
+
+        {/* ==== HOME PROJECT CAROUSEL CATEGORIES START ===================================================================================================== */}
+        <div
+          className={
+            showHideCompList?.homeprojectcarousel?.visibility &&
+            isAdmin &&
+            hasPermission
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <ShowHideToggle
+              showhideStatus={showHideCompList?.homeprojectcarousel?.visibility}
+              title={"Home Project Carousel"}
+              componentName={"homeprojectcarousel"}
+              showHideHandler={showHideHandler}
+              id={showHideCompList?.homeprojectcarousel?.id}
+            />
+          )}
+          {showHideCompList?.homeprojectcarousel?.visibility && (
+            <div className="row">
+              <div class="col-md-12 p-0">
+                <HomeProjectCarousel />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* END OF HOME PROJECT CAROUSEL CATEGORIES END ============================== */}
+
+        {/* === CLIENTS - COMPONENTS DEVELOPER IN SAP DESIGNS START ===========================================================================  */}
+        <div
+          className={
+            showHideCompList?.homeclient?.visibility && isAdmin && hasPermission
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <ShowHideToggle
+              showhideStatus={showHideCompList?.homeclient?.visibility}
+              title={"Home Client"}
+              componentName={"homeclient"}
+              showHideHandler={showHideHandler}
+              id={showHideCompList?.homeclient?.id}
+            />
+          )}
+          {showHideCompList?.homeclient?.visibility && (
+            <HomeClientsStyled>
+              <HomeClientList clientsList={clientsList} />
+            </HomeClientsStyled>
+          )}
+        </div>
+
+        {/* === CLIENTS - COMPONENTS DEVELOPER IN SAP DESIGNS END ===========================================================================  */}
+
+        {/* BANNER COMPONENT START =========================================================================================================== */}
+        <div
+          className={
+            showHideCompList?.banner?.visibility && isAdmin && hasPermission
+              ? "border border-info mb-2"
+              : ""
+          }
+        >
+          {isAdmin && hasPermission && (
+            <ShowHideToggle
+              showhideStatus={showHideCompList?.banner?.visibility}
+              title={"Only Banner"}
+              componentName={"banner"}
+              showHideHandler={showHideHandler}
+              id={showHideCompList?.banner?.id}
+            />
+          )}
+
+          {showHideCompList?.banner?.visibility && (
+            <>
+              <div className="row">
+                <div className="col-md-12 p-0 position-relative homePage">
+                  {isAdmin && hasPermission && (
+                    <EditIcon editHandler={() => editHandler("banner", true)} />
+                  )}
+                  <Banner
+                    getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+                    bannerState={componentEdit.banner}
+                  />
+                </div>
+              </div>
+              {componentEdit.banner && (
+                <div className="adminEditTestmonial selected">
+                  <ImageInputsForm
+                    editHandler={editHandler}
+                    componentType="banner"
+                    pageType={`${pageType}-banner`}
+                    imageLabel="Banner Image"
+                    showDescription={false}
+                    showExtraFormFields={getFormDynamicFields(
+                      `${pageType}-banner`
+                    )}
+                    dimensions={imageDimensionsJson("banner")}
+                  />
+                </div>
+              )}
+            </>
+          )}
+        </div>
+        {/* BANNER COMPONENT END =========================================================================================================== */}
+
+        {/* LEON Pharma Products START =========================================================================================================== */}
         <div
           className={
             showHideCompList?.producthilight?.visibility &&
@@ -478,70 +747,9 @@ const Home = () => {
             </ProductHilightsStyled>
           )}
         </div>
+        {/* LEON Pharma Products END =========================================================================================================== */}
 
-        {/* Introduction component with ON/OF  */}
-        <div
-          className={
-            showHideCompList?.briefintro?.visibility && isAdmin && hasPermission
-              ? "border border-info mb-2"
-              : ""
-          }
-        >
-          {isAdmin && hasPermission && (
-            <ShowHideToggle
-              showhideStatus={showHideCompList?.briefintro?.visibility}
-              title={"A Brief Introduction Component"}
-              componentName={"briefintro"}
-              showHideHandler={showHideHandler}
-              id={showHideCompList?.briefintro?.id}
-            />
-          )}
-
-          {/* INTRODUCTION COMPONENT */}
-          {showHideCompList?.briefintro?.visibility && (
-            <div>
-              <div className="container">
-                <div className="row">
-                  <div className="breiftopMargin">
-                    {isAdmin && hasPermission && (
-                      <EditIcon
-                        editHandler={() => editHandler("briefIntro", true)}
-                      />
-                    )}
-
-                    <BriefIntroFrontend
-                      introState={componentEdit.briefIntro}
-                      linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-                      linkLabel="Read More"
-                      moreLink=""
-                      introTitleCss="fs-3 fw-bold text-center mb-4"
-                      introSubTitleCss="fw-medium text-muted text-center"
-                      introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
-                      detailsContainerCss="col-md-12 py-3"
-                      anchorContainer="d-flex justify-content-center align-items-center mt-4"
-                      anchersvgColor="#17427C"
-                      pageType={pageType}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {componentEdit.briefIntro && (
-                <div className={`adminEditTestmonial selected `}>
-                  <BriefIntroAdmin
-                    editHandler={editHandler}
-                    componentType="briefIntro"
-                    popupTitle="Brief Intro Banner"
-                    pageType="Home"
-                  />
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-        {/* END OF INTRODUCTION COMPONENT ============================== */}
-
-        {/* === Random Hilights ================================================================================================================*/}
+        {/* === Random Hilights START =========================================================================================================== */}
         <div
           className={
             showHideCompList?.services?.visibility && isAdmin && hasPermission
@@ -602,9 +810,9 @@ const Home = () => {
             </ABriefIntroStyled>
           )}
         </div>
-        {/* END OF Random Hilights ============================ */}
+        {/* END OF Random Hilights =========================================================================================================== */}
 
-        {/* ==== PRODUCTS CATEGORIES ===================================================================================================== */}
+        {/* ==== PRODUCTS CATEGORIES  START ===================================================================================================== */}
         <div
           className={
             showHideCompList?.homeproducts?.visibility &&
@@ -645,9 +853,9 @@ const Home = () => {
             </div>
           )}
         </div>
-        {/* END OF PRODUCTS CATEGORIES ============================== */}
+        {/* END OF PRODUCTS CATEGORIES =========================================================================================================== */}
 
-        {/* ==== TESTIMONIAL COMPONENT ====================================================================================================*/}
+        {/* ==== TESTIMONIAL COMPONENT START ====================================================================================================*/}
         <div
           className={
             showHideCompList?.testimonis?.visibility && isAdmin && hasPermission
@@ -721,9 +929,9 @@ const Home = () => {
             </TestimonialCarouselPageStyled>
           )}
         </div>
-        {/* END OF TESTIMONIAL COMPONENT ============================= */}
+        {/* END OF TESTIMONIAL COMPONENT =========================================================================================================== */}
 
-        {/* ==== Random Home Services =================================================================================================*/}
+        {/* ==== Random Home Services START =================================================================================================*/}
         <div
           className={
             showHideCompList?.productslist?.visibility &&
@@ -808,8 +1016,9 @@ const Home = () => {
             </RandomHomeServicesStyled>
           )}
         </div>
+        {/* ==== Random Home Services END =================================================================================================*/}
 
-        {/* HOME NEWS */}
+        {/* HOME NEWS START =================================================================================================*/}
         <div
           className={
             showHideCompList?.news?.visibility && isAdmin && hasPermission
@@ -873,10 +1082,9 @@ const Home = () => {
             </div>
           )}
         </div>
+        {/* END OF HOME NEWS START =================================================================================================*/}
 
-        {/* END OF HOME NEWS */}
-
-        {/* ======================= HOME List of Services DEVELOPED FOR LEOMTECH ======================= */}
+        {/* ======================= HOME List of Services DEVELOPED FOR LEOMTECH START ======================= */}
         <div
           className={
             showHideCompList?.news?.visibility && isAdmin && hasPermission
@@ -900,7 +1108,9 @@ const Home = () => {
             </div>
           )}
         </div>
-        {/* ==== FEATURES SPECICALLY DEVELOPED FOR RISHISYSTEMS ========================================================================== */}
+        {/* ======================= HOME List of Services DEVELOPED FOR LEOMTECH END ======================= */}
+
+        {/* ==== FEATURES SPECICALLY DEVELOPED FOR RISHISYSTEMS START ========================================================================== */}
         <div
           className={
             showHideCompList?.features?.visibility && isAdmin && hasPermission
@@ -919,8 +1129,9 @@ const Home = () => {
           )}
           {showHideCompList?.features?.visibility && <Features />}
         </div>
+        {/* ==== FEATURES SPECICALLY DEVELOPED FOR RISHISYSTEMS END ========================================================================== */}
 
-        {/* ===== HOME WHY CHOOSE RISHSYSTEMS ============================================================================================ */}
+        {/* ===== HOME WHY CHOOSE RISHSYSTEMS START ============================================================================================ */}
         <div
           className={
             showHideCompList?.news?.visibility && isAdmin && hasPermission
@@ -946,7 +1157,9 @@ const Home = () => {
             </div>
           )}
         </div>
-        {/* ==== HOME Services SPECICALLY DEVELOPED FOR RISHISYSTEMS ==================================================================== */}
+        {/* ===== HOME WHY CHOOSE RISHSYSTEMS END ============================================================================================ */}
+
+        {/* ==== HOME Services SPECICALLY DEVELOPED FOR RISHISYSTEMS START ==================================================================== */}
 
         <div
           className={
@@ -977,7 +1190,9 @@ const Home = () => {
             </div>
           )}
         </div>
-        {/* ==== HOME Careers ========================================================================================================== */}
+        {/* ==== HOME Services SPECICALLY DEVELOPED FOR RISHISYSTEMS END ==================================================================== */}
+
+        {/* ==== HOME Careers START ========================================================================================================== */}
         <div
           className={
             showHideCompList?.homecareers?.visibility &&
@@ -1019,11 +1234,9 @@ const Home = () => {
             </div>
           )}
         </div>
+        {/* ==== HOME Careers END ========================================================================================================== */}
 
-        {/* <hr /> */}
-        {/* <Title title="SAP DESIGN STUDIO" cssClass="text-center fs-1" /> */}
-
-        {/* ==== IMAGE GALLERY SPECIFICALLY DESIGNED FOR SAP DESIGN STUDIO =============================================================== */}
+        {/* ==== IMAGE GALLERY SPECIFICALLY DESIGNED FOR SAP DESIGN STUDIO START =============================================================== */}
 
         {/* It will be work only one carosel in the page */}
         <div
@@ -1075,10 +1288,11 @@ const Home = () => {
           )}
         </div>
 
-        {/* == SAP DESIGN STUDIO ========================================================================================================== */}
+        {/* ==== IMAGE GALLERY SPECIFICALLY DESIGNED FOR SAP DESIGN STUDIO END=============================================================== */}
 
-        {/* SERVICES OFFERED COMPONENT -
-        DEVELOPED FOR SPECIFICALLY SAP DESIGNS */}
+        {/* == SAP DESIGN STUDIO START========================================================================================================== */}
+
+        {/* SERVICES OFFERED COMPONENT -  DEVELOPED FOR SPECIFICALLY SAP DESIGNS */}
         <div
           className={
             showHideCompList?.servicesoffered?.visibility &&
@@ -1144,66 +1358,16 @@ const Home = () => {
             </>
           )}
         </div>
-
-        {/* === CLIENTS - COMPONENTS DEVELOPER IN SAP DESIGNS  ===========================================================================  */}
-        <div
-          className={
-            showHideCompList?.homeclient?.visibility && isAdmin && hasPermission
-              ? "border border-info mb-2"
-              : ""
-          }
-        >
-          {isAdmin && hasPermission && (
-            <ShowHideToggle
-              showhideStatus={showHideCompList?.homeclient?.visibility}
-              title={"Home Client"}
-              componentName={"homeclient"}
-              showHideHandler={showHideHandler}
-              id={showHideCompList?.homeclient?.id}
-            />
-          )}
-          {showHideCompList?.homeclient?.visibility && (
-            <HomeClientsStyled>
-              <HomeClientList clientsList={clientsList} />
-            </HomeClientsStyled>
-          )}
-        </div>
+        {/* == SAP DESIGN STUDIO END========================================================================================================== */}
 
         {/* END OF SAP DESIGN STUDIO COMPONENTS */}
 
-        {/* === HPR INFRA ================================================================================================================= */}
-
-        {/* ==== HOME PROJECT CAROUSEL CATEGORIES ===================================================================================================== */}
-        <div
-          className={
-            showHideCompList?.homeprojectcarousel?.visibility &&
-            isAdmin &&
-            hasPermission
-              ? "border border-info mb-2"
-              : ""
-          }
-        >
-          {isAdmin && hasPermission && (
-            <ShowHideToggle
-              showhideStatus={showHideCompList?.homeprojectcarousel?.visibility}
-              title={"Home Project Carousel"}
-              componentName={"homeprojectcarousel"}
-              showHideHandler={showHideHandler}
-              id={showHideCompList?.homeprojectcarousel?.id}
-            />
-          )}
-          {showHideCompList?.homeprojectcarousel?.visibility && (
-            <div className="row">
-              <div class="col-md-12 p-0">
-                <HomeProjectCarousel />
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* END OF HOME PROJECT CAROUSEL CATEGORIES ============================== */}
+        {/* === HPR INFRA START================================================================================================================= */}
 
         {/* Projects + brief intro  */}
+
+        {/* ==== PROJECT + BRIEF INTRODUCTION START ===================================================================================================== */}
+
         <div
           className={
             showHideCompList?.hprinfra?.visibility && isAdmin && hasPermission
@@ -1222,7 +1386,10 @@ const Home = () => {
           )}
           {showHideCompList?.hprinfra?.visibility && <HomeProjects />}
         </div>
-        {/* Projects Brief COMPONENT */}
+        {/* ==== PROJECT + BRIEF INTRODUCTION END ===================================================================================================== */}
+
+        {/* ==== PROJECT  BRIEF INTRODUCTION START ===================================================================================================== */}
+
         <div
           className={
             showHideCompList?.projectsbrief?.visibility &&
@@ -1282,154 +1449,12 @@ const Home = () => {
             </div>
           )}
         </div>
+        {/* ==== PROJECT  BRIEF INTRODUCTION END ===================================================================================================== */}
 
         {/* END OF HPR INFRA COMPONENTS */}
 
         {/* {showEditPop && <ModelBg />} */}
 
-        {/* ICONS HEILIGHT ================================= */}
-        <div
-          className={
-            showHideCompList?.iconshelightsbrief?.visibility &&
-            isAdmin &&
-            hasPermission
-              ? "border border-info mb-2"
-              : ""
-          }
-        >
-          {isAdmin && hasPermission && (
-            <ShowHideToggle
-              showhideStatus={showHideCompList?.iconshelightsbrief?.visibility}
-              title={"Icons Brief"}
-              componentName={"iconshelightsbrief"}
-              showHideHandler={showHideHandler}
-              id={showHideCompList?.iconshelightsbrief?.id}
-            />
-          )}
-          {showHideCompList?.iconshelightsbrief?.visibility && (
-            <div className="homeBriefheilights">
-              <div className="container">
-                <div className="row">
-                  <div className="breiftopMargin">
-                    {isAdmin && hasPermission && (
-                      <EditIcon
-                        editHandler={() =>
-                          editHandler("iconsHelightsBrief", true)
-                        }
-                      />
-                    )}
-
-                    <BriefIntroFrontend
-                      introState={componentEdit.iconsHelightsBrief}
-                      linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-                      linkLabel="Read More"
-                      moreLink=""
-                      introTitleCss="fs-3 fw-bold text-center mb-4"
-                      introSubTitleCss="fw-medium text-muted text-center"
-                      introDecTitleCss="fs-6 fw-normal mx-4 text-center lh-6"
-                      detailsContainerCss="col-md-12 py-3"
-                      anchorContainer="d-flex justify-content-center align-items-center mt-4"
-                      anchersvgColor="#17427C"
-                      pageType={"iconsHelightsBrief"}
-                    />
-
-                    {componentEdit.iconsHelightsBrief && (
-                      <div className={`adminEditTestmonial selected `}>
-                        <BriefIntroAdmin
-                          editHandler={editHandler}
-                          componentType="iconsHelightsBrief"
-                          popupTitle="Brief Intro Banner"
-                          pageType="iconsHelightsBrief"
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* END OF ICONS HEILIGHT ========================= */}
-
-        {/* ICONS ALL SERVICES ============================ */}
-        <div
-          className={
-            showHideCompList?.homedynamciservicesbrief?.visibility &&
-            isAdmin &&
-            hasPermission
-              ? "border border-info mb-2"
-              : ""
-          }
-        >
-          {isAdmin && hasPermission && (
-            <ShowHideToggle
-              showhideStatus={
-                showHideCompList?.homedynamciservicesbrief?.visibility
-              }
-              title={"Dynamci Services Brief"}
-              componentName={"homedynamciservicesbrief"}
-              showHideHandler={showHideHandler}
-              id={showHideCompList?.homedynamciservicesbrief?.id}
-            />
-          )}
-          {showHideCompList?.homedynamciservicesbrief?.visibility && (
-            <div className="homeDynamciServicesIntro">
-              <div>
-                <div className="breiftopMargin">
-                  {isAdmin && hasPermission && (
-                    <EditIcon
-                      editHandler={() =>
-                        editHandler("homeDynamciServicesBrief", true)
-                      }
-                    />
-                  )}
-
-                  <BriefIntroFrontend
-                    introState={componentEdit.homeDynamciServicesBrief}
-                    linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-                    linkLabel="Read More"
-                    moreLink=""
-                    introTitleCss="text-center mb-4"
-                    introSubTitleCss="fw-medium text-muted text-center"
-                    introDecTitleCss="fs-6 fw-normal mx-4 text-center"
-                    detailsContainerCss="col-md-12 py-3"
-                    anchorContainer="d-flex justify-content-center align-items-center mt-4"
-                    anchersvgColor="#17427C"
-                    pageType={"homeDynamciServicesBrief"}
-                    maxHeight="300"
-                  />
-
-                  {componentEdit.homeDynamciServicesBrief && (
-                    <div className={`adminEditTestmonial selected `}>
-                      <BriefIntroAdmin
-                        editHandler={editHandler}
-                        componentType="homeDynamciServicesBrief"
-                        popupTitle="Brief Intro Banner"
-                        pageType="homeDynamciServicesBrief"
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="container homeDynamciServices">
-                <div className="row">
-                  {homeServices.map((service, i) => (
-                    <div className="col-sm-6 col-md-4" key={i}>
-                      <HomeDynamicServices
-                        key={i}
-                        editHandler={editHandler}
-                        objectstatus={componentEdit[`homeService${i}`]}
-                        pageType={`homeService${i}`}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-        {/* END OF ICONS ALL SERVICES */}
         {show && <ModelBg />}
       </div>
     </>
