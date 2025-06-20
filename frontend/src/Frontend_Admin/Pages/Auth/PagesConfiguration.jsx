@@ -90,7 +90,7 @@ const PagesConfiguration = () => {
         getAllPagesDetails();
 
         if (selectedService) {
-          deleteServiceMenu(selectedService);
+          await deleteServiceMenu(selectedService);
           dispatch(getServiceValues());
         }
         dispatch(getMenu());

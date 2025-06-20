@@ -174,7 +174,7 @@ const AddService = ({
         `/services/updateService/${item.id}/`
       );
       if (response.status === 204) {
-        deleteServiceItem(menuList, item);
+        const deleteresponse = await deleteServiceItem(menuList, item);
 
         dispatch(getServiceValues());
         dispatch(getMenu());
