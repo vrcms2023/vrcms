@@ -8,23 +8,25 @@ import { Link } from "react-router-dom";
 export const HomeClientList = ({ clientsList }) => {
   const settings = {
     className: "slider variable-width",
-    dots: true,
+    dots: false,
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
     speed: 2000,
-    autoplaySpeed: 2000,
-    cssEase: "linear",
+    autoplaySpeed: 3000,
+    // cssEase: "linear",
+    cssEase: "ease-in-out",
+    variableWidth: true,
   };
   return (
     <>
-      <div className="text-center mb-5" style={{ marginTop: "100px" }}>
+      <div className="text-center my-5">
         <span
-          className="fs-1 px-4 py-2"
-          style={{ borderBottom: "1px solid #444444" }}
+          className="fs-3 px-4 py-2"
+          // style={{ borderBottom: "1px solid #444444" }}
         >
-          Clients
+          Our Clients We Proudly Served
         </span>
       </div>
 
@@ -35,11 +37,11 @@ export const HomeClientList = ({ clientsList }) => {
           })}
         </Slider>
       </div>
-      <div className="text-center py-4 position-relative viewAllBtn">
+      {/* <div className="text-center py-4 position-relative viewAllBtn">
         <Link to="/clients/clients" className="btn btn-outline">
           View All
         </Link>
-      </div>
+      </div> */}
     </>
   );
 };

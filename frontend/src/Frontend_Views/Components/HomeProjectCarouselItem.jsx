@@ -10,7 +10,7 @@ export const HomeProjectCarouselItem = ({ item, index }) => {
       className={`carousel-item ${index === 0 ? "active" : ""}`}
       key={item.index}
     >
-      <div className="container-fluid">
+      <div className="container">
         <div className="row align-items-start">
           <div className="col-sm-6 col-md-6 p-0 carouselImg">
             <img

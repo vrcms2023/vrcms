@@ -14,17 +14,23 @@ export const CarouselItem = ({ item, index }) => {
       />
 
       <div className="carousel-caption ">
-        {item.carouse_title ? (
-          <h1 className="fw-bold">{item.carouse_title}</h1>
-        ) : (
-          ""
-        )}
-
         {item.carouse_sub_title ? (
           <span className="subtitle">{item.carouse_sub_title}</span>
         ) : (
           ""
         )}
+        
+        {item.carouse_title ? (
+          <h1 className="fw-bold my-4">{item.carouse_title}</h1>
+        ) : (
+          ""
+        )}
+
+        {/* {item.carouse_sub_title ? (
+          <span className="subtitle">{item.carouse_sub_title}</span>
+        ) : (
+          ""
+        )} */}
 
         {item.carouse_description ? (
           <p className="fw-normal description fs-5">
