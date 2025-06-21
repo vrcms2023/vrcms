@@ -15,19 +15,17 @@ export const HomeClientItem = ({ client }) => {
   };
   return (
     <div
-      style={{ width: 300 }}
+      // style={{ width: '200px !important' }}
       onMouseEnter={mouseOver}
       onMouseLeave={mouseOut}
     >
-      <div className="">
-        <img
-          src={`${baseURL}${client.path}`}
-          alt={client.client_title}
-          key={client.id}
-          style={{ width: "100px", height: "100px" }}
-        />
-        <RichTextView data={client?.client_description} />
-      </div>
+      <img
+        src={`${baseURL}${client.path}`}
+        alt={client.client_title}
+        key={client.id}
+        style={{ height: "100px" }}
+      />
+      {/* <RichTextView data={client?.client_description} /> */}
     </div>
   );
 };

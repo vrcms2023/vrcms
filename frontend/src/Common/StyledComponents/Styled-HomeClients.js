@@ -107,7 +107,20 @@ export const HomeClientsStyled = styled.div`
     }
 }
 
- 
+.slick-initialized .slick-slide {
+  width: auto !important;
+  min-width: 240px;
+  padding: 8px 16px;
+  border: 1px solid #ededed;
+  margin: 0 12px;
+  cursor: pointer;
+
+  div { 
+    img {
+      margin: 0 auto;
+    }
+  }
+}
 
     
  

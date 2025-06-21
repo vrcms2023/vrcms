@@ -6,6 +6,8 @@ import Button from "../../Common/Button";
 import RaqFormModel from "../../Common/RaqFormModel";
 import ModelBg from "../../Common/ModelBg";
 
+import './DownloadBrochures.css'
+
 const DownloadBrochures = () => {
   const [brochuresList, setBrochuresList] = useState([]);
   const [show, setShow] = useState(false);
@@ -63,11 +65,12 @@ const DownloadBrochures = () => {
   };
 
   return (
-    <>
+    <div className="floatingButton">
       {brochuresList.length === 1 && (
         <Button
-          label="Dropdown Brochure"
-          cssClass="btn btn-primary mb-1"
+          label="Brochure"
+          cssClass="btn btn-primary mb-1 p-4 text-uppercase"
+          icon="fa-download"
           handlerChange={() =>
             checkClientInfoAndDownload(
               brochuresList[0]?.path,
@@ -115,7 +118,7 @@ const DownloadBrochures = () => {
         <RaqFormModel closeModel={closeModel} downloadPDF={downloadPDF} />
       )}
       {show && <ModelBg />}
-    </>
+    </div>
   );
 };
 

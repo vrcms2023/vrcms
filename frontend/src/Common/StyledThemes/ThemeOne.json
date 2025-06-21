@@ -47,11 +47,11 @@
   "teritoryHoverColor": "#2A5CA0",
 
   "navbarBg": "#222222",
-  "navbarTextColor": "#ffffff",
-  "navbarLinkColor": "#ffffff",
+  "navbarTextColor": "#012060",
+  "navbarLinkColor": "#012060",
   "navbarLinkBgColor": "#748E31",
-  "navbarLinkActiveColor": "#aaaaaa",
-  "navbarLinkHoverColor": "#aaaaaa",
+  "navbarLinkActiveColor": "#6D2F9B",
+  "navbarLinkHoverColor": "#6D2F9B",
 
   "navbarChildLinkBgColor": "#222222",
   "navbarChildLinkColor": "#ffffff",
@@ -121,12 +121,12 @@
   "btnSecondryBorderColor": "#aaaaaa",
   "btnSecondryBorderHoverColor": "#aaaaaa",
 
-  "btnOutline": "#ffffff",
+  "btnOutline": "#6D2F9B",
   "btnOutlineHover": "#ffffff",
-  "btnOutlineTextColor": "#555555",
-  "btnOutlineTextHoverColor": "#111111",
-  "btnOutlineBorderColor": "#999999",
-  "btnOutlineBorderHoverColor": "#f3f3f3",
+  "btnOutlineTextColor": "#444444",
+  "btnOutlineTextHoverColor": "#444444",
+  "btnOutlineBorderColor": "#6D2F9B",
+  "btnOutlineBorderHoverColor": "#444444",
 
   "btnLinkTextColor": "#007CB9",
   "btnLinkTextHoverColor": "#005689",

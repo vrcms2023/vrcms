@@ -31,15 +31,17 @@ export const StyledMenu = styled.menu`
 
   .navbar {
     padding: 0;
-    background-color: rgba(34, 34, 34, .87);
+    background-color: rgba(255, 255, 255, .95);
     // background-color:${({ theme }) => theme.navbarBg}; 
-    // box-shadow: 0px 2px 10px ${({ theme }) => theme.navbarLinkActiveColor};
+    box-shadow: 0px 2px 10px ${({ theme }) => theme.navbarLinkActiveColor};
+    // box-shadow: 0 .125rem .25rem ${({ theme }) => theme.navbarLinkActiveColor};
 
     .nav-item {
         .nav-Link {
           color:${({ theme }) => theme.navbarTextColor}; 
           margin: 0 12px;
           text-decoration: none;
+          text-transform: uppercase;
           font-size: 0.9rem;
           font-weight: normal;
           position: relative;
@@ -64,7 +66,7 @@ export const StyledMenu = styled.menu`
             &:before {
               position: absolute;
               content: "";
-              width: 35%;
+              width: 75%;
               /* height: 1px; */
               // border-bottom: 2px solid ${({ theme }) => theme.navbarLinkActiveColor}; 
               bottom: -4px;
