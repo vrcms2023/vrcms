@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const HomeClientsStyled = styled.div`
   background-color: ${({ theme }) => theme.white};
+  margin: 64px 0;
 
 
 .clients-image-slider{
@@ -107,11 +108,21 @@ export const HomeClientsStyled = styled.div`
     }
 }
 
+.slider-container {
+  .slick-slider {
+    overflow: hidden !important;
+  }
+
+  .slick-track {
+    overflow: hidden !important;
+  }
+}
+
 .slick-initialized .slick-slide {
   width: auto !important;
   min-width: 240px;
   padding: 8px 16px;
-  border: 1px solid #ededed;
+  // border: 1px solid #ededed;
   margin: 0 12px;
   cursor: pointer;
 
@@ -119,6 +130,19 @@ export const HomeClientsStyled = styled.div`
     img {
       margin: 0 auto;
     }
+  }
+}
+
+.ql-editor {
+  padding: 10px !imporrant;
+  text-align: center;
+  max-width: 240px;
+
+  p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   }
 }
 
