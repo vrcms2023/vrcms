@@ -1,0 +1,16 @@
+.floatingButton {
+    position: fixed;
+    top: 600px;
+    right: 0;
+    z-index: 99999;
+
+    button {
+        border-top-right-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+    }
+
+    button i {
+        font-size: 24px;
+        margin-right:8px
+    }
+}
