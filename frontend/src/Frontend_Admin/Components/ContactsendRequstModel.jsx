@@ -6,7 +6,7 @@ const ContactsendRequstModel = ({ closeModel, selectedUser }) => {
     <div
       className="modal d-block modal-lg"
       tabIndex="-1"
-      style={{ position: "absolute", zIndex: 9999 }}
+      style={{ position: "absolute", zIndex: 99999 }}
     >
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
