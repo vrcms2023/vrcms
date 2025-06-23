@@ -68,7 +68,7 @@ const Registration = () => {
       <div className="login">
         <div className="text-center pt-4">
           <button className="btn btn-secondary" onClick={() => navigate("/")}>
-            Back to HPR Infra website
+            Back to HOME
           </button>
         </div>
         <div className="d-flex justify-content-center align-items-center flex-column">

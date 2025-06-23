@@ -1,13 +1,13 @@
 import React, { lazy, Suspense, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import _ from "lodash";
 import { ThemeProvider } from "styled-components";
 
 // Components
 import LoadingSpinner from "./Common/LoadingSpinner";
-import { HideFooterForAdmin, isNotEmptyObject } from "./util/commonUtil";
+import { NO_FOOTER_ROUTES } from "./util/commonUtil";
 import SkeletonPage from "./Common/Skeltons/SkeletonPage";
 import Footer from "./Common/Footer/Footer";
 import Header from "./Common/Header/Header";
@@ -140,8 +140,9 @@ const RAQAdmininistration = lazy(
 
 function App() {
   const { isLoading } = useSelector((state) => state.loader);
+  const location = useLocation();
 
-  const isHideMenu = HideFooterForAdmin();
+  const isHideMenu = NO_FOOTER_ROUTES.includes(location.pathname);
   const [flashAdd, setFlashAdd] = useState(false);
   const { userInfo, permissions } = useSelector((state) => state.auth);
 
@@ -203,109 +204,103 @@ function App() {
 
       <ThemeProvider theme={ThemeOne}>
         <GlobalStyles />
-        <BrowserRouter>
-          {isLoading ? <LoadingSpinner /> : ""}
-          <TopStrip />
-          <Header />
 
-          <Suspense fallback={<SkeletonPage />}>
-            <Routes>
-              <Route element={<ProtectedRoute />}>
-                <Route
-                  path="/appAdmin/change_password"
-                  element={<ChangePassword />}
-                />
-                <Route path="/appAdmin/dashboard" element={<Dashboard />} />
-                <Route
-                  path="/appAdmin/contactUSList"
-                  element={<ContactUSAdmin />}
-                />
-              </Route>
+        {isLoading ? <LoadingSpinner /> : ""}
+        <TopStrip />
+        <Header />
 
-              <Route element={<AdminProtectedRoute />}>
-                <Route path="/appAdmin/userAdmin" element={<UserAdmin />} />
-                <Route path="/appAdmin/theme" element={<Themes />} />
-                <Route
-                  path="/appAdmin/userPermission"
-                  element={<UserPagePermission />}
-                />
-                <Route
-                  path="/appAdmin/adminPagesConfiguration"
-                  element={<PagesConfiguration />}
-                />
-                <Route
-                  path="/appAdmin/raqformAdministration"
-                  element={<RAQAdmininistration />}
-                />
-                <Route path="/appAdmin/settings" element={<AdminSettings />} />
-                <Route path="/editproject/:id" element={<AddProject />} />
-              </Route>
+        <Suspense fallback={<SkeletonPage />}>
+          <Routes>
+            <Route element={<ProtectedRoute />}>
+              <Route
+                path="/appAdmin/change_password"
+                element={<ChangePassword />}
+              />
+              <Route path="/appAdmin/dashboard" element={<Dashboard />} />
+              <Route
+                path="/appAdmin/contactUSList"
+                element={<ContactUSAdmin />}
+              />
+            </Route>
 
-              <Route path="*" element={<PageNotFound />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/hpr-home" element={<HPRHome />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/whychooseus" element={<WhyChooseUs />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/categories/:id" element={<Products />} />
-              <Route path="/products/:id" element={<ProductDetails />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/services/services" element={<Services />} />
-              <Route path="/services/:uid" element={<Services />} />
-              <Route path="/clients/clients" element={<ClientsList />} />
-              <Route path="/profile/careers" element={<Careers />} />
-              <Route path="/career-details/:id" element={<CareerDetails />} />
-              <Route path="/profile/team" element={<Team />} />
-              <Route path="/projects/projects" element={<Projects />} />
-              <Route path="/project-details" element={<ProjectTabs />} />
+            <Route element={<AdminProtectedRoute />}>
+              <Route path="/appAdmin/userAdmin" element={<UserAdmin />} />
+              <Route path="/appAdmin/theme" element={<Themes />} />
               <Route
-                path="/projects/projectgallery"
-                element={<ProjectsGallery />}
+                path="/appAdmin/userPermission"
+                element={<UserPagePermission />}
               />
-              <Route path="/gallery/imagegallery" element={<ImagesGallery />} />
-              <Route path="/gallery/videogallery" element={<VideosGallery />} />
-              <Route path="/clients/casestudies" element={<CaseStudies />} />
               <Route
-                path="/clients/casestudies-details/:id/"
-                element={<CaseStudiesDetails />}
+                path="/appAdmin/adminPagesConfiguration"
+                element={<PagesConfiguration />}
               />
-              <Route path="/profile/news" element={<NewsAndUpdates />} />
               <Route
-                path="/profile/testimonials"
-                element={<TestimonialsList />}
+                path="/appAdmin/raqformAdministration"
+                element={<RAQAdmininistration />}
               />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Registration />} />
-              <Route path="/reset_password" element={<ResetPassword />} />
+              <Route path="/appAdmin/settings" element={<AdminSettings />} />
+              <Route path="/editproject/:id" element={<AddProject />} />
               <Route
                 path="/password/reset/:uid/:token"
                 element={<ResetPasswordConfirmation />}
               />
-              <Route path="/activate/:uid/:token" element={<Activation />} />
-              <Route
-                path="/resend_activation"
-                element={<ResendActivationEmail />}
-              />
-              <Route path="/unauthorized" element={<UnauthorizedPage />} />
-              <Route path="/authForm" element={<AuthForm />} />
-              <Route path="/addproject" element={<AddProject />} />
-              <Route
-                path="/appAdmin/addCategory"
-                element={<ProjectCategory />}
-              />
+            </Route>
 
-              <Route path="/adminNews" element={<AdminNews />} />
-              <Route
-                path="/profile/testimonial"
-                element={<AdminTestimonial />}
-              />
-            </Routes>
-          </Suspense>
+            <Route path="*" element={<PageNotFound />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/hpr-home" element={<HPRHome />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/whychooseus" element={<WhyChooseUs />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/categories/:id" element={<Products />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/services/services" element={<Services />} />
+            <Route path="/services/:uid" element={<Services />} />
+            <Route path="/clients/clients" element={<ClientsList />} />
+            <Route path="/profile/careers" element={<Careers />} />
+            <Route path="/career-details/:id" element={<CareerDetails />} />
+            <Route path="/profile/team" element={<Team />} />
+            <Route path="/projects/projects" element={<Projects />} />
+            <Route path="/project-details" element={<ProjectTabs />} />
+            <Route
+              path="/projects/projectgallery"
+              element={<ProjectsGallery />}
+            />
+            <Route path="/gallery/imagegallery" element={<ImagesGallery />} />
+            <Route path="/gallery/videogallery" element={<VideosGallery />} />
+            <Route path="/clients/casestudies" element={<CaseStudies />} />
+            <Route
+              path="/clients/casestudies-details/:id/"
+              element={<CaseStudiesDetails />}
+            />
+            <Route path="/profile/news" element={<NewsAndUpdates />} />
+            <Route
+              path="/profile/testimonials"
+              element={<TestimonialsList />}
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Registration />} />
+            <Route path="/reset_password" element={<ResetPassword />} />
 
-          {!isHideMenu && <Footer />}
-        </BrowserRouter>
+            <Route path="/activate/:uid/:token" element={<Activation />} />
+            <Route
+              path="/resend_activation"
+              element={<ResendActivationEmail />}
+            />
+            <Route path="/unauthorized" element={<UnauthorizedPage />} />
+            <Route path="/authForm" element={<AuthForm />} />
+            <Route path="/addproject" element={<AddProject />} />
+            <Route path="/appAdmin/addCategory" element={<ProjectCategory />} />
+
+            <Route path="/adminNews" element={<AdminNews />} />
+            <Route path="/profile/testimonial" element={<AdminTestimonial />} />
+          </Routes>
+        </Suspense>
+
+        {!isHideMenu && <Footer />}
       </ThemeProvider>
       <ToastContainer autoClose={2000} theme="colored" />
       <ScrollToTop
