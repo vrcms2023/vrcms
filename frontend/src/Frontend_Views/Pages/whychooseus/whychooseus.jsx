@@ -174,10 +174,10 @@ const WhyChooseUs = () => {
           </div>
         )}
       </div>
-      <div className="container homeDynamciServices">
+      <div className="container my-5">
         <div className="row">
           {keyPointsList.map((i) => (
-            <div className="col-6" key={i}>
+            <div className="col-md-6" key={i}>
               <DynamicKeyPoints
                 editHandler={editHandler}
                 objectstatus={componentEdit[`dynamickeypoints${i}`]}

@@ -17,35 +17,29 @@ const DynamicKeyPoints = ({ editHandler, objectstatus, pageType }) => {
   const { isAdmin, hasPermission } = useAdminLoginStatus();
 
   return (
-    <div className="homeService">
-      <div className="container">
-        <div className="row">
-          <div className="breiftopMargin">
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler(pageType, true)} />
-            )}
+    <div className="position-relative">
+      {isAdmin && hasPermission && (
+        <EditIcon editHandler={() => editHandler(pageType, true)} />
+      )}
 
-            <DynamicKeyPoint
-              getBannerAPIURL={`banner/clientBannerIntro/${pageType}/`}
-              bannerState={objectstatus}
-            />
+      <DynamicKeyPoint
+        getBannerAPIURL={`banner/clientBannerIntro/${pageType}/`}
+        bannerState={objectstatus}
+      />
 
-            {objectstatus && (
-              <div className="adminEditTestmonial selected">
-                <ImageInputsForm
-                  editHandler={editHandler}
-                  componentType={pageType}
-                  pageType={pageType}
-                  imageLabel="Key Points"
-                  showDescription={false}
-                  showExtraFormFields={getKeyPointsDynamicFields(pageType)}
-                  dimensions={imageDimensionsJson("banner")}
-                />
-              </div>
-            )}
-          </div>
+      {objectstatus && (
+        <div className="adminEditTestmonial selected">
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType={pageType}
+            pageType={pageType}
+            imageLabel="Key Points"
+            showDescription={false}
+            showExtraFormFields={getKeyPointsDynamicFields(pageType)}
+            dimensions={imageDimensionsJson("banner")}
+          />
         </div>
-      </div>
+      )}
     </div>
   );
 };
