@@ -61,10 +61,10 @@ export const TeamStyled = styled.div`
       }
 
       .strengths {
-        display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;  
-  overflow: hidden;
+  //       display: -webkit-box;
+  // -webkit-line-clamp: 4;
+  // -webkit-box-orient: vertical;  
+  // overflow: hidden;
 
   @media(max-width: 480px) {
     -webkit-line-clamp: none;
