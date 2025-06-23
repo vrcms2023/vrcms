@@ -49,7 +49,10 @@ const ProductDetails = lazy(
 const ClientsList = lazy(
   () => import("./Frontend_Views/Pages/Clients/ClientsList")
 );
-
+const Careers = lazy(() => import("./Frontend_Views/Pages/Careers/Careers"));
+const CareerDetails = lazy(
+  () => import("./Frontend_Views/Pages/Careers/career-details")
+);
 const Team = lazy(() => import("./Frontend_Views/Pages/Teams/Team"));
 const Projects = lazy(() => import("./Frontend_Views/Pages/Projects/Projects"));
 const ProjectsGallery = lazy(
@@ -62,9 +65,20 @@ const ProjectTabs = lazy(
 const ImagesGallery = lazy(
   () => import("./Frontend_Views/Pages/Gallery/ImagesGallery")
 );
-
+const VideosGallery = lazy(
+  () => import("./Frontend_Views/Pages/Gallery/VideosGallery")
+);
+const CaseStudies = lazy(
+  () => import("./Frontend_Views/Pages/Casestudies/CaseStudies")
+);
+const CaseStudiesDetails = lazy(
+  () => import("./Frontend_Views/Pages/Casestudies/caseStudies-details")
+);
 const NewsAndUpdates = lazy(
   () => import("./Frontend_Views/Pages/News/NewsAndUpdates")
+);
+const TestimonialsList = lazy(
+  () => import("./Frontend_Views/Pages/Testimonials/TestimonialsList")
 );
 
 const Login = lazy(() => import("./Frontend_Admin/Pages/Auth/Login"));
@@ -102,7 +116,7 @@ const AddProject = lazy(
 const ProjectCategory = lazy(
   () => import("./Frontend_Admin/Pages/Login/ProjectCategory")
 );
-
+const AdminNews = lazy(() => import("./Frontend_Admin/Pages/Login/AdminNews"));
 const ContactUSAdmin = lazy(
   () => import("./Frontend_Admin/Pages/Auth/ContactUSAdmin")
 );
@@ -111,6 +125,9 @@ const PagesConfiguration = lazy(
 );
 const UserPagePermission = lazy(
   () => import("./Frontend_Admin/Pages/Auth/UserPagePermission")
+);
+const AdminTestimonial = lazy(
+  () => import("./Frontend_Admin/Pages/Login/AdminTestimonial")
 );
 
 const AdminSettings = lazy(
@@ -142,9 +159,46 @@ function App() {
     }
   }, [showHideList]);
 
+  // useEffect(() => {
+  //   document.addEventListener("contextmenu", handleContextMenu);
+  //   return () => {
+  //     document.removeEventListener("contextmenu", handleContextMenu);
+  //   };
+  // }, []);
+  // const handleContextMenu = (e) => {
+  //   e.preventDefault();
+  //   toast.error("Right Click is diabled");
+  // };
+
+  // Google Language Translator
+
+  // const googleTranslateElementInit = () => {
+  //   new window.google.translate.TranslateElement(
+  //     {
+  //       pageLanguage: "en",
+  //       autoDisplay: false,
+  //     },
+  //     "google_translate_element"
+  //   );
+  // };
+  // useEffect(() => {
+  //   var addScript = document.createElement("script");
+  //   addScript.setAttribute(
+  //     "src",
+  //     "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+  //   );
+  //   document.body.appendChild(addScript);
+  //   window.googleTranslateElementInit = googleTranslateElementInit;
+  // }, []);
+
+  // End of Google Language Translator
+
   return (
     <>
       <SEO />
+      {/* Google Language Translator */}
+      {/* <div id="google_translate_element"></div> */}
+      {/* End of Google Language Translator */}
 
       {flashAdd && <Advertisement setFlashAdd={setFlashAdd} />}
 
@@ -163,11 +217,6 @@ function App() {
                 element={<ChangePassword />}
               />
               <Route path="/appAdmin/dashboard" element={<Dashboard />} />
-              <Route path="/addproject" element={<AddProject />} />
-              <Route
-                path="/appAdmin/addCategory"
-                element={<ProjectCategory />}
-              />
               <Route
                 path="/appAdmin/contactUSList"
                 element={<ContactUSAdmin />}
@@ -200,29 +249,38 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/hpr-home" element={<HPRHome />} />
             <Route path="/about" element={<About />} />
-
-            <Route path="/whychooseus/keypoints" element={<WhyChooseUs />} />
-            <Route
-              path="/whychooseus/infrastructure"
-              element={<ImagesGallery />}
-            />
-            <Route path="/whychooseus/projects/" element={<Projects />} />
-            <Route path="/project-details" element={<ProjectTabs />} />
-            <Route
-              path="/whychooseus/projectgallery"
-              element={<ProjectsGallery />}
-            />
-            <Route path="/whychooseus/news" element={<NewsAndUpdates />} />
-            <Route path="/whychooseus/team" element={<Team />} />
-            <Route path="/whychooseus/clients" element={<ClientsList />} />
-
+            <Route path="/whychooseus" element={<WhyChooseUs />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/categories/:id" element={<Products />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/services" element={<Services />} />
             <Route path="/services/:uid" element={<Services />} />
-
-            <Route path="/contact" element={<Contact />} />
-
+            <Route path="/clients/clients" element={<ClientsList />} />
+            <Route path="/profile/careers" element={<Careers />} />
+            <Route path="/career-details/:id" element={<CareerDetails />} />
+            <Route path="/profile/team" element={<Team />} />
+            <Route path="/projects/projects" element={<Projects />} />
+            <Route path="/project-details" element={<ProjectTabs />} />
+            <Route
+              path="/projects/projectgallery"
+              element={<ProjectsGallery />}
+            />
+            <Route path="/gallery/imagegallery" element={<ImagesGallery />} />
+            <Route path="/gallery/videogallery" element={<VideosGallery />} />
+            <Route path="/clients/casestudies" element={<CaseStudies />} />
+            <Route
+              path="/clients/casestudies-details/:id/"
+              element={<CaseStudiesDetails />}
+            />
+            <Route path="/profile/news" element={<NewsAndUpdates />} />
+            <Route
+              path="/profile/testimonials"
+              element={<TestimonialsList />}
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Registration />} />
             <Route path="/reset_password" element={<ResetPassword />} />
@@ -234,6 +292,11 @@ function App() {
             />
             <Route path="/unauthorized" element={<UnauthorizedPage />} />
             <Route path="/authForm" element={<AuthForm />} />
+            <Route path="/addproject" element={<AddProject />} />
+            <Route path="/appAdmin/addCategory" element={<ProjectCategory />} />
+
+            <Route path="/adminNews" element={<AdminNews />} />
+            <Route path="/profile/testimonial" element={<AdminTestimonial />} />
           </Routes>
         </Suspense>
 

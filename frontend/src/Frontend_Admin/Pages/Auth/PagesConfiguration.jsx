@@ -345,7 +345,7 @@ const PagesConfiguration = () => {
       });
 
       const response = await updateObjectsIndex(_finalObject);
-      if (response.length > 0) {
+      if (response?.length > 0) {
         const result = getMenuObject(response);
         setPagesDetails(result);
       }

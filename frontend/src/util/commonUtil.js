@@ -272,20 +272,23 @@ export const NO_FOOTER_ROUTES = [
 export const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
+  if ([removed]) {
+    result.splice(endIndex, 0, removed);
+  }
   return result;
 };
 
 export const updateArrIndex = (list, property, parentIndex) => {
   return list.map((item, index) => {
-    let _ind = index + 1;
-    if (parentIndex) {
-      _ind = parentIndex * 10 + _ind;
-    }
-    item[property] = _ind;
+    if (item) {
+      let _ind = index + 1;
+      if (parentIndex) {
+        _ind = parentIndex * 10 + _ind;
+      }
+      item[property] = _ind;
 
-    return item;
+      return item;
+    }
   });
 };
 
