@@ -40,6 +40,8 @@ const ImageGalleryComponent = ({ pageType, componentEdit, imageGallery }) => {
     setShowModal(!showModal);
   };
 
+  console.log(img, "Image Gallery Image")
+
   return (
     <div>
       <div className="row gallery">
