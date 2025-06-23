@@ -14,6 +14,7 @@ const DownloadBrochures = () => {
   const [pathName, setPathName] = useState("");
   const [fileName, setFileName] = useState("");
   const baseURL = getBaseURL();
+  const [scrolled, setScrolled] = useState(false);
 
   const getBrochuresList = async () => {
     try {
@@ -33,6 +34,15 @@ const DownloadBrochures = () => {
 
   useEffect(() => {
     getBrochuresList();
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 200); // Trigger scroll at 200px
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // const downloadPDF = (url) => {
@@ -65,10 +75,10 @@ const DownloadBrochures = () => {
   };
 
   return (
-    <div className="floatingButton">
+    <div className={`floatingButton ${scrolled ? "scrolled" : ""}`}>
       {brochuresList.length === 1 && (
         <Button
-          label="Brochure"
+          label="BROCHURE"
           cssClass="btn btn-primary mb-1 p-4 text-uppercase"
           icon="fa-download"
           handlerChange={() =>
@@ -84,17 +94,18 @@ const DownloadBrochures = () => {
       {brochuresList.length > 1 && (
         <div class="dropdown">
           <button
-            class="btn btn-secondary dropdown-toggle"
+            class="btn btn-primary mb-1 p-4  dropdown-toggle"
             type="button"
             id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            Dropdown button
+            BROCHURES
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             {brochuresList?.map((brochures) => (
               <li>
+                <i class="fa fa-file-pdf-o cursor-pointer fs-4 me-2" aria-hidden="true"></i>
                 <a
                   href="#!"
                   onClick={() =>

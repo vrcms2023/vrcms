@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { getDummyImage, getImagePath } from "../../../util/commonUtil";
 import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
 import Button from "../../../Common/Button";
+import ModalBg from "../../../Common/ModelBg";
 
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 import {
@@ -113,6 +114,7 @@ const UploadBrochures = () => {
   };
 
   return (
+    <>
     <div className="container-fluid pt-5 contactsList">
       <div className="row px-2 px-lg-5">
         <div className="col-sm-12 col-md-11">
@@ -216,6 +218,8 @@ const UploadBrochures = () => {
         </>
       </div>
     </div>
+    {show && <ModalBg />}
+    </>
   );
 };
 

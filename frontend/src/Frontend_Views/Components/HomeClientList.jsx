@@ -10,14 +10,29 @@ export const HomeClientList = ({ clientsList }) => {
     className: "slider variable-width",
     dots: false,
     infinite: true,
-    slidesToShow: 3,
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     speed: 2000,
     autoplaySpeed: 3000,
     // cssEase: "linear",
-    cssEase: "ease-in-out",
+    // cssEase: "ease-in-out",
     variableWidth: true,
+
+    draggable: true,
+    swipeToSlide: true,
+    cssEase: "ease",
+
+
+  //   infinite: false,
+  // draggable: true,
+  // swipeToSlide: true,
+  // slidesToShow: 1,           // overridden if variableWidth is true
+  // slidesToScroll: 1,
+  // variableWidth: true,
+  // autoplay: false,
+  // speed: 500,
+  // cssEase: "ease",
   };
   return (
     <>

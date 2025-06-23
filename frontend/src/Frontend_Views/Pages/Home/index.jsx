@@ -271,14 +271,16 @@ const Home = () => {
           )}
           {showHideCompList?.carousel?.visibility && (
             <>
-              <div className="row">
-                <div className="col-md-12 p-0 carousel">
-                  {isAdmin && hasPermission && (
-                    <EditIcon
-                      editHandler={() => editHandler("carousel", true)}
-                    />
-                  )}
-                  <Carousel carouselState={componentEdit.carousel} />
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-md-12 p-0 carousel">
+                    {isAdmin && hasPermission && (
+                      <EditIcon
+                        editHandler={() => editHandler("carousel", true)}
+                      />
+                    )}
+                    <Carousel carouselState={componentEdit.carousel} />
+                  </div>
                 </div>
               </div>
 
@@ -530,11 +532,7 @@ const Home = () => {
             />
           )}
           {showHideCompList?.homeprojectcarousel?.visibility && (
-            <div className="row">
-              <div class="col-md-12 p-0">
-                <HomeProjectCarousel />
-              </div>
-            </div>
+              <HomeProjectCarousel />
           )}
         </div>
 

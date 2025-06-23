@@ -42,6 +42,7 @@ export const FooterStyled = styled.div`
     }
 
   .footerDetails {
+    position: relative;
     .logo img { width: 150px; }
     // a {
     //   color: ${({ theme }) => theme.footerLinkColor};
@@ -101,13 +102,14 @@ export const FooterStyled = styled.div`
 
     
     i {
+      
       font-size: 2rem;
       margin: 0 8px 0;
       // color: ${({ theme }) => theme.footerLinkColor};
       color: ${({ theme }) => theme.white};
 
       &:hover {
-        color: ${({ theme }) => theme.footerLinkHoverColor};
+        color: ${({ theme }) => theme.primaryColor};
       }
     }
 
@@ -119,7 +121,9 @@ export const FooterStyled = styled.div`
         // }
 
       .socialLinks {
-    
+        margin-top: 24px;
+        width: 100%;
+        text-align: right; 
         .editIcon  {
           top: -48px;
           right: 0px;
