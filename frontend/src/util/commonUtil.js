@@ -245,38 +245,29 @@ export const getMenuObject = (data) => {
   return sortParentMenu;
 };
 
-export const HideFooterForAdmin = () => {
-  const pathList = [
-    "/appAdmin/login",
-    "/appAdmin/register",
-    "/appAdmin/unauthorized",
-    "/appAdmin/activate",
-    "/appAdmin/reset_password",
-    "/appAdmin/authForm",
-    "/appAdmin/resend_activation",
-    "/appAdmin/password",
-    "/appAdmin/adminNews",
-    "/appAdmin/main",
-    "/appAdmin/dashboard",
-    "/appAdmin/testimonial",
-    "/appAdmin/contactuslist",
-    "/appAdmin/useradmin",
-    "/appAdmin/userpermission",
-    "/appAdmin/theme",
-    "/appAdmin/adminpagesconfiguration",
-    "/addproject",
-    "/appAdmin/settings",
-    "/appAdmin/addCategory",
-    "/appadmin/dashboard",
-  ];
-  const path = window.location.pathname;
-  const match = path.match(/^\/editproject(?:\/([a-zA-Z0-9-]+))?$/);
-  if (match) {
-    return true;
-  } else {
-    return pathList.indexOf(path) >= 0 ? true : false;
-  }
-};
+export const NO_FOOTER_ROUTES = [
+  "/login",
+  "/register",
+  "/unauthorized",
+  "/activate/",
+  "/reset_password",
+  "/authForm",
+  "/resend_activation",
+  "/password/",
+  "/appadmin/useradmin",
+  "/appadmin/theme",
+  "/appadmin/adminpagesconfiguration",
+  "/addproject",
+  "/appadmin/settings",
+  "/appadmin/dashboard",
+  "/appadmin/raqformadministration",
+  "/appadmin/useradmin",
+  "/appadmin/settings",
+  "/appadmin/addcategory",
+  "/appadmin/userpermission",
+  "/appadmin/contactuslist",
+  "/appadmin/change_password",
+];
 
 export const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);

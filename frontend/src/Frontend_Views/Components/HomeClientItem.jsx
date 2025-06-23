@@ -14,7 +14,6 @@ export const HomeClientItem = ({ client }) => {
     setHover(false);
   };
 
-  console.log(client, "client")
   return (
     <div
       // style={{ width: '200px !important' }}
@@ -27,7 +26,9 @@ export const HomeClientItem = ({ client }) => {
         key={client.id}
         style={{ height: "100px" }}
       />
-      <h5 className="fs-6 mt-3 mb-0 fw-bold text-center text-uppercase">{client.client_title}</h5>
+      <h5 className="fs-6 mt-3 mb-0 fw-bold text-center text-uppercase">
+        {client.client_title}
+      </h5>
       <RichTextView data={client?.client_description} />
     </div>
   );

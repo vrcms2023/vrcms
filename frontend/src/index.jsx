@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 
 import reportWebVitals from "./reportWebVitals";
 import store from "./redux/store";
@@ -21,7 +22,9 @@ root.render(
       <Provider store={store}>
         <CookiesProvider>
           <ThemeContextProvider>
-            <App />
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
           </ThemeContextProvider>
         </CookiesProvider>
       </Provider>
