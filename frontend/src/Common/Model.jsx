@@ -20,7 +20,7 @@ const Model = ({ obj, closeModel, flag }) => {
     <div
       className="modal d-block modal-lg"
       tabIndex="-1"
-      style={{ position: "absolute", zIndex: 9999 }}
+      style={{ position: "absolute", zIndex: 99999 }}
     >
       <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
         <div className="modal-content">

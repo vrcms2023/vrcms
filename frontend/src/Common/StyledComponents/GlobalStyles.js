@@ -358,6 +358,6 @@ body {
     }
 
     .scrollTop {
-      background-color: ${({theme}) => theme.secondaryColor};
+      background-color: ${({theme}) => theme.clientColor};
     }
 `;
