@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./RichTextView.css";
 import Button from "./Button";
 
-const RichTextView = ({ data, className = "", characterLimit = 150 }) => {
+const ReadMoreText = ({ data, characterLimit = 150 }) => {
   if (!data) return;
   const [showFullContent, setShowFullContent] = useState(false);
   const displayedContent = showFullContent
@@ -15,18 +15,7 @@ const RichTextView = ({ data, className = "", characterLimit = 150 }) => {
   };
   return (
     <div>
-      <div className="quill ">
-        <div className="ql-container ql-snow">
-          <div className="ql-editor">
-            <div
-              className={className}
-              dangerouslySetInnerHTML={{
-                __html: displayedContent,
-              }}
-            ></div>
-          </div>
-        </div>
-      </div>
+      <p>{displayedContent}</p>
       {data.length > characterLimit && (
         <Button
           label={showFullContent ? "Show Less" : "Read More"}
@@ -37,4 +26,4 @@ const RichTextView = ({ data, className = "", characterLimit = 150 }) => {
     </div>
   );
 };
-export default RichTextView;
+export default ReadMoreText;

@@ -120,26 +120,31 @@ const RAQAdmininistration = () => {
         <div className="col-md-3">
           <Title title={"RAQ Form list"} cssClass="fs-1 pageTitle" />
         </div>
-        <div className="col-md-7">
-          <Search
-            setObject={setResponseData}
-            clientSearchURL={"/contactus/raqsearchContacts/"}
-            adminSearchURL={"/contactus/raqform/"}
-            clientDefaultURL={"/contactus/raqform/"}
-            searchfiledDeatails={" Name / Email / Phone Number"}
-            setPageloadResults={setPageloadResults}
-            setSearchquery={setSearchquery}
-            searchQuery={searchQuery}
-          />
-        </div>
-        <div className="col-md-2 p-0">
-          <Button
-            label={"Contacts"}
-            handlerChange={downloadExcelfile}
-            cssClass="btn btn-outline float-end"
-            icon="fa-download"
-          />
-        </div>
+        {userDetails?.length > 0 && (
+          <>
+            <div className="col-md-7">
+              <Search
+                setObject={setResponseData}
+                clientSearchURL={"/contactus/raqsearchContacts/"}
+                adminSearchURL={"/contactus/raqform/"}
+                clientDefaultURL={"/contactus/raqform/"}
+                searchfiledDeatails={" Name / Email / Phone Number"}
+                setPageloadResults={setPageloadResults}
+                setSearchquery={setSearchquery}
+                searchQuery={searchQuery}
+              />
+            </div>
+
+            <div className="col-md-2 p-0">
+              <Button
+                label={"RAQ Contacts"}
+                handlerChange={downloadExcelfile}
+                cssClass="btn btn-outline float-end"
+                icon="fa-download"
+              />
+            </div>
+          </>
+        )}
       </div>
 
       <div className="row px-3 px-lg-5 py-4 table-responsive">

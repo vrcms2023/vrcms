@@ -118,6 +118,9 @@ const MenuForm = ({
       setError("Menu url should be starting with /");
       return true;
     }
+    if (isParentVal) {
+      data["page_parent_ID"] = "";
+    }
     if (data.page_parent_ID) {
       const getSelectedParentObject = _.filter(menuList, (item) => {
         return item.id === data.page_parent_ID;
@@ -140,6 +143,10 @@ const MenuForm = ({
       data["created_by"] = getCookie("userName");
     } else {
       data["updated_by"] = getCookie("userName");
+      data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
+      const _url = data["page_url"].split("/");
+
+      data["page_url"] = "/" + _url[_url.length - 1];
     }
 
     data["page_isActive"] = true;
