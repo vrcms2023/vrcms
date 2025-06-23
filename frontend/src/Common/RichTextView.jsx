@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./RichTextView.css";
 import Button from "./Button";
 
-const RichTextView = ({ data, className = "", characterLimit = 150 }) => {
+const RichTextView = ({ data, className = "", characterLimit = 240 }) => {
   if (!data) return;
   const [showFullContent, setShowFullContent] = useState(false);
   const displayedContent = showFullContent
@@ -29,9 +29,9 @@ const RichTextView = ({ data, className = "", characterLimit = 150 }) => {
       </div>
       {data.length > characterLimit && (
         <Button
-          label={showFullContent ? "Show Less" : "Read More"}
+          label={showFullContent ? "Less" : "More..."}
           handlerChange={toggleShowContent}
-          cssClass="btn btn-outline float-end"
+          cssClass="btn moreLink float-end p-0"
         />
       )}
     </div>
