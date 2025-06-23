@@ -5,13 +5,14 @@ import React, { useEffect, useState } from "react";
 import { axiosClientServiceApi } from "../util/axiosUtil";
 import { getDummyImage, getImagePath } from "../util/commonUtil";
 import { PageBannerStyled } from "./StyledComponents/Styled-PageBanner";
+import { KeypointsStyled } from "./StyledComponents/Styled-Keypoints";
 
 // Styles
 
 const DynamicKeyPoint = ({
   getBannerAPIURL,
   bannerState,
-  imageCss = "img-fluid w-100 h-100",
+  imageCss = "img-fluid w-100",
 }) => {
   const [bannerdata, setBannerData] = useState([]);
 
@@ -35,14 +36,10 @@ const DynamicKeyPoint = ({
   }, [bannerState, getBannerAPIURL]);
 
   return (
-    <PageBannerStyled>
+    <KeypointsStyled>
       <div className="container-fluid">
-        <div className="row ">
-          <div className="col-12">
-            <div
-              className="d-inline-block"
-              style={{ width: "60px", height: "60px" }}
-            >
+        <div className="row IconsMainKeys">
+          <div className="col-md-2 p-2 d-flex align-items-center keyPoint">
               {bannerdata.path ? (
                 <img
                   src={
@@ -56,12 +53,12 @@ const DynamicKeyPoint = ({
               ) : (
                 <img src={getDummyImage()} className={imageCss} />
               )}
-            </div>
-            <div>{bannerdata?.banner_title}</div>
+            
           </div>
+          <div className="col-md-10 p-2 d-flex align-items-center">{bannerdata?.banner_title}</div>
         </div>
       </div>
-    </PageBannerStyled>
+      </KeypointsStyled>
   );
 };
 export default DynamicKeyPoint;
