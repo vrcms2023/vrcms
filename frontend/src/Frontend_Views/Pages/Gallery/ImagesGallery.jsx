@@ -92,7 +92,7 @@ const ImagesGallery = () => {
                     deleteImageURL="imgGallery/updateImageVidoeGallery/"
                     imagePostURL="imgGallery/createImageVidoeGallery/"
                     imageUpdateURL="imgGallery/updateImageVidoeGallery/"
-                    imageIndexURL=""
+                    imageIndexURL="imgGallery/updateNewsIndex/"
                     imageLabel="Add Image"
                     showDescription={false}
                     showExtraFormFields={getImageGalleryFields("imageGallery")}

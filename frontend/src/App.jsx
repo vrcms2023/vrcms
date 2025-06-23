@@ -42,10 +42,7 @@ const WhyChooseUs = lazy(
 );
 const Contact = lazy(() => import("./Frontend_Views/Pages/Contact/Contact"));
 const Services = lazy(() => import("./Frontend_Views/Pages/Services/Services"));
-const Products = lazy(() => import("./Frontend_Views/Pages/Products/index"));
-const ProductDetails = lazy(
-  () => import("./Frontend_Views/Pages/Products/ProductDetails")
-);
+
 const ClientsList = lazy(
   () => import("./Frontend_Views/Pages/Clients/ClientsList")
 );

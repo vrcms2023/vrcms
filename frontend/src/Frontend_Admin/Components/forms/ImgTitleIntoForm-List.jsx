@@ -241,7 +241,7 @@ const AdminCarouselItem = ({
   const { isAdmin, hasPermission } = useAdminLoginStatus();
   return (
     <Draggable
-      isDragDisabled={!isAdmin || componentType === "gallery" ? true : false}
+      isDragDisabled={!isAdmin ? true : false}
       key={item.id}
       draggableId={item.id}
       index={index}
