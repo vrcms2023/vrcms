@@ -155,38 +155,26 @@ function App() {
         <Suspense fallback={<SkeletonPage />}>
           <Routes>
             <Route element={<ProtectedRoute />}>
-              <Route
-                path="/appAdmin/change_password"
-                element={<ChangePassword />}
-              />
-              <Route path="/appAdmin/dashboard" element={<Dashboard />} />
+              <Route path="/change_password" element={<ChangePassword />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/addproject" element={<AddProject />} />
-              <Route
-                path="/appAdmin/addCategory"
-                element={<ProjectCategory />}
-              />
-              <Route
-                path="/appAdmin/contactUSList"
-                element={<ContactUSAdmin />}
-              />
+              <Route path="/addCategory" element={<ProjectCategory />} />
+              <Route path="/contactUSList" element={<ContactUSAdmin />} />
             </Route>
 
             <Route element={<AdminProtectedRoute />}>
-              <Route path="/appAdmin/userAdmin" element={<UserAdmin />} />
-              <Route path="/appAdmin/theme" element={<Themes />} />
+              <Route path="/userAdmin" element={<UserAdmin />} />
+              <Route path="/theme" element={<Themes />} />
+              <Route path="/userPermission" element={<UserPagePermission />} />
               <Route
-                path="/appAdmin/userPermission"
-                element={<UserPagePermission />}
-              />
-              <Route
-                path="/appAdmin/adminPagesConfiguration"
+                path="/adminPagesConfiguration"
                 element={<PagesConfiguration />}
               />
               <Route
-                path="/appAdmin/raqformAdministration"
+                path="/raqformAdministration"
                 element={<RAQAdmininistration />}
               />
-              <Route path="/appAdmin/settings" element={<AdminSettings />} />
+              <Route path="/settings" element={<AdminSettings />} />
               <Route path="/editproject/:id" element={<AddProject />} />
               <Route
                 path="/password/reset/:uid/:token"
@@ -199,23 +187,16 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
 
-            <Route path="/whychooseus/keypoints" element={<WhyChooseUs />} />
-            <Route
-              path="/whychooseus/infrastructure"
-              element={<ImagesGallery />}
-            />
-            <Route path="/whychooseus/projects/" element={<Projects />} />
+            <Route path="/keypoints" element={<WhyChooseUs />} />
+            <Route path="/infrastructure" element={<ImagesGallery />} />
+            <Route path="/projects/" element={<Projects />} />
             <Route path="/project-details" element={<ProjectTabs />} />
-            <Route
-              path="/whychooseus/projectgallery"
-              element={<ProjectsGallery />}
-            />
-            <Route path="/whychooseus/news" element={<NewsAndUpdates />} />
-            <Route path="/whychooseus/team" element={<Team />} />
-            <Route path="/whychooseus/clients" element={<ClientsList />} />
+            <Route path="/projectgallery" element={<ProjectsGallery />} />
+            <Route path="/news" element={<NewsAndUpdates />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/clients" element={<ClientsList />} />
 
             <Route path="/services" element={<Services />} />
-            <Route path="/services/services" element={<Services />} />
             <Route path="/services/:uid" element={<Services />} />
 
             <Route path="/contact" element={<Contact />} />

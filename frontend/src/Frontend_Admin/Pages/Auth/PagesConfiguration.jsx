@@ -14,6 +14,7 @@ import {
   getListStyle,
   getMenuObject,
   getParentObject,
+  getServiceMainMenu,
   isNotEmptyObject,
   reorder,
   updateArrIndex,
@@ -38,6 +39,7 @@ const PagesConfiguration = () => {
   const dispatch = useDispatch();
   const { isAdmin, hasPermission } = useAdminLoginStatus();
   const [selectedServiceMenu, setselectedServiceMenu] = useState([]);
+  const [rootServiceMenu, setRootServiceMenu] = useState({});
 
   const editHandler = (name, value, item) => {
     setEditMenu(item);
@@ -48,7 +50,8 @@ const PagesConfiguration = () => {
     if (
       selectedService &&
       !item.is_Parent &&
-      item?.page_url.includes("/services/")
+      item?.page_parent_ID &&
+      item?.page_parent_ID === rootServiceMenu.id
     ) {
       setselectedServiceMenu(selectedService);
     }
@@ -62,6 +65,8 @@ const PagesConfiguration = () => {
       const response = await axiosServiceApi.get(`/pageMenu/createPageMenu/`);
       if (response?.status === 200 && response?.data?.PageDetails?.length > 0) {
         setRawData(response.data.PageDetails);
+        const _rootservicemenu = getServiceMainMenu(response.data.PageDetails);
+        setRootServiceMenu(_rootservicemenu);
         const result = getMenuObject(response.data.PageDetails);
         setPagesDetails(result);
       } else {
@@ -217,7 +222,11 @@ const PagesConfiguration = () => {
                   {node.page_label}
                 </td>
                 <td>
-                  <Link to={node.page_url}>{node.page_url}</Link>
+                  <Link
+                    to={`${rootServiceMenu.id === node.page_parent_ID ? rootServiceMenu.page_url + node.page_url : node.page_url}`}
+                  >
+                    {`${rootServiceMenu.id === node.page_parent_ID ? rootServiceMenu.page_url + node.page_url : node.page_url}`}
+                  </Link>
                 </td>
                 <td>{node.is_Parent ? "Parent Menu" : "Child Menu"}</td>
                 {/* <td className="text-center">
@@ -398,6 +407,7 @@ const PagesConfiguration = () => {
               editMenu={editMenu}
               componentType="menu"
               selectedServiceMenu={selectedServiceMenu}
+              rootServiceMenu={rootServiceMenu}
             />
           </div>
         )}

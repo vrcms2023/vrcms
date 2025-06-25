@@ -254,7 +254,7 @@ const Dashboard = () => {
               type=""
               cssClass="btn btn-outline"
               label="Project Category"
-              handlerChange={() => navigate("/appAdmin/addCategory")}
+              handlerChange={() => navigate("/addCategory")}
             />
           </div>
         </div>

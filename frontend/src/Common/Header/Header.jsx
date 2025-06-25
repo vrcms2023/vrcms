@@ -53,6 +53,7 @@ const Header = () => {
   const { serviceMenu } = useSelector((state) => state.serviceMenu);
   const dispatch = useDispatch();
   const onPageLoadServiceAction = useRef(true);
+  const [rootServiceMenu, setRootServiceMenu] = useState({});
 
   const pathList = [
     "/login",
@@ -117,6 +118,7 @@ const Header = () => {
       let _customMenulist = getClonedObject(menuRawList);
       if (permissions[0]?.name.toLowerCase() !== "all") {
         _customMenulist = getselectedUserMenu(permissions, menuRawList);
+
         let mainServiceMenu = getServiceMainMenu(_customMenulist);
         if (mainServiceMenu?.length > 0) {
           setIsServiceMenuAvailable(true);
@@ -125,6 +127,8 @@ const Header = () => {
         setIsServiceMenuAvailable(true);
       }
       const menuObject = getMenuObject(_customMenulist);
+      const _rootservicemenu = getServiceMainMenu(menuRawList);
+      setRootServiceMenu(_rootservicemenu);
       dispatch(updatedMenulist(menuObject));
       dispatch(updatedMenuloadedStatus());
     }
@@ -252,17 +256,18 @@ const Header = () => {
           )}
           {showAddMenuMessage && (
             <div className="w-75 text-end">
-              <Link
-                to="/appAdmin/adminPagesConfiguration"
-                className="btn btn-outline "
-              >
+              <Link to="/adminPagesConfiguration" className="btn btn-outline ">
                 Go for Menu Creation
               </Link>
             </div>
           )}
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             {!isHideMenu && (
-              <ClientMenu serviceMenuList={serviceMenuList} key="clientMenu" />
+              <ClientMenu
+                serviceMenuList={serviceMenuList}
+                rootServiceMenu={rootServiceMenu}
+                key="clientMenu"
+              />
             )}
           </div>
         </div>
@@ -272,7 +277,7 @@ const Header = () => {
   );
 };
 
-export const ClientMenu = ({ serviceMenuList }) => {
+export const ClientMenu = ({ serviceMenuList, rootServiceMenu }) => {
   const { menuList } = useSelector((state) => state.auth);
 
   const getSelectedServiceMenu = (menu) => {
@@ -291,7 +296,9 @@ export const ClientMenu = ({ serviceMenuList }) => {
         key={menu.id}
       >
         <NavLink
-          to={urlStringFormat(menu.page_url)}
+          to={urlStringFormat(
+            `${rootServiceMenu.id === menu.page_parent_ID ? rootServiceMenu.page_url + menu.page_url : menu.page_url}`
+          )}
           className={
             (({ isActive }) => (isActive ? "active" : ""),
             `${menu.is_Parent ? "nav-Link" : "dropdown-item"} ${
@@ -299,7 +306,7 @@ export const ClientMenu = ({ serviceMenuList }) => {
             }`)
           }
           onClick={
-            menu.page_url.startsWith("/services/")
+            menu.page_parent_ID === rootServiceMenu.id
               ? () => {
                   getSelectedServiceMenu(menu);
                 }

@@ -95,9 +95,7 @@ const ABrief = ({ title, cssClass, linkClass, moreLink, dimensions }) => {
                   <li key={index}>
                     <img src={circleArrow} alt="" />
                     <Link
-                      to={`/services/${urlStringFormat(
-                        item.services_page_title
-                      )}/`}
+                      to={`/${urlStringFormat(item.services_page_title)}/`}
                       onClick={() => {
                         storeServiceMenuValueinCookie(item);
                       }}

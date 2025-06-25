@@ -20,7 +20,7 @@ export const getSelectedMenuDetails = async (
     page_isActive: true,
     page_label: serviceResponse.services_page_title,
     page_parent_ID: _getSelectedParentObject.id,
-    page_url: `${_getSelectedParentObject.page_url}/${serviceResponse.services_page_title.replace(/\s/g, "").toLowerCase()}`,
+    page_url: `/${serviceResponse.services_page_title.replace(/\s/g, "").toLowerCase()}`,
   };
 
   if (isEdit) {
