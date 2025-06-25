@@ -181,7 +181,7 @@ export const getselectedUserMenu = (permisions, menuList) => {
 export const getServiceMainMenu = (data) => {
   return _.filter(data, (item) => {
     return item.page_label.toLowerCase() === "services";
-  });
+  })[0];
 };
 
 export const getClonedObject = (list) => {
@@ -224,8 +224,8 @@ export const getMenuObject = (data) => {
     return !item.is_Parent;
   });
 
-  sortParentMenu.forEach((parent) => {
-    childList.forEach((child) => {
+  sortParentMenu.map((parent) => {
+    return childList.map((child) => {
       if (child?.page_parent_ID === parent?.id) {
         if (parent.childMenu) {
           parent.childMenu.push(child);
@@ -254,19 +254,19 @@ export const NO_FOOTER_ROUTES = [
   "/authForm",
   "/resend_activation",
   "/password/",
-  "/appadmin/useradmin",
-  "/appadmin/theme",
-  "/appadmin/adminpagesconfiguration",
+  "/useradmin",
+  "/theme",
+  "/adminpagesconfiguration",
   "/addproject",
-  "/appadmin/settings",
-  "/appadmin/dashboard",
-  "/appadmin/raqformadministration",
-  "/appadmin/useradmin",
-  "/appadmin/settings",
-  "/appadmin/addcategory",
-  "/appadmin/userpermission",
-  "/appadmin/contactuslist",
-  "/appadmin/change_password",
+  "/settings",
+  "/dashboard",
+  "/raqformadministration",
+  "/useradmin",
+  "/settings",
+  "/addcategory",
+  "/userpermission",
+  "/contactuslist",
+  "/change_password",
 ];
 
 export const reorder = (list, startIndex, endIndex) => {

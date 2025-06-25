@@ -212,33 +212,24 @@ function App() {
         <Suspense fallback={<SkeletonPage />}>
           <Routes>
             <Route element={<ProtectedRoute />}>
-              <Route
-                path="/appAdmin/change_password"
-                element={<ChangePassword />}
-              />
-              <Route path="/appAdmin/dashboard" element={<Dashboard />} />
-              <Route
-                path="/appAdmin/contactUSList"
-                element={<ContactUSAdmin />}
-              />
+              <Route path="/change_password" element={<ChangePassword />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/contactUSList" element={<ContactUSAdmin />} />
             </Route>
 
             <Route element={<AdminProtectedRoute />}>
-              <Route path="/appAdmin/userAdmin" element={<UserAdmin />} />
-              <Route path="/appAdmin/theme" element={<Themes />} />
+              <Route path="/userAdmin" element={<UserAdmin />} />
+              <Route path="/theme" element={<Themes />} />
+              <Route path="/userPermission" element={<UserPagePermission />} />
               <Route
-                path="/appAdmin/userPermission"
-                element={<UserPagePermission />}
-              />
-              <Route
-                path="/appAdmin/adminPagesConfiguration"
+                path="/adminPagesConfiguration"
                 element={<PagesConfiguration />}
               />
               <Route
-                path="/appAdmin/raqformAdministration"
+                path="/raqformAdministration"
                 element={<RAQAdmininistration />}
               />
-              <Route path="/appAdmin/settings" element={<AdminSettings />} />
+              <Route path="/settings" element={<AdminSettings />} />
               <Route path="/editproject/:id" element={<AddProject />} />
               <Route
                 path="/password/reset/:uid/:token"
@@ -257,30 +248,23 @@ function App() {
             <Route path="/categories/:id" element={<Products />} />
             <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/services" element={<Services />} />
-            <Route path="/services/services" element={<Services />} />
             <Route path="/services/:uid" element={<Services />} />
-            <Route path="/clients/clients" element={<ClientsList />} />
-            <Route path="/profile/careers" element={<Careers />} />
+            <Route path="/clients" element={<ClientsList />} />
+            <Route path="/careers" element={<Careers />} />
             <Route path="/career-details/:id" element={<CareerDetails />} />
-            <Route path="/profile/team" element={<Team />} />
-            <Route path="/projects/projects" element={<Projects />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/projects" element={<Projects />} />
             <Route path="/project-details" element={<ProjectTabs />} />
+            <Route path="/projectgallery" element={<ProjectsGallery />} />
+            <Route path="/imagegallery" element={<ImagesGallery />} />
+            <Route path="/videogallery" element={<VideosGallery />} />
+            <Route path="/casestudies" element={<CaseStudies />} />
             <Route
-              path="/projects/projectgallery"
-              element={<ProjectsGallery />}
-            />
-            <Route path="/gallery/imagegallery" element={<ImagesGallery />} />
-            <Route path="/gallery/videogallery" element={<VideosGallery />} />
-            <Route path="/clients/casestudies" element={<CaseStudies />} />
-            <Route
-              path="/clients/casestudies-details/:id/"
+              path="/casestudies-details/:id/"
               element={<CaseStudiesDetails />}
             />
-            <Route path="/profile/news" element={<NewsAndUpdates />} />
-            <Route
-              path="/profile/testimonials"
-              element={<TestimonialsList />}
-            />
+            <Route path="/news" element={<NewsAndUpdates />} />
+            <Route path="/testimonials" element={<TestimonialsList />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Registration />} />
             <Route path="/reset_password" element={<ResetPassword />} />
@@ -293,10 +277,10 @@ function App() {
             <Route path="/unauthorized" element={<UnauthorizedPage />} />
             <Route path="/authForm" element={<AuthForm />} />
             <Route path="/addproject" element={<AddProject />} />
-            <Route path="/appAdmin/addCategory" element={<ProjectCategory />} />
+            <Route path="/addCategory" element={<ProjectCategory />} />
 
             <Route path="/adminNews" element={<AdminNews />} />
-            <Route path="/profile/testimonial" element={<AdminTestimonial />} />
+            <Route path="/testimonial" element={<AdminTestimonial />} />
           </Routes>
         </Suspense>
 

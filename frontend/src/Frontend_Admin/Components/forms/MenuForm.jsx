@@ -28,6 +28,7 @@ const MenuForm = ({
   componentType,
   popupTitle,
   selectedServiceMenu,
+  rootServiceMenu,
 }) => {
   const dispatch = useDispatch();
   const closeHandler = () => {
@@ -121,32 +122,37 @@ const MenuForm = ({
     if (isParentVal) {
       data["page_parent_ID"] = "";
     }
-    if (data.page_parent_ID) {
-      const getSelectedParentObject = _.filter(menuList, (item) => {
-        return item.id === data.page_parent_ID;
-      })[0];
-      const _url = data["page_url"].split("/");
-
-      data["page_url"] =
-        getSelectedParentObject?.page_url + "/" + _url[_url.length - 1];
+    if (data.id === data.page_parent_ID) {
+      setError(`Same menu item selected as a parent`);
+      return true;
     }
 
-    if (!data?.id) {
-      if (!data?.is_Parent) {
-        if (parseInt(data?.page_parent_ID) === 0) {
-          setError("Please select parent menu");
-          return true;
-        }
-      } else {
-        data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
+    // if (data.page_parent_ID) {
+    //   const getSelectedParentObject = _.filter(menuList, (item) => {
+    //     return item.id === data.page_parent_ID;
+    //   })[0];
+    //   const _url = data["page_url"].split("/");
+
+    //   data["page_url"] =
+    //     getSelectedParentObject?.page_url + "/" + _url[_url.length - 1];
+    // }
+    //data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
+    // const _url = data["page_url"].split("/");
+
+    // data["page_url"] = "/" + _url[_url.length - 1];
+
+    if (!data?.is_Parent) {
+      if (!data?.page_parent_ID || parseInt(data?.page_parent_ID) === 0) {
+        setError("Please select parent menu");
+        return true;
       }
+    } else {
+      data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
+    }
+    if (!data?.id) {
       data["created_by"] = getCookie("userName");
     } else {
       data["updated_by"] = getCookie("userName");
-      data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
-      const _url = data["page_url"].split("/");
-
-      data["page_url"] = "/" + _url[_url.length - 1];
     }
 
     data["page_isActive"] = true;
@@ -160,7 +166,7 @@ const MenuForm = ({
         (response?.status === 201 || response?.status === 200) &&
         response?.data?.PageDetails
       ) {
-        if (!data.is_Parent && data.page_url.includes("/services/")) {
+        if (!data.is_Parent && data.page_parent_ID === rootServiceMenu.id) {
           updateServicePageMenu(
             selectedServiceMenu,
             response?.data?.PageDetails
@@ -191,14 +197,17 @@ const MenuForm = ({
 
   const isParentHandler = () => {
     setisParentVal(!isParentVal);
+    setError("");
   };
 
   const isMaintainerHandler = () => {
     setisMaintainermenuActive(!isMaintainerMenuActive);
+    setError("");
   };
 
   const isClientMenuHandler = () => {
     setIsClientMenuActive(!isClientMenuActive);
+    setError("");
   };
 
   const onChangeHanlder = () => {
