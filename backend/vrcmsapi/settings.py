@@ -81,7 +81,8 @@ INSTALLED_APPS = [
     'products',
     'app_themes',
     'showHideComponents',
-    'advertisement'
+    'advertisement',
+    'TitleDesc'
 ]
 
 MIDDLEWARE = [
