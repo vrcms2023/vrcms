@@ -17,7 +17,7 @@ const ImageInputsForm = ({
   showDescription = true,
   showExtraFormFields,
   dimensions,
-  imageLabel = "Add Image",
+  imageLabel = "Upload Image",
   imagePostURL = "banner/createBannerIntro/",
   imageGetURL = "banner/clientBannerIntro/",
   imageUpdateURL = "banner/updateBannerIntro/",
@@ -79,7 +79,12 @@ const ImageInputsForm = ({
           <DeleteDialog
             onClose={onClose}
             callback={deleteImageByID}
-            message={`deleting the ${name} image?`}
+            // message={`deleting the ${name} image?`}
+            message={
+              <>
+                Confirm deletion of <span>${name}</span> image?
+              </>
+            }
           />
         );
       },
@@ -91,10 +96,10 @@ const ImageInputsForm = ({
     // {editCarousel.id ? (
     <div className="">
       <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
-      <hr className="m-0 text-black" />
+      {/* <hr className="m-0 text-black" /> */}
       <div className="container my-3">
         <div className="row py-0">
-          <div className="col-md-12 mb-5 mb-md-0 px-0">
+          <div className="col-md-12">
             <div className="container px-0 px-md-auto">
               <FileUpload
                 title={imageLabel}

@@ -116,11 +116,14 @@ const SendRequestForm = ({ closeModel, selectedUser }) => {
               </div>
             </div>
           )}
-          <div className="mb-3 row">
+
+ 
+          <div className="row">
             <div className="col-sm-12">
               <button
                 type="submit"
                 className="btn btn-primary w-100 text-uppercase py-2"
+                disabled={formData?.description || defaultMessage ? "" : "disabled"}
               >
                 Send Request
               </button>

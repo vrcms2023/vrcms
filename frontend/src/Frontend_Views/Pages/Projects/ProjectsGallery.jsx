@@ -72,46 +72,41 @@ const ProjectsGallery = () => {
 
   return (
     <>
-      <div className="py-5 mt-5">
-        <div className="text-center pb-2 mt-5 galleryTab">
-          {/* <Button
-                type=""
-                cssClass={`loadMore me-2 ${
-                  btnActiveWord === "all" ? "active" : ""
-                }`}
-                label="All"
-                handlerChange={thumbHandler}
-              /> */}
-          <Button
-            type=""
-            cssClass={`loadMore me-2 ${
-              btnActiveWord === "ongoing" ? "active" : ""
-            }`}
-            label="Ongoing Projects"
-            handlerChange={thumbHandler}
-          />
-          <Button
-            type=""
-            cssClass={`loadMore me-2 ${
-              btnActiveWord === "completed" ? "active" : ""
-            }`}
-            label="Completed Projects"
-            handlerChange={thumbHandler}
-          />
-          <Button
-            type=""
-            cssClass={`loadMore me-2 ${
-              btnActiveWord === "upcoming" ? "active" : ""
-            }`}
-            label="Upcoming Projects"
-            handlerChange={thumbHandler}
-          />
-        </div>
-        <hr />
-        <div>
-          <ProjectGalleryView projectImages={all} type="applicationgallery" />
-        </div>
+      <div className="d-flex justify-content-center align-items-center py-4 galleryTab border-bottom">
+        {/* <Button
+              type=""
+              cssClass={`loadMore me-2 ${
+                btnActiveWord === "all" ? "active" : ""
+              }`}
+              label="All"
+              handlerChange={thumbHandler}
+            /> */}
+        <Button
+          type=""
+          cssClass={`btn  me-2 ${
+            btnActiveWord === "ongoing" ? "btn-primary" : "btn-outline"
+          }`}
+          label="Ongoing Projects"
+          handlerChange={thumbHandler}
+        />
+        <Button
+          type=""
+          cssClass={`btn   me-2 ${
+            btnActiveWord === "completed" ? "btn-primary" : "btn-outline"
+          }`}
+          label="Completed Projects"
+          handlerChange={thumbHandler}
+        />
+        <Button
+          type=""
+          cssClass={`btn  me-2 ${
+            btnActiveWord === "upcoming" ? "btn-primary" : "btn-outline"
+          }`}
+          label="Upcoming Projects"
+          handlerChange={thumbHandler}
+        />
       </div>
+      <ProjectGalleryView projectImages={all} type="applicationgallery" />
     </>
   );
 };

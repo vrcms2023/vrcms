@@ -19,7 +19,7 @@ class CreateService(generics.CreateAPIView):
     """
 
     def get(self, request, format=None):
-        snippets = Services.objects.all()
+        snippets = Services.objects.all().order_by('service_postion')
         serializer = ServiceSerializer(snippets, many=True)
         return Response({"services": serializer.data}, status=status.HTTP_200_OK)
     
@@ -61,6 +61,31 @@ class ServicesDetail(APIView):
         snippet = self.get_object(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class UpdateServiceIndex(APIView):
+    """
+    Retrieve, update or delete a Carousel instance.
+    """
+
+    def get_object(self, obj_id):
+        try:
+            return Services.objects.get(id=obj_id)
+        except (Services.DoesNotExist):
+            raise status.HTTP_400_BAD_REQUEST
+        
+    def put(self, request, *args, **kwargs):
+        obj_list = request.data
+        instances = []
+        user = request.user
+        for item in obj_list:
+            obj = self.get_object(obj_id=item["id"])
+            obj.updated_by = user.userName
+            obj.service_postion = item["service_postion"]
+            obj.save()
+            instances.append(obj)
+
+        serializer = ServiceSerializer(instances,  many=True)
+        return Response({"services": serializer.data}, status=status.HTTP_200_OK)
 
 """ 
 publish services View

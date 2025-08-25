@@ -13,6 +13,7 @@ import EditIcon from "../../../Common/AdminEditIcon";
 import HomeNews from "../../Components/HomeNews";
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import AddEditAdminNews from "../../../Frontend_Admin/Components/News/index";
+import ShareButtons from "../../../Common/Share";
 
 import { removeActiveClass } from "../../../util/ulrUtil";
 import {
@@ -46,7 +47,6 @@ const NewsAndUpdates = () => {
     banner: false,
     news: false,
   };
-
   const pageType = "news";
   const [news, setNews] = useState([]);
   const [show, setShow] = useState(false);
@@ -54,6 +54,7 @@ const NewsAndUpdates = () => {
   const { isAdmin, hasPermission } = useAdminLoginStatus();
   const [showModal, setShowModal] = useState(false);
   const [obj, setObj] = useState({});
+  const [editCarousel, setEditCarousel] = useState({});
 
   const [paginationData, setPaginationData] = useState({});
   const [pageLoadResult, setPageloadResults] = useState(false);
@@ -102,20 +103,12 @@ const NewsAndUpdates = () => {
   };
 
   const [showHideCompList, setShowHideCompList] = useState([]);
-  const showHideCompPageLoad = useRef(true);
   const dispatch = useDispatch();
   const { error, showHideList } = useSelector((state) => state.showHide);
 
   useEffect(() => {
     if (showHideList.length > 0) {
       setShowHideCompList(getObjectsByKey(showHideList));
-    }
-  }, [showHideList]);
-
-  useEffect(() => {
-    if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getAllShowHideComponentsList());
-      showHideCompPageLoad.current = false;
     }
   }, [showHideList]);
 
@@ -133,38 +126,63 @@ const NewsAndUpdates = () => {
 
   return (
     <>
-      {/* Page Banner Component */}
-      <div className="position-relative">
+   
+      <div
+        className={
+          showHideCompList?.newsandupdatesbanner?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "componentOnBorder"
+            : ""
+        }
+      >
         {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
-        )}
-
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        />
-      </div>
-      {componentEdit.banner && (
-        <div className={`adminEditTestmonial  selected `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle="News Banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.newsandupdatesbanner?.visibility}
+            title={"Banner"}
+            componentName={"newsandupdatesbanner"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.newsandupdatesbanner?.id}
           />
-        </div>
-      )}
+        )}
+        {showHideCompList?.newsandupdatesbanner?.visibility && (
+          <>
+            {/* Page Banner Component */}
+            <div className="position-relative">
+              {isAdmin && hasPermission && (
+                <EditIcon editHandler={() => editHandler("banner", true)} editlabel={"Banner"}/>
+              )}
 
+              <Banner
+                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+                bannerState={componentEdit.banner}
+              />
+            </div>
+            {componentEdit.banner && (
+              <div className={`adminEditTestmonial  selected `}>
+                <ImageInputsForm
+                  editHandler={editHandler}
+                  componentType="banner"
+                  popupTitle="News Banner"
+                  pageType={`${pageType}-banner`}
+                  imageLabel="Banner Image"
+                  showDescription={false}
+                  showExtraFormFields={getFormDynamicFields(
+                    `${pageType}-banner`
+                  )}
+                  dimensions={imageDimensionsJson("banner")}
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
       <div
         className={
           showHideCompList?.newsbriefintro?.visibility &&
           isAdmin &&
           hasPermission
-            ? "border border-info mb-2"
+            ? "componentOnBorder"
             : ""
         }
       >
@@ -183,7 +201,7 @@ const NewsAndUpdates = () => {
           <div>
             {/* Introduction */}
             {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} editlabel={"Brief"}/>
             )}
 
             <BriefIntroFrontend
@@ -201,6 +219,7 @@ const NewsAndUpdates = () => {
                 <BriefIntroAdmin
                   editHandler={editHandler}
                   componentType="briefIntro"
+                  popupTitle="News - Brief Intro"
                   pageType={pageType}
                 />
               </div>
@@ -210,8 +229,10 @@ const NewsAndUpdates = () => {
       </div>
 
       <div className="container my-4 newsAndUpdates">
-        {isAdmin && hasPermission && (
+        
+        {/* {isAdmin && hasPermission && (
           <div className="text-end">
+            
             <Link
               to="#"
               className="btn btn-primary"
@@ -221,30 +242,45 @@ const NewsAndUpdates = () => {
               <i className="fa fa-plus ms-2" aria-hidden="true"></i>
             </Link>
           </div>
-        )}
+        )} */}
 
         <div className="row mb-2 py-4">
-          <div className="col-md-8">
+          <div className="col-md-6 d-flex jusitfy-content-start align-items-center">
             <Title
               title="News"
-              cssClass=""
-              mainTitleClassess="fs-4 fw-medium"
+              cssClass="pageTitle fs-4"
+              mainTitleClassess=""
               subTitleClassess=""
-            />
+            /> 
+
+            {isAdmin && hasPermission && (
+          <div className="text-end">
+            
+            <Link
+              to="#"
+              className="btn btn-outline ms-2"
+              onClick={() => editHandler("addNews", true)}
+            >
+              New
+              <i className="fa fa-plus ms-2" aria-hidden="true"></i>
+            </Link>
           </div>
-          <div className="col-md-4">
+        )}
+          </div>
+          <div className="col-md-6">
             <Search
               setObject={setResponseData}
               clientSearchURL={"/appNews/searchAppNews/"}
               adminSearchURL={"/appNews/createAppNews/"}
               clientDefaultURL={"/appNews/clientAppNews/"}
-              searchfiledDeatails={"News Title / News Description"}
+              searchfiledDeatails={"News Title"}
               setPageloadResults={setPageloadResults}
               setSearchquery={setSearchquery}
               searchQuery={searchQuery}
               addStateChanges={componentEdit.addNews}
               editStateChanges={editNews}
             />
+           <div className="d-flex justify-content-end align-items-end position-relative"><ShareButtons /></div>
           </div>
         </div>
         {/* {isAdmin && (
@@ -256,13 +292,14 @@ const NewsAndUpdates = () => {
             <div className={`adminEditTestmonial selected`}>
               <AddEditAdminNews
                 editHandler={editHandler}
+                setEditCarousel={setEditCarousel}
                 componentType="addNews"
                 popupTitle="Add News"
                 imageGetURL="appNews/createAppNews/"
                 imagePostURL="appNews/createAppNews/"
                 imageUpdateURL="appNews/updateAppNews/"
                 imageDeleteURL="appNews/updateAppNews/"
-                imageLabel="Add News Image"
+                imageLabel="Upload Image"
                 showDescription={false}
                 showExtraFormFields={getNewslFields("addNews")}
                 dimensions={imageDimensionsJson("addNews")}

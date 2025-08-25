@@ -10,6 +10,7 @@ import ModelBg from "../../../Common/ModelBg";
 import MenuForm from "../../Components/forms/MenuForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getFilterObjectByID,
   getItemStyle,
   getListStyle,
   getMenuObject,
@@ -24,7 +25,11 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { getMenu } from "../../../redux/auth/authActions";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
 import { getServiceValues } from "../../../redux/services/serviceActions";
-import { deleteServiceMenu, getServiceMenuItem } from "../../../util/menuUtil";
+import {
+  deleteServiceMenu,
+  getServiceMenuItem,
+  updateServiceMenuIndex,
+} from "../../../util/menuUtil";
 
 const PagesConfiguration = () => {
   const editComponentObj = {
@@ -49,12 +54,12 @@ const PagesConfiguration = () => {
     const selectedService = getServiceMenuItem(serviceMenu, item);
     if (
       selectedService &&
-      !item.is_Parent &&
+      !item?.is_Parent &&
       item?.page_parent_ID &&
-      item?.page_parent_ID === rootServiceMenu.id
+      item?.page_parent_ID === rootServiceMenu?.id
     ) {
       setselectedServiceMenu(selectedService);
-    }
+    } else setselectedServiceMenu("");
   };
 
   /**
@@ -94,8 +99,8 @@ const PagesConfiguration = () => {
         toast.success(`${title} Memu is delete successfully `);
         getAllPagesDetails();
 
-        if (selectedService) {
-          await deleteServiceMenu(selectedService);
+        if (menu.service_menu_ID) {
+          await deleteServiceMenu(menu.service_menu_ID);
           dispatch(getServiceValues());
         }
         dispatch(getMenu());
@@ -108,7 +113,12 @@ const PagesConfiguration = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteMenuItemByID}
-            message={`you want to delete the ${title} Menu`}
+            // message={`you want to delete the ${title} Menu`}
+            message={
+              <>
+                Confirm deletion of <span>{title}</span> Menu?
+              </>
+            }
           />
         );
       },
@@ -169,7 +179,7 @@ const PagesConfiguration = () => {
 
   const tableHeader = () => {
     return (
-      <thead>
+      <thead className="">
         <tr>
           <th>Menu Lable</th>
           <th>URL</th>
@@ -222,11 +232,7 @@ const PagesConfiguration = () => {
                   {node.page_label}
                 </td>
                 <td>
-                  <Link
-                    to={`${rootServiceMenu.id === node.page_parent_ID ? rootServiceMenu.page_url + node.page_url : node.page_url}`}
-                  >
-                    {`${rootServiceMenu.id === node.page_parent_ID ? rootServiceMenu.page_url + node.page_url : node.page_url}`}
-                  </Link>
+                  <Link to={`${node.page_url}`}>{`${node.page_url}`}</Link>
                 </td>
                 <td>{node.is_Parent ? "Parent Menu" : "Child Menu"}</td>
                 {/* <td className="text-center">
@@ -301,8 +307,8 @@ const PagesConfiguration = () => {
             )}
             {showChildren && node.childMenu.length > 0 && (
               <tr className="p-0" id={`${node.id}-page`}>
-                <td colSpan="8" className="p-0 ">
-                  <table className="table mt-4 mb-4  w-100 border">
+                <td colSpan="8" className="p-3">
+                  <table className="table border">
                     {tableHeader()}
                     <Treeview treeData={node.childMenu} />
                   </table>
@@ -352,9 +358,15 @@ const PagesConfiguration = () => {
           _finalObject.push(...childObjs);
         }
       });
+      const serviceMenuRoot = getFilterObjectByID(rawData, draggableId)[0];
 
       const response = await updateObjectsIndex(_finalObject);
       if (response?.length > 0) {
+        if (serviceMenuRoot && serviceMenuRoot?.page_url?.match("/services/")) {
+          await updateServiceMenuIndex(response, serviceList);
+          dispatch(getServiceValues());
+        }
+
         const result = getMenuObject(response);
         setPagesDetails(result);
       }
@@ -414,7 +426,7 @@ const PagesConfiguration = () => {
       </div>
       <div className="row px-3 px-lg-5">
         <div className="text-end d-flex justify-content-between">
-          <Title title={"Menu / SEO"} cssClass="fs-2 pageTitle" />
+          <Title title={"Menu / SEO"} cssClass="pageTitle" />
 
           <div className="text-end">
             <Link
@@ -428,7 +440,7 @@ const PagesConfiguration = () => {
         </div>
       </div>
 
-      <div className="row px-3 px-lg-5 py-4 table-responsive">
+      <div className="row px-3 px-lg-5 py-4 table-responsive adminMenuTree">
         {showContentPerRole(userInfo, hasPermission) ? (
           <table className="table table-striped">
             {tableHeader()}

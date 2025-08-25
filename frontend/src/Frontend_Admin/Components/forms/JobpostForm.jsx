@@ -78,116 +78,148 @@ const JobPost = ({
     <>
       <EditAdminPopupHeader
         closeHandler={closeHandler}
-        title={popupTitle}
+        title={"Career"}
         type={type}
       />
-      <hr className="m-0" />
+      {/* <hr className="m-0" /> */}
       <div className="container">
-        <div className="row p-4">
+        <div className="row p-0">
           <div className="col-md-12 mb-5 mb-md-0">
-            <form className="g-3 mb-md-0" onSubmit={handleSubmit(onSubmit)}>
-              <InputField
-                label="Title"
-                fieldName="job_title"
-                register={register}
-                cssClass="requiredField"
-                validationObject={fieldValidation.job_title}
-                error={errors?.job_title?.message}
-                isRequired={true}
-              />
-              <InputField
-                label="Company name"
-                fieldName="company_name"
-                register={register}
-              />
-              <InputField
-                label="Location"
-                fieldName="job_location"
-                register={register}
-              />
+            <form className="mb-md-0" onSubmit={handleSubmit(onSubmit)}>
+              <div className="row">
+                <div className="col-md-6">
+                   <InputField
+                      label="Title"
+                      fieldName="job_title"
+                      register={register}
+                      cssClass="requiredField"
+                      validationObject={fieldValidation.job_title}
+                      error={errors?.job_title?.message}
+                      isRequired={true}
+                    />
+                </div>
+                <div className="col-md-6">
+                  <InputField
+                    label="Company name"
+                    fieldName="company_name"
+                    register={register}
+                  />
+                </div>
 
-              <SelectField
-                label="From Experience"
-                fieldName="experience_from"
-                register={register}
-                options={generateOptionLength(20)}
-              />
-              <SelectField
-                label="To Experience"
-                fieldName="experience_to"
-                register={register}
-                options={generateOptionLength(20)}
-              />
+                <div className="col-md-6">
+                  <InputField
+                    label="Location"
+                    fieldName="job_location"
+                    register={register}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <SelectField
+                    label="From Experience"
+                    fieldName="experience_from"
+                    register={register}
+                    options={generateOptionLength(20)}
+                  />
+                </div>
 
-              <InputField
-                label="Education"
-                fieldName="education"
-                register={register}
-              />
+                <div className="col-md-6">
+                  <SelectField
+                    label="To Experience"
+                    fieldName="experience_to"
+                    register={register}
+                    options={generateOptionLength(20)}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <InputField
+                    label="Education"
+                    fieldName="education"
+                    register={register}
+                  />
+                </div>
 
-              <SelectField
-                label="Openings"
-                fieldName="openings"
-                register={register}
-                options={generateOptionLength(10)}
-              />
+                <div className="col-md-6">
+                  <SelectField
+                    label="Openings"
+                    fieldName="openings"
+                    register={register}
+                    options={generateOptionLength(10)}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <InputField
+                    label="Package"
+                    fieldName="package"
+                    register={register}
+                  />
+                </div>
 
-              <InputField
-                label="Package"
-                fieldName="package"
-                register={register}
-              />
+                <div className="col-md-6">
+                  <InputField
+                    label="Skills"
+                    fieldName="skills"
+                    register={register}
+                  />
+                </div>
+                <div className="col-md-6">
+                    <InputField
+                        label="No of Vacancies"
+                        fieldName="no_of_application"
+                        register={register}
+                      />
+                </div>
 
-              <InputField
-                label="Skills"
-                fieldName="skills"
-                register={register}
-              />
+                <div className="col-md-6">
+                  <SelectField
+                    label="Employment Type"
+                    fieldName="employment_Type"
+                    register={register}
+                    options={generateExperienceOptions()}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <InputField
+                    label="Mode of work"
+                    fieldName="mode_of_work"
+                    register={register}
+                  />
+                </div>
 
-              <InputField
-                label="No of Vacancies"
-                fieldName="no_of_application"
-                register={register}
-              />
+                <div className="col-md-6">
+                  <InputField
+                    label="About company"
+                    fieldName="about_company"
+                    register={register}
+                    validationObject={fieldValidation.about_company}
+                    error={errors?.about_company?.message}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <InputField
+                    label="ContactEmail"
+                    fieldName="contactEmail"
+                    type="email"
+                    register={register}
+                  />
+                </div>
 
-              <SelectField
-                label="Employment Type"
-                fieldName="employment_Type"
-                register={register}
-                options={generateExperienceOptions()}
-              />
+                <div className="col-md-6">
 
-              <InputField
-                label="Mode of work"
-                fieldName="mode_of_work"
-                register={register}
-              />
+                </div>
+                <div className="col-md-6">
+                  
+                </div>
+              </div>
 
-              <InputField
-                label="About company"
-                fieldName="about_company"
-                register={register}
-                validationObject={fieldValidation.about_company}
-                error={errors?.about_company?.message}
-              />
-
-              <InputField
-                label="ContactEmail"
-                fieldName="contactEmail"
-                type="email"
-                register={register}
-              />
-
-              <div className="mb-3 row">
+              <div className="mb-2 row">
                 <label
                   htmlFor=""
-                  className="col-sm-3 col-form-label text-start text-md-end"
+                  className="col-sm-3 col-form-label"
                 >
-                  {" "}
                   Posted On
                 </label>
 
-                <div className="col-sm-5 mb-3">
+                <div className="">
                   <input
                     type="date"
                     {...register("posted_date")}
@@ -197,14 +229,14 @@ const JobPost = ({
                 </div>
               </div>
 
-              <div className="mb-3 row">
+              <div className="row">
                 <label
                   htmlFor=""
-                  className="col-sm-3 col-form-label text-start text-md-end"
+                  className="col-form-label"
                 >
                   Description
                 </label>
-                <div className="col-sm-9">
+                <div className="">
                   <RichTextEditor
                     description="description"
                     initialText={
@@ -215,11 +247,11 @@ const JobPost = ({
                 </div>
               </div>
 
-              <div className="row">
+              <div className="row mt-3">
                 <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-2">
                   {!editPost?.id ? (
                     <button
-                      className="btn btn-secondary m-3"
+                      className="btn btn-outline "
                       onClick={resetForm}
                     >
                       Clear

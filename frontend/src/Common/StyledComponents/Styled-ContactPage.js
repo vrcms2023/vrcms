@@ -20,7 +20,7 @@ export const ContactPageStyled = styled.div`
     .quickContact {
       background: ${({ theme }) => theme.lightWhiteFB};
 
-      .formTitle {
+      .formTitle, label {
         color: ${({ theme }) => theme.textColor};
       }
 

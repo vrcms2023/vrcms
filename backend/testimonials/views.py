@@ -102,9 +102,9 @@ class TestimonialsSearchAPIView(generics.ListAPIView):
   
     def get_object(self, query):
         try:
-            return Testimonials.objects.filter(
-                Q(testimonial_title__icontains=query) | Q(testimonial_description__icontains=query)
-            )
+            return Testimonials.objects.filter(Q(testimonial_title__icontains=query))
+                # Q(testimonial_title__icontains=query) | Q(testimonial_description__icontains=query)
+            
         except Testimonials.DoesNotExist:
             raise Http404
 

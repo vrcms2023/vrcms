@@ -6,12 +6,14 @@ const CareersFilter = () => {
   return (
     <>
       <div className="row">
-        <div className="col-md-12 py-3">
-          <i>707 + Open Positions Globally</i>
-        </div>
+        {/* <div className="col-md-12">
+          <small>707 + Open Positions Globally</small>
+        </div> */}
       </div>
       <div className="row">
-        <div className="col-md-5 mb-3 mb-md-0">
+        <div className="col-md-10">
+          <div className="row">
+          <div className="col-md-8 mb-3 mb-md-0">
           <input
             className="form-control"
             type="text"
@@ -20,7 +22,7 @@ const CareersFilter = () => {
           />
         </div>
 
-        <div className="col-md-3 mb-3 mb-md-0">
+        <div className="col-md-2 mb-3 mb-md-0">
           <select className="form-select" aria-label="Default select example">
             <option value="">Select Experience </option>
             <option value="0-1 years">0-1 years</option>
@@ -31,7 +33,7 @@ const CareersFilter = () => {
             <option value="15+ years">15+ years</option>
           </select>
         </div>
-        <div className="col-md-3">
+        <div className="col-md-2">
           <select className="form-select" aria-label="Default select example">
             <option value="">Select Location</option>
             <option value="bangalore">&nbsp; &nbsp;Bangalore</option>
@@ -46,63 +48,66 @@ const CareersFilter = () => {
             <option value="mexico-city">&nbsp; &nbsp;Mexico City</option>
           </select>
         </div>
-        <div className="col-md-1 d-none d-md-block">
-          <Button type="button" label="Find" cssClass={"btn btn-secondary"} />
         </div>
-      </div>
 
-      <div className="row py-4">
-        <div className="col-6 col-md-2 d-flex justify-content-start align-items-center gap-2">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            value=""
-            id="flexCheckDefault"
-          />
-          <label className="form-check-label" htmlFor="flexCheckDefault">
-            Freelance
-          </label>
-        </div>
-        <div className="col-6 col-md-2 d-flex justify-content-start align-items-center gap-2">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            value=""
-            id="flexCheckDefault"
-            defaultChecked
-          />
-          <label className="form-check-label" htmlFor="flexCheckDefault">
-            Remove
-          </label>
-        </div>
-        <div className="col-6 col-md-2 d-flex justify-content-start align-items-center gap-2">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            value=""
-            id="flexCheckDefault"
-          />
-          <label className="form-check-label" htmlFor="flexCheckDefault">
-            Hybrid
-          </label>
-        </div>
-        <div className="col-6 col-md-6 d-flex justify-content-start align-items-center gap-2">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            value=""
-            id="flexCheckDefault"
-          />
-          <label className="form-check-label" htmlFor="flexCheckDefault">
-            On-Site/Office
-          </label>
-        </div>
+        <div className="col-md-12 py-2 d-flex justify-content-start align-items-start gap-2">
+          <div className="d-flex justify-content-start align-items-center gap-1">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault"
+            />
+            <label className="form-check-label" htmlFor="flexCheckDefault">
+              Freelance
+            </label>
+          </div>
+          <div className="d-flex justify-content-start align-items-center gap-1">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault"
+              defaultChecked
+            />
+            <label className="form-check-label" htmlFor="flexCheckDefault">
+              Remove
+            </label>
+          </div>
+          <div className="d-flex justify-content-start align-items-center gap-1">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault"
+            />
+            <label className="form-check-label" htmlFor="flexCheckDefault">
+              Hybrid
+            </label>
+          </div>
+          <div className=" d-flex justify-content-start align-items-center gap-1">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault"
+            />
+            <label className="form-check-label" htmlFor="flexCheckDefault">
+              On-Site/Office
+            </label>
+          </div>
       </div>
-      <div className="row d-md-none">
+    </div>
+        
+    <div className="col-md-2 d-flex justify-content-center align-items-start">
+      <Button type="button" label="Search" cssClass={"btn btn-primary"} icon="fa-search" />
+    </div>
+  </div>
+      {/* <div className="row d-md-none">
         <div className="col-md-12">
-          <Button type="button" label="Find" cssClass={"btn btn-secondary"} />
+          <Button type="button" label="search" cssClass={"btn btn-primary"} icon="fa-search"/>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

@@ -72,10 +72,9 @@ export default function DynamicForm({
         closeHandler={closeHandler}
         title={componentTitle}
       />
-      <hr />
       <div className="container">
         <div className="row">
-          <div className="col-md-12 px-5">
+          <div className="col-md-12">
             {error && (
               <div className="fw-bold">{error && <Error>{error}</Error>}</div>
             )}

@@ -31,8 +31,16 @@ export const AdvertiseComponentStyled = styled.div`
     }
 
     .imgContainer {
-        position: relative;
-    }
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 👈 centers the popup */
+    background: rgba(0,0,0, .2);
+    width: auto;
+    max-width: 90%;
+    max-height: 90%;
+    box-sizing: border-box;
+    object-fit: cover;
 
     .advertismentInfo {
         position: absolute;
@@ -49,27 +57,9 @@ export const AdvertiseComponentStyled = styled.div`
         bottom: 120px;
     }
 
-    .small {
-        width: 640px;
-        height: auto;
-        margin: 1% auto;
-    }
-
-    .medium {
-        width: 1000px;
-        height: auto;
-        margin: 6% auto;
-    }
-
-    .large {
-        width: 1200px;
-        height: auto;
-        margin: 2% auto;
-    }
-
     img {
-        width: 100%;
-        height:100%;
+       width: 100%;
+        height: 100%;
         object-fit: contain;
     }
 
@@ -88,6 +78,18 @@ export const AdvertiseComponentStyled = styled.div`
                 transform: translateY(0px);
     }
 }
+    }
+    
+    .small img {
+        height: 600px !important;
+    }
 
+    .medium img{
+        height: 800px !important;
+    }
+
+    .large img {
+        height: 850px !important;
+    }
    
 `

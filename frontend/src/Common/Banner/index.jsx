@@ -8,18 +8,22 @@ import SkeletonImage from "../Skeltons/SkeletonImage";
 
 // Styles
 import { PageBannerStyled } from "../StyledComponents/Styled-PageBanner";
+import Ancher from "../Ancher";
+import RichTextView from "../RichTextView";
+import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
 
 const Banner = ({
   getBannerAPIURL,
   bannerState,
   pageLoadServiceName,
-  bannerTitleCss = "title text-end fs-2",
+  bannerTitleCss = "title text-center fs-3",
   bannerSubTitleCss = "subTitle text-end fw-normal",
-  bannerDescriptionCss = "description text-end d-block mt-2 fs-6",
+  bannerDescriptionCss = "description",
   imageCss = "w-100",
-  bannerContainerCss = "titleCaption d-flex align-items-end justify-content-end flex-column",
+  bannerContainerCss = "titleCaption d-flex align-items-center justify-content-end flex-column",
 }) => {
   const [bannerdata, setBannerData] = useState([]);
+  const { isAdmin, hasPermission } = useAdminLoginStatus();
 
   useEffect(() => {
     const getBannerData = async () => {
@@ -56,25 +60,52 @@ const Banner = ({
             <Title
               title={bannerdata.banner_title}
               cssClass={bannerTitleCss}
-              // cssClass=""
-              mainTitleClassess="fs-1 fw-bold text-white "
-              subTitleClassess=""
+              mainTitleClassess=""
             />
           )}
           {bannerdata.banner_subTitle !== "" && (
             <Title
-              title={bannerdata.banner_subTitle}
+              subTitle={bannerdata.banner_subTitle}
               cssClass={bannerSubTitleCss}
-              mainTitleClassess="fs-6 mb-2 fw-medium text-white "
+              subTitleClassess=""
             />
           )}
           {bannerdata.banner_descripiton !== "" && (
+          <RichTextView 
+          data={
+              bannerdata?.banner_descripiton
+                ? bannerdata?.banner_descripiton
+                : isAdmin
+                  ? "Please Update Brief Intro"
+                  : ""
+              }
+              className={"introDecTitleCss bannerDescriptionCss"}
+              showMorelink={false}
+          />
+          )}
+          {/* {bannerdata.banner_descripiton !== "" && (
             <small className={bannerDescriptionCss}>
               {bannerdata.banner_descripiton}
             </small>
-          )}
+          )} */}
+
+          {bannerdata.moreLink &&  (
+              <div >
+                <Ancher
+                  AncherLabel={"Services"}
+                  Ancherpath={
+                    bannerdata.moreLink
+                      ? bannerdata.moreLink
+                      : moreLink
+                  }
+                  // Ancherpath={moreLink}
+                  AncherClass={"btn btn-primary btn-sm mt-2"}
+                  // AnchersvgColor={anchersvgColor}
+                />
+              </div>
+            )}
         </div>
-        {bannerdata.path ? (
+        {bannerdata?.path ? (
           <img
             src={
               bannerdata?.path ? getImagePath(bannerdata.path) : getDummyImage()

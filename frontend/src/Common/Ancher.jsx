@@ -14,10 +14,10 @@ const Ancher = ({
     <>
       <Link to={Ancherpath} className={AncherClass} onClick={handleModel}>
         <span>
-          {AncherLabel}
           {icon && (
-            <i className={`fa ${icon} ${iconCss}`} aria-hidden="true"></i>
+            <i className={`fa me-2 ${icon} ${iconCss}`} aria-hidden="true"></i>
           )}
+          {AncherLabel}
         </span>
         {/* {AnchersvgColor && (
           <svg

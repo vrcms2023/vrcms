@@ -61,7 +61,7 @@ const ServiceOfferedComponent = ({ getBannerAPIURL, componentEdit }) => {
                     key={item.id}
                   >
                     <img
-                      src={getImagePath(item.path)}
+                      src={getImagePath(item?.path)}
                       alt={item.alternitivetext}
                       onClick={() => findThumbHandler(item.id)}
                       className="img-fluid"

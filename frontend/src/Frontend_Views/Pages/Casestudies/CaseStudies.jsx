@@ -34,7 +34,6 @@ import RichTextView from "../../../Common/RichTextView";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 import {
   createShowHideComponent,
-  getAllShowHideComponentsList,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
@@ -138,7 +137,6 @@ const CaseStudies = () => {
   };
 
   const [showHideCompList, setShowHideCompList] = useState([]);
-  const showHideCompPageLoad = useRef(true);
   const dispatch = useDispatch();
   const { error, success, showHideList } = useSelector(
     (state) => state.showHide
@@ -147,13 +145,6 @@ const CaseStudies = () => {
   useEffect(() => {
     if (showHideList.length > 0) {
       setShowHideCompList(getObjectsByKey(showHideList));
-    }
-  }, [showHideList]);
-
-  useEffect(() => {
-    if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getAllShowHideComponentsList());
-      showHideCompPageLoad.current = false;
     }
   }, [showHideList]);
 
@@ -171,37 +162,62 @@ const CaseStudies = () => {
 
   return (
     <>
-      {/* Page Banner Component */}
-      <div className="position-relative">
+      <div
+        className={
+          showHideCompList?.casestudiesbanner?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "componentOnBorder"
+            : ""
+        }
+      >
         {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
-        )}
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        />
-      </div>
-      {componentEdit.banner && (
-        <div className={`adminEditTestmonial selected `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle="Case Studies Banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.casestudiesbanner?.visibility}
+            title={"Banner"}
+            componentName={"casestudiesbanner"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.casestudiesbanner?.id}
           />
-        </div>
-      )}
+        )}
+        {showHideCompList?.casestudiesbanner?.visibility && (
+          <>
+            {/* Page Banner Component */}
+            <div className="position-relative">
+              {isAdmin && hasPermission && (
+                <EditIcon editHandler={() => editHandler("banner", true)} />
+              )}
+              <Banner
+                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+                bannerState={componentEdit.banner}
+              />
+            </div>
+            {componentEdit.banner && (
+              <div className={`adminEditTestmonial selected `}>
+                <ImageInputsForm
+                  editHandler={editHandler}
+                  componentType="banner"
+                  popupTitle="Case Studies Banner"
+                  pageType={`${pageType}-banner`}
+                  imageLabel="Banner Image"
+                  showDescription={false}
+                  showExtraFormFields={getFormDynamicFields(
+                    `${pageType}-banner`
+                  )}
+                  dimensions={imageDimensionsJson("banner")}
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
 
       <div
         className={
           showHideCompList?.casestudiesbriefintro?.visibility &&
           isAdmin &&
           hasPermission
-            ? "border border-info mb-2"
+            ? "componentOnBorder"
             : ""
         }
       >
@@ -246,27 +262,37 @@ const CaseStudies = () => {
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
-        {isAdmin && hasPermission && (
+        {/* {isAdmin && hasPermission && (
           <div className="row">
             <div className="col-md-12">
               <div className="d-flex justify-content-end align-items-center mb-3">
-                {/* <span className="fw-bold me-2">Add New </span> */}
                 <button
                   type="submit"
-                  className="btn btn-primary px-3"
+                  className="btn btn-outline"
                   onClick={() => editHandler("addSection", true)}
                 >
-                  Add New Casestudy
+                 New
                   <i className="fa fa-plus ms-2" aria-hidden="true"></i>
                 </button>
               </div>
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="row">
-          <div className="col-md-6 fs-3 mt-4 mt-md-0">
-            <Title title="Case Studies" cssClass="fs-1 pageTitle" />
+          <div className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start">
+            <Title title="Case Studies" cssClass="pageTitle fs-4" />
+            {isAdmin && hasPermission && (
+              <button
+                type="submit"
+                className="btn btn-outline ms-2"
+                onClick={() => editHandler("addSection", true)}
+              >
+              New
+                <i className="fa fa-plus ms-2" aria-hidden="true"></i>
+              </button>
+            )}
+
           </div>
 
           <div className="col-md-6">
@@ -275,9 +301,7 @@ const CaseStudies = () => {
               clientSearchURL={"/caseStudies/searchCaseStudies/"}
               adminSearchURL={"/caseStudies/createCaseStudies/"}
               clientDefaultURL={"/caseStudies/clientCaseStudies/"}
-              searchfiledDeatails={
-                "Case studies Title / Case studies description "
-              }
+              searchfiledDeatails={"Case studies Title "}
               setPageloadResults={setPageloadResults}
               setSearchquery={setSearchquery}
               searchQuery={searchQuery}
@@ -300,7 +324,8 @@ const CaseStudies = () => {
               imagePostURL="/caseStudies/createCaseStudies/"
               imageUpdateURL="/caseStudies/updateCaseStudies/"
               imageDeleteURL="/caseStudies/updateCaseStudies/"
-              imageLabel="Image"
+              imageLabel="Upload Image"
+              popupTitle={"Case Studie"}
               showDescription={false}
               showExtraFormFields={getCaseStudiesFields()}
               dimensions={imageDimensionsJson("aboutus")}
@@ -364,18 +389,14 @@ const CaseStudies = () => {
                     <RichTextView
                       data={item.case_studies_description}
                       className={""}
+                      showMorelink={false}
                     />
-                    {/* <div
-                      dangerouslySetInnerHTML={{
-                        __html: item.case_studies_description,
-                      }}
-                    /> */}
 
                     <div>
                       <Ancher
                         AncherLabel="More"
                         AncherClass="btn btn-outline d-flex gap-2 justify-content-center align-items-center"
-                        Ancherpath={`/clients/casestudies-details/${item.id}/`}
+                        Ancherpath={`/casestudies-details/${item.id}/`}
                         AnchersvgColor="#17427C"
                       />
                     </div>

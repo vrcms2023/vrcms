@@ -54,7 +54,8 @@ const Specifications = ({
           <DeleteDialog
             onClose={onClose}
             callback={deleteSpecifications}
-            message={`you want to restore ${project.projectTitle} project ?`}
+            // message={`you want to restore ${project.projectTitle} project ?`}
+            message={<>You want to restore <span>{project.projectTitle}</span> project?</>}
           />
         );
       },
@@ -85,23 +86,32 @@ const Specifications = ({
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center">
-        <Title title={title} cssClass="" />
-        {specifications.length > 0 && (
-          <Button
+        <Title title={title} cssClass="fs-6" />
+         <Button
             type="submit"
-            cssClass="btn float-end btn-outline mb-2"
-            label="ADD"
+            icon="fa-plus me-2"
+            cssClass="btn btn-outline mb-2"
+            label="Add"
             handlerChange={handleClick}
           />
-        )}
+
+        {/* {specifications.length > 0 && (
+          <Button
+            type="submit"
+            icon="fa-plus me-2"
+            cssClass="btn float-end btn-outline mb-2"
+            label="Add"
+            handlerChange={handleClick}
+          />
+        )} */}
       </div>
       <div className="">
-        <table className="table m-0">
+        <table className="table border-light m-0">
           <tbody>
             {specifications?.length > 0 ? (
               specifications.map((val, i) => (
-                <tr key={i}>
-                  <td className=" py-4 bg-transparent">
+                <tr key={i} className="">
+                  <td className=" py-3 bg-transparent ">
                     <input
                       type="text"
                       className="form-control mb-2"
@@ -120,9 +130,9 @@ const Specifications = ({
                       onChange={(e) => handleChange(e, i)}
                     ></textarea>
                   </td>
-                  <td className="align-top py-4 text-left bg-transparent">
+                  <td className="align-middle  py-3 text-center">
                     <i
-                      className="fa fa-trash-o fs-4 text-muted"
+                      className="fa fa-trash-o fs-5 text-danger"
                       aria-hidden="true"
                       onClick={() => handleDelete(i)}
                       style={{ cursor: "pointer" }}
@@ -131,21 +141,20 @@ const Specifications = ({
                 </tr>
               ))
             ) : (
-              <tr>
-                <td>
-                  <div className="d-flex justify-content-center align-items-center flex-column">
-                    <Button
-                      type="submit"
-                      cssClass="btn btn-outline mb-2"
-                      label="Add A Specification"
-                      handlerChange={handleClick}
-                    />
-                    {/* <p className="text-center text-warning fs-4 m-0">
-                      "Click on button to add specifications"
-                    </p> */}
-                  </div>
-                </td>
-              </tr>
+              <div className="text-center p-5">No specifications found, Please add</div>
+              // <tr>
+              //   <td>
+              //     <div className="d-flex justify-content-center align-items-center flex-column">
+              //       <Button
+              //         type="submit"
+              //         icon="fa-plus me-2"
+              //         cssClass="btn btn-outline mb-2"
+              //         label="Add"
+              //         handlerChange={handleClick}
+              //       />
+              //     </div>
+              //   </td>
+              // </tr>
             )}
           </tbody>
         </table>

@@ -178,7 +178,8 @@ export const AdminNews = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSelectedNews}
-            message={`deleting the ${news.newstitle} news?`}
+            // message={`deleting the ${news.newstitle} news?`}
+            message={<>Confirm deletion of  <span>{news.newstitle}</span> news?</>}
           />
         );
       },
@@ -259,7 +260,7 @@ export const AdminNews = () => {
                 catategoryImgState={setNewsObject}
                 project={newProject}
                 category="news"
-                cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
+                cssClass="thumb75 mb-5 rounded-3"
               />
             </div>
             <div className="text-center">

@@ -1,20 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { ClientStyled } from "../../Common/StyledComponents/Styled-Clients";
 import { useSelector } from "react-redux";
 import SkeletonImage from "../../Common/Skeltons/SkeletonImage";
 import EditIcon from "../../Common/AdminEditIcon";
 import { Link } from "react-router-dom";
 import Title from "../../Common/Title";
-import {
-  getImagePath,
-  getListStyle,
-  reorder,
-  updateArrIndex,
-} from "../../util/commonUtil";
+import { getImagePath, getListStyle, reorder, updateArrIndex } from "../../util/commonUtil";
 import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { axiosServiceApi } from "../../util/axiosUtil";
 import RichTextView from "../../Common/RichTextView";
+import ModelBg from "../../Common/ModelBg";
+
+import DynamicCarousel from "./DynamicCarousel";
 
 export const ClientListComponent = ({
   clientsList,
@@ -23,6 +21,8 @@ export const ClientListComponent = ({
   editHandler,
 }) => {
   const { isLoading } = useSelector((state) => state.loader);
+  const [showModal, setShowModal] = useState(false);
+  const [img, setImg] = useState(null);
 
   const onDragEnd = async (result) => {
     const { source, destination } = result;
@@ -45,6 +45,18 @@ export const ClientListComponent = ({
     } catch (error) {
       console.log("unable to save clinet position");
     }
+  };
+
+  const clientThumbHandler = (item) => {
+    // console.log(clientsList, id, "Client item")
+    const findImg = clientsList.find((client) => client.id === item.id);
+    //console.log(findImg, "Client item");
+    setShowModal(!showModal);
+    setImg(findImg);
+  };
+
+  const closeModel = () => {
+    setShowModal(!showModal);
   };
 
   return (
@@ -77,6 +89,7 @@ export const ClientListComponent = ({
                         index={index}
                         editHandler={editHandler}
                         deleteAboutSection={deleteAboutSection}
+                        clientThumbHandler={clientThumbHandler}
                       />
                     ))
                   ) : (
@@ -92,11 +105,15 @@ export const ClientListComponent = ({
           </DragDropContext>
         </div>
       </ClientStyled>
+
+      {/* {show && <ModelBg />} */}
+      {showModal && <DynamicCarousel obj={img} all={clientsList} closeCarousel={closeModel} />}
+      {showModal && <ModelBg closeModel={closeModel} />}
     </div>
   );
 };
 
-const Client = ({ item, index, editHandler, deleteAboutSection }) => {
+const Client = ({ item, index, editHandler, deleteAboutSection, clientThumbHandler }) => {
   const { isAdmin, hasPermission } = useAdminLoginStatus();
   return (
     <Draggable
@@ -108,9 +125,7 @@ const Client = ({ item, index, editHandler, deleteAboutSection }) => {
     >
       {(provided) => (
         <div
-          className={`${
-            isAdmin ? "col-12 clientAdmin" : "col-md-3 clientFrontend "
-          } image`}
+          className={`${isAdmin ? "col-12 clientAdmin" : "col-md-3 clientFrontend "} image`}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -127,41 +142,43 @@ const Client = ({ item, index, editHandler, deleteAboutSection }) => {
               <>
                 <EditIcon
                   editHandler={() => editHandler("editSection", true, item)}
+                  editlabel="Clients"
                 />
-                <Link
-                  className="deleteSection"
-                  onClick={() => deleteAboutSection(item)}
-                >
-                  <i
-                    className="fa fa-trash-o text-danger fs-4"
-                    aria-hidden="true"
-                  ></i>
+                <Link className="deleteSection" onClick={() => deleteAboutSection(item)}>
+                  <i className="fa fa-trash-o text-danger fs-4" aria-hidden="true"></i>
                 </Link>
               </>
             )}
 
-            <div className={`${isAdmin ? "d-md-flex p-3" : ""}`}>
+            <div
+              className={`${isAdmin ? "d-md-flex p-3" : "d-flex justify-content-center align-items-center flex-column"}`}
+            >
               <div className="text-center clientAvatar">
                 <img
                   src={getImagePath(item.path)}
                   alt=""
-                  className="img-fluid shadow img-thumbnail"
+                  className="img-fluid"
+                  onClick={() => clientThumbHandler(item)}
                 />
               </div>
-              <div className="mt-3 d-flex justify-content-center align-items-center justify-content-md-center align-items-md-center flex-column  clientDetails ms-3">
-                {item.client_title && (
+              {/* <div className="mt-1 d-flex justify-content-center align-items-center justify-content-md-center align-items-md-start flex-column  clientDetails "> */}
+              {/* {item.client_title && (
                   <Title
                     title={item.client_title}
-                    cssClass="fs-5 mb-2 text-center"
+                    cssClass="fs-5 text-start"
                   />
                 )}
-                <RichTextView
+                {item.client_description && (
+                  <RichTextView
                   data={item.client_description}
                   className={`details ${
-                    isAdmin ? "" : "overlay fa fa-map-marker"
+                    isAdmin ? "" : ""
                   }`}
+                  showMorelink={false}
                 />
-                {/* <div
+                )} */}
+
+              {/* <div
                   className={`details ${
                     isAdmin ? "" : "overlay fa fa-map-marker"
                   }`}
@@ -169,7 +186,7 @@ const Client = ({ item, index, editHandler, deleteAboutSection }) => {
                     __html: item.client_description,
                   }}
                 /> */}
-              </div>
+              {/* </div> */}
             </div>
           </div>
         </div>

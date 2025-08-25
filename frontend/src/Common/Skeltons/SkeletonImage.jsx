@@ -3,7 +3,7 @@ import Skeleton from "./Skeleton";
 
 const SkeletonImage = () => {
   return (
-    <div className="px-2 position-relative">
+    <div className="px-2 position-relative width-100">
       <Skeleton classes="image width-100" />
       <div
         style={{

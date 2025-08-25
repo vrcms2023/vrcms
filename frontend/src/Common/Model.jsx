@@ -1,9 +1,9 @@
 import React from "react";
 import RichTextView from "./RichTextView";
 
-const Model = ({ obj, closeModel, flag }) => {
-  // console.log(obj)
-
+const Model = ({ obj, closeModel, flag, cssClass }) => {
+  // console.log(obj);
+  const title = obj.testimonial_title;
   // const { dec, title, cr, crm } = privacy;
 
   // const newImages = obj.imageUrls.length > 0 ? (
@@ -18,14 +18,14 @@ const Model = ({ obj, closeModel, flag }) => {
 
   return (
     <div
-      className="modal d-block modal-lg"
+      className={`modal d-block modal-lg ${cssClass}`}
       tabIndex="-1"
       style={{ position: "absolute", zIndex: 99999 }}
     >
       <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title text-dark fw-bold">{obj.title}</h5>
+            <h5 className="modal-title text-dark fw-bold">{obj.title || title}</h5>
             <button
               type="button"
               className="btn-close"
@@ -36,11 +36,9 @@ const Model = ({ obj, closeModel, flag }) => {
           </div>
           <div className="modal-body">
             <div className="text-center">
-              {obj.path && (
-                <img src={obj.path} alt="Testimonial" className="img-fluid" />
-              )}
+              {obj.path && <img src={obj.path} alt="Testimonial" className="img-fluid" />}
             </div>
-            <RichTextView data={obj.data || obj.testimonial_description} />
+            <RichTextView data={obj.data || obj.testimonial_description} showMorelink={false} />
           </div>
         </div>
       </div>

@@ -25,12 +25,12 @@ urlpatterns = [
     path('api/v1/pageMenu/', include('pagesAdministration.urls')),
     path('api/v1/pagePermission/', include('pagePermissions.urls')),
 	path('api/v1/address/', include('addressList.urls')),
-    path('api/v1/imgGallery/', include('imageAndVideoGallery.urls')),
+    path('api/v1/appGallery/', include('imageAndVideoGallery.urls')),
     path('api/v1/products/', include('products.urls')),
     path('api/v1/app/', include('app_themes.urls')),
     path('api/v1/showHideComponents/', include('showHideComponents.urls')),
     path('api/v1/advertisement/', include('advertisement.urls')),
-    path('api/v1/title/', include('TitleDesc.urls')),
+    path('api/v1/counter/', include('counter.urls'))
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name="index.html"))]

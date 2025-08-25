@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 
 const Button = ({
   type,
@@ -7,17 +7,21 @@ const Button = ({
   handlerChange,
   disabled = false,
   icon,
-  isMobile
+  isMobile,
+  image,
+  imageLabel,
+  imgeLabelCss
 }) => {
   return (
     <button
       disabled={disabled}
       type={type}
-      className={`d-flex justify-content-center align-items-center gap-2 ${cssClass}`}
+      className={`d-flex justify-content-center align-items-center ${cssClass}`}
       onClick={() => handlerChange(label)}
     >
       {icon ? <i className={`fa ${icon}`} aria-hidden="true"></i> : ""}
-      {isMobile ? " " : <span className="">{label}</span>}
+      {isMobile ? " " : <span className="linkLabel">{label}</span>}
+      {image ? <div className={imgeLabelCss}><img src={image} /> <span style={{fontSize: ".7rem"}}>{imageLabel}</span></div> : ""}
     </button>
   );
 };

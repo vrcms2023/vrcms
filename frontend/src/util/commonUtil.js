@@ -85,6 +85,18 @@ export const getTodayDate = (dt) => {
   }
 };
 
+export const getImageURL = (item) => {
+  if (item?.video_thumbnail_url) {
+    return getImagePath(item?.video_thumbnail_url);
+  } else if (item?.image_WebURL) {
+    return getImagePath(item?.image_WebURL);
+  } else if (item?.path) {
+    return getImagePath(item?.path);
+  } else {
+    return getDummyImage();
+  }
+};
+
 export const getImagePath = (path) => {
   if (!path) return null;
   const baseURL = getBaseURL();
@@ -103,8 +115,7 @@ export const getObjectTitle = (type, item) => {
   const carouse_Field = "carouse_title";
   const testimonial_Field = "testimonial_title";
   const imageGallery_Field = "image_title";
-  if (type === "carousel" || type === "serviceOffered")
-    return item[carouse_Field];
+  if (type === "carousel" || type === "serviceOffered") return item[carouse_Field];
   if (type === "testmonial") return item[testimonial_Field];
   if (type === "gallery") return item[imageGallery_Field];
 };
@@ -128,13 +139,15 @@ export const getObjectDescription = (type, item) => {
 export const storeServiceMenuValueinCookie = (item) => {
   removeCookie("pageLoadServiceID");
   removeCookie("pageLoadServiceName");
+  removeCookie("pageLoadServiceURL");
   setCookie("pageLoadServiceID", item.id);
   setCookie("pageLoadServiceName", urlStringFormat(item?.services_page_title));
+  setCookie("pageLoadServiceURL", item?.page_url);
 };
 
 export const urlStringFormat = (str) => {
   if (!str) return null;
-  return str.replace(/\s+/g, "-").toLowerCase();
+  return str.replace(/\s+/g, "").toLowerCase();
 };
 
 export const TitleStringFormat = (str) => {
@@ -180,7 +193,7 @@ export const getselectedUserMenu = (permisions, menuList) => {
 };
 export const getServiceMainMenu = (data) => {
   return _.filter(data, (item) => {
-    return item.page_label.toLowerCase() === "services";
+    return item?.page_url.toLowerCase() === "/services";
   })[0];
 };
 
@@ -191,21 +204,18 @@ export const getClonedObject = (list) => {
 export const getPublishedSericeMenu = (menuList, publishedMenuList) => {
   let clonedMenu = getClonedObject(menuList);
   let mainServiceMenu = getServiceMainMenu(clonedMenu);
-  const childMenu = mainServiceMenu[0]?.childMenu;
+  const childMenu = mainServiceMenu?.childMenu;
   let selectedMenu = [];
-  childMenu.forEach((item) => {
+  childMenu?.forEach((item) => {
     publishedMenuList.forEach((publishedMenu) => {
-      if (
-        item.page_label.toLowerCase() ===
-        publishedMenu.services_page_title.toLowerCase()
-      ) {
+      if (item.page_label.toLowerCase() === publishedMenu.services_page_title.toLowerCase()) {
         selectedMenu.push(item);
       }
     });
   });
 
   _.map(clonedMenu, (item) => {
-    if (item.page_label.toLowerCase() === "services") {
+    if (item?.page_url?.toLowerCase() === "/services") {
       item["childMenu"] = selectedMenu;
     }
   });
@@ -267,6 +277,16 @@ export const NO_FOOTER_ROUTES = [
   "/userpermission",
   "/contactuslist",
   "/change_password",
+  "/appliedjobsadministration",
+];
+export const NO_HEADER_ROUTES = [
+  "/login",
+  "/register",
+  "/unauthorized",
+  "/activate/",
+  "/reset_password",
+  "/authForm",
+  "/resend_activation",
 ];
 
 export const reorder = (list, startIndex, endIndex) => {
@@ -342,7 +362,7 @@ export const genereateCategoryProducts = (data, categories) => {
 
 export const getImageFileFromUrl = async (imageUrl) => {
   try {
-    const response = await fetch(imageUrl);
+    const response = await fetch(imageUrl, { mode: "cors" });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -369,10 +389,7 @@ export const getParentObject = (rawData, id, formatedMenu) => {
   const dragObject = getFilterObjectByID(rawData, id)[0];
 
   if (dragObject.page_parent_ID) {
-    parentMenuObject = getFilterObjectByID(
-      formatedMenu,
-      dragObject.page_parent_ID
-    )[0];
+    parentMenuObject = getFilterObjectByID(formatedMenu, dragObject.page_parent_ID)[0];
   }
   return parentMenuObject;
 };
@@ -440,3 +457,17 @@ export const getCategoryPorjectList = (data) => {
 
   return projList;
 };
+
+export const buildFormData = (formData, data, showExtraFormFields) => {
+  formData.append("alternative_text", data.alternative_text);
+
+  Object.keys(showExtraFormFields || {}).forEach((key) => {
+    const field = showExtraFormFields[key];
+    formData.append(key, field.type === "hidden" ? field.value : data[key]);
+  });
+
+  return formData;
+};
+
+export const validateDataNotEmpty = (data) =>
+  Object.keys(data).some((key) => data[key] && key !== "category" && key !== "alternative_text");

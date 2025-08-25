@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 // Components
 import BriefIntroFrontend from "../../../Common/BriefIntro";
@@ -28,6 +29,13 @@ import ApplyForm from "./ApplyForm";
 import CareersFilter from "../../Components/CareersSearch/CareersFilter";
 import { CareerFilterStyled } from "../../../Common/StyledComponents/Styled-CareerFilter";
 import RichTextView from "../../../Common/RichTextView";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import ShowHideToggle from "../../../Common/ShowHideToggle";
+import {
+  createShowHideComponent,
+  updateShowHideComponent,
+} from "../../../redux/showHideComponent/showHideActions";
+import Ancher from "../../../Common/Ancher";
 
 const Careers = () => {
   const editComponentObj = {
@@ -79,79 +87,121 @@ const Careers = () => {
     document.body.style.overflow = "hidden";
   };
 
+  const [showHideCompList, setShowHideCompList] = useState([]);
+  const dispatch = useDispatch();
+  const { error, success, showHideList } = useSelector(
+    (state) => state.showHide
+  );
+
+  useEffect(() => {
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
+    }
+  }, [showHideList]);
+
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
+    } else {
+      const newData = {
+        componentName: compName.toLowerCase(),
+        pageType: pageType,
+      };
+      dispatch(createShowHideComponent(newData));
+    }
+  };
+
   return (
     <>
-
-      {/* Page Banner Component */}
-
-      <div className="position-relative">
+      <div
+        className={
+          showHideCompList?.careerdetailsbanner?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "componentOnBorder"
+            : ""
+        }
+      >
         {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.careerdetailsbanner?.visibility}
+            title={"Banner"}
+            componentName={"careerdetailsbanner"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.careerdetailsbanner?.id}
+          />
         )}
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        />
+        {showHideCompList?.careerdetailsbanner?.visibility && (
+          <>
+            {/* Page Banner Component */}
+            <div className="position-relative">
+              {isAdmin && hasPermission && (
+                <EditIcon editHandler={() => editHandler("banner", true)} />
+              )}
+              <Banner
+                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+                bannerState={componentEdit.banner}
+              />
+            </div>
+
+            {componentEdit.banner && (
+              <div className={`adminEditTestmonial selected `}>
+                <ImageInputsForm
+                  editHandler={editHandler}
+                  componentType="banner"
+                  popupTitle="Career Details Banner"
+                  pageType={`${pageType}-banner`}
+                  imageLabel="Banner Image"
+                  showDescription={false}
+                  showExtraFormFields={getFormDynamicFields(
+                    `${pageType}-banner`
+                  )}
+                />
+              </div>
+            )}
+          </>
+        )}
       </div>
 
-      {componentEdit.banner && (
-        <div className={`adminEditTestmonial selected `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle="Career Details Banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-          />
-        </div>
-      )}
-
-      {/* Introduction */}
-      {isAdmin && hasPermission && (
-        <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-      )}
-
-      <BriefIntroFrontend
-        introState={componentEdit.briefIntro}
-        pageType={pageType}
-      />
-
-      <div className="container my-4">
+      <div className="container mt-3">
         <div className="row">
-          <div className="col-8 col-md-10">
-            <Title
-              title="Careers Details"
-              cssClass="fw-medium fs-4 pageTitle "
+          <div className="col-md-12 d-flex justify-content-between align-items-center">
+            <Title title="Details" cssClass="fw-medium fs-4 pageTitle " />
+            <Ancher
+              AncherLabel="Back"
+              AncherClass="btn btn-outline"
+              Ancherpath={`/careers/`}
+              AnchersvgColor=""
+              icon="fa-chevron-left"
             />
           </div>
-          <div className="col-4 col-md-2">
-            <Link
-              to="/profile/careers"
-              className="btn btn-outline m-auto w-auto d-flex justify-content-center align-items-center gap-2"
-            >
-              <i className="fa fa-chevron-left" aria-hidden="true"></i>
+          {/* <div className="col-4 col-md-2 text-end">
+            <Link to="/careers" className="btn btn-outline">
+              <i className="fa fa-chevron-left me-2" aria-hidden="true"></i>
               <span className="">Back</span>
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
 
-      <CareerFilterStyled>
-        <div className="container p-5 py-3 careersFilter">
+      {/* <CareerFilterStyled>
+        <div className="container careersFilter">
           <CareersFilter />
         </div>
-      </CareerFilterStyled>
+      </CareerFilterStyled> */}
 
       <CareersPageStyled>
-        <div className="container py-4 mb-md-5 py-md-4">
+        <div className="container mb-md-5 py-md-4">
           <div className="row d-flex flex-rowreverse">
-            <div className="col-md-9 px-3">
+            <div className="col-md-7 col-lg-8 p-md-0">
               <JobBriefDetails jobDetails={posts} />
-              <div className="jobDescription p-4">
+              <div className="jobDescription mb-4 p-3">
                 {posts.description && (
-                  <RichTextView data={posts.description} className={""} />
+                  <RichTextView
+                    data={posts.description}
+                    className={""}
+                    showMorelink={false}
+                  />
                   // <div
                   //   dangerouslySetInnerHTML={{ __html: posts.description }}
                   // />
@@ -166,42 +216,14 @@ const Careers = () => {
                   </span>
                 </div> */}
               </div>
-            </div>
-            <div className="col-md-3 mt-4 mt-md-0">
               <JobCurrentOpenings />
-
-              <ApplyForm />
+            </div>
+            <div className="col-md-5 col-lg-4 p-0 mb-5">
+              <ApplyForm jobDetails={posts} />
             </div>
           </div>
         </div>
       </CareersPageStyled>
-
-      {componentEdit.briefIntro && (
-        <div className={`adminEditTestmonial selected `}>
-          <AdminBriefIntro
-            editHandler={editHandler}
-            componentType="briefIntro"
-            popupTitle="Career Details"
-            pageType={pageType}
-            extraFormParamas={[
-              {
-                pageType: {
-                  readonly: true,
-                  defaultValue: pageType,
-                  fieldName: "pageType",
-                },
-              },
-              {
-                bannerTitle: {
-                  label: "Career Title",
-                  type: "text",
-                  fieldName: "bannerTitle",
-                },
-              },
-            ]}
-          />
-        </div>
-      )}
 
       {show && <ModelBg />}
     </>

@@ -30,6 +30,7 @@ import { getImagePath } from "../../../util/commonUtil";
 import Product from "./Product";
 import { getProductsByCategory } from "../../../redux/products/productsActions";
 import RichTextView from "../../../Common/RichTextView";
+import Ancher from "../../../Common/Ancher";
 
 const ProductDetails = () => {
   const location = useLocation();
@@ -66,45 +67,54 @@ const ProductDetails = () => {
     <>
       <ProductItemStyled>
         <div className="container productDetails">
-          <div className="row">
-            <div className="col-md-12 col-lg-10 py-4 imgSelected">
+          <div className="row d-flex justify-content-center align-items-center">
+            <div className="col-md-6">
+              <span className="fw-bold d-inline-block ms-2"> {selectedProduct?.category_name} </span> / 
+              <span className="fw-normal d-inline-block ms-2">{selectedProduct?.product_name}</span>
+            </div>
+            <div className="col-md-6 py-4 imgSelected text-end">
               <Link
                 to="/products"
-                className="btn btn-primary d-inline-flex justify-content-center align-items-center m-auto"
+                className="btn btn-outline d-inline-flex justify-content-center align-items-center m-auto"
               >
                 <i
                   className="fa fa-angle-left fs-5 me-2"
                   aria-hidden="true"
                 ></i>{" "}
-                Back{" "}
+                Back
               </Link>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-12 col-lg-10  pb-3 imgSelected">
+            <div className="col-md-12 pb-3 imgSelected">
               <img
                 src={getImagePath(selectedProduct?.path)}
                 alt={selectedProduct?.alternitivetext}
                 className="w-100 rounded-2"
               />
-              <div className="py-3">
-                <Title
-                  title={selectedProduct?.product_name}
-                  cssClass="fs-4 fw-medium mt-1 mt-md-4"
-                />
-                <RichTextView
-                  data={selectedProduct?.description}
-                  className={"mt-2"}
-                />
-                {/* <div
-                  className="mt-2"
-                  dangerouslySetInnerHTML={{
-                    __html: selectedProduct?.description,
-                  }}
-                ></div> */}
-              </div>
             </div>
-            {products?.results.length <= 1 ? (
+            </div>
+            <div className="row">
+              <div className="col-md-12 px-5 imgSelected">
+                <div className="py-3">
+                  {/* <Title
+                    title={selectedProduct?.product_name}
+                    cssClass="fs-4 fw-medium mt-1 mt-md-4"
+                  /> */}
+                  <RichTextView
+                    data={selectedProduct?.description}
+                    className={"mt-2"}
+                    showMorelink={false}
+                  />
+                  {/* <div
+                    className="mt-2"
+                    dangerouslySetInnerHTML={{
+                      __html: selectedProduct?.description,
+                    }}
+                  ></div> */}
+                </div>
+              </div>
+            {/* {products?.results.length <= 1 ? (
               ""
             ) : (
               <div className="col-lg-2 my-5 allProducts rightPositioned d-none d-lg-block position-fixed rounded shadow-lg">
@@ -115,14 +125,35 @@ const ProductDetails = () => {
                     )
                 )}
               </div>
-            )}
+            )} */}
           </div>
 
-          <div className="row my-0 my-md-5 allProducts bottomPositioned d-lg-none">
-            {products?.results?.map(
-              (item) => item.id !== id && <Product item={item} key={item.id} />
-            )}
+        {products?.length > 0 ? (
+          <div className="row my-0 my-md-5 allProducts bottomPositioned">
+            {products?.results
+              ?.filter(item => item.id !== id)
+              ?.slice(0, 4)
+              ?.map(item => (
+                <Product item={item} key={item.id} />
+              ))}
+
+            
+            <div className="text-center">
+              <Ancher 
+                 AncherLabel="View All"
+                  AncherClass="btn btn-outline"
+                  Ancherpath="/products"
+                  AnchersvgColor=""
+                  handleModel=""
+                  icon=""
+                  iconCss=""
+              />
+            </div>
           </div>
+        ) : "" }
+          
+
+          
         </div>
       </ProductItemStyled>
     </>

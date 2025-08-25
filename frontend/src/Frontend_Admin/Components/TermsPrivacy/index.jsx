@@ -16,6 +16,7 @@ const AdminTermsAndPrivacy = ({
   componentType,
   termsAndConditionData,
   type,
+  popupTitle
 }) => {
   const [userName, setUserName] = useState("");
   const { register, reset, handleSubmit } = useForm();
@@ -71,7 +72,7 @@ const AdminTermsAndPrivacy = ({
     <>
       <EditAdminPopupHeader
         closeHandler={closeHandler}
-        title={componentType}
+        title={popupTitle}
         type={type}
       />
       <hr className="m-0 text-dark" />

@@ -5,8 +5,8 @@ export const ClientStyled = styled.div`
   //   display: none;
   // }
   .clientAvatar img {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     object-fit: contain;
   }
  
@@ -19,7 +19,7 @@ export const ClientStyled = styled.div`
 
     &.overlayContainer {
       //background: ${({theme}) => theme.primaryColor};
-      border: 1px solid ${({theme}) => theme.gray999};
+      border: 1px solid ${({theme}) => theme.lightgray};
       border-radius: 2px;
       position: relative;
       // width: 50%;

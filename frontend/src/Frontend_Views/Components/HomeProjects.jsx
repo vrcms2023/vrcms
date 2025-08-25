@@ -17,9 +17,7 @@ import { getDummyImage, getImagePath } from "../../util/commonUtil";
 const HomeProjects = () => {
   const [ProjectCategoryType, setProjectCategoryType] = useState([]);
   const getPorjectCategory = async () => {
-    const response = await axiosClientServiceApi.get(
-      `/project/clientCategory/`
-    );
+    const response = await axiosClientServiceApi.get(`/project/clientCategory/`);
 
     if (response?.status === 200) {
       setProjectCategoryType(response.data);
@@ -28,22 +26,22 @@ const HomeProjects = () => {
   useEffect(() => {
     getPorjectCategory();
   }, []);
+
+  console.log(ProjectCategoryType, "ProjectCategoryType");
   return (
-    <div>
-      <Title title="PROJECTS" cssClass="text-center fs-1" />
-      <div className="row my-3 homeProjectsBg">
+    <div className="container">
+      {/* <Title title="PROJECTS" cssClass="text-center fs-3 mb-5" /> */}
+      <div className="row homeProjectsBg">
         <div className="col-md-12 d-flex justify-content-center align-items-center">
           <div className="container">
             <div className="row">
               {ProjectCategoryType?.map((item, index) => (
-                <div className="col-md-4" key={index}>
-                  <div className="card border-0">
-                    <div className="card-body">
-                      <Title title={item.category_Label} cssClass="" />
-                      <hr className="mb-0 title-border ongoing" />
-                    </div>
-                    <div className="card-body pt-0">
-                      <img
+                <div className="col-sm-12 col-md-12 col-lg-4 cardItem" key={index}>
+                  <div className="card border-0 p-3 p-md-5 ">
+                    <div className="card-body p-0">
+                      <Title title={item.category_Label} cssClass="text-start" />
+                      {/* <hr className="mb-0 title-border ongoing" /> */}
+                      {/* <img
                         src={
                           item?.path ? getImagePath(item.path) : getDummyImage()
                         }
@@ -54,11 +52,9 @@ const HomeProjects = () => {
                           height: "100px",
                           objectFit: "cover",
                         }}
-                      />
+                      /> */}
 
-                      <p className="card-text my-4">
-                        {item.category_description}
-                      </p>
+                      <p className="card-text my-4 lineClamp lc9">{item.category_description}</p>
                       <Link to={`${item.readMore_link}`}>
                         Continue{" "}
                         {/* <svg

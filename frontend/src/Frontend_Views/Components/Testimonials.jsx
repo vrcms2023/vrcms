@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Title from "../../Common/Title";
 import { getImagePath } from "../../util/commonUtil";
+import RichTextView from "../../Common/RichTextView";
 
 const Testimonials = ({ testimonis }) => {
   const [index, setIndex] = useState(0);
@@ -35,32 +36,19 @@ const Testimonials = ({ testimonis }) => {
     if (indexPeople === index) {
       position = "activeSlide";
     }
-    if (
-      indexPeople === index - 1 ||
-      (index === 0 && indexPeople === testimonis?.length - 1)
-    ) {
+    if (indexPeople === index - 1 || (index === 0 && indexPeople === testimonis?.length - 1)) {
       position = "lastSlide";
     }
     return (
       <div className={`${position} article position-absolute`} key={item.id}>
-        
-
         {!item.path ? (
           <i className="fa fa-user" aria-hidden="true"></i>
         ) : (
-          <img
-            src={getImagePath(item.path)}
-            className="rounded-circle my-4 testimonialImg shadow-lg"
-            alt="User"
-          />
+          <img src={getImagePath(item.path)} className="rounded-circle my-4 testimonialImg shadow-lg" alt="User" />
         )}
-        <Title
-          title={item.testimonial_title}
-          cssClass="mb-2 px-3 fs-3 fw-bold text-md-center title"
-        />
-        <p className="w-75 m-auto mt-3 mb-5 px-3 px-md-5 fs-6">
-          {item.testimonial_description}
-        </p>
+        <Title title={item.testimonial_title} cssClass="mb-2 px-3 fs-3 fw-bold text-md-center title" />
+        <RichTextView data={item?.testimonial_description} showMorelink={false} className="w-75 m-auto mt-3 mb-5 px-3 px-md-5 fs-6" />
+
         <div className="d-flex justify-content-center gap-5">
           <Link to="" onClick={() => setIndex(index + 1)}>
             {" "}

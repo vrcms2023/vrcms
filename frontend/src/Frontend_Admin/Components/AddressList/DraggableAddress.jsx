@@ -25,18 +25,17 @@ const DraggableAddress = forwardRef(
       >
         <div {...dragHandleProps}>
           <div className="row position-reltive">
-            <div className="col-8">
+            <div className="col-9">
               <p className="m-0 fw-bold">{item?.location_title}</p>
               <small>
                 {item?.city} - {item?.postcode}
-              </small>{" "}
-              <br />
+              </small>
               <small>{item?.state} </small>
             </div>
-            <div className="col-4 d-flex justify-content-around align-items-center flex-md-row gap-3">
+            <div className="col-3 d-flex justify-content-around align-items-center flex-md-row">
               <Link onClick={(event) => handleCarouselEdit(event, item)}>
                 <i
-                  className="fa fa-pencil fs-4 text-warning"
+                  className="fa fa-pencil fs-5 text-warning"
                   aria-hidden="true"
                 ></i>
               </Link>
@@ -44,7 +43,7 @@ const DraggableAddress = forwardRef(
                 onClick={(event) => thumbDelete(item?.id, item?.location_title)}
               >
                 <i
-                  className="fa fa-trash fs-4 text-danger"
+                  className="fa fa-trash fs-5 text-danger"
                   aria-hidden="true"
                 ></i>
               </Link>

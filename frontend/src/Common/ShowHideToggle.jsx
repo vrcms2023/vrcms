@@ -10,13 +10,13 @@ const ShowHideToggle = ({
 }) => {
   return (
     <div
-      className={`randomServices text-white p-1 px-2 mb-1 ${
-        showhideStatus ? " bg-info" : " bg-secondary"
+      className={`randomServices p-2 py-1 ${
+        showhideStatus ? " componentOn" : " componentOff border-bottom"
       }`}
     >
       <div className="d-flex justify-content-between align-items-center">
         {/* Products, visibility = {showHideCompList?.products?.visibility} */}
-        <span className={`${showhideStatus ? "text-white" : "text-muted"}`}>
+        <span className={`${showhideStatus ? "componentext" : "componentext"}`}>
           {title}
         </span>
         <ShowHideIcon

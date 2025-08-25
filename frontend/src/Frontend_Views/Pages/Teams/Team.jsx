@@ -131,7 +131,12 @@ const Team = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSection}
-            message={`deleting the ${name} Service?`}
+            // message={`deleting the ${name} Service?`}
+            message={
+              <>
+                Confirm deletion of <span>{name}</span> Service?
+              </>
+            }
           />
         );
       },
@@ -168,20 +173,12 @@ const Team = () => {
   };
 
   const [showHideCompList, setShowHideCompList] = useState([]);
-  const showHideCompPageLoad = useRef(true);
   const dispatch = useDispatch();
   const { error, showHideList } = useSelector((state) => state.showHide);
 
   useEffect(() => {
     if (showHideList.length > 0) {
       setShowHideCompList(getObjectsByKey(showHideList));
-    }
-  }, [showHideList]);
-
-  useEffect(() => {
-    if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getAllShowHideComponentsList());
-      showHideCompPageLoad.current = false;
     }
   }, [showHideList]);
 
@@ -199,36 +196,58 @@ const Team = () => {
 
   return (
     <>
-      <div className="position-relative">
+      <div
+        className={
+          showHideCompList?.teamsbanner?.visibility && isAdmin && hasPermission
+            ? "componentOnBorder"
+            : ""
+        }
+      >
         {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
-        )}
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        />
-      </div>
-      {componentEdit.banner && (
-        <div className={`adminEditTestmonial selected `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle="Team Banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.teamsbanner?.visibility}
+            title={"Banner"}
+            componentName={"teamsbanner"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.teamsbanner?.id}
           />
-        </div>
-      )}
-
+        )}
+        {showHideCompList?.teamsbanner?.visibility && (
+          <>
+            <div className="position-relative">
+              {isAdmin && hasPermission && (
+                <EditIcon editHandler={() => editHandler("banner", true)} editlabel={"Banner Image"}/>
+              )}
+              <Banner
+                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+                bannerState={componentEdit.banner}
+              />
+            </div>
+            {componentEdit.banner && (
+              <div className={`adminEditTestmonial selected `}>
+                <ImageInputsForm
+                  editHandler={editHandler}
+                  componentType="banner"
+                  popupTitle="Team Banner"
+                  pageType={`${pageType}-banner`}
+                  imageLabel="Banner Image"
+                  showDescription={false}
+                  showExtraFormFields={getFormDynamicFields(
+                    `${pageType}-banner`
+                  )}
+                  dimensions={imageDimensionsJson("banner")}
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
       <div
         className={
           showHideCompList?.teambriefintro?.visibility &&
           isAdmin &&
           hasPermission
-            ? "border border-info mb-2"
+            ? "componentOnBorder"
             : ""
         }
       >
@@ -247,7 +266,7 @@ const Team = () => {
           <div>
             {/* Brief Introduction */}
             {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} editlabel={"Brief Info"}/>
             )}
 
             <BriefIntroFrontend
@@ -279,26 +298,37 @@ const Team = () => {
       </div>
 
       <div className="container">
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12 mt-4">
             {isAdmin && hasPermission && (
               <div className="text-end mb-4">
                 <Link
                   to="#"
-                  className="btn btn-primary"
+                  className="btn btn-outline"
                   onClick={() => editHandler("addSection", true)}
                 >
-                  Add team
-                  <i className="fa fa-plus ms-2" aria-hidden="true"></i>
+                  <i className="fa fa-plus" aria-hidden="true"></i>
                 </Link>
               </div>
             )}
           </div>
-        </div>
+        </div> */}
 
-        <div className="row mb-0 py-2 py-md-4">
-          <div className="col-md-6 fs-3 mt-4 mt-md-0">
-            <Title title="Our Team" cssClass="fs-1 pageTitle" />
+        <div className="row mb-0 mt-4">
+          <div className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start">
+            <Title title="Our Team" cssClass="pageTitle fs-4" />
+            
+            {isAdmin && hasPermission && (
+              <div className="text-end">
+                <Link
+                  to="#"
+                  className="btn btn-outline ms-2"
+                  onClick={() => editHandler("addSection", true)}
+                > New
+                  <i className="fa fa-plus ms-2" aria-hidden="true"></i>
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="col-md-6 mb-4">
@@ -332,7 +362,7 @@ const Team = () => {
               deleteImageURL="ourteam/UpdateOurteamDetail/"
               imagePostURL="ourteam/createteam/"
               imageUpdateURL="ourteam/UpdateOurteamDetail/"
-              imageLabel="Add Profile Image"
+              imageLabel="Upload Image"
               showDescription={false}
               showExtraFormFields={getTeamMemberFields(
                 editCarousel?.team_member_position
@@ -435,7 +465,7 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
             {isAdmin && hasPermission && (
               <>
                 <EditIcon
-                  editHandler={() => editHandler("editSection", true, item)}
+                  editHandler={() => editHandler("editSection", true, item)} editlabel={"Profile"}
                 />
                 <Link
                   className="deleteSection"

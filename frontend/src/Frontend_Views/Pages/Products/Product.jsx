@@ -33,22 +33,22 @@ const Product = ({
     >
       <ProductItemStyled>
         {isAdmin && hasPermission && (
-          <div className="d-flex justify-content-end gap-2">
+          <div className="d-flex justify-content-end pe-4">
             {editHandler && (
               <Link
                 onClick={() => editHandler("product", true, item)}
-                className=" p-2"
+                className="btn p-2"
               >
                 <i
-                  className="fa fa-pencil fs-5 text-warning"
+                  className="fa fa-pencil fs-6 text-warning"
                   aria-hidden="true"
                 ></i>
               </Link>
             )}
             {deleteProduct && (
-              <Link onClick={(event) => deleteProduct(item)} className=" p-2">
+              <Link onClick={(event) => deleteProduct(item)} className="btn">
                 <i
-                  className="fa fa-trash-o fs-5 text-danger"
+                  className="fa fa-trash-o fs-6 text-danger"
                   aria-hidden="true"
                 ></i>
               </Link>
@@ -64,11 +64,11 @@ const Product = ({
           }
         >
           <img
-            src={getImagePath(item.path)}
+            src={getImagePath(item?.path)}
             alt={item.alternitivetext}
-            className="w-75 rounded-4 shadow object-fit-cover productImage"
+            className="w-75 rounded-1 shadow object-fit-cover productImage"
           />
-        </Link>
+       
 
         <Title
           title={
@@ -76,8 +76,9 @@ const Product = ({
               ? item.category_name
               : item.product_name
           }
-          cssClass="productName mt-3 fw-semibold"
+          cssClass="productName mt-1 fs-6 fw-medium"
         />
+         </Link>
         {/* <p>{item.description}</p> */}
       </ProductItemStyled>
     </div>

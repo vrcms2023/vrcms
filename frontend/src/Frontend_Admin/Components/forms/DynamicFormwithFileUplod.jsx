@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import Error from "../Error";
-import { InputFields, RichTextInputEditor } from "./FormFields";
+import { InputFields, RichTextInputEditor, RichTextInputEditor_V2 } from "./FormFields";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
 import Button from "../../../Common/Button";
 import { axiosServiceApi } from "../../../util/axiosUtil";
@@ -31,9 +31,11 @@ export default function DynamicFormwithFileUplod({
   };
   const [error, setError] = useState(false);
   const {
+    control,
     register,
     reset,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: useMemo(() => {
@@ -51,9 +53,7 @@ export default function DynamicFormwithFileUplod({
       if (item === "category_fileuplod") {
         formData.append(
           item,
-          typeof data[item] !== "string" && data[item]?.length > 0
-            ? data[item][0]
-            : ""
+          typeof data[item] !== "string" && data[item]?.length > 0 ? data[item][0] : ""
         );
       } else formData.append(item, data[item]);
     });
@@ -65,13 +65,9 @@ export default function DynamicFormwithFileUplod({
     try {
       if (data?.id) {
         formData.append("updated_by", getCookie("userName"));
-        response = await axiosServiceApi.patch(
-          `${formUpdateURL}${data.id}/`,
-          formData,
-          {
-            headers: header,
-          }
-        );
+        response = await axiosServiceApi.patch(`${formUpdateURL}${data.id}/`, formData, {
+          headers: header,
+        });
       } else {
         formData.append("created_by", getCookie("userName"));
         response = await axiosServiceApi.post(formPostURL, formData, {
@@ -98,12 +94,9 @@ export default function DynamicFormwithFileUplod({
     const _body = JSON.parse(JSON.stringify(item));
     _body["category_fileuplod"] = "";
     const deleteImageByID = async () => {
-      const response = await axiosServiceApi.patch(
-        `${formDeleteURL}${id}/`,
-        _body
-      );
+      const response = await axiosServiceApi.patch(`${formDeleteURL}${id}/`, _body);
       if (response) {
-        console.log(response);
+        //console.log(response);
       }
     };
 
@@ -113,7 +106,12 @@ export default function DynamicFormwithFileUplod({
           <DeleteDialog
             onClose={onClose}
             callback={deleteImageByID}
-            message={`deleting the ${category_name} image?`}
+            // message={`deleting the ${category_name} image?`}
+            message={
+              <>
+                Confirm deletion of <span>{category_name}</span> image?
+              </>
+            }
           />
         );
       },
@@ -121,28 +119,25 @@ export default function DynamicFormwithFileUplod({
   };
   return (
     <>
-      <EditAdminPopupHeader
-        closeHandler={closeHandler}
-        title={componentTitle}
-      />
-      <hr />
+      <EditAdminPopupHeader closeHandler={closeHandler} title={componentTitle} />
+      {/* <hr /> */}
       <div className="container">
         <div className="row">
-          <div className="col-md-12 px-5">
-            {error && (
-              <div className="fw-bold">{error && <Error>{error}</Error>}</div>
-            )}
+          <div className="col-md-12">
+            {error && <div className="fw-bold">{error && <Error>{error}</Error>}</div>}
             <form onSubmit={handleSubmit(saveForm)}>
               {Object.keys(dynamicFormFields).map((e, index) => {
                 const { label, type, fieldName, value } = dynamicFormFields[e];
 
                 if (type == "richText") {
                   return (
-                    <RichTextInputEditor
+                    <RichTextInputEditor_V2
+                      Controller={Controller}
+                      control={control}
                       key={index}
                       label={label}
-                      editorSetState={setEditorState}
-                      initialText={""}
+                      name={fieldName}
+                      value={value}
                     />
                   );
                 } else {
@@ -162,16 +157,10 @@ export default function DynamicFormwithFileUplod({
               })}
 
               {editObject?.category_fileuplod ? (
-                <div className="text-end">
-                  <Link
-                    className="moreLink "
-                    onClick={() => downloadFile(editObject?.category_fileuplod)}
-                  >
-                    Download File{" "}
-                    <i
-                      className="fa fa-download ms-1 fs-5 rounded-2 p-2 border border-1 border-info bg-white"
-                      aria-hidden="true"
-                    ></i>
+                <div className="d-flex justify-content-between align-items-center border border-white p-2">
+                  <Link to="" onClick={() => downloadFile(editObject?.category_fileuplod)}>
+                    <i className="fa fa-download ms-1 fs-5 rounded-2 p-2" aria-hidden="true"></i>{" "}
+                    Download File
                   </Link>
                   <Link to="" onClick={() => deleteFileHandler(editObject)}>
                     <i
@@ -183,19 +172,18 @@ export default function DynamicFormwithFileUplod({
               ) : (
                 ""
               )}
-              <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-1 gap-md-3 mt-5">
-                <button className="btn btn-secondary mx-3">save</button>
-                {/* <Button
-                  type="button"
-                  cssClass="btn btn-secondary"
-                  label={"Save"}
-                  handlerChange={()=> {}}
-                /> */}
+              <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-2 mt-3">
                 <Button
                   type="submit"
                   cssClass="btn btn-outline"
                   label={"Close"}
                   handlerChange={closeHandler}
+                />
+                <Button
+                  type="submit"
+                  cssClass="btn btn-primary mx-3"
+                  label={"Save"}
+                  handlerChange={() => {}}
                 />
               </div>
             </form>

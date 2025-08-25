@@ -1,0 +1,7 @@
+.TestimonialModal {
+    img {
+        height: 180px;
+        width: 100%;
+        object-fit: cover;
+    }
+}

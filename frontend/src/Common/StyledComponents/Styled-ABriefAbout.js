@@ -54,14 +54,19 @@ export const ABriefIntroStyled = styled.div`
     
     
 
-    form {
-        // padding: 30px 50px;
-        border-radius: 15px;
-        border: 1px solid ${({theme}) =>  theme.lightgray};
-        // background: ${({theme}) =>  theme.white};
+    form.contactForm {
+        padding: 30px 60px;
+        border-radius: 8px;
+        // border: 1px solid ${({theme}) =>  theme.lightgray};
+        background: ${({theme}) =>  theme.white};
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
 
         @media(max-width: 576px) {
             padding: 30px;   
+        }
+
+        input, textarea {
+            border-color: ${({theme}) =>  theme.lightgray} !important;
         }
     }
 `

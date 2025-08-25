@@ -15,6 +15,7 @@ import { getImagePath } from "../../util/commonUtil";
 import { getFormDynamicFields } from "../../util/dynamicFormFields";
 import Ancher from "../../Common/Ancher";
 import ContactForm from "../../Common/Forms/ContactForm";
+import RichTextView from "../../Common/RichTextView";
 
 const ABriefAbout = ({
   cssClass,
@@ -26,6 +27,8 @@ const ABriefAbout = ({
   componentFlip = false,
   showForm = false,
   categoryId,
+  popupTitle = "Who We Are Banner",
+  imageLabel = "Banner Image",
 }) => {
   const editComponentObj = {
     whoweare: false,
@@ -44,9 +47,7 @@ const ABriefAbout = ({
   useEffect(() => {
     const getBannerData = async () => {
       try {
-        const response = await axiosClientServiceApi.get(
-          `banner/clientBannerIntro/${pageType}/`
-        );
+        const response = await axiosClientServiceApi.get(`banner/clientBannerIntro/${pageType}/`);
         if (response?.status === 200) {
           setBannerData(response.data.imageModel);
         }
@@ -62,18 +63,12 @@ const ABriefAbout = ({
   return (
     <>
       <div className={`${col1}`}>
-        <img
-          src={getImagePath(bannerData?.path)}
-          alt=""
-          className={imageClass}
-        />
+        <img src={getImagePath(bannerData?.path)} alt="" className={imageClass} />
       </div>
 
       <div className={`${col2}`}>
         {/* Edit */}
-        {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("whoweare", true)} />
-        )}
+        {isAdmin && hasPermission && <EditIcon editHandler={() => editHandler("whoweare", true)} />}
         {bannerData?.banner_title ? (
           <Title title={bannerData.banner_title} cssClass={cssClass} />
         ) : (
@@ -85,11 +80,20 @@ const ABriefAbout = ({
           ""
         )}
         <div>
-          <p className="lh-md">
-            {bannerData?.banner_descripiton
-              ? bannerData.banner_descripiton
-              : "Update description"}
-          </p>
+          {/* <p className="lh-md">
+            {bannerData?.banner_descripiton ? bannerData.banner_descripiton : "Update description"}
+          </p> */}
+          <RichTextView
+            data={
+              bannerData?.banner_descripiton
+                ? bannerData?.banner_descripiton
+                : isAdmin
+                  ? "Please Update Content"
+                  : ""
+            }
+            className={"introDecTitleCss bannerDescriptionCss"}
+            showMorelink={false}
+          />
         </div>
         {showForm && <ContactForm categoryId={categoryId} />}
         {bannerData.moreLink ? (
@@ -111,8 +115,8 @@ const ABriefAbout = ({
             editHandler={editHandler}
             componentType="whoweare"
             pageType={pageType}
-            popupTitle="Who We Are Banner"
-            imageLabel="Banner Image"
+            popupTitle={popupTitle}
+            imageLabel={imageLabel}
             showDescription={false}
             dimensions={dimensions}
             showExtraFormFields={getFormDynamicFields(pageType)}

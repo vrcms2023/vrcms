@@ -1,5 +1,6 @@
 import React from "react";
 import "./DeleteDialog.css";
+import { ConfirmationDialogStyled } from "./StyledComponents/Styled-ConfirmationDialog";
 
 const DeleteDialog = ({
   title,
@@ -12,13 +13,14 @@ const DeleteDialog = ({
   projectName,
 }) => {
   return (
+    <ConfirmationDialogStyled>
     <div className="popup-overlay d-flex justify-content-center align-items-center flex-column  border-light">
-      <h1 className="fs-4 text-secondary text-uppercase">
-        {title ? title : "Are you sure?"}
+      <h1 className="">
+        {title ? title : "Are you sure ?"}
       </h1>
-      <p className="text-muted m-0">{message ? message : ""}</p>
+      <p className="text-muted m-0 mesg">{message ? message : ""}</p>
       <div className="w-100">
-        <hr className="mb-4 border border-secondary" />
+        <hr className="mb-4" />
         <div className="d-flex justify-content-center align-items-center gap-2 w-100">
           {showConfirmButotns ? (
             <>
@@ -26,7 +28,8 @@ const DeleteDialog = ({
                 No
               </button>
               <button
-                className={`border btn bg-danger text-white ${buttonStyle ? buttonStyle : "btn-outline-danger"}`}
+                className={`border btn btn-outline-dark text-danger`}
+                // className={`border btn text-danger ${buttonStyle ? buttonStyle : "btn-outline-danger"}`}
                 onClick={() => {
                   callback();
                   onClose();
@@ -49,6 +52,7 @@ const DeleteDialog = ({
         </div>
       </div>
     </div>
+    </ConfirmationDialogStyled>
   );
 };
 

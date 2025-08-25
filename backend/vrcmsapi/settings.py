@@ -82,7 +82,7 @@ INSTALLED_APPS = [
     'app_themes',
     'showHideComponents',
     'advertisement',
-    'TitleDesc'
+    'counter'
 ]
 
 MIDDLEWARE = [
@@ -117,6 +117,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'vrcmsapi.wsgi.application'
+
+JOB_ACCEPT_FILE_TYPE= ['.docx', '.rtf', '.pdf']
 
 
 # Database
@@ -157,8 +159,8 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
-EMAIL_THANK_YOU_MESSAGE="Thank you contact VRCMS"
-EMAIL_REQUEST_MESSAGE="Exciting New Features & Updates in VRCMS Enhance Your Experience!"
+EMAIL_REQUEST_MESSAGE_1="Discover the Latest Features and Enhancements from  to Elevate Your Experience!"
+EMAIL_REQUEST_MESSAGE_2="to Elevate Your Experience!"
 
 # env properties not workign need check later
 # EMAIL_HOST = 'smtp.gmail.com'
@@ -169,8 +171,12 @@ EMAIL_REQUEST_MESSAGE="Exciting New Features & Updates in VRCMS Enhance Your Exp
 # EMAIL_USE_SSL = True
 # EMAIL_USE_TLS = False
 
-EMAIL_CUSTOMER_MESSAGE = "Thanks for contacting VRCMS! This automatic reply is just to let you know that we received your message and we will get back to you with a response as quickly as possible. During business hours, we do our best to reply as quick as we can, usually within a couple of hours."
-
+EMAIL_CUSTOMER_THANK_YOU_MESSAGE = "Thanks for contacting"
+EMAIL_CUSTOMER_AUTO_REPLY_MESSAGE = " This automatic reply is just to let you know that we received your message and we will get back to you with a response as quickly as possible. During business hours, we do our best to reply as quick as we can, usually within a couple of hours."
+EMAIL_CUSTOMER_JOB_THANK_YOU_MESSAGE="Thank you for apply job in"
+APP_NAME = " ICONSENGG "
+APP_CONTACT_EMAIL = "Info@turbineservicesllc.com"
+RESUME_FILE_SIZE = 5
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -270,6 +276,13 @@ DJOSER = {
         'password_changed_confirmation': 'user_auth.email.PasswordChangedConfirmationEmail',
     },
 }
+
+CSRF_COOKIE_PATH = "/"                # Ensure cookie is available on all paths
+CSRF_COOKIE_DOMAIN = None            # Default: current domain
+CSRF_COOKIE_HTTPONLY = False         # Allows JS access
+CSRF_COOKIE_SAMESITE = "Lax"         # Allows sending CSRF from same-site frontends
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
 
 CORS_EXPOSE_HEADERS = ['Content-Disposition']  # ← Critical for React access
 

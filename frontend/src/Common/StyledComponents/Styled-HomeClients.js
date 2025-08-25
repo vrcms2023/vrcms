@@ -1,8 +1,17 @@
 import styled from "styled-components";
+import bgImage from "../../Images/background-styling-image.png";
 
 export const HomeClientsStyled = styled.div`
   background-color: ${({ theme }) => theme.white};
-  margin: 64px 0;
+  // margin: 64px 0;
+  background-attachment: fixed;
+  // background-image: url(${bgImage});
+  background-position: center;
+  padding: 120px 0;
+
+  @media (max-width: 480px) {
+    padding: 32px 0;
+  }
 
 
 .clients-image-slider{
@@ -113,38 +122,50 @@ export const HomeClientsStyled = styled.div`
     overflow: hidden !important;
   }
 
+  .slick-list {
+    width: 100% !important;
+  }
+
   .slick-track {
     overflow: hidden !important;
   }
 }
 
 .slick-initialized .slick-slide {
-  width: auto !important;
-  min-width: 240px;
-  padding: 8px 16px;
-  // border: 1px solid #ededed;
-  margin: 0 12px;
-  cursor: pointer;
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px !important;
+    height: 100px;
+    padding: 16px;
+    border: 2px dashed ${({ theme }) => theme.grayccc};
+    background: white;
+    margin: 0 12px;
+    cursor: pointer;
 
-  div { 
+  div {
     img {
       margin: 0 auto;
+      width: 100%;
+      height: 100% !important;
+      // box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
     }
   }
 }
 
-.ql-editor {
-  padding: 10px !imporrant;
-  text-align: center;
-  max-width: 240px;
+// .ql-editor {
+//   padding: 10px !imporrant;
+//   text-align: center;
+//   max-width: 240px;
 
-  p {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  }
-}
+//   p {
+//   display: -webkit-box;
+//   -webkit-line-clamp: 2;
+//   -webkit-box-orient: vertical;
+//   overflow: hidden;
+//   }
+// }
 
     
  

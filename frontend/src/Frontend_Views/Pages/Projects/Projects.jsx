@@ -12,7 +12,7 @@ import {
   getFormDynamicFields,
   imageDimensionsJson,
 } from "../../../util/dynamicFormFields";
-import "./Projects.css";
+// import "./Projects.css";
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import { removeActiveClass } from "../../../util/ulrUtil";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
@@ -23,6 +23,7 @@ import {
   getAllShowHideComponentsList,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
+import { ProjectsPageStyled } from "../../../Common/StyledComponents/Styled-ProjectsPage";
 
 const Projects = () => {
   const editComponentObj = {
@@ -70,19 +71,11 @@ const Projects = () => {
   };
 
   const [showHideCompList, setShowHideCompList] = useState([]);
-  const showHideCompPageLoad = useRef(true);
   const { error, showHideList } = useSelector((state) => state.showHide);
 
   useEffect(() => {
     if (showHideList.length > 0) {
       setShowHideCompList(getObjectsByKey(showHideList));
-    }
-  }, [showHideList]);
-
-  useEffect(() => {
-    if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getAllShowHideComponentsList());
-      showHideCompPageLoad.current = false;
     }
   }, [showHideList]);
 
@@ -100,36 +93,60 @@ const Projects = () => {
 
   return (
     <>
-      <div className="position-relative">
+      <div
+        className={
+          showHideCompList?.projetstbanner?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "componentOnBorder"
+            : ""
+        }
+      >
         {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
-        )}
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        />
-      </div>
-      {componentEdit.banner && (
-        <div className={`adminEditTestmonial selected `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle="Projects Banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Project Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.projetstbanner?.visibility}
+            title={"Banner"}
+            componentName={"projetstbanner"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.projetstbanner?.id}
           />
-        </div>
-      )}
-
+        )}
+        {showHideCompList?.projetstbanner?.visibility && (
+          <>
+            <div className="position-relative">
+              {isAdmin && hasPermission && (
+                <EditIcon editHandler={() => editHandler("banner", true)} />
+              )}
+              <Banner
+                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+                bannerState={componentEdit.banner}
+              />
+            </div>
+            {componentEdit.banner && (
+              <div className={`adminEditTestmonial selected `}>
+                <ImageInputsForm
+                  editHandler={editHandler}
+                  componentType="banner"
+                  popupTitle="Projects Banner"
+                  pageType={`${pageType}-banner`}
+                  imageLabel="Project Banner Image"
+                  showDescription={false}
+                  showExtraFormFields={getFormDynamicFields(
+                    `${pageType}-banner`
+                  )}
+                  dimensions={imageDimensionsJson("banner")}
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
       <div
         className={
           showHideCompList?.projectsbriefintro?.visibility &&
           isAdmin &&
           hasPermission
-            ? "border border-info mb-2"
+            ? "componentOnBorder"
             : ""
         }
       >
@@ -177,22 +194,23 @@ const Projects = () => {
           </div>
         )}
       </div>
-      <div className="container-fluid container-lg ">
-        {ongoing?.length > 0 && (
-          <ProjectItem projectList={ongoing} projectType={ongoing} />
-        )}
+      <ProjectsPageStyled>
+        <div className="container-fluid projectsList">
+          {ongoing?.length > 0 && (
+            <ProjectItem projectList={ongoing} projectType={ongoing} />
+          )}
 
-        {/* Completed Projects */}
-        {completed?.length > 0 && (
-          <ProjectItem projectList={completed} projectType={completed} />
-        )}
+          {/* Completed Projects */}
+          {completed?.length > 0 && (
+            <ProjectItem projectList={completed} projectType={completed} />
+          )}
 
-        {/* future Projects */}
-        {future?.length > 0 && (
-          <ProjectItem projectList={future} projectType={future} />
-        )}
-      </div>
-
+          {/* future Projects */}
+          {future?.length > 0 && (
+            <ProjectItem projectList={future} projectType={future} />
+          )}
+        </div>
+      </ProjectsPageStyled>
       {show && <ModelBg />}
     </>
   );

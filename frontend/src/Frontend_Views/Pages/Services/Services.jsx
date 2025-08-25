@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import _ from "lodash";
 // Components
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import AdminBriefIntro from "../../../Frontend_Admin/Components/BriefIntro/index";
@@ -17,16 +19,9 @@ import DeleteDialog from "../../../Common/DeleteDialog";
 import AddService from "../../../Frontend_Admin/Components/Services";
 import AddEditAdminNews from "../../../Frontend_Admin/Components/News";
 import { getReactHostDetils, removeActiveClass } from "../../../util/ulrUtil";
-import {
-  getFormDynamicFields,
-  getServiceFormFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
-import {
-  axiosClientServiceApi,
-  axiosServiceApi,
-} from "../../../util/axiosUtil";
-import { getImagePath, urlStringFormat } from "../../../util/commonUtil";
+import { getFormDynamicFields, getServiceFormFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
+import { getImagePath, sortByFieldName, storeServiceMenuValueinCookie, urlStringFormat } from "../../../util/commonUtil";
 import { sortByCreatedDate } from "../../../util/dataFormatUtil";
 import { getCookie } from "../../../util/cookieUtil";
 
@@ -34,6 +29,10 @@ import { getCookie } from "../../../util/cookieUtil";
 import { ServicesStyled } from "../../../Common/StyledComponents/Styled-Services";
 
 import RichTextView from "../../../Common/RichTextView";
+import ShowHideToggle from "../../../Common/ShowHideToggle";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import { createShowHideComponent, updateShowHideComponent } from "../../../redux/showHideComponent/showHideActions";
+import ShareButtons from "../../../Common/Share";
 
 const Services = () => {
   const editComponentObj = {
@@ -55,6 +54,29 @@ const Services = () => {
   const navigate = useNavigate();
   const pageLoadServiceID = getCookie("pageLoadServiceID");
   const pageLoadServiceName = getCookie("pageLoadServiceName");
+  const pageLoadServiceURL = getCookie("pageLoadServiceURL");
+  const location = useLocation();
+  const isNewServiceCreated = useRef(false);
+  const { serviceMenu, serviceerror } = useSelector((state) => state.serviceMenu);
+
+  useEffect(() => {
+    const pageURL = location.pathname;
+    if (pageURL && serviceMenu.length > 0 && !isNewServiceCreated.current) {
+      const sortedMapped = sortByFieldName(serviceMenu, "service_postion");
+      const selectedMneu = _.filter(sortedMapped, (item) => {
+        return item?.page_url?.toLowerCase() === pageURL;
+      })[0];
+      if (selectedMneu) {
+        storeServiceMenuValueinCookie(selectedMneu);
+        setSelectedServiceProject(selectedMneu);
+      } else {
+        navigate(sortedMapped[0]?.page_url);
+        storeServiceMenuValueinCookie(sortedMapped[0]);
+        setSelectedServiceProject(sortedMapped[0]);
+      }
+      setSelectedServiceList([]);
+    }
+  }, [location, serviceMenu]);
 
   // useEffect(() => {
   //   window.scrollTo(0, 0);
@@ -67,15 +89,16 @@ const Services = () => {
     }
   });
 
-  useEffect(() => {
-    if (pageLoadServiceID && pageLoadServiceName)
-      getSelectedServiceObject(pageLoadServiceID);
-    setSelectedServiceName(pageLoadServiceName);
-    setSelectedServiceProject({
-      id: pageLoadServiceID,
-      services_page_title: pageLoadServiceName,
-    });
-  }, [uid, pageLoadServiceID]);
+  // useEffect(() => {
+  //   if (pageLoadServiceID && pageLoadServiceName && pageLoadServiceURL)
+  //     getSelectedServiceObject(pageLoadServiceID);
+  //   setSelectedServiceName(pageLoadServiceName);
+  //   setSelectedServiceProject({
+  //     id: pageLoadServiceID,
+  //     services_page_title: pageLoadServiceName,
+  //     page_url: pageLoadServiceURL,
+  //   });
+  // }, [uid, pageLoadServiceID]);
 
   useEffect(() => {
     removeActiveClass();
@@ -85,13 +108,9 @@ const Services = () => {
     if (selectedServiceProject?.id) {
       setEditCarousel({
         serviceID: selectedServiceProject ? selectedServiceProject?.id : "",
-        services_page_title: selectedServiceProject
-          ? selectedServiceProject?.services_page_title
-          : "",
+        services_page_title: selectedServiceProject ? selectedServiceProject?.services_page_title : "",
       });
-      setSelectedServiceName(
-        urlStringFormat(selectedServiceProject?.services_page_title)
-      );
+      setSelectedServiceName(urlStringFormat(selectedServiceProject?.services_page_title));
       getSelectedServiceObject(selectedServiceProject.id);
     }
   }, [selectedServiceProject]);
@@ -102,15 +121,9 @@ const Services = () => {
       return;
     }
     try {
-      let response = await axiosClientServiceApi.get(
-        `/services/getSelectedClientService/${id}/`
-      );
-      setSelectedServiceList(sortByCreatedDate(response.data.servicesFeatures));
-      //window.scrollTo(0, 0);
-      if (window.history.replaceState && isAdmin) {
-        const url = `${getReactHostDetils()}/services/${pageLoadServiceName}/`;
-        window.history.pushState({}, null, url);
-      }
+      let response = await axiosClientServiceApi.get(`/services/getSelectedClientService/${id}/`);
+      const createdDate = sortByCreatedDate(response.data.servicesFeatures);
+      setSelectedServiceList(createdDate);
     } catch (error) {
       console.log("Unable to get the intro");
     }
@@ -121,9 +134,7 @@ const Services = () => {
     const name = item.feature_title;
 
     const deleteSelectedSection = async () => {
-      const response = await axiosServiceApi.delete(
-        `/services/updateFeatureService/${id}/`
-      );
+      const response = await axiosServiceApi.delete(`/services/updateFeatureService/${id}/`);
       if (response.status === 204) {
         const list = selectedServiceList.filter((list) => list.id !== id);
         setSelectedServiceList(list);
@@ -137,7 +148,12 @@ const Services = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSelectedSection}
-            message={`deleting the ${name} Service?`}
+            // message={`deleting the ${name} Service?`}
+            message={
+              <>
+                Confirm deletion of <span>{name}</span> Service?
+              </>
+            }
           />
         );
       },
@@ -145,11 +161,7 @@ const Services = () => {
   };
 
   useEffect(() => {
-    if (
-      !componentEdit.editSection &&
-      !componentEdit.addSection &&
-      selectedServiceProject?.id !== undefined
-    ) {
+    if (!componentEdit.editSection && !componentEdit.addSection && selectedServiceProject?.id !== undefined) {
       getSelectedServiceObject(selectedServiceProject.id);
     }
   }, [componentEdit.editSection, componentEdit.addSection]);
@@ -161,40 +173,74 @@ const Services = () => {
       let data = item;
       data.services_page_title = selectedServiceProject?.services_page_title;
       setEditCarousel(data);
+      isNewServiceCreated.current = false;
     }
     document.body.style.overflow = "hidden";
   };
   // console.log(selectedServiceProject)
+
+  const [showHideCompList, setShowHideCompList] = useState([]);
+  const dispatch = useDispatch();
+  const { error, success, showHideList } = useSelector((state) => state.showHide);
+
+  useEffect(() => {
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
+    }
+  }, [showHideList]);
+
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
+    } else {
+      const newData = {
+        componentName: compName.toLowerCase(),
+        pageType: pageType,
+      };
+      dispatch(createShowHideComponent(newData));
+    }
+  };
+
   return (
     <>
-      {/* Page Banner Component */}
-      <div className="position-relative">
+      <div className={showHideCompList?.servicebanner?.visibility && isAdmin && hasPermission ? "componentOnBorder" : ""}>
         {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
-        )}
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-${pageLoadServiceName}-banner/`}
-          bannerState={componentEdit.banner}
-          pageLoadServiceName={pageLoadServiceName}
-        />
-      </div>
-      {componentEdit.banner && (
-        <div className={`adminEditTestmonial selected `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle={`Service ${pageLoadServiceName ? "-" + pageLoadServiceName : ""} Banner`}
-            pageType={`${pageType}-${pageLoadServiceName}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(
-              `${pageType}-${selectedServiceName}-banner`
-            )}
-            dimensions={imageDimensionsJson("banner")}
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.servicebanner?.visibility}
+            title={"Banner"}
+            componentName={"servicebanner"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.servicebanner?.id}
           />
-        </div>
-      )}
-
+        )}
+        {showHideCompList?.servicebanner?.visibility && (
+          <>
+            {/* Page Banner Component */}
+            <div className="position-relative">
+              {isAdmin && hasPermission && <EditIcon editHandler={() => editHandler("banner", true)} editlabel={"Banner"} />}
+              <Banner
+                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-${pageLoadServiceName}-banner/`}
+                bannerState={componentEdit.banner}
+                pageLoadServiceName={pageLoadServiceName}
+              />
+            </div>
+            {componentEdit.banner && (
+              <div className={`adminEditTestmonial selected `}>
+                <ImageInputsForm
+                  editHandler={editHandler}
+                  componentType="banner"
+                  popupTitle={`Service ${pageLoadServiceName ? "-" + pageLoadServiceName : ""} Banner`}
+                  pageType={`${pageType}-${pageLoadServiceName}-banner`}
+                  imageLabel="Banner Image"
+                  showDescription={false}
+                  showExtraFormFields={getFormDynamicFields(`${pageType}-${selectedServiceName}-banner`)}
+                  dimensions={imageDimensionsJson("banner")}
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
       {/* End Of Page Banner Component */}
 
       <ServicesStyled>
@@ -227,30 +273,20 @@ const Services = () => {
             setSelectedServiceProject={setSelectedServiceProject}
             selectedServiceProject={selectedServiceProject}
             pageType="service"
+            isNewServiceCreated={isNewServiceCreated}
           />
         )}
         {/* End of Add Service Page */}
 
-        <div
-          className={
-            isAdmin && hasPermission
-              ? "container-fluid my-md-3 servicesPage"
-              : "container my-md-3 servicesPage"
-          }
-          id="servicesPage"
-        >
+        <div className={isAdmin && hasPermission && "container my-md-3 servicesPage" } id="servicesPage">
           <div className="row">
-            <div
-              className={isAdmin && hasPermission ? "col-md-12" : "col-md-12"}
-            >
-              {isAdmin && hasPermission && selectedServiceProject?.id && (
+            <div className={isAdmin && hasPermission ? "col-md-12" : "col-md-12"}>
+              {isAdmin && hasPermission && selectedServiceProject?.id && selectedServiceProject.page_url !== "/services/addservices" && (
                 <div className="d-flex justify-content-center align-items-center my-4 p-2 border border-info">
                   <span className="mx-2 text-dark">
                     {" "}
                     Add new section in
-                    <span className="text-dark fw-bold mx-1">
-                      {selectedServiceProject.services_page_title}
-                    </span>
+                    <span className="text-dark fw-bold mx-1">{selectedServiceProject.services_page_title}</span>
                     page
                   </span>
                   <button
@@ -271,20 +307,18 @@ const Services = () => {
                     category="services"
                     editCarousel={editCarousel}
                     setEditCarousel={setEditCarousel}
-                    componentType={`${
-                      componentEdit.editSection ? "editSection" : "addSection"
-                    }`}
+                    componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
                     imageGetURL="services/createServiceFeatures/"
                     imagePostURL="services/createServiceFeatures/"
                     imageUpdateURL="services/updateFeatureService/"
                     imageDeleteURL="services/updateFeatureService/"
-                    imageLabel="Add Service Banner"
+                    imageLabel="Upload Image"
+                    popupTitle={`Add Content ${pageLoadServiceName ? " - " + pageLoadServiceName : ""} `}
                     showDescription={false}
                     showExtraFormFields={getServiceFormFields(
                       selectedServiceProject ? selectedServiceProject?.id : "",
-                      selectedServiceProject
-                        ? selectedServiceProject?.services_page_title
-                        : ""
+                      selectedServiceProject ? selectedServiceProject?.services_page_title : "",
+                      selectedServiceProject ? selectedServiceProject?.page_url : ""
                     )}
                     dimensions={imageDimensionsJson("addService")}
                   />
@@ -293,7 +327,10 @@ const Services = () => {
                 ""
               )}
 
-              <div className="row ">
+              <div className="d-flex justify-content-end align-items-end position-relative">
+                <ShareButtons />
+              </div>
+              <div className="row">
                 <div className="col-12 col-md-8">
                   {/* <Title title={"Services"} cssClass="fs-3 mb-2 pageTitle" /> */}
                   {/* <Title
@@ -304,66 +341,45 @@ const Services = () => {
               /> */}
                 </div>
               </div>
-              {selectedServiceList.map((item, index) => (
-                <div
-                  className={`row my-5 ${
-                    isAdmin
-                      ? "border border-warning mb-3 position-relative"
-                      : ""
-                  } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
-                  key={item.id}
-                >
-                  {isAdmin && hasPermission && (
-                    <>
-                      <EditIcon
-                        editHandler={() =>
-                          editHandler("editSection", true, item)
-                        }
-                      />
-                      <Link
-                        className="deleteSection"
-                        onClick={() => deleteSelectedSectionInPage(item)}
-                      >
-                        <i
-                          className="fa fa-trash-o text-danger fs-4"
-                          aria-hidden="true"
-                        ></i>
-                      </Link>
-                    </>
-                  )}
-                  <div className="col-md-8 px-5">
-                    <Title
-                      title={
-                        item.feature_title
-                          ? item.feature_title
-                          : "Update Feature title"
-                      }
-                      cssClass="fs-1 fw-bold mt-3 mb-1"
-                    />
-                    <Title
-                      title={
-                        item.feature_sub_title
-                          ? item.feature_sub_title
-                          : "Update Feature sub title"
-                      }
-                      cssClass="fs-5 text-secondary mb-2"
-                    />
-                    <RichTextView
-                      data={item.feature_description}
-                      className={""}
-                    />
-                    {/*                  
+              {selectedServiceProject.page_url !== "/services/addservices" &&
+                selectedServiceList.map((item, index) => (
+                  <div
+                    className={`row ${isAdmin ? "border border-warning mb-3 position-relative" : ""} ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
+                    key={item.id}
+                  >
+                    {isAdmin && hasPermission && (
+                      <>
+                        <EditIcon editHandler={() => editHandler("editSection", true, item)} />
+                        <Link className="deleteSection" onClick={() => deleteSelectedSectionInPage(item)}>
+                          <i className="fa fa-trash-o text-danger fs-4" aria-hidden="true"></i>
+                        </Link>
+                      </>
+                    )}
+                    <div className="col-lg-8 p-4 px-lg-5 d-flex flex-column jusity-content-center">
+                      {item.feature_title && (
+                        <Title title={item.feature_title ? item.feature_title : "Update Feature title"} cssClass="fs-3 mb-2 title" />
+                      )}
+
+                      {item.feature_sub_title && (
+                        <Title
+                          title={item.feature_sub_title ? item.feature_sub_title : "Update Feature sub title"}
+                          cssClass="fs-5 text-secondary mb-2"
+                        />
+                      )}
+
+                      {item.feature_description && <RichTextView data={item.feature_description} className={""} showMorelink={false} />}
+                      {/*                  
                     <div
                       dangerouslySetInnerHTML={{
                         __html: item.feature_description,
                       }}
                     /> */}
+                    </div>
+                    <div className="col-lg-4 px-0 d-flex align-items-center justify-content-center">
+                      <img src={getImagePath(item.path)} alt="" />
+                    </div>
                   </div>
-                  <div className="col-md-4">
-                    <img src={getImagePath(item.path)} alt="" />
-                  </div>
-                </div>
-              ))}
+                ))}
             </div>
 
             {/* {isAdmin && hasPermission && (

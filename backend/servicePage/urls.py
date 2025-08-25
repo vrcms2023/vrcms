@@ -5,6 +5,7 @@ from .views import *
 urlpatterns = [
     path('createService/', CreateService.as_view(), name="create_get_Services"),
     path('updateService/<pk>/', ServicesDetail.as_view(), name='retrieve_update_delete_Service'),
+    path('updateServiceIndex/', UpdateServiceIndex.as_view(), name="update_index"),
     path('createServiceFeatures/', CreateFeatureService.as_view(), name="create_get_Service_Feature"),
     path('updateFeatureService/<pk>/', FeatureServicesDetail.as_view(), name='retrieve_update_delete_Service_Feature'),
     path('createServiceAccordion/', CreateServiceAccordion.as_view(), name="create_get_Service_Accordion"),

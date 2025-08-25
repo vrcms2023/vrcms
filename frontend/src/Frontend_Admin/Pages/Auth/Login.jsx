@@ -7,16 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Title from "../../../Common/Title";
 import Button from "../../../Common/Button";
 import Error from "../../Components/Error";
-import {
-  removeAllCookies,
-  setCookie,
-  getCookie,
-} from "../../../util/cookieUtil";
-import {
-  userLogin,
-  getUser,
-  getSelectedUserPermissions,
-} from "../../../redux/auth/authActions";
+import { removeAllCookies, setCookie, getCookie } from "../../../util/cookieUtil";
+import { userLogin, getUser, getSelectedUserPermissions } from "../../../redux/auth/authActions";
 import { updatedPermisisons } from "../../../redux/auth/authSlice";
 import CSRFToken from "../../../Frontend_Views/Components/CRSFToken";
 
@@ -24,15 +16,27 @@ import CSRFToken from "../../../Frontend_Views/Components/CRSFToken";
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
 import { isAppAccess } from "../../../util/permissions";
 import Ancher from "../../../Common/Ancher";
+import { InputFields } from "../../Components/forms/FormFields";
+import { fieldValidation } from "../../../util/validationUtil";
 
 const Login = () => {
-  const { access, userInfo, error, permissions } = useSelector(
-    (state) => state.auth
-  );
+  const { access, userInfo, error, permissions } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    reset,
+    handleSubmit,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+  });
+
+  const handleChange = (fieldName) => {
+    clearErrors(fieldName);
+  };
 
   const navigate = useNavigate();
 
@@ -83,25 +87,15 @@ const Login = () => {
     dispatch(userLogin(data));
   };
 
-  const loginHandler = () => {};
-
   return (
     <LoginStyled>
       <div className="text-center">
-
-        {/* <button
-          className="btn btn-secondary mt-4"
-          onClick={() => navigate("/")}
-        >
-          Back to Home
-        </button> */}
         <Ancher
           Ancherpath="/"
           AncherClass="btn btn-outline mt-5 w-auto"
           handleModel=""
           AncherLabel=""
           icon="fa-home"
-          // icon="fa-arrow-right"
           iconCss="fs-4"
         />
       </div>
@@ -109,59 +103,41 @@ const Login = () => {
         <div className="d-flex justify-content-center align-items-center flex-column">
           <form onSubmit={handleSubmit(submitForm)} className="shadow">
             <CSRFToken />
-            {error ? (
-              <p className="fw-bold">{error && <Error>{error}</Error>}</p>
-            ) : (
-              ""
-            )}
+            {error && <div className="fw-bold">{error && <Error>{error}</Error>}</div>}
+
             <input
               type="hidden"
               {...register("csrfmiddlewaretoken")}
               name="csrfmiddlewaretoken"
               value="m6pDnuW9RPTEuK66x0H4oc09JSfyv6bD"
             />
-            {/* <Title
-              title="login"
-              cssClass="text-center text-dark mb-4 fw-medium fs-4"
-            /> */}
-            <div className="mb-3">
-              <label
-                htmlFor="userName"
-                className="form-label text-dark fw-normal"
-              >
-                Email
-              </label>
-              <input
-                type="text"
-                {...register("email")}
-                name="email"
-                className="form-control bg-light"
-                id="userName"
-                aria-describedby="emailHelp"
-              />
-              {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
-            </div>
-            <div className="mb-3">
-              <label
-                htmlFor="signPassord"
-                className="form-label text-dark fw-normal"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                {...register("password")}
-                name="password"
-                className="form-control bg-light"
-                id="signPassord"
-              />
-            </div>
+
+            <InputFields
+              type="text"
+              label="Email"
+              fieldName="email"
+              register={register}
+              isRequired={true}
+              validationObject={fieldValidation.email}
+              error={errors?.email?.message}
+              onChange={() => handleChange("email")}
+            />
+            <InputFields
+              type="password"
+              label="Password"
+              fieldName="password"
+              register={register}
+              isRequired={true}
+              validationObject={fieldValidation.password}
+              error={errors?.password?.message}
+              onChange={() => handleChange("password")}
+            />
 
             <div className="d-grid gap-2 mt-4">
               <Button
                 type="submit"
                 cssClass="btn btn-lg btn-primary"
-                handlerChange={loginHandler}
+                handlerChange={() => {}}
                 label="Login"
               />
             </div>
@@ -177,14 +153,12 @@ const Login = () => {
               </div>
               <div className="">
                 <small>
-                  Forgot your Password ?{" "}
-                  <Link to="/reset_password  ">Reset Password </Link>
+                  Forgot your Password ? <Link to="/reset_password  ">Reset Password </Link>
                 </small>
               </div>
               <div className="">
                 <small>
-                  Not Activate your account ?{" "}
-                  <Link to="/resend_activation">Activate</Link>
+                  Not Activate your account ? <Link to="/resend_activation">Activate</Link>
                 </small>
               </div>
             </div>

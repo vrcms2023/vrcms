@@ -435,13 +435,20 @@ const AddProject = () => {
     <div className="container-fluid pt-4">
       <CSRFToken />
 
-      <div className="row px-3 px-lg-5">
+      <div className="row">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
           <Title
-            title={`${id ? "Edit Project" : "Add Project"}`}
-            cssClass="text-center blue-500 fs-5 mb-3 mb-md-0"
+            title={`${id ? "Edit " : "Add "} Project`}
+            cssClass="fs-4 mb-3 mb-md-0"
           />
           <div className="d-flex gap-1 justify-content-center align-items-center">
+            <Button
+              type=""
+              icon="fa-chevron-left me-2"
+              cssClass="btn btn-outline"
+              label="Back"
+              handlerChange={() => navigate(-1)}
+            />
             <Button
               type=""
               cssClass="btn btn-outline"
@@ -547,10 +554,11 @@ const AddProject = () => {
             {/* <div className="d-flex justify-content-center align-items-center"> */}
             <div className="">
               {readOnlyTitle && (
-                <h3 className="mb-4 fs-5 text-center border-bottom pt-0 pb-3 py-md-3">
+                // <Title title={readOnlyTitle} cssClass="text-center border-bottom fs-5"  />
+                <h3 className="mb-4 fs-5 text-center border-bottom pt-0 pb-3 pb-md-3">
                   {readOnlyTitle}
                   <span
-                    className="badge bg-warning text-dark px-2 ms-2"
+                    className="badge bg-light border text-dark px-2 ms-2"
                     style={{ fontSize: ".7rem", fontWeight: "500" }}
                   >
                     {projectStatus.toUpperCase()}
@@ -882,7 +890,7 @@ const AddProject = () => {
                   </div>
                 </div>
 
-                {/* DOCUMENTS */}
+                {/* PDF DOCUMENTS */}
                 <div
                   className="tab-pane fade collateralUpload"
                   id="v-pills-profile"
@@ -890,14 +898,25 @@ const AddProject = () => {
                   aria-labelledby="v-pills-profile-tab"
                 >
                   <div className="mb-4">
-                    <div className="mb-3 border p-3 text-center">
+                    <div className="mb-3 border text-center">
+                      <div className="text-end p-2 bg-light">
                       <Link
                         className="moreLink text-decoration-underline"
                         onClick={() => handleModel("PDF")}
                       >
-                        Upload <strong>PDF's</strong>{" "}
-                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        Add <strong>PDF's</strong>
+                        {/* <i class="fa fa-plus ms-2" aria-hidden="true"></i> */}
                       </Link>
+                      </div>
+
+                      <CatageoryImgC
+                      title={`${readOnlyTitle} PDF's`}
+                      catategoryImgs={pdfObject}
+                      catategoryImgState={setPdfObject}
+                      project={newProject}
+                      category="PDF"
+                      cssClass="thumb75"
+                    />
                     </div>
 
                     {showModel && fileuploadType === "PDF" && (
@@ -919,25 +938,37 @@ const AddProject = () => {
                         setEditCarousel={setEditCarousel}
                       />
                     )}
-                    <CatageoryImgC
-                      title={`${readOnlyTitle} PDF's`}
-                      catategoryImgs={pdfObject}
-                      catategoryImgState={setPdfObject}
-                      project={newProject}
-                      category="PDF"
-                      cssClass="thumb75 mb-5 shadow-lg"
-                    />
+                    
                   </div>
 
+                  {/* PDF DOCUMENTS */}
+
                   <div className="mb-4">
-                    <div className="mb-3 border p-3 text-center">
+                    <div className="mb-3 border text-center">
+                      <div className="bg-light text-end p-2">
                       <Link
                         className="moreLink text-decoration-underline"
                         onClick={() => handleModel("Plans")}
                       >
-                        Upload Plan <strong>Image</strong>{" "}
-                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        Add <strong>Image's</strong>
+                        {/* Add Plan <strong>Image</strong>{" "} */}
+                        {/* <i class="fa fa-upload" aria-hidden="true"></i> */}
                       </Link>
+                    </div>
+
+                      <CatageoryImgC
+                      title={`${readOnlyTitle} Plans`}
+                      catategoryImgs={planObject}
+                      catategoryImgState={setPlanObject}
+                      project={newProject}
+                      category="Plans"
+                      cssClass="thumb75  shadow-lg rounded-2"
+                    />
+                    {/* {planObject?.length > 0 && (
+                      <small className="text-info">
+                        Click on the image to delete
+                      </small>
+                    )} */}
                     </div>
 
                     {showModel && fileuploadType === "Plans" && (
@@ -959,7 +990,7 @@ const AddProject = () => {
                         setEditCarousel={setEditCarousel}
                       />
                     )}
-                    <CatageoryImgC
+                    {/* <CatageoryImgC
                       title={`${readOnlyTitle} Plans`}
                       catategoryImgs={planObject}
                       catategoryImgState={setPlanObject}
@@ -971,19 +1002,30 @@ const AddProject = () => {
                       <small className="text-info">
                         Click on the image to delete
                       </small>
-                    )}
+                    )} */}
                   </div>
 
                   <div className="mb-4">
-                    <div className="mb-3 border p-3 text-center ">
-                      <Link
+                    <div className="mb-3 border text-center ">
+                      <div className="text-end p-2 bg-light">
+                        <Link
                         className="moreLink text-decoration-underline"
                         onClick={() => handleModel("availability")}
                       >
+                        Add <strong>Image's / PDF's</strong>
                         {/* Click here to upload Add Availability (Upload image / PDF) */}
-                        Upload Availability <strong>Image's / PDF's</strong>
-                        <i class="fa fa-upload ms-2" aria-hidden="true"></i>
+                        {/* Add Availability <strong>Image's / PDF's</strong> */}
+                        {/* <i class="fa fa-upload ms-2" aria-hidden="true"></i> */}
                       </Link>
+                      </div>
+                       <CatageoryImgC
+                      title={`${readOnlyTitle} Availibility`}
+                      catategoryImgs={availabileObject}
+                      catategoryImgState={setAvailabileObject}
+                      project={newProject}
+                      category="availability"
+                      cssClass="thumb75 rounded-3"
+                    />
                     </div>
 
                     {showModel && fileuploadType === "availability" && (
@@ -1006,26 +1048,30 @@ const AddProject = () => {
                       />
                     )}
 
-                    <CatageoryImgC
-                      title={`${readOnlyTitle} Availibility`}
-                      catategoryImgs={availabileObject}
-                      catategoryImgState={setAvailabileObject}
-                      project={newProject}
-                      category="availability"
-                      cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
-                    />
+                   
                   </div>
 
                   <div className="mb-3">
-                    <div className="mb-3 border p-3 text-center">
+                    <div className="mb-3 border text-center">
+                      <div className="text-end p-2 bg-light">
                       <Link
                         className="moreLink text-decoration-underline"
                         onClick={() => handleModel("price")}
                       >
                         {/* Click here to upload Add Price (Upload image / PDF) */}
-                        Upload Pricing <strong>Image's / PDF's</strong>
+                        Add Pricing <strong>Image's / PDF's</strong>
                         <i class="fa fa-upload ms-2" aria-hidden="true"></i>
                       </Link>
+                      </div>
+
+                       <CatageoryImgC
+                      title={`${readOnlyTitle} Price`}
+                      catategoryImgs={priceObject}
+                      catategoryImgState={setPriceObject}
+                      project={newProject}
+                      category="price"
+                      cssClass="thumb75 rounded-3"
+                    />
                     </div>
 
                     {showModel && fileuploadType === "price" && (
@@ -1048,16 +1094,10 @@ const AddProject = () => {
                       />
                     )}
 
-                    <CatageoryImgC
-                      title={`${readOnlyTitle} Price`}
-                      catategoryImgs={priceObject}
-                      catategoryImgState={setPriceObject}
-                      project={newProject}
-                      category="price"
-                      cssClass="thumb75 mb-5 shadow-lg border border-5 border-warning rounded-5"
-                    />
+                   
                   </div>
                 </div>
+                
                 {/* Add GOOGLE MAP  */}
                 <div
                   className="tab-pane fade"
@@ -1096,7 +1136,8 @@ const AddProject = () => {
                     " height="450" width="100%" &gt; &;t;/iframe&gt;
                   </code>
                 </div>
-
+                
+                {/* Add SPECIFICATIONS  */}
                 <div
                   className="tab-pane fade"
                   id="v-pills-messages"
@@ -1111,6 +1152,8 @@ const AddProject = () => {
                     specifications={specifications}
                   />
                 </div>
+
+                {/* Add AMENITIES */}
                 <div
                   className="tab-pane fade"
                   id="v-pills-settings"
@@ -1146,10 +1189,27 @@ const AddProject = () => {
                       onChange={changeHandler}
                       id="imageDescription"
                     />
+                    
                   </div>
 
+                  <CatageoryImgC
+                    title={`${readOnlyTitle} Image Gallery`}
+                    catategoryImgs={imgGallery}
+                    catategoryImgState={setImgGallery}
+                    project={newProject}
+                    category="images"
+                    cssClass="thumb75 shadow-lg border border-1 rounded"
+                  />
+                  {/* {imgGallery?.length > 0 && (
+                    <div>
+                      <small class="text-warning">
+                        Click on the image to delete
+                      </small>
+                    </div>
+                  )} */}
+
                   <FileUpload
-                    title="Add Images"
+                    title="Upload Images"
                     project={newProject}
                     updated_by={userName}
                     category="images"
@@ -1163,21 +1223,6 @@ const AddProject = () => {
                     setEditCarousel={setEditCarousel}
                   />
 
-                  <CatageoryImgC
-                    title={`${readOnlyTitle} Image Gallery`}
-                    catategoryImgs={imgGallery}
-                    catategoryImgState={setImgGallery}
-                    project={newProject}
-                    category="images"
-                    cssClass="thumb75 shadow-lg border border-1 rounded"
-                  />
-                  {imgGallery?.length > 0 && (
-                    <div>
-                      <small class="text-warning">
-                        Click on the image to delete
-                      </small>
-                    </div>
-                  )}
                 </div>
 
                 <div
@@ -1289,10 +1334,10 @@ const AddProject = () => {
             </div>
           </div>
           <div className="row border-top botder-1">
-            <div className="col-lg-12 py-4 d-flex gap-1 justify-content-center align-items-center">
+            <div className="col-lg-12 py-4 d-flex gap-3 justify-content-center align-items-center">
               <Button
                 type="submit"
-                cssClass="btn btn btn-secondary"
+                cssClass="btn btn btn-outline"
                 label="Cancel"
                 handlerChange={() => navigate("/dashboard")}
               />

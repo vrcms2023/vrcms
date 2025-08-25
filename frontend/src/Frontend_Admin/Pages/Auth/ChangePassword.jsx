@@ -9,9 +9,22 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/auth/authSlice";
 import { toast } from "react-toastify";
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
+import { InputFields } from "../../Components/forms/FormFields";
+import { fieldValidation } from "../../../util/validationUtil";
 
 const ChangePassword = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+  });
+
+  const handleChange = (fieldName) => {
+    clearErrors(fieldName);
+  };
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState(false);
   const dispatch = useDispatch();
@@ -24,10 +37,7 @@ const ChangePassword = () => {
     };
     const body = JSON.stringify(data);
     try {
-      const data = await axiosServiceApi.post(
-        `/user/auth/users/set_password/`,
-        body
-      );
+      const data = await axiosServiceApi.post(`/user/auth/users/set_password/`, body);
       if (data.status === 204) {
         setSuccess(true);
         toast.success(`Password updated successfully `);
@@ -40,12 +50,6 @@ const ChangePassword = () => {
         setServerError(error.email[0]);
       } else setServerError(error[0]);
     }
-  };
-
-  const loginHandler = () => {};
-
-  const inputHandler = (e) => {
-    reset();
   };
 
   const reset = () => {
@@ -70,29 +74,18 @@ const ChangePassword = () => {
           </div>
         </div> */}
             <div className="row d-flex flex-column justify-content-center align-items-center">
-              <form
-                onSubmit={handleSubmit(resetPassword)}
-                className="shadow-lg"
-              >
+              <form onSubmit={handleSubmit(resetPassword)} className="shadow-lg">
                 {serverError ? (
-                  <p className="fw-bold">
-                    {serverError && <Error>{serverError}</Error>}
-                  </p>
+                  <div className="fw-bold">{serverError && <Error>{serverError}</Error>}</div>
                 ) : (
                   ""
                 )}
 
-                <Title
-                  title="Change Password"
-                  cssClass="text-center text-dark mb-4 fw-bold fs-4"
-                />
+                <Title title="Change Password" cssClass="text-center text-dark mb-4 fw-bold fs-4" />
 
                 {success ? (
                   <>
-                    <div>
-                      Your password Updated successfully, login with new
-                      password
-                    </div>
+                    <div>Your password Updated successfully, login with new password</div>
                     <div className="mt-3">
                       Click here to login ?{" "}
                       <Link onClick={dispatch(logout())} to="/login">
@@ -102,11 +95,44 @@ const ChangePassword = () => {
                   </>
                 ) : (
                   <>
-                    <div className="mb-3">
-                      <label
-                        htmlFor="currentPassord"
-                        className="form-label text-dark fw-normal"
-                      >
+                    <>
+                      <InputFields
+                        type="password"
+                        label="Password"
+                        fieldName="current_password"
+                        register={register}
+                        isRequired={true}
+                        validationObject={fieldValidation.password}
+                        error={errors?.current_password?.message}
+                        onChange={() => handleChange("current_password")}
+                      />
+                      <small className="text-muted">Current Password</small>
+                    </>
+                    <>
+                      <InputFields
+                        type="password"
+                        label="Password"
+                        fieldName="new_password"
+                        register={register}
+                        isRequired={true}
+                        validationObject={fieldValidation.password}
+                        error={errors?.new_password?.message}
+                        onChange={() => handleChange("new_password")}
+                      />
+                      <small className="text-muted">Passwords must be at least 6 characters.</small>
+                    </>
+                    <InputFields
+                      type="password"
+                      label="Confirm Password"
+                      fieldName="re_new_password"
+                      register={register}
+                      isRequired={true}
+                      validationObject={fieldValidation.confirmPassword}
+                      error={errors?.re_new_password?.message}
+                      onChange={() => handleChange("re_new_password")}
+                    />
+                    {/* <div className="mb-3">
+                      <label htmlFor="currentPassord" className="form-label text-dark fw-normal">
                         Current Password
                       </label>
                       <input
@@ -120,12 +146,9 @@ const ChangePassword = () => {
                         className="form-control"
                         id="signPassord"
                       />
-                    </div>
+                    </div> 
                     <div className="mb-3">
-                      <label
-                        htmlFor="signPassord"
-                        className="form-label text-dark fw-normal"
-                      >
+                      <label htmlFor="signPassord" className="form-label text-dark fw-normal">
                         New Password
                       </label>
                       <input
@@ -139,15 +162,10 @@ const ChangePassword = () => {
                         className="form-control"
                         id="signPassord"
                       />
-                      <small className="text-muted">
-                        Passwords must be at least 6 characters.
-                      </small>
-                    </div>
-                    <div className="mb-3">
-                      <label
-                        htmlFor="signPassordRe"
-                        className="form-label text-dark fw-normal"
-                      >
+                      <small className="text-muted">Passwords must be at least 6 characters.</small>
+                    </div>*/}
+                    {/* <div className="mb-3">
+                      <label htmlFor="signPassordRe" className="form-label text-dark fw-normal">
                         Re-enter password
                       </label>
                       <input
@@ -161,13 +179,13 @@ const ChangePassword = () => {
                         className="form-control"
                         id="signPassordRe"
                       />
-                    </div>
+                    </div> */}
 
                     <div className="d-grid gap-2 mt-4">
                       <Button
                         type="submit"
                         cssClass="btn btn-lg btn-primary"
-                        handlerChange={loginHandler}
+                        handlerChange={() => {}}
                         label="Reset Password"
                       />
                     </div>

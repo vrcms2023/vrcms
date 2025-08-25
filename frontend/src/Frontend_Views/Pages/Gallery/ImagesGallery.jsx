@@ -2,16 +2,15 @@ import React, { useEffect, useState } from "react";
 import EditIcon from "../../../Common/AdminEditIcon";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
 import AdminBanner from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm-List";
-import {
-  getImageGalleryFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { getImageGalleryFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 
 import { paginationDataFormat } from "../../../util/commonUtil";
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import { ImageGalleryStyled } from "../../../Common/StyledComponents/Styled-ImageGallery";
 import ImageGalleryComponent from "../../Components/ImageGalleryComponent";
 import CustomPagination from "../../../Common/CustomPagination";
+import ModelBg from "../../../Common/ModelBg";
+import AdminListOfRecordsUpload from "../../../Frontend_Admin/Components/forms/V2/AdminListOfRecordsUpload";
 
 const ImagesGallery = () => {
   const editComponentObj = {
@@ -20,7 +19,7 @@ const ImagesGallery = () => {
 
   const pageType = "imageGallery";
   const { isAdmin, hasPermission } = useAdminLoginStatus();
-  //const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [imageGallery, setImageGallery] = useState([]);
   //const [showModal, setShowModal] = useState(false);
@@ -31,7 +30,8 @@ const ImagesGallery = () => {
 
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
-    //setShow(value);
+    // setShow(value);
+    setShow(!show);
     document.body.style.overflow = "hidden";
   };
 
@@ -39,7 +39,7 @@ const ImagesGallery = () => {
     const getGalleryImages = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `imgGallery/clientImageVidoeGallery/${pageType}/`
+          `appGallery/clientImageGallery/${pageType}/`
         );
 
         if (response?.status === 200) {
@@ -58,15 +58,6 @@ const ImagesGallery = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // const findThumbHandler = (id) => {
-  //   const findImg = imageGallery.find((allGallery) => allGallery.id === id);
-  //   setShowModal(!showModal);
-  //   setImg(findImg);
-  // };
-
-  // const closeModel = () => {
-  //   setShowModal(!showModal);
-  // };
   const setResponseData = (data) => {
     setImageGallery(data.results);
     setPaginationData(paginationDataFormat(data));
@@ -80,23 +71,23 @@ const ImagesGallery = () => {
           <div className="row">
             <div className="col-md-12 py-5">
               {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler("gallery", true)} />
+                <EditIcon editHandler={() => editHandler("gallery", true)} editlabel={"Gallery"} />
               )}
               {componentEdit.gallery && (
                 <div className={`adminEditTestmonial selected `}>
-                  <AdminBanner
+                  <AdminListOfRecordsUpload
                     editHandler={editHandler}
                     componentType="gallery"
                     popupTitle="Image Gallery"
-                    getImageListURL={`imgGallery/createImageVidoeGallery/${pageType}/`}
-                    deleteImageURL="imgGallery/updateImageVidoeGallery/"
-                    imagePostURL="imgGallery/createImageVidoeGallery/"
-                    imageUpdateURL="imgGallery/updateImageVidoeGallery/"
-                    imageIndexURL="imgGallery/updateNewsIndex/"
-                    imageLabel="Add Image"
-                    showDescription={false}
+                    getImageListURL={`appGallery/createImageGallery/${pageType}/`}
+                    deleteImageURL="appGallery/updateImageGallery/"
+                    imagePostURL="appGallery/createImageGallery/"
+                    imageUpdateURL="appGallery/updateImageGallery/"
+                    imageIndexURL="appGallery/updateImageIndex/"
+                    imageLabel="Upload Image"
                     showExtraFormFields={getImageGalleryFields("imageGallery")}
                     dimensions={imageDimensionsJson("imageGallery")}
+                    isclosePopup={false}
                   />
                 </div>
               )}
@@ -116,13 +107,13 @@ const ImagesGallery = () => {
             paginationData={paginationData}
             paginationURL={
               isAdmin
-                ? `imgGallery/createImageVidoeGallery/${pageType}/`
-                : `imgGallery/clientImageVidoeGallery/${pageType}/`
+                ? `appGallery/createImageGallery/${pageType}/`
+                : `appGallery/clientImageGallery/${pageType}/`
             }
             paginationSearchURL={
               isAdmin
-                ? `imgGallery/createImageVidoeGallery/${pageType}/`
-                : `imgGallery/clientImageVidoeGallery/${pageType}/`
+                ? `appGallery/createImageGallery/${pageType}/`
+                : `appGallery/clientImageGallery/${pageType}/`
             }
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
@@ -131,6 +122,7 @@ const ImagesGallery = () => {
           />
         )}
       </div>
+      {show && <ModelBg />}
     </>
   );
 };

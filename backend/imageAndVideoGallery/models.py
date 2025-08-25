@@ -1,8 +1,11 @@
 from django.db import models
-from common.BaseModel import ImageModel
+from common.BaseModel import FileUpload
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+import os
 # Create your models here.
 
-class imageAndVideoGallery(ImageModel):
+class Gallery(FileUpload):   
     image_title =       models.CharField(max_length=200, null=True, blank=True)
     image_description = models.CharField(max_length=500, null=True, blank=True)
     likes  =            models.CharField(max_length=100, null=True, blank=True)
@@ -10,5 +13,32 @@ class imageAndVideoGallery(ImageModel):
     Downloads  =        models.CharField(max_length=100, null=True, blank=True)
     location =          models.CharField(max_length=500, null=True, blank=True)
     imageDimension =    models.CharField(max_length=200, null=True, blank=True)
-    position =          models.IntegerField(null=True, blank=True, default=0)
-    image_WebURL =          models.CharField(max_length=200, null=True, blank=True)
+    position =          models.IntegerField(null=True, blank=True, default=0)   
+    category =          models.CharField(max_length=100, null=True, blank=True)
+
+    class Meta:
+        abstract = True 
+    
+
+class VideoGallery(Gallery):      
+    video_WebURL =      models.URLField(null=True, blank=True)
+    video_id =          models.CharField(max_length=50, blank=True)
+    video_thumbnail_url = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.title
+    
+class ImageGallery(Gallery): 
+    image_WebURL =      models.URLField(null=True, blank=True)   
+
+    def __str__(self):
+        return self.title
+    
+@receiver(post_delete, sender=ImageGallery)
+@receiver(post_delete, sender=VideoGallery)
+def delete_file_on_imageupload_delete(sender, instance, **kwargs):
+    print("instance.path",instance.path )
+    if instance.path and instance.path.name:
+        if os.path.isfile(instance.path.path):
+            os.remove(instance.path.path)
+            

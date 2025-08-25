@@ -41,12 +41,12 @@ const UserAdmin = () => {
   }, []);
 
   const handleUserDelete = (user) => {
-    console.log(user);
+    // console.log(user);
     const deleteUser = async () => {
-      // const response = await axiosServiceApi.delete(
-      // `/user/auth/users/me/?current_password=Abcd@1234`,
-      // );
-      // console.log(response)
+      const response = await axiosServiceApi.delete(`/user/auth/deleteuser/${user.id}/`);
+      if (response?.status === 204) {
+        getAllUserDetails();
+      }
     };
 
     confirmAlert({
@@ -55,7 +55,12 @@ const UserAdmin = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteUser}
-            message={`you want to delete the ${user.userName}`}
+            // message={`you want to delete the ${user.userName}`}
+            message={
+              <>
+                Confirm deletion of <span>{user.userName}</span> ?
+              </>
+            }
           />
         );
       },
@@ -68,12 +73,9 @@ const UserAdmin = () => {
    */
   const activeDeactiveUser = async (user) => {
     try {
-      const response = await axiosServiceApi.put(
-        `/user/auth/appAccess/${user.id}/`,
-        {
-          is_appAccess: !user.is_appAccess,
-        }
-      );
+      const response = await axiosServiceApi.put(`/user/auth/appAccess/${user.id}/`, {
+        is_appAccess: !user.is_appAccess,
+      });
 
       if (response.status !== 200) {
         toast.error("Unable to active user");
@@ -123,9 +125,7 @@ const UserAdmin = () => {
             <tbody>
               {userDetails?.map((user) => (
                 <tr key={user.id}>
-                  <td className={`${user.is_admin ? "" : ""}`}>
-                    {user.userName}
-                  </td>
+                  <td className={`${user.is_admin ? "" : ""}`}>{user.userName}</td>
                   <td className={`${user.is_admin ? "" : ""}`}>{user.email}</td>
                   <td className={`${user.is_admin ? "text-danger" : ""}`}>
                     {user.is_admin ? "Super Admin" : "Maintainer"}
@@ -133,9 +133,7 @@ const UserAdmin = () => {
                   <td className={`${user.is_admin ? "text-danger" : ""}`}>
                     <span
                       className={`badge ${
-                        isAppAccess(user)
-                          ? "bg-success"
-                          : "bg-secondary text-mute"
+                        isAppAccess(user) ? "bg-success" : "bg-secondary text-mute"
                       } fw-normal`}
                     >
                       {isAppAccess(user) ? "Active" : "In Active"}{" "}

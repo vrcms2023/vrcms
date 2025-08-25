@@ -15,6 +15,7 @@ class HomeIntro(BaseModel):
     intro_morelink = models.CharField(max_length=100, null=True, blank=True)
     subTitle =      models.JSONField(null=True, blank=True)
     pageType =      models.CharField(max_length=100, null=False)
+    intro_position = models.IntegerField(null=True, blank=True, default=0)
    
 
 class ClientLogo(ImageModel):

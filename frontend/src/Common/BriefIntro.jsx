@@ -6,9 +6,12 @@ import { axiosClientServiceApi } from "../util/axiosUtil";
 
 import { BriefIntroStyled } from "./StyledComponents/Styled-BriefIntro";
 import Ancher from "./Ancher";
+import RichTextView from "./RichTextView";
+import useAdminLoginStatus from "./customhook/useAdminLoginStatus";
 
 const BriefIntroFrontend = ({
   pageType,
+  border,
   introState,
   linkCss,
   linkLabel,
@@ -21,8 +24,11 @@ const BriefIntroFrontend = ({
   anchersvgColor,
   showLink = true,
   maxHeight,
+  seoTitle,
+  mainTitleClassess
 }) => {
   const [introValue, setIntroValues] = useState([]);
+  const { isAdmin, hasPermission } = useAdminLoginStatus();
 
   useEffect(() => {
     const getBriefIntro = async () => {
@@ -44,17 +50,31 @@ const BriefIntroFrontend = ({
   }, [introState, pageType]);
 
   return (
-    <div className="container-fluid">
+    <div className={`container-fluid ${border}`}>
       <BriefIntroStyled>
         <div className="row ">
           <div className={`${detailsContainerCss} briefIntro`}>
             {introValue?.intro_title !== "" && (
-              <Title title={introValue?.intro_title} cssClass={introTitleCss} />
+              <Title title={introValue?.intro_title} cssClass={introTitleCss} mainTitleClassess={mainTitleClassess} seoTitle/>
             )}
             {introValue?.subTitle !== "" && (
-              <Title title={introValue?.subTitle} cssClass={introSubTitleCss} />
+              <Title subTitle={introValue?.subTitle} cssClass={introSubTitleCss} />
             )}
-            {introValue?.intro_desc ? (
+            {introValue?.intro_desc !== "" ? (
+              <RichTextView
+                data={
+                  introValue?.intro_desc
+                    ? introValue?.intro_desc
+                    : isAdmin
+                      ? "Please Update Brief Intro"
+                      : ""
+                }
+                className={"introDecTitleCss"}
+                showMorelink={false}
+              />
+            ) : ""}
+            
+            {/* {introValue?.intro_desc ? (
               <p className={introDecTitleCss}>
                 {introValue?.intro_desc
                   ? introValue?.intro_desc
@@ -62,7 +82,7 @@ const BriefIntroFrontend = ({
               </p>
             ) : (
               ""
-            )}
+            )} */}
 
             {showLink && introValue?.intro_morelink && (
               <div className={anchorContainer}>

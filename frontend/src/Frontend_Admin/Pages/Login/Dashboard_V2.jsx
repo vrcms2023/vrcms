@@ -125,7 +125,7 @@ const Dashboard = () => {
             onClose={onClose}
             callback={deleteDashBoardProject}
             projectName={project.projectTitle}
-            message={`${project.projectTitle}  project will be archive`}
+            message={`${project.projectTitle}  project will be archived`}
           />
         );
       },
@@ -153,7 +153,8 @@ const Dashboard = () => {
             callback={reStoreDashBoardProject}
             projectName={project.projectTitle}
             label={"restore"}
-            message={`you want to restore ${project.projectTitle} project ?`}
+            // message={`you want to restore ${project.projectTitle} project ?`}
+            message={<>Do you wish to restore  <span>{project.projectTitle}</span> project?</>}
           />
         );
       },
@@ -185,7 +186,7 @@ const Dashboard = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSelectedNews}
-            message={`${project.projectTitle} project will be  deleted permentely `}
+            message={`${project.projectTitle} project will be deleted permentely `}
           />
         );
       },

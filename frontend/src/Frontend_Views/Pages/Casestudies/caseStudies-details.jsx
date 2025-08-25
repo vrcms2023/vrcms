@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import { useParams } from "react-router-dom";
 import { CaseStudiesPageStyled } from "../../../Common/StyledComponents/Styled-Casestudies";
@@ -16,6 +17,12 @@ import {
 import { getImagePath } from "../../../util/commonUtil";
 
 import RichTextView from "../../../Common/RichTextView";
+import ShowHideToggle from "../../../Common/ShowHideToggle";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import {
+  createShowHideComponent,
+  updateShowHideComponent,
+} from "../../../redux/showHideComponent/showHideActions";
 
 const CaseStudiesDetails = () => {
   const editComponentObj = {
@@ -59,36 +66,86 @@ const CaseStudiesDetails = () => {
     // }
     document.body.style.overflow = "hidden";
   };
+
+  const [showHideCompList, setShowHideCompList] = useState([]);
+  const dispatch = useDispatch();
+  const { error, success, showHideList } = useSelector(
+    (state) => state.showHide
+  );
+
+  useEffect(() => {
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
+    }
+  }, [showHideList]);
+
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
+    } else {
+      const newData = {
+        componentName: compName.toLowerCase(),
+        pageType: pageType,
+      };
+      dispatch(createShowHideComponent(newData));
+    }
+  };
+
   return (
     <CaseStudiesPageStyled>
-      {/* Page Banner Component */}
-      <div className="position-relative">
+      <div
+        className={
+          showHideCompList?.casestudiesdetailsbanner?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "componentOnBorder"
+            : ""
+        }
+      >
         {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
-        )}
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        />
-      </div>
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle="Case Studies Details Banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
+          <ShowHideToggle
+            showhideStatus={
+              showHideCompList?.casestudiesdetailsbanner?.visibility
+            }
+            title={"Banner"}
+            componentName={"casestudiesdetailsbanner"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.casestudiesdetailsbanner?.id}
           />
-        </div>
-      ) : (
-        ""
-      )}
+        )}
+        {showHideCompList?.casestudiesdetailsbanner?.visibility && (
+          <>
+            {/* Page Banner Component */}
+            <div className="position-relative">
+              {isAdmin && hasPermission && (
+                <EditIcon editHandler={() => editHandler("banner", true)} />
+              )}
+              <Banner
+                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+                bannerState={componentEdit.banner}
+              />
+            </div>
+            {componentEdit.banner && (
+              <div className="adminEditTestmonial">
+                <ImageInputsForm
+                  editHandler={editHandler}
+                  componentType="banner"
+                  popupTitle="Case Studies Details Banner"
+                  pageType={`${pageType}-banner`}
+                  imageLabel="Banner Image"
+                  showDescription={false}
+                  showExtraFormFields={getFormDynamicFields(
+                    `${pageType}-banner`
+                  )}
+                  dimensions={imageDimensionsJson("banner")}
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
 
-      {/* Brief Introduction */}
+      {/* Brief Introduction
       {isAdmin && hasPermission && (
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
       )}
@@ -102,23 +159,28 @@ const CaseStudiesDetails = () => {
         <div className={`adminEditTestmonial selected `}>
           <AdminBriefIntro
             editHandler={editHandler}
-            popupTitle="Case Studies Details"
+            popupTitle="Case Studies Brief"
             componentType="briefIntro"
             pageType={pageType}
           />
         </div>
-      )}
+      )} */}
 
       {selectedCaseStudieDetails && (
-        <div className="container">
-          <div className="d-flex flex-column flex-column-reverse flex-sm-row justify-content justify-content-between align-items-center gap-3 mt-4">
-            <h1 className="">{selectedCaseStudieDetails.case_studies_title}</h1>
+        <div className="container mt-3">
+          <div className="row">
+            <div className="col-md-12 text-end">
             <Ancher
               AncherLabel="Back"
-              AncherClass="btn btn-secondary d-flex gap-2 justify-content-center align-items-center float-end fw-bold"
-              Ancherpath={`/clients/casestudies/`}
+              AncherClass="btn btn-outline"
+              Ancherpath={`/casestudies/`}
               AnchersvgColor=""
+              icon="fa-chevron-left"
             />
+            </div>
+          </div>
+          <div className="d-flex flex-column flex-column-reverse flex-sm-row justify-content justify-content-between align-items-center gap-3 mt-4">
+            <h1 className="">{selectedCaseStudieDetails.case_studies_title}</h1>
           </div>
           <div className="row">
             <div className="col-md-12 py-3 caseStudieDetails">
@@ -131,6 +193,7 @@ const CaseStudiesDetails = () => {
                 <RichTextView
                   data={selectedCaseStudieDetails.case_studies_description}
                   className={""}
+                  showMorelink={false}
                 />
               </p>
             </div>

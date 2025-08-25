@@ -130,7 +130,12 @@ const ClientsList = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSection}
-            message={`deleting the ${name} Service?`}
+            // message={`deleting the ${name} Service?`}
+            message={
+              <>
+                Confirm deletion of <span>{name}</span> service?
+              </>
+            }
           />
         );
       },
@@ -138,7 +143,6 @@ const ClientsList = () => {
   };
 
   const [showHideCompList, setShowHideCompList] = useState([]);
-  const showHideCompPageLoad = useRef(true);
   const dispatch = useDispatch();
   const { error, success, showHideList } = useSelector(
     (state) => state.showHide
@@ -147,13 +151,6 @@ const ClientsList = () => {
   useEffect(() => {
     if (showHideList.length > 0) {
       setShowHideCompList(getObjectsByKey(showHideList));
-    }
-  }, [showHideList]);
-
-  useEffect(() => {
-    if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getAllShowHideComponentsList());
-      showHideCompPageLoad.current = false;
     }
   }, [showHideList]);
 
@@ -171,37 +168,61 @@ const ClientsList = () => {
 
   return (
     <>
-      {/* Page Banner Component */}
-      <div className="position-relative">
+      <div
+        className={
+          showHideCompList?.clientlistbanner?.visibility &&
+          isAdmin &&
+          hasPermission
+            ? "componentOnBorder"
+            : ""
+        }
+      >
         {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
-        )}
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        />
-      </div>
-      {componentEdit.banner && (
-        <div className={`adminEditTestmonial selected `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle="Client List Banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
+          <ShowHideToggle
+            showhideStatus={showHideCompList?.clientlistbanner?.visibility}
+            title={"Banner"}
+            componentName={"clientlistbanner"}
+            showHideHandler={showHideHandler}
+            id={showHideCompList?.clientlistbanner?.id}
           />
-        </div>
-      )}
-
+        )}
+        {showHideCompList?.clientlistbanner?.visibility && (
+          <>
+            {/* Page Banner Component */}
+            <div className="position-relative">
+              {isAdmin && hasPermission && (
+                <EditIcon editHandler={() => editHandler("banner", true)} />
+              )}
+              <Banner
+                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
+                bannerState={componentEdit.banner}
+              />
+            </div>
+            {componentEdit.banner && (
+              <div className={`adminEditTestmonial selected `}>
+                <ImageInputsForm
+                  editHandler={editHandler}
+                  componentType="banner"
+                  popupTitle="Client List Banner"
+                  pageType={`${pageType}-banner`}
+                  imageLabel="Banner Image"
+                  showDescription={false}
+                  showExtraFormFields={getFormDynamicFields(
+                    `${pageType}-banner`
+                  )}
+                  dimensions={imageDimensionsJson("banner")}
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
       <div
         className={
           showHideCompList?.clientsbriefintro?.visibility &&
           isAdmin &&
           hasPermission
-            ? "border border-info mb-2"
+            ? "componentOnBorder"
             : ""
         }
       >
@@ -246,27 +267,39 @@ const ClientsList = () => {
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
-        <div className="row">
+        {/* <div className="row">
           {isAdmin && hasPermission && (
             <div className="col-md-12">
               <div className="d-flex justify-content-end align-items-center mb-3">
-                {/* <span className="fw-bold me-2">Add content </span> */}
                 <button
                   type="submit"
-                  className="btn btn-primary px-3"
+                  className="btn btn-outline px-3"
                   onClick={() => editHandler("addSection", true, {})}
                 >
-                  Add New Client{" "}
+                  New Client
                   <i className="fa fa-plus ms-2" aria-hidden="true"></i>
                 </button>
               </div>
             </div>
           )}
-        </div>
+        </div> */}
 
         <div className="row">
-          <div className="col-md-6 fs-3 mt-4 mt-md-0">
-            <Title title="Clients" cssClass="fs-1 pageTitle" />
+          <div className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start">
+            <Title title="Clients" cssClass="pageTitle fs-4" />
+
+            {isAdmin && hasPermission && (
+            <div className="">
+              <button
+                  type="submit"
+                  className="btn btn-outline px-3 ms-3"
+                  onClick={() => editHandler("addSection", true, {})}
+                >
+                  New
+                  <i className="fa fa-plus ms-2" aria-hidden="true"></i>
+                </button>
+            </div>
+          )}
           </div>
 
           <div className="col-md-6">
@@ -275,7 +308,7 @@ const ClientsList = () => {
               clientSearchURL={"/client/searchClientLogos/"}
               adminSearchURL={"/client/createClientLogo/"}
               clientDefaultURL={"/client/getAllClientLogos/"}
-              searchfiledDeatails={"client Title / client description "}
+              searchfiledDeatails={"client Title"}
               setPageloadResults={setPageloadResults}
               setSearchquery={setSearchquery}
               searchQuery={searchQuery}
@@ -299,7 +332,7 @@ const ClientsList = () => {
               imagePostURL="client/createClientLogo/"
               imageUpdateURL="client/updateClientLogo/"
               imageDeleteURL="client/updateClientLogo/"
-              imageLabel="Add Client Logo"
+              imageLabel="Upload Image"
               showDescription={false}
               showExtraFormFields={getClinetLogsFields()}
               dimensions={imageDimensionsJson("aboutus")}
@@ -312,7 +345,7 @@ const ClientsList = () => {
 
         <br />
         {isAdmin && (
-          <NoteComponent note="Use drag option to shuffle the Items" />
+          <NoteComponent note="Use drag option to shuffle the Items" cssClass="bg-warning" />
         )}
         <ClientStyled>
           <ClientListComponent

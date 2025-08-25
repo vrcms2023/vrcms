@@ -7,4 +7,5 @@ urlpatterns = [
     path('updatePageMenu/<pk>/', UpdatePageDetails.as_view(), name='retrieve_update_delete_page_menu'),
     path('getPageMenu/', ClientMenuListAPIView.as_view(), name='get_client_page_menu'),
     path('updateindex/', UpdateMenuIndex.as_view(), name="update_index"),
+    path('uploadMenuData/', JSONMenuDataUpload.as_view(), name='upload-pages'),
 ]

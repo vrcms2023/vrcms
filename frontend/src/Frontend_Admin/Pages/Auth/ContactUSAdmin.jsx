@@ -4,11 +4,7 @@ import { axiosServiceApi } from "../../../util/axiosUtil";
 import { toast } from "react-toastify";
 import Search from "../../../Common/Search";
 import CustomPagination from "../../../Common/CustomPagination";
-import {
-  getDateAndTimeValue,
-  getTodayDate,
-  paginationDataFormat,
-} from "../../../util/commonUtil";
+import { getDateAndTimeValue, getTodayDate, paginationDataFormat } from "../../../util/commonUtil";
 import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
 import Button from "../../../Common/Button";
 import Ancher from "../../../Common/Ancher";
@@ -35,7 +31,7 @@ const ContactUSAdmin = () => {
   useEffect(() => {
     const getAllUserDetails = async () => {
       try {
-        const response = await axiosServiceApi.get(`/contactus/`);
+        const response = await axiosServiceApi.get(`/contactus/listcreate/`);
         if (response?.status === 200 && response.data?.results?.length > 0) {
           setResponseData(response.data);
           setPageloadResults(true);
@@ -49,9 +45,7 @@ const ContactUSAdmin = () => {
   }, []);
 
   const setResponseData = (data) => {
-    setUserDetails(
-      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []
-    );
+    setUserDetails(data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []);
     setPaginationData(paginationDataFormat(data));
     setCurrentPage(1);
   };
@@ -89,12 +83,9 @@ const ContactUSAdmin = () => {
       description: user.description,
     };
     try {
-      const response = await axiosServiceApi.post(
-        `/contactus/sendRequesttoClient/`,
-        {
-          ...data,
-        }
-      );
+      const response = await axiosServiceApi.post(`/contactus/sendRequesttoClient/`, {
+        ...data,
+      });
 
       if (response.status === 200) {
         toast.success(`Request is sent successfully`);
@@ -120,30 +111,26 @@ const ContactUSAdmin = () => {
         <div className="col-md-2">
           <Title title={"Contact list"} cssClass="fs-1 pageTitle" />
         </div>
-        {userDetails?.length > 0 && (
-          <>
-            <div className="col-md-8">
-              <Search
-                setObject={setResponseData}
-                clientSearchURL={"/contactus/searchContacts/"}
-                adminSearchURL={"/contactus/"}
-                clientDefaultURL={"/contactus/"}
-                searchfiledDeatails={"First Name / Email / Phone Number"}
-                setPageloadResults={setPageloadResults}
-                setSearchquery={setSearchquery}
-                searchQuery={searchQuery}
-              />
-            </div>
-            <div className="col-md-2 p-0">
-              <Button
-                label={"Contacts"}
-                handlerChange={downloadExcelfile}
-                cssClass="btn btn-outline float-end"
-                icon="fa-download"
-              />
-            </div>
-          </>
-        )}
+        <div className="col-md-8">
+          <Search
+            setObject={setResponseData}
+            clientSearchURL={"/contactus/searchContacts/"}
+            adminSearchURL={"/contactus/listcreate/"}
+            clientDefaultURL={"/contactus/listcreate/"}
+            searchfiledDeatails={"First Name / Email / Phone Number"}
+            setPageloadResults={setPageloadResults}
+            setSearchquery={setSearchquery}
+            searchQuery={searchQuery}
+          />
+        </div>
+        <div className="col-md-2 p-0">
+          <Button
+            label={"Contacts"}
+            handlerChange={downloadExcelfile}
+            cssClass="btn btn-outline float-end"
+            icon="fa-download"
+          />
+        </div>
       </div>
 
       <div className="row px-3 px-lg-5 py-4 table-responsive">
@@ -156,7 +143,7 @@ const ContactUSAdmin = () => {
                 <th class="align-middle">phoneNumber</th>
                 <th class="align-middle">description</th>
                 <th class="align-middle">Date | Time</th>
-                <th className="text-end align-middle">Send Request</th>
+                <th className="text-end align-middle">Request</th>
               </tr>
             </thead>
             <tbody>
@@ -164,14 +151,14 @@ const ContactUSAdmin = () => {
                 <tr key={user.id}>
                   <td class="align-middle">{user.firstName}</td>
                   <td class="align-middle">{user.email}</td>
-                  <td class="align-middle">{user.phoneNumber}</td>
+                  <td class="align-middle">
+                    <a href={`tel:${user.phoneNumber}`}>{user.phoneNumber}</a>
+                  </td>
                   <td class="align-middle">{user.description} </td>
                   <td class="align-middle">
                     {getDateAndTimeValue(user.created_at)}
                     {getTodayDate(user.created_at) && (
-                      <span className="badge bg-warning text-dark px-2 ms-2">
-                        NEW
-                      </span>
+                      <span className="badge bg-warning text-white px-2 ms-2">NEW</span>
                     )}
                   </td>
                   <td class="align-middle">
@@ -181,8 +168,8 @@ const ContactUSAdmin = () => {
                         //sendRequest(user);
                         showModel(user);
                       }}
-                      cssClass="btn btn-outline px-3 float-end"
-                      icon="fa-paper-plane"
+                      cssClass="btn btn-sm btn-primary px-3 float-end"
+                      icon="fa-paper-plane me-1"
                     />
                     {/* <Ancher
                       AncherClass="btn btn-outline px-3 float-end"
@@ -202,11 +189,9 @@ const ContactUSAdmin = () => {
         {paginationData?.total_count ? (
           <CustomPagination
             paginationData={paginationData}
-            paginationURL={"/contactus/"}
+            paginationURL={"/contactus/listcreate/"}
             paginationSearchURL={
-              searchQuery
-                ? `/contactus/searchContacts/${searchQuery}/`
-                : "/contactus/"
+              searchQuery ? `/contactus/searchContacts/${searchQuery}/` : "/contactus/listcreate/"
             }
             searchQuery={searchQuery}
             setCurrentPage={setCurrentPage}
@@ -218,12 +203,7 @@ const ContactUSAdmin = () => {
           ""
         )}
       </div>
-      {modelShow && (
-        <ContactsendRequstModel
-          closeModel={closeModel}
-          selectedUser={selectedUser}
-        />
-      )}
+      {modelShow && <ContactsendRequstModel closeModel={closeModel} selectedUser={selectedUser} />}
       {modelShow && <ModelBg closeModel={closeModel} />}
     </div>
   );
