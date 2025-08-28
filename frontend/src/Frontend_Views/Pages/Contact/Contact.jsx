@@ -19,20 +19,14 @@ import GoogleMap from "../../../Frontend_Admin/Components/forms/GoogleMap";
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import { removeCookie, setCookie } from "../../../util/cookieUtil";
 import { removeActiveClass } from "../../../util/ulrUtil";
-import {
-  getFormDynamicFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { getFormDynamicFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 
 // Styles
 import { ContactPageStyled } from "../../../Common/StyledComponents/Styled-ContactPage";
 
 // images
 import { getAddressList } from "../../../redux/address/addressActions";
-import {
-  InputField,
-  TextAreaField,
-} from "../../../Frontend_Admin/Components/forms/FormFields";
+import { InputField, TextAreaField } from "../../../Frontend_Admin/Components/forms/FormFields";
 import { fieldValidation } from "../../../util/validationUtil";
 import Title from "../../../Common/Title";
 import ContactForm from "../../../Common/Forms/ContactForm";
@@ -46,6 +40,7 @@ import {
 } from "../../../redux/showHideComponent/showHideActions";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 import RaqUseForm from "../../Components/RaqUseForm";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const Contact = () => {
   const editComponentObj = {
@@ -128,9 +123,7 @@ const Contact = () => {
 
   const getGoogleMapUrl = async () => {
     try {
-      const response = await axiosClientServiceApi.get(
-        `footer/getGoogleMapURL/`
-      );
+      const response = await axiosClientServiceApi.get(`footer/getGoogleMapURL/`);
       if (response?.data?.mapURL?.length > 0) {
         const data = response.data.mapURL[0];
         setMapValues(data);
@@ -164,61 +157,21 @@ const Contact = () => {
 
   return (
     <ContactPageStyled>
-      <div
-        className={
-          showHideCompList?.contactusbanner?.visibility &&
-          isAdmin &&
-          hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.contactusbanner?.visibility}
-            title={"Banner"}
-            componentName={"contactusbanner"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.contactusbanner?.id}
-          />
-        )}
-        {showHideCompList?.contactusbanner?.visibility && (
-          <>
-            {/* Page Banner Component */}
-            <div className="position-relative">
-              {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler("banner", true)} editlabel="Banner" />
-              )}
-              <Banner
-                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-                bannerState={componentEdit.banner}
-              />
-            </div>
-            {componentEdit.banner && (
-              <div className={`adminEditTestmonial selected `}>
-                <ImageInputsForm
-                  editHandler={editHandler}
-                  componentType="banner"
-                  popupTitle="Contact  Banner"
-                  pageType={`${pageType}-banner`}
-                  imageLabel="Banner Image"
-                  showDescription={false}
-                  showExtraFormFields={getFormDynamicFields(
-                    `${pageType}-banner`
-                  )}
-                  dimensions={imageDimensionsJson("banner")}
-                />
-              </div>
-            )}
-          </>
-        )}
-      </div>
+      {/* Page Banner Component */}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"contactus-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Contact Banner"}
+        showHideComponentName={"contactusbanner"}
+      />
 
       <div
         className={
-          showHideCompList?.contactbriefintro?.visibility &&
-          isAdmin &&
-          hasPermission
+          showHideCompList?.contactbriefintro?.visibility && isAdmin && hasPermission
             ? "componentOnBorder"
             : ""
         }
@@ -299,125 +252,111 @@ const Contact = () => {
                           className={`my-4 px-4 px-sm-auto addressItem ${addressList.length === 1 ? "col-md-12" : addressList.length === 2 ? "col-md-6" : addressList.length === 3 ? "col-md-6" : "col-md-3"}`}
                         >
                           {item.location_title && (
-                            <Title
-                            title={item.location_title}
-                            cssClass="mb-2 title"
-                          />
+                            <Title title={item.location_title} cssClass="mb-2 title" />
                           )}
-                          
+
                           <div className="mb-2 contactAddress" key={index}>
                             {item.company_name && (
                               <p className="m-0 fs-4 fw-medium"> {item.company_name} </p>
                             )}
-                            
-                            {item.address_dr_no && (<p className="m-0">{item.address_dr_no}</p>)}
-                            {item.street && (<p className="m-0">{item.street} </p>)}
-                            {item.location && (<p className="m-0">{item.location} </p>)}
-                            {item.city && (<p className="m-0">{item.city} </p>)}
-                            {item.state && (<p className="mb-3">{item.state}</p>)}
-                            
+
+                            {item.address_dr_no && <p className="m-0">{item.address_dr_no}</p>}
+                            {item.street && <p className="m-0">{item.street} </p>}
+                            {item.location && <p className="m-0">{item.location} </p>}
+                            {item.city && <p className="m-0">{item.city} </p>}
+                            {item.state && <p className="mb-3">{item.state}</p>}
+
                             {/* <p className="m-0">Pincode - {item.postcode}</p> */}
                             {item.phonen_number && (
                               <p className="mt-2">
-                              {item.phonen_number && (
-                                <>
-                                  {/* <Title title="Phone Number :" cssClass="mb-2" /> */}
-                                  <i
-                                    className="fa fa-phone-square fs-4 me-2"
-                                    aria-hidden="true"
-                                  ></i>{" "}
-                                  {item.phonen_number}
-                                </>
-                              )}
-                            </p>
+                                {item.phonen_number && (
+                                  <>
+                                    {/* <Title title="Phone Number :" cssClass="mb-2" /> */}
+                                    <i
+                                      className="fa fa-phone-square fs-4 me-2"
+                                      aria-hidden="true"
+                                    ></i>{" "}
+                                    {item.phonen_number}
+                                  </>
+                                )}
+                              </p>
                             )}
 
                             {item.phonen_number_2 && (
                               <p className="mt-2">
-                              {item.phonen_number_2 && (
-                                <>
-                                  {/* <Title title="Phone Number :" cssClass="mb-2" /> */}
-                                  <i
-                                    className="fa fa-phone-square fs-4 me-2"
-                                    aria-hidden="true"
-                                  ></i>{" "}
-                                  {item.phonen_number_2}
-                                </>
-                              )}
-                            </p>
+                                {item.phonen_number_2 && (
+                                  <>
+                                    {/* <Title title="Phone Number :" cssClass="mb-2" /> */}
+                                    <i
+                                      className="fa fa-phone-square fs-4 me-2"
+                                      aria-hidden="true"
+                                    ></i>{" "}
+                                    {item.phonen_number_2}
+                                  </>
+                                )}
+                              </p>
                             )}
-                            
-                            
+
                             {item.phonen_number_3 && (
                               <p className="mt-2">
-                              {item.phonen_number_3 && (
-                                <>
-                                  <i
-                                    className="fa fa-whatsapp fs-4 me-2"
-                                    aria-hidden="true"
-                                  ></i>{" "}
-                                  {item.phonen_number_3}{" "}
-                                </>
-                              )}
-                            </p>
+                                {item.phonen_number_3 && (
+                                  <>
+                                    <i className="fa fa-whatsapp fs-4 me-2" aria-hidden="true"></i>{" "}
+                                    {item.phonen_number_3}{" "}
+                                  </>
+                                )}
+                              </p>
                             )}
 
                             {item.emailid && (
                               <p className="mt-0">
-                              {item.emailid && (
-                                <>
-                                  <i
-                                    className="fa fa-envelope-o fs-4 me-2"
-                                    aria-hidden="true"
-                                  ></i>{" "}
-                                  {/* <a href="">{item.emailid_2}</a> */}
-                                  <Link
-                                    to={`mailto: ${item.emailid && item.emailid}`}
-                                  >
-                                    ${item.emailid && item.emailid}
-                                  </Link>
-                                </>
-                              )}
-                            </p>
+                                {item.emailid && (
+                                  <>
+                                    <i
+                                      className="fa fa-envelope-o fs-4 me-2"
+                                      aria-hidden="true"
+                                    ></i>{" "}
+                                    {/* <a href="">{item.emailid_2}</a> */}
+                                    <Link to={`mailto: ${item.emailid && item.emailid}`}>
+                                      ${item.emailid && item.emailid}
+                                    </Link>
+                                  </>
+                                )}
+                              </p>
                             )}
-                            
+
                             {item.emailid_2 && (
                               <p className="mt-0">
-                              {item.emailid_2 && (
-                                <>
-                                  <i
-                                    className="fa fa-envelope-o fs-4 me-2"
-                                    aria-hidden="true"
-                                  ></i>{" "}
-                                  {/* <a href="">{item.emailid_2}</a> */}
-                                  <Link
-                                    to={`mailto: ${item.emailid_2 && item.emailid_2}`}
-                                  >
-                                    ${item.emailid_2 && item.emailid_2}
-                                  </Link>
-                                </>
-                              )}
-                            </p>
+                                {item.emailid_2 && (
+                                  <>
+                                    <i
+                                      className="fa fa-envelope-o fs-4 me-2"
+                                      aria-hidden="true"
+                                    ></i>{" "}
+                                    {/* <a href="">{item.emailid_2}</a> */}
+                                    <Link to={`mailto: ${item.emailid_2 && item.emailid_2}`}>
+                                      ${item.emailid_2 && item.emailid_2}
+                                    </Link>
+                                  </>
+                                )}
+                              </p>
                             )}
-                            
+
                             {item.emailid_3 && (
                               <p className="mt-0">
-                              {item.emailid_3 && (
-                                <>
-                                  <i
-                                    className="fa fa-envelope-o fs-4 me-2"
-                                    aria-hidden="true"
-                                  ></i>{" "}
-                                  <Link
-                                    to={`mailto: ${item.emailid_3 && item.emailid_3}`}
-                                  >
-                                    ${item.emailid_3 && item.emailid_3}
-                                  </Link>
-                                </>
-                              )}
-                            </p>
+                                {item.emailid_3 && (
+                                  <>
+                                    <i
+                                      className="fa fa-envelope-o fs-4 me-2"
+                                      aria-hidden="true"
+                                    ></i>{" "}
+                                    <Link to={`mailto: ${item.emailid_3 && item.emailid_3}`}>
+                                      ${item.emailid_3 && item.emailid_3}
+                                    </Link>
+                                  </>
+                                )}
+                              </p>
                             )}
-                            
                           </div>
                         </div>
                       ))}
@@ -462,10 +401,7 @@ const Contact = () => {
 
             <ContactForm />
           </div> */}
-          <div
-            className="col-md-12 p-0 position-relative"
-            style={{ bottom: "-10px" }}
-          >
+          <div className="col-md-12 p-0 position-relative" style={{ bottom: "-10px" }}>
             {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("map", true)} editlabel="Map" />
             )}

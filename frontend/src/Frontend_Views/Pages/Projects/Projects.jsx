@@ -8,10 +8,7 @@ import EditIcon from "../../../Common/AdminEditIcon";
 import ModelBg from "../../../Common/ModelBg";
 import Banner from "../../../Common/Banner";
 import { dataFormatedByCatergoryName } from "../../../util/dataFormatUtil";
-import {
-  getFormDynamicFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { getFormDynamicFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 // import "./Projects.css";
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import { removeActiveClass } from "../../../util/ulrUtil";
@@ -24,6 +21,7 @@ import {
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
 import { ProjectsPageStyled } from "../../../Common/StyledComponents/Styled-ProjectsPage";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const Projects = () => {
   const editComponentObj = {
@@ -93,59 +91,21 @@ const Projects = () => {
 
   return (
     <>
+      {/* Page Banner Component */}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"projects-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Projects Banner"}
+        showHideComponentName={"projectsbanner"}
+      />
+
       <div
         className={
-          showHideCompList?.projetstbanner?.visibility &&
-          isAdmin &&
-          hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.projetstbanner?.visibility}
-            title={"Banner"}
-            componentName={"projetstbanner"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.projetstbanner?.id}
-          />
-        )}
-        {showHideCompList?.projetstbanner?.visibility && (
-          <>
-            <div className="position-relative">
-              {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler("banner", true)} />
-              )}
-              <Banner
-                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-                bannerState={componentEdit.banner}
-              />
-            </div>
-            {componentEdit.banner && (
-              <div className={`adminEditTestmonial selected `}>
-                <ImageInputsForm
-                  editHandler={editHandler}
-                  componentType="banner"
-                  popupTitle="Projects Banner"
-                  pageType={`${pageType}-banner`}
-                  imageLabel="Project Banner Image"
-                  showDescription={false}
-                  showExtraFormFields={getFormDynamicFields(
-                    `${pageType}-banner`
-                  )}
-                  dimensions={imageDimensionsJson("banner")}
-                />
-              </div>
-            )}
-          </>
-        )}
-      </div>
-      <div
-        className={
-          showHideCompList?.projectsbriefintro?.visibility &&
-          isAdmin &&
-          hasPermission
+          showHideCompList?.projectsbriefintro?.visibility && isAdmin && hasPermission
             ? "componentOnBorder"
             : ""
         }
@@ -196,19 +156,13 @@ const Projects = () => {
       </div>
       <ProjectsPageStyled>
         <div className="container-fluid projectsList">
-          {ongoing?.length > 0 && (
-            <ProjectItem projectList={ongoing} projectType={ongoing} />
-          )}
+          {ongoing?.length > 0 && <ProjectItem projectList={ongoing} projectType={ongoing} />}
 
           {/* Completed Projects */}
-          {completed?.length > 0 && (
-            <ProjectItem projectList={completed} projectType={completed} />
-          )}
+          {completed?.length > 0 && <ProjectItem projectList={completed} projectType={completed} />}
 
           {/* future Projects */}
-          {future?.length > 0 && (
-            <ProjectItem projectList={future} projectType={future} />
-          )}
+          {future?.length > 0 && <ProjectItem projectList={future} projectType={future} />}
         </div>
       </ProjectsPageStyled>
       {show && <ModelBg />}

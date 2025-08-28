@@ -82,7 +82,8 @@ INSTALLED_APPS = [
     'app_themes',
     'showHideComponents',
     'advertisement',
-    'counter'
+    'counter',
+    'banner'
 ]
 
 MIDDLEWARE = [

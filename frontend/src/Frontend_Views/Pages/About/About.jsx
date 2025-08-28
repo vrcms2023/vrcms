@@ -25,10 +25,7 @@ import {
 } from "../../../util/dynamicFormFields";
 import { getImagePath } from "../../../util/commonUtil";
 import { sortByUpdatedDate } from "../../../util/dataFormatUtil";
-import {
-  axiosClientServiceApi,
-  axiosServiceApi,
-} from "../../../util/axiosUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 
 // CSS
 import { AboutPageStyled } from "../../../Common/StyledComponents/Styled-AboutPage";
@@ -41,6 +38,7 @@ import {
   getShowHideComponentsListByPage,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const About = () => {
   const editComponentObj = {
@@ -58,9 +56,7 @@ const About = () => {
   const [editCarousel, setEditCarousel] = useState({});
   const [showHideCompList, setShowHideCompList] = useState([]);
 
-  const { error, success, showHideList } = useSelector(
-    (state) => state.showHide
-  );
+  const { error, success, showHideList } = useSelector((state) => state.showHide);
 
   useEffect(() => {
     if (showHideList.length > 0) {
@@ -125,9 +121,7 @@ const About = () => {
     const name = item.aboutus_title;
 
     const deleteSection = async () => {
-      const response = await axiosServiceApi.delete(
-        `/aboutus/updateAboutus/${id}/`
-      );
+      const response = await axiosServiceApi.delete(`/aboutus/updateAboutus/${id}/`);
       if (response.status === 204) {
         const list = aboutList.filter((list) => list.id !== id);
         setAboutList(list);
@@ -155,58 +149,20 @@ const About = () => {
 
   return (
     <>
+      {/* Page Banner Component */}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"about-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"About Banner"}
+        showHideComponentName={"aboutbanner"}
+      />
       <div
         className={
-          showHideCompList?.aboutbanner?.visibility && isAdmin && hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.aboutbanner?.visibility}
-            title={"Banner"}
-            componentName={"aboutbanner"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.aboutbanner?.id}
-          />
-        )}
-        {showHideCompList?.aboutbanner?.visibility && (
-          <>
-            {/* Page Banner Component */}
-            <div className="position-relative">
-              {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler("banner", true)} editlabel="Brief" />
-              )}
-              <Banner
-                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-                bannerState={componentEdit.banner}
-              />
-            </div>
-            {componentEdit.banner && (
-              <div className={`adminEditTestmonial selected `}>
-                <ImageInputsForm
-                  editHandler={editHandler}
-                  componentType="banner"
-                  popupTitle="About - Banner Image"
-                  pageType={`${pageType}-banner`}
-                  imageLabel="Upload Image"
-                  showDescription={false}
-                  showExtraFormFields={getFormDynamicFields(
-                    `${pageType}-banner`
-                  )}
-                  dimensions={imageDimensionsJson("banner")}
-                />
-              </div>
-            )}
-          </>
-        )}
-      </div>
-      <div
-        className={
-          showHideCompList?.aboutbriefintro?.visibility &&
-          isAdmin &&
-          hasPermission
+          showHideCompList?.aboutbriefintro?.visibility && isAdmin && hasPermission
             ? "componentOnBorder"
             : ""
         }
@@ -226,7 +182,7 @@ const About = () => {
           <div className="breiftopMargin">
             {/* Brief Introduction  */}
             {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)}  />
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
             )}
 
             <BriefIntroFrontend
@@ -285,9 +241,7 @@ const About = () => {
                 popupTitle="About"
                 editCarousel={editCarousel}
                 setEditCarousel={setEditCarousel}
-                componentType={`${
-                  componentEdit.editSection ? "editSection" : "addSection"
-                }`}
+                componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
                 imageGetURL="aboutus/clientAboutus/"
                 imagePostURL="aboutus/createAboutus/"
                 imageUpdateURL="aboutus/updateAboutus/"
@@ -308,26 +262,14 @@ const About = () => {
                 <div
                   key={item.id}
                   className={`row ${
-                    isAdmin
-                      ? "border border-warning mb-4 position-relative"
-                      : "border"
+                    isAdmin ? "border border-warning mb-4 position-relative" : "border"
                   } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
                 >
                   {isAdmin && hasPermission && (
                     <>
-                      <EditIcon
-                        editHandler={() =>
-                          editHandler("editSection", true, item)
-                        }
-                      />
-                      <Link
-                        className="deleteSection"
-                        onClick={() => deleteAboutSection(item)}
-                      >
-                        <i
-                          className="fa fa-trash-o text-danger fs-4"
-                          aria-hidden="true"
-                        ></i>
+                      <EditIcon editHandler={() => editHandler("editSection", true, item)} />
+                      <Link className="deleteSection" onClick={() => deleteAboutSection(item)}>
+                        <i className="fa fa-trash-o text-danger fs-4" aria-hidden="true"></i>
                       </Link>
                     </>
                   )}
@@ -380,9 +322,7 @@ const About = () => {
                 </div>
               ))
             ) : (
-              <p className="text-center text-muted py-5">
-                Please add page contents...
-              </p>
+              <p className="text-center text-muted py-5">Please add page contents...</p>
             )}
           </div>
         </div>

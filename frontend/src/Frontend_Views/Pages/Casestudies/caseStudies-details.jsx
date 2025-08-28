@@ -10,10 +10,7 @@ import EditIcon from "../../../Common/AdminEditIcon";
 import AdminBriefIntro from "../../../Frontend_Admin/Components/BriefIntro/index";
 import Banner from "../../../Common/Banner";
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
-import {
-  getFormDynamicFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { getFormDynamicFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 import { getImagePath } from "../../../util/commonUtil";
 
 import RichTextView from "../../../Common/RichTextView";
@@ -23,6 +20,7 @@ import {
   createShowHideComponent,
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const CaseStudiesDetails = () => {
   const editComponentObj = {
@@ -69,9 +67,7 @@ const CaseStudiesDetails = () => {
 
   const [showHideCompList, setShowHideCompList] = useState([]);
   const dispatch = useDispatch();
-  const { error, success, showHideList } = useSelector(
-    (state) => state.showHide
-  );
+  const { error, success, showHideList } = useSelector((state) => state.showHide);
 
   useEffect(() => {
     if (showHideList.length > 0) {
@@ -93,57 +89,17 @@ const CaseStudiesDetails = () => {
 
   return (
     <CaseStudiesPageStyled>
-      <div
-        className={
-          showHideCompList?.casestudiesdetailsbanner?.visibility &&
-          isAdmin &&
-          hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={
-              showHideCompList?.casestudiesdetailsbanner?.visibility
-            }
-            title={"Banner"}
-            componentName={"casestudiesdetailsbanner"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.casestudiesdetailsbanner?.id}
-          />
-        )}
-        {showHideCompList?.casestudiesdetailsbanner?.visibility && (
-          <>
-            {/* Page Banner Component */}
-            <div className="position-relative">
-              {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler("banner", true)} />
-              )}
-              <Banner
-                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-                bannerState={componentEdit.banner}
-              />
-            </div>
-            {componentEdit.banner && (
-              <div className="adminEditTestmonial">
-                <ImageInputsForm
-                  editHandler={editHandler}
-                  componentType="banner"
-                  popupTitle="Case Studies Details Banner"
-                  pageType={`${pageType}-banner`}
-                  imageLabel="Banner Image"
-                  showDescription={false}
-                  showExtraFormFields={getFormDynamicFields(
-                    `${pageType}-banner`
-                  )}
-                  dimensions={imageDimensionsJson("banner")}
-                />
-              </div>
-            )}
-          </>
-        )}
-      </div>
+      {/* Page Banner Component */}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"casestudies-details-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Case Studies Details Banner"}
+        showHideComponentName={"casestudiesdetailsbanner"}
+      />
 
       {/* Brief Introduction
       {isAdmin && hasPermission && (
@@ -170,13 +126,13 @@ const CaseStudiesDetails = () => {
         <div className="container mt-3">
           <div className="row">
             <div className="col-md-12 text-end">
-            <Ancher
-              AncherLabel="Back"
-              AncherClass="btn btn-outline"
-              Ancherpath={`/casestudies/`}
-              AnchersvgColor=""
-              icon="fa-chevron-left"
-            />
+              <Ancher
+                AncherLabel="Back"
+                AncherClass="btn btn-outline"
+                Ancherpath={`/casestudies/`}
+                AnchersvgColor=""
+                icon="fa-chevron-left"
+              />
             </div>
           </div>
           <div className="d-flex flex-column flex-column-reverse flex-sm-row justify-content justify-content-between align-items-center gap-3 mt-4">

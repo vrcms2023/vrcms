@@ -40,6 +40,7 @@ import {
 import BriefIntroFrontend from "../../../Common/BriefIntro";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 import BriefIntroAdmin from "../../../Frontend_Admin/Components/BriefIntro";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const NewsAndUpdates = () => {
   const editComponentObj = {
@@ -126,62 +127,21 @@ const NewsAndUpdates = () => {
 
   return (
     <>
-   
-      <div
-        className={
-          showHideCompList?.newsandupdatesbanner?.visibility &&
-          isAdmin &&
-          hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.newsandupdatesbanner?.visibility}
-            title={"Banner"}
-            componentName={"newsandupdatesbanner"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.newsandupdatesbanner?.id}
-          />
-        )}
-        {showHideCompList?.newsandupdatesbanner?.visibility && (
-          <>
-            {/* Page Banner Component */}
-            <div className="position-relative">
-              {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler("banner", true)} editlabel={"Banner"}/>
-              )}
+      {/* Page Banner Component */}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"news-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"News Banner"}
+        showHideComponentName={"newsandupdatesbanner"}
+      />
 
-              <Banner
-                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-                bannerState={componentEdit.banner}
-              />
-            </div>
-            {componentEdit.banner && (
-              <div className={`adminEditTestmonial  selected `}>
-                <ImageInputsForm
-                  editHandler={editHandler}
-                  componentType="banner"
-                  popupTitle="News Banner"
-                  pageType={`${pageType}-banner`}
-                  imageLabel="Banner Image"
-                  showDescription={false}
-                  showExtraFormFields={getFormDynamicFields(
-                    `${pageType}-banner`
-                  )}
-                  dimensions={imageDimensionsJson("banner")}
-                />
-              </div>
-            )}
-          </>
-        )}
-      </div>
       <div
         className={
-          showHideCompList?.newsbriefintro?.visibility &&
-          isAdmin &&
-          hasPermission
+          showHideCompList?.newsbriefintro?.visibility && isAdmin && hasPermission
             ? "componentOnBorder"
             : ""
         }
@@ -201,7 +161,7 @@ const NewsAndUpdates = () => {
           <div>
             {/* Introduction */}
             {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} editlabel={"Brief"}/>
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} editlabel={"Brief"} />
             )}
 
             <BriefIntroFrontend
@@ -229,7 +189,6 @@ const NewsAndUpdates = () => {
       </div>
 
       <div className="container my-4 newsAndUpdates">
-        
         {/* {isAdmin && hasPermission && (
           <div className="text-end">
             
@@ -251,21 +210,20 @@ const NewsAndUpdates = () => {
               cssClass="pageTitle fs-4"
               mainTitleClassess=""
               subTitleClassess=""
-            /> 
+            />
 
             {isAdmin && hasPermission && (
-          <div className="text-end">
-            
-            <Link
-              to="#"
-              className="btn btn-outline ms-2"
-              onClick={() => editHandler("addNews", true)}
-            >
-              New
-              <i className="fa fa-plus ms-2" aria-hidden="true"></i>
-            </Link>
-          </div>
-        )}
+              <div className="text-end">
+                <Link
+                  to="#"
+                  className="btn btn-outline ms-2"
+                  onClick={() => editHandler("addNews", true)}
+                >
+                  New
+                  <i className="fa fa-plus ms-2" aria-hidden="true"></i>
+                </Link>
+              </div>
+            )}
           </div>
           <div className="col-md-6">
             <Search
@@ -280,7 +238,9 @@ const NewsAndUpdates = () => {
               addStateChanges={componentEdit.addNews}
               editStateChanges={editNews}
             />
-           <div className="d-flex justify-content-end align-items-end position-relative"><ShareButtons /></div>
+            <div className="d-flex justify-content-end align-items-end position-relative">
+              <ShareButtons />
+            </div>
           </div>
         </div>
         {/* {isAdmin && (
@@ -321,11 +281,7 @@ const NewsAndUpdates = () => {
             {paginationData?.total_count ? (
               <CustomPagination
                 paginationData={paginationData}
-                paginationURL={
-                  isAdmin
-                    ? "/appNews/createAppNews/"
-                    : "/appNews/clientAppNews/"
-                }
+                paginationURL={isAdmin ? "/appNews/createAppNews/" : "/appNews/clientAppNews/"}
                 paginationSearchURL={
                   searchQuery
                     ? `appNews/searchAppNews/${searchQuery}/`

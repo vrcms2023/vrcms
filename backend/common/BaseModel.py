@@ -62,6 +62,29 @@ class ImageModel(BaseModel):
     class Meta:
         abstract = True 
 
+class ImageModelV2(BaseModelV2):
+    path = models.FileField(upload_to=image_upload_path,  blank=True, null=True )
+    original_name = models.CharField(max_length=255, blank=True, editable=False)
+    content_type = models.CharField(max_length=100, blank=True, editable=False)
+    alternative_text = models.CharField(max_length=255, blank=True,  null=True)
+
+    def save(self, *args, **kwargs):
+        if self.path and not self.original_name:
+            self.original_name = self.path.name
+
+        if self.path and not self.content_type:
+            mime_type, _ = mimetypes.guess_type(self.path.name)
+            self.content_type = mime_type or 'application/octet-stream'
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.original_name or "Unnamed File"
+
+    class Meta:
+        abstract = True 
+
+
 class FileUpload(BaseModelV2):
     path = models.FileField(upload_to=file_upload_path,  blank=True, null=True )
     original_name = models.CharField(max_length=255, blank=True, editable=False)

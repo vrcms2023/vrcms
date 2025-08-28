@@ -94,9 +94,9 @@ const ImageUploadForm = ({
   useEffect(() => {
     setError("");
     reset(editImage?.id ? editImage : {});
-    if (editImage?.pageType) {
-      setPageType(editImage.pageType.split("-")[1]);
-    }
+    // if (editImage?.pageType) {
+    //   setPageType(editImage.pageType.split("-")[1]);
+    // }
   }, [editImage]);
 
   useEffect(() => {

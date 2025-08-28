@@ -10,10 +10,7 @@ import EditIcon from "../../../Common/AdminEditIcon";
 import ModelBg from "../../../Common/ModelBg";
 import Banner from "../../../Common/Banner";
 import JobCurrentOpenings from "../../Components/JobCurrentOpenings";
-import {
-  axiosClientServiceApi,
-  axiosServiceApi,
-} from "../../../util/axiosUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 
 import { removeActiveClass } from "../../../util/ulrUtil";
 import { getFormDynamicFields } from "../../../util/dynamicFormFields";
@@ -36,6 +33,7 @@ import {
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
 import Ancher from "../../../Common/Ancher";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const Careers = () => {
   const editComponentObj = {
@@ -64,9 +62,7 @@ const Careers = () => {
   useEffect(() => {
     const getCareerData = async () => {
       try {
-        let response = await axiosClientServiceApi.get(
-          `/careers/clientSelectedCareers/${id}/`
-        );
+        let response = await axiosClientServiceApi.get(`/careers/clientSelectedCareers/${id}/`);
 
         let keys = Object.keys(response.data);
         if (keys.length > 1) {
@@ -89,9 +85,7 @@ const Careers = () => {
 
   const [showHideCompList, setShowHideCompList] = useState([]);
   const dispatch = useDispatch();
-  const { error, success, showHideList } = useSelector(
-    (state) => state.showHide
-  );
+  const { error, success, showHideList } = useSelector((state) => state.showHide);
 
   useEffect(() => {
     if (showHideList.length > 0) {
@@ -113,55 +107,17 @@ const Careers = () => {
 
   return (
     <>
-      <div
-        className={
-          showHideCompList?.careerdetailsbanner?.visibility &&
-          isAdmin &&
-          hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.careerdetailsbanner?.visibility}
-            title={"Banner"}
-            componentName={"careerdetailsbanner"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.careerdetailsbanner?.id}
-          />
-        )}
-        {showHideCompList?.careerdetailsbanner?.visibility && (
-          <>
-            {/* Page Banner Component */}
-            <div className="position-relative">
-              {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler("banner", true)} />
-              )}
-              <Banner
-                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-                bannerState={componentEdit.banner}
-              />
-            </div>
-
-            {componentEdit.banner && (
-              <div className={`adminEditTestmonial selected `}>
-                <ImageInputsForm
-                  editHandler={editHandler}
-                  componentType="banner"
-                  popupTitle="Career Details Banner"
-                  pageType={`${pageType}-banner`}
-                  imageLabel="Banner Image"
-                  showDescription={false}
-                  showExtraFormFields={getFormDynamicFields(
-                    `${pageType}-banner`
-                  )}
-                />
-              </div>
-            )}
-          </>
-        )}
-      </div>
+      {/* Page Banner Component */}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"careers-details-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Careers Details Banner"}
+        showHideComponentName={"careerdetailsbanner"}
+      />
 
       <div className="container mt-3">
         <div className="row">
@@ -197,11 +153,7 @@ const Careers = () => {
               <JobBriefDetails jobDetails={posts} />
               <div className="jobDescription mb-4 p-3">
                 {posts.description && (
-                  <RichTextView
-                    data={posts.description}
-                    className={""}
-                    showMorelink={false}
-                  />
+                  <RichTextView data={posts.description} className={""} showMorelink={false} />
                   // <div
                   //   dangerouslySetInnerHTML={{ __html: posts.description }}
                   // />

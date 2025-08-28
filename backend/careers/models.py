@@ -28,7 +28,13 @@ class Careers(BaseModel):
         employment_Type =   models.CharField(max_length=100, null=True, blank=True )
         mode_of_work =      models.CharField(max_length=100, null=True, blank=True )
         about_company  =    models.CharField(max_length=100, null=True, blank=True )
-        
+
+        class Meta:
+            db_table = "careers"
+
+        def __str__(self):
+            return f"{self.job_title or 'No Title'}"
+
 # def validate_file_extension(value):
 #     ext = os.path.splitext(value.name)[1]  
 #     valid_extensions = settings.JOB_ACCEPT_FILE_TYPE
@@ -52,6 +58,12 @@ class appledJob(FileUpload):
         cityAddress =   models.CharField(max_length=100, null=True, blank=True )
         country =       models.CharField(max_length=100, null=False, blank=True )
         description =   models.TextField()
+
+        class Meta:
+            db_table = "appled_job"     
+
+        def __str__(self):
+            return f"{self.jobtitle or 'No Title'}"
 
 
 @receiver(post_delete, sender=appledJob)

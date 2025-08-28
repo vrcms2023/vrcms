@@ -24,15 +24,21 @@ class VideoGallery(Gallery):
     video_WebURL =      models.URLField(null=True, blank=True)
     video_id =          models.CharField(max_length=50, blank=True)
     video_thumbnail_url = models.URLField(blank=True)
+    
+    class Meta:
+        db_table = "video_gallery"
 
     def __str__(self):
-        return self.title
+        return f"{self.title or 'No Name'}"
     
 class ImageGallery(Gallery): 
     image_WebURL =      models.URLField(null=True, blank=True)   
 
+    class Meta:
+        db_table = "image_gallery"
+
     def __str__(self):
-        return self.title
+        return f"{self.title or 'No Name'}"
     
 @receiver(post_delete, sender=ImageGallery)
 @receiver(post_delete, sender=VideoGallery)

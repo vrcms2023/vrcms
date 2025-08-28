@@ -8,15 +8,9 @@ import Banner from "../../../Common/Banner";
 import BriefIntroFrontend from "../../../Common/BriefIntro";
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import AdminBriefIntro from "../../../Frontend_Admin/Components/BriefIntro/index";
-import {
-  getFormDynamicFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { getFormDynamicFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
-import {
-  axiosClientServiceApi,
-  axiosServiceApi,
-} from "../../../util/axiosUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 import {
   getImagePath,
   paginationDataFormat,
@@ -49,6 +43,7 @@ import {
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 
 import "./TestimonialsList.css";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const TestimonialsList = () => {
   const editComponentObj = {
@@ -75,9 +70,7 @@ const TestimonialsList = () => {
   const [modelItem, setModelItem] = useState({});
 
   const setResponseData = (data) => {
-    setClientsList(
-      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []
-    );
+    setClientsList(data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []);
     setPaginationData(paginationDataFormat(data));
     setCurrentPage(1);
   };
@@ -85,9 +78,7 @@ const TestimonialsList = () => {
   useEffect(() => {
     const getCAseStutiesvalues = async () => {
       try {
-        const response = await axiosClientServiceApi.get(
-          `/testimonials/clientTestimonials/`
-        );
+        const response = await axiosClientServiceApi.get(`/testimonials/clientTestimonials/`);
         if (response?.status === 200) {
           setResponseData(response.data);
         }
@@ -95,10 +86,7 @@ const TestimonialsList = () => {
         console.log("unable to access ulr because of server is down");
       }
     };
-    if (
-      (!componentEdit.addSection || !componentEdit.editSection) &&
-      !searchQuery
-    ) {
+    if ((!componentEdit.addSection || !componentEdit.editSection) && !searchQuery) {
       getCAseStutiesvalues();
     }
   }, [componentEdit.addSection, componentEdit.editSection]);
@@ -126,9 +114,7 @@ const TestimonialsList = () => {
     const name = item.testimonial_title;
 
     const deleteSection = async () => {
-      const response = await axiosServiceApi.delete(
-        `/testimonials/updateTestimonials/${id}/`
-      );
+      const response = await axiosServiceApi.delete(`/testimonials/updateTestimonials/${id}/`);
       if (response.status === 204) {
         const list = clientsList.filter((list) => list.id !== id);
         setClientsList(list);
@@ -177,10 +163,7 @@ const TestimonialsList = () => {
   };
   const updateObjectsIndex = async (data) => {
     try {
-      let response = await axiosServiceApi.put(
-        `/testimonials/updateTestimonialsindex/`,
-        data
-      );
+      let response = await axiosServiceApi.put(`/testimonials/updateTestimonialsindex/`, data);
       if (response?.data?.testimonial) {
         return response.data.testimonial;
       }
@@ -213,60 +196,21 @@ const TestimonialsList = () => {
 
   return (
     <>
+      {/* Page Banner Component */}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"testimonial-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Testimonial Banner"}
+        showHideComponentName={"testimonialbanner"}
+      />
+
       <div
         className={
-          showHideCompList?.testimonialbanner?.visibility &&
-          isAdmin &&
-          hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.testimonialbanner?.visibility}
-            title={"Banner"}
-            componentName={"testimonialbanner"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.testimonialbanner?.id}
-          />
-        )}
-        {showHideCompList?.testimonialbanner?.visibility && (
-          <>
-            {/* Page Banner Component */}
-            <div className="position-relative">
-              {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler("banner", true)} />
-              )}
-              <Banner
-                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-                bannerState={componentEdit.banner}
-              />
-            </div>
-            {componentEdit.banner && (
-              <div className={`adminEditTestmonial selected `}>
-                <ImageInputsForm
-                  editHandler={editHandler}
-                  componentType="banner"
-                  popupTitle={`Testimonial`}
-                  pageType={`${pageType}-banner`}
-                  imageLabel="Banner Image"
-                  showDescription={false}
-                  showExtraFormFields={getFormDynamicFields(
-                    `${pageType}-banner`
-                  )}
-                  dimensions={imageDimensionsJson("banner")}
-                />
-              </div>
-            )}
-          </>
-        )}
-      </div>
-      <div
-        className={
-          showHideCompList?.testimonialbriefintro?.visibility &&
-          isAdmin &&
-          hasPermission
+          showHideCompList?.testimonialbriefintro?.visibility && isAdmin && hasPermission
             ? "componentOnBorder"
             : ""
         }
@@ -305,12 +249,12 @@ const TestimonialsList = () => {
 
             {componentEdit.briefIntro && (
               <div className="adminEditTestmonial selected">
-                <AdminBriefIntro 
-                  editHandler={editHandler} 
-                  componentType="briefIntro" 
-                  pageType={pageType} 
+                <AdminBriefIntro
+                  editHandler={editHandler}
+                  componentType="briefIntro"
+                  pageType={pageType}
                   popupTitle="Testinonial - Brief Info"
-                  />
+                />
               </div>
             )}
           </div>
@@ -319,7 +263,7 @@ const TestimonialsList = () => {
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
-          {/* {isAdmin && hasPermission && (
+        {/* {isAdmin && hasPermission && (
               <div className="d-flex justify-content-end align-items-center mb-3">
                 <span className="fw-bold me-2">Add Testimonials </span>
                 <button
@@ -337,14 +281,14 @@ const TestimonialsList = () => {
             <Title title="Testimonials" cssClass="pageTitle fs-4" />
             {isAdmin && hasPermission && (
               <button
-                  type="submit"
-                  className="btn btn-outline ms-2"
-                  onClick={() => editHandler("addSection", true, {})}
-                >
-                  New
-                  <i className="fa fa-plus ms-2" aria-hidden="true"></i>
+                type="submit"
+                className="btn btn-outline ms-2"
+                onClick={() => editHandler("addSection", true, {})}
+              >
+                New
+                <i className="fa fa-plus ms-2" aria-hidden="true"></i>
               </button>
-              )}
+            )}
           </div>
 
           <div className="col-md-6">
@@ -370,9 +314,7 @@ const TestimonialsList = () => {
               popupTitle={`Testimonial`}
               editCarousel={editCarousel}
               setEditCarousel={setEditCarousel}
-              componentType={`${
-                componentEdit.editSection ? "editSection" : "addSection"
-              }`}
+              componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
               getImageListURL="testimonials/clientTestimonials/"
               deleteImageURL="testimonials/updateTestimonials/"
               imagePostURL="testimonials/createTestimonials/"
@@ -429,27 +371,19 @@ const TestimonialsList = () => {
                               <div
                                 key={item.id}
                                 className={`row mb-2 ${
-                                  isAdmin
-                                    ? "border border-warning mb-3 position-relative"
-                                    : ""
+                                  isAdmin ? "border border-warning mb-3 position-relative" : ""
                                 } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
                               >
                                 {isAdmin && hasPermission && (
                                   <>
                                     <EditIcon
-                                      editHandler={() =>
-                                        editHandler("editSection", true, item)
-                                      }
+                                      editHandler={() => editHandler("editSection", true, item)}
                                     />
                                     <EditIcon
                                       icon={"fa-trash-o"}
                                       iconCss={"text-danger fs-4"}
-                                      cssClasses={
-                                        "position-absolute deleteIcon"
-                                      }
-                                      editHandler={() =>
-                                        deleteAboutSection(item)
-                                      }
+                                      cssClasses={"position-absolute deleteIcon"}
+                                      editHandler={() => deleteAboutSection(item)}
                                     />
                                     {/* <Link
                                       className="deleteSection"
@@ -464,10 +398,7 @@ const TestimonialsList = () => {
                                 )}
                                 <div className="col-12 col-lg-9 p-3 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column">
                                   {item.testimonial_title ? (
-                                    <Title
-                                      title={item.testimonial_title}
-                                      cssClass="fs-5 mb-1"
-                                    />
+                                    <Title title={item.testimonial_title} cssClass="fs-5 mb-1" />
                                   ) : (
                                     ""
                                   )}
@@ -525,11 +456,7 @@ const TestimonialsList = () => {
         {paginationData?.total_count ? (
           <CustomPagination
             paginationData={paginationData}
-            paginationURL={
-              isAdmin
-                ? "/client/createClientLogo/"
-                : "/client/getAllClientLogos/"
-            }
+            paginationURL={isAdmin ? "/client/createClientLogo/" : "/client/getAllClientLogos/"}
             paginationSearchURL={
               searchQuery
                 ? `/client/searchClientLogos/${searchQuery}/`

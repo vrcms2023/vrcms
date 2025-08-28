@@ -90,6 +90,8 @@ import { TwoColumnCarouselStyles } from "../../../Common/StyledComponents/Styled
 
 // Styles
 import { HomePageStyles } from "../../../Common/StyledComponents/Styled-HomePage";
+import AdminSingleRecordUpload from "../../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
+import HeroBannerComponent from "../../../Common/Banner/HeroBannerComponent";
 
 const Home = () => {
   const editComponentObj = {
@@ -269,53 +271,20 @@ const Home = () => {
         {/* ==== END ======================================== */}
 
         {/* BANNER COMPONENT START ======================================== */}
-        <div
-          className={
-            showHideCompList?.banner?.visibility && isAdmin && hasPermission
-              ? "componentOnBorder"
-              : ""
-          }
-        >
-          {isAdmin && hasPermission && (
-            <ShowHideToggle
-              showhideStatus={showHideCompList?.banner?.visibility}
-              title={"Hero Banner"}
-              componentName={"banner"}
-              showHideHandler={showHideHandler}
-              id={showHideCompList?.banner?.id}
-            />
-          )}
+        <HeroBannerComponent
+          isAdmin={isAdmin}
+          hasPermission={hasPermission}
+          editHandler={editHandler}
+          componentEdit={componentEdit}
+          pageType={pageType}
+          category={"hero-banner"}
+          popupTitle="Hero Banner"
+          componentType="banner"
+          showHideComponentName="banner"
+          showHideCompList={showHideCompList}
+          showHideHandler={showHideHandler}
+        />
 
-          {showHideCompList?.banner?.visibility && (
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-md-12 p-0 position-relative homePage">
-                  {isAdmin && hasPermission && (
-                    <EditIcon editHandler={() => editHandler("banner", true)} editlabel="Banner" />
-                  )}
-                  <Banner
-                    getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-                    bannerState={componentEdit.banner}
-                  />
-                </div>
-              </div>
-              {componentEdit.banner && (
-                <div className="adminEditTestmonial selected">
-                  <ImageInputsForm
-                    editHandler={editHandler}
-                    componentType="banner"
-                    popupTitle="Hero Banner"
-                    pageType={`${pageType}-banner`}
-                    imageLabel="Upload Image"
-                    showDescription={false}
-                    showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-                    dimensions={imageDimensionsJson("banner")}
-                  />
-                </div>
-              )}
-            </div>
-          )}
-        </div>
         {/* ==== END ======================================== */}
 
         {/* ==== CAROUSEL COMPONENT  ===================================== */}

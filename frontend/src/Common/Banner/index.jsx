@@ -47,69 +47,65 @@ const Banner = ({
   return (
     <PageBannerStyled>
       <div className="pageBanner">
-        <div
-          className={
-            (bannerdata.banner_descripiton && bannerdata.banner_title) ||
-            bannerdata.banner_descripiton ||
-            bannerdata.banner_title
-              ? bannerContainerCss
-              : ""
-          }
-        >
-          {bannerdata.banner_title !== "" && (
-            <Title
-              title={bannerdata.banner_title}
-              cssClass={bannerTitleCss}
-              mainTitleClassess=""
-            />
-          )}
-          {bannerdata.banner_subTitle !== "" && (
-            <Title
-              subTitle={bannerdata.banner_subTitle}
-              cssClass={bannerSubTitleCss}
-              subTitleClassess=""
-            />
-          )}
-          {bannerdata.banner_descripiton !== "" && (
-          <RichTextView 
-          data={
-              bannerdata?.banner_descripiton
-                ? bannerdata?.banner_descripiton
-                : isAdmin
-                  ? "Please Update Brief Intro"
-                  : ""
-              }
-              className={"introDecTitleCss bannerDescriptionCss"}
-              showMorelink={false}
-          />
-          )}
-          {/* {bannerdata.banner_descripiton !== "" && (
+        {bannerdata?.path && (
+          <div
+            className={
+              (bannerdata.banner_descripiton && bannerdata.banner_title) ||
+              bannerdata.banner_descripiton ||
+              bannerdata.banner_title
+                ? bannerContainerCss
+                : ""
+            }
+          >
+            {bannerdata.banner_title !== "" && (
+              <Title
+                title={bannerdata.banner_title}
+                cssClass={bannerTitleCss}
+                mainTitleClassess=""
+              />
+            )}
+            {bannerdata.banner_subTitle !== "" && (
+              <Title
+                subTitle={bannerdata.banner_subTitle}
+                cssClass={bannerSubTitleCss}
+                subTitleClassess=""
+              />
+            )}
+            {bannerdata.banner_descripiton !== "" && (
+              <RichTextView
+                data={
+                  bannerdata?.banner_descripiton
+                    ? bannerdata?.banner_descripiton
+                    : isAdmin
+                      ? "Please Update Brief Intro"
+                      : ""
+                }
+                className={"introDecTitleCss bannerDescriptionCss"}
+                showMorelink={false}
+              />
+            )}
+            {/* {bannerdata.banner_descripiton !== "" && (
             <small className={bannerDescriptionCss}>
               {bannerdata.banner_descripiton}
             </small>
           )} */}
 
-          {bannerdata.moreLink &&  (
-              <div >
+            {bannerdata.moreLink && (
+              <div>
                 <Ancher
                   AncherLabel={"Services"}
-                  Ancherpath={
-                    bannerdata.moreLink
-                      ? bannerdata.moreLink
-                      : moreLink
-                  }
+                  Ancherpath={bannerdata.moreLink ? bannerdata.moreLink : moreLink}
                   // Ancherpath={moreLink}
                   AncherClass={"btn btn-primary btn-sm mt-2"}
                   // AnchersvgColor={anchersvgColor}
                 />
               </div>
             )}
-        </div>
+          </div>
+        )}
         {bannerdata?.path ? (
           <img
-            src={
-              bannerdata?.path ? getImagePath(bannerdata.path) : getDummyImage()
-            }
+            src={bannerdata?.path ? getImagePath(bannerdata.path) : getDummyImage()}
             alt={bannerdata.alternitivetext}
             className={imageCss}
           />

@@ -18,3 +18,9 @@ class PageDetails(BaseModel):
     seo_link =          models.CharField(blank=True, max_length=200, null=True)
     seo_author =        models.CharField(blank=True, max_length=200, null=True)
     seo_keywords =      models.CharField(blank=True, max_length=500, null=True)  
+
+    class Meta:
+        db_table = "page_details"
+
+    def __str__(self):
+        return f"{self.page_label or 'No Label'}"

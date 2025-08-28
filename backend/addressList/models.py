@@ -21,3 +21,9 @@ class AddressList(BaseModel):
         phonen_number_2 =   models.CharField(max_length=100, null=True, blank=True )
         phonen_number_3 =   models.CharField(max_length=100, null=True, blank=True )
         address_position =  models.IntegerField(null=True, blank=True)
+
+        class Meta:
+                db_table = "address_list"
+
+        def __str__(self):
+            return f"{self.company_name or 'No Company Name'}"

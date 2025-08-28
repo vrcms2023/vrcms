@@ -4,7 +4,6 @@ import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../../Common/DeleteDialog";
 
 import EditAdminPopupHeader from "../../EditAdminPopupHeader";
-import { getCookie } from "../../../../util/cookieUtil";
 import {
   getObjectTitle,
   getObjectDescription,
@@ -36,7 +35,6 @@ const AdminListOfRecordsUpload = ({
   imageUpdateURL,
   imageIndexURL,
   imageLabel = "Add Images",
-  showDescription,
   showExtraFormFields,
   dimensions,
   validTypes = "image/png,image/jpeg",
@@ -191,14 +189,11 @@ const AdminListOfRecordsUpload = ({
           >
             <ImageUploadForm
               title={imageLabel}
-              category={componentType}
               newObjectsetState={setNewObject}
               editImage={editObject}
               setEditObject={setEditObject}
               maxFiles={1}
               validTypes={validTypes}
-              showDescription={showDescription}
-              buttonLable="Save"
               imagePostURL={imagePostURL}
               imageUpdateURL={imageUpdateURL}
               showExtraFormFields={showExtraFormFields}

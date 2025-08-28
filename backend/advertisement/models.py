@@ -12,5 +12,18 @@ class AdvertisementList(ImageModel):
         phonen_number = models.CharField(max_length=100, null=True, blank=True )
         showAndHide =   models.BooleanField(default=False)
 
+        class Meta:
+            db_table = "advertisement_list"     
+
+        def __str__(self):
+            return f"{self.title or 'No Title'}"
+
+
 class AdvertisementSize(BaseModel):
         size =   models.CharField(max_length=100, null=True, blank=True )
+
+        class Meta:
+                db_table = "advertisement_size"
+
+        def __str__(self):
+            return f"{self.size or 'No Size'}"

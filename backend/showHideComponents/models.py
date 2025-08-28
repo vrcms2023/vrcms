@@ -11,6 +11,7 @@ class ShowHideComponents(BaseModel):
 
         class Meta:
                 unique_together = ('componentName', 'pageType')
+                db_table = "show_hide_components"
 
         def __str__(self):
                 return f"{self.componentName} ({self.pageType})"

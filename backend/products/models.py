@@ -21,8 +21,12 @@ class Category(BaseModel):
     is_available =      models.BooleanField(default=True)
     description =       models.CharField(max_length=10000, null=True, blank=True )
 
+    class Meta:
+        db_table = "product_category"
+
     def __str__(self):
-        return self.company_name
+        return f"{self.category_name or 'No Name'}"
+
 
 class Product(ImageModel):
     company_name =      models.CharField(max_length=100, null=False)
@@ -38,5 +42,10 @@ class Product(ImageModel):
     seo_author =        models.CharField(blank=True, max_length=200, null=True)
     seo_keywords =      models.CharField(blank=True, max_length=200, null=True)  
 
+
+    class Meta:
+        db_table = "product"
+
+
     def __str__(self):
-        return self.product_name
+        return f"{self.product_name or 'No Name'}"

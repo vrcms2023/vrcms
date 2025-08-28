@@ -6,15 +6,9 @@ import BriefIntroFrontend from "../../../Common/BriefIntro";
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import AdminBriefIntro from "../../../Frontend_Admin/Components/BriefIntro/index";
 import Ancher from "../../../Common/Ancher";
-import {
-  getFormDynamicFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { getFormDynamicFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
-import {
-  axiosClientServiceApi,
-  axiosServiceApi,
-} from "../../../util/axiosUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 import { getImagePath, paginationDataFormat } from "../../../util/commonUtil";
 import Title from "../../../Common/Title";
 import { Link } from "react-router-dom";
@@ -37,6 +31,7 @@ import {
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const CaseStudies = () => {
   const editComponentObj = {
@@ -60,9 +55,7 @@ const CaseStudies = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const setResponseData = (data) => {
-    setClientsList(
-      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []
-    );
+    setClientsList(data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []);
     setPaginationData(paginationDataFormat(data));
     setCurrentPage(1);
   };
@@ -81,9 +74,7 @@ const CaseStudies = () => {
   useEffect(() => {
     const getCAseStutiesvalues = async () => {
       try {
-        const response = await axiosClientServiceApi.get(
-          `/caseStudies/clientCaseStudies/`
-        );
+        const response = await axiosClientServiceApi.get(`/caseStudies/clientCaseStudies/`);
         if (response?.status === 200) {
           setResponseData(response.data);
           setPageloadResults(1);
@@ -92,10 +83,7 @@ const CaseStudies = () => {
         console.log("unable to access ulr because of server is down");
       }
     };
-    if (
-      (!componentEdit.addSection || !componentEdit.editSection) &&
-      !searchQuery
-    ) {
+    if ((!componentEdit.addSection || !componentEdit.editSection) && !searchQuery) {
       getCAseStutiesvalues();
     }
   }, [componentEdit.addSection, componentEdit.editSection]);
@@ -113,9 +101,7 @@ const CaseStudies = () => {
     const name = item.case_studies_title;
 
     const deleteSection = async () => {
-      const response = await axiosServiceApi.delete(
-        `/caseStudies/updateCaseStudies/${id}/`
-      );
+      const response = await axiosServiceApi.delete(`/caseStudies/updateCaseStudies/${id}/`);
       if (response.status === 204) {
         const list = clientsList.filter((list) => list.id !== id);
         setClientsList(list);
@@ -138,9 +124,7 @@ const CaseStudies = () => {
 
   const [showHideCompList, setShowHideCompList] = useState([]);
   const dispatch = useDispatch();
-  const { error, success, showHideList } = useSelector(
-    (state) => state.showHide
-  );
+  const { error, success, showHideList } = useSelector((state) => state.showHide);
 
   useEffect(() => {
     if (showHideList.length > 0) {
@@ -162,61 +146,21 @@ const CaseStudies = () => {
 
   return (
     <>
-      <div
-        className={
-          showHideCompList?.casestudiesbanner?.visibility &&
-          isAdmin &&
-          hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.casestudiesbanner?.visibility}
-            title={"Banner"}
-            componentName={"casestudiesbanner"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.casestudiesbanner?.id}
-          />
-        )}
-        {showHideCompList?.casestudiesbanner?.visibility && (
-          <>
-            {/* Page Banner Component */}
-            <div className="position-relative">
-              {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler("banner", true)} />
-              )}
-              <Banner
-                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-                bannerState={componentEdit.banner}
-              />
-            </div>
-            {componentEdit.banner && (
-              <div className={`adminEditTestmonial selected `}>
-                <ImageInputsForm
-                  editHandler={editHandler}
-                  componentType="banner"
-                  popupTitle="Case Studies Banner"
-                  pageType={`${pageType}-banner`}
-                  imageLabel="Banner Image"
-                  showDescription={false}
-                  showExtraFormFields={getFormDynamicFields(
-                    `${pageType}-banner`
-                  )}
-                  dimensions={imageDimensionsJson("banner")}
-                />
-              </div>
-            )}
-          </>
-        )}
-      </div>
+      {/* Page Banner Component */}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"casestudies-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Case Studies Banner"}
+        showHideComponentName={"casestudiesbanner"}
+      />
 
       <div
         className={
-          showHideCompList?.casestudiesbriefintro?.visibility &&
-          isAdmin &&
-          hasPermission
+          showHideCompList?.casestudiesbriefintro?.visibility && isAdmin && hasPermission
             ? "componentOnBorder"
             : ""
         }
@@ -288,11 +232,10 @@ const CaseStudies = () => {
                 className="btn btn-outline ms-2"
                 onClick={() => editHandler("addSection", true)}
               >
-              New
+                New
                 <i className="fa fa-plus ms-2" aria-hidden="true"></i>
               </button>
             )}
-
           </div>
 
           <div className="col-md-6">
@@ -317,9 +260,7 @@ const CaseStudies = () => {
               category="about"
               editCarousel={editCarousel}
               setEditCarousel={setEditCarousel}
-              componentType={`${
-                componentEdit.editSection ? "editSection" : "addSection"
-              }`}
+              componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
               imageGetURL="/caseStudies/createCaseStudies/"
               imagePostURL="/caseStudies/createCaseStudies/"
               imageUpdateURL="/caseStudies/updateCaseStudies/"
@@ -354,35 +295,20 @@ const CaseStudies = () => {
                 <div
                   key={item.id}
                   className={`row mb-2 ${
-                    isAdmin
-                      ? "border border-warning mb-3 position-relative"
-                      : ""
+                    isAdmin ? "border border-warning mb-3 position-relative" : ""
                   } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
                 >
                   {isAdmin && hasPermission && (
                     <>
-                      <EditIcon
-                        editHandler={() =>
-                          editHandler("editSection", true, item)
-                        }
-                      />
-                      <Link
-                        className="deleteSection"
-                        onClick={() => deleteAboutSection(item)}
-                      >
-                        <i
-                          className="fa fa-trash-o text-danger fs-4"
-                          aria-hidden="true"
-                        ></i>
+                      <EditIcon editHandler={() => editHandler("editSection", true, item)} />
+                      <Link className="deleteSection" onClick={() => deleteAboutSection(item)}>
+                        <i className="fa fa-trash-o text-danger fs-4" aria-hidden="true"></i>
                       </Link>
                     </>
                   )}
                   <div className="col-sm-9 p-3 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column caseStudieDetails">
                     {item.case_studies_title ? (
-                      <Title
-                        title={item.case_studies_title}
-                        cssClass="fs-4 fw-bold mb-2"
-                      />
+                      <Title title={item.case_studies_title} cssClass="fs-4 fw-bold mb-2" />
                     ) : (
                       ""
                     )}
@@ -423,9 +349,7 @@ const CaseStudies = () => {
             <CustomPagination
               paginationData={paginationData}
               paginationURL={
-                isAdmin
-                  ? "/caseStudies/createCaseStudies/"
-                  : "/caseStudies/clientCaseStudies/"
+                isAdmin ? "/caseStudies/createCaseStudies/" : "/caseStudies/clientCaseStudies/"
               }
               paginationSearchURL={
                 searchQuery

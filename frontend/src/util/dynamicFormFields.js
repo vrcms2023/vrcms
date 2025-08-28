@@ -32,7 +32,7 @@ export const getProductCategoryBannerFormFields = (pageType) => {
   };
 };
 
-export const getFormDynamicFields = (pageType) => {
+export const getFormDynamicFields = (pageType, category) => {
   return {
     banner_title: {
       label: "Title",
@@ -53,6 +53,13 @@ export const getFormDynamicFields = (pageType) => {
       label: "Page To Link",
       type: "text",
       fieldName: "moreLink",
+    },
+    category: {
+      label: "News Title",
+      readonly: true,
+      type: "hidden",
+      value: category ? category : "",
+      fieldName: "category",
     },
     pageType: {
       label: "News Title",

@@ -11,10 +11,7 @@ import Banner from "../../../Common/Banner";
 import CustomPagination from "../../../Common/CustomPagination";
 
 import { removeActiveClass } from "../../../util/ulrUtil";
-import {
-  getFormDynamicFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { getFormDynamicFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 import { paginationDataFormat } from "../../../util/commonUtil";
 import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
 import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
@@ -37,6 +34,7 @@ import {
 } from "../../../redux/showHideComponent/showHideActions";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const Careers = () => {
   const editComponentObj = {
@@ -74,18 +72,14 @@ const Careers = () => {
   };
 
   const setResponseData = (data) => {
-    setPosts(
-      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []
-    );
+    setPosts(data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []);
     setPaginationData(paginationDataFormat(data));
     setCurrentPage(1);
   };
 
   const [showHideCompList, setShowHideCompList] = useState([]);
   const dispatch = useDispatch();
-  const { error, success, showHideList } = useSelector(
-    (state) => state.showHide
-  );
+  const { error, success, showHideList } = useSelector((state) => state.showHide);
 
   useEffect(() => {
     if (showHideList.length > 0) {
@@ -107,59 +101,21 @@ const Careers = () => {
 
   return (
     <>
-      <div
-        className={
-          showHideCompList?.careerbanner?.visibility && isAdmin && hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.careerbanner?.visibility}
-            title={"Banner"}
-            componentName={"careerbanner"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.careerbanner?.id}
-          />
-        )}
-        {showHideCompList?.careerbanner?.visibility && (
-          <>
-            {/* Page Banner Component */}
-            <div className="position-relative careersPage">
-              {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler("banner", true)}  />
-              )}
-              <Banner
-                getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-                bannerState={componentEdit.banner}
-              />
-            </div>
-            {componentEdit.banner && (
-              <div className={`adminEditTestmonial selected `}>
-                <ImageInputsForm
-                  editHandler={editHandler}
-                  componentType="banner"
-                  popupTitle={`Careers Banner`}
-                  pageType={`${pageType}-banner`}
-                  imageLabel="Banner Image"
-                  showDescription={false}
-                  showExtraFormFields={getFormDynamicFields(
-                    `${pageType}-banner`
-                  )}
-                  dimensions={imageDimensionsJson("banner")}
-                />
-              </div>
-            )}
-          </>
-        )}
-      </div>
+      {/* Page Banner Component */}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"careers-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Careers Banner"}
+        showHideComponentName={"careerbanner"}
+      />
 
       <div
         className={
-          showHideCompList?.careerbriefintro?.visibility &&
-          isAdmin &&
-          hasPermission
+          showHideCompList?.careerbriefintro?.visibility && isAdmin && hasPermission
             ? "componentOnBorder"
             : ""
         }
@@ -179,7 +135,7 @@ const Careers = () => {
           <div>
             {/* Introduction */}
             {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)}  />
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
             )}
 
             <BriefIntroFrontend
@@ -300,11 +256,7 @@ const Careers = () => {
             {paginationData?.total_count ? (
               <CustomPagination
                 paginationData={paginationData}
-                paginationURL={
-                  isAdmin
-                    ? "/careers/createCareer/"
-                    : "/careers/clientCareersList/"
-                }
+                paginationURL={isAdmin ? "/careers/createCareer/" : "/careers/clientCareersList/"}
                 paginationSearchURL={
                   searchQuery
                     ? `/careers/searchCareers/${searchQuery}/`
