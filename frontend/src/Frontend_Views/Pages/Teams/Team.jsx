@@ -24,10 +24,7 @@ import {
   sortByFieldName,
   updateArrIndex,
 } from "../../../util/commonUtil";
-import {
-  axiosClientServiceApi,
-  axiosServiceApi,
-} from "../../../util/axiosUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
 import { toast } from "react-toastify";
@@ -44,6 +41,7 @@ import {
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const Team = () => {
   const editComponentObj = {
@@ -92,9 +90,7 @@ const Team = () => {
   useEffect(() => {
     const getTeamMemberDetails = async () => {
       try {
-        const response = await axiosClientServiceApi.get(
-          `/ourteam/clentViewOurTeamDetails/`
-        );
+        const response = await axiosClientServiceApi.get(`/ourteam/clentViewOurTeamDetails/`);
         if (response?.status === 200) {
           setResponseData(response.data);
         }
@@ -102,10 +98,7 @@ const Team = () => {
         console.log("unable to access ulr because of server is down");
       }
     };
-    if (
-      (!componentEdit.addSection || !componentEdit.editSection) &&
-      !searchQuery
-    ) {
+    if ((!componentEdit.addSection || !componentEdit.editSection) && !searchQuery) {
       getTeamMemberDetails();
     }
   }, [componentEdit.addSection, componentEdit.editSection]);
@@ -115,9 +108,7 @@ const Team = () => {
     const name = item.team_member_name;
 
     const deleteSection = async () => {
-      const response = await axiosServiceApi.delete(
-        `/ourteam/UpdateOurteamDetail/${id}/`
-      );
+      const response = await axiosServiceApi.delete(`/ourteam/UpdateOurteamDetail/${id}/`);
       if (response.status === 204) {
         const list = team.filter((list) => list.id !== id);
         setTeam(list);
@@ -131,7 +122,12 @@ const Team = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSection}
-            message={`deleting the ${name} Service?`}
+            // message={`deleting the ${name} Service?`}
+            message={
+              <>
+                Confirm deletion of <span>{name}</span> Service?
+              </>
+            }
           />
         );
       },
@@ -155,10 +151,7 @@ const Team = () => {
 
   const updateObjectsIndex = async (data) => {
     try {
-      let response = await axiosServiceApi.put(
-        `/ourteam/updateTeamindex/`,
-        data
-      );
+      let response = await axiosServiceApi.put(`/ourteam/updateTeamindex/`, data);
       if (response?.data?.team) {
         return response.data.team;
       }
@@ -168,20 +161,12 @@ const Team = () => {
   };
 
   const [showHideCompList, setShowHideCompList] = useState([]);
-  const showHideCompPageLoad = useRef(true);
   const dispatch = useDispatch();
   const { error, showHideList } = useSelector((state) => state.showHide);
 
   useEffect(() => {
     if (showHideList.length > 0) {
       setShowHideCompList(getObjectsByKey(showHideList));
-    }
-  }, [showHideList]);
-
-  useEffect(() => {
-    if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getAllShowHideComponentsList());
-      showHideCompPageLoad.current = false;
     }
   }, [showHideList]);
 
@@ -199,36 +184,22 @@ const Team = () => {
 
   return (
     <>
-      <div className="position-relative">
-        {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
-        )}
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        />
-      </div>
-      {componentEdit.banner && (
-        <div className={`adminEditTestmonial selected `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle="Team Banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
-      )}
+      {/* Page Banner Component */}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"team-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Team Banner"}
+        showHideComponentName={"teambanner"}
+      />
 
       <div
         className={
-          showHideCompList?.teambriefintro?.visibility &&
-          isAdmin &&
-          hasPermission
-            ? "border border-info mb-2"
+          showHideCompList?.teambriefintro?.visibility && isAdmin && hasPermission
+            ? "componentOnBorder"
             : ""
         }
       >
@@ -247,7 +218,10 @@ const Team = () => {
           <div>
             {/* Brief Introduction */}
             {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+              <EditIcon
+                editHandler={() => editHandler("briefIntro", true)}
+                editlabel={"Brief Info"}
+              />
             )}
 
             <BriefIntroFrontend
@@ -279,26 +253,39 @@ const Team = () => {
       </div>
 
       <div className="container">
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12 mt-4">
             {isAdmin && hasPermission && (
               <div className="text-end mb-4">
                 <Link
                   to="#"
-                  className="btn btn-primary"
+                  className="btn btn-outline"
                   onClick={() => editHandler("addSection", true)}
                 >
-                  Add team
-                  <i className="fa fa-plus ms-2" aria-hidden="true"></i>
+                  <i className="fa fa-plus" aria-hidden="true"></i>
                 </Link>
               </div>
             )}
           </div>
-        </div>
+        </div> */}
 
-        <div className="row mb-0 py-2 py-md-4">
-          <div className="col-md-6 fs-3 mt-4 mt-md-0">
-            <Title title="Our Team" cssClass="fs-1 pageTitle" />
+        <div className="row mb-0 mt-4">
+          <div className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start">
+            <Title title="Our Team" cssClass="pageTitle fs-4" />
+
+            {isAdmin && hasPermission && (
+              <div className="text-end">
+                <Link
+                  to="#"
+                  className="btn btn-outline ms-2"
+                  onClick={() => editHandler("addSection", true)}
+                >
+                  {" "}
+                  New
+                  <i className="fa fa-plus ms-2" aria-hidden="true"></i>
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="col-md-6 mb-4">
@@ -325,18 +312,14 @@ const Team = () => {
               popupTitle="Team"
               editCarousel={editCarousel}
               setEditCarousel={setEditCarousel}
-              componentType={`${
-                componentEdit.editSection ? "editSection" : "addSection"
-              }`}
+              componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
               getImageListURL="ourteam/createteam/"
               deleteImageURL="ourteam/UpdateOurteamDetail/"
               imagePostURL="ourteam/createteam/"
               imageUpdateURL="ourteam/UpdateOurteamDetail/"
-              imageLabel="Add Profile Image"
+              imageLabel="Upload Image"
               showDescription={false}
-              showExtraFormFields={getTeamMemberFields(
-                editCarousel?.team_member_position
-              )}
+              showExtraFormFields={getTeamMemberFields(editCarousel?.team_member_position)}
               dimensions={imageDimensionsJson("teams")}
             />
           </div>
@@ -366,9 +349,7 @@ const Team = () => {
                         />
                       ))
                     ) : (
-                      <p className="text-center text-muted py-5">
-                        Please add page contents...
-                      </p>
+                      <p className="text-center text-muted py-5">Please add page contents...</p>
                     )}
                     {provided.placeholder}
                   </div>
@@ -382,9 +363,7 @@ const Team = () => {
             <CustomPagination
               paginationData={paginationData}
               paginationURL={
-                isAdmin
-                  ? "/ourteam/createteam/"
-                  : "/clieourteamnt/clentViewOurTeamDetails/"
+                isAdmin ? "/ourteam/createteam/" : "/clieourteamnt/clentViewOurTeamDetails/"
               }
               paginationSearchURL={
                 searchQuery
@@ -436,41 +415,27 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
               <>
                 <EditIcon
                   editHandler={() => editHandler("editSection", true, item)}
+                  editlabel={"Profile"}
                 />
-                <Link
-                  className="deleteSection"
-                  onClick={() => deleteAboutSection(item)}
-                >
-                  <i
-                    className="fa fa-trash-o text-danger fs-4"
-                    aria-hidden="true"
-                  ></i>
+                <Link className="deleteSection" onClick={() => deleteAboutSection(item)}>
+                  <i className="fa fa-trash-o text-danger fs-4" aria-hidden="true"></i>
                 </Link>
               </>
             )}
             <div className="text-center p-3">
-              <img
-                src={getImagePath(item.path)}
-                className="rounded rounded-1 mt-2 "
-                alt=""
-              />
+              <img src={getImagePath(item.path)} className="rounded rounded-1 mt-2 " alt="" />
             </div>
 
             <div className=" text-start py-2 p-4 memberDetails">
               {item.team_member_designation && (
-                <small className="mb-1 fw-bold">
-                  {item.team_member_designation}
-                </small>
+                <small className="mb-1 fw-bold">{item.team_member_designation}</small>
               )}
 
               {item.team_member_name && (
                 <Title title={item.team_member_name} cssClass="fs-4 title " />
               )}
               {item.team_member_about_us && (
-                <RichTextView
-                  data={item.team_member_about_us}
-                  className={"strengths"}
-                />
+                <RichTextView data={item.team_member_about_us} className={"strengths"} />
                 // <div
                 //   className="strengths my-3"
                 //   dangerouslySetInnerHTML={{
@@ -481,14 +446,10 @@ const TeamItem = ({ item, index, deleteAboutSection, editHandler }) => {
 
               {item.team_member_email && (
                 <div className="mt-3">
-                  <a href={`mailto:${item.team_member_email}`}>
-                    {item.team_member_email}
-                  </a>
+                  <a href={`mailto:${item.team_member_email}`}>{item.team_member_email}</a>
                 </div>
               )}
-              {item.team_member_phone_number && (
-                <p>{item.team_member_phone_number}</p>
-              )}
+              {item.team_member_phone_number && <p>{item.team_member_phone_number}</p>}
 
               <div className="social">
                 {item.facebook_url && (

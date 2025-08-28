@@ -1,26 +1,41 @@
 import React from "react";
 
 import './Title.css'
+import { TitleSubTitleStyled } from "./StyledComponents/Styled-Title-Component";
 
 const Title = ({ 
   title = "",
   subTitle = "", 
   cssClass,
   mainTitleClassess="",
-  subTitleClassess=""
+  subTitleClassess="",
+  icon,
+  seoTitle=false
 }) => {
   
   return (
-    <>
-      <h5 className={`${cssClass} ${mainTitleClassess}`}>
-        {title}
-        {subTitle ? (
-          <span className={`${subTitleClassess}`}> / {subTitle}</span>
+    <TitleSubTitleStyled>
+      {seoTitle ? (
+        <h1 className={`${mainTitleClassess}`}>
+          {icon ? <i class={`fa ${icon}`} aria-hidden="true"></i> : ""} {title} 
+        </h1>
+      ) : title ? (
+        <h5 className={`${cssClass}`}>
+          {icon ? <i class={`fa ${icon}`} aria-hidden="true"></i> : ""} {title} 
+        </h5>
+      ) : ""}
+      {/* {title ? (
+        <h5 className={`${cssClass} ${mainTitleClassess}`}>
+        {icon ? <i class={`fa ${icon}`} aria-hidden="true"></i> : ""} {title} 
+      </h5>
+      ) : ""} */}
+      
+      {subTitle ? (
+          <span className={`${subTitleClassess}`}>{subTitle}</span>
         ) : (
           ""
         )}
-      </h5>
-    </>
+    </TitleSubTitleStyled>
   );
 };
 

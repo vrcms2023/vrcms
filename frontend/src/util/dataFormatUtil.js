@@ -1,5 +1,6 @@
 import moment from "moment";
 import _ from "lodash";
+import { sortByFieldName } from "./commonUtil";
 
 export const dataFormatedByCatergoryName = (data) => {
   const project = data.projectList;
@@ -83,29 +84,34 @@ export const getFirstShortDescription = (data) => {
   return data.substring(0, 50);
 };
 
-export const mapServicePagetoComponent = (data) => {
+export const mapServicePagetoComponent = (data, maxCount = 9) => {
   const services = sortByCreatedDate(data.services);
   const serviceSection = data.serviceSection;
-  const displayCount = 5;
 
-  return services.reduce((acc, val, ind) => {
-    let service = [];
-    if (ind >= displayCount) {
-      service = getservicelist(service);
-      return acc.concat({ ...val, service });
+  const sortedChildren = [...serviceSection].sort(
+    (a, b) => new Date(a.created_at) - new Date(b.created_at)
+  );
+
+  const firstChildMap = {};
+
+  for (const child of sortedChildren) {
+    if (!firstChildMap[child.serviceID]) {
+      firstChildMap[child.serviceID] = child;
     }
-    serviceSection.forEach((el, i) => {
-      if (el.serviceID === val.id) {
-        service.push(el);
-      }
-    });
+  }
 
-    service = getservicelist(service);
-    return acc.concat({ ...val, service });
-  }, []);
-};
+  // Attach one child (if exists) to each parent
+  const mapped = services.map((parent) => ({
+    ...parent,
+    child: firstChildMap[parent.id] ? [firstChildMap[parent.id]] : [],
+  }));
 
-const getservicelist = (service) => {
-  let data = sortByCreatedDate(service);
-  return (service = data.splice(0, 1));
+  // Sort by created_at and return only maxCount parents
+  const sortedMapped = sortByFieldName(mapped, "service_postion");
+
+  if (maxCount) {
+    return sortedMapped.slice(0, maxCount);
+  } else {
+    return sortedMapped;
+  }
 };

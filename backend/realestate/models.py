@@ -8,11 +8,25 @@ class ProjectCategory(models.Model):
         projectLabel = models.CharField(max_length=50)
         projectValue = models.CharField(max_length=50)
 
+
+        class Meta:
+                db_table = "real_estate_project_category"
+
+        def __str__(self):
+                return f"{self.projectLabel or 'No Name'}"
+
 class Category(ImageModel):              
         category_Label = models.CharField(max_length=50)
         category_Value = models.CharField(max_length=50, blank=True, null=True)
         category_description =   models.CharField(blank=True, max_length=5000, null=True)
         readMore_link =  models.CharField(blank=True, max_length=100, null=True)
+
+
+        class Meta:
+                db_table = "real_estate_category"
+
+        def __str__(self):
+                return f"{self.category_Label or 'No Label'}"
 
 
 class Projects(BaseModel):       
@@ -33,22 +47,35 @@ class Projects(BaseModel):
         seo_link =          models.CharField(blank=True, max_length=200, null=True)
         seo_author =        models.CharField(blank=True, max_length=200, null=True)
         seo_keywords =      models.CharField(blank=True, max_length=200, null=True)  
-
         
+        class Meta:
+                db_table = "real_estate_projects"
 
-class FeatureAndAmenities(BaseModel):    
+        def __str__(self):
+                return f"{self.projectTitle or 'No Title'}"
+
+
+class FeatureAndAmenities(BaseModel):
         projectID = models.CharField(max_length=100, null=False, unique=True)
         amenitie = models.CharField(max_length=5000, null=True, blank=True)
         feature = models.CharField(max_length=5000, null=True, blank=True)
         googleMap = models.CharField(max_length=5000, null=True, blank=True)
-       
+
+        class Meta:
+                db_table = "real_estate_feature_and_amenities"
+
+        def __str__(self):
+                return f"{self.feature or 'No Feature'}"
 
 
-class Specifications(BaseModel):       
+class Specifications(BaseModel):
         projectID = models.CharField(max_length=100, null=False)
         title = models.CharField(max_length=500, null=True, blank=True)
         feature = models.CharField(max_length=5000, null=True, blank=True)
        
-        
-        def __str__(self):  
-                return self.title  
+
+        class Meta:
+                db_table = "real_estate_specifications"
+
+        def __str__(self):
+                return f"{self.title or 'No Title'}"

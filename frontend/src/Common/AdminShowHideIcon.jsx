@@ -1,5 +1,4 @@
 import React from "react";
-import "./AdminEditIcon.css";
 
 const ShowHideIcon = ({
   editHandler,
@@ -12,12 +11,12 @@ const ShowHideIcon = ({
   // iconCss = "text-info cursor-pointer fs-3",
   cssClasses = "",
 }) => {
-  const appliedIconCss = iconCss ?? `${hideIcon ? 'text-white' : 'text-muted'} cursor-pointer fs-3`;
+  const appliedIconCss = iconCss ?? `${hideIcon ? 'componentext' : 'componentext'} cursor-pointer fs-5`;
   return (
-    <span className={`${cssClasses} d-block p-1 rounded-2 d-flex justify-content-between align-items-center`}>
-     <span className={hideIcon ? "" : "text-muted" }>{hideIcon ? "ON" : "OFF" }</span>
+    <span className={`${cssClasses} componentext d-flex justify-content-between align-items-center`}>
+     <small className={hideIcon ? "" : "componentext" }>{hideIcon ? "ON" : "OFF" }</small>
       <i
-        className={`mx-2 fa ${hideIcon ? iconShow : iconHide} ${appliedIconCss}`}
+        className={`ms-1 fa ${hideIcon ? iconShow : iconHide} ${appliedIconCss}`}
         aria-hidden="true"
         onClick={editHandler}
       ></i>

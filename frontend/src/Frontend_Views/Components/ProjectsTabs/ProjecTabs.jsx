@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./ProjectTabs.css";
+// import "./ProjectTabs.css";
 
 import Title from "../../../Common/Title";
 
@@ -13,6 +13,8 @@ import Cost from "./Cost";
 import Button from "../../../Common/Button";
 import ProjectGalleryView from "../../Pages/Projects/ProjectGalleryView";
 import { removeCookie, setCookie } from "../../../util/cookieUtil";
+import { ProjectsPageStyled } from "../../../Common/StyledComponents/Styled-ProjectsPage";
+import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
 
 const ProjectTabs = () => {
   const location = useLocation();
@@ -37,6 +39,9 @@ const ProjectTabs = () => {
 
   const [avlPdfs, setAvlPdfs] = useState([]);
   const [avlImgs, setAvlImgs] = useState([]);
+  const { isAdmin, hasPermission } = useAdminLoginStatus();
+
+  // console.log(amenities, "amenities");
 
   useEffect(() => {
     removeCookie("projectid");
@@ -145,43 +150,69 @@ const ProjectTabs = () => {
   };
 
   return (
-    <>
-      <div className="container mt-5 pt-5">
+    <ProjectsPageStyled>
+      <div className="container">
         <div className="row p-0 pt-4 projectTabs">
           <div className="col-md-12">
-            <div className="text-end">
+            {/* <div className="d-flex justify-content-end">
               <Button
                 type=""
-                cssClass={"btn btn-success"}
-                label="Back to projects"
+                cssClass={"btn btn-outline"}
+                label="All Projects"
                 handlerChange={() => {
-                  navigate("/projects/projects");
+                  navigate("/projects");
                 }}
               />
-            </div>
+            </div> */}
 
             <div className="d-flex justify-content-between align-items-center mt-3 mb-3">
-              <Title
-                title={projectHome.projectCategoryName}
-                subTitle={projectTitle}
-                cssClass="blue-900 fs-5 fw-bold"
+              <div className="w-50 d-flex">
+                <Title
+                  title={projectHome.projectCategoryName + " " + " / " + projectTitle}
+                  // subTitle={projectTitle}
+                  cssClass="fs-5 breadCrumb "
+                />
+              </div>
+
+              <div className="d-flex justify-content-end align-items-center gap-2 w-50">
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  id="projectStatus"
+                  value={projectid}
+                  onChange={(e) => getProjects(e.target.value)}
+                >
+                  <option value="select">Select</option>
+                  {projects?.length > 0
+                    ? projects?.map((project) => (
+                        <option value={project.id} key={project.id}>
+                          {project.projectTitle}
+                        </option>
+                      ))
+                    : ""}
+                </select>
+                {isAdmin && hasPermission && (
+                  <Button
+                    type=""
+                    icon="fa-pencil me-2 text-warning"
+                    cssClass={"btn btn-outline"}
+                    label="Edit"
+                    handlerChange={() => {
+                      navigate(`/editproject/${projectid}`);
+                    }}
+                  />
+                  
+                )}
+                <Button
+                type=""
+                icon="fa-chevron-left me-2"
+                cssClass={"btn btn-outline"}
+                label="Projects"
+                handlerChange={() => {
+                  navigate("/projects");
+                }}
               />
-              <select
-                className="form-select shadow-lg border border-1 rounded-0 border-success w-25"
-                aria-label="Default select example"
-                id="projectStatus"
-                value={projectid}
-                onChange={(e) => getProjects(e.target.value)}
-              >
-                <option value="select">Select Project</option>
-                {projects?.length > 0
-                  ? projects?.map((project) => (
-                      <option value={project.id} key={project.id}>
-                        {project.projectTitle}
-                      </option>
-                    ))
-                  : ""}
-              </select>
+              </div>
             </div>
 
             <div className="col-md-12 mb-4">
@@ -289,21 +320,20 @@ const ProjectTabs = () => {
                     </button>
                   )}
 
-                  {amenities?.amenitie ||
-                    (amenities?.feature && (
-                      <button
-                        className="nav-link"
-                        id="nav-amenities-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#nav-amenities"
-                        type="button"
-                        role="tab"
-                        aria-controls="nav-amenities"
-                        aria-selected="false"
-                      >
-                        AMENITIES
-                      </button>
-                    ))}
+                  {(amenities?.amenitie || amenities?.feature) && (
+                    <button
+                      className="nav-link"
+                      id="nav-amenities-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#nav-amenities"
+                      type="button"
+                      role="tab"
+                      aria-controls="nav-amenities"
+                      aria-selected="false"
+                    >
+                      AMENITIES
+                    </button>
+                  )}
                 </div>
               </nav>
 
@@ -414,7 +444,7 @@ const ProjectTabs = () => {
           </div>
         </div>
       </div>
-    </>
+    </ProjectsPageStyled>
   );
 };
 

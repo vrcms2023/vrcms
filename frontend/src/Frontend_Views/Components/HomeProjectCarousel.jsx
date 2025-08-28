@@ -10,7 +10,6 @@ import {
 } from "../../util/commonUtil";
 
 // Styles
-import "./Carousel.css";
 import SkeletonImage from "../../Common/Skeltons/SkeletonImage";
 import { CarouselItem } from "./CarouselItem";
 import { getClientProjects } from "../../redux/project/clientProjectActions";

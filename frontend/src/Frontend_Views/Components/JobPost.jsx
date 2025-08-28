@@ -88,7 +88,8 @@ const JobPost = ({
           <DeleteDialog
             onClose={onClose}
             callback={deleteImageByID}
-            message={`deleting the ${title} image?`}
+            // message={`deleting the ${title} image?`}
+            message={<>Confirm deletion of <span>{title}</span> News?</>}
           />
         );
       },
@@ -189,7 +190,7 @@ const JobPost = ({
                         </small>
                       )}
                     </Link>
-                    {/* <EditIcon editHandler={() => publishCareer(item)} /> */}
+                    {/* <EditIcon editHandler={() => publishCareer(item)} editlabel="Careers" /> */}
                   </div>
                 </>
               ) : (
@@ -208,7 +209,7 @@ const JobPost = ({
             {/* <div className="position-realative">
                 {isAdmin ? (
                   <EditIcon
-                    editHandler={() => editHandler("job", true, item)}
+                    editHandler={() => editHandler("job", true, item)} editlabel="Banner"
                   />
                 ) : (
                   ""
@@ -217,26 +218,26 @@ const JobPost = ({
 
             {/* publihser Icon */}
 
-            <div className="p-4 jobPost">
+            <div className="p-3 jobPost">
               <small className="d-block location mb-3">
                 <i
-                  className="fa fa-map-marker fs-4 me-1"
+                  className="fa fa-map-marker fs-5 me-1"
                   aria-hidden="true"
                 ></i>{" "}
                 {item.job_location}
               </small>
-              <div className="mt-0 mb-3">
+              <div className="mt-0 mb-2">
                 <Title
                   title={item.job_title}
-                  cssClass="fs-4 jobTitle"
+                  cssClass="jobTitle"
                 />
               </div>
-              <div className="mt-0 mb-3">
-                <Title title="Company" cssClass="subTitle" />
+              <div className="mt-0 mb-2">
+                {/* <Title title="Company" cssClass="subTitle" /> */}
                 <p className="m-0">{item.company_name} </p>
               </div>
               <div className="">
-                <Title title="Job Description" cssClass="subTitle" />
+                <Title title="Job Description" cssClass="subTitle mb-0" />
                 <div className="m-0">
                   <RichTextView
                     data={getFirstShortDescription(item?.description)}
@@ -261,10 +262,10 @@ const JobPost = ({
                   "Today"
                 ) : (
                   <>
-                    [{" "}
-                    <strong className="subTitle">
+                    [
+                    <strong className="">
                       {showPosteddate(item.posted_date)}
-                    </strong>{" "}
+                    </strong>
                     ] days ago
                   </>
                 )}

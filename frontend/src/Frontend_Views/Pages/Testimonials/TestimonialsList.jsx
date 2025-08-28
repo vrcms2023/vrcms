@@ -8,15 +8,9 @@ import Banner from "../../../Common/Banner";
 import BriefIntroFrontend from "../../../Common/BriefIntro";
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import AdminBriefIntro from "../../../Frontend_Admin/Components/BriefIntro/index";
-import {
-  getFormDynamicFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { getFormDynamicFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
-import {
-  axiosClientServiceApi,
-  axiosServiceApi,
-} from "../../../util/axiosUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 import {
   getImagePath,
   paginationDataFormat,
@@ -48,6 +42,9 @@ import {
 } from "../../../redux/showHideComponent/showHideActions";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 
+import "./TestimonialsList.css";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
+
 const TestimonialsList = () => {
   const editComponentObj = {
     banner: false,
@@ -57,6 +54,7 @@ const TestimonialsList = () => {
     testmonial: false,
   };
 
+  const [counter, setCounter] = useState(0);
   const pageType = "testimonial";
   const { isLoading } = useSelector((state) => state.loader);
   const { isAdmin, hasPermission } = useAdminLoginStatus();
@@ -72,9 +70,7 @@ const TestimonialsList = () => {
   const [modelItem, setModelItem] = useState({});
 
   const setResponseData = (data) => {
-    setClientsList(
-      data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []
-    );
+    setClientsList(data.results.length > 0 ? sortCreatedDateByDesc(data.results) : []);
     setPaginationData(paginationDataFormat(data));
     setCurrentPage(1);
   };
@@ -82,9 +78,7 @@ const TestimonialsList = () => {
   useEffect(() => {
     const getCAseStutiesvalues = async () => {
       try {
-        const response = await axiosClientServiceApi.get(
-          `/testimonials/clientTestimonials/`
-        );
+        const response = await axiosClientServiceApi.get(`/testimonials/clientTestimonials/`);
         if (response?.status === 200) {
           setResponseData(response.data);
         }
@@ -92,10 +86,7 @@ const TestimonialsList = () => {
         console.log("unable to access ulr because of server is down");
       }
     };
-    if (
-      (!componentEdit.addSection || !componentEdit.editSection) &&
-      !searchQuery
-    ) {
+    if ((!componentEdit.addSection || !componentEdit.editSection) && !searchQuery) {
       getCAseStutiesvalues();
     }
   }, [componentEdit.addSection, componentEdit.editSection]);
@@ -123,9 +114,7 @@ const TestimonialsList = () => {
     const name = item.testimonial_title;
 
     const deleteSection = async () => {
-      const response = await axiosServiceApi.delete(
-        `/testimonials/updateTestimonials/${id}/`
-      );
+      const response = await axiosServiceApi.delete(`/testimonials/updateTestimonials/${id}/`);
       if (response.status === 204) {
         const list = clientsList.filter((list) => list.id !== id);
         setClientsList(list);
@@ -139,7 +128,11 @@ const TestimonialsList = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSection}
-            message={`deleting the ${name} Service?`}
+            message={
+              <>
+                Confirm deletion of <span>{name}</span> Service?
+              </>
+            }
           />
         );
       },
@@ -170,10 +163,7 @@ const TestimonialsList = () => {
   };
   const updateObjectsIndex = async (data) => {
     try {
-      let response = await axiosServiceApi.put(
-        `/testimonials/updateTestimonialsindex/`,
-        data
-      );
+      let response = await axiosServiceApi.put(`/testimonials/updateTestimonialsindex/`, data);
       if (response?.data?.testimonial) {
         return response.data.testimonial;
       }
@@ -183,20 +173,12 @@ const TestimonialsList = () => {
   };
 
   const [showHideCompList, setShowHideCompList] = useState([]);
-  const showHideCompPageLoad = useRef(true);
   const dispatch = useDispatch();
   const { error, showHideList } = useSelector((state) => state.showHide);
 
   useEffect(() => {
     if (showHideList.length > 0) {
       setShowHideCompList(getObjectsByKey(showHideList));
-    }
-  }, [showHideList]);
-
-  useEffect(() => {
-    if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getAllShowHideComponentsList());
-      showHideCompPageLoad.current = false;
     }
   }, [showHideList]);
 
@@ -215,35 +197,21 @@ const TestimonialsList = () => {
   return (
     <>
       {/* Page Banner Component */}
-      <div className="position-relative">
-        {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
-        )}
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        />
-      </div>
-      {componentEdit.banner && (
-        <div className={`adminEditTestmonial selected `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle={`Testimonial`}
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
-      )}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"testimonial-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Testimonial Banner"}
+        showHideComponentName={"testimonialbanner"}
+      />
+
       <div
         className={
-          showHideCompList?.testimonialbriefintro?.visibility &&
-          isAdmin &&
-          hasPermission
-            ? "border border-info mb-2"
+          showHideCompList?.testimonialbriefintro?.visibility && isAdmin && hasPermission
+            ? "componentOnBorder"
             : ""
         }
       >
@@ -285,6 +253,7 @@ const TestimonialsList = () => {
                   editHandler={editHandler}
                   componentType="briefIntro"
                   pageType={pageType}
+                  popupTitle="Testinonial - Brief Info"
                 />
               </div>
             )}
@@ -294,26 +263,32 @@ const TestimonialsList = () => {
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
-        <div className="row">
-          {isAdmin && hasPermission && (
-            <div className="col-md-12">
+        {/* {isAdmin && hasPermission && (
               <div className="d-flex justify-content-end align-items-center mb-3">
-                {/* <span className="fw-bold me-2">Add Testimonials </span> */}
+                <span className="fw-bold me-2">Add Testimonials </span>
                 <button
                   type="submit"
-                  className="btn btn-primary px-3"
+                  className="btn btn-outline"
                   onClick={() => editHandler("addSection", true, {})}
                 >
-                  Add New Testimonials{" "}
+                  New
                   <i className="fa fa-plus ms-2" aria-hidden="true"></i>
                 </button>
               </div>
-            </div>
-          )}
-        </div>
+          )} */}
         <div className="row">
-          <div className="col-md-6 d-flex align-items-center">
-            <Title title="Testimonials" cssClass="fw-medium pageTitle" />
+          <div className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start">
+            <Title title="Testimonials" cssClass="pageTitle fs-4" />
+            {isAdmin && hasPermission && (
+              <button
+                type="submit"
+                className="btn btn-outline ms-2"
+                onClick={() => editHandler("addSection", true, {})}
+              >
+                New
+                <i className="fa fa-plus ms-2" aria-hidden="true"></i>
+              </button>
+            )}
           </div>
 
           <div className="col-md-6">
@@ -322,7 +297,7 @@ const TestimonialsList = () => {
               clientSearchURL={"/testimonials/searchtestimonials/"}
               adminSearchURL={"/testimonials/createTestimonials/"}
               clientDefaultURL={"/testimonials/clientTestimonials/"}
-              searchfiledDeatails={"client Title / client description "}
+              searchfiledDeatails={"client Title "}
               setPageloadResults={setPageloadResults}
               setSearchquery={setSearchquery}
               searchQuery={searchQuery}
@@ -339,14 +314,12 @@ const TestimonialsList = () => {
               popupTitle={`Testimonial`}
               editCarousel={editCarousel}
               setEditCarousel={setEditCarousel}
-              componentType={`${
-                componentEdit.editSection ? "editSection" : "addSection"
-              }`}
+              componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
               getImageListURL="testimonials/clientTestimonials/"
               deleteImageURL="testimonials/updateTestimonials/"
               imagePostURL="testimonials/createTestimonials/"
               imageUpdateURL="testimonials/updateTestimonials/"
-              imageLabel="Image"
+              imageLabel="Upload Image"
               showDescription={false}
               showExtraFormFields={getTestimonialsFields("testmonial")}
               dimensions={imageDimensionsJson("testimonial")}
@@ -357,7 +330,7 @@ const TestimonialsList = () => {
         )}
 
         <TestimonialsListPageStyled>
-          <div className="testimonialsPage my-5">
+          <div className="testimonialsPage my-3">
             {isLoading ? (
               <div className="row">
                 {[1, 2, 3, 4].map((item, index) => (
@@ -398,25 +371,19 @@ const TestimonialsList = () => {
                               <div
                                 key={item.id}
                                 className={`row mb-2 ${
-                                  isAdmin
-                                    ? "border border-warning mb-3 position-relative"
-                                    : ""
+                                  isAdmin ? "border border-warning mb-3 position-relative" : ""
                                 } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
                               >
                                 {isAdmin && hasPermission && (
                                   <>
                                     <EditIcon
-                                      editHandler={() =>
-                                        editHandler("editSection", true, item)
-                                      }
+                                      editHandler={() => editHandler("editSection", true, item)}
                                     />
                                     <EditIcon
                                       icon={"fa-trash-o"}
                                       iconCss={"text-danger fs-4"}
-                                      cssClasses={""}
-                                      editHandler={() =>
-                                        deleteAboutSection(item)
-                                      }
+                                      cssClasses={"position-absolute deleteIcon"}
+                                      editHandler={() => deleteAboutSection(item)}
                                     />
                                     {/* <Link
                                       className="deleteSection"
@@ -429,18 +396,16 @@ const TestimonialsList = () => {
                                     </Link> */}
                                   </>
                                 )}
-                                <div className="col-12 col-lg-10 p-3 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column">
+                                <div className="col-12 col-lg-9 p-3 p-md-4 py-md-4 d-flex justify-content-center align-items-start flex-column">
                                   {item.testimonial_title ? (
-                                    <Title
-                                      title={item.testimonial_title}
-                                      cssClass="fs-1 fw-bold mb-1"
-                                    />
+                                    <Title title={item.testimonial_title} cssClass="fs-5 mb-1" />
                                   ) : (
                                     ""
                                   )}
                                   <RichTextView
                                     data={item?.testimonial_description}
                                     className=""
+                                    showMorelink={false}
                                   />
                                   {/* <div
                                     dangerouslySetInnerHTML={{
@@ -449,8 +414,8 @@ const TestimonialsList = () => {
                                   /> */}
                                 </div>
 
-                                <div className="col-lg-2 d-none d-lg-block h-100">
-                                  <div className="h-100 p-3 p-md-5 py-md-4 testimonialAvatar ">
+                                <div className="col-lg-3 d-none d-lg-block text-center">
+                                  <div className="p-3 py-md-4 testimonialAvatar ">
                                     <Link
                                       to=""
                                       className="text-decoration-underline"
@@ -459,7 +424,7 @@ const TestimonialsList = () => {
                                       <img
                                         src={getImagePath(item.path)}
                                         alt=""
-                                        className="img-fluid rounded-circle border border-3 border-light shadow-lg img-thumbnail "
+                                        className="img-fluid rounded-circle shadow-lg"
                                       />
                                     </Link>
                                   </div>
@@ -491,11 +456,7 @@ const TestimonialsList = () => {
         {paginationData?.total_count ? (
           <CustomPagination
             paginationData={paginationData}
-            paginationURL={
-              isAdmin
-                ? "/client/createClientLogo/"
-                : "/client/getAllClientLogos/"
-            }
+            paginationURL={isAdmin ? "/client/createClientLogo/" : "/client/getAllClientLogos/"}
             paginationSearchURL={
               searchQuery
                 ? `/client/searchClientLogos/${searchQuery}/`
@@ -519,6 +480,7 @@ const TestimonialsList = () => {
           privacy={""}
           closeModel={closeModel}
           flag="footer"
+          cssClass="TestimonialModal"
         />
       )}
 

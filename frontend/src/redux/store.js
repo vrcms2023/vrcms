@@ -11,6 +11,7 @@ import categorySlice from "./products/categorySlice";
 import { authApi } from "./auth/authService";
 import themeReducer from "./themes/themeSlice";
 import showHideComponentReducer from "./showHideComponent/showHideSlice";
+import homeIntroSlice from "./homeintroList/homeIntroListSlice";
 
 const combinedReducer = combineReducers({
   dashBoardProjects: projectReducer,
@@ -24,6 +25,7 @@ const combinedReducer = combineReducers({
   categoryList: categorySlice,
   selectedTheme: themeReducer,
   showHide: showHideComponentReducer,
+  homeIntroList: homeIntroSlice,
   [authApi.reducerPath]: authApi.reducer,
 });
 

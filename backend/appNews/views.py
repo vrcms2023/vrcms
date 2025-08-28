@@ -106,8 +106,8 @@ class NewsSearchAPIView(generics.ListAPIView):
   
     def get_object(self, query):
         try:
-            return AppNews.objects.filter(
-                Q(news_title__icontains=query) | Q(news_description__icontains=query)
+            return AppNews.objects.filter(Q(news_title__icontains=query)
+                # Q(news_title__icontains=query) | Q(news_description__icontains=query)
             )
         except AppNews.DoesNotExist:
             raise Http404

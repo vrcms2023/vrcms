@@ -1,38 +1,51 @@
 import styled from "styled-components";
 
 export const AboutPageStyled = styled.div`
-  .title {
-    color: ${({ theme }) => theme.textColor};
-    font-weight: 600 !important;
-  }
-
   .subTitle {
-
+    font-size: .9rem !important;
+    color: ${({ theme }) => theme.gray666};
+    font-weight: 500 !important;
   }
+
   .aboutPage {
+      padding-bottom: 54px;
 
-    padding-bottom: 24px;
+      .row {
+        border-bottom: 2px solid ${({ theme }) => theme.white};
+        transition: background-color 0.4s ease;
+        margin-bottom: 2.5rem;
 
-    .row {
-      border-bottom: 2px solid ${({ theme }) => theme.white};
+        &:last-child {
+          // border-bottom: 0 !important;
+        }
 
-      &:last-child {
-        border-bottom: 0 !important;
+        img {
+          transition: transform 0.4s ease;
+        }
+
+        &:hover {background:rgb(248, 248, 248);}
+
+          &:hover img {
+              transform: scale(1.1);
+          }
       }
-    }
-    
-    .quill {
-      background: none;
-    }
-    .ql-editor {
-      padding-left: 0;
-      padding-right: 0;
-    }
+      
+      .quill {
+        background: none;
+      }
+      .ql-editor {
+        padding-left: 0;
+        padding-right: 0;
 
-    p {
-      line-height: 1.6;
-      margin-bottom: 12px
-    }
+        p, p span {
+          text-align: left;
+        }
+      }
+
+      p {
+        line-height: 1.6;
+        margin-bottom: 12px
+      }
       
     }
     
@@ -45,7 +58,10 @@ export const AboutPageStyled = styled.div`
       img {
         position: relative;
         transition: opacity 0.5s ease, transform 0.5s ease, border-radius 0.5s ease;
-        border-radius: 8px;
+        // border-radius: 8px;
+        max-width: auto;
+        width: 100%;
+        max-height: 280px;
         
       
         &:hover {
@@ -81,38 +97,27 @@ export const AboutPageStyled = styled.div`
         }
         
       }
-
-      li:first-child {
-        // border-top-left-radius: 5px;
-        // border-top-right-radius: 5px;
-      }
-
-      li:last-child {
-        border: 0;
-        // border-bottom-left-radius: 5px;
-        // border-bottom-right-radius: 5px;
-      }
     }
 
     hr:last-child {
       display: none;
     }
-
-    .normalCSS,
-      .flipCSS {
-      }
       
-      .flipCSS {
-        flex-direction: row-reverse;
-        background: #fbfbfb;
-        padding: 24px 10px;
-        margin-top: 32px;
-        margin-bottom: 32px;
+    .flipCSS {
+      flex-direction: row-reverse;
+      background: #fbfbfb;
+      // padding: 24px 10px;
+      // margin-top: 32px;
+      // margin-bottom: 32px;
 
-        @media (max-width: 768px) {
-          padding: 0;
-          margin: 0px;
+      
+    }
 
-        }
+    .normalCSS, .flipCSS {
+      @media (max-width: 768px) {
+        padding: 0;
+        margin: 0px;
+
       }
+    }
 `;

@@ -1,20 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { fieldValidation } from "../../util/validationUtil";
-import Alert from "../../Common/Alert";
 import { toast } from "react-toastify";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 
-import { removeCookie, setCookie } from "../../util/cookieUtil";
-import {
-  InputFields,
-  SelectField,
-} from "../../Frontend_Admin/Components/forms/FormFields";
-import { generateOptionLength } from "../../util/commonUtil";
-import Button from "../../Common/Button";
+import { InputFields } from "../../Frontend_Admin/Components/forms/FormFields";
 import { countries, natureofprojectOptions } from "../../data/coutrieslist";
 
-const RaqUseForm = ({ closeModel, downloadPDF }) => {
+const RaqUseForm = ({ closeModel, downloadPDF, buttonLabel = "DOWNLOAD" }) => {
   const {
     register,
     reset,
@@ -30,20 +23,28 @@ const RaqUseForm = ({ closeModel, downloadPDF }) => {
   };
 
   const onFormSubmit = async (data) => {
-    console.log(data);
+    //console.log(data);
     try {
       const response = await axiosClientServiceApi.post(`/contactus/raqform/`, {
         ...data,
       });
       if (response.status === 201) {
         toast.success("Your request is submit succuessfully");
-        closeModel();
-        downloadPDF();
+        if (closeModel) {
+          closeModel();
+          downloadPDF();
+        }
+        reset();
       } else {
+        if (closeModel) {
+          closeModel();
+        }
         toast.error("unable to process your request");
+        reset();
       }
     } catch (error) {
       toast.error("unable to process your request");
+      reset();
     }
   };
 
@@ -51,16 +52,14 @@ const RaqUseForm = ({ closeModel, downloadPDF }) => {
     <>
       {/* User Contact Form */}
       <div className="col-md-12 d-flex justify-content-center align-items-center flex-column">
-        <form
-          className="my-2 contactForm"
-          onSubmit={handleSubmit(onFormSubmit)}
-        >
+        <form className="my-2 contactForm" onSubmit={handleSubmit(onFormSubmit)}>
           <div className="row">
             <div className="col-6">
               <InputFields
-                label="Name *"
+                label="Name"
                 fieldName="name"
                 register={register}
+                isRequired={true}
                 validationObject={fieldValidation.name}
                 error={errors?.name?.message}
                 onChange={() => handleChange("name")}
@@ -78,9 +77,10 @@ const RaqUseForm = ({ closeModel, downloadPDF }) => {
             </div>
             <div className="col-6">
               <InputFields
-                label="Email Address*"
+                label="Email Address"
                 fieldName="email"
                 register={register}
+                isRequired={true}
                 validationObject={fieldValidation.email}
                 error={errors?.email?.message}
                 onChange={() => handleChange("email")}
@@ -88,8 +88,9 @@ const RaqUseForm = ({ closeModel, downloadPDF }) => {
             </div>
             <div className="col-6">
               <InputFields
-                label="Phone*"
+                label="Phone"
                 fieldName="phoneNumber"
+                isRequired={true}
                 register={register}
                 validationObject={fieldValidation.phoneNumber}
                 error={errors?.phoneNumber?.message}
@@ -131,9 +132,10 @@ const RaqUseForm = ({ closeModel, downloadPDF }) => {
             <div className="col-6">
               <InputFields
                 type="dropdown"
-                label="Country *"
+                label="Country"
                 fieldName="country"
                 register={register}
+                isRequired={true}
                 options={countries}
                 validationObject={fieldValidation.country}
                 error={errors?.country?.message}
@@ -143,18 +145,19 @@ const RaqUseForm = ({ closeModel, downloadPDF }) => {
             <div className="col-12">
               <InputFields
                 type="textarea"
-                label="Description of your project  *"
+                label="Description of your project"
                 fieldName="description"
                 register={register}
-                options={generateOptionLength(20)}
+                isRequired={true}
                 validationObject={fieldValidation.description}
                 error={errors?.description?.message}
                 onChange={() => handleChange("description")}
               />
             </div>
-            <div className="col-4">
+            <div className="col-12">
               <InputFields
-                label="Teams"
+                type="text"
+                label="Services Interested"
                 fieldName="teams"
                 register={register}
                 validationObject={fieldValidation.teams}
@@ -163,27 +166,12 @@ const RaqUseForm = ({ closeModel, downloadPDF }) => {
               />
             </div>
             <div className="col-4">
-              <InputFields
-                label="Teams"
-                fieldName="hangout"
-                register={register}
-                validationObject={fieldValidation.hangout}
-                error={errors?.hangout?.message}
-                onChange={() => handleChange("hangout")}
-              />
-            </div>
-            <div className="col-4">
-              <InputFields
-                label="Teams"
-                fieldName="other"
-                register={register}
-                validationObject={fieldValidation.other}
-                error={errors?.other?.message}
-                onChange={() => handleChange("other")}
-              />
+              <InputFields type="hidden" label="Teams" fieldName="hangout" register={register} />
+
+              <InputFields type="hidden" label="Teams" fieldName="other" register={register} />
             </div>
             <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-1 mt-3">
-              <button className="btn btn-primary mx-3">Save</button>
+              <button className="btn btn-primary mx-3">{buttonLabel} </button>
             </div>
           </div>
         </form>

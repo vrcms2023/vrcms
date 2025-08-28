@@ -11,43 +11,44 @@ import { KeypointsStyled } from "./StyledComponents/Styled-Keypoints";
 
 const DynamicKeyPoint = ({
   getBannerAPIURL,
-  bannerState,
-  imageCss = "img-fluid w-100",
+  keyPointsState,
+  imageCss = "",
 }) => {
   const [bannerdata, setBannerData] = useState([]);
+  const [keyPointsdata, setKeyPointsData] = useState([]);
 
   useEffect(() => {
-    const getBannerData = async () => {
+    const getKeyPointsData = async () => {
       try {
         const response = await axiosClientServiceApi.get(getBannerAPIURL);
         if (response?.status === 200) {
-          setBannerData(response.data.imageModel);
+          setKeyPointsData(response.data.imageModel);
         } else {
-          setBannerData({});
+          setKeyPointsData({});
         }
       } catch (error) {
-        setBannerData({});
+        setKeyPointsData({});
         console.log("unable to access ulr because of server is down");
       }
     };
-    if (!bannerState) {
-      getBannerData();
+    if (!keyPointsState) {
+      getKeyPointsData();
     }
-  }, [bannerState, getBannerAPIURL]);
+  }, [keyPointsState, getBannerAPIURL]);
 
   return (
     <KeypointsStyled>
       <div className="container-fluid">
         <div className="row IconsMainKeys">
           <div className="col-md-2 p-2 d-flex align-items-center keyPoint">
-              {bannerdata.path ? (
+              {keyPointsdata?.path ? (
                 <img
                   src={
-                    bannerdata?.path
-                      ? getImagePath(bannerdata.path)
+                    keyPointsdata?.path
+                      ? getImagePath(keyPointsdata.path)
                       : getDummyImage()
                   }
-                  alt={bannerdata?.alternitivetext}
+                  alt={keyPointsdata?.alternitivetext}
                   className={imageCss}
                 />
               ) : (
@@ -55,7 +56,7 @@ const DynamicKeyPoint = ({
               )}
             
           </div>
-          <div className="col-md-10 p-2 d-flex align-items-center">{bannerdata?.banner_title}</div>
+          <div className="col-md-10 p-2 d-flex align-items-center">{keyPointsdata?.banner_title}</div>
         </div>
       </div>
       </KeypointsStyled>

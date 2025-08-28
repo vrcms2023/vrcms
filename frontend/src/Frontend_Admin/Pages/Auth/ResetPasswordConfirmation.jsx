@@ -7,9 +7,19 @@ import Title from "../../../Common/Title";
 import Error from "../../Components/Error";
 import { useParams } from "react-router-dom";
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
+import { InputFields } from "../../Components/forms/FormFields";
+import { fieldValidation } from "../../../util/validationUtil";
 
 const ResetPasswordConfirmation = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+  });
+
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState(false);
   let { uid, token } = useParams();
@@ -32,10 +42,7 @@ const ResetPasswordConfirmation = () => {
         setSuccess(true);
       }
     } catch (error) {
-      if (typeof error === "object") {
-        const key = Object.keys(error);
-        setServerError(error[key]);
-      } else setServerError(error[0]);
+      setServerError(error[0]);
     }
   };
 
@@ -56,14 +63,9 @@ const ResetPasswordConfirmation = () => {
         <div className="bg-white d-flex justify-content-center align-items-center flex-column">
           <div className="container">
             <div className="d-flex flex-column justify-content-center align-items-center">
-              <form
-                onSubmit={handleSubmit(resetPassword)}
-                className="shadow-lg"
-              >
+              <form onSubmit={handleSubmit(resetPassword)} className="shadow-lg">
                 {serverError ? (
-                  <p className="fw-bold">
-                    {serverError && <Error>{serverError}</Error>}
-                  </p>
+                  <div className="fw-bold">{serverError && <Error>{serverError}</Error>}</div>
                 ) : (
                   ""
                 )}
@@ -73,58 +75,38 @@ const ResetPasswordConfirmation = () => {
                 />
                 {success ? (
                   <div className="mt-3">
-                    Password updated successfully Click here to login{" "}
-                    <Link to="/login">Login</Link>
+                    Password updated successfully Click here to login <Link to="/login">Login</Link>
                   </div>
                 ) : (
                   <>
-                    <div className="mb-3">
-                      <label
-                        htmlFor="signPassord"
-                        className="form-label text-dark fw-normal"
-                      >
-                        Password
-                      </label>
-                      <input
-                        type="password"
-                        {...register("new_password", {
-                          required: true,
-                        })}
-                        required
-                        name="new_password"
-                        onChange={inputHandler}
-                        className="form-control"
-                        id="signPassord"
-                      />
-                      <small className="text-muted">
-                        Passwords must be at least 6 characters.
-                      </small>
-                    </div>
-                    <div className="mb-3">
-                      <label
-                        htmlFor="signPassordRe"
-                        className="form-label text-dark fw-normal"
-                      >
-                        Re-enter password
-                      </label>
-                      <input
-                        type="password"
-                        {...register("re_new_password", {
-                          required: true,
-                        })}
-                        required
-                        name="re_new_password"
-                        onChange={inputHandler}
-                        className="form-control"
-                        id="signPassordRe"
-                      />
-                    </div>
+                    <InputFields
+                      type="password"
+                      label="Password"
+                      fieldName="new_password"
+                      register={register}
+                      isRequired={true}
+                      validationObject={fieldValidation.password}
+                      error={errors?.new_password?.message}
+                      onChange={() => handleChange("new_password")}
+                    />
+                    <small className="text-muted">Passwords must be at least 6 characters.</small>
+
+                    <InputFields
+                      type="password"
+                      label="Confirm Password"
+                      fieldName="re_new_password"
+                      register={register}
+                      isRequired={true}
+                      validationObject={fieldValidation.confirmPassword}
+                      error={errors?.re_new_password?.message}
+                      onChange={() => handleChange("re_new_password")}
+                    />
 
                     <div className="d-grid gap-2 mt-4">
                       <Button
                         type="submit"
                         cssClass="btn btn-lg btn-primary"
-                        handlerChange={loginHandler}
+                        handlerChange={() => {}}
                         label="Update Password"
                       />
                     </div>

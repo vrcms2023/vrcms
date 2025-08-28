@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import _ from "lodash";
 import { getCookie } from "../../util/cookieUtil";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,21 +31,24 @@ import {
 import { getServiceValues } from "../../redux/services/serviceActions";
 import { isAppAccess } from "../../util/permissions";
 
-// import Logo from "../../Images/logo.png";
-import headersvgLogo from "../../Images/headerLogo.svg";
-import LogoForm from "../../Frontend_Admin/Components/forms/Logo";
 import {
   updatedMenulist,
   updatedMenuloadedStatus,
 } from "../../redux/auth/authSlice";
-import { use } from "react";
+import { axiosServiceApi } from "../../util/axiosUtil";
+import { toast } from "react-toastify";
+import Menudata from "../../data/Menu.json";
+import ImageInputsForm from "../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
+import EditIcon from "../AdminEditIcon";
+import { getLogoFormFields } from "../../util/dynamicFormFields";
+import ApplicationLogo from "../Logo/ApplicationLogo";
 
 const Header = () => {
   const editComponentObj = {
     logo: false,
     menu: false,
   };
-  const { isAdmin } = useAdminLoginStatus();
+  const { isAdmin, hasPermission } = useAdminLoginStatus();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [show, setShow] = useState(false);
   const { userInfo, menuList, menuRawList, permissions, menuloadedStatus } =
@@ -54,6 +57,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const onPageLoadServiceAction = useRef(true);
   const [rootServiceMenu, setRootServiceMenu] = useState({});
+  const navigate = useNavigate();
+  const pageType = "header";
 
   const pathList = [
     "/login",
@@ -127,8 +132,7 @@ const Header = () => {
         setIsServiceMenuAvailable(true);
       }
       const menuObject = getMenuObject(_customMenulist);
-      const _rootservicemenu = getServiceMainMenu(menuRawList);
-      setRootServiceMenu(_rootservicemenu);
+
       dispatch(updatedMenulist(menuObject));
       dispatch(updatedMenuloadedStatus());
     }
@@ -137,8 +141,10 @@ const Header = () => {
   useEffect(() => {
     if (menuRawList?.length > 0 && menuloadedStatus) {
       let _customMenulist = getClonedObject(menuRawList);
-      let mainServiceMenu = getServiceMainMenu(_customMenulist);
-      if (mainServiceMenu?.length > 0) {
+      const _rootservicemenu = getServiceMainMenu(_customMenulist);
+      setRootServiceMenu(_rootservicemenu);
+
+      if (_rootservicemenu) {
         setIsServiceMenuAvailable(true);
       }
     }
@@ -167,7 +173,6 @@ const Header = () => {
     if (
       menuList.length > 0 &&
       serviceMenuList.length > 0 &&
-      !isAdmin &&
       menuUpdateInitialized.current
     ) {
       menuUpdateInitialized.current = false;
@@ -192,6 +197,22 @@ const Header = () => {
       });
     }, 2000);
   }, []);
+
+  const loadAndSubmitMenuJSON = async () => {
+    try {
+      const response = await axiosServiceApi.post(
+        `/pageMenu/uploadMenuData/`,
+        Menudata
+      );
+
+      if (response.status === 201) {
+        toast.success(response.data.message || "File uploaded successfully!");
+        navigate("/adminPagesConfiguration");
+      }
+    } catch (error) {
+      toast.error("An error occurred while uploading.");
+    }
+  };
 
   // useEffect(() => {
   //   function scrollFunction() {
@@ -221,13 +242,6 @@ const Header = () => {
   // }
   return (
     <StyledMenu>
-      {componentEdit.menu ? (
-        <div className="adminEditTestmonial">
-          <LogoForm editHandler={editHandler} />
-        </div>
-      ) : (
-        ""
-      )}
       <nav
         className={
           isAdmin
@@ -236,9 +250,33 @@ const Header = () => {
         }
       >
         <div className="container">
+          {isAdmin && hasPermission && (
+          <div className="position-relative">
+            
+              <EditIcon editHandler={() => editHandler("menu", true)} editlabel="Logo" />
+           
+            {/* {componentEdit.menu && (
+              <div className={`adminEditTestmonial selected `}>
+                <ImageInputsForm
+                  editHandler={editHandler}
+                  componentType="menu"
+                  popupTitle="Application Logo"
+                  pageType={`${pageType}-logo`}
+                  imageLabel="Application Logo"
+                  category="Logo"
+                  showDescription={false}
+                  validTypes={"image/svg+xml"}
+                  showExtraFormFields={getLogoFormFields(`${pageType}-logo`)}
+                />
+              </div>
+            )} */}
+          </div>
+           )}
           <Link to={isHideMenu ? "#" : "/"} className="navbar-brand logo">
-            {/* <img src={Logo} alt="" /> */}
-            <img src={headersvgLogo} alt="" />
+            <ApplicationLogo
+              getBannerAPIURL={`banner/clientBannerIntro/${pageType}-logo/`}
+              bannerState={componentEdit.menu}
+            />
           </Link>
 
           {!isHideBurgetIcon && !showAddMenuMessage && (
@@ -254,10 +292,17 @@ const Header = () => {
               <span className="navbar-toggler-icon"></span>
             </button>
           )}
-          {showAddMenuMessage && (
+          {menuRawList?.length === 0 && isAdmin && (
             <div className="w-75 text-end">
-              <Link to="/adminPagesConfiguration" className="btn btn-outline ">
+              {/* <Link to="/adminPagesConfiguration" className="btn btn-outline ">
                 Go for Menu Creation
+              </Link> */}
+              <Link
+                className="btn btn-primary mx-4"
+                onClick={loadAndSubmitMenuJSON}
+              >
+                Generate Menu
+                {/* <i className="fa fa-plus mx-2" aria-hidden="true"></i> */}
               </Link>
             </div>
           )}
@@ -272,6 +317,23 @@ const Header = () => {
           </div>
         </div>
       </nav>
+
+      {/* Edit Logo Code */}
+      {componentEdit.menu && (
+        <div className={`adminEditTestmonial selected `}>
+          <ImageInputsForm
+            editHandler={editHandler}
+            componentType="menu"
+            popupTitle="Logo"
+            pageType={`${pageType}-logo`}
+            imageLabel="Upload Logo"
+            category="Logo"
+            showDescription={false}
+            validTypes={"image/svg+xml"}
+            showExtraFormFields={getLogoFormFields(`${pageType}-logo`)}
+          />
+        </div>
+      )}
       {show && <ModalBg />}
     </StyledMenu>
   );
@@ -290,32 +352,53 @@ export const ClientMenu = ({ serviceMenuList, rootServiceMenu }) => {
   };
 
   const ChildMenuContent = ({ menu, className }) => {
+    const location = useLocation();
+    const isParentActive = (item) => {
+      const current = location.pathname;
+
+      // Check if home route matches
+      if (current === "/" && item.page_url === "/home") return true;
+
+      // Check if current route matches parent or aliases
+      if (current === item.page_url) return true;
+
+      // Check if any child path exactly matches
+      if (item.childMenu) {
+        return item.childMenu.some(
+          (child) => child.page_url.toLowerCase() === current
+        );
+      }
+
+      return false;
+    };
+
     return (
       <li
         className={`nav-item ${className}-${menu.page_label.replaceAll(" ", "-")} ${menu.childMenu ? "dropdown" : ""}`}
         key={menu.id}
       >
         <NavLink
-          to={urlStringFormat(
-            `${rootServiceMenu.id === menu.page_parent_ID ? rootServiceMenu.page_url + menu.page_url : menu.page_url}`
-          )}
-          className={
-            (({ isActive }) => (isActive ? "active" : ""),
-            `${menu.is_Parent ? "nav-Link" : "dropdown-item"} ${
-              menu.childMenu?.length > 0 && "dropdown-toggle isChildAvailable"
-            }`)
-          }
-          onClick={
-            menu.page_parent_ID === rootServiceMenu.id
-              ? () => {
-                  getSelectedServiceMenu(menu);
-                }
-              : ""
-          }
+          to={urlStringFormat(`${menu.page_url}`)}
+          className={({ isActive }) => {
+            const baseClass = menu.is_Parent ? "nav-Link" : "dropdown-item";
+            const childToggleClass =
+              menu.childMenu?.length > 0
+                ? "dropdown-toggle isChildAvailable"
+                : "";
+            const activeClass =
+              isActive || isParentActive(menu) ? "active" : "";
+
+            return `${baseClass} ${childToggleClass} ${activeClass}`;
+          }}
+          onClick={(e) => {
+            if (menu?.page_parent_ID === rootServiceMenu?.id) {
+              getSelectedServiceMenu(menu);
+            }
+          }}
           id={menu.id}
-          data-bs-toggle={`${menu.childMenu?.length > 0 ? "dropdown" : ""}`}
-          aria-expanded={`${menu.childMenu?.length > 0 ? false : true}`}
-          role={`${menu.childMenu?.length > 0 ? "button" : ""}`}
+          data-bs-toggle={menu.childMenu?.length > 0 ? "dropdown" : undefined}
+          aria-expanded={menu.childMenu?.length > 0 ? "false" : "true"}
+          role={menu.childMenu?.length > 0 ? "button" : undefined}
         >
           {menu.page_label}
         </NavLink>

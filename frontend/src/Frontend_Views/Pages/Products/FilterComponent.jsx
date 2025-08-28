@@ -1,6 +1,7 @@
 import React from "react";
 import Search from "../../../Common/Search";
 import _ from "lodash";
+import Title from "../../../Common/Title";
 
 const FilterComponent = ({
   category,
@@ -23,11 +24,13 @@ const FilterComponent = ({
     }
   };
   return (
-    <div className="container position-relative ">
-      <div className="row rounded-3 position-absolute overflow-hidden productCategorySearch">
-        <div className="col-md-12 px-md-5 productCategory d-flex justify-content-center align-items-center">
-          <select
-            className="form-select"
+    <div className="container p-1 py-5 bg-light">
+      <div className="row productCategorySearch">
+        <div className="col-md-12 px-md-5 productCategory d-flex justify-content-center align-items-center gap-3">
+          <div className="w-50">
+            <Title title="Select Category" cssClass="fs-6 mb-0" />
+            <select
+            className="form-select "
             aria-label="Default select example"
             onChange={changeCategory}
           >
@@ -42,9 +45,10 @@ const FilterComponent = ({
               </option>
             ))}
           </select>
-        </div>
-        <div className="col-md-12 p-0 productSearch d-flex justify-content-center align-items-center">
-          <Search
+          </div>
+          <div className="w-50">
+            <Title title="Product Filter" cssClass="fs-6 mb-0" />
+            <Search
             results={category}
             setObject={setResponseData}
             clientSearchURL={`/products/productSearch/${selectedCategory.id}/`}
@@ -56,8 +60,15 @@ const FilterComponent = ({
             searchQuery={searchQuery}
             searchBy={searchBy ? searchBy : "Search By"}
             hideSearchBy={hideSearchBy}
+            cssClass=""
           />
+          </div>
+          
+          
         </div>
+        {/* <div className="col-md-9 p-0 productSearch d-flex justify-content-center align-items-center">
+          
+        </div> */}
       </div>
     </div>
   );

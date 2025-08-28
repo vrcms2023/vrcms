@@ -10,21 +10,16 @@ import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
 import Button from "../../../Common/Button";
 import ModalBg from "../../../Common/ModelBg";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
-import {
-  createShowHideComponent,
-  getShowHideComponentsListByPage,
-  updateShowHideComponent,
-} from "../../../redux/showHideComponent/showHideActions";
+import { createShowHideComponent, getShowHideComponentsListByPage, updateShowHideComponent } from "../../../redux/showHideComponent/showHideActions";
 import DeleteDialog from "../../../Common/DeleteDialog";
 import { confirmAlert } from "react-confirm-alert";
 import SingleImageUlploadWithForm from "../../Components/forms/SingleImageUlploadWithForm";
-import {
-  getAdvertisementFormDynamicFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { getAdvertisementFormDynamicFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 import RadioButtonGroup from "../../Components/RadioButtonGroup";
 
 import "./adminSettingStyles.css";
+import { AdvertisementComponentStyles } from "../../../Common/Styled-Advertisements-Component";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 
 const AdvertisementsAdminSettings = () => {
   const pageType = "advertisementsettings";
@@ -44,48 +39,45 @@ const AdvertisementsAdminSettings = () => {
   const dispatch = useDispatch();
 
   const radioOptions = [
-    { label: "small", value: "small" },
-    { label: "medium", value: "medium" },
-    { label: "large", value: "large" },
+    { label: "600 * 600", value: "small" },
+    { label: "800 * 800", value: "medium" },
+    { label: "1000 * 1000", value: "large" },
   ];
 
-  const { error, success, showHideCompPageList } = useSelector(
-    (state) => state.showHide
-  );
+  const { error, success, showHideList } = useSelector((state) => state.showHide);
 
+  // useEffect(() => {
+  //   if (showHideCompPageList && showHideCompPageList[pageType]) {
+  //     setShowHideCompList(showHideCompPageList[[pageType]]);
+  //   }
+  // }, [showHideCompPageList]);
   useEffect(() => {
-    if (showHideCompPageList && showHideCompPageList[pageType]) {
-      setShowHideCompList(showHideCompPageList[[pageType]]);
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
     }
-  }, [showHideCompPageList]);
+  }, [showHideList]);
 
   useEffect(() => {
     dispatch(getShowHideComponentsListByPage(pageType));
   }, [pageType]);
 
-  const showHideHandler = async (name) => {
-    const selectedItem = showHideCompList[name];
-    if (selectedItem) {
-      const id = selectedItem?.id;
-      dispatch(updateShowHideComponent({ id, showHideCompPageList }));
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
     } else {
       const newData = {
-        componentName: name.toLowerCase(),
+        componentName: compName.toLowerCase(),
         pageType: pageType,
       };
-      dispatch(createShowHideComponent({ newData, showHideCompPageList }));
+      dispatch(createShowHideComponent(newData));
     }
   };
 
   const getAdvertisementList = async () => {
     try {
-      const response = await axiosServiceApi.get(
-        `/advertisement/createAdvertisement/`
-      );
+      const response = await axiosServiceApi.get(`/advertisement/createAdvertisement/`);
       if (response?.status === 200) {
-        const sortbyCreateData = sortCreatedDateByDesc(
-          response?.data?.advertisementList
-        );
+        const sortbyCreateData = sortCreatedDateByDesc(response?.data?.advertisementList);
         setAdvertisementList(sortbyCreateData);
       }
     } catch (error) {
@@ -98,9 +90,7 @@ const AdvertisementsAdminSettings = () => {
 
   const getAdvertisementSize = async () => {
     try {
-      const response = await axiosServiceApi.get(
-        `/advertisement/createAdvSize/`
-      );
+      const response = await axiosServiceApi.get(`/advertisement/createAdvSize/`);
       if (response?.status === 200 && response?.data.length > 0) {
         setadvSize(response.data[0]);
         setSelectedOption(response.data[0].size);
@@ -114,12 +104,9 @@ const AdvertisementsAdminSettings = () => {
     try {
       let response = "";
       if (advSize?.id) {
-        response = await axiosServiceApi.patch(
-          `/advertisement/updateAdvSize/${advSize?.id}/`,
-          {
-            size: value,
-          }
-        );
+        response = await axiosServiceApi.patch(`/advertisement/updateAdvSize/${advSize?.id}/`, {
+          size: value,
+        });
       } else {
         response = await axiosServiceApi.post(`/advertisement/createAdvSize/`, {
           size: value,
@@ -148,12 +135,9 @@ const AdvertisementsAdminSettings = () => {
     advertisement.showAndHide = !advertisement.showAndHide;
     advertisement.path = "";
     try {
-      const response = await axiosServiceApi.patch(
-        `/advertisement/updateAdvertisement/${advertisement.id}/`,
-        {
-          ...advertisement,
-        }
-      );
+      const response = await axiosServiceApi.patch(`/advertisement/updateAdvertisement/${advertisement.id}/`, {
+        ...advertisement,
+      });
 
       if (response.status === 200) {
         toast.success(`Advertisement update successfully`);
@@ -182,9 +166,7 @@ const AdvertisementsAdminSettings = () => {
   const handleAdvertisementDelete = (advertisement) => {
     const title = advertisement.title;
     const deleteMenuItemByID = async () => {
-      const response = await axiosServiceApi.delete(
-        `/advertisement/updateAdvertisement/${advertisement.id}/`
-      );
+      const response = await axiosServiceApi.delete(`/advertisement/updateAdvertisement/${advertisement.id}/`);
       if (response.status === 204) {
         toast.success(`${title} Advertisement is delete successfully `);
         getAdvertisementList();
@@ -197,7 +179,12 @@ const AdvertisementsAdminSettings = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteMenuItemByID}
-            message={`you want to delete the ${title} Advertisement`}
+            // message={`you want to delete the ${title} Advertisement`}
+            message={
+              <>
+                Confirm deletion of <span>{title}</span> Advertisement?
+              </>
+            }
           />
         );
       },
@@ -211,154 +198,117 @@ const AdvertisementsAdminSettings = () => {
   }, [componentEdit.advertisement]);
 
   return (
-    <>
-    <div className="container-fluid pt-5 contactsList">
-      <div className="row px-2 px-lg-5">
-        <div className="col-sm-12 col-md-7">
-          <Title title={"Advertisements"} cssClass="fs-1 pageTitle" />
-        </div>
+    <AdvertisementComponentStyles>
+      <div className="my-4 addAdvertisement border">
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center p-3">
+          <Title title={"Advertisements"} cssClass="fs-1 pageTitle m-0" />
 
-        <div className="col-12 col-sm-6 col-md-3 d-flex align-items-center text-center bg-light my-3 my-md-0 py-3 py-md-0 advSizes">
-          <RadioButtonGroup
-            options={radioOptions}
-            onChange={handleOptionChange}
-            defaultOption={selectedOption}
-          />
-        </div>
-        <div className="col-6 col-sm-3 col-md-1 d-flex align-items-center justify-content-center publishAdvertisement">
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.advertisement?.visibility}
-            title={""}
-            componentName={"advertisement"}
-            showHideHandler={showHideHandler}
-          />
-        </div>
-        <div className="col-6 col-sm-3 col-md-1  justify-content-center addAdvertisement">
-          <Button
-            type=""
-            cssClass="btn btn-outline"
-            label="Add"
-            handlerChange={() => addNewAdvertisement("advertisement", true)}
-          />
-        </div>
-      </div>
-
-      <div className="row px-3 px-lg-5 py-4 table-responsive">
-        {advertisementList?.length > 0 ? (
-          <table className="table contacts">
-            <thead>
-              <tr>
-                <th className="align-middle">Title</th>
-                <th className="align-middle">Description</th>
-                <th className="align-middle" style={{ width: "100px" }}>
-                  Image
-                </th>
-                <th className="align-middle" style={{ width: "100px" }}>
-                  Show or Hide
-                </th>
-                <th
-                  className="align-middle text-end"
-                  style={{ width: "100px" }}
-                >
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {advertisementList?.map((advertisement) => (
-                <tr key={advertisement.id}>
-                  <td className="align-middle">{advertisement.title}</td>
-                  <td className="align-middle">
-                    {advertisement.advertisement_description}
-                  </td>
-                  <td className="align-middle text-center">
-                    <img
-                      src={
-                        advertisement.path
-                          ? getImagePath(advertisement.path)
-                          : getDummyImage()
-                      }
-                      alt={advertisement.alternitivetext}
-                      className="thumb75 d-lg-block rounded-1"
-                      style={{
-                        width: "60px",
-                        height: "60px",
-                        objectFit: "cover",
-                      }}
-                    />
-                  </td>
-                  <td className="align-middle">
-                    <ShowHideToggle
-                      showhideStatus={advertisement.showAndHide}
-                      title={""}
-                      componentName={"Default"}
-                      showHideHandler={() => {
-                        advertisementShowHideHandler(advertisement);
-                      }}
-                    />
-                    {advertisement.showAndHide}
-                  </td>
-                  <td className="align-middle text-end">
-                    <Link
-                      to=""
-                      onClick={() =>
-                        editHandler("advertisement", true, advertisement)
-                      }
-                      className="p-2"
-                    >
-                      <i
-                        className="fa fa-pencil text-warning cursor-pointer fs-5"
-                        aria-hidden="true"
-                      ></i>
-                    </Link>
-
-                    <Link
-                      to=""
-                      className=" ms-4"
-                      onClick={() => handleAdvertisementDelete(advertisement)}
-                    >
-                      <i
-                        className="fa fa-trash-o fs-4 text-danger"
-                        aria-hidden="true"
-                        title="Delete"
-                      ></i>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          "No Result found"
-        )}
-        <>
-          {componentEdit.advertisement && (
-            <div className={`adminEditTestmonial selected `}>
-              <SingleImageUlploadWithForm
-                editHandler={editHandler}
-                componentType="advertisement"
-                popupTitle="advertisement"
-                componentTitle={compTtile}
-                selectedItem={editAdvertisement}
-                setSelectedItemState={setEditAdvertisement}
-                imageGetURL={`/advertisement/createAdvertisement/${editAdvertisement.id}/`}
-                imagePostURL="/advertisement/createAdvertisement/"
-                imageUpdateURL="/advertisement/updateAdvertisement/"
-                imageDeleteURL="/advertisement/updateAdvertisement/"
-                imageLabel="Advertisement Image"
-                showDescription={false}
-                showExtraFormFields={getAdvertisementFormDynamicFields(
-                  editAdvertisement
-                )}
-                dimensions={imageDimensionsJson("advertisement")}
-              />
+          <div className="w-100 p-0 d-flex flex-column flex-md-row justify-content-end align-items-center gap-2">
+            <div className="w-100  d-flex justify-content-center align-items-center py-2 py-md-0 advSizes">
+              <RadioButtonGroup options={radioOptions} onChange={handleOptionChange} defaultOption={selectedOption} />
             </div>
+            <div className="d-flex align-items-bet justify-content-between publishAdvertisement">
+              <ShowHideToggle
+                showhideStatus={showHideCompList?.advertisement?.visibility}
+                title={""}
+                componentName={"advertisement"}
+                showHideHandler={showHideHandler}
+                id={showHideCompList?.advertisement?.id}
+              />
+
+              <Button type="" cssClass="btn btn-outline" label="Add" handlerChange={() => addNewAdvertisement("advertisement", true)} />
+            </div>
+          </div>
+        </div>
+
+        <div className=" table-responsive px-2">
+          {advertisementList?.length > 0 ? (
+            <table className="table list">
+              <thead>
+                <tr>
+                  <th className="align-middle">Title</th>
+                  <th className="align-middle">Description</th>
+                  <th className="align-middle" style={{ width: "100px" }}>
+                    Image
+                  </th>
+                  <th className="align-middle" style={{ width: "100px" }}>
+                    Toggle
+                  </th>
+                  <th className="align-middle text-end" style={{ width: "100px" }}>
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {advertisementList?.map((advertisement) => (
+                  <tr key={advertisement.id}>
+                    <td className="align-middle">{advertisement.title}</td>
+                    <td className="align-middle">{advertisement.advertisement_description}</td>
+                    <td className="align-middle text-center">
+                      <img
+                        src={advertisement.path ? getImagePath(advertisement.path) : getDummyImage()}
+                        alt={advertisement.alternitivetext}
+                        className="thumb75 d-lg-block rounded-1"
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </td>
+                    <td className="align-middle">
+                      <ShowHideToggle
+                        showhideStatus={advertisement.showAndHide}
+                        title={""}
+                        componentName={"Default"}
+                        showHideHandler={() => {
+                          advertisementShowHideHandler(advertisement);
+                        }}
+                      />
+                      {advertisement.showAndHide}
+                    </td>
+                    <td className="align-middle text-end">
+                      <Link to="" onClick={() => editHandler("advertisement", true, advertisement)} className="p-2">
+                        <i className="fa fa-pencil text-warning cursor-pointer fs-5" aria-hidden="true"></i>
+                      </Link>
+
+                      <Link to="" className=" ms-4" onClick={() => handleAdvertisementDelete(advertisement)}>
+                        <i className="fa fa-trash-o fs-4 text-danger" aria-hidden="true" title="Delete"></i>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            "No Result found"
           )}
-        </>
+          <>
+            {componentEdit.advertisement && (
+              <div className={`adminEditTestmonial selected `}>
+                <SingleImageUlploadWithForm
+                  editHandler={editHandler}
+                  componentType="advertisement"
+                  popupTitle="advertisement"
+                  componentTitle={compTtile}
+                  selectedItem={editAdvertisement}
+                  setSelectedItemState={setEditAdvertisement}
+                  imageGetURL={`/advertisement/createAdvertisement/${editAdvertisement.id}/`}
+                  imagePostURL="/advertisement/createAdvertisement/"
+                  imageUpdateURL="/advertisement/updateAdvertisement/"
+                  imageDeleteURL="/advertisement/updateAdvertisement/"
+                  imageLabel="Advertisement Image"
+                  showDescription={false}
+                  showExtraFormFields={getAdvertisementFormDynamicFields(editAdvertisement)}
+                  dimensions={imageDimensionsJson("advertisement")}
+                />
+              </div>
+            )}
+          </>
+        </div>
       </div>
-    </div>
-    {show && <ModalBg />}
-    </>
+      {show && <ModalBg />}
+    </AdvertisementComponentStyles>
   );
 };
 

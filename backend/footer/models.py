@@ -24,12 +24,29 @@ class Address(BaseModel):
         instagram_url =     models.CharField(max_length=500, null=True, blank=True )
         vimeo_url =         models.CharField(max_length=500, null=True, blank=True )
         pinterest_url =     models.CharField(max_length=500, null=True, blank=True )
- 
+
+        class Meta:
+                db_table = "address"
+
+        def __str__(self):
+            return f"{self.company_name or 'No Title'}"
+
 
 class TermsandCondition(BaseModel):
         terms_condition =   models.CharField(max_length=5000, null=True, blank=True )
         privacy_policy =    models.CharField(max_length=5000, null=True, blank=True )
 
+        class Meta:
+                db_table = "terms_and_conditions"
+
+        def __str__(self):
+            return f"{self.company_name or 'No Title'}"
+
 class googleMAPURL(BaseModel):
         google_map_url =   models.CharField(max_length=5000, null=True, blank=True )
-      
+
+        class Meta:
+                db_table = "google_map_urls"
+
+        def __str__(self):
+            return f"{self.google_map_url or 'No Title'}"

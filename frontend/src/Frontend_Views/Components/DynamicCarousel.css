@@ -1,12 +1,12 @@
 .dcarousel {
   position: fixed !important;
   /* top: 15vh; */
-  top: 24px;
-  left: 24px;
-  right: 24px;
+  top: 10%;
+  left: 0;
+  right: 0;
   bottom: 0px;
   width: 90%;
-  height: 100%;
+  height: 80%;
   /* width: 1000px; */
   /* height: 560px; */
   overflow: hidden;
@@ -14,6 +14,33 @@
   z-index: 99999;
   /* border: 5px solid #ffffff; */
   /* border-radius: 10px; */
+  transform: translate(-0%, -0%);
+
+  /* @media(max-width: 1024px) {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -0%);
+  } */
+/* 
+  @media(max-width: 480px) {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -0%);
+  } */
+}
+
+.carousel-control-next, .carousel-control-prev {
+  /* position: absolute; */
+  /* transform: translate(-50%, -50%); */
+  /* top: unset;
+  bottom: unset; */
+  width: auto !important;
+
+  /* @media(max-width: 1024px) {
+    top: 50%;
+    bottom: 0;
+  } */
 }
 
 .dcarousel .carousel-item {
@@ -78,10 +105,10 @@
     right: 30px;
   }
 
-  .carousel-control-next, .carousel-control-prev {
+  /* .carousel-control-next, .carousel-control-prev {
     height: 50vh;
     width: 20%;
-  }
+  } */
 }
 
 .dcarousel .closeCarousel:hover i {
@@ -91,3 +118,5 @@
 /* .dcarousel .carousel-item {
     display: block;
 } */
+
+

@@ -7,6 +7,9 @@ from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from django.utils.decorators import method_decorator
 from .serializers import UserSerializer
 from .models import User
+from djoser.views import UserViewSet
+from rest_framework.permissions import IsAdminUser
+
 
 # Create your views here.
 
@@ -33,3 +36,13 @@ class RetrieveUpdateAPIView(RetrieveUpdateAPIView):
                 {'error': 'Unable to updated '},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+class AdminUserViewSet(UserViewSet):
+    permission_classes = [IsAdminUser]
+
+    def destroy(self, request, *args, **kwargs):
+        print("Deleting user...")
+        user = self.get_object()
+        user.delete()
+        return Response({"detail": "User deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    

@@ -1,4 +1,5 @@
 import React from "react";
+import Title from "../../../Common/Title";
 
 const Location = ({ amenities }) => {
   const { googleMap } = amenities ? amenities : {};
@@ -7,12 +8,12 @@ const Location = ({ amenities }) => {
       {googleMap === "" ? (
         ""
       ) : (
-        <div className="py-4">
-          <h4 className="mb-4">Project location map</h4>
+        <div className="px-2">
+          <Title title = "TURBINE ELECTROMECHANICAL EQUIPMENT SERVICES LLC - Project Location" cssClass="fs-5 mb-4 text-center" />
           <iframe
             className="googlemap"
             src={googleMap}
-            height="450"
+            height="600"
             width="100%"
           ></iframe>
         </div>

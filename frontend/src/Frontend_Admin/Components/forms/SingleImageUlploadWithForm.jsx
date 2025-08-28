@@ -50,7 +50,7 @@ export const SingleImageUlploadWithForm = ({
         title={componentTitle}
         type={type}
       />
-      <hr className="m-0" />
+      {/* <hr className="m-0" /> */}
       <div className="container my-3">
         <div className="row py-0 pb-md-5">
           <div className="col-md-12 mb-5 mb-md-0">

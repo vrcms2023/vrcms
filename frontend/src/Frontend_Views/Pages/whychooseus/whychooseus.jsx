@@ -15,10 +15,7 @@ import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIn
 import AdminBriefIntro from "../../../Frontend_Admin/Components/BriefIntro/index";
 
 import { removeActiveClass } from "../../../util/ulrUtil";
-import {
-  getFormDynamicFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { getFormDynamicFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 
 // CSS
 
@@ -30,6 +27,7 @@ import {
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
 import DynamicKeyPoints from "../../Components/DynamicKeyPoints";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const WhyChooseUs = () => {
   const editComponentObj = {
@@ -42,29 +40,21 @@ const WhyChooseUs = () => {
     dynamickeypoints5: false,
     dynamickeypoints6: false,
   };
+
   const dispatch = useDispatch();
   const pageType = "whychooseus";
   const { isAdmin, hasPermission } = useAdminLoginStatus();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [show, setShow] = useState(false);
   const [showHideCompList, setShowHideCompList] = useState([]);
-  const showHideCompPageLoad = useRef(true);
+
   const keyPointsList = [1, 2, 3, 4, 5, 6];
 
-  const { error, success, showHideList } = useSelector(
-    (state) => state.showHide
-  );
+  const { error, success, showHideList } = useSelector((state) => state.showHide);
 
   useEffect(() => {
     if (showHideList.length > 0) {
       setShowHideCompList(getObjectsByKey(showHideList));
-    }
-  }, [showHideList]);
-
-  useEffect(() => {
-    if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getAllShowHideComponentsList());
-      showHideCompPageLoad.current = false;
     }
   }, [showHideList]);
 
@@ -97,36 +87,21 @@ const WhyChooseUs = () => {
   return (
     <>
       {/* Page Banner Component */}
-      <div className="position-relative">
-        {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("whychooseus", true)} />
-        )}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"whychooseus-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Why Choose Us Banner"}
+        showHideComponentName={"whychooseusbanner"}
+      />
 
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.whychooseus}
-        />
-      </div>
-      {componentEdit.whychooseus && (
-        <div className={`adminEditTestmonial selected `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="whychooseus"
-            popupTitle="Why Choose US"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
-      )}
       <div
         className={
-          showHideCompList?.whychooseusbriefintro?.visibility &&
-          isAdmin &&
-          hasPermission
-            ? "border border-info mb-2"
+          showHideCompList?.whychooseusbriefintro?.visibility && isAdmin && hasPermission
+            ? "componentOnBorder"
             : ""
         }
       >
@@ -145,7 +120,7 @@ const WhyChooseUs = () => {
           <div className="breiftopMargin">
             {/* Brief Introduction  */}
             {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+              <EditIcon editHandler={() => editHandler("briefIntro", true)} editlabel={"Brief"} />
             )}
 
             <BriefIntroFrontend

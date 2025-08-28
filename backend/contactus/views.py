@@ -4,10 +4,10 @@ from xmlrpc.client import Boolean
 
 from products.serializers import CategorySerializer
 from products.models import Category
-from .models import ContactUS, Brochures, IconsenggRaqForm
-from .serializers import ContactUSSerializer, BrochuresSerializer, IconsenggRaqFormSerializer
+from .models import ContactUS, Brochures, RaqForm
+from .serializers import ContactUSSerializer, BrochuresSerializer, RaqFormSerializer
 from rest_framework import generics, permissions
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, DestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.mail import  EmailMessage
@@ -73,11 +73,11 @@ class ContactUSAPIView(generics.CreateAPIView):
             
             client_ctx = {
                 'user': serializer.data["firstName"], 
-                "message": settings.EMAIL_CUSTOMER_MESSAGE
+                "message": settings.EMAIL_CUSTOMER_THANK_YOU_MESSAGE + settings.APP_NAME + settings.EMAIL_CUSTOMER_AUTO_REPLY_MESSAGE
             }
             client_message = get_template('customer-mesg.html').render(client_ctx)
             client_msg = EmailMessage(
-                    settings.EMAIL_THANK_YOU_MESSAGE,
+                    settings.EMAIL_CUSTOMER_THANK_YOU_MESSAGE + settings.APP_NAME,
                     client_message,
                     settings.EMAIL_HOST_USER,
                     [serializer.data["email"]]
@@ -208,7 +208,7 @@ class SendEnquierytoCustomer(generics.CreateAPIView):
             }
             client_message = get_template('customer-requestForm.html').render(client_ctx)
             client_msg = EmailMessage(
-                    settings.EMAIL_REQUEST_MESSAGE,
+                    settings.EMAIL_REQUEST_MESSAGE_1 +  settings.APP_NAME + settings.EMAIL_REQUEST_MESSAGE_1,
                     client_message,
                     settings.EMAIL_HOST_USER,
                     [serializer.data["email"]]
@@ -360,10 +360,10 @@ class ClientViewBrochures(generics.CreateAPIView):
     
 
 
-class IconsenggRaqFormAPIView(generics.CreateAPIView):
+class RaqFormAPIView(generics.CreateAPIView):
     permission_classes = (permissions.AllowAny,)
-    queryset = IconsenggRaqForm.objects.all()
-    serializer_class = IconsenggRaqFormSerializer
+    queryset = RaqForm.objects.all()
+    serializer_class = RaqFormSerializer
     pagination_class = CustomPagination
 
     """
@@ -371,16 +371,16 @@ class IconsenggRaqFormAPIView(generics.CreateAPIView):
     """
 
     def get(self, request, format=None):
-        snippets = IconsenggRaqForm.objects.all()
+        snippets = RaqForm.objects.all()
         results = get_custom_paginated_data(self, snippets)
         if results is not None:
             return results
         
-        serializer = IconsenggRaqFormSerializer(snippets, many=True)
+        serializer = RaqFormSerializer(snippets, many=True)
         return Response({"raqform": serializer.data}, status=status.HTTP_200_OK)
     
     def post(self, request, format=None):
-        serializer = IconsenggRaqFormSerializer(data=request.data)
+        serializer = RaqFormSerializer(data=request.data)
         
         if serializer.is_valid():
             serializer.save()            
@@ -411,11 +411,11 @@ class IconsenggRaqFormAPIView(generics.CreateAPIView):
             
             client_ctx = {
                 'user': serializer.data["name"], 
-                "message": settings.EMAIL_CUSTOMER_MESSAGE
+                "message": settings.EMAIL_CUSTOMER_THANK_YOU_MESSAGE + settings.APP_NAME + settings.EMAIL_CUSTOMER_AUTO_REPLY_MESSAGE
             }
             client_message = get_template('customer-mesg.html').render(client_ctx)
             client_msg = EmailMessage(
-                    settings.EMAIL_THANK_YOU_MESSAGE,
+                    settings.EMAIL_CUSTOMER_THANK_YOU_MESSAGE + settings.APP_NAME,
                     client_message,
                     settings.EMAIL_HOST_USER,
                     [serializer.data["email"]]
@@ -429,17 +429,17 @@ class IconsenggRaqFormAPIView(generics.CreateAPIView):
     
 
 
-class IconsenggRaqSearchAPIView(ListAPIView):
+class RaqSearchAPIView(ListAPIView):
     permission_classes = [permissions.AllowAny]
-    serializer_class = IconsenggRaqFormSerializer
+    serializer_class = RaqFormSerializer
     pagination_class = CustomPagination
 
     def get_object(self, query):
         try:
-            return IconsenggRaqForm.objects.filter(
+            return RaqForm.objects.filter(
                 Q(name__icontains=query) | Q(email__icontains=query) | Q(phoneNumber__icontains=query)
             )
-        except IconsenggRaqForm.DoesNotExist:
+        except RaqForm.DoesNotExist:
             raise Http404
 
     def get(self, request, query, format=None):
@@ -448,19 +448,27 @@ class IconsenggRaqSearchAPIView(ListAPIView):
         if results is not None:
             return results
         
-        serializer = IconsenggRaqFormSerializer(snippet, many=True)
+        serializer = RaqFormSerializer(snippet, many=True)
         return Response({"contactus": serializer.data}, status=status.HTTP_200_OK)
-    
 
-class IconsenggRaqExportToExcel(APIView):
+class RaqDeleteAPIView(DestroyAPIView):
+    queryset = RaqForm.objects.all()
+    serializer_class = RaqFormSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({"message": "Deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
+class RaqExportToExcel(APIView):
     permission_classes = [permissions.AllowAny]
-    serializer_class = IconsenggRaqFormSerializer
+    serializer_class = RaqFormSerializer
     pagination_class = CustomPagination
 
     def get(self, request):
         # Get data from database
-        queryset = IconsenggRaqForm.objects.all()
-        serializer = IconsenggRaqFormSerializer(queryset, many=True)
+        queryset = RaqForm.objects.all()
+        serializer = RaqFormSerializer(queryset, many=True)
         
         # Create Excel workbook and worksheet
         wb = Workbook()

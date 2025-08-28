@@ -24,19 +24,7 @@ import { confirmAlert } from "react-confirm-alert";
 import { getDashBoardProjects } from "../../../redux/project/projectActions";
 
 const ProjectCategory = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { projects } = useSelector((state) => state.dashBoardProjects);
-  const [ProjectCategoryType, setProjectCategoryType] = useState([]);
-  const editComponentObj = {
-    category: false,
-  };
-  const [componentEdit, SetComponentEdit] = useState(editComponentObj);
-  const [show, setShow] = useState(false);
-  const [compTtile, setComptitle] = useState("Add Project Categories");
-  const [editCategory, setEditCategory] = useState({});
-  const [projectsList, setProjectsList] = useState([]);
-  const [categoryOptionList, setCategoryOptionList] = useState([
+  const categoryOptions = [
     {
       id: 1000,
       label: "Select",
@@ -57,7 +45,22 @@ const ProjectCategory = () => {
       label: "Completed Projects",
       value: "completed",
     },
-  ]);
+  ];
+  let deleteCategoryOption;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { projects } = useSelector((state) => state.dashBoardProjects);
+  const [ProjectCategoryType, setProjectCategoryType] = useState([]);
+  const editComponentObj = {
+    category: false,
+  };
+  const [componentEdit, SetComponentEdit] = useState(editComponentObj);
+  const [show, setShow] = useState(false);
+  const [compTtile, setComptitle] = useState("Add Project Categories");
+  const [editCategory, setEditCategory] = useState({});
+  const [projectsList, setProjectsList] = useState([]);
+  const [categoryOptionList, setCategoryOptionList] = useState(categoryOptions);
+  const [deletedcategoryOption, setDeletedCategoryOption] = useState([]);
 
   const getPorjectCategory = async () => {
     //const response = await axiosServiceApi.get(`/project/categorylist/`);
@@ -102,7 +105,8 @@ const ProjectCategory = () => {
   const handleCategoryDelete = (category) => {
     const title = category.category_Label;
     const isProjectsAvailable = projectsList[category.category_Value];
-    console.log(isProjectsAvailable);
+    deleteCategoryOption = categoryOptions.filter((item) => item.value === title);
+
     if (isProjectsAvailable?.length > 0) {
       // toast.info={`${title} category has ${isProjectsAvailable.length} projects, cannot delete category`}
       confirmAlert({
@@ -112,7 +116,12 @@ const ProjectCategory = () => {
               title={title}
               showConfirmButotns={false}
               onClose={onClose}
-              message={`category has ${isProjectsAvailable.length} projects, cannot delete`}
+              // message={`category has ${isProjectsAvailable.length} projects, cannot delete`}
+              message={
+                <>
+                  Category has <span>{isProjectsAvailable.length}</span> projects, cannot delete
+                </>
+              }
             />
           );
         },
@@ -120,11 +129,10 @@ const ProjectCategory = () => {
       return true;
     }
     const deleteMenuItemByID = async () => {
-      const response = await axiosServiceApi.delete(
-        `/project/updateCategory/${category.id}/`
-      );
+      const response = await axiosServiceApi.delete(`/project/updateCategory/${category.id}/`);
       if (response.status === 204) {
         toast.success(`${title} category is delete successfully `);
+
         getPorjectCategory();
       }
     };
@@ -135,7 +143,12 @@ const ProjectCategory = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteMenuItemByID}
-            message={`you want to delete the ${title} category`}
+            // message={`you want to delete the ${title} category`}
+            message={
+              <>
+                Do you wish to delete the <span>{title}</span> category?
+              </>
+            }
           />
         );
       },
@@ -145,11 +158,7 @@ const ProjectCategory = () => {
   const getAvailableCategoryList = (data) => {
     const list = [];
     categoryOptionList.forEach((element) => {
-      const isoptionExit = getFilterObjectLabel(
-        data,
-        "category_Value",
-        element.value
-      );
+      const isoptionExit = getFilterObjectLabel(data, "category_Value", element.value);
       if (!isoptionExit) {
         list.push({
           label: element.label,
@@ -157,6 +166,10 @@ const ProjectCategory = () => {
         });
       }
     });
+    if (deleteCategoryOption) {
+      list.push(...deleteCategoryOption);
+      deleteCategoryOption = "";
+    }
     setCategoryOptionList(list);
   };
 
@@ -209,9 +222,7 @@ const ProjectCategory = () => {
                 <tr>
                   <th className="align-middle fw-bold text-muted">Category</th>
                   {/* <th className="align-middle fw-bold  text-muted">Value</th> */}
-                  <th className="align-middle fw-bold  text-muted">
-                    Description
-                  </th>
+                  <th className="align-middle fw-bold  text-muted">Description</th>
                   <th className="align-middle fw-bold  text-muted">Image</th>
                   <th
                     className="align-middle text-end fw-bold text-muted"
@@ -236,16 +247,10 @@ const ProjectCategory = () => {
                     >
                       {category.category_Value}
                     </td>
-                    <td className="align-middle">
-                      {category?.category_description}
-                    </td>
+                    <td className="align-middle">{category?.category_description}</td>
                     <td className="align-middle text-center">
                       <img
-                        src={
-                          category?.path
-                            ? getImagePath(category.path)
-                            : getDummyImage()
-                        }
+                        src={category?.path ? getImagePath(category.path) : getDummyImage()}
                         alt={category?.alternitivetext}
                         className="thumb75 d-lg-block rounded-1"
                         style={{
@@ -268,11 +273,7 @@ const ProjectCategory = () => {
                         ></i>
                       </Link>
 
-                      <Link
-                        to=""
-                        className=" ms-4"
-                        onClick={() => handleCategoryDelete(category)}
-                      >
+                      <Link to="" className=" ms-4" onClick={() => handleCategoryDelete(category)}>
                         <i
                           className="fa fa-trash-o fs-4 text-danger"
                           aria-hidden="true"
@@ -305,7 +306,8 @@ const ProjectCategory = () => {
                   showDescription={false}
                   showExtraFormFields={getProjectCategoryFormDynamicFields(
                     editCategory,
-                    categoryOptionList
+                    categoryOptionList,
+                    editCategory?.id ? true : false
                   )}
                   dimensions={imageDimensionsJson("advertisement")}
                 />

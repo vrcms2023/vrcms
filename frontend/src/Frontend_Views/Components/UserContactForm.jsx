@@ -29,7 +29,7 @@ const UserContactForm = ({ closeModel, downloadPDF }) => {
     setFormerror(errors);
     if (Object.keys(errors).length > 0) return;
     try {
-      const response = await axiosClientServiceApi.post(`/contactus/`, {
+      const response = await axiosClientServiceApi.post(`/contactus/listcreate/`, {
         ...formData,
       });
       if (response.status === 201) {
@@ -88,11 +88,11 @@ const UserContactForm = ({ closeModel, downloadPDF }) => {
           <div className="mb-3 row">
             <label
               htmlFor="exampleInputFName"
-              className="col-sm-2 col-form-label"
+              className="col-sm-4 col-form-label"
             >
               Name
             </label>
-            <div className="col-sm-10">
+            <div className="col-sm-8">
               <input
                 type="textbox"
                 name="firstName"
@@ -115,11 +115,11 @@ const UserContactForm = ({ closeModel, downloadPDF }) => {
           <div className="mb-3 row">
             <label
               htmlFor="exampleInputEmail1"
-              className="col-sm-2 col-form-label"
+              className="col-sm-4 col-form-label"
             >
               Email
             </label>
-            <div className="col-sm-10">
+            <div className="col-sm-8">
               <input
                 type="email"
                 name="email"
@@ -141,11 +141,11 @@ const UserContactForm = ({ closeModel, downloadPDF }) => {
           <div className="mb-3 row">
             <label
               htmlFor="exampleInputPhone"
-              className="col-sm-2 col-form-label"
+              className="col-sm-4 col-form-label"
             >
               Phone
             </label>
-            <div className="col-sm-10">
+            <div className="col-sm-8">
               <input
                 type="textbox"
                 name="phoneNumber"
@@ -167,11 +167,11 @@ const UserContactForm = ({ closeModel, downloadPDF }) => {
           <div className="mb-3 row">
             <label
               htmlFor="exampleFormMesg"
-              className="col-sm-2 col-form-label"
+              className="col-sm-4 col-form-label"
             >
               Message
             </label>
-            <div className="col-sm-10">
+            <div className="col-sm-8">
               <textarea
                 className="form-control"
                 value={formData.description}
@@ -183,8 +183,8 @@ const UserContactForm = ({ closeModel, downloadPDF }) => {
             </div>
           </div>
           <div className="mb-3 row">
-            <div className="col-sm-2"></div>
-            <div className="col-sm-10">
+            <div className="col-sm-4"></div>
+            <div className="col-sm-8">
               <button
                 type="submit"
                 className="btn btn-primary w-100 text-uppercase py-2"

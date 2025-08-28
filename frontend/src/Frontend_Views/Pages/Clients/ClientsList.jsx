@@ -3,19 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import BriefIntroFrontend from "../../../Common/BriefIntro";
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import AdminBriefIntro from "../../../Frontend_Admin/Components/BriefIntro/index";
-import {
-  getFormDynamicFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { getFormDynamicFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
-import {
-  axiosClientServiceApi,
-  axiosServiceApi,
-} from "../../../util/axiosUtil";
-import {
-  paginationDataFormat,
-  sortByFieldName,
-} from "../../../util/commonUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
+import { paginationDataFormat, sortByFieldName } from "../../../util/commonUtil";
 import Title from "../../../Common/Title";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
@@ -37,6 +28,7 @@ import {
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const ClientsList = () => {
   const editComponentObj = {
@@ -70,19 +62,14 @@ const ClientsList = () => {
   };
 
   useEffect(() => {
-    if (
-      (!componentEdit.addSection || !componentEdit.editSection) &&
-      !searchQuery
-    ) {
+    if ((!componentEdit.addSection || !componentEdit.editSection) && !searchQuery) {
       getClinetDetails();
     }
   }, [componentEdit.addSection, componentEdit.editSection]);
 
   const getClinetDetails = async () => {
     try {
-      const response = await axiosClientServiceApi.get(
-        `/client/getAllClientLogos/`
-      );
+      const response = await axiosClientServiceApi.get(`/client/getAllClientLogos/`);
       if (response?.status === 200) {
         setResponseData(response.data);
       }
@@ -114,9 +101,7 @@ const ClientsList = () => {
     const name = item.client_title;
 
     const deleteSection = async () => {
-      const response = await axiosServiceApi.delete(
-        `/client/updateClientLogo/${id}/`
-      );
+      const response = await axiosServiceApi.delete(`/client/updateClientLogo/${id}/`);
       if (response.status === 204) {
         const list = clientsList.filter((list) => list.id !== id);
         setClientsList(list);
@@ -130,7 +115,12 @@ const ClientsList = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSection}
-            message={`deleting the ${name} Service?`}
+            // message={`deleting the ${name} Service?`}
+            message={
+              <>
+                Confirm deletion of <span>{name}</span> service?
+              </>
+            }
           />
         );
       },
@@ -138,22 +128,12 @@ const ClientsList = () => {
   };
 
   const [showHideCompList, setShowHideCompList] = useState([]);
-  const showHideCompPageLoad = useRef(true);
   const dispatch = useDispatch();
-  const { error, success, showHideList } = useSelector(
-    (state) => state.showHide
-  );
+  const { error, success, showHideList } = useSelector((state) => state.showHide);
 
   useEffect(() => {
     if (showHideList.length > 0) {
       setShowHideCompList(getObjectsByKey(showHideList));
-    }
-  }, [showHideList]);
-
-  useEffect(() => {
-    if (showHideList.length === 0 && showHideCompPageLoad.current) {
-      dispatch(getAllShowHideComponentsList());
-      showHideCompPageLoad.current = false;
     }
   }, [showHideList]);
 
@@ -172,36 +152,21 @@ const ClientsList = () => {
   return (
     <>
       {/* Page Banner Component */}
-      <div className="position-relative">
-        {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
-        )}
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        />
-      </div>
-      {componentEdit.banner && (
-        <div className={`adminEditTestmonial selected `}>
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle="Client List Banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
-      )}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"clientlist-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Client List Banner"}
+        showHideComponentName={"clientlistbanner"}
+      />
 
       <div
         className={
-          showHideCompList?.clientsbriefintro?.visibility &&
-          isAdmin &&
-          hasPermission
-            ? "border border-info mb-2"
+          showHideCompList?.clientsbriefintro?.visibility && isAdmin && hasPermission
+            ? "componentOnBorder"
             : ""
         }
       >
@@ -246,27 +211,39 @@ const ClientsList = () => {
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
-        <div className="row">
+        {/* <div className="row">
           {isAdmin && hasPermission && (
             <div className="col-md-12">
               <div className="d-flex justify-content-end align-items-center mb-3">
-                {/* <span className="fw-bold me-2">Add content </span> */}
                 <button
                   type="submit"
-                  className="btn btn-primary px-3"
+                  className="btn btn-outline px-3"
                   onClick={() => editHandler("addSection", true, {})}
                 >
-                  Add New Client{" "}
+                  New Client
                   <i className="fa fa-plus ms-2" aria-hidden="true"></i>
                 </button>
               </div>
             </div>
           )}
-        </div>
+        </div> */}
 
         <div className="row">
-          <div className="col-md-6 fs-3 mt-4 mt-md-0">
-            <Title title="Clients" cssClass="fs-1 pageTitle" />
+          <div className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start">
+            <Title title="Clients" cssClass="pageTitle fs-4" />
+
+            {isAdmin && hasPermission && (
+              <div className="">
+                <button
+                  type="submit"
+                  className="btn btn-outline px-3 ms-3"
+                  onClick={() => editHandler("addSection", true, {})}
+                >
+                  New
+                  <i className="fa fa-plus ms-2" aria-hidden="true"></i>
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="col-md-6">
@@ -275,7 +252,7 @@ const ClientsList = () => {
               clientSearchURL={"/client/searchClientLogos/"}
               adminSearchURL={"/client/createClientLogo/"}
               clientDefaultURL={"/client/getAllClientLogos/"}
-              searchfiledDeatails={"client Title / client description "}
+              searchfiledDeatails={"client Title"}
               setPageloadResults={setPageloadResults}
               setSearchquery={setSearchquery}
               searchQuery={searchQuery}
@@ -292,14 +269,12 @@ const ClientsList = () => {
               popupTitle="Client"
               editCarousel={editCarousel}
               setEditCarousel={setEditCarousel}
-              componentType={`${
-                componentEdit.editSection ? "editSection" : "addSection"
-              }`}
+              componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
               imageGetURL="client/createClientLogo/"
               imagePostURL="client/createClientLogo/"
               imageUpdateURL="client/updateClientLogo/"
               imageDeleteURL="client/updateClientLogo/"
-              imageLabel="Add Client Logo"
+              imageLabel="Upload Image"
               showDescription={false}
               showExtraFormFields={getClinetLogsFields()}
               dimensions={imageDimensionsJson("aboutus")}
@@ -312,7 +287,7 @@ const ClientsList = () => {
 
         <br />
         {isAdmin && (
-          <NoteComponent note="Use drag option to shuffle the Items" />
+          <NoteComponent note="Use drag option to shuffle the Items" cssClass="bg-warning" />
         )}
         <ClientStyled>
           <ClientListComponent
@@ -326,11 +301,7 @@ const ClientsList = () => {
         {paginationData?.total_count ? (
           <CustomPagination
             paginationData={paginationData}
-            paginationURL={
-              isAdmin
-                ? "/client/createClientLogo/"
-                : "/client/getAllClientLogos/"
-            }
+            paginationURL={isAdmin ? "/client/createClientLogo/" : "/client/getAllClientLogos/"}
             paginationSearchURL={
               searchQuery
                 ? `/client/searchClientLogos/${searchQuery}/`

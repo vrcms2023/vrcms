@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { getImagePath } from "../../util/commonUtil";
+import { getImagePath, getImageURL } from "../../util/commonUtil";
 
 import ModelBg from "../../Common/ModelBg";
 import DynamicCarousel from "./DynamicCarousel";
+import Title from "../../Common/Title";
 
 const ImageGalleryComponent = ({ pageType, componentEdit, imageGallery }) => {
   //const [show, setShow] = useState(false);
@@ -40,22 +41,21 @@ const ImageGalleryComponent = ({ pageType, componentEdit, imageGallery }) => {
     setShowModal(!showModal);
   };
 
-  console.log(img, "Image Gallery Image")
-
   return (
     <div>
       <div className="row gallery">
-        <div className="col-md-10 offset-md-1">
-          <div className="container">
-            <div className="text-center my-5">
-              <span className="fs-1">View Gallery</span>
+        <div className="">
+          <div className="container-fluid">
+            <div className="text-center mb-5">
+              {/* <span className="fs-1">View Gallery</span> */}
+              <Title title="View Gallery" cssClass={"fs-1"} />
             </div>
             <div className="row">
               {imageGallery?.length > 0 &&
                 imageGallery?.map((item, index) => (
-                  <div className="col-sm-6 col-md-4 mb-4" key={item.id}>
+                  <div className="col-6 col-md-4 mb-4" key={item.id}>
                     <img
-                      src={getImagePath(item.path)}
+                      src={getImageURL(item)}
                       alt={item.alternitivetext}
                       className="d-block w-100 img-fluid"
                       onClick={() => findThumbHandler(item.id)}
@@ -79,13 +79,7 @@ const ImageGalleryComponent = ({ pageType, componentEdit, imageGallery }) => {
         </div>
       </div>
       {/* {show && <ModelBg />} */}
-      {showModal && (
-        <DynamicCarousel
-          obj={img}
-          all={imageGallery}
-          closeCarousel={closeModel}
-        />
-      )}
+      {showModal && <DynamicCarousel obj={img} all={imageGallery} closeCarousel={closeModel} />}
       {showModal && <ModelBg closeModel={closeModel} />}
     </div>
   );

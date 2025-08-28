@@ -12,3 +12,8 @@ class Testimonials(ImageModel):
     testimonial_position =      models.IntegerField(null=True, blank=True, default=0)
 
 
+    class Meta:
+            db_table = "testimonials"
+
+    def __str__(self):
+            return f"{self.testimonial_title or 'No Title'}"

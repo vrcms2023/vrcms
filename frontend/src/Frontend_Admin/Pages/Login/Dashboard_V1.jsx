@@ -155,7 +155,8 @@ const Dashboard = () => {
             callback={reStoreDashBoardProject}
             projectName={project.projectTitle}
             label={"restore"}
-            message={`you want to restore ${project.projectTitle} project ?`}
+            // message={`you want to restore ${project.projectTitle} project ?`}
+            message={<>Do you wish to restore  <span>{project.projectTitle}</span> project?</>}
           />
         );
       },

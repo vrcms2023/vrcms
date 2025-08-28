@@ -17,7 +17,7 @@ export const LoginStyled = styled.div`
         }
     }
 
-    .loginLinks a {color: ${({ theme }) => theme.teritoryColor} !important;}
+    .loginLinks a {color: ${({ theme }) => theme.black} !important;}
 
       @media (max-width: 768px) {
         .login form {

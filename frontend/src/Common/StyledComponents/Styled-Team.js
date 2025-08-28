@@ -40,9 +40,6 @@ export const TeamStyled = styled.div`
   .aboutMe {
   }
   
-  .ql-editor {
-    padding: 0
-  }
 
   .memberCard {
     background-color: ${({ theme }) => theme.white};
@@ -57,7 +54,7 @@ export const TeamStyled = styled.div`
       small {
         font-size: 0.7rem;
         text-transform: uppercase;
-        color: ${({ theme }) => theme.clientColor};
+        color: ${({ theme }) => theme.clientPrimaryColor};
       }
 
       .strengths {

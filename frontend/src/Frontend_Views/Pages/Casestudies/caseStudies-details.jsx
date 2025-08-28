@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import { useParams } from "react-router-dom";
 import { CaseStudiesPageStyled } from "../../../Common/StyledComponents/Styled-Casestudies";
@@ -9,13 +10,17 @@ import EditIcon from "../../../Common/AdminEditIcon";
 import AdminBriefIntro from "../../../Frontend_Admin/Components/BriefIntro/index";
 import Banner from "../../../Common/Banner";
 import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
-import {
-  getFormDynamicFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { getFormDynamicFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 import { getImagePath } from "../../../util/commonUtil";
 
 import RichTextView from "../../../Common/RichTextView";
+import ShowHideToggle from "../../../Common/ShowHideToggle";
+import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import {
+  createShowHideComponent,
+  updateShowHideComponent,
+} from "../../../redux/showHideComponent/showHideActions";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const CaseStudiesDetails = () => {
   const editComponentObj = {
@@ -59,36 +64,44 @@ const CaseStudiesDetails = () => {
     // }
     document.body.style.overflow = "hidden";
   };
+
+  const [showHideCompList, setShowHideCompList] = useState([]);
+  const dispatch = useDispatch();
+  const { error, success, showHideList } = useSelector((state) => state.showHide);
+
+  useEffect(() => {
+    if (showHideList.length > 0) {
+      setShowHideCompList(getObjectsByKey(showHideList));
+    }
+  }, [showHideList]);
+
+  const showHideHandler = async (id, compName) => {
+    if (id) {
+      dispatch(updateShowHideComponent(id));
+    } else {
+      const newData = {
+        componentName: compName.toLowerCase(),
+        pageType: pageType,
+      };
+      dispatch(createShowHideComponent(newData));
+    }
+  };
+
   return (
     <CaseStudiesPageStyled>
       {/* Page Banner Component */}
-      <div className="position-relative">
-        {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
-        )}
-        <Banner
-          getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-          bannerState={componentEdit.banner}
-        />
-      </div>
-      {componentEdit.banner ? (
-        <div className="adminEditTestmonial">
-          <ImageInputsForm
-            editHandler={editHandler}
-            componentType="banner"
-            popupTitle="Case Studies Details Banner"
-            pageType={`${pageType}-banner`}
-            imageLabel="Banner Image"
-            showDescription={false}
-            showExtraFormFields={getFormDynamicFields(`${pageType}-banner`)}
-            dimensions={imageDimensionsJson("banner")}
-          />
-        </div>
-      ) : (
-        ""
-      )}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"casestudies-details-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Case Studies Details Banner"}
+        showHideComponentName={"casestudiesdetailsbanner"}
+      />
 
-      {/* Brief Introduction */}
+      {/* Brief Introduction
       {isAdmin && hasPermission && (
         <EditIcon editHandler={() => editHandler("briefIntro", true)} />
       )}
@@ -102,23 +115,28 @@ const CaseStudiesDetails = () => {
         <div className={`adminEditTestmonial selected `}>
           <AdminBriefIntro
             editHandler={editHandler}
-            popupTitle="Case Studies Details"
+            popupTitle="Case Studies Brief"
             componentType="briefIntro"
             pageType={pageType}
           />
         </div>
-      )}
+      )} */}
 
       {selectedCaseStudieDetails && (
-        <div className="container">
+        <div className="container mt-3">
+          <div className="row">
+            <div className="col-md-12 text-end">
+              <Ancher
+                AncherLabel="Back"
+                AncherClass="btn btn-outline"
+                Ancherpath={`/casestudies/`}
+                AnchersvgColor=""
+                icon="fa-chevron-left"
+              />
+            </div>
+          </div>
           <div className="d-flex flex-column flex-column-reverse flex-sm-row justify-content justify-content-between align-items-center gap-3 mt-4">
             <h1 className="">{selectedCaseStudieDetails.case_studies_title}</h1>
-            <Ancher
-              AncherLabel="Back"
-              AncherClass="btn btn-secondary d-flex gap-2 justify-content-center align-items-center float-end fw-bold"
-              Ancherpath={`/clients/casestudies/`}
-              AnchersvgColor=""
-            />
           </div>
           <div className="row">
             <div className="col-md-12 py-3 caseStudieDetails">
@@ -131,6 +149,7 @@ const CaseStudiesDetails = () => {
                 <RichTextView
                   data={selectedCaseStudieDetails.case_studies_description}
                   className={""}
+                  showMorelink={false}
                 />
               </p>
             </div>

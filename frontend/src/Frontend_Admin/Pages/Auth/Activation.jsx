@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import { useParams } from "react-router-dom";
 import Title from "../../../Common/Title";
@@ -9,6 +10,7 @@ import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
 import LoadingSpinner from "../../../Common/LoadingSpinner";
 
 const Activation = () => {
+  const navigate = useNavigate();
   const [verified, setVerified] = useState(false);
   let { uid, token } = useParams();
 
@@ -28,13 +30,11 @@ const Activation = () => {
     const body = JSON.stringify(data);
 
     try {
-      const response = await axiosClientServiceApi.post(
-        `/user/auth/users/activation/`,
-        body
-      );
+      const response = await axiosClientServiceApi.post(`/user/auth/users/activation/`, body);
       setIsLoading(false);
       if (response.status === 204) {
         setVerified(true);
+        navigate("/login");
       }
     } catch (error) {
       setIsLoading(false);
@@ -62,18 +62,14 @@ const Activation = () => {
               />
               {verified ? (
                 <h5>
-                  Your Account verified please contact your application admin to
-                  activate your account
+                  Your Account verified please contact your application admin to activate your
+                  account
                 </h5>
               ) : (
                 <div>
-                  <p className="fw-bold">
-                    {serverError && <Error>{serverError}</Error>}
-                  </p>
+                  <p className="fw-bold">{serverError && <Error>{serverError}</Error>}</p>
                   <br />
-                  {serverError && (
-                    <p className="text-center">Please contact your admin</p>
-                  )}
+                  {serverError && <p className="text-center">Please contact your admin</p>}
                 </div>
               )}
               {isLoading && (

@@ -1,9 +1,14 @@
+/* .homeBrochure {
 .floatingButton {
     position: fixed;
     top: 600px;
     right: 0;
     z-index: 99999;
     transition: top 0.4s ease;
+
+    img {
+        width: 80px;
+    }
 
     button {
         border-top-right-radius: 0px !important;
@@ -37,5 +42,7 @@
 }
 
 .floatingButton.scrolled {
-  top: 100px;     /* On scroll position */
+  top: 100px;     
 }
+}
+ */

@@ -14,7 +14,7 @@ export const getProductCategoryBannerFormFields = (pageType) => {
     },
     banner_descripiton: {
       label: "Description",
-      type: "textarea",
+      type: "richText",
       fieldName: "banner_descripiton",
     },
     moreLink: {
@@ -32,13 +32,12 @@ export const getProductCategoryBannerFormFields = (pageType) => {
   };
 };
 
-export const getFormDynamicFields = (pageType) => {
+export const getFormDynamicFields = (pageType, category) => {
   return {
     banner_title: {
       label: "Title",
       type: "text",
       fieldName: "banner_title",
-      validationObject: { required: "Please enter Title" },
     },
     banner_subTitle: {
       label: "Sub Title",
@@ -47,13 +46,20 @@ export const getFormDynamicFields = (pageType) => {
     },
     banner_descripiton: {
       label: "Description",
-      type: "textarea",
+      type: "richText",
       fieldName: "banner_descripiton",
     },
     moreLink: {
       label: "Page To Link",
       type: "text",
       fieldName: "moreLink",
+    },
+    category: {
+      label: "News Title",
+      readonly: true,
+      type: "hidden",
+      value: category ? category : "",
+      fieldName: "category",
     },
     pageType: {
       label: "News Title",
@@ -129,7 +135,7 @@ export const getCarouselFields = (category) => {
     },
     carouse_description: {
       label: "Description",
-      type: "textarea",
+      type: "richText",
       fieldName: "carouse_description",
     },
     category: {
@@ -156,7 +162,7 @@ export const getserviceOfferedFields = (category) => {
     },
     carouse_description: {
       label: "Description",
-      type: "textarea",
+      type: "richText",
       fieldName: "carouse_description",
     },
     category: {
@@ -200,7 +206,7 @@ export const getTestimonialsFields = (category) => {
     },
     testimonial_description: {
       label: "Writeup",
-      type: "textarea",
+      type: "richText",
       fieldName: "testimonial_description",
     },
     category: {
@@ -213,7 +219,7 @@ export const getTestimonialsFields = (category) => {
   };
 };
 
-export const getServiceFormFields = (id, title) => {
+export const getServiceFormFields = (id, title, page_url) => {
   return {
     feature_title: {
       label: "Service Title",
@@ -243,6 +249,13 @@ export const getServiceFormFields = (id, title) => {
       type: "hidden",
       value: title ? title : "",
       fieldName: "services_page_title",
+    },
+    services_page_url: {
+      label: "hidden",
+      readonly: true,
+      type: "hidden",
+      value: page_url ? page_url : "",
+      fieldName: "services_page_url",
     },
   };
 };
@@ -325,9 +338,9 @@ export const getImageGalleryFields = (category) => {
     image_WebURL: {
       label: "Image URL",
       type: "text",
-      id: "image_WebURL",
+      id: "image_video_WebURL",
       fieldName: "image_WebURL",
-      onchange: "handleImageURLChange",
+      validationObject: fieldValidation.URL,
     },
     image_title: {
       label: "Image Title",
@@ -336,7 +349,35 @@ export const getImageGalleryFields = (category) => {
     },
     image_description: {
       label: "Description",
-      type: "textarea",
+      type: "richText",
+      fieldName: "image_description",
+    },
+    category: {
+      label: "News Title",
+      readonly: true,
+      type: "hidden",
+      value: category ? category : "",
+      fieldName: "category",
+    },
+  };
+};
+export const getVideoGalleryFields = (category) => {
+  return {
+    video_WebURL: {
+      label: "YouTube URL",
+      type: "text",
+      id: "image_video_WebURL",
+      fieldName: "video_WebURL",
+      validationObject: fieldValidation.URL,
+    },
+    image_title: {
+      label: "Image Title",
+      type: "text",
+      fieldName: "image_title",
+    },
+    image_description: {
+      label: "Description",
+      type: "richText",
       fieldName: "image_description",
     },
     category: {
@@ -366,7 +407,7 @@ export const getCategoryFormDynamicFields = () => {
     },
     description: {
       label: "Category Description",
-      type: "textarea",
+      type: "richText",
       fieldName: "description",
     },
     category_fileuplod: {
@@ -430,12 +471,12 @@ export const getProductFormDynamicFields = (selectedCategory) => {
     },
     seo_keywords: {
       label: "SEO keywords",
-      type: "textarea",
+      type: "richText",
       fieldName: "seo_keywords",
     },
     seo_description: {
       label: "SEO Description",
-      type: "textarea",
+      type: "richText",
       fieldName: "seo_description",
     },
     category_id: {
@@ -492,7 +533,7 @@ export const getTitleAndDescriptionFields = (pageType) => {
     },
     intro_desc: {
       label: "Description",
-      type: "textarea",
+      type: "richText",
       fieldName: "intro_desc",
     },
     pageType: {
@@ -501,6 +542,13 @@ export const getTitleAndDescriptionFields = (pageType) => {
       type: "hidden",
       value: pageType ? pageType : "",
       fieldName: "pageType",
+    },
+    pageType: {
+      label: "intro_position",
+      readonly: true,
+      type: "hidden",
+      value: "",
+      fieldName: "intro_position",
     },
   };
 };
@@ -538,11 +586,11 @@ export const getAdvertisementFormDynamicFields = (advertisement) => {
       fieldName: "category",
     },
 
-    alternitivetext: {
-      label: "alternitivetext",
-      type: "text",
-      fieldName: "alternitivetext",
-    },
+    // alternitivetext: {
+    //   label: "alternitivetext",
+    //   type: "text",
+    //   fieldName: "alternitivetext",
+    // },
   };
 };
 
@@ -569,14 +617,15 @@ export const getBrochuresFormDynamicFields = (brochures) => {
   };
 };
 
-export const getProjectCategoryFormDynamicFields = (editCategory, options) => {
+export const getProjectCategoryFormDynamicFields = (editCategory, options, disabled) => {
+  console.log("readonly ==", editCategory);
   return {
     category_Label: {
       label: "Category",
       type: `${editCategory?.id ? "text" : "dropdown"}`,
-      readonly: `${editCategory?.id ? true : false}`,
+      readonly: disabled,
       options: options,
-      disabled: `${editCategory?.id ? true : false}`,
+      disabled: disabled,
       selectedValue: editCategory?.category_Value,
       fieldName: "category_Label",
       validationObject: { required: "Please enter Category Title" },
@@ -589,6 +638,7 @@ export const getProjectCategoryFormDynamicFields = (editCategory, options) => {
     readMore_link: {
       label: "More Link",
       type: "text",
+      value: "/projects",
       fieldName: "readMore_link",
     },
   };
@@ -657,8 +707,8 @@ export const imageDimensionsJson = (component) => {
       h: "200px",
     },
     banner: {
-      w: "1500px",
-      h: "400px",
+      w: "2000px",
+      h: "600px",
     },
     teams: {
       w: "300px",
@@ -680,6 +730,41 @@ export const imageDimensionsJson = (component) => {
       w: "300px",
       h: "200px",
     },
+    logo: {
+      w: "300px",
+      h: "200px",
+    },
   };
   return imgDimension[component];
+};
+
+export const getLogoFormFields = (pageType) => {
+  return {
+    banner_title: {
+      readonly: true,
+      type: "hidden",
+      fieldName: "banner_title",
+    },
+    banner_subTitle: {
+      readonly: true,
+      type: "hidden",
+      fieldName: "banner_subTitle",
+    },
+    banner_descripiton: {
+      readonly: true,
+      type: "hidden",
+      fieldName: "banner_descripiton",
+    },
+    moreLink: {
+      readonly: true,
+      type: "hidden",
+      fieldName: "moreLink",
+    },
+    pageType: {
+      readonly: true,
+      type: "hidden",
+      value: pageType ? pageType : "",
+      fieldName: "pageType",
+    },
+  };
 };

@@ -119,9 +119,9 @@ class CaseStudiesSearchAPIView(generics.ListAPIView):
   
     def get_object(self, query):
         try:
-            return CaseStudies.objects.filter(
-                Q(case_studies_title__icontains=query) | Q(case_studies_description__icontains=query)
-            )
+            return CaseStudies.objects.filter(Q(case_studies_title__icontains=query))
+                # Q(case_studies_title__icontains=query) | Q(case_studies_description__icontains=query))
+           
         except CaseStudies.DoesNotExist:
             raise Http404
 

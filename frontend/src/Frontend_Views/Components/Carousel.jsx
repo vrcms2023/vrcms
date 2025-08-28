@@ -6,11 +6,10 @@ import { axiosClientServiceApi } from "../../util/axiosUtil";
 import { getImagePath, sortByFieldName } from "../../util/commonUtil";
 
 // Styles
-import "./Carousel.css";
 import SkeletonImage from "../../Common/Skeltons/SkeletonImage";
 import { CarouselItem } from "./CarouselItem";
 
-const Carousel = ({ carouselState }) => {
+const Carousel = ({ carouselState, category, containerId }) => {
   const { isLoading } = useSelector((state) => state.loader);
   const [carousel, setCarousel] = useState([]);
   const pageType = "imagegallery";
@@ -19,7 +18,7 @@ const Carousel = ({ carouselState }) => {
     const getCarousels = async () => {
       try {
         const response = await axiosClientServiceApi.get(
-          `carousel/clientCarousel/`
+          `carousel/clientCarousel/${category}/`
         );
 
         if (response?.status === 200) {
@@ -42,7 +41,7 @@ const Carousel = ({ carouselState }) => {
 
   return (
     <div
-      id="carouselExampleIndicators"
+      id={containerId}
       className="homeCarousel carousel slide"
       data-bs-ride="carousel"
     >
@@ -58,26 +57,6 @@ const Carousel = ({ carouselState }) => {
             {!isLoading && <p>Please add images for Carousel...</p>}
           </div>
         )}
-        {/* {carousel?.map((item, index) => (
-          <div
-            className={`carousel-item ${index == 0 ? "active" : ""}`}
-            key={item.id}
-          >
-            <img
-              src={getImagePath(item.path)}
-              alt={item.alternitivetext}
-              className="d-block w-100"
-            />
-            <div className="carousel-caption d-none d-md-block">
-              <h1 className="fw-bold">
-                {item.carouse_title ? item.carouse_title : ""}{" "}
-              </h1>
-              <p className="fw-normal fs-5">
-                {item.carouse_description ? item.carouse_description : ""}{" "}
-              </p>
-            </div>
-          </div>
-        ))} */}
       </div>
 
       {carousel.length > 1 && (
@@ -85,7 +64,7 @@ const Carousel = ({ carouselState }) => {
           <button
             className="carousel-control-prev"
             type="button"
-            data-bs-target="#carouselExampleIndicators"
+            data-bs-target={`#${containerId}`}
             data-bs-slide="prev"
           >
             <span
@@ -97,7 +76,7 @@ const Carousel = ({ carouselState }) => {
           <button
             className="carousel-control-next"
             type="button"
-            data-bs-target="#carouselExampleIndicators"
+            data-bs-target={`#${containerId}`}
             data-bs-slide="next"
           >
             <span

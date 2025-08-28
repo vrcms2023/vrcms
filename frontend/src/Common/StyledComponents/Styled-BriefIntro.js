@@ -2,30 +2,23 @@ import styled from "styled-components";
 
 export const BriefIntroStyled = styled.div`
     background-color: ${({ theme }) => theme.transparent};
-    padding: 16px 0;
-
-    @media(max-width: 768px) {
-      padding-bottom: 0;
-    }
-
-  p {
-    color: ${({ theme }) => theme.textColor};
-  }
+    padding: 24px 0;
 
   .briefIntro { 
-    // margin: 40px 0 0px;
-
     @media(max-width: 768px) {
-      margin: 0px;
+      padding: 0 2rem
+    }
+
+    h3 {
+      font-size: 2.5rem;
+      color: ${({ theme }) => theme.briefIntroTitleColor};
     }
   }
 
-  .briefIntro h5 {
-    color: ${({ theme }) => theme.gray222};
-  }
-
-  .briefIntro h3 {
-    font-size: 2.5rem;
-    color: ${({ theme }) => theme.briefIntroTitleColor};
+  .ql-editor {
+    margin: 1.2rem 0;
+    p, p span, .introDecTitleCss {
+      text-align: center;
+    }
   }
 `;

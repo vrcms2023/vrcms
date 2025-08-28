@@ -9,18 +9,25 @@ import Error from "../../Components/Error";
 
 // CSS Styles
 import { LoginStyled } from "../../../Common/StyledComponents/Styled-Login";
+import { InputFields } from "../../Components/forms/FormFields";
+import { fieldValidation } from "../../../util/validationUtil";
+import Ancher from "../../../Common/Ancher";
 
 const ResendActivationEmail = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+  });
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState(false);
   const resetPassword = async (email) => {
     const body = JSON.stringify(email);
     try {
-      const data = await axiosClientServiceApi.post(
-        `/user/auth/users/resend_activation/`,
-        body
-      );
+      const data = await axiosClientServiceApi.post(`/user/auth/users/resend_activation/`, body);
       if (data.status === 204) {
         setSuccess(true);
       }
@@ -44,21 +51,23 @@ const ResendActivationEmail = () => {
 
   return (
     <LoginStyled>
+      <div className="text-center">
+        <Ancher
+          Ancherpath="/login"
+          AncherClass="btn btn-outline mt-5 w-auto"
+          handleModel=""
+          AncherLabel=""
+          icon="fa-home"
+          iconCss="fs-4"
+        />
+      </div>
       <div className="login">
-
         <div className="bg-white d-flex justify-content-center align-items-center flex-column">
           <div className="container">
             <div className="d-flex flex-column justify-content-center align-items-center">
-              <form
-                onSubmit={handleSubmit(resetPassword)}
-                className="shadow-lg"
-              >
-                {serverError ? (
-                  <p className="fw-bold">
-                    {serverError && <Error>{serverError}</Error>}
-                  </p>
-                ) : (
-                  ""
+              <form onSubmit={handleSubmit(resetPassword)} className="shadow-lg">
+                {serverError && (
+                  <div className="fw-bold">{serverError && <Error>{serverError}</Error>}</div>
                 )}
                 <Title
                   title="Resend Activation Email"
@@ -67,8 +76,8 @@ const ResendActivationEmail = () => {
                 {success ? (
                   <>
                     <div>
-                      Email sent to your resgister email id please activate your
-                      account before login
+                      Email sent to your resgister email id please activate your account before
+                      login
                     </div>
                     <div className="mt-3">
                       Click here to ? <Link to="/login">Login</Link>
@@ -76,21 +85,22 @@ const ResendActivationEmail = () => {
                   </>
                 ) : (
                   <>
-                    <input
+                    <InputFields
                       type="text"
-                      {...register("email")}
-                      name="email"
-                      onChange={inputHandler}
-                      className="form-control bg-light"
-                      id="userName"
-                      aria-describedby="emailHelp"
+                      label="Email"
+                      fieldName="email"
+                      register={register}
+                      isRequired={true}
+                      validationObject={fieldValidation.email}
+                      error={errors?.email?.message}
+                      onChange={() => handleChange("email")}
                     />
 
                     <div className="d-grid gap-2 mt-4">
                       <Button
                         type="submit"
                         cssClass="btn btn-lg btn-primary"
-                        handlerChange={loginHandler}
+                        handlerChange={() => {}}
                         label="Submit"
                       />
                     </div>

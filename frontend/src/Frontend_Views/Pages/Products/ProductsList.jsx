@@ -56,7 +56,8 @@ const ProductsList = ({
           <DeleteDialog
             onClose={onClose}
             callback={deleteImageByID}
-            message={`deleting the ${product_name} Product?`}
+            // message={`deleting the ${product_name} Product?`}
+            message={<>Confirm deletion of <span>{product_name}</span> Product?</>}
           />
         );
       },

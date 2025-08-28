@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import _ from "lodash";
 import { toast } from "react-toastify";
 // Comonents
@@ -13,34 +13,37 @@ import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getCookie } from "../../../util/cookieUtil";
 import { getMenu } from "../../../redux/auth/authActions";
 
-import {
-  createServiceChildFromMenu,
-  getMenuPosition,
-  updatedMenu,
-} from "../../../util/menuUtil";
+import { createServiceChildFromMenu, updatedMenu, updateServiceMmenuID } from "../../../util/menuUtil";
 import SEOForm from "./SEOForm";
 import { getServiceValues } from "../../../redux/services/serviceActions";
+import Title from "../../../Common/Title";
 
-const MenuForm = ({
-  editHandler,
-  menuList,
-  editMenu,
-  componentType,
-  popupTitle,
-  selectedServiceMenu,
-  rootServiceMenu,
-}) => {
+const MenuForm = ({ editHandler, menuList, editMenu, componentType, popupTitle, selectedServiceMenu, rootServiceMenu }) => {
   const dispatch = useDispatch();
   const closeHandler = () => {
     editHandler(componentType, false);
     document.body.style.overflow = "";
   };
-  const { register, reset, handleSubmit } = useForm({
+  const {
+    control,
+    register,
+    reset,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
     defaultValues: useMemo(() => {
       return editMenu;
     }, [editMenu]),
   });
   const [error, setError] = useState(false);
+  const [show, setShow] = useState(true);
+
+  const [seoLink, setSEOLink] = useState("");
+  const [seoAuthor, setSeoAuthor] = useState("");
+
+  const pageUrlValue = watch("page_url");
 
   const [isParentVal, setisParentVal] = useState(
     editMenu ? (editMenu?.is_Parent ? true : false) : true
@@ -75,6 +78,14 @@ const MenuForm = ({
     });
     setMenuIndexValues(menuIndexValues);
   };
+
+  useEffect(() => {
+    if (editMenu) {
+      const seolink = `${window.location.origin}${editMenu.page_url}`;
+      setSEOLink(seolink);
+      setSeoAuthor(window.location.origin);
+    }
+  }, [editMenu]);
 
   useEffect(() => {
     let menuOptinList = [];
@@ -119,7 +130,7 @@ const MenuForm = ({
       setError("Menu url should be starting with /");
       return true;
     }
-    if (isParentVal) {
+    if (!data?.id && isParentVal) {
       data["page_parent_ID"] = "";
     }
     if (data.id === data.page_parent_ID) {
@@ -127,15 +138,27 @@ const MenuForm = ({
       return true;
     }
 
-    // if (data.page_parent_ID) {
-    //   const getSelectedParentObject = _.filter(menuList, (item) => {
-    //     return item.id === data.page_parent_ID;
-    //   })[0];
-    //   const _url = data["page_url"].split("/");
+    if (data.page_parent_ID) {
+      const getSelectedParentObject = _.filter(menuList, (item) => {
+        return item.id === data.page_parent_ID;
+      })[0];
+      if (getSelectedParentObject.page_url === "/services") {
+        const _url = data["page_url"].split("/");
 
-    //   data["page_url"] =
-    //     getSelectedParentObject?.page_url + "/" + _url[_url.length - 1];
-    // }
+        data["page_url"] =
+          getSelectedParentObject?.page_url + "/" + _url[_url.length - 1];
+      }
+
+      if (!data?.id) {
+        const parentPosition = getSelectedParentObject.childMenu?.length
+          ? getSelectedParentObject.childMenu.length
+          : 1;
+        data["page_position"] =
+          getSelectedParentObject.page_position * 10 + parentPosition;
+      }
+    } else if (!data.page_parent_ID && !data?.id) {
+      data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
+    }
     //data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
     // const _url = data["page_url"].split("/");
 
@@ -146,8 +169,6 @@ const MenuForm = ({
         setError("Please select parent menu");
         return true;
       }
-    } else {
-      data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
     }
     if (!data?.id) {
       data["created_by"] = getCookie("userName");
@@ -186,9 +207,16 @@ const MenuForm = ({
         selectedServiceMenu,
         PageDetails
       );
+      if (response?.status === 201) {
+        const res = await updateServiceMmenuID(
+          response.data.services,
+          PageDetails
+        );
+      }
       if (response?.status === 201 || response?.status === 200) {
         toast.success(`$service is created `);
         dispatch(getServiceValues());
+        dispatch(getMenu());
       }
     } catch (error) {
       toast.error("Unable to load user details");
@@ -214,11 +242,15 @@ const MenuForm = ({
     setError("");
   };
 
+  const handleToggleSeoForm = () => {
+    setShow(!show);
+  }
+
   return (
     <>
       <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
-      <hr className="my-2" />
-      <div className="container">
+      {/* <hr className="my-2" /> */}
+      <div className="container mt-2 p-0">
         <div className="row py-0 pb-md-5">
           <div className="col-md-12 mb-5 mb-md-0">
             {error && (
@@ -287,11 +319,20 @@ const MenuForm = ({
               )} */}
               {!isParentHasChilds && (
                 <>
-                  <hr className="mt-4" />
-                  <h5 className="mt-4">SEO</h5>
+                <hr className="mt-4 border-secondary" />
+               
+                <div className="d-flex justify-content-between align-items-center">
+                  
+                  <h5 className="m-0">SEO</h5>
+                   <span onClick={() =>handleToggleSeoForm()} style={{cursor: "pointer"}} className={`px-2  ${show ? "text-dark border-light" : "text-dark border-light"}`}>
+                    <small>
+                      <i className={`fa me-1 ${show ? "fa-chevron-up text-dark" : "fa-chevron-down text-dark"}`} aria-hidden="true"></i> 
+                      {show ? "CLOSE" : "OPEN" }</small>
+                  </span>
+                </div>
                 </>
               )}
-              {!isParentHasChilds && (
+              {!isParentHasChilds && show && (
                 <div
                   className="p-4 py-1 pb-3 seoform"
                   style={{ backgroundColor: "rgba(255, 255, 255, .4)" }}
@@ -299,17 +340,19 @@ const MenuForm = ({
                   <SEOForm
                     register={register}
                     onChangeHanlder={onChangeHanlder}
+                    Controller={Controller}
+                    control={control}
+                    seoLink={seoLink}
+                    seoAuthor={seoAuthor}
+                    setValue={setValue}
                   />
+                  
                 </div>
               )}
-              <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-1 mt-3">
-                <Button
-                  type="submit"
-                  cssClass="btn btn-outline"
-                  label={"Close"}
-                  handlerChange={closeHandler}
-                />
-                <button className="btn btn-primary mx-3">Save</button>
+              {!show && <hr className="my-1 border-secondary" />}
+              <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-2 mt-3">
+                <Button type="submit" cssClass="btn btn-outline" label={"Close"} handlerChange={closeHandler} />
+                <button className="btn btn-primary">Save</button>
               </div>
             </form>
           </div>

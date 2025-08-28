@@ -7,4 +7,9 @@ class AppNews(ImageModel):
     news_description =     models.CharField(max_length=5000, null=True, blank=True)
     news_position =      models.IntegerField(null=True, blank=True, default=0)
 
-  
+
+    class Meta:
+            db_table = "news"
+
+    def __str__(self):
+            return f"{self.news_title or 'No Title'}"

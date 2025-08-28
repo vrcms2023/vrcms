@@ -28,6 +28,7 @@ import RadioButtonGroup from "../../Components/RadioButtonGroup";
 
 import "./adminSettingStyles.css";
 import { getBaseURL } from "../../../util/ulrUtil";
+import { BrochureComponentStyles } from "../../../Common/StyledComponents/Styled-AddBrochure-Component";
 
 const UploadBrochures = () => {
   const pageType = "advertisementsettings";
@@ -106,7 +107,8 @@ const UploadBrochures = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteMenuItemByID}
-            message={`you want to delete the ${title} Brochures`}
+            // message={`you want to delete the ${title} Brochures`}
+            message={<>Confirm deletion of  <span>{title}</span> Brochures?</>}
           />
         );
       },
@@ -114,13 +116,11 @@ const UploadBrochures = () => {
   };
 
   return (
-    <>
-    <div className="container-fluid pt-5 contactsList">
-      <div className="row px-2 px-lg-5">
-        <div className="col-sm-12 col-md-11">
-          <Title title={"Add Brochures"} cssClass="fs-1 pageTitle" />
-        </div>
-        <div className="col-6 col-sm-3 col-md-1  justify-content-center addAdvertisement">
+    <BrochureComponentStyles>
+    <div className="my-4 addBrochure border">
+      <div className="d-flex justify-content-between align-items-center p-3">
+        <Title title={"Add Brochures"} cssClass="pageTitle" />
+        <div className="uploadBrochure">
           <Button
             type=""
             cssClass="btn btn-outline"
@@ -130,16 +130,15 @@ const UploadBrochures = () => {
         </div>
       </div>
 
-      <div className="row px-3 px-lg-5 py-4 table-responsive">
+      <div className="row table-responsive px-3">
         {brochuresList?.length > 0 ? (
-          <table className="table contacts">
+          <table className="table">
             <thead>
-              <tr>
-                <th className="align-middle">Title</th>
-                <th className="align-middle">Download File</th>
+              <tr style={{background: "#f8f8f8"}}>
+                <th className="align-middle bg-secondary">Title</th>
+                <th className="align-middle bg-secondary">Download File</th>
                 <th
-                  className="align-middle text-end"
-                  style={{ width: "100px" }}
+                  className="align-middle text-end bg-secondary"
                 >
                   Action
                 </th>
@@ -150,11 +149,13 @@ const UploadBrochures = () => {
                 <tr key={brochures.id}>
                   <td className="align-middle">{brochures.brochures_name}</td>
                   <td className="align-middle text-left">
+                    
                     <a
                       href="#!"
                       onClick={() => downloadPDF(`${baseURL}${brochures.path}`)}
                       className="mx-1 text-dark"
                     >
+                      <i class="fa fa-download me-1" aria-hidden="true"></i> 
                       {brochures.brochures_downloadName
                         ? brochures.brochures_downloadName
                         : brochures.originalname}
@@ -219,7 +220,7 @@ const UploadBrochures = () => {
       </div>
     </div>
     {show && <ModalBg />}
-    </>
+    </BrochureComponentStyles>
   );
 };
 

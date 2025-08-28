@@ -15,7 +15,7 @@
 } */
 
 .adminEditTestmonial {
-  background-color: #ddd;
+  background-color: #e1e1e1;
   /* border: 2px dashed rgb(255, 193, 7); */
   position: fixed;
   top: 0;
@@ -26,11 +26,44 @@
   overflow-x: hidden;
   /* overflow-y: hidden; */
   outline: 0;
-  padding: 0 15px;
+  padding: 0 20px;
   /* right: -1000px;
   transition: 1s; */
   transform: translateX(100%);
   /* -webkit-transform: translateX(100%); */
+
+  input {
+    border: 0 !important;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 4px !important;
+  }
+  label {
+    text-align: left;
+    padding-bottom: 0px !important;
+  }
+
+  p {
+    margin: 0;
+    small {
+      color: #444444 !important;
+    }
+  }
+
+  .adminEditTestmonialHeader {
+    border-bottom: 1px solid rgba(68, 68, 68, 0.1);
+  }
+
+  .addresslist {
+    padding: 0;
+  }
+
+  .adminEditTestmonialHeader,
+  #adminActionForm {
+    h5 {
+      font-size: 1.05rem !important;
+      font-weight: 600;
+    }
+  }
 }
 
 .selected {
@@ -78,16 +111,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: rgba(0, 0, 0, 0.3);
 }
 
 .adminEditTestmonial a.close:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+  /* background-color: rgba(255, 255, 255, 0.5); */
+  color: rgba(0, 0, 0, 1);
   border-radius: 50%;
   color: #222222 !important;
-}
-
-.adminEditTestmonialHeader {
-  border-bottom: 1px solid #444;
 }
 
 /* @media (max-width: 768px) {
@@ -97,6 +128,14 @@
   }
 } */
 
+.adminEditTestmonial [data-rfd-droppable-context-id] {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.slideItem {
+  cursor: grab;
+}
+
 .slideItem .description {
   overflow: hidden;
   display: -webkit-box !important;
@@ -104,15 +143,42 @@
   -webkit-line-clamp: 2;
 }
 
+.imglist {
+  margin-bottom: 1rem;
+
+  .slideItem {
+    .col-md-8 {
+      padding: 1rem;
+
+      .pl-editor {
+        padding: 0 !important;
+      }
+
+      p,
+      p span,
+      .introDecTitleCss,
+      div {
+        text-align: left;
+        padding: 0 !important;
+        line-clamp: 1;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+}
+
 .heightCtrl {
-  height: 280px;
+  max-height: 200px;
   overflow: auto;
   overflow-x: hidden;
   resize: vertical;
 }
 
 .fullHeightCtrl {
-  height: 80vh !important;
+  max-height: 80vh !important;
   overflow: auto;
   overflow-x: hidden;
   resize: vertical;
@@ -150,4 +216,37 @@
 .adminEditTestmonial::-webkit-scrollbar-thumb {
   /* border-radius: 10px; */
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 1);
+}
+
+.slideItem .description .quill {
+  background: none !important;
+}
+.adminEditTestmonial .quill {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+
+  .pl-editor {
+    padding: 0 !important;
+  }
+
+  p,
+  p span,
+  .introDecTitleCss,
+  div {
+    text-align: left;
+    padding: 0.5rem;
+  }
+
+  .ql-toolbar {
+    border-top: 0 !important;
+    border-right: 0 !important;
+    border-left: 0 !important;
+  }
+
+  /* .ql-editor {
+          * {text-align: left; }
+        } */
+}
+
+.filepond--root {
+  margin-bottom: 0.2rem !important;
 }

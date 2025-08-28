@@ -26,10 +26,12 @@ export const HomeClientItem = ({ client }) => {
         key={client.id}
         style={{ height: "100px" }}
       />
-      <h5 className="fs-6 mt-3 mb-0 fw-bold text-center text-uppercase">
+      
+      {/* {client.client_title && (<h5 className="fs-6 mt-3 mb-0 fw-bold text-center text-uppercase">
         {client.client_title}
-      </h5>
-      <RichTextView data={client?.client_description} />
+      </h5>) }
+      {client?.client_description && <RichTextView data={client?.client_description} showMorelink={false} />} */}
+      
     </div>
   );
 };

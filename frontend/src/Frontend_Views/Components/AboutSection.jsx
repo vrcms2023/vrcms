@@ -7,9 +7,11 @@ import { getBaseURL } from "../../util/ulrUtil";
 import { getImagePath } from "../../util/commonUtil";
 import Title from "../../Common/Title";
 import RichTextView from "../../Common/RichTextView";
+import useAdminLoginStatus from "../../Common/customhook/useAdminLoginStatus";
 
 const AboutSection = ({ getBannerAPIURL, bannerState }) => {
   const [bannerdata, setBannerData] = useState([]);
+  const { isAdmin, hasPermission } = useAdminLoginStatus();
 
   useEffect(() => {
     const getBannerData = async () => {
@@ -46,7 +48,9 @@ const AboutSection = ({ getBannerAPIURL, bannerState }) => {
           data={
             bannerdata?.banner_descripiton
               ? bannerdata.banner_descripiton
-              : "<p>Please update Section</p>"
+              : isAdmin
+                ? "<p>Please update Section</p>"
+                : ""
           }
         />
       </div>

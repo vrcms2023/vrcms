@@ -17,5 +17,8 @@ class Gallery(ImageModel):
     imageTitle =    models.CharField(max_length=500, null=True)
     imageDescription = models.CharField(max_length=5000, null=True)
 
+    class Meta:
+        db_table = "gallery"
 
-
+    def __str__(self):
+        return f"{self.imageTitle or 'No Title'}"

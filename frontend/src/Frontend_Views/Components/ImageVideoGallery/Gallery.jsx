@@ -83,7 +83,7 @@ const Gallery = () => {
     <>
       <div className="position-relative">
         {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("banner", true)} />
+          <EditIcon editHandler={() => editHandler("banner", true)} editlabel="Gallery" />
         )}
         <Banner
           getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}

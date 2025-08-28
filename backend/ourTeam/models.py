@@ -9,3 +9,9 @@ class OurTeam(ImageModel, SocialMeidaModel):
     team_member_about_us  =     models.CharField(max_length=5000, null=True, blank=True)
     team_member_position =      models.IntegerField(null=True, blank=True, default=0)
     
+
+    class Meta:
+        db_table = "our_team"
+
+    def __str__(self):
+        return f"{self.team_member_name or 'No Name'}"

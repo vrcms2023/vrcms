@@ -12,7 +12,7 @@
 {% trans "Please go to the following page to activate account:" %}
 {{ protocol }}://{{ domain }}/{{ url|safe }}
 
-<i>{% blocktrans %}If you face difficulties on account activation kindly contact us on: contact@hprinfra.com{% endblocktrans %}</i>
+<i>{% blocktrans %}If you face difficulties on account activation kindly contact us on: {{ APP_CONTACT_EMAIL }}{% endblocktrans %}</i>
 
 {% endblock text_body %}
 
@@ -26,6 +26,6 @@
 <p style="text-align: center; margin-top: 30px;"><a style="padding: 10px 20px; background-color: #a8c849; color: #165d3d; border: 0; border-radius: 5px; font-size: 18px; cursor: pointer; border: 0px solid #165d3d; font-weight: bold" href="{{ protocol }}://{{ domain }}/{{ url|safe }}">Activate Account</a></p>
 
 
-<i style="margin-top: 50px; display: block;">{% blocktrans %}If you face difficulties on account activation kindly contact us on: contact@hprinfra.com{% endblocktrans %}</i>
+<i style="margin-top: 50px; display: block;">{% blocktrans %}If you face difficulties on account activation kindly contact us on: {{ APP_CONTACT_EMAIL }}{% endblocktrans %}</i>
 
 {% endblock html_body %}

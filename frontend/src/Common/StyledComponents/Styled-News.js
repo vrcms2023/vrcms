@@ -5,10 +5,28 @@ export const NewsStyled = styled.div`
     min-height: 380px;
     background-color: ${({ theme }) => theme.newsCardBg};
     color: ${({ theme }) => theme.newsCardTextColor};
-    // margin-bottom: 30px;
-    // border-radius: 10px;
-    // overflow: hidden;
-    border: 0px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    border: 1px solid ${({ theme }) => theme.grayddd};
+    overflow: hidden;
+
+    // .ql-editor {
+    //   padding: 0 !important;
+    // }
+
+    .cardInfo {
+      h5 {
+        font-size: 1.1rem !important;
+        color: ${({ theme }) => theme.gray444};
+      }
+      .newsDate {
+        color: ${({ theme }) => theme.clientSecondaryColor};
+      }
+
+      a {
+        font-size: .9rem
+      }
+    }
 
     .title {
       color: ${({ theme }) => theme.newsCardTitleColor};
@@ -30,7 +48,12 @@ export const NewsStyled = styled.div`
       //     }
       // }
     }
-    
+  }
+
+  .homeNews img {
+    height: 240px;
+    width: 100%;
+    object-fit: cover;
   }
   .adminView {
     img {
@@ -38,6 +61,8 @@ export const NewsStyled = styled.div`
       height: 80px;
     }
 
-    
+    .moreLink {
+      font-size: .9rem
+    }
   }
 `;

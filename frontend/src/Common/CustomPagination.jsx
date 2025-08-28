@@ -4,15 +4,8 @@ import { toast } from "react-toastify";
 import { axiosClientServiceApi, axiosServiceApi } from "../util/axiosUtil";
 import { getCookie } from "../util/cookieUtil";
 
-const CustomPagination = ({
-  paginationData,
-  paginationURL,
-  paginationSearchURL,
-  setCurrentPage,
-  currentPage,
-  setResponseData,
-  pageLoadResult,
-}) => {
+const CustomPagination = ({ paginationData, paginationURL, paginationSearchURL, setCurrentPage, currentPage, setResponseData, pageLoadResult }) => {
+  const pageSize = 12;
   const { total_count, per_page_size, next_url, previous_url } = paginationData;
   const userCookie = getCookie("access");
   const pageNumbers = [];
@@ -41,7 +34,7 @@ const CustomPagination = ({
 
   return (
     <>
-      {total_count > 10 && (
+      {total_count > pageSize && (
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-end">
             <li className={`page-item ${previous_url ? "" : "disabled"}`}>

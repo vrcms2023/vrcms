@@ -5,8 +5,11 @@ import { getBaseURL } from "../../util/ulrUtil";
 import Button from "../../Common/Button";
 import RaqFormModel from "../../Common/RaqFormModel";
 import ModelBg from "../../Common/ModelBg";
+import { toast } from "react-toastify";
 
-import './DownloadBrochures.css'
+import "./DownloadBrochures.css";
+
+import IconsIconImg from "../../Images/IconsIcon.svg";
 
 const DownloadBrochures = () => {
   const [brochuresList, setBrochuresList] = useState([]);
@@ -45,20 +48,9 @@ const DownloadBrochures = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // const downloadPDF = (url) => {
-  //   window.open(
-  //     url,
-  //     "_blank",
-  //     "location=yes,height=800,width=600 ,scrollbars=yes,status=yes"
-  //   );
-  // };
-
   const downloadPDF = () => {
-    const link = document.createElement("a");
-    link.download = fileName;
-    link.href = baseURL + pathName;
-    link.target = "_blank";
-    link.click();
+    const url = baseURL + pathName;
+    window.open(url, "_blank", "location=yes,height=800,width=600 ,scrollbars=yes,status=yes");
   };
 
   const checkClientInfoAndDownload = (path, name) => {
@@ -76,10 +68,10 @@ const DownloadBrochures = () => {
 
   return (
     <div className={`floatingButton ${scrolled ? "scrolled" : ""}`}>
-      {brochuresList.length === 1 && (
+      {/* {brochuresList.length === 1 && (
         <Button
-          label="BROCHURE"
-          cssClass="btn btn-primary mb-1 p-4 text-uppercase"
+          label="Pdf"
+          cssClass="btn btn-primary mb-1"
           icon="fa-download"
           handlerChange={() =>
             checkClientInfoAndDownload(
@@ -90,22 +82,29 @@ const DownloadBrochures = () => {
             )
           }
         />
-      )}
-      {brochuresList.length > 1 && (
-        <div class="dropdown">
+      )} */}
+      {brochuresList.length > 0 && (
+        <div className="dropdown">
           <button
-            class="btn btn-primary mb-1 p-4  dropdown-toggle"
+            className="btn btn-primary mb-1 dropdown-toggle px-3"
             type="button"
             id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            BROCHURES
+            <i
+              className="fa fa-download cursor-pointer fs-4"
+              aria-hidden="true"
+            ></i>
+            <span className=""> Pdfs</span>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             {brochuresList?.map((brochures) => (
-              <li>
-                <i class="fa fa-file-pdf-o cursor-pointer fs-4 me-2" aria-hidden="true"></i>
+              <li key={brochures.id}>
+                <i
+                  className="fa fa-file-pdf-o cursor-pointer fs-4 me-2"
+                  aria-hidden="true"
+                ></i>
                 <a
                   href="#!"
                   onClick={() =>

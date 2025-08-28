@@ -28,10 +28,7 @@ import { ABriefIntroStyled } from "../../../Common/StyledComponents/Styled-ABrie
 import Button from "../../../Common/Button";
 import BriefIntroAdmin from "../../../Frontend_Admin/Components/BriefIntro";
 import DynamicForm from "../../../Frontend_Admin/Components/forms/DynamicForm";
-import {
-  axiosClientServiceApi,
-  axiosServiceApi,
-} from "../../../util/axiosUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 import Title from "../../../Common/Title";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
@@ -54,6 +51,7 @@ import {
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
+import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 
 const ProductsPage = () => {
   const { id } = useParams();
@@ -64,6 +62,7 @@ const ProductsPage = () => {
     category: false,
     product: false,
   };
+  const [counter, setCounter] = useState(0);
   const pageload = useRef(true);
   const { isAdmin, hasPermission } = useAdminLoginStatus();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
@@ -87,9 +86,7 @@ const ProductsPage = () => {
   const editHandler = (name, value, item) => {
     if (item) {
       setSelectedProduct(item);
-      setComptitle(
-        `${selectedCategory?.category_name} > ${item.product_name} - Edit Product`
-      );
+      setComptitle(`${selectedCategory?.category_name} > ${item.product_name} - Edit Product`);
     } else {
       setComptitle(`${selectedCategory?.category_name} - Add New Product`);
     }
@@ -144,9 +141,7 @@ const ProductsPage = () => {
   const categoryDeleteHandler = () => {
     const id = selectedCategory?.id;
     const deleteSection = async () => {
-      const response = await axiosServiceApi.delete(
-        `/products/updateCategory/${id}/`
-      );
+      const response = await axiosServiceApi.delete(`/products/updateCategory/${id}/`);
       if (response.status === 204) {
         const list = category.filter((list) => list.id !== id);
         setCategory(list);
@@ -162,7 +157,12 @@ const ProductsPage = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSection}
-            message={`Do you want to delete the ${selectedCategory?.category_name} ?`}
+            // message={`Do you want to delete the ${selectedCategory?.category_name} ?`}
+            message={
+              <>
+                Confirm deletion of <span>{selectedCategory?.category_name}</span> ?
+              </>
+            }
           />
         );
       },
@@ -189,9 +189,10 @@ const ProductsPage = () => {
   }, [showHideList]);
 
   useEffect(() => {
-    if (showHideList.length === 0 && showHideCompPageLoad.current) {
+    if (showHideList.length === 0 && showHideCompPageLoad.current && counter < 3) {
       dispatch(getAllShowHideComponentsList());
       showHideCompPageLoad.current = false;
+      setCounter(counter + 1);
     }
   }, [showHideList]);
 
@@ -206,50 +207,9 @@ const ProductsPage = () => {
       dispatch(createShowHideComponent(newData));
     }
   };
-
+  // console.log(productsList, "productsList")
   return (
     <>
-      {isAdmin && hasPermission && (
-        <div className="container py-4">
-          <div className="row ">
-            <div className="col-md-12 d-flex justify-content-end align-items-center gap-2">
-              <span>
-                <Title title="CATEGORY - " cssClass={"fw-medium fs-6"} />
-              </span>
-              <Button
-                type="button"
-                cssClass="btn btn-secondary w-auto"
-                label={"Create"}
-                icon="fa-plus fs-5"
-                isMobile={isMobile}
-                handlerChange={() => {
-                  editHandler("category", true);
-                }}
-              />
-              {selectedCategory?.id && (
-                <Button
-                  type="button"
-                  cssClass="btn btn-more w-auto"
-                  label={"Edit"}
-                  icon="fa-pencil fs-5"
-                  isMobile={isMobile}
-                  handlerChange={categoryEditHandler}
-                />
-              )}
-              {selectedCategory?.id && (
-                <Button
-                  type="button"
-                  cssClass="btn bg-danger text-white w-auto"
-                  label={"Delete"}
-                  icon="fa-trash-o fs-5"
-                  isMobile={isMobile}
-                  handlerChange={categoryDeleteHandler}
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      )}
       {componentEdit.category && (
         <div className={`adminEditTestmonial selected `}>
           <DynamicFormwithFileUplod
@@ -266,59 +226,22 @@ const ProductsPage = () => {
         </div>
       )}
 
-      {selectedCategory?.id && (
-        <>
-          {/* Page Banner Component */}
-          <div className="position-relative">
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("banner", true)} />
-            )}
-
-            <Banner
-              getBannerAPIURL={`banner/clientBannerIntro/${pageType}-banner/`}
-              bannerState={componentEdit.banner}
-              bannerContainerCss="titleCaption d-flex align-items-end justify-content-center flex-column"
-            />
-          </div>
-          {componentEdit.banner && (
-            <div className={`adminEditTestmonial selected `}>
-              <ImageInputsForm
-                editHandler={editHandler}
-                componentType="banner"
-                popupTitle="Products Banner"
-                pageType={`${pageType}-banner`}
-                imageLabel="Category Banner Image"
-                showDescription={false}
-                showExtraFormFields={getProductCategoryBannerFormFields(
-                  `${pageType}-banner`
-                )}
-                dimensions={imageDimensionsJson("banner")}
-              />
-            </div>
-          )}
-        </>
-      )}
-
+      {/* Page Banner Component */}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"products-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"Products Banner"}
+        showHideComponentName={"productsbanner"}
+      />
       <ProductStyled>
-        <SearchFilter
-          category={category}
-          selectedCategory={selectedCategory}
-          setResponseData={setResponseData}
-          setSelectedCategory={setSelectedCategory}
-          setPageloadResults={setPageloadResults}
-          setSearchquery={setSearchquery}
-          searchQuery={searchQuery}
-          searchBy={"Search By Product Name"}
-          hideSearchBy={false}
-        />
-        <div />
-
         <div
           className={
-            showHideCompList?.productsbriefintro?.visibility &&
-            isAdmin &&
-            hasPermission
-              ? "border border-info mb-2"
+            showHideCompList?.productsbriefintro?.visibility && isAdmin && hasPermission
+              ? "componentOnBorder"
               : ""
           }
         >
@@ -337,17 +260,21 @@ const ProductsPage = () => {
             <div>
               {/* Introduction */}
               {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler("briefIntro", true)} />
+                <EditIcon editHandler={() => editHandler("briefIntro", true)} editlabel="Brief" />
               )}
 
               <BriefIntroFrontend
-                introState={componentEdit.briefIntro}
                 pageType={pageType}
-                introTitleCss="fs-3 fw-medium text-md-center"
-                introSubTitleCss="fw-medium text-muted text-md-center"
-                introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-                anchorContainer="text-center my-4"
-                linkLabel="More.."
+                introState={componentEdit.briefIntro}
+                detailsContainerCss="col-lg-8 offset-lg-2 text-center"
+                introTitleCss=""
+                introSubTitleCss=""
+                introDecTitleCss=""
+                linkLabel="Read More"
+                linkCss="btn btn-outline"
+                moreLink=""
+                anchorContainer=""
+                anchersvgColor=""
                 showLink={"True"}
               />
               {componentEdit.briefIntro && (
@@ -356,6 +283,7 @@ const ProductsPage = () => {
                     editHandler={editHandler}
                     componentType="briefIntro"
                     pageType={pageType}
+                    popupTitle={"Banner"}
                   />
                 </div>
               )}
@@ -363,64 +291,125 @@ const ProductsPage = () => {
           )}
         </div>
 
-        <div className="container productsList pt-5">
-          <div className="row mb-4">
-            <div className="col-md-12 col-lg-6 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0 align-items-center">
+        <div>
+          <SearchFilter
+            category={category}
+            selectedCategory={selectedCategory}
+            setResponseData={setResponseData}
+            setSelectedCategory={setSelectedCategory}
+            setPageloadResults={setPageloadResults}
+            setSearchquery={setSearchquery}
+            searchQuery={searchQuery}
+            searchBy={"Search By Product Name"}
+            hideSearchBy={false}
+          />
+        </div>
+
+        <div className="container productsList">
+          <div className="row mb-4 py-2 shadow-lg d-flex justify-content-between align-items-center bg-white">
+            {/* <div className="col-md-12 col-lg-6">
               <Title
-                title={`CATEGORY -> ${selectedCategory?.category_name}`}
-                cssClass={"fw-medium fs-4"}
-              />{" "}
+                title={`CATEGORY:  ${selectedCategory?.category_name}`}
+                cssClass={""}
+                icon=""
+              />
+            </div> */}
+            <div className="col-md-4 d-flex flex-column flex-sm-row justify-content-start align-items-center gap-3 ">
+              <div className="d-flex justify-content-end align-items-center">
+                <Title title={`${selectedCategory?.category_name}`} cssClass={"m-0 fs-5"} icon="" />
+
+                {selectedCategory?.id && isAdmin && hasPermission && (
+                  <Button
+                    type="button"
+                    cssClass="btn "
+                    label={""}
+                    icon="fa-pencil fs-6 text-warning"
+                    isMobile={isMobile}
+                    handlerChange={categoryEditHandler}
+                  />
+                )}
+                {selectedCategory?.id && isAdmin && hasPermission && (
+                  <Button
+                    type="button"
+                    cssClass="btn"
+                    label={""}
+                    icon="fa-trash-o fs-6 text-danger"
+                    isMobile={isMobile}
+                    handlerChange={categoryDeleteHandler}
+                  />
+                )}
+              </div>
             </div>
-            <div className="col-md-12 col-lg-6 d-flex flex-column flex-sm-row justify-content-end align-items-center gap-3">
-              {selectedCategory?.id && isAdmin && hasPermission && (
-                <Button
-                  type="button"
-                  cssClass="btn btn-secondary w-auto"
-                  label={" Add Product"}
-                  icon="fa-plus"
-                  handlerChange={() => {
-                    editHandler("product", true);
-                  }}
-                />
-                // <EditIcon editHandler={() => editHandler("product", true)} />
+            <div
+              className={`${isAdmin && hasPermission ? "col-md-4 justify-content-center" : "col-md-6 justify-content-end"} d-flex flex-column flex-sm-row  align-items-center gap-3 productFilters`}
+            >
+              {productsList?.length > 0 ? (
+                <div>
+                  {/* Showing 1 –  */}
+                  {productsList?.length} of
+                  <strong className="text-primary fw-medium"> {productsList?.length}</strong>
+                  {/* results */}
+                </div>
+              ) : (
+                ""
               )}
-              <div>
-                {/* Showing 1 –  */}
-                {productsList?.length} of{" "}
-                <strong>{productsList?.length}</strong>
-                {/* results */}
-              </div>
-              <span className="d-none d-md-block"> | </span>
-              <div className="d-flex justify-content-end align-items-center gap-1">
-                {/* <span>Show </span> */}
-                <select
-                  className="form-select"
-                  aria-label="Default select example"
-                >
-                  <option selected>show</option>
-                  <option value="1">5</option>
-                  <option value="2">10</option>
-                  <option value="3">25</option>
-                  <option value="3">50</option>
-                  <option value="3">75</option>
-                  <option value="3">100</option>
-                </select>
-                {/* <span>entries</span> */}
-              </div>
-              <span className="d-none d-md-block"> | </span>
+
+              {productsList?.length > 5 ? (
+                <div>
+                  {/* <span>Show </span> */}
+                  <select className="form-select perPage" aria-label="Default select example">
+                    <option selected>Show</option>
+                    <option value="1">5</option>
+                    <option value="2">10</option>
+                    <option value="3">25</option>
+                    <option value="3">50</option>
+                    <option value="3">75</option>
+                    <option value="3">100</option>
+                  </select>
+                  {/* <span>entries</span> */}
+                </div>
+              ) : (
+                ""
+              )}
+
               <div>
                 <Link
                   className="moreLink "
-                  // onClick={() => downloadFile(editObject?.category_fileuplod)}
+                  onClick={() => downloadFile(editObject?.category_fileuplod)}
                 >
                   File
-                  <i
-                    className="fa fa-download ms-1 fs-5 rounded-2 p-1 border border-1 border-info bg-white"
-                    aria-hidden="true"
-                  ></i>
+                  <i className="fa fa-download p-1 " aria-hidden="true"></i>
                 </Link>
               </div>
             </div>
+
+            {isAdmin && hasPermission && (
+              <div className="col-md-4 d-flex flex-column flex-sm-row justify-content-end align-items-center gap-3">
+                <Button
+                  type="button"
+                  cssClass="btn btn-outline"
+                  label={"New Category"}
+                  icon="fa-plus  me-2"
+                  isMobile={isMobile}
+                  handlerChange={() => {
+                    editHandler("category", true);
+                  }}
+                />
+
+                {selectedCategory?.id && (
+                  <Button
+                    type="button"
+                    cssClass="btn btn-outline w-auto"
+                    label={"Product"}
+                    icon="fa-plus  me-2"
+                    handlerChange={() => {
+                      editHandler("product", true);
+                    }}
+                  />
+                  // <EditIcon editHandler={() => editHandler("product", true)} />
+                )}
+              </div>
+            )}
           </div>
 
           {selectedCategory?.id && (
@@ -450,9 +439,7 @@ const ProductsPage = () => {
               imageDeleteURL="/products/updateProduct/"
               imageLabel="Product Image"
               showDescription={false}
-              showExtraFormFields={getProductFormDynamicFields(
-                selectedCategory
-              )}
+              showExtraFormFields={getProductFormDynamicFields(selectedCategory)}
               dimensions={imageDimensionsJson("product")}
             />
           </div>
@@ -518,11 +505,12 @@ const ProductsPage = () => {
         )} */}
 
         {/* Feed back form for client to send product list back */}
-        {selectedCategory?.id && (
+
+        {selectedCategory?.id && productsList?.length > 0 ? (
           <>
             <ABriefIntroStyled>
               <div className="container-lg px-0  productForm">
-                <div className="row py-4">
+                <div className="row pb-4">
                   <ABriefAbout
                     col1="col-md-5 p-lg-5 ps-lg-0 d-none d-md-block"
                     col2="col-md-7 px-4 p-lg-5 d-flex justify-content-center align-items-start flex-column"
@@ -538,6 +526,8 @@ const ProductsPage = () => {
               </div>
             </ABriefIntroStyled>
           </>
+        ) : (
+          ""
         )}
       </ProductStyled>
 

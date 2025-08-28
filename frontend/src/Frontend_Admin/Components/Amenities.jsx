@@ -46,7 +46,14 @@ export const AmenitiesList = ({ project, amenities, setAmenities }) => {
   );
 };
 
-export const Amenities = ({ title, value, amenities, setAmenities, name, rows }) => {
+export const Amenities = ({
+  title,
+  value,
+  amenities,
+  setAmenities,
+  name,
+  rows,
+}) => {
   const handleChange = (e, i) => {
     const { name, value } = e.target;
     const onchangeVal = { ...amenities };
@@ -55,7 +62,7 @@ export const Amenities = ({ title, value, amenities, setAmenities, name, rows })
   };
   return (
     <div className="animities">
-      <Title title={title} cssClass="mb-2" />
+      <Title title={title} cssClass="mb-1 fs-6" />
       <div className="mb-4">
         {/* <label htmlFor="addImages" className="form-label  ">Add Image's</label> */}
         <textarea

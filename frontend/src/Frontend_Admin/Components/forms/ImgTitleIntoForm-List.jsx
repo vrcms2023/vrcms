@@ -16,14 +16,13 @@ import {
   updateArrIndex,
   getObjectPositionKey,
   sortByFieldName,
+  getImageURL,
 } from "../../../util/commonUtil";
-import {
-  axiosFileUploadServiceApi,
-  axiosServiceApi,
-} from "../../../util/axiosUtil";
+import { axiosFileUploadServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
 import NoteComponent from "../../../Common/NoteComponent";
+import RichTextView from "../../../Common/RichTextView";
 
 const AdminBanner = ({
   editHandler,
@@ -42,6 +41,7 @@ const AdminBanner = ({
   showExtraFormFields,
   dimensions,
   validTypes = "image/png,image/jpeg",
+  sideDeck,
 }) => {
   const projectID = "a62d7759-a e6b-4e49-a129-1ee208c6789d";
   const [userName, setUserName] = useState("");
@@ -69,17 +69,11 @@ const AdminBanner = ({
           let key = Object.keys(response.data);
           if (key.length > 1) {
             const _positionKey = getObjectPositionKey(response.data.results[0]);
-            const _carouselList = sortByFieldName(
-              response.data.results,
-              _positionKey
-            );
+            const _carouselList = sortByFieldName(response.data.results, _positionKey);
             setcarouseData(_carouselList);
           } else {
             const _positionKey = getObjectPositionKey(response.data[key][0]);
-            const _carouselList = sortByFieldName(
-              response.data[key],
-              _positionKey
-            );
+            const _carouselList = sortByFieldName(response.data[key], _positionKey);
             setcarouseData(_carouselList);
           }
         }
@@ -103,9 +97,7 @@ const AdminBanner = ({
    */
   const thumbDelete = (id, name) => {
     const deleteImageByID = async () => {
-      const response = await axiosFileUploadServiceApi.delete(
-        `${deleteImageURL}${id}/`
-      );
+      const response = await axiosFileUploadServiceApi.delete(`${deleteImageURL}${id}/`);
       if (response.status === 204) {
         const list = imgGallery.filter((item) => item.id !== id);
         setImgGallery(list);
@@ -119,7 +111,12 @@ const AdminBanner = ({
           <DeleteDialog
             onClose={onClose}
             callback={deleteImageByID}
-            message={`deleting the ${name} image?`}
+            // message={`deleting the ${name} image?`}
+            message={
+              <>
+                Confirm deletion of <span>{name}</span> image?
+              </>
+            }
           />
         );
       },
@@ -151,28 +148,25 @@ const AdminBanner = ({
     }
   };
 
+  console.log(Object.keys(editCarousel).length, "editCarousel")
   return (
     <div>
       <EditAdminPopupHeader closeHandler={closeHandler} title={popupTitle} />
 
-      <hr className="m-0" />
+      {/* <hr className="m-0" /> */}
 
       <div className="container mt-2">
-        <NoteComponent note="Drag to shuffle banners" />
+        <NoteComponent note="Shuffle order" />
 
         <div className="row mt-2 d-flex flex-row-reverse">
           {carousel?.length > 0 ? (
-            <div className="heightCtrl imglist">
-              <div className="container">
+            <div className="heightCtrl imglist p-0">
+              <div className="container p-0">
                 <DragDropContext onDragEnd={onDragEnd}>
                   {carousel?.map((item, index) => (
                     <Droppable key={index} droppableId={item.id}>
                       {(provided, snapshot) => (
-                        <div
-                          ref={provided.innerRef}
-                          style={getListStyle(snapshot.isDraggingOver)}
-                          {...provided.droppableProps}
-                        >
+                        <div ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)} {...provided.droppableProps}>
                           <AdminCarouselItem
                             item={item}
                             index={index}
@@ -192,11 +186,15 @@ const AdminBanner = ({
           ) : (
             ""
           )}
-          <hr className="" />
+          
 
+        <small className={`text-center py-1 fw-medium text-white ${Object.keys(editCarousel).length > 0 ? "bg-warning " : "bg-secondary"}`}>
+          {Object.keys(editCarousel).length > 0 ? "EDIT" : "ADD NEW"}
+        </small>
+        {/* <hr className="border-1 border-white" /> */}
           <div
-            className={`mb-5 mb-md-0 px-0 ${
-              carousel?.length > 0 ? "col-md-12" : "col-md-12"
+            className={`mb-5 mb-md-0 border border-2 p-2 ${
+              Object.keys(editCarousel).length > 0  ? " border-warning" : "border-secondary"
             }`}
           >
             <FileUpload
@@ -223,6 +221,8 @@ const AdminBanner = ({
               dimensions={dimensions}
               closeHandler={closeHandler}
               scrollEnable={carousel.lengh > 0 ? true : false}
+              isclosePopup={false}
+              sideDeck={sideDeck}
             />
           </div>
         </div>
@@ -231,66 +231,44 @@ const AdminBanner = ({
   );
 };
 
-const AdminCarouselItem = ({
-  item,
-  index,
-  componentType,
-  handleCarouselEdit,
-  thumbDelete,
-}) => {
+const AdminCarouselItem = ({ item, index, componentType, handleCarouselEdit, thumbDelete }) => {
   const { isAdmin, hasPermission } = useAdminLoginStatus();
+
   return (
-    <Draggable
-      isDragDisabled={!isAdmin ? true : false}
-      key={item.id}
-      draggableId={item.id}
-      index={index}
-      id={item.id}
-    >
+    <Draggable isDragDisabled={!isAdmin ? true : false} key={item.id} draggableId={item.id} index={index} id={item.id}>
       {(provided) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <div className="row mb-2 p-2 slideItem" key={index}>
+        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+          <div className="row mb-1 p-1 slideItem" key={index}>
             <div className="col-2 col-md-2">
-              <i
-                className="fa fa-picture-o fs-2 d-lg-none"
-                aria-hidden="true"
-              ></i>
-              <img
-                src={item.path ? getImagePath(item.path) : getDummyImage()}
-                alt={item.alternitivetext}
-                className="w-100 d-none d-lg-block"
-              />
+              {/* <i className="fa fa-picture-o fs-2 d-lg-none" aria-hidden="true"></i> */}
+
+              <img src={getImageURL(item)} alt={item.alternitivetext} className="w-100  d-lg-block" />
             </div>
-            <div className="col col-md-8 ">
-              <h6 className="fw-bold m-0 fs-6">
-                {getObjectTitle(componentType, item)}
-              </h6>
+            <div className="col col-md-8 text-left ps-0">
+              <h6 className="fw-medium lc1 mb-1 lineClamp">{getObjectTitle(componentType, item)}</h6>
               <small className="description text-muted d-none d-md-block">
-                {getObjectDescription(componentType, item)}
-                {item.carouseDescription && item.carouseDescription}
-                {item.image_description && item.image_description}
+                {/* {getObjectDescription(componentType, item)} */}
+                {/* {item.carouseDescription && item.carouseDescription}
+                {item.image_description && item.image_description} */}
+                <RichTextView data={getObjectDescription(componentType, item)} className={""} showMorelink={false} />
+                {/* <RichTextView
+                    data={item.carouseDescription && item.carouseDescription}
+                    className={""}
+                    showMorelink={false}
+                  />
+                  <RichTextView
+                    data={item.image_description && item.image_description}
+                    className={""}
+                    showMorelink={false}
+                  /> */}
               </small>
             </div>
-            <div className="col-4 col-md-2 d-flex justify-content-around align-items-center flex-md-row gap-3">
+            <div className="col-4 col-md-2 d-flex justify-content-around align-items-center flex-md-row gap-1">
               <Link onClick={(event) => handleCarouselEdit(event, item)}>
-                <i
-                  className="fa fa-pencil fs-5 text-warning"
-                  aria-hidden="true"
-                ></i>
+                <i className="fa fa-pencil fs-5 text-secondary" aria-hidden="true"></i>
               </Link>
-              <Link
-                onClick={(event) =>
-                  thumbDelete(item.id, getObjectTitle(componentType, item))
-                }
-              >
-                <i
-                  className="fa fa-trash fs-5 text-danger"
-                  aria-hidden="true"
-                ></i>
+              <Link onClick={(event) => thumbDelete(item.id, getObjectTitle(componentType, item))}>
+                <i className="fa fa-trash fs-5 text-secondary" aria-hidden="true"></i>
               </Link>
             </div>
           </div>

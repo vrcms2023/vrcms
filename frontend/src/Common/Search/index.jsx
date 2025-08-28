@@ -15,10 +15,11 @@ const Search = ({
   searchQuery,
   imageGallery,
   setImageGallery,
-  hideSearchBy,
+  hideSearchBy = true,
   searchBy = " Search ",
   addStateChanges,
   editStateChanges,
+  cssClass
 }) => {
   const userCookie = getCookie("access");
 
@@ -74,7 +75,7 @@ const Search = ({
   }, [editStateChanges]);
 
   return (
-    <div className="d-flex justify-conent-start align-items-start flex-column">
+    <div className={`${cssClass} d-flex justify-conent-start align-items-start flex-column`}>
       <div className="input-group mb-1 search my-2 my-md-0 ">
         <input
           type="text"
@@ -96,7 +97,7 @@ const Search = ({
           {/* <span className="text-muted">Search by</span> */}
           <small className="text-dark">
             <span className="fw-bolder">Search by</span> :{" "}
-            {searchfiledDeatails ? searchfiledDeatails : ""}
+            <span>{searchfiledDeatails ? searchfiledDeatails : ""}</span>
           </small>
         </div>
       )}

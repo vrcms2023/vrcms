@@ -23,7 +23,7 @@ const SEO = () => {
   useEffect(() => {
     if (menuRawList?.length > 0 && !ispathExit) {
       let seoMenu = _.filter(menuRawList, (item) => {
-        return item.page_url.toLowerCase() === pathname.toLowerCase();
+        return item?.page_url?.toLowerCase() === pathname.toLowerCase();
       })[0];
       if (seoMenu) {
         setSeoObject(seoMenu);
@@ -56,7 +56,7 @@ const SEO = () => {
   }, [products, productID]);
 
   useEffect(() => {
-    console.log("seoObject?.seo_title", seoObject?.seo_title);
+    // console.log("seoObject?.seo_title", seoObject?.seo_title);
   }, [seoObject]);
   return (
     <>
@@ -64,7 +64,7 @@ const SEO = () => {
         <title>
           {seoObject?.seo_title
             ? seoObject?.seo_title
-            : "EZI defautl - Custom CMS"}
+            : "EZI Press - Custom CMS"}
         </title>
         <meta
           name="description"

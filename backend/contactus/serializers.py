@@ -16,7 +16,7 @@ class BrochuresSerializer(serializers.ModelSerializer):
         def remove_fields(self, fields_to_exclude=None):
          return exclude_fields(self, fields_to_exclude)
 
-class IconsenggRaqFormSerializer(serializers.ModelSerializer):
+class RaqFormSerializer(serializers.ModelSerializer):
      class Meta:
-        model = IconsenggRaqForm
+        model = RaqForm
         fields = '__all__'
