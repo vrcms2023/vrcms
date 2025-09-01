@@ -144,8 +144,8 @@ const HomeNews = ({
   const updateObjectsIndex = async (data) => {
     try {
       let response = await axiosServiceApi.put(`/appNews/updateNewsIndex/`, data);
-      if (response?.data?.appNews) {
-        return response.data.appNews;
+      if (response?.data?.length > 0) {
+        return response.data;
       }
     } catch (error) {
       console.log("unable to save news position");

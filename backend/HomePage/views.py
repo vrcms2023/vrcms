@@ -279,100 +279,32 @@ class ClientHomeIntroListView(generics.CreateAPIView):
 '''
 
 
-class ClientLogoAPIView(generics.CreateAPIView):
-     permission_classes = [permissions.IsAuthenticated]
-     serializer_class = ClientLogoSerializer
-     queryset = ClientLogo.objects.all().order_by('client_position',"-created_at")
-     pagination_class = CustomPaginationForImageGallery
-
-     """
-     List all ClientLogo, or create a new ClientLogo.
-     """
-
-
-     def get(self, request, format=None):
-        snippets = ClientLogo.objects.all().order_by('client_position',"-created_at")
-        results = get_custom_paginated_data(self, snippets)
-        if results is not None:
-            return results
-
-        serializer = ClientLogoSerializer(snippets, many=True)
-        return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
-    
-     def post(self, request, format=None):
-        serializer = ClientLogoSerializer(data=request.data)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"clientLogo": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-class ClientLogoUpdateAndDeleteView(APIView):
-    """
-    Retrieve, update or delete a carousel instance.
-    """
-    def get_object(self, pk):
-        try:
-            return ClientLogo.objects.get(pk=pk)
-        except ClientLogo.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = ClientLogoSerializer(snippet)
-        return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
-
-    def patch(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = ClientLogoSerializer(snippet, data=request.data)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-   
-class ClientLogoImagesView(generics.CreateAPIView):
-    permission_classes = [permissions.AllowAny]
-    queryset = ClientLogo.objects.all().order_by('client_position')
+class ClientLogoAPIView(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = ClientLogoSerializer
+    queryset = ClientLogo.objects.all().order_by('client_position',"-created_at")
     pagination_class = CustomPaginationForImageGallery
-   
-    """
-    List all ClientLogo, or create a new ClientLogo.
-    """
 
-    def get(self, request, format=None):
-        snippets = ClientLogo.objects.all().order_by('client_position',"-created_at")
-        results = get_custom_paginated_data(self, snippets)
-        if results is not None:
-            return results
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user, updated_by=self.request.user)
 
-        serializer = ClientLogoSerializer(snippets, many=True)
-        return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
+class ClientLogoUpdateAndDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ClientLogo.objects.all().order_by("-created_at")
+    serializer_class = ClientLogoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = CustomPaginationForImageGallery
 
-class AllClientLogoImagesView(generics.CreateAPIView):
+    def perform_update(self, serializer):
+        serializer.save(updated_by=self.request.user)
+
+
+
+class AllClientLogoImagesView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = ClientLogo.objects.all().order_by('client_position',"-created_at")
     serializer_class = ClientLogoSerializer
-    """
-    List all ClientLogo, or create a new ClientLogo.
-    """
+    pagination_class = CustomPaginationForImageGallery
 
-    def get(self, request, format=None):
-        snippets = ClientLogo.objects.all().order_by('client_position',"-created_at")
-        serializer = ClientLogoSerializer(snippets, many=True)
-        return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
     
 
 class ClientLogoSearchAPIView(generics.ListAPIView):
@@ -416,7 +348,7 @@ class UpdateClientIndex(APIView):
         user = request.user
         for item in obj_list:
             obj = self.get_object(obj_id=item["id"])
-            obj.updated_by = user.userName
+            obj.updated_by = user
             obj.client_position = item["client_position"]
             obj.save()
             instances.append(obj)

@@ -29,6 +29,8 @@ import {
 } from "../../../redux/showHideComponent/showHideActions";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
+import BriefWithShowHideToggleComponent from "../../../Common/Brief/BriefWithShowHideToggleComponent";
+import AdminSingleRecordUpload from "../../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
 
 const ClientsList = () => {
   const editComponentObj = {
@@ -62,10 +64,10 @@ const ClientsList = () => {
   };
 
   useEffect(() => {
-    if ((!componentEdit.addSection || !componentEdit.editSection) && !searchQuery) {
+    if (!componentEdit.addSection && !componentEdit.editSection && !searchQuery) {
       getClinetDetails();
     }
-  }, [componentEdit.addSection, componentEdit.editSection]);
+  }, [componentEdit.addSection, componentEdit.editSection, searchQuery]);
 
   const getClinetDetails = async () => {
     try {
@@ -163,71 +165,25 @@ const ClientsList = () => {
         showHideComponentName={"clientlistbanner"}
       />
 
-      <div
-        className={
-          showHideCompList?.clientsbriefintro?.visibility && isAdmin && hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.clientsbriefintro?.visibility}
-            title={"A Brief Introduction Component"}
-            componentName={"clientsbriefintro"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.clientsbriefintro?.id}
-          />
-        )}
-
-        {/* INTRODUCTION COMPONENT */}
-        {showHideCompList?.clientsbriefintro?.visibility && (
-          <div>
-            {/* Brief Introduction */}
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-            )}
-
-            <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              pageType={pageType}
-              introTitleCss="fs-3 fw-medium text-md-center"
-              introSubTitleCss="fw-medium text-muted text-md-center"
-              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-            />
-            {componentEdit.briefIntro && (
-              <div className={`adminEditTestmonial selected `}>
-                <AdminBriefIntro
-                  editHandler={editHandler}
-                  popupTitle="Client list"
-                  componentType="briefIntro"
-                  pageType={pageType}
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      <BriefWithShowHideToggleComponent
+        editHandler={editHandler}
+        componentType="briefIntro"
+        popupTitle="Client Brief Introduction Component"
+        pageType={pageType}
+        componentEdit={componentEdit}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        editlabel={"briefIntro"}
+        showHideComponentName={"clientsbriefintro"}
+        detailsContainerCss="col-lg-10 offset-lg-1 text-center"
+        introTitleCss="fs-3 fw-medium text-md-center"
+        introSubTitleCss="fw-medium text-muted text-md-center"
+        introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
+        showHideComponentTitle={"Client Brief Intro "}
+      />
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
-        {/* <div className="row">
-          {isAdmin && hasPermission && (
-            <div className="col-md-12">
-              <div className="d-flex justify-content-end align-items-center mb-3">
-                <button
-                  type="submit"
-                  className="btn btn-outline px-3"
-                  onClick={() => editHandler("addSection", true, {})}
-                >
-                  New Client
-                  <i className="fa fa-plus ms-2" aria-hidden="true"></i>
-                </button>
-              </div>
-            </div>
-          )}
-        </div> */}
-
         <div className="row">
           <div className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start">
             <Title title="Clients" cssClass="pageTitle fs-4" />
@@ -263,27 +219,22 @@ const ClientsList = () => {
         </div>
         {componentEdit.editSection || componentEdit.addSection ? (
           <div className={`adminEditTestmonial selected `}>
-            <AddEditAdminNews
+            <AdminSingleRecordUpload
               editHandler={editHandler}
-              category="about"
-              popupTitle="Client"
-              editCarousel={editCarousel}
-              setEditCarousel={setEditCarousel}
               componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
+              parentEditObject={editCarousel}
+              onPageLoadServiceCall={!componentEdit.editSection}
+              popupTitle={`${componentEdit.editSection ? "Edit Client" : "Add Client"}`}
               imageGetURL="client/createClientLogo/"
               imagePostURL="client/createClientLogo/"
               imageUpdateURL="client/updateClientLogo/"
               imageDeleteURL="client/updateClientLogo/"
               imageLabel="Upload Image"
-              showDescription={false}
               showExtraFormFields={getClinetLogsFields()}
               dimensions={imageDimensionsJson("aboutus")}
-              scrollEnable={false}
             />
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
 
         <br />
         {isAdmin && (

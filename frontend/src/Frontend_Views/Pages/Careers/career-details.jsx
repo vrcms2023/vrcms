@@ -131,12 +131,6 @@ const Careers = () => {
               icon="fa-chevron-left"
             />
           </div>
-          {/* <div className="col-4 col-md-2 text-end">
-            <Link to="/careers" className="btn btn-outline">
-              <i className="fa fa-chevron-left me-2" aria-hidden="true"></i>
-              <span className="">Back</span>
-            </Link>
-          </div> */}
         </div>
       </div>
 
@@ -154,19 +148,7 @@ const Careers = () => {
               <div className="jobDescription mb-4 p-3">
                 {posts.description && (
                   <RichTextView data={posts.description} className={""} showMorelink={false} />
-                  // <div
-                  //   dangerouslySetInnerHTML={{ __html: posts.description }}
-                  // />
                 )}
-
-                {/* <div className="mt-3">
-                  <span className="d-block">
-                    <strong>Department</strong> : Engineering - Software & QA
-                  </span>
-                  <span className="d-block">
-                    <strong>Employment Type</strong>: Full Time, Permanent
-                  </span>
-                </div> */}
               </div>
               <JobCurrentOpenings />
             </div>

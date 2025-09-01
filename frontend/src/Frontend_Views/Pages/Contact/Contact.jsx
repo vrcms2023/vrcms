@@ -41,6 +41,7 @@ import {
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 import RaqUseForm from "../../Components/RaqUseForm";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
+import BriefWithShowHideToggleComponent from "../../../Common/Brief/BriefWithShowHideToggleComponent";
 
 const Contact = () => {
   const editComponentObj = {
@@ -169,57 +170,19 @@ const Contact = () => {
         showHideComponentName={"contactusbanner"}
       />
 
-      <div
-        className={
-          showHideCompList?.contactbriefintro?.visibility && isAdmin && hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.contactbriefintro?.visibility}
-            title={"A Brief Introduction Component"}
-            componentName={"contactbriefintro"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.contactbriefintro?.id}
-          />
-        )}
-
-        {/* INTRODUCTION COMPONENT */}
-        {showHideCompList?.contactbriefintro?.visibility && (
-          <div>
-            {/* Introduction */}
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} editlabel="Brief" />
-            )}
-
-            <BriefIntroFrontend
-              pageType={pageType}
-              introState={componentEdit.briefIntro}
-              detailsContainerCss="col-md-8 offset-md-2 text-center"
-              introTitleCss=""
-              introSubTitleCss=""
-              introDecTitleCss=""
-              linkLabel="Read More"
-              linkCss="btn btn-outline"
-              moreLink=""
-              anchorContainer=""
-              anchersvgColor=""
-              showLink={"True"}
-            />
-            {componentEdit.briefIntro && (
-              <div className={`adminEditTestmonial selected `}>
-                <AdminBriefIntro
-                  editHandler={editHandler}
-                  componentType="briefIntro"
-                  pageType={pageType}
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      <BriefWithShowHideToggleComponent
+        editHandler={editHandler}
+        componentType="briefIntro"
+        popupTitle="Contact Brief Introduction Component"
+        pageType={pageType}
+        componentEdit={componentEdit}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        editlabel={"Brief"}
+        showHideComponentName={"contactbriefintro"}
+        detailsContainerCss="col-lg-10 offset-lg-1 text-center"
+        showHideComponentTitle={"Contact Brief Intro "}
+      />
 
       <div className="container-fluid">
         <div className="row">
@@ -245,6 +208,7 @@ const Contact = () => {
                     className={`my-4 my-nd-0 ${addressList.length === 1 ? "col-md-8 text-center" : addressList.length === 2 ? "col-md-6" : addressList.length === 3 ? "col-md-4" : "col-md-3"}`}
                     
                   > */}
+
                   <div className="col-md-12 col-lg-8">
                     <div className="row">
                       {addressList?.map((item, index) => (
@@ -360,6 +324,9 @@ const Contact = () => {
                           </div>
                         </div>
                       ))}
+                      {addressList.length === 0 && (
+                        <p className="text-center">No addresses found</p>
+                      )}
                     </div>
                   </div>
 

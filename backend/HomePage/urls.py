@@ -17,7 +17,6 @@ urlpatterns = [
     path('updateIntroindex/', UpdateIntorIndex.as_view(), name="update_intro_index"),
     path('createClientLogo/', ClientLogoAPIView.as_view(), name="create_get_ClientLogo"),
     path('updateClientLogo/<pk>/', ClientLogoUpdateAndDeleteView.as_view(), name='retrieve_update_delete_ClientLogo'),
-    path('getPaginatedClientLogos/', ClientLogoImagesView.as_view(), name="get_client_ClientLogo"),
     path('getAllClientLogos/', AllClientLogoImagesView.as_view(), name="get_client_ClientLogo"),
     path('searchClientLogos/<query>/', ClientLogoSearchAPIView.as_view(), name="get_client_logo_search_result"),
     path('updateindex/', UpdateClientIndex.as_view(), name="update_index"),
