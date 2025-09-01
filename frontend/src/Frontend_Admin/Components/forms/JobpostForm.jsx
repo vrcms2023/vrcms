@@ -1,39 +1,36 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
 import RichTextEditor from "../../../Frontend_Views/Components/RichTextEditor";
-import { InputField, SelectField } from "./FormFields";
+import { InputField, InputFields, RichTextInputEditor_V2, SelectField } from "./FormFields";
 import { getUserName } from "../../../util/ulrUtil";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { toast } from "react-toastify";
 import moment from "moment";
-import {
-  generateExperienceOptions,
-  generateOptionLength,
-} from "../../../util/commonUtil";
+import { generateExperienceOptions, generateOptionLength } from "../../../util/commonUtil";
 import Button from "../../../Common/Button";
 import { fieldValidation } from "../../../util/validationUtil";
 
-const JobPost = ({
-  editHandler,
-  componentType,
-  type,
-  editPost,
-  popupTitle,
-}) => {
+const JobPost = ({ editHandler, componentType, type, editPost, popupTitle }) => {
   const [editorState, setEditorState] = useState("");
 
   const [userName, setUserName] = useState(getUserName());
   const {
+    control,
     register,
     reset,
     handleSubmit,
+    clearErrors,
     formState: { errors },
   } = useForm({
     defaultValues: useMemo(() => {
       return editPost;
     }, [editPost]),
   });
+
+  const handleChange = (fieldName) => {
+    clearErrors(fieldName);
+  };
 
   const closeHandler = () => {
     editHandler(componentType, false);
@@ -47,13 +44,9 @@ const JobPost = ({
   const onSubmit = async (data) => {
     let response = "";
     try {
-      data["description"] = editorState;
       if (data.id) {
         data["updated_by"] = userName;
-        response = await axiosServiceApi.put(
-          `/careers/updateCareer/${data.id}/`,
-          data
-        );
+        response = await axiosServiceApi.put(`/careers/updateCareer/${data.id}/`, data);
       } else {
         data["created_by"] = userName;
         response = await axiosServiceApi.post(`/careers/createCareer/`, data);
@@ -76,11 +69,7 @@ const JobPost = ({
 
   return (
     <>
-      <EditAdminPopupHeader
-        closeHandler={closeHandler}
-        title={"Career"}
-        type={type}
-      />
+      <EditAdminPopupHeader closeHandler={closeHandler} title={"Career"} type={type} />
       {/* <hr className="m-0" /> */}
       <div className="container">
         <div className="row p-0">
@@ -88,33 +77,27 @@ const JobPost = ({
             <form className="mb-md-0" onSubmit={handleSubmit(onSubmit)}>
               <div className="row">
                 <div className="col-md-6">
-                   <InputField
-                      label="Title"
-                      fieldName="job_title"
-                      register={register}
-                      cssClass="requiredField"
-                      validationObject={fieldValidation.job_title}
-                      error={errors?.job_title?.message}
-                      isRequired={true}
-                    />
+                  <InputFields
+                    label="Title test"
+                    fieldName="job_title"
+                    register={register}
+                    cssClass="requiredField"
+                    validationObject={fieldValidation.job_title}
+                    error={errors?.job_title?.message}
+                    isRequired={true}
+                    onChange={() => handleChange("job_title")}
+                  />
                 </div>
                 <div className="col-md-6">
-                  <InputField
-                    label="Company name"
-                    fieldName="company_name"
-                    register={register}
-                  />
+                  <InputFields label="Company name" fieldName="company_name" register={register} />
                 </div>
 
                 <div className="col-md-6">
-                  <InputField
-                    label="Location"
-                    fieldName="job_location"
-                    register={register}
-                  />
+                  <InputFields label="Location" fieldName="job_location" register={register} />
                 </div>
                 <div className="col-md-6">
-                  <SelectField
+                  <InputFields
+                    type="dropdown"
                     label="From Experience"
                     fieldName="experience_from"
                     register={register}
@@ -123,7 +106,8 @@ const JobPost = ({
                 </div>
 
                 <div className="col-md-6">
-                  <SelectField
+                  <InputFields
+                    type="dropdown"
                     label="To Experience"
                     fieldName="experience_to"
                     register={register}
@@ -131,15 +115,12 @@ const JobPost = ({
                   />
                 </div>
                 <div className="col-md-6">
-                  <InputField
-                    label="Education"
-                    fieldName="education"
-                    register={register}
-                  />
+                  <InputFields label="Education" fieldName="education" register={register} />
                 </div>
 
                 <div className="col-md-6">
-                  <SelectField
+                  <InputFields
+                    type="dropdown"
                     label="Openings"
                     fieldName="openings"
                     register={register}
@@ -147,30 +128,23 @@ const JobPost = ({
                   />
                 </div>
                 <div className="col-md-6">
-                  <InputField
-                    label="Package"
-                    fieldName="package"
+                  <InputFields label="Package" fieldName="package" register={register} />
+                </div>
+
+                <div className="col-md-6">
+                  <InputFields label="Skills" fieldName="skills" register={register} />
+                </div>
+                <div className="col-md-6">
+                  <InputFields
+                    label="No of Vacancies"
+                    fieldName="no_of_application"
                     register={register}
                   />
                 </div>
 
                 <div className="col-md-6">
-                  <InputField
-                    label="Skills"
-                    fieldName="skills"
-                    register={register}
-                  />
-                </div>
-                <div className="col-md-6">
-                    <InputField
-                        label="No of Vacancies"
-                        fieldName="no_of_application"
-                        register={register}
-                      />
-                </div>
-
-                <div className="col-md-6">
-                  <SelectField
+                  <InputFields
+                    type="dropdown"
                     label="Employment Type"
                     fieldName="employment_Type"
                     register={register}
@@ -178,15 +152,11 @@ const JobPost = ({
                   />
                 </div>
                 <div className="col-md-6">
-                  <InputField
-                    label="Mode of work"
-                    fieldName="mode_of_work"
-                    register={register}
-                  />
+                  <InputFields label="Mode of work" fieldName="mode_of_work" register={register} />
                 </div>
 
                 <div className="col-md-6">
-                  <InputField
+                  <InputFields
                     label="About company"
                     fieldName="about_company"
                     register={register}
@@ -195,7 +165,7 @@ const JobPost = ({
                   />
                 </div>
                 <div className="col-md-6">
-                  <InputField
+                  <InputFields
                     label="ContactEmail"
                     fieldName="contactEmail"
                     type="email"
@@ -203,19 +173,12 @@ const JobPost = ({
                   />
                 </div>
 
-                <div className="col-md-6">
-
-                </div>
-                <div className="col-md-6">
-                  
-                </div>
+                <div className="col-md-6"></div>
+                <div className="col-md-6"></div>
               </div>
 
               <div className="mb-2 row">
-                <label
-                  htmlFor=""
-                  className="col-sm-3 col-form-label"
-                >
+                <label htmlFor="" className="col-sm-3 col-form-label">
                   Posted On
                 </label>
 
@@ -230,19 +193,15 @@ const JobPost = ({
               </div>
 
               <div className="row">
-                <label
-                  htmlFor=""
-                  className="col-form-label"
-                >
+                <label htmlFor="" className="col-form-label">
                   Description
                 </label>
                 <div className="">
-                  <RichTextEditor
-                    description="description"
-                    initialText={
-                      editPost?.description ? editPost?.description : ""
-                    }
-                    RichEditorState={setEditorState}
+                  <RichTextInputEditor_V2
+                    label={"Description"}
+                    Controller={Controller}
+                    name="description"
+                    control={control}
                   />
                 </div>
               </div>
@@ -250,10 +209,7 @@ const JobPost = ({
               <div className="row mt-3">
                 <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-2">
                   {!editPost?.id ? (
-                    <button
-                      className="btn btn-outline "
-                      onClick={resetForm}
-                    >
+                    <button className="btn btn-outline " onClick={resetForm}>
                       Clear
                     </button>
                   ) : (

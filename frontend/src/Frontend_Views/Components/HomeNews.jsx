@@ -229,6 +229,7 @@ const HomeNews = ({
             editHandler={editHandler}
             componentType="news"
             parentEditObject={editNews}
+            onPageLoadServiceCall={editNews ? false : true}
             popupTitle={"Edit News"}
             imageGetURL="appNews/createAppNews/"
             imagePostURL="appNews/createAppNews/"

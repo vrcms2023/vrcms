@@ -5,9 +5,12 @@ from .models import *
 
 
 class AboutUSSerializer(serializers.ModelSerializer):
-     class Meta:
-        model = Aboutus
-        fields = '__all__'
-     
-     def remove_fields(self, fields_to_exclude=None):
-         return exclude_fields(self, fields_to_exclude)
+   created_by = serializers.CharField(source="created_by.email", read_only=True)
+   updated_by = serializers.CharField(source="updated_by.email", read_only=True)
+
+   class Meta:
+       model = Aboutus
+       fields = '__all__'
+       read_only_fields = ("id", "created_by", "updated_by", "created_at", "updated_at")
+
+

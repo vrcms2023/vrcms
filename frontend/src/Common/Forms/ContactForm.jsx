@@ -40,14 +40,8 @@ const ContactForm = ({ categoryId }) => {
   return (
     <>
       <small>SEND US EMAIL</small>
-      <Title
-        title="Feel free to write"
-        cssClass="fs-4 mb-3 formTitle"
-      />
-      <form
-        className="my-0 mx-auto contactForm"
-        onSubmit={handleSubmit(onFormSubmit)}
-      >
+      <Title title="Feel free to write" cssClass="fs-4 mb-3 formTitle" />
+      <form className="my-0 mx-auto contactForm" onSubmit={handleSubmit(onFormSubmit)}>
         <InputFields
           label="Name"
           fieldName="firstName"
