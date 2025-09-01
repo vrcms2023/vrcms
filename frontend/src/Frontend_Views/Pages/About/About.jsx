@@ -39,6 +39,7 @@ import {
   updateShowHideComponent,
 } from "../../../redux/showHideComponent/showHideActions";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
+import AdminSingleRecordUpload from "../../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
 
 const About = () => {
   const editComponentObj = {
@@ -102,8 +103,8 @@ const About = () => {
   const getAboutUsList = async (id) => {
     try {
       let response = await axiosClientServiceApi.get(`aboutus/clientAboutus/`);
-      let data = sortByUpdatedDate(response.data.aboutus);
-      setAboutList(data);
+      //let data = sortByUpdatedDate(response.data);
+      setAboutList(response.data);
     } catch (error) {
       console.log("Unable to get the intro");
     }
@@ -233,28 +234,25 @@ const About = () => {
               </div>
             )}
           </div>
-          {componentEdit.editSection || componentEdit.addSection ? (
-            <div className={`adminEditTestmonial selected `}>
-              <AddEditAdminNews
-                editHandler={editHandler}
-                category="about"
-                popupTitle="About"
-                editCarousel={editCarousel}
-                setEditCarousel={setEditCarousel}
-                componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
-                imageGetURL="aboutus/clientAboutus/"
-                imagePostURL="aboutus/createAboutus/"
-                imageUpdateURL="aboutus/updateAboutus/"
-                imageDeleteURL="aboutus/updateAboutus/"
-                imageLabel="Upload Image"
-                showDescription={false}
-                showExtraFormFields={getAboutUSSectionFields()}
-                dimensions={imageDimensionsJson("aboutus")}
-              />
-            </div>
-          ) : (
-            ""
-          )}
+          {componentEdit.editSection ||
+            (componentEdit.addSection && (
+              <div className={`adminEditTestmonial selected `}>
+                <AdminSingleRecordUpload
+                  editHandler={editHandler}
+                  componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
+                  parentEditObject={editCarousel}
+                  onPageLoadServiceCall={componentEdit.editSection}
+                  popupTitle={"About"}
+                  imageGetURL="aboutus/clientAboutus/"
+                  imagePostURL="aboutus/createAboutus/"
+                  imageUpdateURL="aboutus/updateAboutus/"
+                  imageDeleteURL="aboutus/updateAboutus/"
+                  imageLabel="Upload Image"
+                  showExtraFormFields={getAboutUSSectionFields()}
+                  dimensions={imageDimensionsJson("aboutus")}
+                />
+              </div>
+            ))}
 
           <div className="aboutPage">
             {aboutList.length > 0 ? (
@@ -295,24 +293,15 @@ const About = () => {
                     ) : (
                       ""
                     )}
-                    {/* <p>{moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}</p> */}
+
                     <RichTextView
                       data={item?.aboutus_description}
                       className={""}
                       showMorelink={false}
                     />
-                    {/* <div
-                      dangerouslySetInnerHTML={{
-                        __html: item.aboutus_description,
-                      }}
-                    /> */}
                   </div>
 
                   <div className="col-lg-5 p-4 p-md-0 d-flex justify-content-center align-items-start flex-column rightColumn">
-                    {/* <Title
-                          title={"OUR WORK LOCATIONS"}
-                          cssClass="fs-5 my-5 title"
-                        /> */}
                     <img
                       src={getImagePath(item.path)}
                       alt={item.alternitivetext}
