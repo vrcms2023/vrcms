@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import EditAdminPopupHeader from "../../EditAdminPopupHeader";
 import { toast } from "react-toastify";
 
@@ -6,14 +6,15 @@ import { axiosFileUploadServiceApi } from "../../../../util/axiosUtil";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../../Common/DeleteDialog";
 import ImageUploadForm from "../../V2/ImageUploadForm";
+import { set } from "lodash";
 
 const AdminSingleRecordUpload = ({
   editHandler,
   componentType,
   popupTitle,
-  pageType,
   showExtraFormFields,
   dimensions,
+  parentEditObject,
   imageLabel = "Upload Image",
   imagePostURL = "banners/createBanner/",
   imageGetURL = "banners/by-page-and-category/",
@@ -22,10 +23,8 @@ const AdminSingleRecordUpload = ({
   validTypes = "image/png,image/jpeg",
   isclosePopup = true,
   sideDeck,
-  category = { category },
 }) => {
   const [newObject, setNewObject] = useState({});
-  const [objectList, setCurrentObjectList] = useState([]);
   const [editObject, setEditObject] = useState({});
 
   const closeHandler = () => {
@@ -34,22 +33,26 @@ const AdminSingleRecordUpload = ({
   };
 
   useEffect(() => {
-    const getBannerData = async () => {
+    const getRecordData = async () => {
       try {
-        const response = await axiosFileUploadServiceApi.get(
-          `${imageGetURL}${pageType}/category/${category}/`
-        );
+        const response = await axiosFileUploadServiceApi.get(imageGetURL);
         if (response?.status === 200 && response.data?.length > 0) {
-          setCurrentObjectList(response.data[0]);
           setEditObject(response.data[0]);
         }
       } catch (e) {
         console.log("unable to access ulr because of server is down");
       }
     };
+    if (!parentEditObject) {
+      getRecordData();
+    }
+  }, [newObject, parentEditObject]);
 
-    getBannerData();
-  }, [newObject]);
+  useEffect(() => {
+    if (parentEditObject) {
+      setEditObject(parentEditObject);
+    }
+  }, [parentEditObject]);
 
   /**
    *
@@ -92,30 +95,6 @@ const AdminSingleRecordUpload = ({
         <div className="row py-0">
           <div className="col-md-12">
             <div className="container px-0 px-md-auto">
-              {/* <FileUpload
-                title={imageLabel}
-                project={project}
-                updated_by={userName}
-                category={category}
-                gallerysetState={setImgGallery}
-                maxFiles={1}
-                galleryState={imgGallery}
-                validTypes={validTypes}
-                descriptionTitle="Caption"
-                titleTitle="Title"
-                alternitivetextTitle="SEO title"
-                saveState={setSaveState}
-                showDescription={showDescription}
-                buttonLable="Save"
-                editImage={editCarousel}
-                setEditCarousel={setEditCarousel}
-                imagePostURL={imagePostURL}
-                imageUpdateURL={imageUpdateURL}
-                extraFormParamas={extraFormParamas}
-                showExtraFormFields={showExtraFormFields}
-                dimensions={dimensions}
-                closeHandler={closeHandler}
-              /> */}
               <ImageUploadForm
                 title={imageLabel}
                 newObjectsetState={setNewObject}
@@ -128,7 +107,7 @@ const AdminSingleRecordUpload = ({
                 showExtraFormFields={showExtraFormFields}
                 dimensions={dimensions}
                 closeHandler={closeHandler}
-                scrollEnable={objectList.lengh > 0 ? true : false}
+                scrollEnable={editObject.lengh > 0 ? true : false}
                 isclosePopup={isclosePopup}
                 sideDeck={sideDeck}
               />

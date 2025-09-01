@@ -87,7 +87,7 @@ const ImagesGallery = () => {
                     imageLabel="Upload Image"
                     showExtraFormFields={getImageGalleryFields("imageGallery")}
                     dimensions={imageDimensionsJson("imageGallery")}
-                    isclosePopup={false}
+                    sideDeck="imagepopup"
                   />
                 </div>
               )}

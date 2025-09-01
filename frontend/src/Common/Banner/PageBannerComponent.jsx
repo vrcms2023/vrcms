@@ -54,9 +54,10 @@ const PageBannerComponent = ({
                   editHandler={editHandler}
                   componentType={componentType}
                   popupTitle={popupTitle}
-                  pageType={`${pageType}-${componentType}`}
-                  showDescription={false}
-                  category={category}
+                  imagePostURL="banners/createBanner/"
+                  imageGetURL={`banners/by-page-and-category/${pageType}-${componentType}/category/${category}/`}
+                  imageUpdateURL="banners/updateBanner/"
+                  imageDeleteURL="banners/deleteBanner/"
                   showExtraFormFields={getFormDynamicFields(
                     `${pageType}-${componentType}`,
                     category

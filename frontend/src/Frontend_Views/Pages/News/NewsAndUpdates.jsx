@@ -41,6 +41,7 @@ import BriefIntroFrontend from "../../../Common/BriefIntro";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 import BriefIntroAdmin from "../../../Frontend_Admin/Components/BriefIntro";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
+import AdminSingleRecordUpload from "../../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
 
 const NewsAndUpdates = () => {
   const editComponentObj = {
@@ -250,7 +251,18 @@ const NewsAndUpdates = () => {
         <div className="row mb-5">
           {componentEdit.addNews && (
             <div className={`adminEditTestmonial selected`}>
-              <AddEditAdminNews
+              <AdminSingleRecordUpload
+                editHandler={editHandler}
+                componentType="addNews"
+                popupTitle={"Add News"}
+                imageGetURL="appNews/createAppNews/"
+                imagePostURL="appNews/createAppNews/"
+                imageUpdateURL="appNews/updateAppNews/"
+                imageDeleteURL="appNews/updateAppNews/"
+                showExtraFormFields={getNewslFields()}
+                dimensions={imageDimensionsJson("addNews")}
+              />
+              {/* <AddEditAdminNews
                 editHandler={editHandler}
                 setEditCarousel={setEditCarousel}
                 componentType="addNews"
@@ -263,7 +275,7 @@ const NewsAndUpdates = () => {
                 showDescription={false}
                 showExtraFormFields={getNewslFields("addNews")}
                 dimensions={imageDimensionsJson("addNews")}
-              />
+              /> */}
             </div>
           )}
 
@@ -272,8 +284,7 @@ const NewsAndUpdates = () => {
             news={news}
             setNews={setNews}
             setResponseData={setResponseData}
-            setPageloadResults={setPageloadResults}
-            pagetype={pageType}
+            pageType={pageType}
             searchQuery={searchQuery}
             setNewsEditState={setEditNews}
           />

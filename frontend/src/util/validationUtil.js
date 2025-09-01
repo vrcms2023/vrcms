@@ -112,6 +112,15 @@ export const fieldValidation = {
       message: "Please enter valid URL format",
     },
   },
+  title: {
+    required: "Please enter  Title",
+  },
+  counters_title: {
+    required: "Please enter counters Title",
+  },
+  counters_number: {
+    required: "Please enter counters Number",
+  },
 };
 
 const getValues = (formData, fieldName) => {

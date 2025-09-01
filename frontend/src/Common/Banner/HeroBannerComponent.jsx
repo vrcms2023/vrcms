@@ -17,6 +17,7 @@ const HeroBannerComponent = ({
   componentType,
   popupTitle,
   showHideComponentName,
+  showHideComponentTitle,
 }) => {
   return (
     <div className="page-hero-banner">
@@ -30,7 +31,7 @@ const HeroBannerComponent = ({
         {isAdmin && hasPermission && (
           <ShowHideToggle
             showhideStatus={showHideCompList?.banner?.visibility}
-            title={"Hero Banner"}
+            title={showHideComponentTitle}
             componentName={showHideComponentName}
             showHideHandler={showHideHandler}
             id={showHideCompList?.banner?.id}
@@ -58,9 +59,10 @@ const HeroBannerComponent = ({
                   editHandler={editHandler}
                   componentType="banner"
                   popupTitle={popupTitle}
-                  pageType={`${pageType}-${componentType}`}
-                  showDescription={false}
-                  category={category}
+                  imagePostURL="banners/createBanner/"
+                  imageGetURL={`banners/by-page-and-category/${pageType}-${componentType}/category/${category}/`}
+                  imageUpdateURL="banners/updateBanner/"
+                  imageDeleteURL="banners/deleteBanner/"
                   showExtraFormFields={getFormDynamicFields(
                     `${pageType}-${componentType}`,
                     category

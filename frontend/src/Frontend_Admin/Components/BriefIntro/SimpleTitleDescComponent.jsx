@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import Title from "../../../Common/Title";
 import { axiosClientServiceApi } from "../../../util/axiosUtil";
 import { Link } from "react-router-dom";
+import RichTextView from "../../../Common/RichTextView";
 
 export const SimpleTitleDescComponent = ({
   componentEdit,
@@ -29,7 +30,7 @@ export const SimpleTitleDescComponent = ({
   return (
     <>
       <Title title={formvalues?.intro_title} cssClass="fs-4 fw-bold text-left" />
-      <p className="mt-2 mb-3">{formvalues?.intro_desc}</p>
+      <RichTextView data={formvalues?.intro_desc} showMorelink={false} />
       <Link to={formvalues?.intro_morelink} className="moreLink">
         more..
       </Link>

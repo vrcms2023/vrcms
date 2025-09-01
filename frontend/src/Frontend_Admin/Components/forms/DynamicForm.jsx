@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import Error from "../Error";
-import { InputFields, RichTextInputEditor } from "./FormFields";
+import { InputFields, RichTextInputEditor, RichTextInputEditor_V2 } from "./FormFields";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
 import Button from "../../../Common/Button";
 import { axiosServiceApi } from "../../../util/axiosUtil";
@@ -28,6 +28,7 @@ export default function DynamicForm({
   const [error, setError] = useState(false);
   const [formValues, setFormValues] = useState("");
   const {
+    control,
     register,
     reset,
     handleSubmit,
@@ -52,10 +53,7 @@ export default function DynamicForm({
 
     try {
       if (data?.id) {
-        response = await axiosServiceApi.put(
-          `${formUpdateURL}${data.pageType}/`,
-          formData
-        );
+        response = await axiosServiceApi.put(`${formUpdateURL}${data.pageType}/`, formData);
       } else {
         response = await axiosServiceApi.post(formPostURL, formData);
       }
@@ -68,27 +66,23 @@ export default function DynamicForm({
 
   return (
     <>
-      <EditAdminPopupHeader
-        closeHandler={closeHandler}
-        title={componentTitle}
-      />
+      <EditAdminPopupHeader closeHandler={closeHandler} title={componentTitle} />
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            {error && (
-              <div className="fw-bold">{error && <Error>{error}</Error>}</div>
-            )}
+            {error && <div className="fw-bold">{error && <Error>{error}</Error>}</div>}
             <form onSubmit={handleSubmit(saveForm)}>
               {Object.keys(dynamicFormFields).map((e, index) => {
                 const { label, type, fieldName, value } = dynamicFormFields[e];
 
                 if (type == "richText") {
                   return (
-                    <RichTextInputEditor
+                    <RichTextInputEditor_V2
                       key={index}
                       label={label}
-                      editorSetState={setEditorState}
-                      initialText={""}
+                      Controller={Controller}
+                      name={fieldName}
+                      control={control}
                     />
                   );
                 } else {

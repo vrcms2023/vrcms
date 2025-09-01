@@ -1,11 +1,11 @@
 from django.db import models
 import uuid
 import os
-from common.BaseModel import ImageModel, BaseModel
+from common.BaseModel import ImageModel, BaseModel, FileUpload
 
 # Create your models here.
 
-class Testimonials(ImageModel): 
+class Testimonials(FileUpload): 
     testimonial_title =         models.CharField(max_length=100, null=True, blank=True)
     testimonial_sub_title =         models.CharField(max_length=100, null=True, blank=True)
     testimonial_description =         models.CharField(max_length=1000, null=True, blank=True)
@@ -14,6 +14,7 @@ class Testimonials(ImageModel):
 
     class Meta:
             db_table = "testimonials"
+            ordering = ['-created_at']
 
     def __str__(self):
             return f"{self.testimonial_title or 'No Title'}"

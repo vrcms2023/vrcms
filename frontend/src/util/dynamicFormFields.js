@@ -543,11 +543,11 @@ export const getTitleAndDescriptionFields = (pageType) => {
       value: pageType ? pageType : "",
       fieldName: "pageType",
     },
-    pageType: {
+    intro_position: {
       label: "intro_position",
       readonly: true,
       type: "hidden",
-      value: "",
+      value: "0",
       fieldName: "intro_position",
     },
   };
