@@ -4,12 +4,10 @@ import Error from "../Error";
 import { InputFields } from "./FormFields";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
 import Button from "../../../Common/Button";
-import {
-  axiosClientServiceApi,
-  axiosServiceApi,
-} from "../../../util/axiosUtil";
+import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { fieldValidation } from "../../../util/validationUtil";
 
 export default function CounterForm({
   editHandler,
@@ -32,6 +30,7 @@ export default function CounterForm({
     control,
     handleSubmit,
     setValue,
+    clearErrors,
     reset,
     watch,
     formState: { errors },
@@ -56,10 +55,7 @@ export default function CounterForm({
 
     try {
       if (data?.id) {
-        response = await axiosServiceApi.put(
-          `${formUpdateURL}${data.id}/`,
-          payload
-        );
+        response = await axiosServiceApi.put(`${formUpdateURL}${data.id}/`, payload);
       } else {
         response = await axiosServiceApi.post(formPostURL, payload);
       }
@@ -87,49 +83,42 @@ export default function CounterForm({
     }
   }, [componentState, getDataAPIURL]);
 
+  const handleChange = (fieldName) => {
+    clearErrors(fieldName);
+  };
+
   return (
     <>
-      <EditAdminPopupHeader
-        closeHandler={closeHandler}
-        title={componentTitle}
-      />
+      <EditAdminPopupHeader closeHandler={closeHandler} title={componentTitle} />
       {/* <hr /> */}
       <div className="container mt-3 p-0">
         <div className="row">
           <div className="col-md-12">
-            {error && (
-              <div className="fw-bold">{error && <Error>{error}</Error>}</div>
-            )}
+            {error && <div className="fw-bold">{error && <Error>{error}</Error>}</div>}
             <form onSubmit={handleSubmit(saveForm)}>
               <div>
-                
-
-                {/* Title input */}
                 <InputFields
                   label={"Title"}
                   type={"text"}
-                  error={errors?.["title"]?.message}
                   fieldName={"title"}
                   register={register}
-                  validationObject={{ required: "Please enter Title" }}
+                  isRequired={true}
+                  validationObject={fieldValidation.title}
+                  error={errors?.title?.message}
+                  onChange={() => handleChange("title")}
                 />
 
                 {counters.length < 5 && (
                   <div className="text-end d-flex justify-content-end mt-3">
-                      <Link
-                        className="btn btn-primary"
-                        onClick={() =>
-                          append({ label: "", counter: 0, specialChar: "" })
-                        }
-                      >
-                        Add
-                        {/* <i className="fa fa-plus mx-2" aria-hidden="true"></i> */}
-                      </Link>
-                      {/* <EditIcon editHandler={() => editHandler("menu", true)} /> */}
+                    <Link
+                      className="btn btn-primary"
+                      onClick={() => append({ label: "", counter: 0, specialChar: "" })}
+                    >
+                      Add{" "}
+                    </Link>
                   </div>
                 )}
 
-                {/* Counter objects */}
                 {/* Counter objects */}
                 {fields.map((item, index) => (
                   <div key={index} className="row mt-2">
@@ -138,30 +127,25 @@ export default function CounterForm({
                         key={index}
                         label={"Text"}
                         type={"text"}
-                        error={errors?.[`counters.${index}.label`]?.message}
+                        isRequired={true}
+                        error={errors?.counters?.[index]?.label?.message}
                         fieldName={`counters.${index}.label`}
                         register={register}
-                        validationObject={{
-                          required: "Please enter counters Title",
-                        }}
+                        validationObject={fieldValidation.counters_title}
+                        onChange={() => handleChange(`counters.${index}.label`)}
                       />
-                      {errors?.[`counters.${index}.label`]?.message && (
-                        <p className="text-red-600">
-                          {errors[`counters.${index}.label`]?.message}
-                        </p>
-                      )}
                     </div>
                     <div className="col-md-2">
                       <InputFields
                         key={index}
                         label={"Number"}
                         type={"number"}
-                        error={errors?.[`counters.${index}.label`]?.counter}
+                        isRequired={true}
+                        error={errors?.counters?.[index]?.counter?.message}
                         fieldName={`counters.${index}.counter`}
                         register={register}
-                        validationObject={{
-                          required: "Please enter counters Title",
-                        }}
+                        onChange={() => handleChange(`counters.${index}.counter`)}
+                        validationObject={fieldValidation.counters_number}
                       />
                     </div>
                     <div className="col-md-2">
@@ -175,11 +159,7 @@ export default function CounterForm({
                     </div>
 
                     <div className="col-md-1 d-flex justify-content-center align-items-end">
-                      <Link
-                        to=""
-                        className=""
-                        onClick={() => remove(index)}
-                      >
+                      <Link to="" className="" onClick={() => remove(index)}>
                         <i
                           className="fa fa-trash-o fs-5 text-danger"
                           aria-hidden="true"

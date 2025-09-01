@@ -40,6 +40,8 @@ class ImageGallery(Gallery):
     def __str__(self):
         return f"{self.title or 'No Name'}"
     
+
+    
 @receiver(post_delete, sender=ImageGallery)
 @receiver(post_delete, sender=VideoGallery)
 def delete_file_on_imageupload_delete(sender, instance, **kwargs):

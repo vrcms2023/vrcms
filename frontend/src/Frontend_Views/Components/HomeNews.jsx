@@ -31,13 +31,14 @@ import {
 } from "../../util/commonUtil";
 import moment from "moment";
 import RichTextView from "../../Common/RichTextView";
+import AdminSingleRecordUpload from "../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
 
 const HomeNews = ({
   addNewsState,
   news,
   setNews,
   setResponseData,
-  pagetype,
+  pageType,
   searchQuery,
   setNewsEditState,
 }) => {
@@ -61,24 +62,17 @@ const HomeNews = ({
     setEditNews(item);
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setShow(!show);
-    setNewsEditState(!value);
+    // setNewsEditState(!value);
     document.body.style.overflow = "hidden";
   };
 
   useEffect(() => {
     const getNews = async () => {
       try {
-        const response = await axiosClientServiceApi.get(
-          `/appNews/clientAppNews/`
-        );
-        // console.log(response.data.results, "News Component");
-        if (response?.status === 200) {
-          //const data = sortCreatedDateByDesc(response.data.appNews);
+        const response = await axiosClientServiceApi.get(`/appNews/clientAppNews/`);
 
-          //setPageloadResults(true);
-          //const _list = sortByFieldName(response.data.results, "news_position");
-          //const data = pagetype === "home" ? _list.slice(0, 4) : _list;
-          if (pagetype === "home") {
+        if (response?.status === 200) {
+          if (pageType === "home") {
             setNews(response?.data);
           } else {
             setResponseData(response?.data);
@@ -91,7 +85,7 @@ const HomeNews = ({
     if ((componentEdit.news || !addNewsState) && !searchQuery) {
       getNews();
     }
-  }, [componentEdit.news, addNewsState, pagetype, searchQuery]);
+  }, [componentEdit.news, addNewsState, pageType, searchQuery]);
 
   /**
    *
@@ -99,9 +93,7 @@ const HomeNews = ({
    */
   const DeleteNews = (id, name) => {
     const deleteImageByID = async () => {
-      const response = await axiosFileUploadServiceApi.delete(
-        `appNews/updateAppNews/${id}/`
-      );
+      const response = await axiosFileUploadServiceApi.delete(`appNews/updateAppNews/${id}/`);
       if (response.status === 204) {
         const list = news.filter((item) => item.id !== id);
         setNews(list);
@@ -151,10 +143,7 @@ const HomeNews = ({
 
   const updateObjectsIndex = async (data) => {
     try {
-      let response = await axiosServiceApi.put(
-        `/appNews/updateNewsIndex/`,
-        data
-      );
+      let response = await axiosServiceApi.put(`/appNews/updateNewsIndex/`, data);
       if (response?.data?.appNews) {
         return response.data.appNews;
       }
@@ -204,9 +193,7 @@ const HomeNews = ({
                   {isAdmin && hasPermission ? (
                     <>
                       {location.pathname === "/news" ? (
-                        <p className="text-center fs-6">
-                          Please add news items
-                        </p>
+                        <p className="text-center fs-6">Please add news items</p>
                       ) : (
                         <>
                           <p className="text-center fs-6">
@@ -238,18 +225,15 @@ const HomeNews = ({
       </DragDropContext>
       {componentEdit.news && (
         <div className={`adminEditTestmonial  selected`}>
-          <AddEditAdminNews
+          <AdminSingleRecordUpload
             editHandler={editHandler}
-            editCarousel={editNews}
-            setEditCarousel={setEditNews}
             componentType="news"
-            popupTitle="Edit News"
+            parentEditObject={editNews}
+            popupTitle={"Edit News"}
             imageGetURL="appNews/createAppNews/"
             imagePostURL="appNews/createAppNews/"
             imageUpdateURL="appNews/updateAppNews/"
             imageDeleteURL="appNews/updateAppNews/"
-            imageLabel="Add News Image"
-            showDescription={false}
             showExtraFormFields={getNewslFields()}
           />
         </div>
@@ -273,11 +257,7 @@ const HomeNews = ({
                 alt={obj.news_title}
               />
               {obj.news_description ? (
-                <RichTextView
-                  data={obj.news_description}
-                  className={""}
-                  showMorelink={false}
-                />
+                <RichTextView data={obj.news_description} className={""} showMorelink={false} />
               ) : (
                 // <div
                 //   dangerouslySetInnerHTML={{ __html: obj.news_description }}
@@ -314,10 +294,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
           {...provided.draggableProps}
         >
           {/* <div className="col-md-12 col-lg-12 mb-4 mb-lg-0 border border-1" key={item.id}> */}
-          <div
-            className={`col-md-12 col-lg-12 ${isAdmin ? "px-3" : ""}`}
-            key={item.id}
-          >
+          <div className={`col-md-12 col-lg-12 ${isAdmin ? "px-3" : ""}`} key={item.id}>
             <NewsStyled>
               <div
                 className={`card homeNews ${isAdmin ? "border-0 adminView mb-0" : ""}`}
@@ -350,11 +327,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                       className={`${isAdmin ? "px-3 d-flex align-items-center gap-3" : "cardInfo p-3"}`}
                     >
                       <Title
-                        title={
-                          item.news_title
-                            ? item.news_title
-                            : "Update news Title"
-                        }
+                        title={item.news_title ? item.news_title : "Update news Title"}
                         cssClass={`lineClamp lc2 fs-6 ${isAdmin && "border-0"}`}
                         // mainTitleClassess={` fw-medium lh-sm lineClamp lc1 ${isAdmin ? "fs-6" : "fs-5"}`}
                         subTitleClassess=""
@@ -366,9 +339,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                         </small>
                       )}
                       {!isAdmin && (
-                        <div
-                          className={`card-text  ${isAdmin ? "mb-0" : "mb-2"}`}
-                        >
+                        <div className={`card-text  ${isAdmin ? "mb-0" : "mb-2"}`}>
                           {item.news_description ? (
                             <RichTextView
                               data={item?.news_description}
@@ -386,10 +357,7 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                           )}
                         </div>
                       )}
-                      <Link
-                        className="moreLink"
-                        onClick={() => handleModel(item)}
-                      >
+                      <Link className="moreLink" onClick={() => handleModel(item)}>
                         More..
                       </Link>
                     </div>
@@ -398,26 +366,15 @@ const NewsItem = ({ item, index, handleModel, DeleteNews, editHandler }) => {
                     {isAdmin && hasPermission && (
                       <div className="d-flex justify-content-end gap-2">
                         {/* <EditIcon editHandler={() => editHandler("news", true, item)} editlabel="News" /> */}
-                        <Link
-                          onClick={() => editHandler("news", true, item)}
-                          className=" p-2"
-                        >
-                          <i
-                            className="fa fa-pencil fs-5 text-warning"
-                            aria-hidden="true"
-                          ></i>
+                        <Link onClick={() => editHandler("news", true, item)} className=" p-2">
+                          <i className="fa fa-pencil fs-5 text-warning" aria-hidden="true"></i>
                         </Link>
 
                         <Link
-                          onClick={(event) =>
-                            DeleteNews(item.id, item.news_title)
-                          }
+                          onClick={(event) => DeleteNews(item.id, item.news_title)}
                           className="p-2"
                         >
-                          <i
-                            className="fa fa-trash-o fs-5 text-danger"
-                            aria-hidden="true"
-                          ></i>
+                          <i className="fa fa-trash-o fs-5 text-danger" aria-hidden="true"></i>
                         </Link>
                       </div>
                     )}

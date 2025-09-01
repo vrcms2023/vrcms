@@ -94,7 +94,6 @@ const VideosGallery = () => {
                 dimensions={imageDimensionsJson("VideosGallery")}
                 validTypes={"video/quicktime,video/mp4,video/avi"}
                 sideDeck="videopopup"
-                isclosePopup={false}
               />
             </div>
           )}

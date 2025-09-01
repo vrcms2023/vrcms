@@ -1,0 +1,15 @@
+.ABriefAbout h3,
+.ABriefAbout .title {
+  font-size: 2.5rem;
+  border: 0px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ABriefAbout img {
+  object-fit: contain;
+}
+
+.ABriefAbout label {
+  color: #333 !important;
+}

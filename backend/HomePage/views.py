@@ -13,110 +13,50 @@ from common.CustomPaginationForImageGallery import CustomPaginationForImageGalle
 
 # Create your views here.
 
-class CarouselAPIView(generics.CreateAPIView):
-     permission_classes = [permissions.IsAuthenticated]
-     serializer_class = CarouselSerializer
-     queryset = Carousel.objects.all()
+class CarouselAPIView(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = CarouselSerializer
+    pagination_class = CustomPaginationForImageGallery
 
-     def get_object(self, category):
-        try:
-              return Carousel.objects.filter(
-                Q(category__icontains=category)
-            )
-        except (Carousel.DoesNotExist):
-            raise status.HTTP_400_BAD_REQUEST
-        
+    def get_queryset(self):       
+        category = self.kwargs.get("category")       
+        if category:
+            return Carousel.objects.filter(category=category).order_by('-created_at')                 
+        return Carousel.objects.none()  # prevent listing all without category
 
-     """
-     List all Carousel, or create a new Carousel.
-     """
-        
-     def get(self, request, type, format=None):
-        snippets = self.get_object(type)
-        #snippets = Carousel.objects.all()
-        serializer = CarouselSerializer(snippets, many=True)
-        return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
-        
-     def post(self, request,type, format=None):
-        requestObj = get_carousel_data_From_request_Object(request)
-        requestObj['created_by'] = request.data["created_by"]
-        serializer = CarouselSerializer(data=requestObj)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"carousel": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def create(self, request, *args, **kwargs):
+        # Save the new object
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        saved_instance = serializer.save(created_by=self.request.user, updated_by=self.request.user)
+       
+        return Response({"carousel":self.get_serializer(saved_instance).data}, status=status.HTTP_201_CREATED)
 
+class CarouselUpdateAndDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Carousel.objects.all()
+    serializer_class = CarouselSerializer
+    pagination_class = CustomPaginationForImageGallery
 
-class ServiceCarouselAPIView(generics.CreateAPIView):
-     permission_classes = [permissions.IsAuthenticated]
-     serializer_class = CarouselSerializer
-     queryset = Carousel.objects.all()
-
-     def get_object(self, category):
-        try:
-              return Carousel.objects.filter(
-                Q(category__icontains=category)
-            )
-        except (Carousel.DoesNotExist):
-            raise status.HTTP_400_BAD_REQUEST
-        
-
-     """
-     List all Carousel, or create a new Carousel.
-     """
-        
-     def get(self, request,category, format=None):
-        snippets = self.get_object(category)
-        #snippets = Carousel.objects.all()
-        serializer = CarouselSerializer(snippets, many=True)
-        return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
-        
-     def post(self, request, format=None):
-        requestObj = get_carousel_data_From_request_Object(request)
-        requestObj['created_by'] = request.data["created_by"]
-        serializer = CarouselSerializer(data=requestObj)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"carousel": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-class CarouselUpdateAndDeleteView(APIView):
     """
     Retrieve, update or delete a carousel instance.
     """
-    def get_object(self, pk):
-        try:
-            return Carousel.objects.get(pk=pk)
-        except Carousel.DoesNotExist:
-            raise Http404
+   
 
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = CarouselSerializer(snippet)
-        return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop("partial", False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        updated_instance = serializer.save(updated_by=self.request.user)
 
-    def patch(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        requestObj = get_carousel_data_From_request_Object(request)
-        requestObj['updated_by'] = request.data["updated_by"]
-        serializer = CarouselSerializer(snippet, data=requestObj)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        # Wrap updated object in paginated-like response
+        return Response({"carousel":self.get_serializer(updated_instance).data}, status=status.HTTP_200_OK)
 
 
 class UpdateCarouselIndex(APIView):
@@ -143,40 +83,27 @@ class UpdateCarouselIndex(APIView):
 
         serializer = CarouselSerializer(instances,  many=True)
         return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
-   
-class ClientCarouselView(generics.CreateAPIView):
+  
+class ClientCarouselViewByCategory(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
-    queryset = Carousel.objects.all()
     serializer_class = CarouselSerializer
-
-    """
-    List all carousel, or create a new carousel.
-    """
- 
-    def get(self, request,category, format=None):
-        snippets = Carousel.objects.all()
-        serializer = CarouselSerializer(snippets, many=True)
-        return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
-    
-class ClientCarouselViewByCategory(generics.CreateAPIView):
-    permission_classes = [permissions.AllowAny]
     queryset = Carousel.objects.all()
-    serializer_class = CarouselSerializer
+    pagination_class = CustomPaginationForImageGallery
 
     """
-    List all carousel, or create a new carousel.
+    List all carousels, optionally filter by category.
     """
-    def get_object(self, category):
-        try:
-              return Carousel.objects.filter(category=category)
-        except (Carousel.DoesNotExist):
-            raise status.HTTP_400_BAD_REQUEST
-        
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        category = self.kwargs.get("category")
+        if category:
+            queryset = queryset.filter(category=category)
+        return queryset
 
-    def get(self, request, category, format=None):
-        snippets = self.get_object(category)
-        serializer = CarouselSerializer(snippets, many=True)
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
         return Response({"carousel": serializer.data}, status=status.HTTP_200_OK)
 
 '''

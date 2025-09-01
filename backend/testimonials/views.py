@@ -10,90 +10,57 @@ from django.db.models import Q
 from common.CustomPagination import CustomPagination
 
 # Create your views here.
-    
-class CreateTestimonials(generics.CreateAPIView):
+
+class CreateTestimonials(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Testimonials.objects.all()
     serializer_class = TestimonialsSerializer
     pagination_class = CustomPagination
-
-    """
-    List all Testimonials, or create a new Testimonials.
-    """
-
-    def get(self, request, format=None):
-        snippets = Testimonials.objects.all()
-        results = get_custom_paginated_data(self, snippets)
-        if results is not None:
-            return results
-
-        serializer = TestimonialsSerializer(snippets, many=True)
-        return Response({"testimonial": serializer.data}, status=status.HTTP_200_OK)
+      
     
-    def post(self, request, format=None):
-        requestObj = get_testimonial_data_From_request_Object(request)
-        requestObj['created_by'] = request.data["created_by"]
-        serializer = TestimonialsSerializer(data=requestObj)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"testimonial": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def create(self, request, *args, **kwargs):
+        # Save the new object
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        saved_instance = serializer.save(created_by=self.request.user, updated_by=self.request.user)
+       
+        return Response({"ImageGallery":self.get_serializer(saved_instance).data}, status=status.HTTP_201_CREATED)
 
-
-class TestimonialsDetail(APIView):
+class TestimonialsUpdateAndDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Testimonials.objects.all()
+    serializer_class = TestimonialsSerializer
+    pagination_class = CustomPagination
     """
     Retrieve, update or delete a Testimonials instance.
     """
-    def get_object(self, pk):
-        try:
-            return Testimonials.objects.get(pk=pk)
-        except Testimonials.DoesNotExist:
-            raise Http404
+   
 
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = TestimonialsSerializer(snippet)
-        return Response({"testimonial": serializer.data}, status=status.HTTP_200_OK)
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop("partial", False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        updated_instance = serializer.save(updated_by=self.request.user)
 
-    def patch(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        requestObj = get_testimonial_data_From_request_Object(request)
-        requestObj['updated_by'] = request.data["updated_by"]
-        serializer = TestimonialsSerializer(snippet, data=requestObj)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"testimonial": serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
+        # Wrap updated object in paginated-like response
+        return Response({"testimonials":self.get_serializer(updated_instance).data}, status=status.HTTP_200_OK)
 
    
-class ClientTestimonials(generics.CreateAPIView):
+class ClientTestimonials(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = Testimonials.objects.all()
     serializer_class = TestimonialsSerializer
     pagination_class = CustomPagination
 
-    """
-    List all Testimonials, or create a new Testimonials.
-    """
+    def get_queryset(self):
+        return Testimonials.objects.all().order_by('-created_at')  # or 'id'
 
-    def get(self, request, format=None):
-        snippets = Testimonials.objects.all()
-        results = get_custom_paginated_data(self, snippets)
-        if results is not None:
-            return results
-
-        serializer = TestimonialsSerializer(snippets, many=True)
-        return Response({"testimonial": serializer.data}, status=status.HTTP_200_OK)
 
 class TestimonialsSearchAPIView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]

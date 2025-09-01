@@ -44,10 +44,21 @@ const Testimonials = ({ testimonis }) => {
         {!item.path ? (
           <i className="fa fa-user" aria-hidden="true"></i>
         ) : (
-          <img src={getImagePath(item.path)} className="rounded-circle my-4 testimonialImg shadow-lg" alt="User" />
+          <img
+            src={getImagePath(item.path)}
+            className="rounded-circle my-4 testimonialImg shadow-lg"
+            alt="User"
+          />
         )}
-        <Title title={item.testimonial_title} cssClass="mb-2 px-3 fs-3 fw-bold text-md-center title" />
-        <RichTextView data={item?.testimonial_description} showMorelink={false} className="w-75 m-auto mt-3 mb-5 px-3 px-md-5 fs-6" />
+        <Title
+          title={item.testimonial_title}
+          cssClass="mb-2 px-3 fs-3 fw-bold text-md-center title"
+        />
+        <RichTextView
+          data={item?.testimonial_description}
+          showMorelink={false}
+          className="w-75 m-auto mt-3 mb-5 px-3 px-md-5 fs-6"
+        />
 
         <div className="d-flex justify-content-center gap-5">
           <Link to="" onClick={() => setIndex(index + 1)}>

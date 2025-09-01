@@ -271,10 +271,7 @@ const Services = () => {
         )}
         {/* End of Add Service Page */}
 
-        <div
-          className={isAdmin && hasPermission && "container my-md-3 servicesPage"}
-          id="servicesPage"
-        >
+        <div className={"container my-md-3 servicesPage"} id="servicesPage">
           <div className="row">
             <div className={isAdmin && hasPermission ? "col-md-12" : "col-md-12"}>
               {isAdmin &&

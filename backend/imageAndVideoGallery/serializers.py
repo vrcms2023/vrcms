@@ -13,9 +13,13 @@ import numpy as np
 
 
 class VideoGallerySerializer(serializers.ModelSerializer):
+      created_by = serializers.CharField(source="created_by.email", read_only=True)
+      updated_by = serializers.CharField(source="updated_by.email", read_only=True)
+
       class Meta:
         model = VideoGallery
         fields = '__all__'
+        read_only_fields = ("id", "created_by", "updated_by", "created_at", "updated_at")
 
       
       # def validate(self, data):
@@ -95,9 +99,13 @@ class VideoGallerySerializer(serializers.ModelSerializer):
 
 
 class ImageGallerySerializer(serializers.ModelSerializer):
+      created_by = serializers.CharField(source="created_by.email", read_only=True)
+      updated_by = serializers.CharField(source="updated_by.email", read_only=True)
+
       class Meta:
         model = ImageGallery
         fields = '__all__'
+        read_only_fields = ("id", "created_by", "updated_by", "created_at", "updated_at")
 
       # def validate(self, data):
       #   if not data.get('path') and not data.get('image_WebURL'):

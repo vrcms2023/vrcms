@@ -30,6 +30,7 @@ import BriefIntroFrontend from "../BriefIntro";
 import BriefIntroAdmin from "../../Frontend_Admin/Components/BriefIntro";
 import ApplicationLogo from "../Logo/ApplicationLogo";
 import CopyToClipboard from "../CopyToClipboard";
+import BriefComponent from "../Brief/BriefComponent";
 
 const Footer = () => {
   const editComponentObj = {
@@ -146,45 +147,14 @@ const Footer = () => {
             </div>
             <div className="col-md-8 col-lg-9 d-flex align-items-center">
               <div className="description m-0 text-center text-md-start p-0 p-md-0 p-md-4 ">
-                <div>
-                  <div className="container">
-                    <div className="row">
-                      <div className="breiftopMargin">
-                        {isAdmin && hasPermission && (
-                          <EditIcon
-                            editHandler={() => editHandler("footerAboutBrief", true)}
-                            editlabel={"Breif"}
-                          />
-                        )}
-
-                        <BriefIntroFrontend
-                          introState={componentEdit.footerAboutBrief}
-                          linkCss="btn btn-primary d-flex justify-content-center align-items-center gap-3"
-                          linkLabel="Read More"
-                          moreLink=""
-                          introTitleCss="fs-3 text-left mb-2"
-                          introSubTitleCss="fw-medium text-muted text-left mb-3"
-                          introDecTitleCss="fs-6 fw-normal  text-left lh-6"
-                          detailsContainerCss="col-md-12 py-3"
-                          anchorContainer="d-flex justify-content-left align-items-center mt-4"
-                          anchersvgColor="#17427C"
-                          pageType={pageType}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {componentEdit.footerAboutBrief && (
-                    <div className={`adminEditTestmonial selected `}>
-                      <BriefIntroAdmin
-                        editHandler={editHandler}
-                        componentType="footerAboutBrief"
-                        popupTitle="Footer Company Brief"
-                        pageType={pageType}
-                      />
-                    </div>
-                  )}
-                </div>
+                <BriefComponent
+                  editHandler={editHandler}
+                  componentType={"footerAboutBrief"}
+                  popupTitle="Footer Company Brief edit"
+                  pageType={pageType}
+                  componentEdit={componentEdit}
+                  editlabel={"footerAboutBrief"}
+                />
               </div>
             </div>
           </div>

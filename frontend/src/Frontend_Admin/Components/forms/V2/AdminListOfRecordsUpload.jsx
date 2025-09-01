@@ -39,7 +39,7 @@ const AdminListOfRecordsUpload = ({
   dimensions,
   validTypes = "image/png,image/jpeg",
   sideDeck,
-  isclosePopup,
+  isclosePopup = false,
 }) => {
   const [newObject, setNewObject] = useState({});
   const [objectList, setCurrentObjectList] = useState([]);
