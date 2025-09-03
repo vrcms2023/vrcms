@@ -1,11 +1,11 @@
 from django.db import models
 import uuid
-from common.BaseModel import BaseModel
+from common.BaseModel import BaseModelV2
 
 
 # Create your models here.
 
-class AddressList(BaseModel):
+class AddressList(BaseModelV2):
         company_name =      models.CharField(max_length=100,  null=True, blank=True )
         location_title =    models.CharField(max_length=100, null=True, blank=True )
         address_dr_no =     models.CharField(max_length=50,  null=True, blank=True )

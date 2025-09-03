@@ -35,11 +35,7 @@ const CSRFToken = () => {
   }, []);
 
   return (
-    <input
-      type="hidden"
-      name="csrfmiddlewaretoken"
-      value={csrftokenValue ? csrftokenValue : ""}
-    />
+    <input type="hidden" name="csrfmiddlewaretoken" value={csrftokenValue ? csrftokenValue : ""} />
   );
 };
 

@@ -42,6 +42,8 @@ import {
 } from "../../../redux/showHideComponent/showHideActions";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
+import BriefWithShowHideToggleComponent from "../../../Common/Brief/BriefWithShowHideToggleComponent";
+import AdminSingleRecordUpload from "../../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
 
 const Team = () => {
   const editComponentObj = {
@@ -98,7 +100,7 @@ const Team = () => {
         console.log("unable to access ulr because of server is down");
       }
     };
-    if ((!componentEdit.addSection || !componentEdit.editSection) && !searchQuery) {
+    if (!componentEdit.addSection && !componentEdit.editSection && searchQuery === "") {
       getTeamMemberDetails();
     }
   }, [componentEdit.addSection, componentEdit.editSection]);
@@ -196,61 +198,19 @@ const Team = () => {
         showHideComponentName={"teambanner"}
       />
 
-      <div
-        className={
-          showHideCompList?.teambriefintro?.visibility && isAdmin && hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.teambriefintro?.visibility}
-            title={"A Brief Introduction Component"}
-            componentName={"teambriefintro"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.teambriefintro?.id}
-          />
-        )}
-
-        {/* INTRODUCTION COMPONENT */}
-        {showHideCompList?.teambriefintro?.visibility && (
-          <div>
-            {/* Brief Introduction */}
-            {isAdmin && hasPermission && (
-              <EditIcon
-                editHandler={() => editHandler("briefIntro", true)}
-                editlabel={"Brief Info"}
-              />
-            )}
-
-            <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              linkCss="btn btn-outline d-flex justify-content-center align-items-center"
-              linkLabel="Read More"
-              moreLink=""
-              showLink={false}
-              introTitleCss="fs-3 fw-medium text-md-center"
-              introSubTitleCss="fw-medium text-muted text-md-center"
-              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-              detailsContainerCss="col-md-10 offset-md-1"
-              anchorContainer="d-flex justify-content-start align-items-start mt-4"
-              anchersvgColor="#17427C"
-              pageType={pageType}
-            />
-            {componentEdit.briefIntro && (
-              <div className={`adminEditTestmonial selected `}>
-                <AdminBriefIntro
-                  editHandler={editHandler}
-                  componentType="briefIntro"
-                  popupTitle="Team Brief"
-                  pageType={pageType}
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      <BriefWithShowHideToggleComponent
+        editHandler={editHandler}
+        componentType="briefIntro"
+        popupTitle="Teams Brief Introduction Component"
+        pageType={pageType}
+        componentEdit={componentEdit}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        editlabel={"briefIntro"}
+        showHideComponentName={"teambriefintro"}
+        detailsContainerCss="col-lg-10 offset-lg-1 text-center"
+        showHideComponentTitle={"Team Brief Intro "}
+      />
 
       <div className="container">
         {/* <div className="row">
@@ -306,6 +266,21 @@ const Team = () => {
 
         {componentEdit.editSection || componentEdit.addSection ? (
           <div className="adminEditTestmonial selected">
+            <AdminSingleRecordUpload
+              editHandler={editHandler}
+              componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
+              parentEditObject={editCarousel}
+              onPageLoadServiceCall={componentEdit.editSection}
+              popupTitle={`${componentEdit.editSection ? "Edit Teams Us" : "Add Teams Us"}`}
+              imageGetURL="ourteam/createteam/"
+              imageDeleteURL="ourteam/UpdateOurteamDetail/"
+              imagePostURL="ourteam/createteam/"
+              imageUpdateURL="ourteam/UpdateOurteamDetail/"
+              imageLabel="Upload Image"
+              showExtraFormFields={getTeamMemberFields(editCarousel?.team_member_position)}
+              dimensions={imageDimensionsJson("teams")}
+            />
+            {/* 
             <AddEditTeam
               editHandler={editHandler}
               category="team"
@@ -321,7 +296,7 @@ const Team = () => {
               showDescription={false}
               showExtraFormFields={getTeamMemberFields(editCarousel?.team_member_position)}
               dimensions={imageDimensionsJson("teams")}
-            />
+            /> */}
           </div>
         ) : (
           ""

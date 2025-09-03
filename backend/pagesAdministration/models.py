@@ -1,8 +1,8 @@
 from django.db import models
-from common.BaseModel import BaseModel
+from common.BaseModel import BaseModelV2
 # Create your models here.
 
-class PageDetails(BaseModel):
+class PageDetails(BaseModelV2):
     page_label =        models.CharField(max_length=100, null=False, blank=True)
     page_url =          models.CharField(max_length=100, null=True, blank=True)
     page_isActive =     models.BooleanField(default=True)

@@ -32,6 +32,8 @@ import {
 } from "../../../redux/showHideComponent/showHideActions";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
+import BriefWithShowHideToggleComponent from "../../../Common/Brief/BriefWithShowHideToggleComponent";
+import AdminSingleRecordUpload from "../../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
 
 const CaseStudies = () => {
   const editComponentObj = {
@@ -158,71 +160,25 @@ const CaseStudies = () => {
         showHideComponentName={"casestudiesbanner"}
       />
 
-      <div
-        className={
-          showHideCompList?.casestudiesbriefintro?.visibility && isAdmin && hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.casestudiesbriefintro?.visibility}
-            title={"A Brief Introduction Component"}
-            componentName={"casestudiesbriefintro"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.casestudiesbriefintro?.id}
-          />
-        )}
-
-        {/* INTRODUCTION COMPONENT */}
-        {showHideCompList?.casestudiesbriefintro?.visibility && (
-          <div>
-            {/* Brief Introduction */}
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-            )}
-
-            <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              pageType={pageType}
-              introTitleCss="fs-3 fw-medium text-md-center"
-              introSubTitleCss="fw-medium text-muted text-md-center"
-              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-            />
-            {componentEdit.briefIntro && (
-              <div className={`adminEditTestmonial selected `}>
-                <AdminBriefIntro
-                  editHandler={editHandler}
-                  popupTitle="Case Studies"
-                  componentType="briefIntro"
-                  pageType={pageType}
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      <BriefWithShowHideToggleComponent
+        editHandler={editHandler}
+        componentType="briefIntro"
+        popupTitle="Case studies Brief Introduction Component"
+        pageType={pageType}
+        componentEdit={componentEdit}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        editlabel={"briefIntro"}
+        showHideComponentName={"casestudiesbriefintro"}
+        detailsContainerCss="col-lg-10 offset-lg-1 text-center"
+        introTitleCss="fs-3 fw-medium text-md-center"
+        introSubTitleCss="fw-medium text-muted text-md-center"
+        introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
+        showHideComponentTitle={"Case Studies Brief Intro "}
+      />
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
-        {/* {isAdmin && hasPermission && (
-          <div className="row">
-            <div className="col-md-12">
-              <div className="d-flex justify-content-end align-items-center mb-3">
-                <button
-                  type="submit"
-                  className="btn btn-outline"
-                  onClick={() => editHandler("addSection", true)}
-                >
-                 New
-                  <i className="fa fa-plus ms-2" aria-hidden="true"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        )} */}
-
         <div className="row">
           <div className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start">
             <Title title="Case Studies" cssClass="pageTitle fs-4" />
@@ -255,19 +211,16 @@ const CaseStudies = () => {
         </div>
         {componentEdit.editSection || componentEdit.addSection ? (
           <div className={`adminEditTestmonial selected `}>
-            <AddEditAdminNews
+            <AdminSingleRecordUpload
               editHandler={editHandler}
-              category="about"
-              editCarousel={editCarousel}
-              setEditCarousel={setEditCarousel}
               componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
+              parentEditObject={editCarousel}
+              popupTitle={`${componentEdit.editSection ? "Edit Case Studie" : "Add Case Studie"}`}
               imageGetURL="/caseStudies/createCaseStudies/"
               imagePostURL="/caseStudies/createCaseStudies/"
               imageUpdateURL="/caseStudies/updateCaseStudies/"
               imageDeleteURL="/caseStudies/updateCaseStudies/"
               imageLabel="Upload Image"
-              popupTitle={"Case Studie"}
-              showDescription={false}
               showExtraFormFields={getCaseStudiesFields()}
               dimensions={imageDimensionsJson("aboutus")}
             />

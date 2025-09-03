@@ -44,6 +44,8 @@ import ShowHideToggle from "../../../Common/ShowHideToggle";
 
 import "./TestimonialsList.css";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
+import BriefWithShowHideToggleComponent from "../../../Common/Brief/BriefWithShowHideToggleComponent";
+import AdminSingleRecordUpload from "../../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
 
 const TestimonialsList = () => {
   const editComponentObj = {
@@ -86,10 +88,10 @@ const TestimonialsList = () => {
         console.log("unable to access ulr because of server is down");
       }
     };
-    if ((!componentEdit.addSection || !componentEdit.editSection) && !searchQuery) {
+    if (!componentEdit.addSection && !componentEdit.editSection && searchQuery === "") {
       getCAseStutiesvalues();
     }
-  }, [componentEdit.addSection, componentEdit.editSection]);
+  }, [componentEdit.addSection, componentEdit.editSection, searchQuery]);
 
   useEffect(() => {
     const id = document.getElementById("KnowledgeHubnavbarDropdown");
@@ -208,74 +210,22 @@ const TestimonialsList = () => {
         showHideComponentName={"testimonialbanner"}
       />
 
-      <div
-        className={
-          showHideCompList?.testimonialbriefintro?.visibility && isAdmin && hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.testimonialbriefintro?.visibility}
-            title={"A Brief Introduction Component"}
-            componentName={"testimonialbriefintro"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.testimonialbriefintro?.id}
-          />
-        )}
-
-        {/* INTRODUCTION COMPONENT */}
-        {showHideCompList?.testimonialbriefintro?.visibility && (
-          <div>
-            {/* Brief Introduction */}
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-            )}
-
-            <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-              linkLabel="Read More"
-              moreLink=""
-              introTitleCss="fs-3 fw-medium text-md-center"
-              introSubTitleCss="fw-medium text-muted text-md-center"
-              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-              detailsContainerCss="col-md-10 offset-md-1 py-3"
-              anchorContainer="d-flex justify-content-center align-items-center mt-4"
-              anchersvgColor="#17427C"
-              pageType={pageType}
-            />
-
-            {componentEdit.briefIntro && (
-              <div className="adminEditTestmonial selected">
-                <AdminBriefIntro
-                  editHandler={editHandler}
-                  componentType="briefIntro"
-                  pageType={pageType}
-                  popupTitle="Testinonial - Brief Info"
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      <BriefWithShowHideToggleComponent
+        editHandler={editHandler}
+        componentType="briefIntro"
+        popupTitle="Testimonial Brief Introduction Component"
+        pageType={pageType}
+        componentEdit={componentEdit}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        editlabel={"briefIntro"}
+        showHideComponentName={"testimonialbriefintro"}
+        detailsContainerCss="col-lg-10 offset-lg-1 text-center"
+        showHideComponentTitle={"Testimonial Brief Intro "}
+      />
 
       {/* Add Clients */}
       <div className="container-fluid container-lg my-md-5 ">
-        {/* {isAdmin && hasPermission && (
-              <div className="d-flex justify-content-end align-items-center mb-3">
-                <span className="fw-bold me-2">Add Testimonials </span>
-                <button
-                  type="submit"
-                  className="btn btn-outline"
-                  onClick={() => editHandler("addSection", true, {})}
-                >
-                  New
-                  <i className="fa fa-plus ms-2" aria-hidden="true"></i>
-                </button>
-              </div>
-          )} */}
         <div className="row">
           <div className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start">
             <Title title="Testimonials" cssClass="pageTitle fs-4" />
@@ -297,7 +247,7 @@ const TestimonialsList = () => {
               clientSearchURL={"/testimonials/searchtestimonials/"}
               adminSearchURL={"/testimonials/createTestimonials/"}
               clientDefaultURL={"/testimonials/clientTestimonials/"}
-              searchfiledDeatails={"client Title "}
+              searchfiledDeatails={"Testimonials Title "}
               setPageloadResults={setPageloadResults}
               setSearchquery={setSearchquery}
               searchQuery={searchQuery}
@@ -308,7 +258,20 @@ const TestimonialsList = () => {
         </div>
         {componentEdit.editSection || componentEdit.addSection ? (
           <div className={`adminEditTestmonial selected `}>
-            <AddEditAdminNews
+            <AdminSingleRecordUpload
+              editHandler={editHandler}
+              componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
+              parentEditObject={editCarousel}
+              popupTitle={`${componentEdit.editSection ? "Edit Testimonials " : "Add Testimonials "}`}
+              imageGetURL="testimonials/clientTestimonials/"
+              imagePostURL="testimonials/createTestimonials/"
+              imageUpdateURL="testimonials/updateTestimonials/"
+              imageDeleteURL="testimonials/updateTestimonials/"
+              imageLabel="Upload Image"
+              showExtraFormFields={getTestimonialsFields("testmonial")}
+              dimensions={imageDimensionsJson("testimonial")}
+            />
+            {/* <AddEditAdminNews
               editHandler={editHandler}
               category="about"
               popupTitle={`Testimonial`}
@@ -323,7 +286,7 @@ const TestimonialsList = () => {
               showDescription={false}
               showExtraFormFields={getTestimonialsFields("testmonial")}
               dimensions={imageDimensionsJson("testimonial")}
-            />
+            /> */}
           </div>
         ) : (
           ""

@@ -40,6 +40,7 @@ import {
 } from "../../../redux/showHideComponent/showHideActions";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 import AdminSingleRecordUpload from "../../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
+import BriefWithShowHideToggleComponent from "../../../Common/Brief/BriefWithShowHideToggleComponent";
 
 const About = () => {
   const editComponentObj = {
@@ -117,6 +118,88 @@ const About = () => {
     }
   }, [componentEdit.editSection, componentEdit.addSection]);
 
+  return (
+    <>
+      {/* Page Banner Component */}
+      <PageBannerComponent
+        editHandler={editHandler}
+        componentEdit={componentEdit}
+        pageType={pageType}
+        category={"about-banner"}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        popupTitle={"About Banner"}
+        showHideComponentName={"aboutbanner"}
+      />
+
+      <BriefWithShowHideToggleComponent
+        editHandler={editHandler}
+        componentType="briefIntro"
+        popupTitle="About Brief Introduction Component"
+        pageType={pageType}
+        componentEdit={componentEdit}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        editlabel={"briefIntro"}
+        showHideComponentName={"aboutbriefintro"}
+        detailsContainerCss="col-lg-10 offset-lg-1 text-center"
+        showHideComponentTitle={"About Brief Intro "}
+      />
+
+      <AboutPageStyled>
+        <div className="container-fluid container-lg ">
+          <div className="row my-3 d-flex align-items-center">
+            {isAdmin && hasPermission && (
+              <div className="col-12 text-end p-0">
+                <span className="me-2">Add Content</span>
+                <button
+                  type="submit"
+                  className="btn btn-outline "
+                  onClick={() => editHandler("addSection", true)}
+                >
+                  <i className="fa fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            )}
+          </div>
+          {componentEdit.editSection || componentEdit.addSection ? (
+            <div className={`adminEditTestmonial selected `}>
+              <AdminSingleRecordUpload
+                editHandler={editHandler}
+                componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
+                parentEditObject={editCarousel}
+                popupTitle={`${componentEdit.editSection ? "Edit About Us" : "Add About Us"}`}
+                imageGetURL="aboutus/clientAboutus/"
+                imagePostURL="aboutus/createAboutus/"
+                imageUpdateURL="aboutus/updateAboutus/"
+                imageDeleteURL="aboutus/updateAboutus/"
+                imageLabel="Upload Image"
+                showExtraFormFields={getAboutUSSectionFields()}
+                dimensions={imageDimensionsJson("aboutus")}
+              />
+            </div>
+          ) : null}
+
+          <div className="aboutPage">
+            {aboutList.length > 0 ? (
+              aboutList.map((item, index) => (
+                <AboutSection item={item} index={index} key={item.id} editHandler={editHandler} />
+              ))
+            ) : (
+              <p className="text-center text-muted py-5">Please add page contents...</p>
+            )}
+          </div>
+        </div>
+      </AboutPageStyled>
+
+      {show && <ModelBg />}
+    </>
+  );
+};
+
+const AboutSection = ({ item, index, editHandler }) => {
+  const { isAdmin, hasPermission } = useAdminLoginStatus();
+
   const deleteAboutSection = (item) => {
     const id = item.id;
     const name = item.aboutus_title;
@@ -136,7 +219,6 @@ const About = () => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteSection}
-            // message={`deleting the ${name} Service?`}
             message={
               <>
                 Confirm deletion of <span>{name}</span> service?
@@ -147,178 +229,55 @@ const About = () => {
       },
     });
   };
-
   return (
-    <>
-      {/* Page Banner Component */}
-      <PageBannerComponent
-        editHandler={editHandler}
-        componentEdit={componentEdit}
-        pageType={pageType}
-        category={"about-banner"}
-        showHideCompList={showHideCompList}
-        showHideHandler={showHideHandler}
-        popupTitle={"About Banner"}
-        showHideComponentName={"aboutbanner"}
-      />
-      <div
-        className={
-          showHideCompList?.aboutbriefintro?.visibility && isAdmin && hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.aboutbriefintro?.visibility}
-            title={"A Brief Introduction Component"}
-            componentName={"aboutbriefintro"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.aboutbriefintro?.id}
+    <div
+      key={item.id}
+      className={`row ${
+        isAdmin ? "border border-warning mb-4 position-relative" : "border"
+      } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
+    >
+      {isAdmin && hasPermission && (
+        <>
+          <EditIcon editHandler={() => editHandler("editSection", true, item)} />
+          <Link className="deleteSection" onClick={() => deleteAboutSection(item)}>
+            <i className="fa fa-trash-o text-danger fs-4" aria-hidden="true"></i>
+          </Link>
+        </>
+      )}
+      <div className="col-12 col-lg-7 p-4 pb-0 p-sm-5 d-flex justify-content-center align-items-start flex-column leftColumn">
+        {item.aboutus_title ? (
+          <Title
+            title={item.aboutus_title}
+            cssClass=""
+            mainTitleClassess="mb-1 title"
+            subTitleClassess=""
           />
+        ) : (
+          ""
         )}
 
-        {/* INTRODUCTION COMPONENT */}
-        {showHideCompList?.aboutbriefintro?.visibility && (
-          <div className="breiftopMargin">
-            {/* Brief Introduction  */}
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-            )}
-
-            <BriefIntroFrontend
-              pageType={pageType}
-              introState={componentEdit.briefIntro}
-              detailsContainerCss="col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center"
-              // border="border-light border-bottom border-5"
-              introTitleCss=""
-              introSubTitleCss="py-3 d-inline-block"
-              introDecTitleCss=""
-              linkLabel="Read More"
-              linkCss="btn btn-outline"
-              moreLink=""
-              anchorContainer=""
-              anchersvgColor=""
-              mainTitleClassess={"fs-3"}
-              seoTitle={true}
-            />
-            {componentEdit.briefIntro && (
-              <div className={`adminEditTestmonial selected `}>
-                <AdminBriefIntro
-                  editHandler={editHandler}
-                  componentType="briefIntro"
-                  popupTitle="About Brief Intro"
-                  pageType={pageType}
-                />
-              </div>
-            )}
-          </div>
+        {item.aboutus_sub_title ? (
+          <Title
+            title={item.aboutus_sub_title}
+            cssClass=""
+            mainTitleClassess=" mb-3 subTitle"
+            subTitleClassess=""
+          />
+        ) : (
+          ""
         )}
+
+        <RichTextView data={item?.aboutus_description} className={""} showMorelink={false} />
       </div>
-      <AboutPageStyled>
-        <div className="container-fluid container-lg ">
-          <div className="row my-3 d-flex align-items-center">
-            {/* <div className="col-md-6 fs-3 mt-4 mt-md-0">
-              <Title title="About Us" cssClass="fs-1 pageTitle" />
-            </div> */}
-            {isAdmin && hasPermission && (
-              <div className="col-12 text-end p-0">
-                <span className="me-2">Add Content</span>
-                <button
-                  type="submit"
-                  className="btn btn-outline "
-                  onClick={() => editHandler("addSection", true)}
-                >
-                  <i className="fa fa-plus" aria-hidden="true"></i>
-                </button>
-              </div>
-            )}
-          </div>
-          {componentEdit.editSection ||
-            (componentEdit.addSection && (
-              <div className={`adminEditTestmonial selected `}>
-                <AdminSingleRecordUpload
-                  editHandler={editHandler}
-                  componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
-                  parentEditObject={editCarousel}
-                  onPageLoadServiceCall={componentEdit.editSection}
-                  popupTitle={"About"}
-                  imageGetURL="aboutus/clientAboutus/"
-                  imagePostURL="aboutus/createAboutus/"
-                  imageUpdateURL="aboutus/updateAboutus/"
-                  imageDeleteURL="aboutus/updateAboutus/"
-                  imageLabel="Upload Image"
-                  showExtraFormFields={getAboutUSSectionFields()}
-                  dimensions={imageDimensionsJson("aboutus")}
-                />
-              </div>
-            ))}
 
-          <div className="aboutPage">
-            {aboutList.length > 0 ? (
-              aboutList.map((item, index) => (
-                <div
-                  key={item.id}
-                  className={`row ${
-                    isAdmin ? "border border-warning mb-4 position-relative" : "border"
-                  } ${index % 2 === 0 ? "normalCSS" : "flipCSS"}`}
-                >
-                  {isAdmin && hasPermission && (
-                    <>
-                      <EditIcon editHandler={() => editHandler("editSection", true, item)} />
-                      <Link className="deleteSection" onClick={() => deleteAboutSection(item)}>
-                        <i className="fa fa-trash-o text-danger fs-4" aria-hidden="true"></i>
-                      </Link>
-                    </>
-                  )}
-                  <div className="col-12 col-lg-7 p-4 pb-0 p-sm-5 d-flex justify-content-center align-items-start flex-column leftColumn">
-                    {item.aboutus_title ? (
-                      <Title
-                        title={item.aboutus_title}
-                        cssClass=""
-                        mainTitleClassess="mb-1 title"
-                        subTitleClassess=""
-                      />
-                    ) : (
-                      ""
-                    )}
-
-                    {item.aboutus_sub_title ? (
-                      <Title
-                        title={item.aboutus_sub_title}
-                        cssClass=""
-                        mainTitleClassess=" mb-3 subTitle"
-                        subTitleClassess=""
-                      />
-                    ) : (
-                      ""
-                    )}
-
-                    <RichTextView
-                      data={item?.aboutus_description}
-                      className={""}
-                      showMorelink={false}
-                    />
-                  </div>
-
-                  <div className="col-lg-5 p-4 p-md-0 d-flex justify-content-center align-items-start flex-column rightColumn">
-                    <img
-                      src={getImagePath(item.path)}
-                      alt={item.alternitivetext}
-                      className="object-fit-cover shadow m-auto"
-                    />
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p className="text-center text-muted py-5">Please add page contents...</p>
-            )}
-          </div>
-        </div>
-      </AboutPageStyled>
-
-      {show && <ModelBg />}
-    </>
+      <div className="col-lg-5 p-4 p-md-0 d-flex justify-content-center align-items-start flex-column rightColumn">
+        <img
+          src={getImagePath(item.path)}
+          alt={item.alternitivetext}
+          className="object-fit-cover shadow m-auto"
+        />
+      </div>
+    </div>
   );
 };
 

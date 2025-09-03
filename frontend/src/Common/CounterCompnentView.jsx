@@ -13,11 +13,7 @@ const CounterCompnentView = ({ getDataAPIURL, componentState }) => {
       try {
         const response = await axiosClientServiceApi.get(getDataAPIURL);
         if (response?.status === 200) {
-          setCounterData(
-            response?.data?.counterSetList
-              ? response.data.counterSetList[0]
-              : []
-          );
+          setCounterData(response?.data ? response.data[0] : []);
         } else {
           setCounterData([]);
         }

@@ -1,10 +1,14 @@
 from django.db import models
 import uuid
-from common.BaseModel import BaseModel, ImageModel
+from common.BaseModel import BaseModelV2, ImageModelV2
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+import os
+
 
 # Create your models here.
 
-class ContactUS(BaseModel):   
+class ContactUS(BaseModelV2):   
     firstName =     models.CharField(max_length=100, null=False)
     email =         models.EmailField(max_length=254, null=False)
     phoneNumber=    models.CharField(max_length=50, null=False)
@@ -16,7 +20,7 @@ class ContactUS(BaseModel):
     def __str__(self):
         return f"{self.firstName or 'No Title'}"
 
-class Brochures(ImageModel):
+class Brochures(ImageModelV2):
     brochures_name = models.CharField(max_length=100,  null=True, blank=True )
     brochures_downloadName =models.CharField(max_length=100,  null=True, blank=True )
 
@@ -26,7 +30,14 @@ class Brochures(ImageModel):
     def __str__(self):
             return f"{self.brochures_name or 'No Title'}"
 
-class RaqForm(BaseModel):
+@receiver(post_delete, sender=Brochures)
+def delete_file_on_imageupload_delete(sender, instance, **kwargs):
+    print("instance.path",instance.path )
+    if instance.path and instance.path.name:
+        if os.path.isfile(instance.path.path):
+            os.remove(instance.path.path)
+
+class RaqForm(BaseModelV2):
     name =          models.CharField(max_length=100, null=False)
     company =       models.CharField(max_length=100, null=True, blank=True)
     email =         models.EmailField(max_length=254, null=False)

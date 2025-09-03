@@ -10,59 +10,25 @@ import json
 
 # Create your views here.
 
-class CreatePages(generics.CreateAPIView):
+class CreatePages(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    queryset = PageDetails.objects.all()
+    queryset = PageDetails.objects.all().order_by("-created_at")
     serializer_class = PagesAdministrationSerializer
 
-    """
-    Get Page Details, or create a new Page Details.
-    """
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user, updated_by=self.request.user)
 
-    def get(self, request, format=None):
-        user = request.user
-        if user.is_admin:
-            snippets = PageDetails.objects.all()
-        else:
-            snippets = PageDetails.objects.filter(is_Maintainer_menu= True)
-        
-        serializer = PagesAdministrationSerializer(snippets, many=True)
-        return Response({"PageDetails": serializer.data}, status=status.HTTP_200_OK)
-    
-    def post(self, request, format=None):
-        serializer = PagesAdministrationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"PageDetails": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class UpdatePageDetails(APIView):
-    """
-    Retrieve, update or delete a PageDetails instance.
-    """
-    def get_object(self, pk):
-        try:
-            return PageDetails.objects.get(pk=pk)
-        except PageDetails.DoesNotExist:
-            raise Http404
 
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = PagesAdministrationSerializer(snippet)
-        return Response({"PageDetails": serializer.data}, status=status.HTTP_200_OK)
+class UpdatePageDetails(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = PageDetails.objects.all().order_by("-created_at")
+    serializer_class = PagesAdministrationSerializer
 
-    def patch(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = PagesAdministrationSerializer(snippet, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"PageDetails": serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def perform_update(self, serializer):
+        serializer.save(updated_by=self.request.user)
 
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class UpdateMenuIndex(APIView):
     """
@@ -81,18 +47,13 @@ class UpdateMenuIndex(APIView):
         user = request.user
         for item in obj_list:
             obj = self.get_object(obj_id=item["id"])
-            obj.updated_by = user.userName
+            obj.updated_by = user
             obj.page_position = item["page_position"]
             obj.save()
             instances.append(obj)
 
         serializer = PagesAdministrationSerializer(instances,  many=True)
-        
-        return Response({"PageDetails": serializer.data}, status=status.HTTP_200_OK)
-       
-
-
-
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 """ 
 Client Service View
@@ -106,7 +67,7 @@ class ClientMenuListAPIView(generics.ListAPIView):
     def get(self, request, format=None):
         snippets = PageDetails.objects.filter(is_Client_menu= True)
         serializer = PagesAdministrationSerializer(snippets, many=True)
-        return Response({"PageDetails": serializer.data}, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
 
 class JSONMenuDataUpload(APIView):
@@ -122,6 +83,6 @@ class JSONMenuDataUpload(APIView):
             serializer = PagesAdministrationSerializer(data=data)
        
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(created_by=self.request.user, updated_by=self.request.user)
             return Response({"message": "Menu uploaded successfully."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

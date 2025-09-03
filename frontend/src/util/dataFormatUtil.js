@@ -29,8 +29,7 @@ export const dataFormatedByCatergoryName = (data) => {
 export const getImagesByDate = (img) => {
   const imgByDate = [];
   const sortedImageArray = img.sort(
-    (a, b) =>
-      new moment(b.updated_at).valueOf() - new moment(a.updated_at).valueOf()
+    (a, b) => new moment(b.updated_at).valueOf() - new moment(a.updated_at).valueOf()
   );
   sortedImageArray.forEach((img) => {
     const dt = new moment(img.updated_at).format("YYYY/DD/MM");
@@ -81,7 +80,7 @@ export const sortUpdatedDateByDesc = (array) => {
 };
 
 export const getFirstShortDescription = (data) => {
-  return data.substring(0, 50);
+  return data?.substring(0, 50);
 };
 
 export const mapServicePagetoComponent = (data, maxCount = 9) => {

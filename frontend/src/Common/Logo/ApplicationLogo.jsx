@@ -9,11 +9,7 @@ import SkeletonImage from "../Skeltons/SkeletonImage";
 // Styles
 import headersvgLogo from "../../Images/headerLogo.svg";
 
-const ApplicationLogo = ({
-  getBannerAPIURL,
-  bannerState,
-  imageCss = "w-100",
-}) => {
+const ApplicationLogo = ({ getBannerAPIURL, bannerState, imageCss = "w-100" }) => {
   const [bannerdata, setBannerData] = useState([]);
 
   useEffect(() => {
@@ -21,7 +17,7 @@ const ApplicationLogo = ({
       try {
         const response = await axiosClientServiceApi.get(getBannerAPIURL);
         if (response?.status === 200) {
-          setBannerData(response.data.imageModel);
+          setBannerData(response.data[0]);
         } else {
           setBannerData({});
         }

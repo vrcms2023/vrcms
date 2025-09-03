@@ -16,6 +16,7 @@ const PageBannerComponent = ({
   popupTitle,
   componentType = "banner",
   showHideComponentName,
+  editlabel = "Banner",
 }) => {
   const { isAdmin, hasPermission } = useAdminLoginStatus();
   return (
@@ -41,7 +42,10 @@ const PageBannerComponent = ({
             {/* Page Banner Component */}
             <div className="position-relative">
               {isAdmin && hasPermission && (
-                <EditIcon editHandler={() => editHandler(componentType, true)} editlabel="Brief" />
+                <EditIcon
+                  editHandler={() => editHandler(componentType, true)}
+                  editlabel={editlabel}
+                />
               )}
               <PageHeroBannerClientView
                 getBannerAPIURL={`banners/by-page-and-category/${pageType}-${componentType}/category/${category}/`}
@@ -54,6 +58,7 @@ const PageBannerComponent = ({
                   editHandler={editHandler}
                   componentType={componentType}
                   popupTitle={popupTitle}
+                  onPageLoadServiceCall={true}
                   imagePostURL="banners/createBanner/"
                   imageGetURL={`banners/by-page-and-category/${pageType}-${componentType}/category/${category}/`}
                   imageUpdateURL="banners/updateBanner/"

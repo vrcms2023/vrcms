@@ -10,12 +10,7 @@ import { getCookie } from "../../../util/cookieUtil";
 import { InputField, RichTextInputEditor_V2 } from "../forms/FormFields";
 import { fieldValidation } from "../../../util/validationUtil";
 
-export const BriefIntroAdmin = ({
-  editHandler,
-  componentType,
-  popupTitle,
-  pageType,
-}) => {
+export const BriefIntroAdmin = ({ editHandler, componentType, popupTitle, pageType }) => {
   const closeHandler = () => {
     editHandler(componentType, false);
     document.body.style.overflow = "";
@@ -40,11 +35,9 @@ export const BriefIntroAdmin = ({
   useEffect(() => {
     const getintroValues = async () => {
       try {
-        let response = await axiosServiceApi.get(
-          `/carousel/updateHomeIntro/${pageType}/`
-        );
-        setFormValues(response.data.intro);
-        reset(response.data.intro);
+        let response = await axiosServiceApi.get(`/carousel/updateHomeIntro/${pageType}/`);
+        setFormValues(response.data);
+        reset(response.data);
       } catch (error) {
         console.log("Unable to get the intro");
       }
@@ -58,12 +51,9 @@ export const BriefIntroAdmin = ({
       let response = "";
       if (data.id) {
         data["updated_by"] = userName;
-        response = await axiosServiceApi.put(
-          `/carousel/updateHomeIntro/${pageType}/`,
-          {
-            ...data,
-          }
-        );
+        response = await axiosServiceApi.put(`/carousel/updateHomeIntro/${pageType}/`, {
+          ...data,
+        });
       } else {
         data["created_by"] = userName;
         response = await axiosServiceApi.post(`/carousel/createHomeIntro/`, {
@@ -87,10 +77,7 @@ export const BriefIntroAdmin = ({
         <div className="container my-3">
           {success ? (
             <>
-              <Title
-                title="Saved Successfully"
-                cssClass="text-white text-center bg-success py-2"
-              />
+              <Title title="Saved Successfully" cssClass="text-white text-center bg-success py-2" />
             </>
           ) : (
             ""
@@ -118,14 +105,9 @@ export const BriefIntroAdmin = ({
                 name="intro_desc"
                 control={control}
               />
-              <InputField
-                label="More links"
-                fieldName="intro_morelink"
-                register={register}
-              />
+              <InputField label="More links" fieldName="intro_morelink" register={register} />
 
               <div className="d-flex justify-content-center align-items-center gap-2 mt-3">
-                
                 <Button
                   type="submit"
                   cssClass="btn btn-outline"

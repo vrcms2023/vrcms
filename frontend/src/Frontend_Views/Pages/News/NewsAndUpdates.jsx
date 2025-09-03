@@ -42,6 +42,7 @@ import ShowHideToggle from "../../../Common/ShowHideToggle";
 import BriefIntroAdmin from "../../../Frontend_Admin/Components/BriefIntro";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
 import AdminSingleRecordUpload from "../../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
+import BriefWithShowHideToggleComponent from "../../../Common/Brief/BriefWithShowHideToggleComponent";
 
 const NewsAndUpdates = () => {
   const editComponentObj = {
@@ -139,71 +140,26 @@ const NewsAndUpdates = () => {
         popupTitle={"News Banner"}
         showHideComponentName={"newsandupdatesbanner"}
       />
-
-      <div
-        className={
-          showHideCompList?.newsbriefintro?.visibility && isAdmin && hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.newsbriefintro?.visibility}
-            title={"A Brief Introduction Component"}
-            componentName={"newsbriefintro"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.newsbriefintro?.id}
-          />
-        )}
-
-        {/* INTRODUCTION COMPONENT */}
-        {showHideCompList?.newsbriefintro?.visibility && (
-          <div>
-            {/* Introduction */}
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} editlabel={"Brief"} />
-            )}
-
-            <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              pageType={pageType}
-              introTitleCss="fs-3 fw-medium text-md-center"
-              introSubTitleCss="fw-medium text-muted text-md-center"
-              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-              anchorContainer="text-center my-4"
-              linkLabel="More.."
-              showLink={"True"}
-            />
-            {componentEdit.briefIntro && (
-              <div className={`adminEditTestmonial selected `}>
-                <BriefIntroAdmin
-                  editHandler={editHandler}
-                  componentType="briefIntro"
-                  popupTitle="News - Brief Intro"
-                  pageType={pageType}
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      <BriefWithShowHideToggleComponent
+        editHandler={editHandler}
+        componentType="briefIntro"
+        popupTitle="News Brief Introduction Component"
+        pageType={pageType}
+        componentEdit={componentEdit}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        editlabel={"briefIntro"}
+        showHideComponentName={"newsbriefintro"}
+        detailsContainerCss="col-lg-10 offset-lg-1 text-center"
+        introTitleCss="fs-3 fw-medium text-md-center"
+        introSubTitleCss="fw-medium text-muted text-md-center"
+        introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
+        anchorContainer="text-center my-4"
+        linkLabel="More.."
+        showHideComponentTitle={"News Brief Intro "}
+      />
 
       <div className="container my-4 newsAndUpdates">
-        {/* {isAdmin && hasPermission && (
-          <div className="text-end">
-            
-            <Link
-              to="#"
-              className="btn btn-primary"
-              onClick={() => editHandler("addNews", true)}
-            >
-              Add News
-              <i className="fa fa-plus ms-2" aria-hidden="true"></i>
-            </Link>
-          </div>
-        )} */}
-
         <div className="row mb-2 py-4">
           <div className="col-md-6 d-flex jusitfy-content-start align-items-center">
             <Title
@@ -262,20 +218,6 @@ const NewsAndUpdates = () => {
                 showExtraFormFields={getNewslFields()}
                 dimensions={imageDimensionsJson("addNews")}
               />
-              {/* <AddEditAdminNews
-                editHandler={editHandler}
-                setEditCarousel={setEditCarousel}
-                componentType="addNews"
-                popupTitle="Add News"
-                imageGetURL="appNews/createAppNews/"
-                imagePostURL="appNews/createAppNews/"
-                imageUpdateURL="appNews/updateAppNews/"
-                imageDeleteURL="appNews/updateAppNews/"
-                imageLabel="Upload Image"
-                showDescription={false}
-                showExtraFormFields={getNewslFields("addNews")}
-                dimensions={imageDimensionsJson("addNews")}
-              /> */}
             </div>
           )}
 

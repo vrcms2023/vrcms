@@ -82,10 +82,10 @@ const HomeNews = ({
         console.log("unable to access ulr because of server is down");
       }
     };
-    if ((componentEdit.news || !addNewsState) && !searchQuery) {
+    if (!componentEdit.news && !addNewsState && searchQuery === "") {
       getNews();
     }
-  }, [componentEdit.news, addNewsState, pageType, searchQuery]);
+  }, [componentEdit.news, addNewsState, searchQuery]);
 
   /**
    *
@@ -144,8 +144,8 @@ const HomeNews = ({
   const updateObjectsIndex = async (data) => {
     try {
       let response = await axiosServiceApi.put(`/appNews/updateNewsIndex/`, data);
-      if (response?.data?.appNews) {
-        return response.data.appNews;
+      if (response?.data?.length > 0) {
+        return response.data;
       }
     } catch (error) {
       console.log("unable to save news position");
@@ -229,7 +229,6 @@ const HomeNews = ({
             editHandler={editHandler}
             componentType="news"
             parentEditObject={editNews}
-            onPageLoadServiceCall={editNews ? false : true}
             popupTitle={"Edit News"}
             imageGetURL="appNews/createAppNews/"
             imagePostURL="appNews/createAppNews/"

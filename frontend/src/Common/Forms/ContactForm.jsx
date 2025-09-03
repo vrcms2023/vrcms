@@ -10,20 +10,28 @@ import { useForm } from "react-hook-form";
 import { axiosClientServiceApi } from "../../util/axiosUtil";
 import { toast } from "react-toastify";
 import Title from "../Title";
+import CSRFToken from "../../Frontend_Views/Components/CRSFToken";
 
 const ContactForm = ({ categoryId }) => {
   const {
     register,
     reset,
     handleSubmit,
+    clearErrors,
     formState: { errors },
-  } = useForm({});
+  } = useForm({
+    mode: "onBlur",
+  });
+
+  const handleChange = (fieldName) => {
+    clearErrors(fieldName);
+  };
 
   const onFormSubmit = async (data) => {
     data["categoryId"] = categoryId ? categoryId : "";
 
     try {
-      const response = await axiosClientServiceApi.post(`/contactus/`, {
+      const response = await axiosClientServiceApi.post(`/contactus/listcreate/`, {
         ...data,
       });
       if (response.status === 201) {
@@ -42,33 +50,43 @@ const ContactForm = ({ categoryId }) => {
       <small>SEND US EMAIL</small>
       <Title title="Feel free to write" cssClass="fs-4 mb-3 formTitle" />
       <form className="my-0 mx-auto contactForm" onSubmit={handleSubmit(onFormSubmit)}>
+        <CSRFToken />
         <InputFields
           label="Name"
           fieldName="firstName"
           register={register}
+          isRequired={true}
           validationObject={fieldValidation.firstName}
           error={errors?.firstName?.message}
+          onChange={() => handleChange("firstName")}
         />
-        <InputField
+
+        <InputFields
           label="Email"
           fieldName="email"
           register={register}
+          isRequired={true}
           validationObject={fieldValidation.email}
           error={errors?.email?.message}
+          onChange={() => handleChange("email")}
         />
-        <InputField
+        <InputFields
           label="Phone"
+          type="number"
           fieldName="phoneNumber"
           register={register}
           validationObject={fieldValidation.phoneNumber}
           error={errors?.phoneNumber?.message}
         />
-        <TextAreaField
+        <InputFields
+          type="textarea"
           label="Message"
           fieldName="description"
           register={register}
+          isRequired={true}
           validationObject={fieldValidation.description}
           error={errors?.description?.message}
+          onChange={() => handleChange("description")}
         />
 
         <div className="mb-3 row">

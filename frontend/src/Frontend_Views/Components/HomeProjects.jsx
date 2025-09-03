@@ -27,7 +27,6 @@ const HomeProjects = () => {
     getPorjectCategory();
   }, []);
 
-  console.log(ProjectCategoryType, "ProjectCategoryType");
   return (
     <div className="container">
       {/* <Title title="PROJECTS" cssClass="text-center fs-3 mb-5" /> */}

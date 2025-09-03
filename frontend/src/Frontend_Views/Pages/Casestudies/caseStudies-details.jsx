@@ -101,27 +101,6 @@ const CaseStudiesDetails = () => {
         showHideComponentName={"casestudiesdetailsbanner"}
       />
 
-      {/* Brief Introduction
-      {isAdmin && hasPermission && (
-        <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-      )}
-
-      <BriefIntroFrontend
-        introState={componentEdit.briefIntro}
-        pageType={pageType}
-      />
-
-      {componentEdit.briefIntro && (
-        <div className={`adminEditTestmonial selected `}>
-          <AdminBriefIntro
-            editHandler={editHandler}
-            popupTitle="Case Studies Brief"
-            componentType="briefIntro"
-            pageType={pageType}
-          />
-        </div>
-      )} */}
-
       {selectedCaseStudieDetails && (
         <div className="container mt-3">
           <div className="row">

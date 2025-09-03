@@ -113,6 +113,7 @@ const ImagewithDescComponent = ({
             editHandler={editHandler}
             componentType={componentType}
             popupTitle={popupTitle}
+            onPageLoadServiceCall={true}
             imagePostURL="banners/createBanner/"
             imageGetURL={`banners/by-page-and-category/${pageType}/category/${category}/`}
             imageUpdateURL="banners/updateBanner/"

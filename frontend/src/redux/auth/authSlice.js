@@ -150,11 +150,8 @@ const authSlice = createSlice({
     });
     builder.addCase(getMenu.fulfilled, (state, action) => {
       state.loading = false;
-      state.menuRawList = action?.payload?.PageDetails;
-      state.menuList =
-        action.payload?.PageDetails?.length > 0
-          ? getMenuObject(action.payload?.PageDetails)
-          : [];
+      state.menuRawList = action?.payload;
+      state.menuList = action.payload?.length > 0 ? getMenuObject(action.payload) : [];
       state.menuloadedStatus = true;
     });
     builder.addCase(getMenu.rejected, (state, action) => {

@@ -1,5 +1,5 @@
-from .models import Careers, appledJob
-from .serializers import CareerSerializer, appledJobSerializer
+from .models import Careers, AppliedJob
+from .serializers import CareerSerializer, AppliedJobSerializer
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -18,116 +18,58 @@ from io import BytesIO
 
 # Create your views here.
 
-class CreateCareer(generics.CreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = Careers.objects.all()
+
+# Create & List
+class CareerListCreateView(generics.ListCreateAPIView):
+    queryset = Careers.objects.all().order_by("-created_at")
     serializer_class = CareerSerializer
     pagination_class = CustomPagination
+    permission_classes = [permissions.IsAuthenticated]
 
-    """
-    List all Careers, or create a new Careers.
-    """
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user, updated_by=self.request.user)
 
-    def get(self, request, format=None):
-        snippets = Careers.objects.all()
-        results = get_custom_paginated_data(self, snippets)
-        if results is not None:
-            return results
 
-        serializer = CareerSerializer(snippets, many=True)
-        return Response({"careers": serializer.data}, status=status.HTTP_200_OK)
-    
-    def post(self, request, format=None):
-        serializer = CareerSerializer(data=request.data)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"careers": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# Retrieve, Update, Delete
+class CareerRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Careers.objects.all()
+    serializer_class = CareerSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-class UpdateCareersDetail(APIView):
-    """
-    Retrieve, update or delete a Careers instance.
-    """
-    def get_object(self, pk):
-        try:
-            return Careers.objects.get(pk=pk)
-        except Careers.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = CareerSerializer(snippet)
-        return Response({"careers": serializer.data}, status=status.HTTP_200_OK)
-
-    def put(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = CareerSerializer(snippet, data=request.data)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"careers": serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def perform_update(self, serializer):
+        serializer.save(updated_by=self.request.user)
 
 """ 
 publish Careers View
 """
 class PublishCareerAPIView(generics.RetrieveUpdateAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = Careers.objects.all()
+    serializer_class = CareerSerializer
+    lookup_field = "pk"
 
-    def patch(self, request, pk, format=None):
-        snippet = Careers.objects.get(pk=pk)
-        serializer = CareerSerializer(snippet, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"careers" : serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def patch(self, request, *args, **kwargs):
+        instance = self.get_object()  # ✅ DRF built-in safe fetch
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"careers": serializer.data}, status=status.HTTP_200_OK)
     
 
-""" 
-Client Service View
-"""
+
+# client Retrieve
 class ClientCareerAPIView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
+    queryset = Careers.objects.all().order_by("-created_at")
     serializer_class = CareerSerializer
     pagination_class = CustomPagination
-  
-    def get_object(self):
-        try:
-            return Careers.objects.filter(publish= True)
-        except Careers.DoesNotExist:
-            return Response( status=status.HTTP_404_NOT_FOUND)
 
-    def get(self, request, format=None):
-        snippets = self.get_object()
-        results = get_custom_paginated_data(self, snippets)
-        if results is not None:
-            return results
-        
-        serviceList = CareerSerializer(snippets, many=True)
-        return Response({"careers" : serviceList.data}, status=status.HTTP_200_OK)
-    
 
-class ClientSelectedCareerAPIView(generics.ListAPIView):
+class ClientSelectedCareerAPIView(generics.RetrieveAPIView):
     permission_classes = [permissions.AllowAny]
+    queryset = Careers.objects.all().order_by("-created_at")
     serializer_class = CareerSerializer
-    
-    def get_object(self, pk):
-        try:
-            return Careers.objects.get(pk=pk)
-        except Careers.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = CareerSerializer(snippet)
-        return Response({"careers": serializer.data}, status=status.HTTP_200_OK)
+    lookup_field = "pk"
     
 
 class CareerSearchAPIView(generics.ListAPIView):
@@ -154,8 +96,8 @@ class CareerSearchAPIView(generics.ListAPIView):
 
 # GET (list) 
 class JobApplicationListView(generics.ListAPIView):
-    queryset = appledJob.objects.all()
-    serializer_class = appledJobSerializer
+    queryset = AppliedJob.objects.all()
+    serializer_class = AppliedJobSerializer
     pagination_class = CustomPagination
     permission_classes = [permissions.IsAuthenticated]
 
@@ -163,8 +105,8 @@ class JobApplicationListView(generics.ListAPIView):
 # POST (create) and 
 class JobApplicationCreateView(generics.CreateAPIView):   
     permission_classes = [permissions.AllowAny]
-    queryset = appledJob.objects.all()
-    serializer_class = appledJobSerializer
+    queryset = AppliedJob.objects.all()
+    serializer_class = AppliedJobSerializer
 
     def perform_create(self, serializer):          
             username = self.request.user.username if self.request.user.is_authenticated else "system"
@@ -224,8 +166,8 @@ class JobApplicationCreateView(generics.CreateAPIView):
 # GET (detail), PUT/PATCH (update), DELETE
 class JobApplicationRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    queryset = appledJob.objects.all()
-    serializer_class = appledJobSerializer
+    queryset = AppliedJob.objects.all()
+    serializer_class = AppliedJobSerializer
 
     def perform_update(self, serializer):
         serializer.save(updated_by=self.request.user.email)
@@ -233,15 +175,15 @@ class JobApplicationRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIV
 
 class JobApplicantSearchAPIView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
-    serializer_class = appledJobSerializer
-    pagination_class = CustomPagination
+    queryset = AppliedJob.objects.all()
+    serializer_class = AppliedJobSerializer
 
     def get_object(self, query):
         try:
-            return appledJob.objects.filter(
+            return AppliedJob.objects.filter(
                 Q(firstName__icontains=query) | Q(email__icontains=query) | Q(phoneNumber__icontains=query) | Q(jobtitle__icontains=query) | Q(jobID__icontains=query)
             )
-        except appledJob.DoesNotExist:
+        except AppliedJob.DoesNotExist:
             raise Http404
 
     def get(self, request, query, format=None):
@@ -249,22 +191,23 @@ class JobApplicantSearchAPIView(generics.ListAPIView):
         results = get_custom_paginated_data(self, snippet)
         if results is not None:
             return results
-        
-        serializer = appledJobSerializer(snippet, many=True)
+
+        serializer = AppliedJobSerializer(snippet, many=True)
         return Response({"joblist": serializer.data}, status=status.HTTP_200_OK)
     
 
 
 class JobListExportToExcel(APIView):
     permission_classes = [permissions.AllowAny]
-    serializer_class = appledJobSerializer
+    queryset = AppliedJob.objects.all()
+    serializer_class = AppliedJobSerializer
     pagination_class = CustomPagination
 
     def get(self, request):
         # Get data from database
-        queryset = appledJob.objects.all()
-        serializer = appledJobSerializer(queryset, many=True)
-        
+        queryset = AppliedJob.objects.all()
+        serializer = AppliedJobSerializer(queryset, many=True)
+
         # Create Excel workbook and worksheet
         wb = Workbook()
         ws = wb.active

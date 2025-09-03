@@ -1,8 +1,8 @@
 # models.py
 from django.db import models
-from common.BaseModel import BaseModel
+from common.BaseModel import BaseModelV2
 
-class CounterSet(BaseModel):
+class CounterSet(BaseModelV2):
     title = models.CharField(max_length=255)
     counters = models.JSONField(default=list)  # Each element: { "label": "...", "counter": 0 }
 

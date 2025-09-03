@@ -1,11 +1,11 @@
 from django.db import models
 import uuid
-from common.BaseModel import BaseModel
+from common.BaseModel import BaseModelV2
 
 
 # Create your models here.
 
-class Address(BaseModel):
+class Address(BaseModelV2):
         company_name =      models.CharField(max_length=100,  null=True, blank=True )
         address_dr_no =     models.CharField(max_length=50,  null=True, blank=True )
         location =          models.CharField(max_length=100, null=True, blank=True )
@@ -32,7 +32,7 @@ class Address(BaseModel):
             return f"{self.company_name or 'No Title'}"
 
 
-class TermsandCondition(BaseModel):
+class TermsandCondition(BaseModelV2):
         terms_condition =   models.CharField(max_length=5000, null=True, blank=True )
         privacy_policy =    models.CharField(max_length=5000, null=True, blank=True )
 
@@ -42,7 +42,7 @@ class TermsandCondition(BaseModel):
         def __str__(self):
             return f"{self.company_name or 'No Title'}"
 
-class googleMAPURL(BaseModel):
+class googleMAPURL(BaseModelV2):
         google_map_url =   models.CharField(max_length=5000, null=True, blank=True )
 
         class Meta:

@@ -24,7 +24,7 @@ export const getProductCategoryBannerFormFields = (pageType) => {
     },
     pageType: {
       label: "News Title",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: pageType ? pageType : "",
       fieldName: "pageType",
@@ -56,14 +56,14 @@ export const getFormDynamicFields = (pageType, category) => {
     },
     category: {
       label: "News Title",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: category ? category : "",
       fieldName: "category",
     },
     pageType: {
       label: "News Title",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: pageType ? pageType : "",
       fieldName: "pageType",
@@ -140,7 +140,7 @@ export const getCarouselFields = (category) => {
     },
     category: {
       label: "News Title",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: category ? category : "",
       fieldName: "category",
@@ -167,7 +167,7 @@ export const getserviceOfferedFields = (category) => {
     },
     category: {
       label: "News Title",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: category ? category : "",
       fieldName: "category",
@@ -211,7 +211,7 @@ export const getTestimonialsFields = (category) => {
     },
     category: {
       label: "News Title",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: category ? category : "",
       fieldName: "category",
@@ -238,21 +238,21 @@ export const getServiceFormFields = (id, title, page_url) => {
     },
     serviceID: {
       label: "hidden",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: id ? id : "",
       fieldName: "serviceID",
     },
     services_page_title: {
       label: "hidden",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: title ? title : "",
       fieldName: "services_page_title",
     },
     services_page_url: {
       label: "hidden",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: page_url ? page_url : "",
       fieldName: "services_page_url",
@@ -290,7 +290,7 @@ export const getTeamMemberFields = (position) => {
     },
     team_member_position: {
       label: "About ",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: position ? position : 0,
       fieldName: "team_member_position",
@@ -354,7 +354,7 @@ export const getImageGalleryFields = (category) => {
     },
     category: {
       label: "News Title",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: category ? category : "",
       fieldName: "category",
@@ -382,7 +382,7 @@ export const getVideoGalleryFields = (category) => {
     },
     category: {
       label: "News Title",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: category ? category : "",
       fieldName: "category",
@@ -400,7 +400,7 @@ export const getCategoryFormDynamicFields = () => {
     },
     is_available: {
       label: "is available",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: true,
       fieldName: "is_available",
@@ -419,14 +419,14 @@ export const getCategoryFormDynamicFields = () => {
     },
     company_id: {
       label: "company_id",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: "d0c2cd08-6948-47bd-8ab6-78bad09ec7a2",
       fieldName: "company_id",
     },
     company_name: {
       label: "company_name",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: "LeonPharma",
       fieldName: "company_name",
@@ -444,7 +444,7 @@ export const getProductFormDynamicFields = (selectedCategory) => {
     },
     is_available: {
       label: "is available",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: true,
       fieldName: "is_available",
@@ -481,35 +481,35 @@ export const getProductFormDynamicFields = (selectedCategory) => {
     },
     category_id: {
       label: "category_id",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: selectedCategory.id,
       fieldName: "category_id",
     },
     category_name: {
       label: "category_name",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: selectedCategory?.category_name,
       fieldName: "category_name",
     },
     company_id: {
       label: "company_id",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: "d0c2cd08-6948-47bd-8ab6-78bad09ec7a2",
       fieldName: "company_id",
     },
     company_name: {
       label: "company_name",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: "LeonPharma",
       fieldName: "company_name",
     },
     price: {
       label: "price",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: 20,
       fieldName: "price",
@@ -538,14 +538,14 @@ export const getTitleAndDescriptionFields = (pageType) => {
     },
     pageType: {
       label: "News Title",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: pageType ? pageType : "",
       fieldName: "pageType",
     },
     intro_position: {
       label: "intro_position",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: "0",
       fieldName: "intro_position",
@@ -557,7 +557,7 @@ export const getAdvertisementFormDynamicFields = (advertisement) => {
   return {
     showAndHide: {
       label: "Show / Off",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: advertisement?.showAndHide ? advertisement?.showAndHide : false,
       fieldName: "showAndHide",
@@ -580,7 +580,7 @@ export const getAdvertisementFormDynamicFields = (advertisement) => {
     },
     category: {
       label: "category",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: "",
       fieldName: "category",
@@ -609,7 +609,7 @@ export const getBrochuresFormDynamicFields = (brochures) => {
 
     category: {
       label: "category",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: "",
       fieldName: "category",
@@ -618,12 +618,12 @@ export const getBrochuresFormDynamicFields = (brochures) => {
 };
 
 export const getProjectCategoryFormDynamicFields = (editCategory, options, disabled) => {
-  console.log("readonly ==", editCategory);
+  console.log("readOnly ==", editCategory);
   return {
     category_Label: {
       label: "Category",
       type: `${editCategory?.id ? "text" : "dropdown"}`,
-      readonly: disabled,
+      readOnly: disabled,
       options: options,
       disabled: disabled,
       selectedValue: editCategory?.category_Value,
@@ -653,13 +653,13 @@ export const getKeyPointsDynamicFields = (pageType) => {
       validationObject: { required: "Please enter Key Point" },
     },
     banner_subTitle: {
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: "KeyPoints",
       fieldName: "banner_subTitle",
     },
     banner_descripiton: {
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: "KeyPointsdescription",
       fieldName: "banner_descripiton",
@@ -672,7 +672,7 @@ export const getKeyPointsDynamicFields = (pageType) => {
     },
     pageType: {
       label: "News Title",
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: pageType ? pageType : "",
       fieldName: "pageType",
@@ -741,27 +741,27 @@ export const imageDimensionsJson = (component) => {
 export const getLogoFormFields = (pageType) => {
   return {
     banner_title: {
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       fieldName: "banner_title",
     },
     banner_subTitle: {
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       fieldName: "banner_subTitle",
     },
     banner_descripiton: {
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       fieldName: "banner_descripiton",
     },
     moreLink: {
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       fieldName: "moreLink",
     },
     pageType: {
-      readonly: true,
+      readOnly: true,
       type: "hidden",
       value: pageType ? pageType : "",
       fieldName: "pageType",

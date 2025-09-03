@@ -13,11 +13,7 @@ import { useAdminLoginStatus } from "../customhook/useAdminLoginStatus";
 import { StyledMenu } from "../StyledComponents/Styled-NavMenu";
 
 // import { axiosClientServiceApi } from "../../util/axiosUtil";
-import {
-  getMenu,
-  getSelectedUserPermissions,
-  getUser,
-} from "../../redux/auth/authActions";
+import { getMenu, getSelectedUserPermissions, getUser } from "../../redux/auth/authActions";
 import {
   getClonedObject,
   getMenuObject,
@@ -31,17 +27,16 @@ import {
 import { getServiceValues } from "../../redux/services/serviceActions";
 import { isAppAccess } from "../../util/permissions";
 
-import {
-  updatedMenulist,
-  updatedMenuloadedStatus,
-} from "../../redux/auth/authSlice";
+import { updatedMenulist, updatedMenuloadedStatus } from "../../redux/auth/authSlice";
 import { axiosServiceApi } from "../../util/axiosUtil";
 import { toast } from "react-toastify";
 import Menudata from "../../data/Menu.json";
 import ImageInputsForm from "../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import EditIcon from "../AdminEditIcon";
-import { getLogoFormFields } from "../../util/dynamicFormFields";
+import { getFormDynamicFields, getLogoFormFields } from "../../util/dynamicFormFields";
 import ApplicationLogo from "../Logo/ApplicationLogo";
+import AdminSingleRecordUpload from "../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
+import AdminListOfRecordsUpload from "../../Frontend_Admin/Components/forms/V2/AdminListOfRecordsUpload";
 
 const Header = () => {
   const editComponentObj = {
@@ -51,14 +46,17 @@ const Header = () => {
   const { isAdmin, hasPermission } = useAdminLoginStatus();
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [show, setShow] = useState(false);
-  const { userInfo, menuList, menuRawList, permissions, menuloadedStatus } =
-    useSelector((state) => state.auth);
+  const { userInfo, menuList, menuRawList, permissions, menuloadedStatus } = useSelector(
+    (state) => state.auth
+  );
   const { serviceMenu } = useSelector((state) => state.serviceMenu);
   const dispatch = useDispatch();
   const onPageLoadServiceAction = useRef(true);
   const [rootServiceMenu, setRootServiceMenu] = useState({});
   const navigate = useNavigate();
   const pageType = "header";
+  const category = "logo";
+  const componentType = "menu";
 
   const pathList = [
     "/login",
@@ -115,11 +113,7 @@ const Header = () => {
   }, [userInfo, dispatch, menuRawList]);
 
   useEffect(() => {
-    if (
-      permissions?.length > 0 &&
-      menuRawList?.length > 0 &&
-      menuloadedStatus
-    ) {
+    if (permissions?.length > 0 && menuRawList?.length > 0 && menuloadedStatus) {
       let _customMenulist = getClonedObject(menuRawList);
       if (permissions[0]?.name.toLowerCase() !== "all") {
         _customMenulist = getselectedUserMenu(permissions, menuRawList);
@@ -170,11 +164,7 @@ const Header = () => {
   }, [serviceMenu]);
 
   useEffect(() => {
-    if (
-      menuList.length > 0 &&
-      serviceMenuList.length > 0 &&
-      menuUpdateInitialized.current
-    ) {
+    if (menuList.length > 0 && serviceMenuList.length > 0 && menuUpdateInitialized.current) {
       menuUpdateInitialized.current = false;
       const updateMainMenu = getPublishedSericeMenu(menuList, serviceMenuList);
       dispatch(updatedMenulist(updateMainMenu));
@@ -200,10 +190,7 @@ const Header = () => {
 
   const loadAndSubmitMenuJSON = async () => {
     try {
-      const response = await axiosServiceApi.post(
-        `/pageMenu/uploadMenuData/`,
-        Menudata
-      );
+      const response = await axiosServiceApi.post(`/pageMenu/uploadMenuData/`, Menudata);
 
       if (response.status === 201) {
         toast.success(response.data.message || "File uploaded successfully!");
@@ -244,37 +231,18 @@ const Header = () => {
     <StyledMenu>
       <nav
         className={
-          isAdmin
-            ? "navbar navbar-expand-lg navbar-dark"
-            : "navbar navbar-expand-lg navbar-dark"
+          isAdmin ? "navbar navbar-expand-lg navbar-dark" : "navbar navbar-expand-lg navbar-dark"
         }
       >
         <div className="container">
           {isAdmin && hasPermission && (
-          <div className="position-relative">
-            
+            <div className="position-relative">
               <EditIcon editHandler={() => editHandler("menu", true)} editlabel="Logo" />
-           
-            {/* {componentEdit.menu && (
-              <div className={`adminEditTestmonial selected `}>
-                <ImageInputsForm
-                  editHandler={editHandler}
-                  componentType="menu"
-                  popupTitle="Application Logo"
-                  pageType={`${pageType}-logo`}
-                  imageLabel="Application Logo"
-                  category="Logo"
-                  showDescription={false}
-                  validTypes={"image/svg+xml"}
-                  showExtraFormFields={getLogoFormFields(`${pageType}-logo`)}
-                />
-              </div>
-            )} */}
-          </div>
-           )}
+            </div>
+          )}
           <Link to={isHideMenu ? "#" : "/"} className="navbar-brand logo">
             <ApplicationLogo
-              getBannerAPIURL={`banner/clientBannerIntro/${pageType}-logo/`}
+              getBannerAPIURL={`banners/by-category/${category}/`}
               bannerState={componentEdit.menu}
             />
           </Link>
@@ -297,10 +265,7 @@ const Header = () => {
               {/* <Link to="/adminPagesConfiguration" className="btn btn-outline ">
                 Go for Menu Creation
               </Link> */}
-              <Link
-                className="btn btn-primary mx-4"
-                onClick={loadAndSubmitMenuJSON}
-              >
+              <Link className="btn btn-primary mx-4" onClick={loadAndSubmitMenuJSON}>
                 Generate Menu
                 {/* <i className="fa fa-plus mx-2" aria-hidden="true"></i> */}
               </Link>
@@ -321,16 +286,19 @@ const Header = () => {
       {/* Edit Logo Code */}
       {componentEdit.menu && (
         <div className={`adminEditTestmonial selected `}>
-          <ImageInputsForm
+          <AdminSingleRecordUpload
             editHandler={editHandler}
-            componentType="menu"
-            popupTitle="Logo"
-            pageType={`${pageType}-logo`}
-            imageLabel="Upload Logo"
-            category="Logo"
-            showDescription={false}
+            componentType={componentType}
+            popupTitle="Image Gallery"
+            onPageLoadServiceCall={true}
+            imagePostURL="banners/createBanner/"
+            imageGetURL={`banners/by-page-and-category/${pageType}-${componentType}/category/${category}/`}
+            imageUpdateURL="banners/updateBanner/"
+            imageDeleteURL="banners/deleteBanner/"
+            imageLabel="Upload Image"
             validTypes={"image/svg+xml"}
-            showExtraFormFields={getLogoFormFields(`${pageType}-logo`)}
+            showExtraFormFields={getFormDynamicFields(`${pageType}-${componentType}`, category)}
+            sideDeck="imagepopup"
           />
         </div>
       )}
@@ -364,9 +332,7 @@ export const ClientMenu = ({ serviceMenuList, rootServiceMenu }) => {
 
       // Check if any child path exactly matches
       if (item.childMenu) {
-        return item.childMenu.some(
-          (child) => child.page_url.toLowerCase() === current
-        );
+        return item.childMenu.some((child) => child.page_url.toLowerCase() === current);
       }
 
       return false;
@@ -382,11 +348,8 @@ export const ClientMenu = ({ serviceMenuList, rootServiceMenu }) => {
           className={({ isActive }) => {
             const baseClass = menu.is_Parent ? "nav-Link" : "dropdown-item";
             const childToggleClass =
-              menu.childMenu?.length > 0
-                ? "dropdown-toggle isChildAvailable"
-                : "";
-            const activeClass =
-              isActive || isParentActive(menu) ? "active" : "";
+              menu.childMenu?.length > 0 ? "dropdown-toggle isChildAvailable" : "";
+            const activeClass = isActive || isParentActive(menu) ? "active" : "";
 
             return `${baseClass} ${childToggleClass} ${activeClass}`;
           }}
@@ -408,11 +371,7 @@ export const ClientMenu = ({ serviceMenuList, rootServiceMenu }) => {
             aria-labelledby={`${menu.page_label}-navbarDropdown`}
           >
             {menu.childMenu.map((childMenu) => (
-              <ChildMenuContent
-                menu={childMenu}
-                key={childMenu.id}
-                className="child"
-              />
+              <ChildMenuContent menu={childMenu} key={childMenu.id} className="child" />
             ))}
           </ul>
         )}

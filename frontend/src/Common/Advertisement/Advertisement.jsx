@@ -34,7 +34,7 @@ const Advertisement = ({ setFlashAdd, flashAdd }) => {
   useEffect(() => {
     getAdvertisementList();
     getAdvertisementSize();
-  }, []);
+  }, [flashAdd]);
 
   return (
     advertisementList?.length > 0 &&

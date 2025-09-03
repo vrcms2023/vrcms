@@ -23,7 +23,6 @@ function BriefWithShowHideToggleComponent({
   anchersvgColor,
   maxHeight,
   showHideCompList,
-  ShowHideToggle,
   showHideHandler,
   showHideComponentName,
   showHideComponentTitle,

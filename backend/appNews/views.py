@@ -44,23 +44,25 @@ class NewsSearchAPIView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = AppNewsSerializer
     pagination_class = CustomPagination
-  
-    def get_object(self, query):
-        try:
-            return AppNews.objects.filter(Q(news_title__icontains=query)
-                # Q(news_title__icontains=query) | Q(news_description__icontains=query)
-            )
-        except AppNews.DoesNotExist:
-            raise Http404
 
-    def get(self, request, query, format=None):
-        snippet = self.get_object(query)
-        results = get_custom_paginated_data(self, snippet)
-        if results is not None:
-            return results
+    def get_queryset(self):
+        query = self.kwargs.get("query", "")
+        if not query:
+            return AppNews.objects.none()
+        return AppNews.objects.filter(
+            Q(news_title__icontains=query)          
+        )
 
-        serializer = AppNewsSerializer(snippet, many=True)
-        return Response({"appNews": serializer.data}, status=status.HTTP_200_OK)
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response( serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+    
     
 class UpdateClientIndex(APIView):
     """
@@ -74,17 +76,15 @@ class UpdateClientIndex(APIView):
             raise status.HTTP_400_BAD_REQUEST
         
     def put(self, request, *args, **kwargs):
-        obj_list = request.data
-        instances = []
         user = request.user
-        for item in obj_list:
-            obj = self.get_object(obj_id=item["id"])
-            obj.updated_by = user.userName
-            obj.news_position = item["news_position"]
-            obj.save()
-            instances.append(obj)
+        updated_instances = []
 
-        serializer = AppNewsSerializer(instances,  many=True)
-        
-        return Response({"appNews": serializer.data}, status=status.HTTP_200_OK)
-       
+        for item in request.data:
+            obj = self.get_object(item.get("id"))
+            obj.news_position = item.get("news_position")
+            obj.updated_by = user
+            obj.save()
+            updated_instances.append(obj)
+
+        serializer = AppNewsSerializer(updated_instances, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

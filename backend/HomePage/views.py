@@ -76,7 +76,7 @@ class UpdateCarouselIndex(APIView):
         user = request.user
         for item in obj_list:
             obj = self.get_object(obj_id=item["id"])
-            obj.updated_by = user.userName
+            obj.updated_by = user
             obj.carouse_position = item["carouse_position"]
             obj.save()
             instances.append(obj)
@@ -109,107 +109,27 @@ class ClientCarouselViewByCategory(generics.ListAPIView):
 '''
     ------------------------------------------------ Home intro section ------------------------------------------------------
 '''
-class HomeIntroAPIView(generics.CreateAPIView):
-     permission_classes = [permissions.IsAuthenticated]
-     serializer_class = HomeIntroSerializer
-     queryset = HomeIntro.objects.all()
+class HomeIntroAPIView(generics.ListCreateAPIView):
+    queryset = HomeIntro.objects.all().order_by("-created_at")
+    serializer_class = HomeIntroSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-     """
-     List all intro, or create a new Intro.
-     """
-
-     def get(self, request, format=None):
-        snippets = HomeIntro.objects.all()
-        serializer = HomeIntroSerializer(snippets, many=True)
-        return Response({"intro": serializer.data}, status=status.HTTP_200_OK)
-    
-     def post(self, request, format=None):
-        user = request.user
-        request.data.update({"created_by": user.userName})
-        serializer = HomeIntroSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"intro": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user, updated_by=self.request.user)
      
 
 
-class HomeIntroUpdateAndDeleteView(APIView):
-    """
-    Retrieve, update or delete a carousel instance.
-    """
-    def get_object(self, pk):
-        try:
-            return HomeIntro.objects.get(pageType=pk)
-        except HomeIntro.DoesNotExist:
-            raise Http404
-        
-    def get_object_pk(self, pk):
-        try:
-            return HomeIntro.objects.get(pk=pk)
-        except HomeIntro.DoesNotExist:
-            raise Http404
+class HomeIntroUpdateAndDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = HomeIntro.objects.all().order_by("-created_at")
+    serializer_class = HomeIntroSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = HomeIntroSerializer(snippet)
-        return Response({"intro": serializer.data}, status=status.HTTP_200_OK)
-
-    def put(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        user = request.user
-        request.data.update({"updated_by": user.userName})
-        serializer = HomeIntroSerializer(snippet, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"intro": serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object_pk(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class HomeIntroListUpdateAndDeleteView(APIView):
-    """
-    Retrieve, update or delete a carousel instance.
-    """
-    def get_object(self, pk):
-        try:
-            return HomeIntro.objects.get(pageType=pk)
-        except HomeIntro.DoesNotExist:
-            raise Http404
-        
-    def get_object_pk(self, pk):
-        try:
-            return HomeIntro.objects.get(pk=pk)
-        except HomeIntro.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = HomeIntroSerializer(snippet)
-        return Response({"intro": serializer.data}, status=status.HTTP_200_OK)
-
-    def put(self, request, pk, format=None):
-        snippet = self.get_object_pk(pk)
-        user = request.user
-        request.data.update({"updated_by": user.userName})
-        serializer = HomeIntroSerializer(snippet, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"intro": serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object_pk(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def perform_update(self, serializer):
+        serializer.save(updated_by=self.request.user)
 
 
 
-class UpdateIntorIndex(APIView):
+class UpdateIntroIndex(APIView):
     """
     Retrieve, update or delete a Carousel instance.
     """
@@ -226,7 +146,7 @@ class UpdateIntorIndex(APIView):
         user = request.user
         for item in obj_list:
             obj = self.get_object(obj_id=item["id"])
-            obj.updated_by = user.userName
+            obj.updated_by = user
             obj.address_position = item["intro_position"]
             obj.save()
             instances.append(obj)
@@ -238,24 +158,12 @@ class UpdateIntorIndex(APIView):
    
 class ClientHomeIntroView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
-    queryset = HomeIntro.objects.all()
+    queryset = HomeIntro.objects.all().order_by("-created_at")
     serializer_class = HomeIntroSerializer
 
-    """
-    List all carousel, or create a new carousel.
-    """
-    def get_object(self, pk):
-        try:
-            return HomeIntro.objects.get(pageType=pk)
-        except HomeIntro.DoesNotExist:
-            raise Http404
 
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = HomeIntroSerializer(snippet)
-        return Response({"intro": serializer.data}, status=status.HTTP_200_OK)
 
-class ClientHomeIntroListView(generics.CreateAPIView):
+class ClientHomeIntroListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = HomeIntro.objects.all()
     serializer_class = HomeIntroSerializer
@@ -263,116 +171,49 @@ class ClientHomeIntroListView(generics.CreateAPIView):
     """
     List all carousel, or create a new carousel.
     """
-    def get_object(self, pageType):
-        try:
-            return HomeIntro.objects.filter(pageType=pageType)
-        except HomeIntro.DoesNotExist:
+    def get_queryset(self):
+        page_type = self.kwargs.get("pageType")
+        queryset = HomeIntro.objects.filter(pageType=page_type)
+        if not queryset.exists():
             raise Http404
+        return queryset
 
-    def get(self, request, pageType, format=None):
-        snippet = self.get_object(pageType)
-        serializer = HomeIntroSerializer(snippet, many=True)
-        return Response({"intro": serializer.data}, status=status.HTTP_200_OK)
-    
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 '''
     ------------------------------------------------ Client Images section ------------------------------------------------------
 '''
 
 
-class ClientLogoAPIView(generics.CreateAPIView):
-     permission_classes = [permissions.IsAuthenticated]
-     serializer_class = ClientLogoSerializer
-     queryset = ClientLogo.objects.all().order_by('client_position',"-created_at")
-     pagination_class = CustomPaginationForImageGallery
-
-     """
-     List all ClientLogo, or create a new ClientLogo.
-     """
-
-
-     def get(self, request, format=None):
-        snippets = ClientLogo.objects.all().order_by('client_position',"-created_at")
-        results = get_custom_paginated_data(self, snippets)
-        if results is not None:
-            return results
-
-        serializer = ClientLogoSerializer(snippets, many=True)
-        return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
-    
-     def post(self, request, format=None):
-        serializer = ClientLogoSerializer(data=request.data)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"clientLogo": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-class ClientLogoUpdateAndDeleteView(APIView):
-    """
-    Retrieve, update or delete a carousel instance.
-    """
-    def get_object(self, pk):
-        try:
-            return ClientLogo.objects.get(pk=pk)
-        except ClientLogo.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = ClientLogoSerializer(snippet)
-        return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
-
-    def patch(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = ClientLogoSerializer(snippet, data=request.data)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-   
-class ClientLogoImagesView(generics.CreateAPIView):
-    permission_classes = [permissions.AllowAny]
-    queryset = ClientLogo.objects.all().order_by('client_position')
+class ClientLogoAPIView(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = ClientLogoSerializer
+    queryset = ClientLogo.objects.all().order_by('client_position',"-created_at")
     pagination_class = CustomPaginationForImageGallery
-   
-    """
-    List all ClientLogo, or create a new ClientLogo.
-    """
 
-    def get(self, request, format=None):
-        snippets = ClientLogo.objects.all().order_by('client_position',"-created_at")
-        results = get_custom_paginated_data(self, snippets)
-        if results is not None:
-            return results
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user, updated_by=self.request.user)
 
-        serializer = ClientLogoSerializer(snippets, many=True)
-        return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
+class ClientLogoUpdateAndDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ClientLogo.objects.all().order_by("-created_at")
+    serializer_class = ClientLogoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = CustomPaginationForImageGallery
 
-class AllClientLogoImagesView(generics.CreateAPIView):
+    def perform_update(self, serializer):
+        serializer.save(updated_by=self.request.user)
+
+
+
+class AllClientLogoImagesView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = ClientLogo.objects.all().order_by('client_position',"-created_at")
     serializer_class = ClientLogoSerializer
-    """
-    List all ClientLogo, or create a new ClientLogo.
-    """
+    pagination_class = CustomPaginationForImageGallery
 
-    def get(self, request, format=None):
-        snippets = ClientLogo.objects.all().order_by('client_position',"-created_at")
-        serializer = ClientLogoSerializer(snippets, many=True)
-        return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
     
 
 class ClientLogoSearchAPIView(generics.ListAPIView):
@@ -380,22 +221,27 @@ class ClientLogoSearchAPIView(generics.ListAPIView):
     serializer_class = ClientLogoSerializer
     pagination_class = CustomPaginationForImageGallery
   
-    def get_object(self, query):
-        try:
-            return ClientLogo.objects.filter( Q(client_title__icontains=query)
-                # Q(client_title__icontains=query) | Q(client_description__icontains=query)
-            )
-        except ClientLogo.DoesNotExist:
-            raise Http404
 
-    def get(self, request, query, format=None):
-        snippet = self.get_object(query)
-        results = get_custom_paginated_data(self, snippet)
-        if results is not None:
-            return results
+    def get_queryset(self):
+        query = self.kwargs.get("query")
+        if not query:
+            return ClientLogo.objects.none()
 
-        serializer = ClientLogoSerializer(snippet, many=True)
-        return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
+        return ClientLogo.objects.filter(
+            Q(client_title__icontains=query)
+            # | Q(client_description__icontains=query)   # uncomment if needed
+        ).order_by("-created_at")
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
 
 
@@ -416,12 +262,10 @@ class UpdateClientIndex(APIView):
         user = request.user
         for item in obj_list:
             obj = self.get_object(obj_id=item["id"])
-            obj.updated_by = user.userName
+            obj.updated_by = user
             obj.client_position = item["client_position"]
             obj.save()
             instances.append(obj)
 
         serializer = ClientLogoSerializer(instances,  many=True)
-        
-        return Response({"clientLogo": serializer.data}, status=status.HTTP_200_OK)
-       
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -461,7 +461,6 @@ const Home = () => {
           linkLabel="Read More"
           detailsContainerCss="col-lg-10 offset-lg-1 text-center"
           showHideCompList={showHideCompList}
-          ShowHideToggle={ShowHideToggle}
           showHideHandler={showHideHandler}
           showHideComponentName={"iconshelightsbrief"}
           showHideComponentTitle={"Hilighted Brief with BG Image "}

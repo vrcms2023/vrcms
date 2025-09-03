@@ -35,6 +35,7 @@ import {
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
+import BriefWithShowHideToggleComponent from "../../../Common/Brief/BriefWithShowHideToggleComponent";
 
 const Careers = () => {
   const editComponentObj = {
@@ -113,58 +114,19 @@ const Careers = () => {
         showHideComponentName={"careerbanner"}
       />
 
-      <div
-        className={
-          showHideCompList?.careerbriefintro?.visibility && isAdmin && hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.careerbriefintro?.visibility}
-            title={"A Brief Introduction Component"}
-            componentName={"careerbriefintro"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.careerbriefintro?.id}
-          />
-        )}
-
-        {/* INTRODUCTION COMPONENT */}
-        {showHideCompList?.careerbriefintro?.visibility && (
-          <div>
-            {/* Introduction */}
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-            )}
-
-            <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              linkCss="btn btn-outline d-flex justify-content-center align-items-center"
-              linkLabel="Read More"
-              moreLink=""
-              showLink={false}
-              introTitleCss="fs-3 fw-medium text-md-center"
-              introSubTitleCss="fw-medium text-muted text-md-center"
-              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-              detailsContainerCss="col-md-10 offset-md-1"
-              anchorContainer="d-flex justify-content-start align-items-start mt-4"
-              anchersvgColor="#17427C"
-              pageType={pageType}
-            />
-
-            {componentEdit.briefIntro && (
-              <div className={`adminEditTestmonial selected `}>
-                <AdminBriefIntro
-                  editHandler={editHandler}
-                  componentType="briefIntro"
-                  pageType={pageType}
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      <BriefWithShowHideToggleComponent
+        editHandler={editHandler}
+        componentType="briefIntro"
+        popupTitle="Career Brief Introduction Component"
+        pageType={pageType}
+        componentEdit={componentEdit}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        editlabel={"briefIntro"}
+        showHideComponentName={"careerbriefintro"}
+        detailsContainerCss="col-lg-10 offset-lg-1 text-center"
+        showHideComponentTitle={"Career Brief Intro "}
+      />
 
       {/* <CareerFilterStyled>
         <div className="container p-5 py-3 careersFilter">
@@ -173,29 +135,6 @@ const Careers = () => {
       </CareerFilterStyled> */}
 
       <div className="container mt-4 my-md-5 careerItems">
-        {/* {isAdmin && hasPermission && (
-          <div className="text-end mb-4">
-            <Link
-              to="#"
-              className="btn btn-primary"
-              onClick={() => editHandler("addjob", true)}
-            >
-              New
-              <i className="fa fa-plus ms-2" aria-hidden="true"></i>
-            </Link>
-          </div>
-        )}
-        {componentEdit.addjob && (
-          <div className={`adminEditTestmonial selected `}>
-            <JobPostFrom
-              editHandler={editHandler}
-              componentType="addjob"
-              popupTitle="Add Career Details"
-              type="add"
-            />
-          </div>
-        )} */}
-
         <div>
           <CareersPageStyled>
             <div className="row mb-4 pb-4">
