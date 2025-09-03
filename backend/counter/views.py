@@ -8,6 +8,33 @@ from django.http import Http404
 
 # Create your views here.
 
+# Create your views here.
+class CounterListCreateView(generics.ListCreateAPIView):
+    queryset = CounterSet.objects.all().order_by("-created_at")
+    serializer_class = CounterSetSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user, updated_by=self.request.user)
+
+
+# Retrieve, Update, Delete
+class CounterUpdateAndDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CounterSet.objects.all().order_by("-created_at")
+    serializer_class = CounterSetSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_update(self, serializer):
+        serializer.save(updated_by=self.request.user)
+
+# client Retrieve
+class ClientCounterSetView(generics.ListAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = CounterSet.objects.all().order_by("-created_at")
+    serializer_class = CounterSetSerializer
+
+
+
 class CreateCounterSet(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = CounterSet.objects.all()

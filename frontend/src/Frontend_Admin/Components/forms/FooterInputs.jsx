@@ -9,12 +9,7 @@ import Button from "../../../Common/Button";
 import { getCookie } from "../../../util/cookieUtil";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 
-const FooterAdminFeilds = ({
-  editHandler,
-  componentType,
-  popupTitle,
-  footerValues,
-}) => {
+const FooterAdminFeilds = ({ editHandler, componentType, popupTitle, footerValues }) => {
   const [userName, setUserName] = useState("");
   const { register, reset, handleSubmit } = useForm({
     defaultValues: useMemo(() => {
@@ -40,17 +35,14 @@ const FooterAdminFeilds = ({
     try {
       if (data.id) {
         data["updated_by"] = userName;
-        response = await axiosServiceApi.put(
-          `/footer/updateAddress/${data.id}/`,
-          data
-        );
+        response = await axiosServiceApi.put(`/footer/updateAddress/${data.id}/`, data);
       } else {
         data["created_by"] = userName;
         response = await axiosServiceApi.post(`/footer/createAddress/`, data);
       }
 
       if (response.status === 200 || response.status === 201) {
-        reset(response.data.address[0]);
+        reset(response.data[0]);
         toast.success(`Footer Values are updated successfully `);
         closeHandler();
       }
@@ -106,46 +98,14 @@ const FooterAdminFeilds = ({
             </div> */}
 
             <div className="col-md-12 mb-md-0">
-              <InputField
-                label="WhatsApp"
-                fieldName="whatsapp_number"
-                register={register}
-              />
-              <InputField
-                label="Facebook"
-                fieldName="facebook_url"
-                register={register}
-              />
-              <InputField
-                label="Twitter"
-                fieldName="twitter_url"
-                register={register}
-              />
-              <InputField
-                label="Linked In"
-                fieldName="linkedIn_url"
-                register={register}
-              />
-              <InputField
-                label="You Tube"
-                fieldName="youtube_url"
-                register={register}
-              />
-              <InputField
-                label="Instagram"
-                fieldName="instagram_url"
-                register={register}
-              />
-              <InputField
-                label="Vimeo"
-                fieldName="vimeo_url"
-                register={register}
-              />
-              <InputField
-                label="Pinterest"
-                fieldName="pinterest_url"
-                register={register}
-              />
+              <InputField label="WhatsApp" fieldName="whatsapp_number" register={register} />
+              <InputField label="Facebook" fieldName="facebook_url" register={register} />
+              <InputField label="Twitter" fieldName="twitter_url" register={register} />
+              <InputField label="Linked In" fieldName="linkedIn_url" register={register} />
+              <InputField label="You Tube" fieldName="youtube_url" register={register} />
+              <InputField label="Instagram" fieldName="instagram_url" register={register} />
+              <InputField label="Vimeo" fieldName="vimeo_url" register={register} />
+              <InputField label="Pinterest" fieldName="pinterest_url" register={register} />
             </div>
           </div>
           <div className="row">

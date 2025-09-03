@@ -51,10 +51,10 @@ const UserPagePermission = () => {
   const getMenuDetails = async () => {
     try {
       const response = await axiosServiceApi.get(`/pageMenu/createPageMenu/`);
-      if (response?.status === 200 && response?.data?.PageDetails?.length > 0) {
-        const res = JSON.parse(JSON.stringify(response.data.PageDetails));
+      if (response?.status === 200 && response?.data?.length > 0) {
+        const res = JSON.parse(JSON.stringify(response.data));
         setMenuList(res);
-        setMenuDetails(getMenuObject(response.data.PageDetails));
+        setMenuDetails(getMenuObject(response.data));
       } else {
         setMenuDetails([]);
       }
@@ -159,17 +159,11 @@ const UserPagePermission = () => {
           userPermission
         );
       } else {
-        response = await axiosServiceApi.post(
-          `/pagePermission/createPermissions/`,
-          data
-        );
+        response = await axiosServiceApi.post(`/pagePermission/createPermissions/`, data);
       }
 
-      if (
-        (response?.status === 201 || response?.status === 200) &&
-        response?.data?.userPermissions
-      ) {
-        setUserPermission(response?.data?.userPermissions);
+      if ((response?.status === 201 || response?.status === 200) && response?.data) {
+        setUserPermission(response?.data);
         toast.success("Permission are update successfully");
       } else {
         setUserPermission({});
@@ -184,9 +178,7 @@ const UserPagePermission = () => {
    */
   const getSelectedUserPermisisons = async (id) => {
     try {
-      const response = await axiosServiceApi.get(
-        `/pagePermission/updatePermissions/${id}/`
-      );
+      const response = await axiosServiceApi.get(`/pagePermission/updatePermissions/${id}/`);
       if (response?.status === 200 && response?.data?.userPermissions) {
         const permission = response?.data?.userPermissions;
         setUserPermission(permission);
@@ -209,14 +201,10 @@ const UserPagePermission = () => {
         {menu.is_Maintainer_menu && (
           <li
             className={`list-group-item ${
-              !menu.childMenu
-                ? "d-flex justify-content-between align-items-start"
-                : ""
+              !menu.childMenu ? "d-flex justify-content-between align-items-start" : ""
             }`}
           >
-            <span className={`${menu.is_Parent ? "fw-bold" : "child"}`}>
-              {menu.page_label}
-            </span>
+            <span className={`${menu.is_Parent ? "fw-bold" : "child"}`}>{menu.page_label}</span>
             {!menu.childMenu ? (
               <span className="badge">
                 <Checkbox
@@ -277,12 +265,8 @@ const UserPagePermission = () => {
             <tbody>
               {userDetails?.map((user) => (
                 <tr key={user.id}>
-                  <td className={`${user.is_admin ? "text-danger" : ""}`}>
-                    {user.userName}
-                  </td>
-                  <td className={`${user.is_admin ? "text-danger" : ""}`}>
-                    {user.email}
-                  </td>
+                  <td className={`${user.is_admin ? "text-danger" : ""}`}>{user.userName}</td>
+                  <td className={`${user.is_admin ? "text-danger" : ""}`}>{user.email}</td>
                   <td className={`${user.is_admin ? "text-danger" : ""}`}>
                     {user.id !== userId && !user.is_admin ? (
                       <Checkbox
@@ -293,15 +277,8 @@ const UserPagePermission = () => {
                         handleClick={(e) => {
                           userSelection(e, user);
                         }}
-                        isChecked={isObjectChecked(
-                          isUserCheck,
-                          user.id.toString()
-                        )}
-                        disabled={isObjectDisabled(
-                          user,
-                          isUserCheck,
-                          user.id.toString()
-                        )}
+                        isChecked={isObjectChecked(isUserCheck, user.id.toString())}
+                        disabled={isObjectDisabled(user, isUserCheck, user.id.toString())}
                       />
                     ) : (
                       ""
@@ -348,15 +325,7 @@ const UserPagePermission = () => {
   );
 };
 
-const Checkbox = ({
-  id,
-  type,
-  name,
-  handleClick,
-  isChecked,
-  disabled,
-  ...rest
-}) => {
+const Checkbox = ({ id, type, name, handleClick, isChecked, disabled, ...rest }) => {
   return (
     <input
       id={id}

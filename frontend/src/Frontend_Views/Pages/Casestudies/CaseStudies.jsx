@@ -215,7 +215,6 @@ const CaseStudies = () => {
               editHandler={editHandler}
               componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
               parentEditObject={editCarousel}
-              onPageLoadServiceCall={componentEdit.editSection}
               popupTitle={`${componentEdit.editSection ? "Edit Case Studie" : "Add Case Studie"}`}
               imageGetURL="/caseStudies/createCaseStudies/"
               imagePostURL="/caseStudies/createCaseStudies/"

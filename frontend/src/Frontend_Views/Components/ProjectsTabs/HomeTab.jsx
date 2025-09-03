@@ -90,9 +90,9 @@ const HomeTab = ({ project, thumbImgs, pdfs }) => {
           />
         </div>
       </div>
-      {show && <RaqFormModel closeModel={closeModel} downloadPDF={downloadPDF} />}
+      {/* {show && <RaqFormModel closeModel={closeModel} downloadPDF={downloadPDF} />} */}
 
-      {/* {show && <ContactModel closeModel={closeModel} downloadPDF={downloadPDF} />} */}
+      {show && <ContactModel closeModel={closeModel} downloadPDF={downloadPDF} />}
       {show && <ModelBg />}
     </>
   );

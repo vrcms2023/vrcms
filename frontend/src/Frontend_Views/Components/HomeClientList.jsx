@@ -18,7 +18,7 @@ export const HomeClientList = ({ showHideCompList, showHideHandler }) => {
       try {
         const response = await axiosClientServiceApi.get(`/client/getAllClientLogos/`);
         if (response?.status === 200) {
-          const _clientList = sortByFieldName(response.data.clientLogo, "client_position");
+          const _clientList = sortByFieldName(response.data, "client_position");
 
           setClientsList(_clientList);
         }

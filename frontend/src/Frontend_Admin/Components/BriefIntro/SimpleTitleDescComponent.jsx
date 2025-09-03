@@ -17,7 +17,7 @@ export const SimpleTitleDescComponent = ({
     const getintroValues = async () => {
       try {
         let response = await axiosClientServiceApi.get(formgetURL);
-        setFormValues(response.data.intro);
+        setFormValues(response.data);
       } catch (error) {
         console.log("Unable to get the intro");
       }

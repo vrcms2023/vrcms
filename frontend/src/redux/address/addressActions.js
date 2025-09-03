@@ -6,11 +6,9 @@ export const getAddressList = createAsyncThunk(
   "project/clientAddressList",
   async (rejectWithValue) => {
     try {
-      const { data } = await axiosClientServiceApi.get(
-        `address/getClientAddress/`
-      );
+      const { data } = await axiosClientServiceApi.get(`address/getClientAddress/`);
 
-      let response = sortByFieldName(data.addressList, "address_position");
+      let response = sortByFieldName(data, "address_position");
       return response;
     } catch (error) {
       // return custom error message from API if any

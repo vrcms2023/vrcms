@@ -15,7 +15,7 @@ const AdminSingleRecordUpload = ({
   showExtraFormFields,
   dimensions,
   parentEditObject,
-  onPageLoadServiceCall = true,
+  onPageLoadServiceCall = false,
   imageLabel = "Upload Image",
   imagePostURL = "banners/createBanner/",
   imageGetURL = "banners/by-page-and-category/",
@@ -44,10 +44,10 @@ const AdminSingleRecordUpload = ({
         console.log("unable to access ulr because of server is down");
       }
     };
-    if (onPageLoadServiceCall) {
+    if (!parentEditObject?.id && onPageLoadServiceCall) {
       getRecordData();
     }
-  }, [newObject, onPageLoadServiceCall]);
+  }, [newObject, parentEditObject, onPageLoadServiceCall]);
 
   useEffect(() => {
     if (parentEditObject) {

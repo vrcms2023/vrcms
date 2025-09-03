@@ -36,8 +36,8 @@ export const BriefIntroAdmin = ({ editHandler, componentType, popupTitle, pageTy
     const getintroValues = async () => {
       try {
         let response = await axiosServiceApi.get(`/carousel/updateHomeIntro/${pageType}/`);
-        setFormValues(response.data.intro);
-        reset(response.data.intro);
+        setFormValues(response.data);
+        reset(response.data);
       } catch (error) {
         console.log("Unable to get the intro");
       }

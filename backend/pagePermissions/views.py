@@ -6,62 +6,53 @@ from rest_framework.views import APIView
 from rest_framework import status
 from django.http import Http404
 
+
 # Create your views here.
-
-class CreateUserPermissions(generics.CreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = UserPermissions.objects.all()
+class UserPermissionsListCreateView(generics.ListCreateAPIView):
+    queryset = UserPermissions.objects.all().order_by("-created_at")
     serializer_class = UserPermissionsSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    """
-    Get Page Details, or create a new Page Details.
-    """
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user, updated_by=self.request.user)
 
-    def get(self, request, format=None):
-        snippets = UserPermissions.objects.all()
-        serializer = UserPermissionsSerializer(snippets, many=True)
-        return Response({"userPermissions": serializer.data}, status=status.HTTP_200_OK)
-    
-    def post(self, request, format=None):
-        serializer = UserPermissionsSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"userPermissions": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UpdateUserPermissions(APIView):
     """
-    Retrieve, update or delete a UserPermissions instance.
+    Retrieve (by user_id), update (by pk), or delete (by pk) a UserPermissions instance.
     """
-    def get_object_by_userID(self, pk):
+
+    def get_object_by_user_id(self, user_id):
         try:
-            return UserPermissions.objects.get(user_id=pk)
+            return UserPermissions.objects.get(user_id=user_id)
         except UserPermissions.DoesNotExist:
             raise Http404
-    
+
     def get_object(self, pk):
         try:
             return UserPermissions.objects.get(pk=pk)
         except UserPermissions.DoesNotExist:
             raise Http404
 
-
     def get(self, request, pk, format=None):
-        snippet = self.get_object_by_userID(pk)
-        serializer = UserPermissionsSerializer(snippet)
-        return Response({"userPermissions": serializer.data}, status=status.HTTP_200_OK)
+        """Retrieve by user_id (pk here represents user_id)."""
+        instance = self.get_object_by_user_id(pk)
+        serializer = UserPermissionsSerializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def patch(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = UserPermissionsSerializer(snippet, data=request.data)
+        """Partial update by primary key."""
+        instance = self.get_object(pk)
+        serializer = UserPermissionsSerializer(instance, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response({"userPermissions": serializer.data}, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
+        """Delete by primary key."""
+        instance = self.get_object(pk)
+        instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

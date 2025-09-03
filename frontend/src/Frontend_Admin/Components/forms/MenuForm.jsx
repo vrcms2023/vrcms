@@ -13,12 +13,24 @@ import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getCookie } from "../../../util/cookieUtil";
 import { getMenu } from "../../../redux/auth/authActions";
 
-import { createServiceChildFromMenu, updatedMenu, updateServiceMmenuID } from "../../../util/menuUtil";
+import {
+  createServiceChildFromMenu,
+  updatedMenu,
+  updateServiceMmenuID,
+} from "../../../util/menuUtil";
 import SEOForm from "./SEOForm";
 import { getServiceValues } from "../../../redux/services/serviceActions";
 import Title from "../../../Common/Title";
 
-const MenuForm = ({ editHandler, menuList, editMenu, componentType, popupTitle, selectedServiceMenu, rootServiceMenu }) => {
+const MenuForm = ({
+  editHandler,
+  menuList,
+  editMenu,
+  componentType,
+  popupTitle,
+  selectedServiceMenu,
+  rootServiceMenu,
+}) => {
   const dispatch = useDispatch();
   const closeHandler = () => {
     editHandler(componentType, false);
@@ -57,9 +69,7 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType, popupTitle, 
     editMenu ? (editMenu?.is_Client_menu ? true : false) : true
   );
   const [optionMenulist, setOptionMenuList] = useState([]);
-  const [menuIndexValues, setMenuIndexValues] = useState(
-    generateOptionLength(15)
-  );
+  const [menuIndexValues, setMenuIndexValues] = useState(generateOptionLength(15));
 
   const [isParentHasChilds, setIsParentHasChilds] = useState(
     editMenu?.childMenu?.length > 0 ? true : false
@@ -145,16 +155,14 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType, popupTitle, 
       if (getSelectedParentObject.page_url === "/services") {
         const _url = data["page_url"].split("/");
 
-        data["page_url"] =
-          getSelectedParentObject?.page_url + "/" + _url[_url.length - 1];
+        data["page_url"] = getSelectedParentObject?.page_url + "/" + _url[_url.length - 1];
       }
 
       if (!data?.id) {
         const parentPosition = getSelectedParentObject.childMenu?.length
           ? getSelectedParentObject.childMenu.length
           : 1;
-        data["page_position"] =
-          getSelectedParentObject.page_position * 10 + parentPosition;
+        data["page_position"] = getSelectedParentObject.page_position * 10 + parentPosition;
       }
     } else if (!data.page_parent_ID && !data?.id) {
       data["page_position"] = menuList?.length > 0 ? menuList?.length + 1 : 1;
@@ -183,15 +191,9 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType, popupTitle, 
 
     try {
       let response = await updatedMenu(data);
-      if (
-        (response?.status === 201 || response?.status === 200) &&
-        response?.data?.PageDetails
-      ) {
+      if ((response?.status === 201 || response?.status === 200) && response?.data) {
         if (!data.is_Parent && data.page_parent_ID === rootServiceMenu.id) {
-          updateServicePageMenu(
-            selectedServiceMenu,
-            response?.data?.PageDetails
-          );
+          updateServicePageMenu(selectedServiceMenu, response?.data);
         }
         closeHandler();
         dispatch(getMenu());
@@ -203,15 +205,9 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType, popupTitle, 
 
   const updateServicePageMenu = async (selectedServiceMenu, PageDetails) => {
     try {
-      const response = await createServiceChildFromMenu(
-        selectedServiceMenu,
-        PageDetails
-      );
+      const response = await createServiceChildFromMenu(selectedServiceMenu, PageDetails);
       if (response?.status === 201) {
-        const res = await updateServiceMmenuID(
-          response.data.services,
-          PageDetails
-        );
+        const res = await updateServiceMmenuID(response.data.services, PageDetails);
       }
       if (response?.status === 201 || response?.status === 200) {
         toast.success(`$service is created `);
@@ -244,7 +240,7 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType, popupTitle, 
 
   const handleToggleSeoForm = () => {
     setShow(!show);
-  }
+  };
 
   return (
     <>
@@ -253,9 +249,7 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType, popupTitle, 
       <div className="container mt-2 p-0">
         <div className="row py-0 pb-md-5">
           <div className="col-md-12 mb-5 mb-md-0">
-            {error && (
-              <div className="fw-bold">{error && <Error>{error}</Error>}</div>
-            )}
+            {error && <div className="fw-bold">{error && <Error>{error}</Error>}</div>}
             <form onSubmit={handleSubmit(saveMenu)}>
               <InputFields
                 key={0}
@@ -319,17 +313,24 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType, popupTitle, 
               )} */}
               {!isParentHasChilds && (
                 <>
-                <hr className="mt-4 border-secondary" />
-               
-                <div className="d-flex justify-content-between align-items-center">
-                  
-                  <h5 className="m-0">SEO</h5>
-                   <span onClick={() =>handleToggleSeoForm()} style={{cursor: "pointer"}} className={`px-2  ${show ? "text-dark border-light" : "text-dark border-light"}`}>
-                    <small>
-                      <i className={`fa me-1 ${show ? "fa-chevron-up text-dark" : "fa-chevron-down text-dark"}`} aria-hidden="true"></i> 
-                      {show ? "CLOSE" : "OPEN" }</small>
-                  </span>
-                </div>
+                  <hr className="mt-4 border-secondary" />
+
+                  <div className="d-flex justify-content-between align-items-center">
+                    <h5 className="m-0">SEO</h5>
+                    <span
+                      onClick={() => handleToggleSeoForm()}
+                      style={{ cursor: "pointer" }}
+                      className={`px-2  ${show ? "text-dark border-light" : "text-dark border-light"}`}
+                    >
+                      <small>
+                        <i
+                          className={`fa me-1 ${show ? "fa-chevron-up text-dark" : "fa-chevron-down text-dark"}`}
+                          aria-hidden="true"
+                        ></i>
+                        {show ? "CLOSE" : "OPEN"}
+                      </small>
+                    </span>
+                  </div>
                 </>
               )}
               {!isParentHasChilds && show && (
@@ -346,12 +347,16 @@ const MenuForm = ({ editHandler, menuList, editMenu, componentType, popupTitle, 
                     seoAuthor={seoAuthor}
                     setValue={setValue}
                   />
-                  
                 </div>
               )}
               {!show && <hr className="my-1 border-secondary" />}
               <div className="d-flex justify-content-center flex-wrap flex-column flex-sm-row align-items-center gap-2 mt-3">
-                <Button type="submit" cssClass="btn btn-outline" label={"Close"} handlerChange={closeHandler} />
+                <Button
+                  type="submit"
+                  cssClass="btn btn-outline"
+                  label={"Close"}
+                  handlerChange={closeHandler}
+                />
                 <button className="btn btn-primary">Save</button>
               </div>
             </form>

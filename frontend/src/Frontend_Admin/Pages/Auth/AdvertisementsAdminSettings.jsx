@@ -10,16 +10,24 @@ import { sortCreatedDateByDesc } from "../../../util/dataFormatUtil";
 import Button from "../../../Common/Button";
 import ModalBg from "../../../Common/ModelBg";
 import ShowHideToggle from "../../../Common/ShowHideToggle";
-import { createShowHideComponent, getShowHideComponentsListByPage, updateShowHideComponent } from "../../../redux/showHideComponent/showHideActions";
+import {
+  createShowHideComponent,
+  getShowHideComponentsListByPage,
+  updateShowHideComponent,
+} from "../../../redux/showHideComponent/showHideActions";
 import DeleteDialog from "../../../Common/DeleteDialog";
 import { confirmAlert } from "react-confirm-alert";
 import SingleImageUlploadWithForm from "../../Components/forms/SingleImageUlploadWithForm";
-import { getAdvertisementFormDynamicFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
+import {
+  getAdvertisementFormDynamicFields,
+  imageDimensionsJson,
+} from "../../../util/dynamicFormFields";
 import RadioButtonGroup from "../../Components/RadioButtonGroup";
 
 import "./adminSettingStyles.css";
 import { AdvertisementComponentStyles } from "../../../Common/Styled-Advertisements-Component";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
+import AdminSingleRecordUpload from "../../Components/forms/V2/AdminSingleRecordUpload";
 
 const AdvertisementsAdminSettings = () => {
   const pageType = "advertisementsettings";
@@ -77,7 +85,7 @@ const AdvertisementsAdminSettings = () => {
     try {
       const response = await axiosServiceApi.get(`/advertisement/createAdvertisement/`);
       if (response?.status === 200) {
-        const sortbyCreateData = sortCreatedDateByDesc(response?.data?.advertisementList);
+        const sortbyCreateData = sortCreatedDateByDesc(response?.data);
         setAdvertisementList(sortbyCreateData);
       }
     } catch (error) {
@@ -132,12 +140,13 @@ const AdvertisementsAdminSettings = () => {
   }, []);
 
   const advertisementShowHideHandler = async (advertisement) => {
-    advertisement.showAndHide = !advertisement.showAndHide;
-    advertisement.path = "";
     try {
-      const response = await axiosServiceApi.patch(`/advertisement/updateAdvertisement/${advertisement.id}/`, {
-        ...advertisement,
-      });
+      const response = await axiosServiceApi.patch(
+        `/advertisement/updateAdvertisement/${advertisement.id}/`,
+        {
+          showAndHide: !advertisement.showAndHide,
+        }
+      );
 
       if (response.status === 200) {
         toast.success(`Advertisement update successfully`);
@@ -166,7 +175,9 @@ const AdvertisementsAdminSettings = () => {
   const handleAdvertisementDelete = (advertisement) => {
     const title = advertisement.title;
     const deleteMenuItemByID = async () => {
-      const response = await axiosServiceApi.delete(`/advertisement/updateAdvertisement/${advertisement.id}/`);
+      const response = await axiosServiceApi.delete(
+        `/advertisement/updateAdvertisement/${advertisement.id}/`
+      );
       if (response.status === 204) {
         toast.success(`${title} Advertisement is delete successfully `);
         getAdvertisementList();
@@ -205,7 +216,11 @@ const AdvertisementsAdminSettings = () => {
 
           <div className="w-100 p-0 d-flex flex-column flex-md-row justify-content-end align-items-center gap-2">
             <div className="w-100  d-flex justify-content-center align-items-center py-2 py-md-0 advSizes">
-              <RadioButtonGroup options={radioOptions} onChange={handleOptionChange} defaultOption={selectedOption} />
+              <RadioButtonGroup
+                options={radioOptions}
+                onChange={handleOptionChange}
+                defaultOption={selectedOption}
+              />
             </div>
             <div className="d-flex align-items-bet justify-content-between publishAdvertisement">
               <ShowHideToggle
@@ -216,7 +231,12 @@ const AdvertisementsAdminSettings = () => {
                 id={showHideCompList?.advertisement?.id}
               />
 
-              <Button type="" cssClass="btn btn-outline" label="Add" handlerChange={() => addNewAdvertisement("advertisement", true)} />
+              <Button
+                type=""
+                cssClass="btn btn-outline"
+                label="Add"
+                handlerChange={() => addNewAdvertisement("advertisement", true)}
+              />
             </div>
           </div>
         </div>
@@ -246,7 +266,9 @@ const AdvertisementsAdminSettings = () => {
                     <td className="align-middle">{advertisement.advertisement_description}</td>
                     <td className="align-middle text-center">
                       <img
-                        src={advertisement.path ? getImagePath(advertisement.path) : getDummyImage()}
+                        src={
+                          advertisement.path ? getImagePath(advertisement.path) : getDummyImage()
+                        }
                         alt={advertisement.alternitivetext}
                         className="thumb75 d-lg-block rounded-1"
                         style={{
@@ -268,12 +290,27 @@ const AdvertisementsAdminSettings = () => {
                       {advertisement.showAndHide}
                     </td>
                     <td className="align-middle text-end">
-                      <Link to="" onClick={() => editHandler("advertisement", true, advertisement)} className="p-2">
-                        <i className="fa fa-pencil text-warning cursor-pointer fs-5" aria-hidden="true"></i>
+                      <Link
+                        to=""
+                        onClick={() => editHandler("advertisement", true, advertisement)}
+                        className="p-2"
+                      >
+                        <i
+                          className="fa fa-pencil text-warning cursor-pointer fs-5"
+                          aria-hidden="true"
+                        ></i>
                       </Link>
 
-                      <Link to="" className=" ms-4" onClick={() => handleAdvertisementDelete(advertisement)}>
-                        <i className="fa fa-trash-o fs-4 text-danger" aria-hidden="true" title="Delete"></i>
+                      <Link
+                        to=""
+                        className=" ms-4"
+                        onClick={() => handleAdvertisementDelete(advertisement)}
+                      >
+                        <i
+                          className="fa fa-trash-o fs-4 text-danger"
+                          aria-hidden="true"
+                          title="Delete"
+                        ></i>
                       </Link>
                     </td>
                   </tr>
@@ -286,19 +323,16 @@ const AdvertisementsAdminSettings = () => {
           <>
             {componentEdit.advertisement && (
               <div className={`adminEditTestmonial selected `}>
-                <SingleImageUlploadWithForm
+                <AdminSingleRecordUpload
                   editHandler={editHandler}
                   componentType="advertisement"
-                  popupTitle="advertisement"
-                  componentTitle={compTtile}
-                  selectedItem={editAdvertisement}
-                  setSelectedItemState={setEditAdvertisement}
-                  imageGetURL={`/advertisement/createAdvertisement/${editAdvertisement.id}/`}
+                  parentEditObject={editAdvertisement}
+                  popupTitle={`${componentEdit.editSection ? "Edit Advertisement" : "Add Advertisement"}`}
+                  imageGetURL={`/advertisement/createAdvertisement/`}
                   imagePostURL="/advertisement/createAdvertisement/"
                   imageUpdateURL="/advertisement/updateAdvertisement/"
                   imageDeleteURL="/advertisement/updateAdvertisement/"
                   imageLabel="Advertisement Image"
-                  showDescription={false}
                   showExtraFormFields={getAdvertisementFormDynamicFields(editAdvertisement)}
                   dimensions={imageDimensionsJson("advertisement")}
                 />

@@ -10,6 +10,10 @@ import { getCookie } from "../../../util/cookieUtil";
 import { getBaseURL } from "../../../util/ulrUtil";
 import { axiosFileUploadServiceApi } from "../../../util/axiosUtil";
 
+/**
+ * Not usign need to delete
+ */
+
 const AboutImageInputsForm = ({
   editHandler,
   componentType,
@@ -46,9 +50,7 @@ const AboutImageInputsForm = ({
   useEffect(() => {
     const getBannerData = async () => {
       try {
-        const response = await axiosFileUploadServiceApi.get(
-          `${imageGetURL}${pageType}/`
-        );
+        const response = await axiosFileUploadServiceApi.get(`${imageGetURL}${pageType}/`);
         if (response?.status === 200 && response.data.imageModel) {
           setcarouseData(response.data.imageModel);
           setEditCarousel(response.data.imageModel);
@@ -67,9 +69,7 @@ const AboutImageInputsForm = ({
    */
   const thumbDelete = (id, name) => {
     const deleteImageByID = async () => {
-      const response = await axiosFileUploadServiceApi.delete(
-        `${imageDeleteURL}${id}/`
-      );
+      const response = await axiosFileUploadServiceApi.delete(`${imageDeleteURL}${id}/`);
       if (response.status === 204) {
         setcarouseData("");
         toast.success(`Record deleted successfully`);
@@ -83,7 +83,11 @@ const AboutImageInputsForm = ({
             onClose={onClose}
             callback={deleteImageByID}
             // message={`deleting the ${name} image?`}
-            message={<>Confirm deletion of  <span>{name}</span> image?</>}
+            message={
+              <>
+                Confirm deletion of <span>{name}</span> image?
+              </>
+            }
           />
         );
       },
@@ -94,10 +98,7 @@ const AboutImageInputsForm = ({
     <>
       {/* {editCarousel.id ? ( */}
       <div className="bg-white">
-        <EditAdminPopupHeader
-          closeHandler={closeHandler}
-          title={componentType}
-        />
+        <EditAdminPopupHeader closeHandler={closeHandler} title={componentType} />
         <div className="container">
           <div className="row py-0 pb-md-5">
             <div className="col-md-12 mb-5 mb-md-0">

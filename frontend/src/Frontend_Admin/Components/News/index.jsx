@@ -3,6 +3,11 @@ import { getCookie } from "../../../util/cookieUtil";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
 import FileUpload from "../FileUpload";
 
+/**
+ *
+ * Deprecated not using this component
+ * @returns
+ */
 export const News = ({
   editHandler,
   componentType,

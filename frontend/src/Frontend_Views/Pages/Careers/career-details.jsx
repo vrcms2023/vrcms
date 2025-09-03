@@ -63,13 +63,15 @@ const Careers = () => {
     const getCareerData = async () => {
       try {
         let response = await axiosClientServiceApi.get(`/careers/clientSelectedCareers/${id}/`);
-
-        let keys = Object.keys(response.data);
-        if (keys.length > 1) {
-          setPosts(response.data.results);
-        } else {
-          setPosts(response.data.careers);
+        if (response.status == 200) {
+          setPosts(response.data);
         }
+        // let keys = Object.keys(response.data);
+        // if (keys.length > 1) {
+        //   setPosts(response.data.results);
+        // } else {
+        //   setPosts(response.data.careers);
+        // }
       } catch (error) {
         console.log("Unable to get the Career data");
       }

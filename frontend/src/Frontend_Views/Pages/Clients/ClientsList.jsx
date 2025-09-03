@@ -59,7 +59,7 @@ const ClientsList = () => {
       setPaginationData(paginationDataFormat(data));
       setCurrentPage(1);
     } else {
-      setClientsList(data.clientLogo);
+      setClientsList(data);
     }
   };
 
@@ -223,7 +223,6 @@ const ClientsList = () => {
               editHandler={editHandler}
               componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
               parentEditObject={editCarousel}
-              onPageLoadServiceCall={!componentEdit.editSection}
               popupTitle={`${componentEdit.editSection ? "Edit Client" : "Add Client"}`}
               imageGetURL="client/createClientLogo/"
               imagePostURL="client/createClientLogo/"

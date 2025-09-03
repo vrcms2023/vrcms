@@ -168,7 +168,6 @@ const About = () => {
                 editHandler={editHandler}
                 componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
                 parentEditObject={editCarousel}
-                onPageLoadServiceCall={componentEdit.editSection}
                 popupTitle={`${componentEdit.editSection ? "Edit About Us" : "Add About Us"}`}
                 imageGetURL="aboutus/clientAboutus/"
                 imagePostURL="aboutus/createAboutus/"
@@ -184,7 +183,7 @@ const About = () => {
           <div className="aboutPage">
             {aboutList.length > 0 ? (
               aboutList.map((item, index) => (
-                <AboutSection item={item} index={index} key={item.id} />
+                <AboutSection item={item} index={index} key={item.id} editHandler={editHandler} />
               ))
             ) : (
               <p className="text-center text-muted py-5">Please add page contents...</p>
@@ -198,7 +197,7 @@ const About = () => {
   );
 };
 
-const AboutSection = ({ item, index }) => {
+const AboutSection = ({ item, index, editHandler }) => {
   const { isAdmin, hasPermission } = useAdminLoginStatus();
 
   const deleteAboutSection = (item) => {

@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from common.BaseModel import BaseModel, FileUpload
+from common.BaseModel import BaseModelV2, FileUpload
 from django.core.exceptions import ValidationError
 import os
 from django.conf import settings
@@ -10,7 +10,7 @@ from django.db.models.signals import post_delete
 from django.dispatch import receiver
 # Create your models here.
 
-class Careers(BaseModel):
+class Careers(BaseModelV2):
         job_title =         models.CharField(max_length=100, null=False )
         job_location =      models.CharField(max_length=100, null=True, blank=True )
         company_name =      models.CharField(max_length=100, null=True, blank=True )
@@ -48,7 +48,7 @@ class Careers(BaseModel):
 #     return f"resumes/{now:%Y%m%d%H%M%S}{milliseconds}{extension}"
 
 
-class appledJob(FileUpload):
+class AppliedJob(FileUpload):
         jobtitle =      models.CharField(max_length=100, null=False )
         jobID =         models.CharField(max_length=100, null=False )
         firstName =     models.CharField(max_length=100, null=False )
@@ -66,7 +66,7 @@ class appledJob(FileUpload):
             return f"{self.jobtitle or 'No Title'}"
 
 
-@receiver(post_delete, sender=appledJob)
+@receiver(post_delete, sender=AppliedJob)
 def delete_file_on_imageupload_delete(sender, instance, **kwargs):
     print("instance.path",instance.path )
     if instance.path and instance.path.name:

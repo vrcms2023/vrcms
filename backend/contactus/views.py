@@ -277,86 +277,111 @@ class SendEnquierytoCustomer(generics.CreateAPIView):
 
 # Brochures logic
 
-class CreateBrochures(generics.CreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = Brochures.objects.all()
+class BrochuresListCreateView(generics.ListCreateAPIView):
+    queryset = Brochures.objects.all().order_by("-created_at")
     serializer_class = BrochuresSerializer
-
-    """
-    List all App news, or create a Brochures.
-    """
-
-    def get(self, request, format=None):
-        snippets = Brochures.objects.all()
-        serializer = BrochuresSerializer(snippets, many=True)
-        return Response({"brochures": serializer.data}, status=status.HTTP_200_OK)
-    
-    def post(self, request, format=None):
-        user = request.user
-        requestObj = get_brochures_From_request_Object(request)
-        requestObj['created_by'] = user.userName
-        serializer = BrochuresSerializer(data=requestObj)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"brochures": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class UpdateAndDeleteBrochure(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    """
-    Retrieve, update or delete a Brochures
-    """
-    def get_object(self, pk):
-        try:
-            return Brochures.objects.get(pk=pk)
-        except Brochures.DoesNotExist:
-            raise Http404
 
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = BrochuresSerializer(snippet)
-        return Response({"brochures": serializer.data}, status=status.HTTP_200_OK)
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user, updated_by=self.request.user)
+        
+# Retrieve, Update, Delete
+class BrochuresUpdateAndDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Brochures.objects.all().order_by("-created_at")
+    serializer_class = BrochuresSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    def patch(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        user = request.user
-        requestObj = get_brochures_From_request_Object(request)       
-        requestObj['updated_by'] = user.userName
-        serializer = BrochuresSerializer(snippet, data=requestObj)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"brochures": serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def perform_update(self, serializer):
+        serializer.save(updated_by=self.request.user)
 
 
-
-class ClientViewBrochures(generics.CreateAPIView):
+# client Retrieve
+class ClientBrochuresView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
-    queryset = Brochures.objects.all()
+    queryset = Brochures.objects.all().order_by("-created_at")
     serializer_class = BrochuresSerializer
 
-    """
-    List all App news, or create a Brochures
-    """
 
-    def get(self, request, format=None):
-        snippets = Brochures.objects.all()
-        results = get_custom_paginated_data(self, snippets)
-        if results is not None:
-            return results
+# class CreateBrochures(generics.CreateAPIView):
+#     permission_classes = [permissions.IsAuthenticated]
+#     queryset = Brochures.objects.all()
+#     serializer_class = BrochuresSerializer
 
-        serializer = BrochuresSerializer(snippets, many=True)
-        return Response({"brochures": serializer.data}, status=status.HTTP_200_OK)
+#     """
+#     List all App news, or create a Brochures.
+#     """
+
+#     def get(self, request, format=None):
+#         snippets = Brochures.objects.all()
+#         serializer = BrochuresSerializer(snippets, many=True)
+#         return Response({"brochures": serializer.data}, status=status.HTTP_200_OK)
+    
+#     def post(self, request, format=None):
+#         user = request.user
+#         requestObj = get_brochures_From_request_Object(request)
+#         requestObj['created_by'] = user.userName
+#         serializer = BrochuresSerializer(data=requestObj)
+#         if 'path' in request.data and not request.data['path']:
+#             serializer.remove_fields(['path','originalname','contentType'])
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response({"brochures": serializer.data}, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# class UpdateAndDeleteBrochure(APIView):
+#     permission_classes = [permissions.IsAuthenticated]
+#     """
+#     Retrieve, update or delete a Brochures
+#     """
+#     def get_object(self, pk):
+#         try:
+#             return Brochures.objects.get(pk=pk)
+#         except Brochures.DoesNotExist:
+#             raise Http404
+
+#     def get(self, request, pk, format=None):
+#         snippet = self.get_object(pk)
+#         serializer = BrochuresSerializer(snippet)
+#         return Response({"brochures": serializer.data}, status=status.HTTP_200_OK)
+
+#     def patch(self, request, pk, format=None):
+#         snippet = self.get_object(pk)
+#         user = request.user
+#         requestObj = get_brochures_From_request_Object(request)       
+#         requestObj['updated_by'] = user.userName
+#         serializer = BrochuresSerializer(snippet, data=requestObj)
+#         if 'path' in request.data and not request.data['path']:
+#             serializer.remove_fields(['path','originalname','contentType'])
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response({"brochures": serializer.data}, status=status.HTTP_200_OK)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#     def delete(self, request, pk, format=None):
+#         snippet = self.get_object(pk)
+#         snippet.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+# class ClientViewBrochures(generics.CreateAPIView):
+#     permission_classes = [permissions.AllowAny]
+#     queryset = Brochures.objects.all()
+#     serializer_class = BrochuresSerializer
+
+#     """
+#     List all App news, or create a Brochures
+#     """
+
+#     def get(self, request, format=None):
+#         snippets = Brochures.objects.all()
+#         results = get_custom_paginated_data(self, snippets)
+#         if results is not None:
+#             return results
+
+#         serializer = BrochuresSerializer(snippets, many=True)
+#         return Response({"brochures": serializer.data}, status=status.HTTP_200_OK)
     
 
 

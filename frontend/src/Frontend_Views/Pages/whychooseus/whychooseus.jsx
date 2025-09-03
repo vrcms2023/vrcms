@@ -28,6 +28,7 @@ import {
 } from "../../../redux/showHideComponent/showHideActions";
 import DynamicKeyPoints from "../../Components/DynamicKeyPoints";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
+import BriefWithShowHideToggleComponent from "../../../Common/Brief/BriefWithShowHideToggleComponent";
 
 const WhyChooseUs = () => {
   const editComponentObj = {
@@ -98,57 +99,20 @@ const WhyChooseUs = () => {
         showHideComponentName={"whychooseusbanner"}
       />
 
-      <div
-        className={
-          showHideCompList?.whychooseusbriefintro?.visibility && isAdmin && hasPermission
-            ? "componentOnBorder"
-            : ""
-        }
-      >
-        {isAdmin && hasPermission && (
-          <ShowHideToggle
-            showhideStatus={showHideCompList?.whychooseusbriefintro?.visibility}
-            title={"A Brief Introduction Component"}
-            componentName={"whychooseusbriefintro"}
-            showHideHandler={showHideHandler}
-            id={showHideCompList?.whychooseusbriefintro?.id}
-          />
-        )}
+      <BriefWithShowHideToggleComponent
+        editHandler={editHandler}
+        componentType="briefIntro"
+        popupTitle="Why Choose Us Brief Introduction Component"
+        pageType={pageType}
+        componentEdit={componentEdit}
+        showHideCompList={showHideCompList}
+        showHideHandler={showHideHandler}
+        editlabel={"briefIntro"}
+        showHideComponentName={"whychooseusbriefintro"}
+        detailsContainerCss="col-lg-10 offset-lg-1 text-center"
+        showHideComponentTitle={"Why Choose Us Brief Intro "}
+      />
 
-        {/* INTRODUCTION COMPONENT */}
-        {showHideCompList?.whychooseusbriefintro?.visibility && (
-          <div className="breiftopMargin">
-            {/* Brief Introduction  */}
-            {isAdmin && hasPermission && (
-              <EditIcon editHandler={() => editHandler("briefIntro", true)} editlabel={"Brief"} />
-            )}
-
-            <BriefIntroFrontend
-              introState={componentEdit.briefIntro}
-              linkCss="btn btn-outline d-flex justify-content-center align-items-center gap-3"
-              linkLabel="Read More"
-              moreLink=""
-              introTitleCss="fs-3 fw-medium text-md-center"
-              introSubTitleCss="fw-medium text-muted text-md-center"
-              introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-              detailsContainerCss="col-md-10 offset-md-1 py-3"
-              anchorContainer="d-flex justify-content-center align-items-center mt-4"
-              anchersvgColor="#17427C"
-              pageType={pageType}
-            />
-            {componentEdit.briefIntro && (
-              <div className={`adminEditTestmonial selected `}>
-                <AdminBriefIntro
-                  editHandler={editHandler}
-                  componentType="briefIntro"
-                  popupTitle="Why Choose us Brief Intro"
-                  pageType={pageType}
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </div>
       <div className="container my-5">
         <div className="row">
           {keyPointsList.map((i) => (

@@ -6,6 +6,9 @@ from .models import *
 
 
 class CareerSerializer(serializers.ModelSerializer):
+     created_by = serializers.CharField(source="created_by.email", read_only=True)
+     updated_by = serializers.CharField(source="updated_by.email", read_only=True)
+
      class Meta:
         model = Careers
         fields = '__all__'
@@ -15,12 +18,15 @@ class CareerSerializer(serializers.ModelSerializer):
          return exclude_fields(self, fields_to_exclude)
      
    
-class appledJobSerializer(serializers.ModelSerializer):
-   class Meta:
-        model = appledJob
+class AppliedJobSerializer(serializers.ModelSerializer):
+     created_by = serializers.CharField(source="created_by.email", read_only=True)
+     updated_by = serializers.CharField(source="updated_by.email", read_only=True)
+
+     class Meta:
+        model = AppliedJob
         fields = '__all__'
 
-   def validate_path(self, value):
+     def validate_path(self, value):
         file_size = int(settings.RESUME_FILE_SIZE)
         max_size =  file_size * 1024 * 1024  # 5MB
         if value.size > max_size:

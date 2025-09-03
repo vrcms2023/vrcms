@@ -118,7 +118,7 @@ class ServiceImageModel(BaseModel):
         abstract = True 
 
 
-class SocialMeidaModel(BaseModel):
+class SocialMeidaModel(BaseModelV2):
     twitter_url =       models.CharField(max_length=500, null=True, blank=True )
     facebook_url =      models.CharField(max_length=500, null=True, blank=True )
     linkedIn_url =      models.CharField(max_length=500, null=True, blank=True )

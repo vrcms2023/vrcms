@@ -58,6 +58,7 @@ const PageBannerComponent = ({
                   editHandler={editHandler}
                   componentType={componentType}
                   popupTitle={popupTitle}
+                  onPageLoadServiceCall={true}
                   imagePostURL="banners/createBanner/"
                   imageGetURL={`banners/by-page-and-category/${pageType}-${componentType}/category/${category}/`}
                   imageUpdateURL="banners/updateBanner/"

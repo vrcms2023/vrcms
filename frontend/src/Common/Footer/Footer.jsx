@@ -134,7 +134,7 @@ const Footer = () => {
           <div className="row">
             <div className="col-md-4 col-lg-3 d-flex align-items-center">
               <ApplicationLogo
-                getBannerAPIURL={`banner/clientBannerIntro/header-logo/`}
+                getBannerAPIURL={`banners/by-category/logo/`}
                 bannerState={componentEdit.menu}
                 imageCss="footerLogo"
               />

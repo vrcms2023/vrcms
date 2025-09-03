@@ -10,43 +10,31 @@ from django.db.models import Q
 from common.CustomPagination import CustomPagination
 from common.utility import get_custom_paginated_data, get_Team_data_From_request_Object
 
-# Create your views here.
- 
-class CreateOurTeam(generics.CreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = OurTeam.objects.all()
+
+
+# Create & List
+class OurTeamListCreateView(generics.ListCreateAPIView):
+    queryset = OurTeam.objects.all().order_by("-team_member_position")
     serializer_class = OurTeamSerializer
     pagination_class = CustomPagination
+    permission_classes = [permissions.IsAuthenticated]
 
-    """
-    List all our team , or create a new our team.
-    """
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user, updated_by=self.request.user)
 
-    def get(self, request, format=None):
-        snippets = OurTeam.objects.all()
-        results = get_custom_paginated_data(self, snippets)
-        if results is not None:
-            return results
+# Retrieve, Update, Delete
+class OurTeamRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = OurTeam.objects.all().order_by("-team_member_position")
+    serializer_class = OurTeamSerializer
+    pagination_class = CustomPagination
+    permission_classes = [permissions.IsAuthenticated]
 
-        serializer = OurTeamSerializer(snippets, many=True)
-        return Response({"team": serializer.data}, status=status.HTTP_200_OK)
-    
-    def post(self, request, format=None):
-        user = request.user
-        requestObj = get_Team_data_From_request_Object(request)
-        requestObj['created_by'] = user.userName
-        serializer = OurTeamSerializer(data=requestObj)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"team": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
+    def perform_update(self, serializer):
+        serializer.save(updated_by=self.request.user)
+ 
 class UpdateAndDeleteOurteamDetail(APIView):
     """
-    Retrieve, update or delete a App News instance.
+    Retrieve, update or delete a Our Team instance.
     """
     def get_object(self, pk):
         try:
@@ -63,7 +51,7 @@ class UpdateAndDeleteOurteamDetail(APIView):
         snippet = self.get_object(pk)
         user = request.user
         requestObj = get_Team_data_From_request_Object(request)
-        requestObj['updated_by'] = user.userName
+        requestObj['updated_by'] = user
         serializer = OurTeamSerializer(snippet, requestObj)
         if 'path' in request.data and not request.data['path']:
             serializer.remove_fields(['path','originalname','contentType'])
@@ -79,24 +67,12 @@ class UpdateAndDeleteOurteamDetail(APIView):
 
 
 
-class OurteamClientView(generics.CreateAPIView):
+class OurteamClientView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
-    queryset = OurTeam.objects.all()
+    queryset = OurTeam.objects.all().order_by("team_member_position")
     serializer_class = OurTeamSerializer
     pagination_class = CustomPagination
 
-    """
-    List all App news, or create a new App News.
-    """
-
-    def get(self, request, format=None):
-        snippets = OurTeam.objects.all()
-        results = get_custom_paginated_data(self, snippets)
-        if results is not None:
-            return results
-
-        serializer = OurTeamSerializer(snippets, many=True)
-        return Response({"team": serializer.data}, status=status.HTTP_200_OK)
     
 class OurteamSearchAPIView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
@@ -137,7 +113,7 @@ class UpdateTeamIndex(APIView):
         user = request.user
         for item in obj_list:
             obj = self.get_object(obj_id=item["id"])
-            obj.updated_by = user.userName
+            obj.updated_by = user
             obj.team_member_position = item["team_member_position"]
             obj.save()
             instances.append(obj)

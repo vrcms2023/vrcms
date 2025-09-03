@@ -5,7 +5,7 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { getCookie } from "../../../util/cookieUtil";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
-import { InputField } from "./FormFields";
+import { InputField, InputFields } from "./FormFields";
 import Button from "../../../Common/Button";
 import { useSelector } from "react-redux";
 
@@ -31,9 +31,16 @@ const AddressForm = ({ editHandler, componentType, address, popupTitle }) => {
     reset,
     handleSubmit,
     setValue,
+    clearErrors,
     formState: { errors },
-  } = useForm({});
+  } = useForm({
+    mode: "onBlur",
+  });
   const [listofAddress, setListofAddress] = useState(address);
+
+  const handleChange = (fieldName) => {
+    clearErrors(fieldName);
+  };
 
   const closeHandler = () => {
     editHandler(componentType, false);
@@ -59,9 +66,7 @@ const AddressForm = ({ editHandler, componentType, address, popupTitle }) => {
    */
   const thumbDelete = (id, name) => {
     const deleteImageByID = async () => {
-      const response = await axiosServiceApi.delete(
-        `address/updateAddress/${id}/`
-      );
+      const response = await axiosServiceApi.delete(`address/updateAddress/${id}/`);
       if (response.status === 204) {
         const list = listofAddress.filter((item) => item.id !== id);
         setListofAddress(list);
@@ -75,7 +80,11 @@ const AddressForm = ({ editHandler, componentType, address, popupTitle }) => {
             onClose={onClose}
             callback={deleteImageByID}
             // message={`deleting the ${name} image?`}
-            message={<>Confirm deletion of  <span>{name}</span> image?</>}
+            message={
+              <>
+                Confirm deletion of <span>{name}</span> image?
+              </>
+            }
           />
         );
       },
@@ -90,10 +99,7 @@ const AddressForm = ({ editHandler, componentType, address, popupTitle }) => {
     try {
       if (data.id) {
         data["updated_by"] = userName;
-        response = await axiosServiceApi.put(
-          `/address/updateAddress/${data.id}/`,
-          data
-        );
+        response = await axiosServiceApi.put(`/address/updateAddress/${data.id}/`, data);
       } else {
         data["created_by"] = userName;
         data["address_position"] = listofAddress.length;
@@ -104,7 +110,7 @@ const AddressForm = ({ editHandler, componentType, address, popupTitle }) => {
       if (response.status === 200 || response.status === 201) {
         reset();
         toast.success(`Address Values are updated successfully `);
-        updateAddressList(response.data.addressList);
+        updateAddressList(response.data);
       }
     } catch (error) {
       console.log("unable to save the footer form");
@@ -148,8 +154,8 @@ const AddressForm = ({ editHandler, componentType, address, popupTitle }) => {
   const updateObjectsIndex = async (data) => {
     try {
       let response = await axiosServiceApi.put(`/address/updateindex/`, data);
-      if (response?.data?.addressList) {
-        return response.data.addressList;
+      if (response?.data) {
+        return response.data;
       }
     } catch (error) {
       console.log("unable to save the footer form");
@@ -165,14 +171,11 @@ const AddressForm = ({ editHandler, componentType, address, popupTitle }) => {
           <div className="row">
             <div className="col-md-12 mb-md-0  p-0">
               <NoteComponent note="Use drag to shuffle" />
-              <div className={listofAddress.length > 0 && ""}>
+              <div className={listofAddress?.length > 0 && ""}>
                 <DragDropContext onDragEnd={dragEnded}>
                   <Droppable droppableId="address-wrapper">
                     {(provided, snapshot) => (
-                      <DraggableAddressList
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                      >
+                      <DraggableAddressList ref={provided.innerRef} {...provided.droppableProps}>
                         {listofAddress.map((_address, index) => {
                           return (
                             <Draggable
@@ -208,50 +211,37 @@ const AddressForm = ({ editHandler, componentType, address, popupTitle }) => {
             </div>
             <div className="col-md-12 mb-md-0 mt-3">
               <div className="text-dark">
-                <InputField
+                <InputFields
                   label="Company Name"
                   fieldName="company_name"
                   register={register}
                   validationObject={fieldValidation.company_name}
                   error={errors?.company_name?.message}
                   isRequired={true}
+                  onChange={() => handleChange("company_name")}
                 />
-                <InputField
+                <InputFields
                   label="Country"
                   fieldName="location_title"
                   register={register}
                   validationObject={fieldValidation.location_title}
                   error={errors?.location_title?.message}
                   isRequired={true}
+                  onChange={() => handleChange("location_title")}
                 />
-                <InputField
-                  label="State"
-                  fieldName="state"
-                  register={register}
-                />
-                <InputField
+                <InputFields label="State" fieldName="state" register={register} />
+                <InputFields
                   label="City"
                   fieldName="city"
                   register={register}
                   validationObject={fieldValidation.city}
                   error={errors?.city?.message}
                   isRequired={true}
+                  onChange={() => handleChange("city")}
                 />
-                <InputField
-                  label="Location"
-                  fieldName="location"
-                  register={register}
-                />
-                <InputField
-                  label="Street"
-                  fieldName="street"
-                  register={register}
-                />
-                <InputField
-                  label="Door Number"
-                  fieldName="address_dr_no"
-                  register={register}
-                />
+                <InputFields label="Location" fieldName="location" register={register} />
+                <InputFields label="Street" fieldName="street" register={register} />
+                <InputFields label="Door Number" fieldName="address_dr_no" register={register} />
 
                 {/* <InputField
                 label="Postcode"
@@ -260,15 +250,16 @@ const AddressForm = ({ editHandler, componentType, address, popupTitle }) => {
                 validationObject={fieldValidation.postcode}
                 error={errors?.postcode?.message}
               /> */}
-                <InputField
+                <InputFields
                   label="Email"
                   fieldName="emailid"
                   register={register}
                   validationObject={fieldValidation.emailid}
                   error={errors?.emailid?.message}
                   isRequired={true}
+                  onChange={() => handleChange("emailid")}
                 />
-                <InputField
+                <InputFields
                   label="Email 2"
                   fieldName="emailid_2"
                   register={register}
@@ -276,30 +267,34 @@ const AddressForm = ({ editHandler, componentType, address, popupTitle }) => {
                   error={errors?.emailid_2?.message}
                   isRequired={false}
                 />
-                <InputField
+                <InputFields
                   label="Email 3"
                   fieldName="emailid_3"
                   register={register}
                   validationObject={fieldValidation.emailid_2}
                   error={errors?.emailid_2?.message}
                 />
-                <InputField
+                <InputFields
                   label="Phone"
+                  type="number"
                   fieldName="phonen_number"
                   register={register}
                   validationObject={fieldValidation.phonen_number}
                   error={errors?.phonen_number?.message}
                   isRequired={true}
+                  onChange={() => handleChange("phonen_number")}
                 />
-                <InputField
+                <InputFields
                   label="Phone Number 2"
+                  type="number"
                   fieldName="phonen_number_2"
                   register={register}
                   validationObject={fieldValidation.phonen_number_2}
                   error={errors?.phonen_number_2?.message}
                 />
-                <InputField
+                <InputFields
                   label="WhatsApp No."
+                  type="number"
                   fieldName="phonen_number_3"
                   register={register}
                   validationObject={fieldValidation.phonen_number_2}

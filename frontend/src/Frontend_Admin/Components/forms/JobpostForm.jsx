@@ -78,7 +78,7 @@ const JobPost = ({ editHandler, componentType, type, editPost, popupTitle }) => 
               <div className="row">
                 <div className="col-md-6">
                   <InputFields
-                    label="Title test"
+                    label="Title"
                     fieldName="job_title"
                     register={register}
                     cssClass="requiredField"

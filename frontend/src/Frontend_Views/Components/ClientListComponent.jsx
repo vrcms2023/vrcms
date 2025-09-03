@@ -39,8 +39,8 @@ export const ClientListComponent = ({
   const updateObjectsIndex = async (data) => {
     try {
       let response = await axiosServiceApi.put(`/client/updateindex/`, data);
-      if (response?.data?.clientLogo) {
-        return response.data.clientLogo;
+      if (response?.data) {
+        return response.data;
       }
     } catch (error) {
       console.log("unable to save clinet position");

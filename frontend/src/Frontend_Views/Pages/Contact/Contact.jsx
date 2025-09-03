@@ -125,8 +125,8 @@ const Contact = () => {
   const getGoogleMapUrl = async () => {
     try {
       const response = await axiosClientServiceApi.get(`footer/getGoogleMapURL/`);
-      if (response?.data?.mapURL?.length > 0) {
-        const data = response.data.mapURL[0];
+      if (response?.data?.length > 0) {
+        const data = response.data[0];
         setMapValues(data);
       }
     } catch (e) {
@@ -353,12 +353,9 @@ const Contact = () => {
 
         <div className="row">
           {/* <div className="col-md-12 text-center py-0 py-md-4">
-            <Title
-              title="Quick contact"
-              cssClass="fs-3 text-center fw-medium mb-2 pt-5"
-            />
-          </div> */}
-          {/* <div className="col-md-5 contact mb-5">
+            <Title title="Quick contact" cssClass="fs-3 text-center fw-medium mb-2 pt-5" />
+          </div>
+          <div className="col-md-5 contact mb-5">
             {success && (
               <Alert
                 mesg={"Thank you for contact us"}
@@ -372,7 +369,7 @@ const Contact = () => {
             {isAdmin && hasPermission && (
               <EditIcon editHandler={() => editHandler("map", true)} editlabel="Map" />
             )}
-            {mapValues?.google_map_url && (
+            {mapValues?.google_map_url ? (
               <iframe
                 title="Google map"
                 className="googlemap"
@@ -380,6 +377,10 @@ const Contact = () => {
                 height="450"
                 width="100%"
               ></iframe>
+            ) : (
+              <div className="text-center p-4">
+                <p>No Google Map URL available</p>
+              </div>
             )}
           </div>
         </div>

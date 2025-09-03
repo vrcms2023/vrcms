@@ -71,7 +71,7 @@ export default function CounterForm({
       try {
         const response = await axiosClientServiceApi.get(getDataAPIURL);
         if (response?.status === 200) {
-          let data = response?.data?.counterSetList[0];
+          let data = response?.data[0];
           reset(data);
         }
       } catch (error) {

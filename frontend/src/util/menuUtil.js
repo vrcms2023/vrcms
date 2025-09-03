@@ -10,10 +10,7 @@ export const getSelectedMenuDetails = async (
   oldTitle
 ) => {
   const _userName = getCookie("userName");
-  const _getSelectedParentObject = getParentMenuByURL(
-    menuList,
-    location.pathname
-  );
+  const _getSelectedParentObject = getParentMenuByURL(menuList, location.pathname);
   if (!_getSelectedParentObject) return;
   let data = {
     is_Admin_menu: true,
@@ -28,10 +25,7 @@ export const getSelectedMenuDetails = async (
   };
 
   if (isEdit) {
-    const _getSelectedChildMenu = getMenuParent(
-      _getSelectedParentObject.childMenu,
-      oldTitle
-    );
+    const _getSelectedChildMenu = getMenuParent(_getSelectedParentObject.childMenu, oldTitle);
     data["updated_by"] = _userName;
     data["id"] = _getSelectedChildMenu.id;
     data["page_position"] = _getSelectedChildMenu.page_position;
@@ -52,17 +46,14 @@ export const updatedMenu = async (data) => {
   const _body = JSON.stringify(data);
   let response = "";
   if (data?.id) {
-    response = await axiosServiceApi.patch(
-      `/pageMenu/updatePageMenu/${data?.id}/`,
-      _body
-    );
+    response = await axiosServiceApi.patch(`/pageMenu/updatePageMenu/${data?.id}/`, _body);
   } else {
     response = await axiosServiceApi.post(`/pageMenu/createPageMenu/`, _body);
   }
   return response;
 };
 const updateServieMneuID = async (data, serviceResponse) => {
-  serviceResponse["menu_ID"] = data?.PageDetails?.id;
+  serviceResponse["menu_ID"] = data?.id;
   serviceResponse["updated_by"] = getCookie("userName");
   const response = await axiosServiceApi.put(
     `/services/updateService/${serviceResponse.id}/`,
@@ -112,10 +103,7 @@ export const getParentMenuByURL = (menuList, labelName) => {
   })[0];
 };
 
-export const createServiceChildFromMenu = async (
-  selectedServiceMenu,
-  menuData
-) => {
+export const createServiceChildFromMenu = async (selectedServiceMenu, menuData) => {
   let response = "";
   let data = {
     services_page_title: menuData.page_label,
@@ -158,10 +146,7 @@ export const updateServiceMenuIndex = async (data, serviceList) => {
   });
 
   try {
-    const response = await axiosServiceApi.put(
-      `/services/updateServiceIndex/`,
-      _cloneServiceList
-    );
+    const response = await axiosServiceApi.put(`/services/updateServiceIndex/`, _cloneServiceList);
     return response;
   } catch (error) {
     console.log("unable to update the service menu index");
@@ -170,9 +155,7 @@ export const updateServiceMenuIndex = async (data, serviceList) => {
 
 export const deleteServiceItem = async (id) => {
   try {
-    const response = await axiosServiceApi.delete(
-      `/pageMenu/updatePageMenu/${id}/`
-    );
+    const response = await axiosServiceApi.delete(`/pageMenu/updatePageMenu/${id}/`);
     return response;
   } catch (error) {
     console.log("unable to delete the service");
@@ -181,9 +164,7 @@ export const deleteServiceItem = async (id) => {
 
 export const deleteServiceMenu = async (id) => {
   try {
-    const response = await axiosServiceApi.delete(
-      `/services/updateService/${id}/`
-    );
+    const response = await axiosServiceApi.delete(`/services/updateService/${id}/`);
     return response;
   } catch (error) {
     console.log("unable to delete the service");
@@ -192,9 +173,6 @@ export const deleteServiceMenu = async (id) => {
 
 export const getServiceMenuItem = (serviceMenu, item) => {
   return _.filter(serviceMenu, (menu) => {
-    return (
-      menu?.services_page_title?.toLowerCase() ===
-      item?.page_label.toLowerCase()
-    );
+    return menu?.services_page_title?.toLowerCase() === item?.page_label.toLowerCase();
   })[0];
 };

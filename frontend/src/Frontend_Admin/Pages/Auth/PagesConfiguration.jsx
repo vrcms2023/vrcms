@@ -68,11 +68,11 @@ const PagesConfiguration = () => {
   const getAllPagesDetails = async () => {
     try {
       const response = await axiosServiceApi.get(`/pageMenu/createPageMenu/`);
-      if (response?.status === 200 && response?.data?.PageDetails?.length > 0) {
-        setRawData(response.data.PageDetails);
-        const _rootservicemenu = getServiceMainMenu(response.data.PageDetails);
+      if (response?.status === 200 && response?.data?.length > 0) {
+        setRawData(response.data);
+        const _rootservicemenu = getServiceMainMenu(response.data);
         setRootServiceMenu(_rootservicemenu);
-        const result = getMenuObject(response.data.PageDetails);
+        const result = getMenuObject(response.data);
         setPagesDetails(result);
       } else {
         setPagesDetails([]);
@@ -92,9 +92,7 @@ const PagesConfiguration = () => {
     const title = menu.page_label;
     const selectedService = getServiceMenuItem(serviceMenu, menu);
     const deleteMenuItemByID = async () => {
-      const response = await axiosServiceApi.delete(
-        `/pageMenu/updatePageMenu/${id}/`
-      );
+      const response = await axiosServiceApi.delete(`/pageMenu/updatePageMenu/${id}/`);
       if (response.status === 204) {
         toast.success(`${title} Memu is delete successfully `);
         getAllPagesDetails();
@@ -131,10 +129,7 @@ const PagesConfiguration = () => {
    */
   const activeUserMenu = async (id, data, name) => {
     if (!data.is_Parent) {
-      const _parentMenu = _.filter(
-        pagesDetails,
-        (item) => item.id === data.page_parent_ID
-      )[0];
+      const _parentMenu = _.filter(pagesDetails, (item) => item.id === data.page_parent_ID)[0];
       if (!_parentMenu[name]) {
         await updatePageIndex(_parentMenu.id, _parentMenu, name);
         await updatePageIndex(id, data, name);
@@ -148,10 +143,7 @@ const PagesConfiguration = () => {
   const updatePageIndex = async (id, data, name) => {
     data[name] = !data[name];
     try {
-      const response = await axiosServiceApi.patch(
-        `/pageMenu/updatePageMenu/${id}/`,
-        data
-      );
+      const response = await axiosServiceApi.patch(`/pageMenu/updatePageMenu/${id}/`, data);
 
       if (response.status === 200) {
         getAllPagesDetails();
@@ -164,9 +156,7 @@ const PagesConfiguration = () => {
   const onPageLoadAction = useRef(true);
   const [serviceList, setServiceList] = useState([]);
 
-  const { serviceMenu, serviceerror } = useSelector(
-    (state) => state.serviceMenu
-  );
+  const { serviceMenu, serviceerror } = useSelector((state) => state.serviceMenu);
 
   useEffect(() => {
     if (serviceMenu?.length === 0 && onPageLoadAction.current) {
@@ -209,25 +199,17 @@ const PagesConfiguration = () => {
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
-                style={getItemStyle(
-                  snapshot.isDragging,
-                  provided.draggableProps.style
-                )}
+                style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
               >
                 <td className="p-2 ">
                   {node.childMenu?.length > 0 ? (
                     <i
-                      className={`fa ${
-                        showChildren ? "fa-minus" : "fa-plus"
-                      } mx-2`}
+                      className={`fa ${showChildren ? "fa-minus" : "fa-plus"} mx-2`}
                       aria-hidden="true"
                       onClick={showChildMenu}
                     ></i>
                   ) : (
-                    <i
-                      className="fa lableIconPlaceholder mx-2"
-                      aria-hidden="true"
-                    ></i>
+                    <i className="fa lableIconPlaceholder mx-2" aria-hidden="true"></i>
                   )}
                   {node.page_label}
                 </td>
@@ -280,22 +262,14 @@ const PagesConfiguration = () => {
                   />
                 </td>
                 <td className="text-center">
-                  <Link
-                    to=""
-                    onClick={() => editHandler("menu", true, node)}
-                    className="p-2"
-                  >
+                  <Link to="" onClick={() => editHandler("menu", true, node)} className="p-2">
                     <i
                       className="fa fa-pencil text-warning cursor-pointer fs-5"
                       aria-hidden="true"
                     ></i>
                   </Link>
 
-                  <Link
-                    to=""
-                    className=" ms-4"
-                    onClick={() => handleUserDelete(node)}
-                  >
+                  <Link to="" className=" ms-4" onClick={() => handleUserDelete(node)}>
                     <i
                       className="fa fa-trash-o fs-5 text-danger"
                       aria-hidden="true"
@@ -329,11 +303,7 @@ const PagesConfiguration = () => {
       let _parentObjects = [];
       const _parentMenu = getParentObject(rawData, draggableId, pagesDetails);
       if (isNotEmptyObject(_parentMenu)) {
-        let _childmenu = reorder(
-          _parentMenu.childMenu,
-          source.index,
-          destination.index
-        );
+        let _childmenu = reorder(_parentMenu.childMenu, source.index, destination.index);
 
         _parentObjects = Array.from(pagesDetails);
         _parentObjects.map((item) => {
@@ -375,12 +345,9 @@ const PagesConfiguration = () => {
 
     const updateObjectsIndex = async (data) => {
       try {
-        let response = await axiosServiceApi.put(
-          `/pageMenu/updateindex/`,
-          data
-        );
-        if (response?.data?.PageDetails) {
-          return response.data.PageDetails;
+        let response = await axiosServiceApi.put(`/pageMenu/updateindex/`, data);
+        if (response?.data) {
+          return response.data;
         }
       } catch (error) {
         console.log("unable to save menu position");
@@ -429,10 +396,7 @@ const PagesConfiguration = () => {
           <Title title={"Menu / SEO"} cssClass="pageTitle" />
 
           <div className="text-end">
-            <Link
-              className="btn btn-primary"
-              onClick={() => editHandler("menu", true)}
-            >
+            <Link className="btn btn-primary" onClick={() => editHandler("menu", true)}>
               Add <i className="fa fa-plus mx-2" aria-hidden="true"></i>
             </Link>
             {/* <EditIcon editHandler={() => editHandler("menu", true)} /> */}
