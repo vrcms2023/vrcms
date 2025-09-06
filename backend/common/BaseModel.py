@@ -108,7 +108,7 @@ class FileUpload(BaseModelV2):
         abstract = True 
 
 
-class ServiceImageModel(BaseModel):
+class ServiceImageModel(BaseModelV2):
     path =          models.FileField(blank=True, null=True, upload_to=image_upload_path)
     originalname=   models.CharField(max_length=100, null=True, blank=True)
     contentType=    models.CharField(max_length=100, null=True, blank=True)

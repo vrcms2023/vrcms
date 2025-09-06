@@ -4,6 +4,7 @@ from .models import *
 
 
 class ShowHideComponentsSerializer(serializers.ModelSerializer):
+    
      class Meta:
         model = ShowHideComponents
         fields = '__all__'

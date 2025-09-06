@@ -7,6 +7,7 @@ urlpatterns = [
     path('updateService/<pk>/', ServicesDetail.as_view(), name='retrieve_update_delete_Service'),
     path('updateServiceIndex/', UpdateServiceIndex.as_view(), name="update_index"),
     path('createServiceFeatures/', CreateFeatureService.as_view(), name="create_get_Service_Feature"),
+    path('updateServiceFeatureIndex/', UpdateFeatureServiceIndex.as_view(), name="update_feature_index"),
     path('updateFeatureService/<pk>/', FeatureServicesDetail.as_view(), name='retrieve_update_delete_Service_Feature'),
     path('createServiceAccordion/', CreateServiceAccordion.as_view(), name="create_get_Service_Accordion"),
     path('updateFeatureAccordion/<pk>/', ServicesAccordionDetail.as_view(), name='retrieve_update_delete_Service_Accordion'),

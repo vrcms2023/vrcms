@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from common.BaseModel import BaseModel, ServiceImageModel
+from common.BaseModel import BaseModel, ServiceImageModel,ImageModelV2
 
 
 # Create your models here.
@@ -19,13 +19,14 @@ class Services(BaseModel):
         def __str__(self):
                 return f"{self.services_page_title or 'No Title'}"
 
-class ServiceFeature(ServiceImageModel):
+class ServiceFeature(ImageModelV2):
         serviceID  =            models.CharField(max_length=100, null=False)
         services_page_title =   models.CharField(max_length=100, unique=False )
         feature_title =         models.CharField(max_length=100, null=True, blank=True )
         feature_sub_title=      models.CharField(max_length=200, null=True, blank=True)
         feature_description =   models.CharField(max_length=5000, null=True, blank=True)
         services_page_url =     models.CharField(max_length=100, null=True, blank=True)
+        services_feature_position =     models.IntegerField(default=0)
 
         class Meta:
                 db_table = "service_features"
@@ -34,12 +35,13 @@ class ServiceFeature(ServiceImageModel):
                 return f"{self.feature_title or 'No Title'}"
        
 
-class ServiceAccordion(ServiceImageModel):
+class ServiceAccordion(ImageModelV2):
         serviceID  =            models.CharField(max_length=100, null=False)
         services_page_title =   models.CharField(max_length=100, unique=False )
         accordion_title =       models.CharField(max_length=100, null=True, blank=True )
         accordion_sub_title=    models.CharField(max_length=200, null=True, blank=True)
         accordion_description = models.CharField(max_length=5000, null=True, blank=True)
+        services_description_position =     models.IntegerField(default=0)
 
         class Meta:
                 db_table = "service_accordions"

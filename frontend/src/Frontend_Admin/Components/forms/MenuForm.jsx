@@ -9,28 +9,13 @@ import Button from "../../../Common/Button";
 import { CheckboxField, InputFields, SelectField } from "./FormFields";
 import Error from "../Error";
 import { generateOptionLength } from "../../../util/commonUtil";
-import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getCookie } from "../../../util/cookieUtil";
 import { getMenu } from "../../../redux/auth/authActions";
 
-import {
-  createServiceChildFromMenu,
-  updatedMenu,
-  updateServiceMmenuID,
-} from "../../../util/menuUtil";
+import { updatedMenu } from "../../../util/menuUtil";
 import SEOForm from "./SEOForm";
-import { getServiceValues } from "../../../redux/services/serviceActions";
-import Title from "../../../Common/Title";
 
-const MenuForm = ({
-  editHandler,
-  menuList,
-  editMenu,
-  componentType,
-  popupTitle,
-  selectedServiceMenu,
-  rootServiceMenu,
-}) => {
+const MenuForm = ({ editHandler, menuList, editMenu, componentType, popupTitle }) => {
   const dispatch = useDispatch();
   const closeHandler = () => {
     editHandler(componentType, false);
@@ -55,8 +40,6 @@ const MenuForm = ({
   const [seoLink, setSEOLink] = useState("");
   const [seoAuthor, setSeoAuthor] = useState("");
 
-  const pageUrlValue = watch("page_url");
-
   const [isParentVal, setisParentVal] = useState(
     editMenu ? (editMenu?.is_Parent ? true : false) : true
   );
@@ -69,25 +52,10 @@ const MenuForm = ({
     editMenu ? (editMenu?.is_Client_menu ? true : false) : true
   );
   const [optionMenulist, setOptionMenuList] = useState([]);
-  const [menuIndexValues, setMenuIndexValues] = useState(generateOptionLength(15));
 
   const [isParentHasChilds, setIsParentHasChilds] = useState(
     editMenu?.childMenu?.length > 0 ? true : false
   );
-
-  const updateMenuIndexValues = (menuOptinList) => {
-    menuOptinList.forEach((item) => {
-      var i = 0;
-      while (i < menuIndexValues.length) {
-        if (menuIndexValues[i].value === item.page_position) {
-          menuIndexValues.splice(i, 1);
-        } else {
-          i++;
-        }
-      }
-    });
-    setMenuIndexValues(menuIndexValues);
-  };
 
   useEffect(() => {
     if (editMenu) {
@@ -109,27 +77,8 @@ const MenuForm = ({
         menuOptinList.push(option);
       });
       setOptionMenuList(menuOptinList);
-      //updateMenuIndexValues(menuOptinList);
     }
   }, [menuList]);
-  /**
-   * menu index values
-   */
-  // useEffect(() => {
-  //   reset(editMenu);
-  //   if (editMenu?.id) {
-  //     updatedSelectedMenuIndex();
-  //   }
-  // }, [editMenu]);
-
-  // const updatedSelectedMenuIndex = () => {
-  //   let option = {
-  //     label: editMenu?.page_position,
-  //     value: editMenu?.page_position,
-  //   };
-  //   const menuData = [option].concat(menuIndexValues);
-  //   setMenuIndexValues(menuData);
-  // };
 
   const saveMenu = async (data) => {
     if (!data?.page_label) {
@@ -187,31 +136,10 @@ const MenuForm = ({
     data["page_isActive"] = true;
     data["is_Admin_menu"] = true;
 
-    const body = JSON.stringify(data);
-
     try {
       let response = await updatedMenu(data);
-      if ((response?.status === 201 || response?.status === 200) && response?.data) {
-        if (!data.is_Parent && data.page_parent_ID === rootServiceMenu.id) {
-          updateServicePageMenu(selectedServiceMenu, response?.data);
-        }
-        closeHandler();
-        dispatch(getMenu());
-      }
-    } catch (error) {
-      toast.error("Unable to load user details");
-    }
-  };
-
-  const updateServicePageMenu = async (selectedServiceMenu, PageDetails) => {
-    try {
-      const response = await createServiceChildFromMenu(selectedServiceMenu, PageDetails);
-      if (response?.status === 201) {
-        const res = await updateServiceMmenuID(response.data.services, PageDetails);
-      }
       if (response?.status === 201 || response?.status === 200) {
-        toast.success(`$service is created `);
-        dispatch(getServiceValues());
+        closeHandler();
         dispatch(getMenu());
       }
     } catch (error) {

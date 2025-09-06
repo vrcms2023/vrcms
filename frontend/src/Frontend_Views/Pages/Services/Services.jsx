@@ -27,6 +27,7 @@ import {
 import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 import {
   getImagePath,
+  getServiceMainMenu,
   sortByFieldName,
   storeServiceMenuValueinCookie,
   urlStringFormat,
@@ -46,6 +47,8 @@ import {
 } from "../../../redux/showHideComponent/showHideActions";
 import ShareButtons from "../../../Common/Share";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
+import AdminListOfRecordsUpload from "../../../Frontend_Admin/Components/forms/V2/AdminListOfRecordsUpload";
+import AdminSingleRecordUpload from "../../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
 
 const Services = () => {
   const editComponentObj = {
@@ -62,6 +65,7 @@ const Services = () => {
   const [selectedServiceProject, setSelectedServiceProject] = useState({});
   const [selectedServiceList, setSelectedServiceList] = useState([]);
   const [selectedServiceName, setSelectedServiceName] = useState();
+  const [pageServiceMenu, setPageServiceMenu] = useState("");
   const [editCarousel, setEditCarousel] = useState({});
   let { uid } = useParams();
   const navigate = useNavigate();
@@ -70,26 +74,29 @@ const Services = () => {
   const pageLoadServiceURL = getCookie("pageLoadServiceURL");
   const location = useLocation();
   const isNewServiceCreated = useRef(false);
-  const { serviceMenu, serviceerror } = useSelector((state) => state.serviceMenu);
+
+  const { menuList, menuRawList } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const pageURL = location.pathname;
-    if (pageURL && serviceMenu.length > 0 && !isNewServiceCreated.current) {
-      const sortedMapped = sortByFieldName(serviceMenu, "service_postion");
-      const selectedMneu = _.filter(sortedMapped, (item) => {
+    if (pageURL && menuList.length > 0 && !isNewServiceCreated.current) {
+      const _serviceMenu = getServiceMainMenu(menuList);
+      setPageServiceMenu(_serviceMenu);
+      const _servicelist = _serviceMenu?.childMenu;
+      const selectedMneu = _.filter(_servicelist, (item) => {
         return item?.page_url?.toLowerCase() === pageURL;
       })[0];
       if (selectedMneu) {
         storeServiceMenuValueinCookie(selectedMneu);
         setSelectedServiceProject(selectedMneu);
       } else {
-        navigate(sortedMapped[0]?.page_url);
-        storeServiceMenuValueinCookie(sortedMapped[0]);
-        setSelectedServiceProject(sortedMapped[0]);
+        navigate(_servicelist[0]?.page_url);
+        storeServiceMenuValueinCookie(_servicelist[0]);
+        setSelectedServiceProject(_servicelist[0]);
       }
       setSelectedServiceList([]);
     }
-  }, [location, serviceMenu]);
+  }, [location, menuList]);
 
   // useEffect(() => {
   //   window.scrollTo(0, 0);
@@ -102,17 +109,6 @@ const Services = () => {
     }
   });
 
-  // useEffect(() => {
-  //   if (pageLoadServiceID && pageLoadServiceName && pageLoadServiceURL)
-  //     getSelectedServiceObject(pageLoadServiceID);
-  //   setSelectedServiceName(pageLoadServiceName);
-  //   setSelectedServiceProject({
-  //     id: pageLoadServiceID,
-  //     services_page_title: pageLoadServiceName,
-  //     page_url: pageLoadServiceURL,
-  //   });
-  // }, [uid, pageLoadServiceID]);
-
   useEffect(() => {
     removeActiveClass();
   }, []);
@@ -121,11 +117,9 @@ const Services = () => {
     if (selectedServiceProject?.id) {
       setEditCarousel({
         serviceID: selectedServiceProject ? selectedServiceProject?.id : "",
-        services_page_title: selectedServiceProject
-          ? selectedServiceProject?.services_page_title
-          : "",
+        services_page_title: selectedServiceProject ? selectedServiceProject?.page_label : "",
       });
-      setSelectedServiceName(urlStringFormat(selectedServiceProject?.services_page_title));
+      setSelectedServiceName(urlStringFormat(selectedServiceProject?.page_label));
       getSelectedServiceObject(selectedServiceProject.id);
     }
   }, [selectedServiceProject]);
@@ -190,9 +184,11 @@ const Services = () => {
     setShow(!show);
     if (item?.id) {
       let data = item;
-      data.services_page_title = selectedServiceProject?.services_page_title;
+      data.page_label = selectedServiceProject?.page_label;
       setEditCarousel(data);
       isNewServiceCreated.current = false;
+    } else {
+      setEditCarousel("");
     }
     document.body.style.overflow = "hidden";
   };
@@ -283,7 +279,7 @@ const Services = () => {
                       {" "}
                       Add new section in
                       <span className="text-dark fw-bold mx-1">
-                        {selectedServiceProject.services_page_title}
+                        {selectedServiceProject.page_label}
                       </span>
                       page
                     </span>
@@ -300,25 +296,23 @@ const Services = () => {
                 )}
               {componentEdit.editSection || componentEdit.addSection ? (
                 <div className={`adminEditTestmonial selected`}>
-                  <AddEditAdminNews
+                  <AdminSingleRecordUpload
                     editHandler={editHandler}
-                    category="services"
-                    editCarousel={editCarousel}
-                    setEditCarousel={setEditCarousel}
+                    parentEditObject={editCarousel}
                     componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
-                    imageGetURL="services/createServiceFeatures/"
+                    popupTitle={`Add Content ${pageLoadServiceName ? " - " + pageLoadServiceName : ""} `}
+                    getImageListURL="services/createServiceFeatures/"
+                    deleteImageURL="services/updateFeatureService/"
                     imagePostURL="services/createServiceFeatures/"
                     imageUpdateURL="services/updateFeatureService/"
-                    imageDeleteURL="services/updateFeatureService/"
                     imageLabel="Upload Image"
-                    popupTitle={`Add Content ${pageLoadServiceName ? " - " + pageLoadServiceName : ""} `}
-                    showDescription={false}
                     showExtraFormFields={getServiceFormFields(
                       selectedServiceProject ? selectedServiceProject?.id : "",
                       selectedServiceProject ? selectedServiceProject?.services_page_title : "",
                       selectedServiceProject ? selectedServiceProject?.page_url : ""
                     )}
                     dimensions={imageDimensionsJson("addService")}
+                    sideDeck="servicepopup"
                   />
                 </div>
               ) : (

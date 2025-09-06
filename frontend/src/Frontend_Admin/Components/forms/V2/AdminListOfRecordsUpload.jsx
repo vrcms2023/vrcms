@@ -56,14 +56,13 @@ const AdminListOfRecordsUpload = ({
       try {
         const response = await axiosFileUploadServiceApi.get(getImageListURL);
         if (response?.status === 200) {
-          let key = Object.keys(response.data);
-          if (key.length > 1) {
+          if (response?.data?.results?.length > 0) {
             const _positionKey = getObjectPositionKey(response.data.results[0]);
             const _carouselList = sortByFieldName(response.data.results, _positionKey);
             setCurrentObjectList(_carouselList);
           } else {
-            const _positionKey = getObjectPositionKey(response.data[key][0]);
-            const _carouselList = sortByFieldName(response.data[key], _positionKey);
+            const _positionKey = getObjectPositionKey(response.data[0]);
+            const _carouselList = sortByFieldName(response.data, _positionKey);
             setCurrentObjectList(_carouselList);
           }
         }

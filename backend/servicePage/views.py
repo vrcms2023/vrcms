@@ -1,3 +1,4 @@
+from operator import ge
 from .models import Services, ServiceFeature, ServiceAccordion
 from .serializers import ServiceSerializer, ServiceFeatureSerializer, ServiceAccordionSerializer
 from rest_framework import generics, permissions
@@ -6,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from django.http import Http404
 from common.utility import get_service_data_From_request_Object 
+from common.CustomPagination import CustomPagination
 
 # Create your views here.
 
@@ -106,21 +108,14 @@ class PublishServiceAPIView(generics.RetrieveUpdateAPIView):
 """ 
 Client Service View
 """
-class ClientServiceAPIView(APIView):
-    permission_classes = [permissions.AllowAny]
+class ClientServiceAPIView(generics.ListCreateAPIView):
+    queryset = Services.objects.all().order_by("-created_at")
     serializer_class = ServiceSerializer
-  
-    def get_object(self):
-        try:
-            return Services.objects.filter(publish= True)
-        except Services.DoesNotExist:
-            return Response( status=status.HTTP_404_NOT_FOUND)
+    permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, format=None):
-      
-        snippets = self.get_object()
-        serviceList = ServiceSerializer(snippets, many=True)
-        return Response({"services" : serviceList.data}, status=status.HTTP_200_OK)
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user, updated_by=self.request.user)
+
     
 
 class ClientSelectedServiceAPIView(APIView):
@@ -179,118 +174,110 @@ class ClientHomePageServiceListAPIView(APIView):
     Service Features view
 """
 
-class CreateFeatureService(generics.CreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = ServiceFeature.objects.all()
+class CreateFeatureService(generics.ListCreateAPIView):
+    queryset = ServiceFeature.objects.all().order_by("-created_at")
     serializer_class = ServiceFeatureSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     """
     List all services, or create a new services.
     """
 
-    def get(self, request, format=None):
-        snippets = ServiceFeature.objects.all()
-        serializer = ServiceFeatureSerializer(snippets, many=True)
-        return Response({"servicesFeatures": serializer.data}, status=status.HTTP_200_OK)
-    
-    def post(self, request, format=None):
-        requestObj = get_service_data_From_request_Object(request)
-        requestObj['created_by'] = request.data["created_by"]
-        serializer = ServiceFeatureSerializer(data=requestObj)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"servicesFeatures": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user, updated_by=self.request.user)
 
-class FeatureServicesDetail(APIView):
+class FeatureServicesDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ServiceFeature.objects.all().order_by("-created_at")
+    serializer_class = ServiceFeatureSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_update(self, serializer):
+        serializer.save(updated_by=self.request.user)
+    
+class UpdateFeatureServiceIndex(APIView):
     """
-    Retrieve, update or delete a services instance.
+    Bulk update page positions for PageDetails instances.
     """
-    def get_object(self, pk):
+
+    def get_object(self, obj_id):
         try:
-            return ServiceFeature.objects.get(pk=pk)
+            return ServiceFeature.objects.get(id=obj_id)
         except ServiceFeature.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = ServiceFeatureSerializer(snippet)
-        return Response({"servicesFeatures": serializer.data}, status=status.HTTP_200_OK)
+    def put(self, request, *args, **kwargs):
+        obj_list = request.data
+        if not isinstance(obj_list, list):
+            return Response(
+                {"error": "Expected a list of objects."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        user = request.user
+        updated_instances = []
 
-    def patch(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        requestObj = get_service_data_From_request_Object(request)
-        requestObj['updated_by'] = request.data["updated_by"]
-        serializer = ServiceFeatureSerializer(snippet, data=requestObj)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"servicesFeatures": serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        for item in obj_list:
+            obj = self.get_object(obj_id=item.get("id"))
+            obj.updated_by = user
+            obj.page_position = item.get("services_feature_position")
+            obj.save()
+            updated_instances.append(obj)
 
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    
-
+        serializer = ServiceFeatureSerializer(updated_instances, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 """
-    Service Accrodion view
+    Service Accordion view
 """
 
-class CreateServiceAccordion(generics.CreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = ServiceAccordion.objects.all()
+class CreateServiceAccordion(generics.ListCreateAPIView):
+    queryset = ServiceAccordion.objects.all().order_by("-created_at")
     serializer_class = ServiceAccordionSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     """
     List all services, or create a new services.
-    """
+    """  
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user, updated_by=self.request.user)
 
-    def get(self, request, format=None):
-        snippets = ServiceAccordion.objects.all()
-        serializer = ServiceAccordionSerializer(snippets, many=True)
-        return Response({"servicesAccordion": serializer.data}, status=status.HTTP_200_OK)
-    
-    def post(self, request, format=None):
-        serializer = ServiceAccordionSerializer(data=request.data)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"servicesAccordion": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class ServicesAccordionDetail(APIView):
+class ServicesAccordionDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ServiceAccordion.objects.all().order_by("-created_at")
+    serializer_class = ServiceAccordionSerializer
+    permission_classes = [permissions.IsAuthenticated]
     """
     Retrieve, update or delete a services instance.
     """
-    def get_object(self, pk):
+    def perform_update(self, serializer):
+        serializer.save(updated_by=self.request.user)
+
+
+class UpdateFeatureAccordionIndex(APIView):
+    """
+    Bulk update page positions for PageDetails instances.
+    """
+
+    def get_object(self, obj_id):
         try:
-            return ServiceAccordion.objects.get(pk=pk)
-        except ServiceAccordion.DoesNotExist:
+            return ServiceFeature.objects.get(id=obj_id)
+        except ServiceFeature.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = ServiceAccordionSerializer(snippet)
-        return Response({"servicesAccordion": serializer.data}, status=status.HTTP_200_OK)
+    def put(self, request, *args, **kwargs):
+        obj_list = request.data
+        if not isinstance(obj_list, list):
+            return Response(
+                {"error": "Expected a list of objects."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        user = request.user
+        updated_instances = []
 
-    def put(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = ServiceAccordionSerializer(snippet, data=request.data)
-        if 'path' in request.data and not request.data['path']:
-            serializer.remove_fields(['path','originalname','contentType'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"servicesAccordion": serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        for item in obj_list:
+            obj = self.get_object(obj_id=item.get("id"))
+            obj.updated_by = user
+            obj.page_position = item.get("services_description_position")
+            obj.save()
+            updated_instances.append(obj)
 
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        serializer = ServiceAccordionSerializer(updated_instances, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
