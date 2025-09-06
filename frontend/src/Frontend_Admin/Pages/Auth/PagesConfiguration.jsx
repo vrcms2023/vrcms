@@ -25,11 +25,7 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { getMenu } from "../../../redux/auth/authActions";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
 import { getServiceValues } from "../../../redux/services/serviceActions";
-import {
-  deleteServiceMenu,
-  getServiceMenuItem,
-  updateServiceMenuIndex,
-} from "../../../util/menuUtil";
+import { deleteMenuItemByID, updatePageIndex } from "../../../util/menuUtil";
 
 const PagesConfiguration = () => {
   const editComponentObj = {
@@ -43,64 +39,63 @@ const PagesConfiguration = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { isAdmin, hasPermission } = useAdminLoginStatus();
-  const [selectedServiceMenu, setselectedServiceMenu] = useState([]);
-  const [rootServiceMenu, setRootServiceMenu] = useState({});
+
+  const { menuList, menuRawList } = useSelector((state) => state.auth);
 
   const editHandler = (name, value, item) => {
     setEditMenu(item);
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setShow(!show);
     document.body.style.overflow = "hidden";
-    const selectedService = getServiceMenuItem(serviceMenu, item);
-    if (
-      selectedService &&
-      !item?.is_Parent &&
-      item?.page_parent_ID &&
-      item?.page_parent_ID === rootServiceMenu?.id
-    ) {
-      setselectedServiceMenu(selectedService);
-    } else setselectedServiceMenu("");
   };
 
   /**
    * get User details
    */
-  const getAllPagesDetails = async () => {
-    try {
-      const response = await axiosServiceApi.get(`/pageMenu/createPageMenu/`);
-      if (response?.status === 200 && response?.data?.length > 0) {
-        setRawData(response.data);
-        const _rootservicemenu = getServiceMainMenu(response.data);
-        setRootServiceMenu(_rootservicemenu);
-        const result = getMenuObject(response.data);
-        setPagesDetails(result);
-      } else {
-        setPagesDetails([]);
-      }
-    } catch (error) {
-      toast.error("Unable to load user details");
-    }
-  };
+  // const getAllPagesDetails = async () => {
+  //   try {
+  //     const response = await axiosServiceApi.get(`/pageMenu/createPageMenu/`);
+  //     if (response?.status === 200 && response?.data?.length > 0) {
+  //       setRawData(response.data);
+  //       const _rootservicemenu = getServiceMainMenu(response.data);
+  //       setRootServiceMenu(_rootservicemenu);
+  //       const result = getMenuObject(response.data);
+  //       setPagesDetails(result);
+  //     } else {
+  //       setPagesDetails([]);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Unable to load user details");
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (!componentEdit.menu) {
+  //     getAllPagesDetails();
+  //   }
+  // }, [componentEdit.menu]);
+
   useEffect(() => {
-    if (!componentEdit.menu) {
-      getAllPagesDetails();
+    if (menuList.length > 0) {
+      setRawData(menuList);
+      const result = getMenuObject(menuList);
+      setPagesDetails(result);
+    }
+  }, [menuList]);
+
+  useEffect(() => {
+    if (!componentEdit.menu && menuList.length > 0) {
+      dispatch(getMenu());
     }
   }, [componentEdit.menu]);
 
   const handleUserDelete = (menu) => {
     const id = menu.id;
     const title = menu.page_label;
-    const selectedService = getServiceMenuItem(serviceMenu, menu);
-    const deleteMenuItemByID = async () => {
-      const response = await axiosServiceApi.delete(`/pageMenu/updatePageMenu/${id}/`);
-      if (response.status === 204) {
-        toast.success(`${title} Memu is delete successfully `);
-        getAllPagesDetails();
 
-        if (menu.service_menu_ID) {
-          await deleteServiceMenu(menu.service_menu_ID);
-          dispatch(getServiceValues());
-        }
+    const deleteMenuItem = async () => {
+      const response = await deleteMenuItemByID(id);
+      if (response.status === 204) {
+        toast.success(`${title} Menu is deleted successfully `);
         dispatch(getMenu());
       }
     };
@@ -110,7 +105,7 @@ const PagesConfiguration = () => {
         return (
           <DeleteDialog
             onClose={onClose}
-            callback={deleteMenuItemByID}
+            callback={deleteMenuItem}
             // message={`you want to delete the ${title} Menu`}
             message={
               <>
@@ -131,41 +126,25 @@ const PagesConfiguration = () => {
     if (!data.is_Parent) {
       const _parentMenu = _.filter(pagesDetails, (item) => item.id === data.page_parent_ID)[0];
       if (!_parentMenu[name]) {
-        await updatePageIndex(_parentMenu.id, _parentMenu, name);
-        await updatePageIndex(id, data, name);
+        await updateIndex(_parentMenu.id, _parentMenu, name);
+        await updateIndex(id, data, name);
       } else {
-        await updatePageIndex(id, data, name);
+        await updateIndex(id, data, name);
       }
     } else {
-      await updatePageIndex(id, data, name);
+      await updateIndex(id, data, name);
     }
   };
-  const updatePageIndex = async (id, data, name) => {
-    data[name] = !data[name];
+  const updateIndex = async (id, data, name) => {
     try {
-      const response = await axiosServiceApi.patch(`/pageMenu/updatePageMenu/${id}/`, data);
-
+      const response = await updatePageIndex(id, data, name);
       if (response.status === 200) {
-        getAllPagesDetails();
+        dispatch(getMenu());
       }
     } catch (error) {
       toast.error("Unable to load user details");
     }
   };
-
-  const onPageLoadAction = useRef(true);
-  const [serviceList, setServiceList] = useState([]);
-
-  const { serviceMenu, serviceerror } = useSelector((state) => state.serviceMenu);
-
-  useEffect(() => {
-    if (serviceMenu?.length === 0 && onPageLoadAction.current) {
-      onPageLoadAction.current = false;
-      dispatch(getServiceValues());
-    } else if (serviceMenu.length > 0) {
-      setServiceList(serviceMenu);
-    }
-  }, [serviceMenu]);
 
   const tableHeader = () => {
     return (
@@ -332,11 +311,6 @@ const PagesConfiguration = () => {
 
       const response = await updateObjectsIndex(_finalObject);
       if (response?.length > 0) {
-        if (serviceMenuRoot && serviceMenuRoot?.page_url?.match("/services/")) {
-          await updateServiceMenuIndex(response, serviceList);
-          dispatch(getServiceValues());
-        }
-
         const result = getMenuObject(response);
         setPagesDetails(result);
       }
@@ -385,8 +359,6 @@ const PagesConfiguration = () => {
               popupTitle="Menu"
               editMenu={editMenu}
               componentType="menu"
-              selectedServiceMenu={selectedServiceMenu}
-              rootServiceMenu={rootServiceMenu}
             />
           </div>
         )}

@@ -15,28 +15,22 @@ import { StyledMenu } from "../StyledComponents/Styled-NavMenu";
 // import { axiosClientServiceApi } from "../../util/axiosUtil";
 import { getMenu, getSelectedUserPermissions, getUser } from "../../redux/auth/authActions";
 import {
-  getClonedObject,
   getMenuObject,
-  getPublishedSericeMenu,
   getselectedUserMenu,
   getServiceMainMenu,
   storeServiceMenuValueinCookie,
   urlStringFormat,
 } from "../../util/commonUtil";
 
-import { getServiceValues } from "../../redux/services/serviceActions";
 import { isAppAccess } from "../../util/permissions";
-
-import { updatedMenulist, updatedMenuloadedStatus } from "../../redux/auth/authSlice";
+import { updatedMenulist } from "../../redux/auth/authSlice";
 import { axiosServiceApi } from "../../util/axiosUtil";
 import { toast } from "react-toastify";
 import Menudata from "../../data/Menu.json";
-import ImageInputsForm from "../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
 import EditIcon from "../AdminEditIcon";
-import { getFormDynamicFields, getLogoFormFields } from "../../util/dynamicFormFields";
+import { getFormDynamicFields } from "../../util/dynamicFormFields";
 import ApplicationLogo from "../Logo/ApplicationLogo";
 import AdminSingleRecordUpload from "../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
-import AdminListOfRecordsUpload from "../../Frontend_Admin/Components/forms/V2/AdminListOfRecordsUpload";
 
 const Header = () => {
   const editComponentObj = {
@@ -49,10 +43,8 @@ const Header = () => {
   const { userInfo, menuList, menuRawList, permissions, menuloadedStatus } = useSelector(
     (state) => state.auth
   );
-  const { serviceMenu } = useSelector((state) => state.serviceMenu);
+
   const dispatch = useDispatch();
-  const onPageLoadServiceAction = useRef(true);
-  const [rootServiceMenu, setRootServiceMenu] = useState({});
   const navigate = useNavigate();
   const pageType = "header";
   const category = "logo";
@@ -88,8 +80,7 @@ const Header = () => {
   const [serviceMenuList, setServiceMenuList] = useState([]);
   const [counter, setCounter] = useState(0);
   const [showAddMenuMessage, setshowAddMenuMessage] = useState(false);
-  const menuUpdateInitialized = useRef(true);
-  const [isServiceMenuAvailable, setIsServiceMenuAvailable] = useState(false);
+
   const editHandler = (name, value) => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setShow(!show);
@@ -104,7 +95,6 @@ const Header = () => {
       dispatch(getUser());
     }
     if (menuRawList?.length === 0 && counter < 3) {
-      menuUpdateInitialized.current = true;
       dispatch(getMenu());
       setCounter(counter + 1);
     } else if (menuRawList?.length === 0 && counter >= 3) {
@@ -113,63 +103,21 @@ const Header = () => {
   }, [userInfo, dispatch, menuRawList]);
 
   useEffect(() => {
-    if (permissions?.length > 0 && menuRawList?.length > 0 && menuloadedStatus) {
-      let _customMenulist = getClonedObject(menuRawList);
+    if (permissions?.length > 0 && menuRawList?.length > 0) {
       if (permissions[0]?.name.toLowerCase() !== "all") {
-        _customMenulist = getselectedUserMenu(permissions, menuRawList);
-
-        let mainServiceMenu = getServiceMainMenu(_customMenulist);
-        if (mainServiceMenu?.length > 0) {
-          setIsServiceMenuAvailable(true);
-        }
-      } else {
-        setIsServiceMenuAvailable(true);
-      }
-      const menuObject = getMenuObject(_customMenulist);
-
-      dispatch(updatedMenulist(menuObject));
-      dispatch(updatedMenuloadedStatus());
-    }
-  }, [permissions, menuRawList, menuloadedStatus]);
-
-  useEffect(() => {
-    if (menuRawList?.length > 0 && menuloadedStatus) {
-      let _customMenulist = getClonedObject(menuRawList);
-      const _rootservicemenu = getServiceMainMenu(_customMenulist);
-      setRootServiceMenu(_rootservicemenu);
-
-      if (_rootservicemenu) {
-        setIsServiceMenuAvailable(true);
+        let _customMenulist = getselectedUserMenu(permissions, menuRawList);
+        const menuObject = getMenuObject(_customMenulist);
+        dispatch(updatedMenulist(menuObject));
       }
     }
-  }, [menuRawList, menuloadedStatus]);
+  }, [permissions, menuRawList]);
 
   useEffect(() => {
-    if (
-      serviceMenu.length === 0 &&
-      menuList.length > 0 &&
-      onPageLoadServiceAction.current &&
-      isServiceMenuAvailable
-    ) {
-      onPageLoadServiceAction.current = false;
-      dispatch(getServiceValues());
+    if (!getCookie("pageLoadServiceName") && menuList.length > 0) {
+      const _serviceMenu = getServiceMainMenu(menuList);
+      storeServiceMenuValueinCookie(_serviceMenu?.childMenu[0]);
     }
-  }, [serviceMenu, dispatch, menuList, isServiceMenuAvailable]);
-
-  useEffect(() => {
-    setServiceMenuList(serviceMenu);
-    if (!getCookie("pageLoadServiceName") && serviceMenu.length > 0) {
-      storeServiceMenuValueinCookie(serviceMenu[0]);
-    }
-  }, [serviceMenu]);
-
-  useEffect(() => {
-    if (menuList.length > 0 && serviceMenuList.length > 0 && menuUpdateInitialized.current) {
-      menuUpdateInitialized.current = false;
-      const updateMainMenu = getPublishedSericeMenu(menuList, serviceMenuList);
-      dispatch(updatedMenulist(updateMainMenu));
-    }
-  }, [serviceMenuList, menuList, isAdmin]);
+  }, [menuList]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -201,32 +149,6 @@ const Header = () => {
     }
   };
 
-  // useEffect(() => {
-  //   function scrollFunction() {
-  //     const navbar = document.getElementsByClassName("navbar")[0]; // Get the first element with the class name
-  //     const logo = document.getElementsByClassName("logo")[0]; // Get the first element with the class name
-  //     if (
-  //       document.body.scrollTop > 80 ||
-  //       document.documentElement.scrollTop > 80
-  //     ) {
-  //       navbar.style.position = "fixed";
-  //       navbar.style.top = 0;
-  //       navbar.style.width = "100%";
-  //       navbar.style.transition = "0.4s";
-  //     } else {
-  //       navbar.style.position = "static";
-  //     }
-  //   }
-
-  //   window.addEventListener("scroll", scrollFunction);
-  // });
-
-  // function logOutHandler() {
-  //   removeAllCookies();
-  //   dispatch(logout());
-  //   toast.success("Logout successfully");
-  //   navigate("/");
-  // }
   return (
     <StyledMenu>
       <nav
@@ -272,13 +194,7 @@ const Header = () => {
             </div>
           )}
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            {!isHideMenu && (
-              <ClientMenu
-                serviceMenuList={serviceMenuList}
-                rootServiceMenu={rootServiceMenu}
-                key="clientMenu"
-              />
-            )}
+            {!isHideMenu && <ClientMenu key="clientMenu" />}
           </div>
         </div>
       </nav>
@@ -307,17 +223,8 @@ const Header = () => {
   );
 };
 
-export const ClientMenu = ({ serviceMenuList, rootServiceMenu }) => {
+export const ClientMenu = () => {
   const { menuList } = useSelector((state) => state.auth);
-
-  const getSelectedServiceMenu = (menu) => {
-    const tempService = _.filter(serviceMenuList, (item) => {
-      return item.services_page_title === menu.page_label;
-    })[0];
-    if (tempService) {
-      storeServiceMenuValueinCookie(tempService);
-    }
-  };
 
   const ChildMenuContent = ({ menu, className }) => {
     const location = useLocation();
@@ -352,11 +259,6 @@ export const ClientMenu = ({ serviceMenuList, rootServiceMenu }) => {
             const activeClass = isActive || isParentActive(menu) ? "active" : "";
 
             return `${baseClass} ${childToggleClass} ${activeClass}`;
-          }}
-          onClick={(e) => {
-            if (menu?.page_parent_ID === rootServiceMenu?.id) {
-              getSelectedServiceMenu(menu);
-            }
           }}
           id={menu.id}
           data-bs-toggle={menu.childMenu?.length > 0 ? "dropdown" : undefined}

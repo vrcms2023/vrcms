@@ -257,6 +257,13 @@ export const getServiceFormFields = (id, title, page_url) => {
       value: page_url ? page_url : "",
       fieldName: "services_page_url",
     },
+    category: {
+      label: "hidden",
+      readOnly: true,
+      type: "hidden",
+      value: "services",
+      fieldName: "category",
+    },
   };
 };
 

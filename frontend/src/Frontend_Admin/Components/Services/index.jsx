@@ -3,37 +3,43 @@ import { toast } from "react-toastify";
 import Button from "../../../Common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 import Error from "../Error";
 import _ from "lodash";
-import { getCookie, removeCookie } from "../../../util/cookieUtil";
 import { confirmAlert } from "react-confirm-alert";
 import DeleteDialog from "../../../Common/DeleteDialog";
 import Title from "../../../Common/Title";
-import moment from "moment";
-import { sortByCreatedDate, sortByDate } from "../../../util/dataFormatUtil";
-import { getClonedObject, sortByFieldName, storeServiceMenuValueinCookie } from "../../../util/commonUtil";
+
+import { getServiceMainMenu, sortByFieldName } from "../../../util/commonUtil";
 
 import { useLocation } from "react-router-dom";
-import { deleteServiceItem, getSelectedMenuDetails } from "../../../util/menuUtil";
+import {
+  deleteMenuItemByID,
+  getMenuPosition,
+  getServiceMenuRawData,
+  updatedMenu,
+  updatePageIndex,
+} from "../../../util/menuUtil";
 import { getMenu } from "../../../redux/auth/authActions";
-import { getServiceValues } from "../../../redux/services/serviceActions";
 import Ancher from "../../../Common/Ancher";
 
-const AddService = ({ setSelectedServiceProject, selectedServiceProject, pageType, isNewServiceCreated }) => {
+const AddService = ({
+  setSelectedServiceProject,
+  selectedServiceProject,
+  pageType,
+  isNewServiceCreated,
+}) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const ulRef = useRef(null);
   const [serviceLinksBoxHeight, setServiceLinksBoxHeight] = useState(86);
   const [linkShow, setLinkHide] = useState(true);
   const [serviceName, setServiceName] = useState("");
+  const [pageServiceMenu, setPageServiceMenu] = useState("");
   const [error, setError] = useState("");
   const [serviceList, setServiceList] = useState([]);
   const [editServiceObject, setEditServiceObject] = useState("");
-  const [userName, setUserName] = useState("");
   const onPageLoadAction = useRef(true);
   const [editState, setEditState] = useState(false);
-  const { serviceMenu, serviceerror } = useSelector((state) => state.serviceMenu);
   const { menuList, menuRawList } = useSelector((state) => state.auth);
   const inputRef = useRef(null);
   const dispatch = useDispatch();
@@ -48,27 +54,22 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, pageTyp
   const onClickSelectedService = (item) => {
     isNewServiceCreated.current = false;
     navigate(item.page_url, { replace: true });
-    // storeServiceMenuValueinCookie(item);
-    // setSelectedServiceProject(item);
   };
 
+  /***
+   * get Service Menu onPage load
+   */
   useEffect(() => {
-    setUserName(getCookie("userName"));
-  }, []);
-
-  useEffect(() => {
-    if (serviceMenu.length > 0) {
-      let filterMenu = _.filter(serviceMenu, (item) => {
+    if (menuList.length > 0) {
+      const _serviceMenu = getServiceMainMenu(menuList);
+      setPageServiceMenu(_serviceMenu);
+      let filterMenu = _.filter(_serviceMenu?.childMenu, (item) => {
         return item?.page_url?.toLowerCase() !== "/services/addservices";
       });
-
       const sortedMapped = sortByFieldName(filterMenu, "service_postion");
-
       setServiceList(sortedMapped);
-    } else {
-      setServiceList(serviceMenu);
     }
-  }, [serviceMenu]);
+  }, [menuList]);
 
   /**
    * Add Service handler
@@ -78,41 +79,33 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, pageTyp
       setError("Please Enter Service  name");
       return;
     }
-    let response = "";
-    let data = {
-      services_page_title: serviceName,
-      created_by: userName,
-      pageType: pageType,
-      publish: editServiceObject?.publish ? true : false,
-    };
+
+    let _url;
+    let _indexPosition;
+
     try {
-      if (editServiceObject?.id) {
-        const _tempEditObj = _.cloneDeep(editServiceObject);
-        data["id"] = editServiceObject.id;
-        data["updated_by"] = userName;
-        data["page_url"] = editServiceObject.page_url;
-        response = await axiosServiceApi.put(`/services/updateService/${editServiceObject.id}/`, data);
-        createChildMenu(response.data.services, true, editServiceObject.services_page_title);
-        setServiceName("");
-        setEditServiceObject({});
+      if (editServiceObject) {
+        _indexPosition = editServiceObject?.page_position;
+        _url = editServiceObject?.page_url;
       } else {
-        const _serviceMenuObject = serviceMenu[0];
-        const position = Math.floor(parseInt(_serviceMenuObject?.service_postion) / 10);
-        data["service_postion"] = position * 10 + serviceMenu.length + 1;
-        data["page_url"] = `/services/${serviceName.replace(/\s/g, "").toLowerCase()}`;
-        response = await axiosServiceApi.post(`/services/createService/`, data);
-        createChildMenu(response.data.services, false, "");
+        _url = `/services/${serviceName.replace(/\s/g, "").toLowerCase()}`;
+        _indexPosition = getMenuPosition(pageServiceMenu);
       }
-      if (response?.status === 201 || response?.status === 200) {
-        const item = response.data.services;
+      let _data = getServiceMenuRawData(
+        serviceName,
+        _url,
+        pageServiceMenu?.id,
+        editServiceObject,
+        _indexPosition
+      );
+      let response = await updatedMenu(_data);
+      if ((response?.status === 201 || response?.status === 200) && response?.data) {
         toast.success(`${serviceName} service is created `);
         setServiceName("");
-        dispatch(getServiceValues());
+        dispatch(getMenu());
         isNewServiceCreated.current = true;
-        setSelectedServiceProject(item);
-        navigate(item.page_url, { replace: true });
-      } else {
-        setError(response.data.message);
+        setSelectedServiceProject(response?.data);
+        navigate(response?.data?.page_url, { replace: true });
       }
     } catch (error) {
       setError(`${serviceName} is already register`);
@@ -120,46 +113,12 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, pageTyp
     }
   }
 
-  // const getServiceList = async () => {
-  //   try {
-  //     const response = await axiosServiceApi.get(`/services/createService/`);
-  //     if (response?.status === 200) {
-  //       const data = sortByCreatedDate(response.data.services);
-  //       setServiceList(data);
-  //       if (onPageLoadAction.current && !getCookie("pageLoadServiceID")) {
-  //         setSelectedServiceProject(data[0]);
-  //         onPageLoadAction.current = false;
-  //       }
-  //     }
-  //   } catch (e) {
-  //     console.log("unable to access ulr because of server is down");
-  //   }
-  // };
-
-  /**
-   *  get Service list on page load
-   */
-  useEffect(() => {
-    if (serviceMenu?.length === 0 && onPageLoadAction.current) {
-      onPageLoadAction.current = false;
-      dispatch(getServiceValues());
-    }
-
-    if (serviceMenu?.length === 0) {
-      removeCookie("pageLoadServiceID");
-      removeCookie("pageLoadServiceName");
-    }
-  }, [serviceMenu]);
-
   const publishService = async (item) => {
     try {
-      let response = await axiosServiceApi.patch(`/services/publishService/${item.id}/`, { publish: !item.publish });
-
+      const _tempEditObj = _.cloneDeep(item);
+      const response = await updatePageIndex(_tempEditObj.id, _tempEditObj, "is_Client_menu");
       if (response.status === 200) {
-        let services = response.data.services;
-        toast.success(`Service ${services.publish ? "published" : "un published"} successfully`);
-        setSelectedServiceProject(response.data.services);
-        dispatch(getServiceValues());
+        dispatch(getMenu());
       }
     } catch (error) {
       console.log("unable to publish the services");
@@ -169,15 +128,12 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, pageTyp
   const deleteService = (item) => {
     CancelServiceNameChange();
     const id = item.id;
-    const name = item.services_page_title;
-    const deleteImageByID = async () => {
-      const response = await axiosServiceApi.delete(`/services/updateService/${item.id}/`);
+    const name = item.page_label;
+    const deleteMenuItem = async () => {
+      const response = await deleteMenuItemByID(id);
       if (response.status === 204) {
-        const deleteresponse = await deleteServiceItem(item.menu_ID);
-
-        dispatch(getServiceValues());
+        toast.success(`${name} Service Menu is deleted successfully `);
         dispatch(getMenu());
-        toast.success(`${name} is deleted`);
       }
     };
 
@@ -186,7 +142,7 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, pageTyp
         return (
           <DeleteDialog
             onClose={onClose}
-            callback={deleteImageByID}
+            callback={deleteMenuItem}
             // message={`deleting the ${name} Service?`}
             message={
               <>
@@ -200,7 +156,7 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, pageTyp
   };
 
   const EditService = (item) => {
-    setServiceName(item?.services_page_title);
+    setServiceName(item?.page_label);
     setEditServiceObject(item);
     setEditState(true);
     if (inputRef.current) {
@@ -214,29 +170,6 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, pageTyp
     setEditState(false);
     isNewServiceCreated.current = false;
   };
-
-  const createChildMenu = async (serviceResponse, isEdit, oldTilte) => {
-    const _data = await getSelectedMenuDetails(menuList, location, serviceResponse, isEdit, oldTilte);
-    dispatch(getServiceValues());
-    dispatch(getMenu());
-  };
-
-  //   const handlerHeightSetting = () => {
-  //   if (ulRef.current) {
-  //     const fullHeight = ulRef.current.scrollHeight;
-
-  //     if (serviceLinksBoxHeight === "86px") {
-  //       const newHeight = fullHeight > 320 ? "320px" : `${fullHeight}px`;
-  //       setServiceLinksBoxHeight(newHeight);
-  //       setShowAll("FEW ONLY");
-  //       setLinkHide(false)
-  //     } else {
-  //       setServiceLinksBoxHeight("86px");
-  //       setShowAll("SHOW ALL..");
-  //       setLinkHide(true)
-  //     }
-  //   }
-  // };
 
   const handlerHeightSetting = () => {
     if (ulRef.current) {
@@ -288,11 +221,23 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, pageTyp
               <Button
                 type="submit"
                 // cssClass="btn btn-primary mt-2"
-                cssClass={isFocused || serviceName ? "btn btn-primary btn-sm mt-2" : "btn btn-secondary mt-2 disabled"}
+                cssClass={
+                  isFocused || serviceName
+                    ? "btn btn-primary btn-sm mt-2"
+                    : "btn btn-secondary mt-2 disabled"
+                }
                 handlerChange={submitHandler}
                 label={editServiceObject?.id ? "Change Name" : "SAVE"}
               />
-              {editServiceObject?.id ? <Button cssClass="btn btn-outline btn-sm mt-2" handlerChange={CancelServiceNameChange} label="Cancel" /> : ""}
+              {editServiceObject?.id ? (
+                <Button
+                  cssClass="btn btn-outline btn-sm mt-2"
+                  handlerChange={CancelServiceNameChange}
+                  label="Cancel"
+                />
+              ) : (
+                ""
+              )}
             </div>
           </div>
 
@@ -323,7 +268,7 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, pageTyp
                         <Ancher
                           Ancherpath={item.page_url}
                           AncherClass="text-dark pageTitle"
-                          AncherLabel={item.services_page_title}
+                          AncherLabel={item.page_label}
                           handleModel={(event) => onClickSelectedService(item)}
                         />
                         {/* <Link
@@ -344,9 +289,9 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, pageTyp
                           //     ? "bg-success text-white"
                           //     : "bg-secondary text-light"
                           // }`}
-                          title={item.publish ? "Page Published" : "Page Not Published"}
+                          title={item.is_Client_menu ? "Page Published" : "Page Not Published"}
                         >
-                          {item.publish ? (
+                          {item.is_Client_menu ? (
                             <span className="text-success fs-5 fw-bold">P</span>
                           ) : (
                             // <i
@@ -376,7 +321,11 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, pageTyp
               {linkShow && serviceList.length > 2 && (
                 <div className="row">
                   <div className="col-12 text-end">
-                    <a href="#" className="btn viewAllServices" onClick={() => handlerHeightSetting()}>
+                    <a
+                      href="#"
+                      className="btn viewAllServices"
+                      onClick={() => handlerHeightSetting()}
+                    >
                       {isExpanded ? "FEW ONLY" : "SHOW ALL.."}
                     </a>
                   </div>

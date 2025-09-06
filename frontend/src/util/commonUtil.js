@@ -141,7 +141,7 @@ export const storeServiceMenuValueinCookie = (item) => {
   removeCookie("pageLoadServiceName");
   removeCookie("pageLoadServiceURL");
   setCookie("pageLoadServiceID", item.id);
-  setCookie("pageLoadServiceName", urlStringFormat(item?.services_page_title));
+  setCookie("pageLoadServiceName", urlStringFormat(item?.page_label));
   setCookie("pageLoadServiceURL", item?.page_url);
 };
 
@@ -208,7 +208,7 @@ export const getPublishedSericeMenu = (menuList, publishedMenuList) => {
   let selectedMenu = [];
   childMenu?.forEach((item) => {
     publishedMenuList.forEach((publishedMenu) => {
-      if (item.page_label.toLowerCase() === publishedMenu.services_page_title.toLowerCase()) {
+      if (item.page_label.toLowerCase() === publishedMenu.page_label.toLowerCase()) {
         selectedMenu.push(item);
       }
     });
