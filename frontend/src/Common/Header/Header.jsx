@@ -238,7 +238,7 @@ export const ClientMenu = () => {
       if (current === item.page_url) return true;
 
       // Check if any child path exactly matches
-      if (item.childMenu) {
+      if (item?.childMenu) {
         return item.childMenu.some((child) => child.page_url.toLowerCase() === current);
       }
 

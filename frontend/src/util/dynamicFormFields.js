@@ -243,6 +243,13 @@ export const getServiceFormFields = (id, title, page_url) => {
       value: id ? id : "",
       fieldName: "serviceID",
     },
+    service: {
+      label: "hidden",
+      readOnly: true,
+      type: "hidden",
+      value: id ? id : "",
+      fieldName: "service",
+    },
     services_page_title: {
       label: "hidden",
       readOnly: true,
