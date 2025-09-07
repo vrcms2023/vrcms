@@ -52,24 +52,17 @@ const Services = () => {
   const [show, setShow] = useState(false);
   const [selectedServiceProject, setSelectedServiceProject] = useState({});
   const [selectedServiceList, setSelectedServiceList] = useState([]);
-  const [selectedServiceName, setSelectedServiceName] = useState();
-  const [pageServiceMenu, setPageServiceMenu] = useState("");
   const [editCarousel, setEditCarousel] = useState({});
-  let { uid } = useParams();
   const navigate = useNavigate();
-  const pageLoadServiceID = getCookie("pageLoadServiceID");
-  const pageLoadServiceName = getCookie("pageLoadServiceName");
-  const pageLoadServiceURL = getCookie("pageLoadServiceURL");
   const location = useLocation();
   const isNewServiceCreated = useRef(false);
 
-  const { menuList, menuRawList } = useSelector((state) => state.auth);
+  const { menuList } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const pageURL = location.pathname;
     if (pageURL && menuList.length > 0 && !isNewServiceCreated.current) {
       const _serviceMenu = getServiceMainMenu(menuList);
-      setPageServiceMenu(_serviceMenu);
       const _servicelist = _serviceMenu?.childMenu;
       const selectedMneu = _.filter(_servicelist, (item) => {
         return item?.page_url?.toLowerCase() === pageURL;
@@ -108,7 +101,6 @@ const Services = () => {
         serviceID: selectedServiceProject ? selectedServiceProject?.id : "",
         services_page_title: selectedServiceProject ? selectedServiceProject?.page_label : "",
       });
-      setSelectedServiceName(urlStringFormat(selectedServiceProject?.page_label));
       getSelectedServiceObject(selectedServiceProject.id);
     }
   }, [selectedServiceProject]);
@@ -222,29 +214,6 @@ const Services = () => {
       {/* End Of Page Banner Component */}
 
       <ServicesStyled>
-        {/* Introduction 
-        {isAdmin && hasPermission && (
-          <EditIcon editHandler={() => editHandler("briefIntro", true)} />
-        )}
-        <BriefIntroFrontend
-          introState={componentEdit.briefIntro}
-          pageType={pageType}
-          introTitleCss="fs-3 fw-medium text-md-center"
-          introSubTitleCss="fw-medium text-muted text-md-center"
-          introDecTitleCss="fs-6 fw-normal w-75 m-auto text-md-center"
-        />
-        {componentEdit.briefIntro && (
-          <div className={`adminEditTestmonial selected `}>
-            <AdminBriefIntro
-              editHandler={editHandler}
-              popupTitle="Service Details"
-              componentType="briefIntro"
-              pageType={pageType}
-            />
-          </div>
-        )} */}
-        {/* End Of Introduction */}
-
         {/* Add Service Page */}
         {isAdmin && hasPermission && (
           <AddService
@@ -311,15 +280,7 @@ const Services = () => {
                 <ShareButtons />
               </div>
               <div className="row">
-                <div className="col-12 col-md-8">
-                  {/* <Title title={"Services"} cssClass="fs-3 mb-2 pageTitle" /> */}
-                  {/* <Title
-                title={TitleStringFormat(
-                  selectedServiceProject.services_page_title,
-                )}
-                cssClass="fs-1 mb-2 pageTitle"
-              /> */}
-                </div>
+                <div className="col-12 col-md-8"></div>
               </div>
               {selectedServiceProject.page_url !== "/services/addservices" &&
                 selectedServiceList.map((item, index) => (
@@ -364,12 +325,6 @@ const Services = () => {
                           showMorelink={false}
                         />
                       )}
-                      {/*                  
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: item.feature_description,
-                      }}
-                    /> */}
                     </div>
                     <div className="col-lg-4 px-0 d-flex align-items-center justify-content-center">
                       <img src={getImagePath(item.path)} alt="" />
@@ -377,16 +332,6 @@ const Services = () => {
                   </div>
                 ))}
             </div>
-
-            {/* {isAdmin && hasPermission && (
-              <div className="col-md-4">
-                <AddService
-                  setSelectedServiceProject={setSelectedServiceProject}
-                  selectedServiceProject={selectedServiceProject}
-                  pageType="service"
-                />
-              </div>
-            )} */}
           </div>
         </div>
       </ServicesStyled>

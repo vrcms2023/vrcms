@@ -78,7 +78,6 @@ const Header = () => {
     "settings",
   ];
   const isHideBurgetIcon = isPathExit(burgetHide);
-  const [serviceMenuList, setServiceMenuList] = useState([]);
   const [counter, setCounter] = useState(0);
   const [showAddMenuMessage, setshowAddMenuMessage] = useState(false);
 
