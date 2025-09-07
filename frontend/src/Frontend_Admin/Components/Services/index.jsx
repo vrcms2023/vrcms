@@ -79,7 +79,7 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, isNewSe
     let _indexPosition;
 
     try {
-      if (editServiceObject) {
+      if (editServiceObject?.id) {
         _indexPosition = editServiceObject?.page_position;
         _url = editServiceObject?.page_url;
       } else {
@@ -93,6 +93,7 @@ const AddService = ({ setSelectedServiceProject, selectedServiceProject, isNewSe
         editServiceObject,
         _indexPosition
       );
+
       let response = await updatedMenu(_data);
       if ((response?.status === 201 || response?.status === 200) && response?.data) {
         toast.success(`${serviceName} service is created `);
