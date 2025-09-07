@@ -1,34 +1,24 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import _ from "lodash";
 // Components
-import ImageInputsForm from "../../../Frontend_Admin/Components/forms/ImgTitleIntoForm";
-import AdminBriefIntro from "../../../Frontend_Admin/Components/BriefIntro/index";
+
 import EditIcon from "../../../Common/AdminEditIcon";
 import ModelBg from "../../../Common/ModelBg";
-import Banner from "../../../Common/Banner";
 import Title from "../../../Common/Title";
-import BriefIntroFrontend from "../../../Common/BriefIntro";
 import { useAdminLoginStatus } from "../../../Common/customhook/useAdminLoginStatus";
 
 import DeleteDialog from "../../../Common/DeleteDialog";
 import AddService from "../../../Frontend_Admin/Components/Services";
-import AddEditAdminNews from "../../../Frontend_Admin/Components/News";
-import { getReactHostDetils, removeActiveClass } from "../../../util/ulrUtil";
-import {
-  getFormDynamicFields,
-  getServiceFormFields,
-  imageDimensionsJson,
-} from "../../../util/dynamicFormFields";
+import { removeActiveClass } from "../../../util/ulrUtil";
+import { getServiceFormFields, imageDimensionsJson } from "../../../util/dynamicFormFields";
 import { axiosClientServiceApi, axiosServiceApi } from "../../../util/axiosUtil";
 import {
   getImagePath,
   getServiceMainMenu,
-  sortByFieldName,
   storeServiceMenuValueinCookie,
   urlStringFormat,
 } from "../../../util/commonUtil";
@@ -39,7 +29,6 @@ import { getCookie } from "../../../util/cookieUtil";
 import { ServicesStyled } from "../../../Common/StyledComponents/Styled-Services";
 
 import RichTextView from "../../../Common/RichTextView";
-import ShowHideToggle from "../../../Common/ShowHideToggle";
 import { getObjectsByKey } from "../../../util/showHideComponentUtil";
 import {
   createShowHideComponent,
@@ -47,7 +36,6 @@ import {
 } from "../../../redux/showHideComponent/showHideActions";
 import ShareButtons from "../../../Common/Share";
 import PageBannerComponent from "../../../Common/Banner/PageBannerComponent";
-import AdminListOfRecordsUpload from "../../../Frontend_Admin/Components/forms/V2/AdminListOfRecordsUpload";
 import AdminSingleRecordUpload from "../../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
 
 const Services = () => {
@@ -94,6 +82,7 @@ const Services = () => {
         storeServiceMenuValueinCookie(_servicelist[0]);
         setSelectedServiceProject(_servicelist[0]);
       }
+
       setSelectedServiceList([]);
     }
   }, [location, menuList]);
@@ -222,11 +211,11 @@ const Services = () => {
       <PageBannerComponent
         editHandler={editHandler}
         componentEdit={componentEdit}
-        pageType={`${pageType}${pageLoadServiceName ? "-" + pageLoadServiceName : "mainservice"}`}
+        pageType={`${pageType}-${selectedServiceProject?.id ? selectedServiceProject.id : "mainservice"}`}
         category={"service-banner"}
         showHideCompList={showHideCompList}
         showHideHandler={showHideHandler}
-        popupTitle={`Service ${pageLoadServiceName ? "-" + pageLoadServiceName : ""} Banner`}
+        popupTitle={`Service ${selectedServiceProject?.page_label ? "-" + selectedServiceProject.page_label : ""} Banner`}
         showHideComponentName={"servicebanner"}
       />
 
@@ -299,7 +288,7 @@ const Services = () => {
                     editHandler={editHandler}
                     parentEditObject={editCarousel}
                     componentType={`${componentEdit.editSection ? "editSection" : "addSection"}`}
-                    popupTitle={`Add Content ${pageLoadServiceName ? " - " + pageLoadServiceName : ""} `}
+                    popupTitle={`Add Content ${selectedServiceProject?.page_label ? " - " + selectedServiceProject?.page_label : ""} `}
                     getImageListURL="services/createServiceFeatures/"
                     deleteImageURL="services/updateFeatureService/"
                     imagePostURL="services/createServiceFeatures/"

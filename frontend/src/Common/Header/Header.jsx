@@ -31,6 +31,7 @@ import EditIcon from "../AdminEditIcon";
 import { getFormDynamicFields } from "../../util/dynamicFormFields";
 import ApplicationLogo from "../Logo/ApplicationLogo";
 import AdminSingleRecordUpload from "../../Frontend_Admin/Components/forms/V2/AdminSingleRecordUpload";
+import SafeNavLink from "../../Frontend_Views/Routes/SafeNavLink";
 
 const Header = () => {
   const editComponentObj = {
@@ -250,7 +251,7 @@ export const ClientMenu = () => {
         className={`nav-item ${className}-${menu.page_label.replaceAll(" ", "-")} ${menu.childMenu ? "dropdown" : ""}`}
         key={menu.id}
       >
-        <NavLink
+        <SafeNavLink
           to={urlStringFormat(`${menu.page_url}`)}
           className={({ isActive }) => {
             const baseClass = menu.is_Parent ? "nav-Link" : "dropdown-item";
@@ -266,7 +267,7 @@ export const ClientMenu = () => {
           role={menu.childMenu?.length > 0 ? "button" : undefined}
         >
           {menu.page_label}
-        </NavLink>
+        </SafeNavLink>
         {menu.childMenu?.length > 0 && (
           <ul
             className={`dropdown-menu child-${menu.page_label}`}
