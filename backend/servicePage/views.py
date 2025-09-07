@@ -138,7 +138,7 @@ class ClientSelectedServiceAPIView(APIView):
         # service_query_set = Services.objects.filter(serviceID=id)
         # service_serializer = self.service_serializer_class(service_query_set, many=True)
 
-        service_feature_query_set = ServiceFeature.objects.filter(serviceID=id)
+        service_feature_query_set = ServiceFeature.objects.filter(service_id=id)
         service_feature_serializer = self.service_feature_serializer_class(service_feature_query_set, many=True)
 
         # service_accordion_query_set = ServiceAccordion.objects.filter(serviceID=id)
