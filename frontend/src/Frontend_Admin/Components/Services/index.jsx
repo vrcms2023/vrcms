@@ -22,12 +22,7 @@ import {
 import { getMenu } from "../../../redux/auth/authActions";
 import Ancher from "../../../Common/Ancher";
 
-const AddService = ({
-  setSelectedServiceProject,
-  selectedServiceProject,
-  pageType,
-  isNewServiceCreated,
-}) => {
+const AddService = ({ setSelectedServiceProject, selectedServiceProject, isNewServiceCreated }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const ulRef = useRef(null);

@@ -222,7 +222,7 @@ const Services = () => {
       <PageBannerComponent
         editHandler={editHandler}
         componentEdit={componentEdit}
-        pageType={`${pageType}-${pageLoadServiceName ? "-" + pageLoadServiceName : "mainservice"}`}
+        pageType={`${pageType}${pageLoadServiceName ? "-" + pageLoadServiceName : "mainservice"}`}
         category={"service-banner"}
         showHideCompList={showHideCompList}
         showHideHandler={showHideHandler}
@@ -261,7 +261,6 @@ const Services = () => {
           <AddService
             setSelectedServiceProject={setSelectedServiceProject}
             selectedServiceProject={selectedServiceProject}
-            pageType="service"
             isNewServiceCreated={isNewServiceCreated}
           />
         )}
@@ -308,7 +307,7 @@ const Services = () => {
                     imageLabel="Upload Image"
                     showExtraFormFields={getServiceFormFields(
                       selectedServiceProject ? selectedServiceProject?.id : "",
-                      selectedServiceProject ? selectedServiceProject?.services_page_title : "",
+                      selectedServiceProject ? selectedServiceProject?.page_label : "",
                       selectedServiceProject ? selectedServiceProject?.page_url : ""
                     )}
                     dimensions={imageDimensionsJson("addService")}
