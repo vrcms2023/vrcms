@@ -115,7 +115,9 @@ const Header = () => {
   useEffect(() => {
     if (!getCookie("pageLoadServiceName") && menuList.length > 0) {
       const _serviceMenu = getServiceMainMenu(menuList);
-      storeServiceMenuValueinCookie(_serviceMenu?.childMenu[0]);
+      if (_serviceMenu?.childMenu?.length > 0) {
+        storeServiceMenuValueinCookie(_serviceMenu?.childMenu[0]);
+      }
     }
   }, [menuList]);
 

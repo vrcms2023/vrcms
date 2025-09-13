@@ -5,10 +5,7 @@ import { Link } from "react-router-dom";
 const ProjectItem = ({ title, cssClass, projects, handleProjectDelete }) => {
   return (
     <>
-      <Title
-        title={title}
-        cssClass="text-start fw-normal pt-3 mb-3 fs-6 text-dark"
-      />
+      <Title title={title} cssClass="text-start fw-normal pt-3 mb-3 fs-6 text-dark" />
       <table className={`table table-hover border `}>
         <thead>
           <tr className="">
@@ -21,11 +18,7 @@ const ProjectItem = ({ title, cssClass, projects, handleProjectDelete }) => {
             {/* <th scope="col" className="py-2 bg-light fw-normal text-dark">
               publish
             </th> */}
-            <th
-              scope="col"
-              colSpan={2}
-              className="py-2 bg-light fw-normal text-dark"
-            >
+            <th scope="col" colSpan={2} className="py-2 bg-light fw-normal text-dark">
               Actions
             </th>
           </tr>
@@ -58,8 +51,8 @@ const ProjectItem = ({ title, cssClass, projects, handleProjectDelete }) => {
                         parseInt(project.percentValue) === 0
                           ? "bg-info"
                           : parseInt(project.percentValue) === 100
-                          ? "bg-success"
-                          : "bg-warning"
+                            ? "bg-success"
+                            : "bg-warning"
                       }`}
                     >
                       {project.percentValue} %
@@ -74,17 +67,14 @@ const ProjectItem = ({ title, cssClass, projects, handleProjectDelete }) => {
                 <td className="align-middle">
                   {project.isActive ? (
                     <>
-                      <Link to={`/editproject/${project.id}`}>
+                      <Link to={`/getClientProject/${project.id}`}>
                         <i
                           className="fa fa-pencil-square-o fs-4 text-muted me-4"
                           aria-hidden="true"
                           title="Edit"
                         ></i>
                       </Link>
-                      <Link
-                        to=""
-                        onClick={() => handleProjectDelete(project, project.id)}
-                      >
+                      <Link to="" onClick={() => handleProjectDelete(project, project.id)}>
                         <i
                           className="fa fa-trash-o fs-4 text-danger"
                           aria-hidden="true"
@@ -93,10 +83,7 @@ const ProjectItem = ({ title, cssClass, projects, handleProjectDelete }) => {
                       </Link>
                     </>
                   ) : (
-                    <Link
-                      to=""
-                      onClick={() => handleProjectDelete(project, project.id)}
-                    >
+                    <Link to="" onClick={() => handleProjectDelete(project, project.id)}>
                       <i
                         className="fa fa-undo fs-5 fw-bormal text-warning"
                         aria-hidden="true"
@@ -128,7 +115,7 @@ export const Projects = ({ project, handleProjectDelete }) => {
       {project?.ongoing?.length > 0 ? (
         <div className="col-md-6 col-lg-4">
           <ProjectItem
-            title={project.ongoing[0].projectCategoryName}
+            title={project.ongoing[0].projectStatus}
             cssClass="text-success"
             projects={project.ongoing}
             handleProjectDelete={handleProjectDelete}
@@ -148,7 +135,7 @@ export const Projects = ({ project, handleProjectDelete }) => {
       {project?.future?.length > 0 ? (
         <div className="col-md-6 col-lg-4">
           <ProjectItem
-            title={project.future[0].projectCategoryName}
+            title={project.future[0].projectStatus}
             cssClass="text-success"
             projects={project.future}
             handleProjectDelete={handleProjectDelete}
@@ -168,7 +155,7 @@ export const Projects = ({ project, handleProjectDelete }) => {
       {project?.completed?.length > 0 ? (
         <div className="col-md-6 col-lg-4">
           <ProjectItem
-            title={project.completed[0].projectCategoryName}
+            title={project.completed[0].projectStatus}
             cssClass="text-success"
             projects={project.completed}
             handleProjectDelete={handleProjectDelete}

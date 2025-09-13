@@ -1,76 +1,78 @@
-.select-project-type, #projectTitle {
-    width: 680px;
-    margin: 0 auto;
+.select-project-type,
+#projectTitle {
+  width: 680px;
+  margin: 0 auto;
 
-    @media (max-width: 440px) {
-        width: 100%;
-    }
+  @media (max-width: 440px) {
+    width: 100%;
+  }
 }
-
+/* 
 .select-project-type {
     display: flex;
     align-items: center;
-}
+} */
 
 .custom-select {
-    border: 2px solid #ccc !important;
-    padding: 8px;
-    color: #aaa !important;
-    transition: all 0.3s ease;
-  }
-  
-  .custom-select.active {
-    border-color: #a5e7f6 !important;
-    color: #000 !important;
-  }
-
-.linksproject-page-tab-links btn.nav-link {
-    border-radius: 0px !important;
+  border: 2px solid #ccc !important;
+  padding: 8px;
+  color: #aaa !important;
+  transition: all 0.3s ease;
 }
 
+.custom-select.active {
+  border-color: #a5e7f6 !important;
+  color: #000 !important;
+}
+
+.linksproject-page-tab-links btn.nav-link {
+  border-radius: 0px !important;
+}
 
 .projectDetails .tab-pane {
-    @media (max-width: 768px) {
-        width: 100%;
-        margin: 0 auto;
-    }
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 0 auto;
+  }
 
-    @media (min-width: 769px) and (max-width: 992px) {
-        width: 90%;
-        margin: 0 auto;
-    }
+  @media (min-width: 769px) and (max-width: 992px) {
+    width: 90%;
+    margin: 0 auto;
+  }
 
-    @media (min-width: 1024px) {
-        width: 60%;
-        margin: 0 auto;
-    }
+  @media (min-width: 1024px) {
+    width: 60%;
+    margin: 0 auto;
+  }
 }
 
 .collateralUpload {
-    .heightCtrl {
-        height: auto; 
-    }
+  .heightCtrl {
+    height: auto;
+  }
 
-    .form-label {
-        padding-bottom: 0px;
-        margin-top: 48px;
-        /* border-bottom: 1px solid #ececec; */
-        display: block;
-    }
+  .form-label {
+    padding-bottom: 0px;
+    margin-top: 48px;
+    /* border-bottom: 1px solid #ececec; */
+    display: block;
+  }
 }
 
-.project-sublish-status, .project-pills {
-    position: -webkit-sticky !important;
-    position: sticky !important;
-    top: 100px;
-    z-index: 1010;
+.project-sublish-status,
+.project-pills {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 100px;
+  z-index: 1010;
 }
 
 .project-pills {
-    top: 200px;
-    z-index: 1011;
+  top: 200px;
+  z-index: 1011;
 }
 
-.projectInfo .modal-dialog .heightCtrl, .project-image-gallery .heightCtrl {
-    height: auto 
+.projectInfo .modal-dialog .heightCtrl,
+.project-image-gallery .heightCtrl {
+  height: auto;
 }

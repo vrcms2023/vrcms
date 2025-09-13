@@ -46,7 +46,7 @@ const Projects = () => {
   }, [dispatch, clientProjects]);
 
   useEffect(() => {
-    if (clientProjects?.projectList?.length > 0) {
+    if (clientProjects?.length > 0) {
       const projectList = dataFormatedByCatergoryName(clientProjects);
       setCompleted(projectList.completed);
       setFuture(projectList.upcoming);

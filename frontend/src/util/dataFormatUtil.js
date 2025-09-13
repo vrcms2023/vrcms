@@ -3,13 +3,13 @@ import _ from "lodash";
 import { sortByFieldName } from "./commonUtil";
 
 export const dataFormatedByCatergoryName = (data) => {
-  const project = data.projectList;
-  const images = data.imageList;
+  const project = data;
+  const images = data?.imageList;
   const projList = [];
 
   const list = project.reduce((acc, val, ind) => {
     const imgs = [];
-    images.forEach((el, i) => {
+    images?.forEach((el, i) => {
       if (el.projectID === val.id) {
         imgs.push(el);
       }
@@ -18,10 +18,10 @@ export const dataFormatedByCatergoryName = (data) => {
   }, []);
 
   list.forEach((proj) => {
-    if (!projList[proj.projectCategoryValue]) {
-      projList[proj.projectCategoryValue] = [];
+    if (!projList[proj.projectStatus]) {
+      projList[proj.projectStatus] = [];
     }
-    projList[proj.projectCategoryValue].push(proj);
+    projList[proj.projectStatus].push(proj);
   });
   return projList;
 };

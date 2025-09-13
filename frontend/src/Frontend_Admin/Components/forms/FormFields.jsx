@@ -110,11 +110,13 @@ export const InputFields = ({
             <select
               className="custom-select custom-select-lg form-control p-2"
               {...register(fieldName, validationObject)}
+              onChange={onChange}
             >
               {rest.options.map((option, index) => (
                 <option
                   key={index}
                   value={option.value}
+                  id={rest?.id}
                   defaultValue={rest?.selectedValue}
                   selected={option.value === rest?.selectedValue}
                   {...rest}

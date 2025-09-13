@@ -6,6 +6,7 @@ import { getBaseURL } from "../../../util/ulrUtil";
 import ModelBg from "../../../Common/ModelBg";
 import ContactModel from "../../../Common/contactModel";
 import RaqFormModel from "../../../Common/RaqFormModel";
+import RichTextView from "../../../Common/RichTextView";
 
 const HomeTab = ({ project, thumbImgs, pdfs }) => {
   const [show, setShow] = useState(false);
@@ -46,7 +47,7 @@ const HomeTab = ({ project, thumbImgs, pdfs }) => {
       <div className="px-2">
         <Title title={aboutstitle} cssClass="title" />
         <Title title={aboutussubtitle} cssClass="subTitle" />
-        <div className="py-3">{description}</div>
+        <RichTextView data={description ? description : ""} showMorelink={false} />
 
         {pdfs.length > 0 && (
           <div className="pdfDownloadsAsSelectBox">

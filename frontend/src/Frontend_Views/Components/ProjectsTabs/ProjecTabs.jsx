@@ -57,25 +57,26 @@ const ProjectTabs = () => {
   });
 
   const getProjects = async (projectid) => {
-    // const {value} = e.target
+    if (projectid === "select") {
+      return;
+    } // const {value} = e.target
     try {
       const response = await axiosClientServiceApi.get(
         `/project/getSelectedClientProject/${projectid}/`
       );
       if (response?.status === 200) {
-        const projectData = response.data;
-        const project = projectData.project[0];
+        const project = response.data;
         setProjectTitle(project?.projectTitle);
         setprojectid(project?.id);
         setProjectHome(project);
-        setAmenities(projectData.amenitie[0]);
-        filtersImgPdfs(projectData, "images");
-        filtersImgPdfs(projectData, "pdfs");
-        filtersImgPdfs(projectData, "price");
-        filtersImgPdfs(projectData, "plan");
-        filtersImgPdfs(projectData, "avl");
-        filtersImgPdfs(projectData, "thumbnail");
-        setSpecifications(projectData?.specificationData);
+        setAmenities(project.features_amenities);
+        // filtersImgPdfs(project, "images");
+        // filtersImgPdfs(project, "pdfs");
+        // filtersImgPdfs(project, "price");
+        // filtersImgPdfs(project, "plan");
+        // filtersImgPdfs(project, "avl");
+        // filtersImgPdfs(project, "thumbnail");
+        setSpecifications(project?.specifications);
       }
     } catch (error) {
       console.log("unable to access ulr because of server is down");
@@ -83,7 +84,7 @@ const ProjectTabs = () => {
   };
 
   const filtersImgPdfs = (proj, type) => {
-    const data = proj.imageData;
+    const data = proj?.imageData;
 
     if (type === "images") {
       const imgs = filterCategory(data, "images");
@@ -139,9 +140,7 @@ const ProjectTabs = () => {
   const filterImages = (data) => {
     return data.filter(
       (item) =>
-        item.contentType === ".jpg" ||
-        item.contentType === ".jpeg" ||
-        item.contentType === ".png"
+        item.contentType === ".jpg" || item.contentType === ".jpeg" || item.contentType === ".png"
     );
   };
 
@@ -168,7 +167,7 @@ const ProjectTabs = () => {
             <div className="d-flex justify-content-between align-items-center mt-3 mb-3">
               <div className="w-50 d-flex">
                 <Title
-                  title={projectHome.projectCategoryName + " " + " / " + projectTitle}
+                  title={projectHome.projectStatus + " " + " / " + projectTitle}
                   // subTitle={projectTitle}
                   cssClass="fs-5 breadCrumb "
                 />
@@ -198,20 +197,19 @@ const ProjectTabs = () => {
                     cssClass={"btn btn-outline"}
                     label="Edit"
                     handlerChange={() => {
-                      navigate(`/editproject/${projectid}`);
+                      navigate(`/getClientProject/${projectid}`);
                     }}
                   />
-                  
                 )}
                 <Button
-                type=""
-                icon="fa-chevron-left me-2"
-                cssClass={"btn btn-outline"}
-                label="Projects"
-                handlerChange={() => {
-                  navigate("/projects");
-                }}
-              />
+                  type=""
+                  icon="fa-chevron-left me-2"
+                  cssClass={"btn btn-outline"}
+                  label="Projects"
+                  handlerChange={() => {
+                    navigate("/projects");
+                  }}
+                />
               </div>
             </div>
 
@@ -344,11 +342,7 @@ const ProjectTabs = () => {
                   role="tabpanel"
                   aria-labelledby="nav-home-tab"
                 >
-                  <HomeTab
-                    project={projectHome}
-                    thumbImgs={thumbImgs}
-                    pdfs={pdfs}
-                  />
+                  <HomeTab project={projectHome} thumbImgs={thumbImgs} pdfs={pdfs} />
                 </div>
                 {isProjectImg ? (
                   <div
@@ -357,10 +351,7 @@ const ProjectTabs = () => {
                     role="tabpanel"
                     aria-labelledby="nav-gallery-tab"
                   >
-                    <ProjectGalleryView
-                      projectImages={projectImages}
-                      type="projectgallery"
-                    />
+                    <ProjectGalleryView projectImages={projectImages} type="projectgallery" />
                   </div>
                 ) : (
                   ""

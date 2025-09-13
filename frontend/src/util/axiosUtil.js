@@ -72,6 +72,9 @@ const responseInterceptorErrortHanler = async (error) => {
   if (error?.response?.status === 404) {
     return Promise.reject(error.response.statusText);
   }
+  if (error?.response?.status === 400) {
+    return error;
+  }
   const key = Object.keys(error?.response?.data)[0];
   return Promise.reject(error.response.data[key]);
 };
@@ -94,14 +97,38 @@ const clientresponseInterceptorErrortHanler = async (error) => {
   return Promise.reject(error?.response?.data[key]);
 };
 
-axiosServiceApi.interceptors.request.use(requestInterceptorRequestHanler, requestInterceptorErrortHanler);
-axiosServiceApi.interceptors.response.use(responseInterceptorResponseHanler, responseInterceptorErrortHanler);
+axiosServiceApi.interceptors.request.use(
+  requestInterceptorRequestHanler,
+  requestInterceptorErrortHanler
+);
+axiosServiceApi.interceptors.response.use(
+  responseInterceptorResponseHanler,
+  responseInterceptorErrortHanler
+);
 
-axiosFileUploadServiceApi.interceptors.request.use(requestInterceptorRequestHanler, requestInterceptorErrortHanler);
-axiosFileUploadServiceApi.interceptors.response.use(responseInterceptorResponseHanler, responseInterceptorErrortHanler);
+axiosFileUploadServiceApi.interceptors.request.use(
+  requestInterceptorRequestHanler,
+  requestInterceptorErrortHanler
+);
+axiosFileUploadServiceApi.interceptors.response.use(
+  responseInterceptorResponseHanler,
+  responseInterceptorErrortHanler
+);
 
-axiosClientServiceApi.interceptors.request.use(requestInterceptorClientRequestHanler, requestInterceptorErrortHanler);
-axiosClientServiceApi.interceptors.response.use(responseInterceptorResponseHanler, clientresponseInterceptorErrortHanler);
+axiosClientServiceApi.interceptors.request.use(
+  requestInterceptorClientRequestHanler,
+  requestInterceptorErrortHanler
+);
+axiosClientServiceApi.interceptors.response.use(
+  responseInterceptorResponseHanler,
+  clientresponseInterceptorErrortHanler
+);
 
-axiosJobUploadServiceApi.interceptors.request.use(requestInterceptorClientRequestHanler, requestInterceptorErrortHanler);
-axiosJobUploadServiceApi.interceptors.response.use(responseInterceptorResponseHanler, clientresponseInterceptorErrortHanler);
+axiosJobUploadServiceApi.interceptors.request.use(
+  requestInterceptorClientRequestHanler,
+  requestInterceptorErrortHanler
+);
+axiosJobUploadServiceApi.interceptors.response.use(
+  responseInterceptorResponseHanler,
+  clientresponseInterceptorErrortHanler
+);

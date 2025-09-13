@@ -631,8 +631,7 @@ export const getBrochuresFormDynamicFields = (brochures) => {
   };
 };
 
-export const getProjectCategoryFormDynamicFields = (editCategory, options, disabled) => {
-  console.log("readOnly ==", editCategory);
+export const getProjectCategoryFormDynamicFields = (editCategory, options, disabled, category) => {
   return {
     category_Label: {
       label: "Category",

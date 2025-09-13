@@ -449,10 +449,10 @@ export const getCategoryPorjectList = (data) => {
   const projList = [];
 
   data?.forEach((proj) => {
-    if (!projList[proj.projectCategoryValue]) {
-      projList[proj.projectCategoryValue] = [];
+    if (!projList[proj.projectStatus]) {
+      projList[proj.projectStatus] = [];
     }
-    projList[proj.projectCategoryValue].push(proj);
+    projList[proj.projectStatus].push(proj);
   });
 
   return projList;

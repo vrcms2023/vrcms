@@ -3,9 +3,6 @@ from  .models import *
 
 # Register your models here.
 
-@admin.register(ProjectCategory)
-class ProjectCategoryAdmin(admin.ModelAdmin):
-    list_display = ("idprojectcategories", "projectLabel", "projectValue")
 
 @admin.register(Projects)
 class ProjectsAdmin(admin.ModelAdmin):
@@ -17,5 +14,5 @@ class AmenitiesAndFeatureAdmin(admin.ModelAdmin):
 
 @admin.register(Specifications)
 class AddSpecifications(admin.ModelAdmin):
-    list_display =("projectID", "title")
+    list_display = ("title", "feature")
 

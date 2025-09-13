@@ -32,24 +32,18 @@ const Dashboard = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (projects && projects?.projectList?.length > 0) {
-      updateProjects(projects?.projectList);
+    if (projects && projects?.length > 0) {
+      updateProjects(projects);
     }
   }, [projects]);
 
   const updateProjects = (projects) => {
     let projectsByCategory = getCategoryPorjectList(projects);
 
-    setOngoingProject(
-      formatData(projectsByCategory.ongoing ? projectsByCategory.ongoing : [])
-    );
-    setUpcomingProject(
-      formatData(projectsByCategory.upcoming ? projectsByCategory.upcoming : [])
-    );
+    setOngoingProject(formatData(projectsByCategory.ongoing ? projectsByCategory.ongoing : []));
+    setUpcomingProject(formatData(projectsByCategory.upcoming ? projectsByCategory.upcoming : []));
     setCompletedProject(
-      formatData(
-        projectsByCategory.completed ? projectsByCategory.completed : []
-      )
+      formatData(projectsByCategory.completed ? projectsByCategory.completed : [])
     );
   };
 
@@ -57,17 +51,14 @@ const Dashboard = () => {
    * Format dashboard data
    */
   const formatData = (data) => {
-    const { publishedProject, liveProject, archiveProject } =
-      getProjectsByCategory(data);
+    const { publishedProject, liveProject, archiveProject } = getProjectsByCategory(data);
 
     const listAvailable =
-      publishedProject.length > 0 ||
-      liveProject.length > 0 ||
-      archiveProject.length > 0
+      publishedProject.length > 0 || liveProject.length > 0 || archiveProject.length > 0
         ? true
         : false;
     return {
-      projectCategoryName: data[0]?.projectCategoryName,
+      projectStatus: data[0]?.projectStatus,
       listAvailable: listAvailable,
       liveProject,
       archiveProject,
@@ -89,18 +80,13 @@ const Dashboard = () => {
 
   const callService = async (id, data, project, message) => {
     try {
-      const response = await axiosServiceApi.patch(
-        `/project/archiveProject/${id}/`,
-        data
-      );
-      if (response.data?.projectList?.length > 0) {
+      const response = await axiosServiceApi.patch(`/project/addProject/${id}/`, data);
+      if (response.data) {
         toast.success(`${project.projectTitle} ${message}`);
-        updateProjects(response.data.projectList);
+        dispatch(getDashBoardProjects());
       }
     } catch (error) {
-      toast.error(
-        `${project.projectTitle} project unabel to process your request`
-      );
+      toast.error(`${project.projectTitle} project unable to process your request`);
     }
   };
 
@@ -154,7 +140,11 @@ const Dashboard = () => {
             projectName={project.projectTitle}
             label={"restore"}
             // message={`you want to restore ${project.projectTitle} project ?`}
-            message={<>Do you wish to restore  <span>{project.projectTitle}</span> project?</>}
+            message={
+              <>
+                Do you wish to restore <span>{project.projectTitle}</span> project?
+              </>
+            }
           />
         );
       },
@@ -165,9 +155,7 @@ const Dashboard = () => {
     event.preventDefault();
     const deleteSelectedNews = async () => {
       try {
-        const response = await axiosServiceApi.delete(
-          `/project/deleteProject/${project.id}/`
-        );
+        const response = await axiosServiceApi.delete(`/project/deleteProject/${project.id}/`);
         if (response.status !== 204) {
           setErrorMessage(response.data.message);
           toast.error("Unable to Delete Porject");
@@ -211,8 +199,9 @@ const Dashboard = () => {
     },
   ];
   const projectFilter = async (value) => {
-    const { publishedProject, liveProject, archiveProject } =
-      getProjectsByCategory(projects?.projectList);
+    const { publishedProject, liveProject, archiveProject } = getProjectsByCategory(
+      projects?.projectList
+    );
     if (value === "publishedProject") updateProjects(publishedProject);
     else if (value === "liveProject") updateProjects(liveProject);
     else if (value === "archiveProject") updateProjects(archiveProject);
@@ -237,10 +226,7 @@ const Dashboard = () => {
         </div> */}
       <div className="row px-2 pb-4 px-lg-5 border-bottom">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
-          <Title
-            title="Projects Dashboard v2"
-            cssClass="text-center blue-500 fs-5 mb-2 mb-md-0"
-          />
+          <Title title="Projects Dashboard v2" cssClass="text-center blue-500 fs-5 mb-2 mb-md-0" />
           <div className="d-flex gap-1 justify-content-between align-items-center">
             {ProjectCategoryType.length > 0 && (
               <Button
