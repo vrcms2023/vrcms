@@ -26,6 +26,7 @@ const ProjectTabs = () => {
   const { clientProjects } = useSelector((state) => state.clientProjects);
 
   const [projects, setProjects] = useState("");
+  const [selectedProjects, setSelectedProjects] = useState("");
 
   const [projectImages, setProjectImages] = useState([]);
   const [pdfs, setPdfs] = useState([]);
@@ -46,6 +47,10 @@ const ProjectTabs = () => {
   const filteredProject = (projectid) => {
     const filteredProject = clientProjects.filter((proj) => proj.id === projectid)[0];
     if (filteredProject) {
+      const selectedProjects = clientProjects.filter(
+        (proj) => proj.projectStatus === filteredProject.projectStatus
+      );
+      setSelectedProjects(selectedProjects);
       setProjects(filteredProject);
       updateProjectDetails(filteredProject);
     }
@@ -179,8 +184,8 @@ const ProjectTabs = () => {
                   onChange={(e) => getProjects(e.target.value)}
                 >
                   <option value="select">Select</option>
-                  {projects?.length > 0
-                    ? projects?.map((project) => (
+                  {selectedProjects?.length > 0
+                    ? selectedProjects?.map((project) => (
                         <option value={project.id} key={project.id}>
                           {project.projectTitle}
                         </option>
@@ -222,7 +227,7 @@ const ProjectTabs = () => {
                     className=" active"
                   />
 
-                  {isProjectImg && (
+                  {isProjectImg.length > 0 && (
                     <PillButton
                       label="GALLERY"
                       id="nav-gallery-tab"
