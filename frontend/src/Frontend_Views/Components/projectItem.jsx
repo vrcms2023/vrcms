@@ -22,14 +22,7 @@ const ProjectItem = ({ projectList, projectType }) => {
               <div
                 className="col-md-3 col-lg-2 mb-5 cursor-pointer"
                 key={project.id}
-                onClick={() =>
-                  navigate("/project-details", {
-                    state: {
-                      selectedPorject: projectType,
-                      projectid: project.id,
-                    },
-                  })
-                }
+                onClick={() => navigate(`/project-details/${project.id}`)}
               >
                 <div className="position-relative box">
                   <div className="infoStrip">

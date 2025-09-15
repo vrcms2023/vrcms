@@ -49,7 +49,7 @@ const Careers = () => {
   const [componentEdit, SetComponentEdit] = useState(editComponentObj);
   const [show, setShow] = useState(false);
   const [posts, setPosts] = useState({});
-  let { id } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     window.scrollTo(0, 0);

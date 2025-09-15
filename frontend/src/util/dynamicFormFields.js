@@ -657,6 +657,29 @@ export const getProjectCategoryFormDynamicFields = (editCategory, options, disab
   };
 };
 
+export const getProjectCategoryGalleryFields = (category, projectID) => {
+  return {
+    image_description: {
+      label: "Description",
+      type: "textarea",
+      fieldName: "image_description",
+      id: "imageDescription",
+    },
+    category: {
+      label: "category",
+      type: "hidden",
+      value: category,
+      fieldName: "category",
+    },
+    project: {
+      label: "project",
+      type: "hidden",
+      value: projectID,
+      fieldName: "project",
+    },
+  };
+};
+
 export const getKeyPointsDynamicFields = (pageType) => {
   return {
     banner_title: {

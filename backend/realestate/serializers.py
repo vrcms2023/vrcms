@@ -1,13 +1,18 @@
 from rest_framework import serializers
 
 from common.utility import exclude_fields
-from .models import Category, Projects, FeatureAndAmenities, Specifications
+from .models import Category, Projects, FeatureAndAmenities, Specifications,ProjectGallery
 
 
-# class ProjectCategorySerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = ProjectCategory
-#         fields =['idprojectcategories', 'projectLabel', 'projectValue']
+class ProjectImageSerializer(serializers.ModelSerializer):
+    created_by = serializers.CharField(source="created_by.email", read_only=True)
+    updated_by = serializers.CharField(source="updated_by.email", read_only=True)
+    class Meta:
+        model = ProjectGallery
+        fields = "__all__"
+        read_only_fields = ("id", "project")
+
+
 
 class CategorySerializer(serializers.ModelSerializer):
     created_by = serializers.CharField(source="created_by.email", read_only=True)
@@ -45,6 +50,7 @@ class ProjectsSerializer(serializers.ModelSerializer):
     )
     features_amenities = FeatureAndAmenitiesSerializer(required=False)
     specifications = SpecificationsSerializer(many=True, required=False)
+    ProjectGallery = ProjectImageSerializer(many=True, read_only=True)
     created_by = serializers.CharField(source="created_by.email", read_only=True)
     updated_by = serializers.CharField(source="updated_by.email", read_only=True)
 
@@ -98,3 +104,5 @@ class ProjectsSerializer(serializers.ModelSerializer):
                 Specifications.objects.create(project=instance, **spec)
 
         return instance
+    
+

@@ -7,6 +7,7 @@ import ModelBg from "../../../Common/ModelBg";
 import ContactModel from "../../../Common/contactModel";
 import RaqFormModel from "../../../Common/RaqFormModel";
 import RichTextView from "../../../Common/RichTextView";
+import { getImageURL } from "../../../util/commonUtil";
 
 const HomeTab = ({ project, thumbImgs, pdfs }) => {
   const [show, setShow] = useState(false);
@@ -58,7 +59,7 @@ const HomeTab = ({ project, thumbImgs, pdfs }) => {
                     <span
                       key={i}
                       className="d-block cursorPointer"
-                      onClick={() => checkClientInfoAndDownload(pdf.path, pdf.originalname)}
+                      onClick={() => checkClientInfoAndDownload(pdf.path, pdf.original_name)}
                       //onClick={showModel}
                     >
                       <svg
@@ -74,7 +75,7 @@ const HomeTab = ({ project, thumbImgs, pdfs }) => {
                         />
                       </svg>
                       <span className="text-dark ms-2" download>
-                        {pdf.originalname}
+                        {pdf.original_name}
                       </span>
                     </span>
                   ))
@@ -84,11 +85,21 @@ const HomeTab = ({ project, thumbImgs, pdfs }) => {
         )}
 
         <div className="d-flex justify-content-left my-2 clearfix projectHomeImage">
+          {thumbImgs.length > 0 &&
+            thumbImgs.map((img, i) => (
+              <img
+                key={i}
+                src={getImageURL(img)}
+                alt={img.alternative_text}
+                className="rounded img-fluid"
+              />
+            ))}
+          {/* <img src={getImageURL(thumbImgs)} className="rounded img-fluid" />
           <img
             src={thumbImgs.length > 0 ? `${baseURL}${thumbImgs[0]?.path}` : HomeImg}
             className="rounded img-fluid"
             alt="..."
-          />
+          /> */}
         </div>
       </div>
       {/* {show && <RaqFormModel closeModel={closeModel} downloadPDF={downloadPDF} />} */}

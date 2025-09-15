@@ -71,7 +71,15 @@ class GetClientProjectViewSet(generics.ListAPIView):
     queryset = Projects.objects.all().order_by("-created_at")
     serializer_class = ProjectsSerializer
 
-   
+
+class ProjectImageViewSet(viewsets.ModelViewSet):
+    queryset = ProjectGallery.objects.all()
+    serializer_class = ProjectImageSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def perform_create(self, serializer):
+        # Project should be sent in request data
+        serializer.save(project_id=self.request.data.get("project"))
         
 """ 
 Client Project View

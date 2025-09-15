@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 
-const RichTextEditor = ({ onChange, value, field }) => {
+const RichTextEditor = ({ onChange, value, field, id }) => {
   const toolbar = {
     toolbar: [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -23,6 +23,7 @@ const RichTextEditor = ({ onChange, value, field }) => {
       value={value === "undefined" ? "" : value}
       onChange={onChange}
       modules={toolbar}
+      id={id}
     />
   );
 };

@@ -215,7 +215,7 @@ function App() {
             <Route path="/career-details/:id" element={<CareerDetails />} />
             <Route path="/teams" element={<Team />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/project-details" element={<ProjectTabs />} />
+            <Route path="/project-details/:id" element={<ProjectTabs />} />
             <Route path="/projectgallery" element={<ProjectsGallery />} />
             <Route path="/imagegallery" element={<ImagesGallery />} />
             <Route path="/videogallery" element={<VideosGallery />} />

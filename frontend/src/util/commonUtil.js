@@ -471,3 +471,9 @@ export const buildFormData = (formData, data, showExtraFormFields) => {
 
 export const validateDataNotEmpty = (data) =>
   Object.keys(data).some((key) => data[key] && key !== "category" && key !== "alternative_text");
+
+export const getSelectedImage = (galleryList, category) => {
+  return galleryList.filter((item) => {
+    return item.category?.toLowerCase() === category.toLowerCase();
+  });
+};

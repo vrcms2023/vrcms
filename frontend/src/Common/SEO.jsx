@@ -32,14 +32,14 @@ const SEO = () => {
   }, [pathname, menuRawList]);
 
   useEffect(() => {
-    if (clientProjects.length === 0) {
+    if (clientProjects?.length === 0) {
       dispatch(getClientProjects());
     }
   }, [dispatch, clientProjects]);
 
   useEffect(() => {
-    if (clientProjects?.projectList?.length > 0) {
-      const seoProject = _.filter(clientProjects?.projectList, (item) => {
+    if (clientProjects?.length > 0) {
+      const seoProject = _.filter(clientProjects, (item) => {
         return item.id === projectid;
       })[0];
       setSeoObject(seoProject);
@@ -61,40 +61,24 @@ const SEO = () => {
   return (
     <>
       <Helmet>
-        <title>
-          {seoObject?.seo_title
-            ? seoObject?.seo_title
-            : "EZI Press - Custom CMS"}
-        </title>
+        <title>{seoObject?.seo_title ? seoObject?.seo_title : "EZI Press - Custom CMS"}</title>
         <meta
           name="description"
           content={
-            seoObject?.seo_description
-              ? seoObject?.seo_description
-              : "EZI Press - Custom CMS"
+            seoObject?.seo_description ? seoObject?.seo_description : "EZI Press - Custom CMS"
           }
         />
         <meta
           name="link"
-          content={
-            seoObject?.seo_link ? seoObject?.seo_link : "EZI Press - Custom CMS"
-          }
+          content={seoObject?.seo_link ? seoObject?.seo_link : "EZI Press - Custom CMS"}
         />
         <meta
           name="keywords"
-          content={
-            seoObject?.seo_keywords
-              ? seoObject?.seo_keywords
-              : "EZI Press - Custom CMS"
-          }
+          content={seoObject?.seo_keywords ? seoObject?.seo_keywords : "EZI Press - Custom CMS"}
         />
         <meta
           name="author"
-          content={
-            seoObject?.seo_author
-              ? seoObject?.seo_author
-              : "EZI Press - Custom CMS"
-          }
+          content={seoObject?.seo_author ? seoObject?.seo_author : "EZI Press - Custom CMS"}
         />
       </Helmet>
     </>

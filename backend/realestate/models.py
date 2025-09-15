@@ -1,7 +1,9 @@
 from django.db import models
 import uuid
 from common.BaseModel import BaseModelV2, ImageModelV2
-
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+import os
 
 # class ProjectCategory(models.Model):
 #         idprojectcategories = models.CharField(max_length=100, primary_key=True)
@@ -85,3 +87,23 @@ class Specifications(BaseModelV2):
 
         def __str__(self):
                 return f"{self.title or 'No Title'}"
+        
+class ProjectGallery(ImageModelV2):
+        project = models.ForeignKey(Projects, related_name="ProjectGallery", on_delete=models.CASCADE)
+        category = models.CharField(max_length=100)
+        image_description = models.TextField(null=True, blank=True)
+
+        class Meta:
+                db_table = "real_estate_project_images"
+
+        def __str__(self):
+                return self.originalname or f"Image {self.id}"
+
+
+@receiver(post_delete, sender=Category)
+@receiver(post_delete, sender=ProjectGallery)
+def delete_file_on_imageupload_delete(sender, instance, **kwargs):
+    print("instance.path",instance.path )
+    if instance.path and instance.path.name:
+        if os.path.isfile(instance.path.path):
+            os.remove(instance.path.path)
