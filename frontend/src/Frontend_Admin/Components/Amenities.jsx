@@ -1,70 +1,37 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Title from "../../Common/Title";
-import { axiosServiceApi } from "../../util/axiosUtil";
+import { InputFields, RichTextInputEditor_V2 } from "./forms/FormFields";
 
-export const AmenitiesList = ({ project, amenities, setAmenities }) => {
-  /**
-   * get selected Specification for edit
-   */
-  useEffect(() => {
-    const getSelectedAmenities = async () => {
-      try {
-        const response = await axiosServiceApi.get(
-          `/project/getAmenitiesById/${project?.id}/`
-        );
-        if (response?.status === 200) {
-          setAmenities(response.data.amenitie);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (project?.id) {
-      getSelectedAmenities();
-    }
-  }, []);
-
+export const AmenitiesList = ({ register }) => {
   return (
     <>
       <Amenities
         title="Add Features (Press Enter after every feature) "
-        value={amenities?.feature}
-        amenities={amenities}
-        setAmenities={setAmenities}
-        name="feature"
-        rows="5"
+        register={register}
+        fieldName="features_amenities.amenitie"
       />
       <Amenities
         title="Add Amenities (Press Enter after every amenitie)"
-        value={amenities?.amenitie}
-        amenities={amenities}
-        setAmenities={setAmenities}
-        name="amenitie"
-        rows="5"
+        register={register}
+        fieldName="features_amenities.feature"
       />
     </>
   );
 };
 
-export const Amenities = ({
-  title,
-  value,
-  amenities,
-  setAmenities,
-  name,
-  rows,
-}) => {
-  const handleChange = (e, i) => {
-    const { name, value } = e.target;
-    const onchangeVal = { ...amenities };
-    onchangeVal[name] = value !== "" ? value : null;
-    setAmenities(onchangeVal);
-  };
+export const Amenities = ({ title, register, fieldName }) => {
   return (
     <div className="animities">
       <Title title={title} cssClass="mb-1 fs-6" />
-      <div className="mb-4">
-        {/* <label htmlFor="addImages" className="form-label  ">Add Image's</label> */}
+      <InputFields type="textarea" fieldName={fieldName} register={register} />
+      {/* <RichTextInputEditor_V2
+        label={"feature"}
+        Controller={Controller}
+        name="feature"
+        control={control}
+        onChange={(e) => handleChange(e)}
+      /> */}
+      {/* <div className="mb-4">
         <textarea
           className="form-control"
           name={name}
@@ -73,7 +40,7 @@ export const Amenities = ({
           id="amenitiesDescription"
           rows={rows}
         ></textarea>
-      </div>
+      </div> */}
     </div>
   );
 };

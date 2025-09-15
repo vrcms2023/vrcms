@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 // import "./ProjectTabs.css";
 
 import Title from "../../../Common/Title";
@@ -15,22 +16,22 @@ import ProjectGalleryView from "../../Pages/Projects/ProjectGalleryView";
 import { removeCookie, setCookie } from "../../../util/cookieUtil";
 import { ProjectsPageStyled } from "../../../Common/StyledComponents/Styled-ProjectsPage";
 import useAdminLoginStatus from "../../../Common/customhook/useAdminLoginStatus";
+import { getSelectedImage } from "../../../util/commonUtil";
+import PillButton from "../../../Common/Buttons/PillButton";
 
 const ProjectTabs = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { clientProjects } = useSelector((state) => state.clientProjects);
 
-  const [projects, setProjects] = useState(location?.state?.selectedPorject);
-  const [projectid, setprojectid] = useState(location?.state?.projectid);
-  // const [selectedProject, setSelectedProject] = useState(null)
-  const [amenities, setAmenities] = useState({});
+  const [projects, setProjects] = useState("");
+  const [selectedProjects, setSelectedProjects] = useState("");
+
   const [projectImages, setProjectImages] = useState([]);
-  const [projectHome, setProjectHome] = useState([]);
-  const [specifications, setSpecifications] = useState([]);
   const [pdfs, setPdfs] = useState([]);
   const [planPdfs, setPlanPdfs] = useState([]);
   const [planImg, setPlanImg] = useState([]);
-  const [projectTitle, setProjectTitle] = useState("");
   const [isProjectImg, setIsProjectImg] = useState(false);
 
   const [thumbImgs, setThumbImgs] = useState([]);
@@ -43,11 +44,23 @@ const ProjectTabs = () => {
 
   // console.log(amenities, "amenities");
 
+  const filteredProject = (projectid) => {
+    const filteredProject = clientProjects.filter((proj) => proj.id === projectid)[0];
+    if (filteredProject) {
+      const selectedProjects = clientProjects.filter(
+        (proj) => proj.projectStatus === filteredProject.projectStatus
+      );
+      setSelectedProjects(selectedProjects);
+      setProjects(filteredProject);
+      updateProjectDetails(filteredProject);
+    }
+  };
+
   useEffect(() => {
-    removeCookie("projectid");
-    setCookie("projectid", projectid);
-    getProjects(projectid);
-  }, [projectid]);
+    if (clientProjects?.length > 0 && id) {
+      filteredProject(id);
+    }
+  }, [id, clientProjects]);
 
   useEffect(() => {
     const id = document.getElementById("projectLink");
@@ -57,52 +70,37 @@ const ProjectTabs = () => {
   });
 
   const getProjects = async (projectid) => {
-    // const {value} = e.target
-    try {
-      const response = await axiosClientServiceApi.get(
-        `/project/getSelectedClientProject/${projectid}/`
-      );
-      if (response?.status === 200) {
-        const projectData = response.data;
-        const project = projectData.project[0];
-        setProjectTitle(project?.projectTitle);
-        setprojectid(project?.id);
-        setProjectHome(project);
-        setAmenities(projectData.amenitie[0]);
-        filtersImgPdfs(projectData, "images");
-        filtersImgPdfs(projectData, "pdfs");
-        filtersImgPdfs(projectData, "price");
-        filtersImgPdfs(projectData, "plan");
-        filtersImgPdfs(projectData, "avl");
-        filtersImgPdfs(projectData, "thumbnail");
-        setSpecifications(projectData?.specificationData);
-      }
-    } catch (error) {
-      console.log("unable to access ulr because of server is down");
+    if (projectid === "select") {
+      return;
     }
+    filteredProject(projectid);
   };
 
-  const filtersImgPdfs = (proj, type) => {
-    const data = proj.imageData;
+  const updateProjectDetails = (project) => {
+    filtersImgPdfs(project, "images");
+    filtersImgPdfs(project, "pdf");
+    filtersImgPdfs(project, "thumbnail");
+    filtersImgPdfs(project, "price");
+    filtersImgPdfs(project, "plans");
+    filtersImgPdfs(project, "avl");
+    filtersImgPdfs(project, "thumbnail");
+  };
 
+  const filtersImgPdfs = (project, type) => {
+    const data = project?.ProjectGallery;
     if (type === "images") {
-      const imgs = filterCategory(data, "images");
-      const project = [
-        {
-          ...proj.project[0],
-          imgs: imgs,
-        },
-      ];
-      setIsProjectImg(imgs.length > 0 ? true : false);
-      setProjectImages(project);
+      const imgs = getSelectedImage(data, "images");
+      setIsProjectImg(imgs?.length > 0 ? imgs : []);
     }
-    if (type === "pdfs") {
-      const pdfs = filterCategory(data, "PDF");
+
+    if (type === "pdf") {
+      const pdfs = getSelectedImage(data, "pdf");
       setPdfs(pdfs);
     }
 
-    if (type === "plan") {
-      const filteredPlanPdfImgs = filterCategory(data, "Plans");
+    if (type === "plans") {
+      const filteredPlanPdfImgs = getSelectedImage(data, "plans");
+      //const filteredPlanPdfImgs = filterCategory(data, "plans");
       const images = filterImages(filteredPlanPdfImgs);
       setPlanImg(images);
       const pdfs = filterPdfs(filteredPlanPdfImgs);
@@ -110,7 +108,8 @@ const ProjectTabs = () => {
     }
 
     if (type === "price") {
-      const filteredPricePdfImgs = filterCategory(data, "price");
+      const filteredPricePdfImgs = getSelectedImage(data, "price");
+      //const filteredPricePdfImgs = filterCategory(data, "price");
       const images = filterImages(filteredPricePdfImgs);
       setPriceImgs(images);
       const pdfs = filterPdfs(filteredPricePdfImgs);
@@ -118,7 +117,8 @@ const ProjectTabs = () => {
     }
 
     if (type === "avl") {
-      const avlImgs = filterCategory(data, "availability");
+      const avlImgs = getSelectedImage(data, "availability");
+      //const avlImgs = filterCategory(data, "availability");
       const images = filterImages(avlImgs);
       setAvlImgs(images);
 
@@ -127,9 +127,10 @@ const ProjectTabs = () => {
     }
 
     if (type === "thumbnail") {
-      const thumbImgs = filterCategory(data, "thumbnail");
-      const images = filterImages(thumbImgs);
-      setThumbImgs(images);
+      const thumbImgs = getSelectedImage(data, "thumbnail");
+      //const thumbImgs = filterCategory(data, "thumbnail");
+      //const images = filterImages(thumbImgs);
+      setThumbImgs(thumbImgs);
     }
   };
 
@@ -139,14 +140,14 @@ const ProjectTabs = () => {
   const filterImages = (data) => {
     return data.filter(
       (item) =>
-        item.contentType === ".jpg" ||
-        item.contentType === ".jpeg" ||
-        item.contentType === ".png"
+        item.content_type === "image/jpg" ||
+        item.content_type === "image/jpeg" ||
+        item.content_type === "image/png"
     );
   };
 
   const filterPdfs = (data) => {
-    return data.filter((item) => item.contentType === ".pdf");
+    return data.filter((item) => item.content_type === "application/pdf");
   };
 
   return (
@@ -168,7 +169,7 @@ const ProjectTabs = () => {
             <div className="d-flex justify-content-between align-items-center mt-3 mb-3">
               <div className="w-50 d-flex">
                 <Title
-                  title={projectHome.projectCategoryName + " " + " / " + projectTitle}
+                  title={projects?.projectStatus + " " + " / " + projects?.projectTitle}
                   // subTitle={projectTitle}
                   cssClass="fs-5 breadCrumb "
                 />
@@ -179,12 +180,12 @@ const ProjectTabs = () => {
                   className="form-select"
                   aria-label="Default select example"
                   id="projectStatus"
-                  value={projectid}
+                  value={projects?.id}
                   onChange={(e) => getProjects(e.target.value)}
                 >
                   <option value="select">Select</option>
-                  {projects?.length > 0
-                    ? projects?.map((project) => (
+                  {selectedProjects?.length > 0
+                    ? selectedProjects?.map((project) => (
                         <option value={project.id} key={project.id}>
                           {project.projectTitle}
                         </option>
@@ -198,159 +199,118 @@ const ProjectTabs = () => {
                     cssClass={"btn btn-outline"}
                     label="Edit"
                     handlerChange={() => {
-                      navigate(`/editproject/${projectid}`);
+                      navigate(`/editproject/${projects?.id}/`);
                     }}
                   />
-                  
                 )}
                 <Button
-                type=""
-                icon="fa-chevron-left me-2"
-                cssClass={"btn btn-outline"}
-                label="Projects"
-                handlerChange={() => {
-                  navigate("/projects");
-                }}
-              />
+                  type=""
+                  icon="fa-chevron-left me-2"
+                  cssClass={"btn btn-outline"}
+                  label="Projects"
+                  handlerChange={() => {
+                    navigate("/projects");
+                  }}
+                />
               </div>
             </div>
 
             <div className="col-md-12 mb-4">
               <nav>
                 <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                  <button
-                    className="nav-link active"
+                  <PillButton
+                    label="HOME"
                     id="nav-home-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-home"
-                    type="button"
-                    role="tab"
+                    dataBsTarget="#nav-home"
                     aria-controls="nav-home"
-                    aria-selected="true"
-                  >
-                    HOME
-                  </button>
-                  {isProjectImg && (
-                    <button
-                      className="nav-link"
+                    aria-selected="false"
+                    className=" active"
+                  />
+
+                  {isProjectImg.length > 0 && (
+                    <PillButton
+                      label="GALLERY"
                       id="nav-gallery-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#nav-gallery"
-                      type="button"
-                      role="tab"
+                      dataBsTarget="#nav-gallery"
                       aria-controls="nav-gallery"
                       aria-selected="false"
-                    >
-                      GALLERY
-                    </button>
+                    />
                   )}
-                  {specifications?.length > 0 && (
-                    <button
-                      className="nav-link"
+                  {projects?.specifications?.length > 0 && (
+                    <PillButton
+                      label="SPECIFICATIONS"
                       id="nav-specifications-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#nav-specifications"
-                      type="button"
-                      role="tab"
+                      dataBsTarget="#nav-specifications"
                       aria-controls="nav-specifications"
                       aria-selected="false"
-                    >
-                      SPECIFICATIONS
-                    </button>
+                    />
                   )}
-                  {avlImgs?.length > 0 ||
-                    (avlPdfs?.length > 0 && (
-                      <button
-                        className="nav-link"
-                        id="nav-availability-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#nav-availability"
-                        type="button"
-                        role="tab"
-                        aria-controls="nav-availability"
-                        aria-selected="false"
-                      >
-                        AVAILABILITY
-                      </button>
-                    ))}
 
-                  {pricePdfs?.length > 0 ||
-                    (priceImgs.length > 0 && (
-                      <button
-                        className="nav-link"
-                        id="nav-cost-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#nav-cost"
-                        type="button"
-                        role="tab"
-                        aria-controls="nav-cost"
-                        aria-selected="false"
-                      >
-                        COST
-                      </button>
-                    ))}
+                  {avlImgs?.length > 0 || avlPdfs?.length > 0 ? (
+                    <PillButton
+                      label="AVAILABILITY"
+                      id="nav-availability-tab"
+                      dataBsTarget="#nav-availability"
+                      aria-controls="nav-availability"
+                      aria-selected="false"
+                    />
+                  ) : null}
+
+                  {pricePdfs?.length > 0 || priceImgs.length > 0 ? (
+                    <PillButton
+                      label="COST"
+                      id="nav-cost-tab"
+                      dataBsTarget="#nav-cost"
+                      aria-controls="nav-cost"
+                      aria-selected="false"
+                    />
+                  ) : null}
 
                   {planImg?.length > 0 && (
-                    <button
-                      className="nav-link"
+                    <PillButton
+                      label="PLAN"
                       id="nav-plan-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#nav-plan"
-                      type="button"
-                      role="tab"
+                      dataBsTarget="#nav-plan"
                       aria-controls="nav-plan"
                       aria-selected="false"
-                    >
-                      PLAN
-                    </button>
+                    />
                   )}
 
-                  {amenities?.googleMap && (
-                    <button
-                      className="nav-link"
+                  {projects?.features_amenities?.googleMap && (
+                    <PillButton
+                      label="LOCATION"
                       id="nav-location-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#nav-location"
-                      type="button"
-                      role="tab"
+                      dataBsTarget="#nav-location"
                       aria-controls="nav-location"
                       aria-selected="false"
-                    >
-                      LOCATION
-                    </button>
+                    />
                   )}
 
-                  {(amenities?.amenitie || amenities?.feature) && (
-                    <button
-                      className="nav-link"
+                  {projects?.features_amenities?.amenitie ||
+                  projects?.features_amenities?.feature ? (
+                    <PillButton
+                      label="AMENITIES"
                       id="nav-amenities-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#nav-amenities"
-                      type="button"
-                      role="tab"
+                      dataBsTarget="#nav-amenities"
                       aria-controls="nav-amenities"
                       aria-selected="false"
-                    >
-                      AMENITIES
-                    </button>
-                  )}
+                    />
+                  ) : null}
                 </div>
               </nav>
 
               <div className="tab-content" id="nav-tabContent">
-                <div
-                  className="tab-pane fade show active"
-                  id="nav-home"
-                  role="tabpanel"
-                  aria-labelledby="nav-home-tab"
-                >
-                  <HomeTab
-                    project={projectHome}
-                    thumbImgs={thumbImgs}
-                    pdfs={pdfs}
-                  />
-                </div>
-                {isProjectImg ? (
+                {projects?.id && (
+                  <div
+                    className="tab-pane fade show active"
+                    id="nav-home"
+                    role="tabpanel"
+                    aria-labelledby="nav-home-tab"
+                  >
+                    <HomeTab project={projects} thumbImgs={thumbImgs} pdfs={pdfs} />
+                  </div>
+                )}
+                {isProjectImg?.length > 0 && (
                   <div
                     className="tab-pane fade"
                     id="nav-gallery"
@@ -358,25 +318,22 @@ const ProjectTabs = () => {
                     aria-labelledby="nav-gallery-tab"
                   >
                     <ProjectGalleryView
-                      projectImages={projectImages}
+                      project={projects}
+                      projectImages={isProjectImg}
                       type="projectgallery"
                     />
                   </div>
-                ) : (
-                  ""
                 )}
 
-                {specifications?.length > 0 ? (
+                {projects?.specifications?.length > 0 && (
                   <div
                     className="tab-pane fade"
                     id="nav-specifications"
                     role="tabpanel"
                     aria-labelledby="nav-specifications-tab"
                   >
-                    <Spefifications specifications={specifications} />
+                    <Spefifications specifications={projects?.specifications} />
                   </div>
-                ) : (
-                  ""
                 )}
 
                 {avlImgs?.length > 0 || avlPdfs?.length > 0 ? (
@@ -415,26 +372,26 @@ const ProjectTabs = () => {
                 ) : (
                   ""
                 )}
-                {amenities?.googleMap ? (
+                {projects?.features_amenities?.googleMap ? (
                   <div
                     className="tab-pane fade"
                     id="nav-location"
                     role="tabpanel"
                     aria-labelledby="nav-location-tab"
                   >
-                    <Location amenities={amenities} />
+                    <Location amenities={projects?.features_amenities} />
                   </div>
                 ) : (
                   ""
                 )}
-                {amenities?.amenitie || amenities?.feature ? (
+                {projects?.features_amenities?.amenitie || projects?.features_amenities?.feature ? (
                   <div
                     className="tab-pane fade"
                     id="nav-amenities"
                     role="tabpanel"
                     aria-labelledby="nav-amenities-tab"
                   >
-                    <Amenities amenities={amenities} />
+                    <Amenities amenities={projects?.features_amenities} />
                   </div>
                 ) : (
                   ""

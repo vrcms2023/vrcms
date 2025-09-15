@@ -121,6 +121,9 @@ export const fieldValidation = {
   counters_number: {
     required: "Please enter counters Number",
   },
+  projectTitle: {
+    required: "Please enter Project Title",
+  },
 };
 
 const getValues = (formData, fieldName) => {

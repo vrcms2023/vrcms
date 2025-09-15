@@ -236,17 +236,21 @@ const ImageUploadForm = ({
    * @param {response[]} responses object
    */
   const handleSuccess = (responses) => {
-    const newFiles = responses.map((res) => {
-      const data = res.data[Object.keys(res.data)[0]];
-      return {
-        id: data.id,
-        original_name: data.original_name,
-        path: data.path,
-        content_type: data.content_type,
-      };
-    });
+    if (responses[0]?.data) {
+      newObjectsetState(responses[0]?.data);
+    } else {
+      const newFiles = responses.map((res) => {
+        const data = res.data[Object.keys(res.data)[0]];
+        return {
+          id: data.id,
+          original_name: data.original_name,
+          path: data.path,
+          content_type: data.content_type,
+        };
+      });
+      newObjectsetState(newFiles);
+    }
 
-    newObjectsetState(newFiles);
     resetFileUploadForm();
     closePopupWindow();
   };
@@ -411,6 +415,7 @@ const ImageUploadForm = ({
                     label={label}
                     name={fieldName}
                     value={value}
+                    id={fieldName}
                   />
                 );
               } else {

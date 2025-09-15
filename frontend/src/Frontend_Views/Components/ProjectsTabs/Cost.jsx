@@ -6,6 +6,7 @@ import { confirmAlert } from "react-confirm-alert";
 import { getBaseURL } from "../../../util/ulrUtil";
 import RaqFormModel from "../../../Common/RaqFormModel";
 import ModelBg from "../../../Common/ModelBg";
+import { getImageURL } from "../../../util/commonUtil";
 
 const Cost = ({ images, pdfs }) => {
   const navigate = useNavigate();
@@ -41,9 +42,7 @@ const Cost = ({ images, pdfs }) => {
               onClose={onClose}
               callback={navigateTocontactus}
               label={"to Download PDF's"}
-              message={
-                "We need some of your personal details to download PDF's"
-              }
+              message={"We need some of your personal details to download PDF's"}
               buttonStyle={"btn-success"}
               title={" "}
             />
@@ -55,23 +54,23 @@ const Cost = ({ images, pdfs }) => {
 
   let imgs;
   let pdf;
-  if (images.length > 0) {
+  if (images?.length > 0) {
     imgs = images.map((item, i) => (
       <div className="my-1 text-center zoomImg" key={i}>
-        <img src={`${baseURL}${item.path}`} alt="" className="" />
+        <img key={i} src={getImageURL(item)} alt={item.alternative_text} />
       </div>
     ));
   }
 
-  if (pdfs.length > 0) {
+  if (pdfs?.length > 0) {
     pdf = pdfs.map((item, i) => (
       <p className="text-end" key={i}>
         <span
           className="d-block my-3 cursorPointer"
-          onClick={() => downloadPDF(item.path, item.originalname)}
+          onClick={() => downloadPDF(item.path, item.original_name)}
         >
           <span className="text-dark me-2" download>
-            {item.originalname}
+            {item.original_name}
           </span>
           <svg
             width="18"
@@ -96,9 +95,7 @@ const Cost = ({ images, pdfs }) => {
         {pdfs.length > 0 ? pdf : null}
         {images.length > 0 ? imgs : null}
       </div>
-      {show && (
-        <RaqFormModel closeModel={closeModel} downloadPDF={downloadPDF} />
-      )}
+      {show && <RaqFormModel closeModel={closeModel} downloadPDF={downloadPDF} />}
       {show && <ModelBg />}
     </div>
   );

@@ -7,43 +7,30 @@ const ProjectItem = ({ projectList, projectType }) => {
   const navigate = useNavigate();
   const baseURL = getBaseURL();
   return (
-
-      <div className="container mb-3">
-        <div className="row">
-          <div className="col-md-12 ">
-            <Title
-              title={
-                projectList.length > 0
-                  ? projectList[0].projectCategoryName
-                  : "Ongoing Projects"
-              }
-              cssClass="blue-900 fs-5 mb-2"
-            />
-          </div>
+    <div className="container mb-3">
+      <div className="row">
+        <div className="col-md-12 ">
+          <Title
+            title={projectList.length > 0 ? projectList[0].projectStatus : "Ongoing Projects"}
+            cssClass="blue-900 fs-5 mb-2"
+          />
         </div>
-        <div className="row">
-          {projectList.length > 0
-            ? projectList.map((project) => (
-                <div className="col-md-3 col-lg-2 mb-5 cursor-pointer" key={project.id}
-                  onClick={() =>
-                    navigate("/project-details", {
-                      state: {
-                        selectedPorject: projectType,
-                        projectid: project.id,
-                      },
-                    })
-                  }
-                >
-                  <div className="position-relative box">
-                    <div className="infoStrip">
-                      <Title
-                        title={project.projectTitle}
-                        cssClass="text-white fs-5 fw-normal"
-                      />
-                      {/* <Link to="" className="blue-900">
+      </div>
+      <div className="row">
+        {projectList.length > 0
+          ? projectList.map((project) => (
+              <div
+                className="col-md-3 col-lg-2 mb-5 cursor-pointer"
+                key={project.id}
+                onClick={() => navigate(`/project-details/${project.id}`)}
+              >
+                <div className="position-relative box">
+                  <div className="infoStrip">
+                    <Title title={project.projectTitle} cssClass="text-white fs-5 fw-normal" />
+                    {/* <Link to="" className="blue-900">
                       more details
                     </Link> */}
-                      {/* <button
+                    {/* <button
                         className="btn btn-sm"
                         onClick={() =>
                           navigate("/project-details", {
@@ -56,21 +43,21 @@ const ProjectItem = ({ projectList, projectType }) => {
                       >
                         more details
                       </button> */}
-                    </div>
-                    {project.imgs.length > 0 ? (
-                      <img src={`${baseURL}${project.imgs[0].path}`} alt={project.projectTitle} />
-                    ) : (
-                      <img
-                        src={`${baseURL}/media/images/dummy-image-square.png`}
-                        alt={`${projectList[0].projectCategoryName} Projects`}
-                      />
-                    )}
                   </div>
+                  {project.imgs.length > 0 ? (
+                    <img src={`${baseURL}${project.imgs[0].path}`} alt={project.projectTitle} />
+                  ) : (
+                    <img
+                      src={`${baseURL}/media/images/dummy-image-square.png`}
+                      alt={`${projectList[0].projectStatus} Projects`}
+                    />
+                  )}
                 </div>
-              ))
-            : ""}
-        </div>
-        {/* {projectList.length > 3 ? (
+              </div>
+            ))
+          : ""}
+      </div>
+      {/* {projectList.length > 3 ? (
           <div className="row mt-3">
             <div className="col-md-12 text-center py-3">
               <Link to="" className="loadMore">
@@ -91,8 +78,7 @@ const ProjectItem = ({ projectList, projectType }) => {
         ) : (
           ""
         )} */}
-      </div>
-    
+    </div>
   );
 };
 

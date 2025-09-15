@@ -49,9 +49,7 @@ const Dashboard = () => {
 
   const GetProjectsListStatus = (list, setObjectState) => {
     setObjectState(
-      list?.completed?.length > 0 ||
-        list?.future?.length > 0 ||
-        list?.ongoing?.length > 0
+      list?.completed?.length > 0 || list?.future?.length > 0 || list?.ongoing?.length > 0
         ? true
         : false
     );
@@ -92,18 +90,13 @@ const Dashboard = () => {
 
   const callService = async (id, data, project, message) => {
     try {
-      const response = await axiosServiceApi.patch(
-        `/project/archiveProject/${id}/`,
-        data
-      );
+      const response = await axiosServiceApi.patch(`/project/addProject/${id}/`, data);
       if (response.data?.projectList?.length > 0) {
         toast.success(`${project.projectTitle} ${message}`);
         updateProjects(response.data.projectList);
       }
     } catch (error) {
-      toast.error(
-        `${project.projectTitle} project unabel to process your request`
-      );
+      toast.error(`${project.projectTitle} project unabel to process your request`);
     }
   };
 
@@ -156,7 +149,11 @@ const Dashboard = () => {
             projectName={project.projectTitle}
             label={"restore"}
             // message={`you want to restore ${project.projectTitle} project ?`}
-            message={<>Do you wish to restore  <span>{project.projectTitle}</span> project?</>}
+            message={
+              <>
+                Do you wish to restore <span>{project.projectTitle}</span> project?
+              </>
+            }
           />
         );
       },
@@ -170,10 +167,7 @@ const Dashboard = () => {
         </div> */}
       <div className="row px-3 px-md-5 mb-3">
         <div className="text-end d-flex justify-content-between align-items-center flex-column flex-md-row">
-          <Title
-            title="Projects Dashboard v1"
-            cssClass="text-center blue-500 fs-4"
-          />
+          <Title title="Projects Dashboard v1" cssClass="text-center blue-500 fs-4" />
           <div className="d-flex gap-1 justify-content-between align-items-center">
             <Button
               type=""
@@ -201,10 +195,7 @@ const Dashboard = () => {
         />
         <hr className="border-dark" /> */}
         {publishProjecstStatus ? (
-          <Projects
-            project={pubishProject}
-            handleProjectDelete={handleProjectDelete}
-          />
+          <Projects project={pubishProject} handleProjectDelete={handleProjectDelete} />
         ) : (
           <p className="text-center">Add new Project and publish</p>
         )}
@@ -218,10 +209,7 @@ const Dashboard = () => {
             cssClass="text-center fw-bolder pt-4 text-uppercase  mb-2 fs-5 green-900"
           />
           <hr className="border-dark" />
-          <Projects
-            project={liveProjects}
-            handleProjectDelete={handleProjectDelete}
-          />
+          <Projects project={liveProjects} handleProjectDelete={handleProjectDelete} />
         </div>
       ) : (
         ""
@@ -234,10 +222,7 @@ const Dashboard = () => {
             cssClass="text-center fw-bolder pt-4 text-uppercase  mb-2 fs-4 gray-900"
           />
           <hr className="border-dark" />
-          <Projects
-            project={archiveProject}
-            handleProjectDelete={reStoreProject}
-          />
+          <Projects project={archiveProject} handleProjectDelete={reStoreProject} />
         </div>
       ) : (
         ""

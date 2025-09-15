@@ -631,8 +631,7 @@ export const getBrochuresFormDynamicFields = (brochures) => {
   };
 };
 
-export const getProjectCategoryFormDynamicFields = (editCategory, options, disabled) => {
-  console.log("readOnly ==", editCategory);
+export const getProjectCategoryFormDynamicFields = (editCategory, options, disabled, category) => {
   return {
     category_Label: {
       label: "Category",
@@ -654,6 +653,29 @@ export const getProjectCategoryFormDynamicFields = (editCategory, options, disab
       type: "text",
       value: "/projects",
       fieldName: "readMore_link",
+    },
+  };
+};
+
+export const getProjectCategoryGalleryFields = (category, projectID) => {
+  return {
+    image_description: {
+      label: "Description",
+      type: "textarea",
+      fieldName: "image_description",
+      id: "imageDescription",
+    },
+    category: {
+      label: "category",
+      type: "hidden",
+      value: category,
+      fieldName: "category",
+    },
+    project: {
+      label: "project",
+      type: "hidden",
+      value: projectID,
+      fieldName: "project",
     },
   };
 };

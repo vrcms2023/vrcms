@@ -2,12 +2,8 @@ import React from "react";
 import { getImagesByDate } from "../../../util/dataFormatUtil";
 import { getBaseURL } from "../../../util/ulrUtil";
 import "./Gallery.css";
-const GalleryImgThumb = ({
-  imgs,
-  imageDescription,
-  findThumbHandler,
-  projectID,
-}) => {
+import { getImageURL } from "../../../util/commonUtil";
+const GalleryImgThumb = ({ imgs, findThumbHandler, projectID }) => {
   const imagesByDate = getImagesByDate(imgs);
   const baseURL = getBaseURL();
 
@@ -20,11 +16,12 @@ const GalleryImgThumb = ({
                 Work status as on date - <small className="workStatusDate">{dt}</small>
               </h5>
               <>
-                {imagesByDate[dt].map((img) => (
+                {imagesByDate[dt].map((img, i) => (
                   <img
-                    src={`${baseURL}${img.path}`}
-                    key={img.id}
-                    alt=" "
+                    key={i}
+                    src={getImageURL(img)}
+                    alt={img.alternative_text}
+                    className="rounded img-fluid"
                     onClick={() => findThumbHandler(projectID, img.id)}
                   />
                 ))}

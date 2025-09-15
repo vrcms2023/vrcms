@@ -7,7 +7,7 @@ button.nav-link {
 }
 
 button.nav-link.active {
-  background-color: #007CB9 !important;
+  background-color: #007cb9 !important;
   color: #fff !important;
 }
 
@@ -56,4 +56,9 @@ background: linear-gradient(350deg, rgba(218,87,0,0.9332107843137255) 0%, rgba(2
 
 .ql-container.ql-snow {
   border: 0 !important;
+}
+.ql-editor {
+  height: 120px;
+  max-height: 120px;
+  overflow: auto;
 }

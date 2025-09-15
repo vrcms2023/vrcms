@@ -1,23 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FileUpload from "../Frontend_Admin/Components/FileUpload";
+import ImageUploadForm from "../Frontend_Admin/Components/V2/ImageUploadForm";
+import { getProjectCategoryGalleryFields, imageDimensionsJson } from "../util/dynamicFormFields";
+import { getSelectedImage } from "../util/commonUtil";
 
 const FileUploadModel = ({
   ModelTitle,
   closeModel,
   project,
-  updated_By,
   category = "thumbnail",
-  gallerysetState,
-  galleryState,
-  validTypes = "image/png,image/jpeg",
-  descriptionTitle,
-  showDescription,
-  saveState,
-  buttonLable = "Upload Plan",
   maxFiles,
-  scrollEnable,
+  imageLabel = "Upload Image",
+  imagePostURL = "/project/projectImages/",
+  imageGetURL = "/project/projectImages/",
+  imageUpdateURL = "/project/projectImages/",
+  imageDeleteURL = "/project/projectImages/",
+  validTypes = "image/png,image/jpeg",
+  isclosePopup = true,
+  sideDeck = "Project image gallery",
+  saveState,
+  dimensions = true,
 }) => {
-  const [editCarousel, setEditCarousel] = useState({});
+  const [editObject, setEditObject] = useState({});
+  const [newObject, setNewObject] = useState({});
+
+  useEffect(() => {
+    if (newObject?.id) {
+      saveState(true);
+      closeModel();
+    }
+  }, [newObject]);
+
+  const closeHandler = () => {
+    setEditObject({});
+  };
+
+  // useEffect(() => {
+  //   if (project?.id) {
+  //     const selectedImage = getSelectedImage(project?.ProjectGallery, category);
+  //     setEditObject(selectedImage[0]);
+  //   }
+  // }, [project]);
+
   return (
     <div
       className="modal d-block modal-lg"
@@ -38,21 +62,21 @@ const FileUploadModel = ({
           </div>
           <div className="modal-body px-4 py-3">
             <div className="m-3">
-              <FileUpload
-                project={project}
-                updated_By={updated_By}
-                category={category}
-                gallerysetState={gallerysetState}
-                galleryState={galleryState}
-                validTypes={validTypes}
-                descriptionTitle={descriptionTitle}
-                showDescription={showDescription}
-                saveState={saveState}
-                buttonLable={buttonLable}
+              <ImageUploadForm
+                title={ModelTitle}
+                newObjectsetState={setNewObject}
+                editImage={editObject}
+                setEditObject={setEditObject}
                 maxFiles={maxFiles}
-                scrollEnable={scrollEnable}
-                closeHandler={closeModel}
-                setEditCarousel={setEditCarousel}
+                validTypes={validTypes}
+                imagePostURL={imagePostURL}
+                imageUpdateURL={imageUpdateURL}
+                showExtraFormFields={getProjectCategoryGalleryFields(category, project?.id)}
+                dimensions={dimensions ? imageDimensionsJson("imageGallery") : false}
+                closeHandler={closeHandler}
+                scrollEnable={editObject?.lengh > 0 ? true : false}
+                isclosePopup={isclosePopup}
+                sideDeck={sideDeck}
               />
             </div>
           </div>

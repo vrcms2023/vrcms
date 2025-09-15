@@ -110,11 +110,13 @@ export const InputFields = ({
             <select
               className="custom-select custom-select-lg form-control p-2"
               {...register(fieldName, validationObject)}
+              onChange={onChange}
             >
               {rest.options.map((option, index) => (
                 <option
                   key={index}
                   value={option.value}
+                  id={rest?.id}
                   defaultValue={rest?.selectedValue}
                   selected={option.value === rest?.selectedValue}
                   {...rest}
@@ -269,7 +271,7 @@ export const RichTextInputEditor = ({ label, editorSetState, initialText, isRequ
   );
 };
 
-export const RichTextInputEditor_V2 = ({ label, Controller, name, control }) => {
+export const RichTextInputEditor_V2 = ({ label, Controller, name, control, id }) => {
   return (
     <div className="mb-2 row">
       <div className="col-sm-12">
@@ -279,8 +281,14 @@ export const RichTextInputEditor_V2 = ({ label, Controller, name, control }) => 
         <Controller
           name={name}
           control={control}
+          id={id}
           render={({ field }) => (
-            <RichTextEditor_V2 field={field} onChange={field.onChange} value={field.value} />
+            <RichTextEditor_V2
+              field={field}
+              onChange={field.onChange}
+              value={field.value}
+              id={id}
+            />
           )}
         />
       </div>

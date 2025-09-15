@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Controller, useForm } from "react-hook-form";
 // Components
-import Button from "../../../Common/Button";
+
 import Title from "../../../Common/Title";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
 import { axiosServiceApi } from "../../../util/axiosUtil";
 import { getCookie } from "../../../util/cookieUtil";
 import { InputField, RichTextInputEditor_V2 } from "../forms/FormFields";
 import { fieldValidation } from "../../../util/validationUtil";
+import Button from "../../../Common/Button";
 
 export const BriefIntroAdmin = ({ editHandler, componentType, popupTitle, pageType }) => {
   const closeHandler = () => {
@@ -36,8 +37,8 @@ export const BriefIntroAdmin = ({ editHandler, componentType, popupTitle, pageTy
     const getintroValues = async () => {
       try {
         let response = await axiosServiceApi.get(`/carousel/updateHomeIntro/${pageType}/`);
-        setFormValues(response.data);
-        reset(response.data);
+        setFormValues(response.data.intro);
+        reset(response.data.intro);
       } catch (error) {
         console.log("Unable to get the intro");
       }

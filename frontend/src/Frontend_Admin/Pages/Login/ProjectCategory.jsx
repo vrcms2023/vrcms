@@ -22,6 +22,7 @@ import {
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import { getDashBoardProjects } from "../../../redux/project/projectActions";
+import AdminSingleRecordUpload from "../../Components/forms/V2/AdminSingleRecordUpload";
 
 const ProjectCategory = () => {
   const categoryOptions = [
@@ -90,6 +91,7 @@ const ProjectCategory = () => {
     SetComponentEdit((prevFormData) => ({ ...prevFormData, [name]: value }));
     setComptitle("Add category");
     setShow(!show);
+    setEditCategory("");
     document.body.style.overflow = "hidden";
   };
 
@@ -291,7 +293,25 @@ const ProjectCategory = () => {
           <>
             {componentEdit.category && (
               <div className={`adminEditTestmonial selected `}>
-                <SingleImageUlploadWithForm
+                <AdminSingleRecordUpload
+                  editHandler={editHandler}
+                  componentType="category"
+                  popupTitle={compTtile}
+                  parentEditObject={editCategory}
+                  onPageLoadServiceCall={false}
+                  imagePostURL="/project/createCategory/"
+                  imageGetURL="/project/createCategory/"
+                  imageUpdateURL="/project/updateCategory/"
+                  imageDeleteURL="/project/updateCategory/"
+                  imageLabel="Project Image"
+                  showExtraFormFields={getProjectCategoryFormDynamicFields(
+                    editCategory,
+                    categoryOptionList,
+                    editCategory?.id ? true : false
+                  )}
+                  dimensions={imageDimensionsJson("advertisement")}
+                />
+                {/* <SingleImageUlploadWithForm
                   editHandler={editHandler}
                   componentType="category"
                   popupTitle="category"
@@ -310,7 +330,7 @@ const ProjectCategory = () => {
                     editCategory?.id ? true : false
                   )}
                   dimensions={imageDimensionsJson("advertisement")}
-                />
+                /> */}
               </div>
             )}
           </>

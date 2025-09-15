@@ -449,10 +449,10 @@ export const getCategoryPorjectList = (data) => {
   const projList = [];
 
   data?.forEach((proj) => {
-    if (!projList[proj.projectCategoryValue]) {
-      projList[proj.projectCategoryValue] = [];
+    if (!projList[proj.projectStatus]) {
+      projList[proj.projectStatus] = [];
     }
-    projList[proj.projectCategoryValue].push(proj);
+    projList[proj.projectStatus].push(proj);
   });
 
   return projList;
@@ -471,3 +471,9 @@ export const buildFormData = (formData, data, showExtraFormFields) => {
 
 export const validateDataNotEmpty = (data) =>
   Object.keys(data).some((key) => data[key] && key !== "category" && key !== "alternative_text");
+
+export const getSelectedImage = (galleryList, category) => {
+  return galleryList.filter((item) => {
+    return item.category?.toLowerCase() === category.toLowerCase();
+  });
+};
