@@ -36,7 +36,7 @@ export const BriefIntroAdmin = ({ editHandler, componentType, popupTitle, pageTy
   useEffect(() => {
     const getintroValues = async () => {
       try {
-        let response = await axiosServiceApi.get(`/carousel/updateHomeIntro/${pageType}/`);
+        let response = await axiosServiceApi.get(`/carousel/clientHomeIntro/${pageType}/`);
         setFormValues(response.data.intro);
         reset(response.data.intro);
       } catch (error) {
@@ -52,7 +52,7 @@ export const BriefIntroAdmin = ({ editHandler, componentType, popupTitle, pageTy
       let response = "";
       if (data.id) {
         data["updated_by"] = userName;
-        response = await axiosServiceApi.put(`/carousel/updateHomeIntro/${pageType}/`, {
+        response = await axiosServiceApi.put(`/carousel/updateHomeIntro/${data.id}/`, {
           ...data,
         });
       } else {

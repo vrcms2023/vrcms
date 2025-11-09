@@ -162,6 +162,21 @@ class ClientHomeIntroView(generics.CreateAPIView):
     serializer_class = HomeIntroSerializer
 
 
+    """
+    List all carousel, or create a new carousel.
+    """
+    def get_object(self, pk):
+        try:
+            return HomeIntro.objects.get(pageType=pk)
+        except HomeIntro.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        serializer = HomeIntroSerializer(snippet)
+        return Response({"intro": serializer.data}, status=status.HTTP_200_OK)
+
+
 
 class ClientHomeIntroListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]

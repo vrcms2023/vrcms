@@ -35,13 +35,6 @@ const FileUploadModel = ({
     setEditObject({});
   };
 
-  // useEffect(() => {
-  //   if (project?.id) {
-  //     const selectedImage = getSelectedImage(project?.ProjectGallery, category);
-  //     setEditObject(selectedImage[0]);
-  //   }
-  // }, [project]);
-
   return (
     <div
       className="modal d-block modal-lg"

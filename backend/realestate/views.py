@@ -79,8 +79,11 @@ class ProjectImageViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         # Project should be sent in request data
-        serializer.save(project_id=self.request.data.get("project"))
-        
+        serializer.save(created_by=self.request.user, project_id=self.request.data.get("project"))
+
+    def perform_update(self, serializer):
+        serializer.save(updated_by=self.request.user)
+
 """ 
 Client Project View
 """

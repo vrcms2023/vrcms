@@ -225,6 +225,7 @@ export const getServiceFormFields = (id, title, page_url) => {
       label: "Service Title",
       type: "text",
       fieldName: "feature_title",
+      validationObject: { required: "Please enter Service Title" },
     },
     feature_sub_title: {
       label: "Service Sub Title",
@@ -661,7 +662,7 @@ export const getProjectCategoryGalleryFields = (category, projectID) => {
   return {
     image_description: {
       label: "Description",
-      type: "textarea",
+      type: "richText",
       fieldName: "image_description",
       id: "imageDescription",
     },

@@ -49,15 +49,15 @@ const HeroBannerComponent = ({
                 )}
                 <PageHeroBannerClientView
                   getBannerAPIURL={`banners/by-page-and-category/${pageType}-${componentType}/category/${category}/`}
-                  bannerState={componentEdit.banner}
+                  bannerState={componentEdit[componentType]}
                 />
               </div>
             </div>
-            {componentEdit.banner && (
+            {componentEdit[componentType] && (
               <div className="adminEditTestmonial selected">
                 <AdminSingleRecordUpload
                   editHandler={editHandler}
-                  componentType="banner"
+                  componentType={componentType}
                   popupTitle={popupTitle}
                   onPageLoadServiceCall={true}
                   imagePostURL="banners/createBanner/"

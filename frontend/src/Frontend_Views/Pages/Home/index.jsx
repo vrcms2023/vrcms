@@ -258,7 +258,7 @@ const Home = () => {
         </BrochureDownloadStyling>
         {/* ==== END ======================================== */}
 
-        {/* BANNER COMPONENT START ======================================== */}
+        {/* HERO BANNER COMPONENT START ======================================== */}
         <HeroBannerComponent
           isAdmin={isAdmin}
           hasPermission={hasPermission}
@@ -267,8 +267,8 @@ const Home = () => {
           pageType={pageType}
           category={"hero-banner"}
           popupTitle="Hero Banner"
-          componentType="banner"
-          showHideComponentName="banner"
+          componentType="hero-banner"
+          showHideComponentName="hero-banner"
           showHideCompList={showHideCompList}
           showHideHandler={showHideHandler}
           showHideComponentTitle={"Hero Banner "}

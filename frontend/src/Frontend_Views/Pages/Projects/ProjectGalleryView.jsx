@@ -33,23 +33,19 @@ const ProjectGalleryView = ({ project, projectImages, type }) => {
         <div className="row">
           <div className="col-md-12">
             {projectImages?.length > 0 ? (
-              projectImages.map((images) => (
-                <div
-                  className={`gallery projectTabs ${
-                    type === "applicationgallery" ? "p-3 p-md-5 border-bottom" : "px-2"
-                  }`}
-                  key={images.id}
-                >
-                  <h4 className="">{project?.projectTitle}</h4>
-                  <p className="">{images?.image_description}</p>
-                  <GalleryImgThumb
-                    imgs={projectImages}
-                    imageDescription={project.imageDescription}
-                    findThumbHandler={findThumbHandler}
-                    projectID={project.id}
-                  />
-                </div>
-              ))
+              <div
+                className={`gallery projectTabs ${
+                  type === "applicationgallery" ? "p-3 p-md-5 border-bottom" : "px-2"
+                }`}
+              >
+                <h4 className="">{project?.projectTitle}</h4>
+                <GalleryImgThumb
+                  imgs={projectImages}
+                  imageDescription={project.imageDescription}
+                  findThumbHandler={findThumbHandler}
+                  projectID={project.id}
+                />
+              </div>
             ) : (
               <div className="fs-2 p-5 text-warning text-center">No images found</div>
             )}

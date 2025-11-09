@@ -350,20 +350,22 @@ const ImageUploadForm = ({
 
                   {error ? <Error>{error}</Error> : ""}
                 </div>
-                {editImage?.id && editImage.path && editImage.contentType === ".pdf" && (
-                  <div className="col-6 col-md-6">
-                    <div>
-                      <b className="d-block">File name</b>
-                      <a
-                        href="#!"
-                        onClick={() => downloadPDF(`${baseURL}${editImage.path}`)}
-                        className="mx-1 text-dark"
-                      >
-                        {editImage.originalname}
-                      </a>
+                {editImage?.id &&
+                  editImage.path &&
+                  editImage.content_type === "application/pdf" && (
+                    <div className="col-6 col-md-6">
+                      <div>
+                        <b className="d-block">File name</b>
+                        <a
+                          href="#!"
+                          onClick={() => downloadPDF(`${baseURL}${editImage.path}`)}
+                          className="mx-1 text-dark"
+                        >
+                          {editImage.original_name}
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
                 {editImage?.id &&
                   (editImage?.path || editImage?.thumbnail_url) &&
                   editImage?.contentType !== ".pdf" && (
