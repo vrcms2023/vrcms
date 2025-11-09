@@ -3,20 +3,31 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 // Components
-import { InputField } from "./FormFields";
+import { InputField, InputFields } from "./FormFields";
 import EditAdminPopupHeader from "../EditAdminPopupHeader";
 import Button from "../../../Common/Button";
 import { getCookie } from "../../../util/cookieUtil";
 import { axiosServiceApi } from "../../../util/axiosUtil";
+import { fieldValidation } from "../../../util/validationUtil";
 
 const FooterAdminFeilds = ({ editHandler, componentType, popupTitle, footerValues }) => {
   const [userName, setUserName] = useState("");
-  const { register, reset, handleSubmit } = useForm({
+  const {
+    register,
+    reset,
+    handleSubmit,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
     defaultValues: useMemo(() => {
       return footerValues;
     }, [footerValues]),
-    mode: "onChange",
   });
+
+  const handleChange = (fieldName) => {
+    clearErrors(fieldName);
+  };
 
   const closeHandler = () => {
     editHandler(componentType, false);
@@ -98,14 +109,29 @@ const FooterAdminFeilds = ({ editHandler, componentType, popupTitle, footerValue
             </div> */}
 
             <div className="col-md-12 mb-md-0">
-              <InputField label="WhatsApp" fieldName="whatsapp_number" register={register} />
-              <InputField label="Facebook" fieldName="facebook_url" register={register} />
-              <InputField label="Twitter" fieldName="twitter_url" register={register} />
-              <InputField label="Linked In" fieldName="linkedIn_url" register={register} />
-              <InputField label="You Tube" fieldName="youtube_url" register={register} />
-              <InputField label="Instagram" fieldName="instagram_url" register={register} />
-              <InputField label="Vimeo" fieldName="vimeo_url" register={register} />
-              <InputField label="Pinterest" fieldName="pinterest_url" register={register} />
+              <InputFields
+                label="WhatsApp"
+                type="number"
+                fieldName="whatsapp_number"
+                register={register}
+                validationObject={fieldValidation.phonen_number_2}
+                error={errors?.whatsapp_number?.message}
+                onChange={() => handleChange("whatsapp_number")}
+              />
+              <InputFields
+                label="Facebook"
+                fieldName="facebook_url"
+                register={register}
+                validationObject={fieldValidation.URL}
+                error={errors?.facebook_url?.message}
+                onChange={() => handleChange("facebook_url")}
+              />
+              <InputFields label="Twitter" fieldName="twitter_url" register={register} />
+              <InputFields label="Linked In" fieldName="linkedIn_url" register={register} />
+              <InputFields label="You Tube" fieldName="youtube_url" register={register} />
+              <InputFields label="Instagram" fieldName="instagram_url" register={register} />
+              <InputFields label="Vimeo" fieldName="vimeo_url" register={register} />
+              <InputFields label="Pinterest" fieldName="pinterest_url" register={register} />
             </div>
           </div>
           <div className="row">

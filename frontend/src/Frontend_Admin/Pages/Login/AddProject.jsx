@@ -522,7 +522,7 @@ const AddProject = () => {
                       onChange={() => handleFieldsChange("aboutussubtitle")}
                     />
                     <RichTextInputEditor_V2
-                      label={"Description"}
+                      label={"Project Description"}
                       Controller={Controller}
                       name="description"
                       control={control}
@@ -582,8 +582,7 @@ const AddProject = () => {
                           className="moreLink text-decoration-underline"
                           onClick={() => handleModel("PDF")}
                         >
-                          Add <strong>PDF's</strong>
-                          {/* <i className="fa fa-plus ms-2" aria-hidden="true"></i> */}
+                          Add <strong>Project PDF's</strong>
                         </Link>
                       </div>
                       <CatageoryImgC
@@ -619,8 +618,6 @@ const AddProject = () => {
                           onClick={() => handleModel("Plans")}
                         >
                           Add <strong>Plan Image's / PDF's</strong>
-                          {/* Add Plan <strong>Image</strong>{" "} */}
-                          {/* <i className="fa fa-upload" aria-hidden="true"></i> */}
                         </Link>
                       </div>
                       <CatageoryImgC
@@ -686,7 +683,6 @@ const AddProject = () => {
                           className="moreLink text-decoration-underline"
                           onClick={() => handleModel("price")}
                         >
-                          {/* Click here to upload Add Price (Upload image / PDF) */}
                           Add <strong>Pricing Image's / PDF's</strong>
                           <i className="fa fa-upload ms-2" aria-hidden="true"></i>
                         </Link>

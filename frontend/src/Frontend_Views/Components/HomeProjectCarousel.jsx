@@ -3,11 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 // Components
 import { axiosClientServiceApi } from "../../util/axiosUtil";
-import {
-  getImagePath,
-  getProjectwithImageMap,
-  sortByFieldName,
-} from "../../util/commonUtil";
+import { getImagePath, getProjectwithImageMap, sortByFieldName } from "../../util/commonUtil";
 
 // Styles
 import SkeletonImage from "../../Common/Skeltons/SkeletonImage";
@@ -22,10 +18,12 @@ const HomeProjectCarousel = ({ carouselState }) => {
   const { isLoading } = useSelector((state) => state.loader);
   const [carousel, setCarousel] = useState([]);
   const pageType = "imagegallery";
+  const [onPageLoadCall, setonPageLoadCall] = useState(0);
 
   useEffect(() => {
-    if (clientProjects.length === 0) {
+    if (clientProjects.length === 0 && onPageLoadCall < 3) {
       dispatch(getClientProjects());
+      setonPageLoadCall(onPageLoadCall + 1);
     }
   }, [dispatch, clientProjects]);
 
@@ -134,10 +132,7 @@ const HomeProjectCarousel = ({ carouselState }) => {
             data-bs-target="#carouselExampleDark"
             data-bs-slide="prev"
           >
-            <span
-              className="carousel-control-prev-icon"
-              aria-hidden="true"
-            ></span>
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
             <span className="visually-hidden">Previous</span>
           </button>
           <button
@@ -146,10 +141,7 @@ const HomeProjectCarousel = ({ carouselState }) => {
             data-bs-target="#carouselExampleDark"
             data-bs-slide="next"
           >
-            <span
-              className="carousel-control-next-icon"
-              aria-hidden="true"
-            ></span>
+            <span className="carousel-control-next-icon" aria-hidden="true"></span>
             <span className="visually-hidden">Next</span>
           </button>
         </>

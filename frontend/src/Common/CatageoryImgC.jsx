@@ -23,26 +23,6 @@ const CatageoryImgC = ({ cssClass, project, category, saveState }) => {
     }
   }, [project]);
 
-  /**
-   * get selected Images for edit
-   */
-  // useEffect(() => {
-  //   const getSelectedImages = async () => {
-  //     const response = await axiosServiceApi.get(`/project/projectImages/`, {
-  //       params: {
-  //         projectID: project.id,
-  //         category: category,
-  //       },
-  //     });
-  //     if (response?.status === 200 && response?.data?.fileData?.length > 0) {
-  //       catategoryImgState(response.data.fileData);
-  //     }
-  //   };
-  //   if (project?.id) {
-  //     getSelectedImages();
-  //   }
-  // }, [project, category]);
-
   const thumbDelete = (id, name) => {
     const deleteImageByID = async () => {
       const response = await axiosServiceApi.delete(`/project/projectImages/${id}/`);
@@ -58,7 +38,6 @@ const CatageoryImgC = ({ cssClass, project, category, saveState }) => {
           <DeleteDialog
             onClose={onClose}
             callback={deleteImageByID}
-            // message={`deleting the ${name} image?`}
             message={
               <>
                 Confirm deletion of <span>{name}</span> image?
